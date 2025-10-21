@@ -5,6 +5,16 @@ import { sql } from '@vercel/postgres';
 
 export default async function handler(req, res) {
     try {
+        // Check if database environment variables are set
+        const dbUrl = process.env.POSTGRES_URL || process.env.STORAGE_URL;
+        if (!dbUrl) {
+            return res.status(500).json({
+                success: false,
+                message: 'Database connection not configured',
+                error: 'Missing POSTGRES_URL or STORAGE_URL environment variable',
+                help: 'Please add database environment variables in Vercel Settings → Environment Variables'
+            });
+        }
         // Create users table
         await sql`
             CREATE TABLE IF NOT EXISTS users (
