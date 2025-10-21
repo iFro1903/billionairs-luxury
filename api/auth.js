@@ -1,11 +1,9 @@
 // Authentication API for BILLIONAIRS
 // Handles user registration, login, and session management
+// NOW WITH REAL DATABASE INTEGRATION
 
+import { sql } from '@vercel/postgres';
 import { createHash } from 'crypto';
-
-// Temporary in-memory storage (you'll want to use a real database later)
-const users = new Map();
-const sessions = new Map();
 
 // Helper function to hash passwords
 function hashPassword(password) {
@@ -15,6 +13,11 @@ function hashPassword(password) {
 // Helper function to generate session token
 function generateToken() {
     return createHash('sha256').update(Date.now() + Math.random().toString()).digest('hex');
+}
+
+// Helper function to generate member ID
+function generateMemberId() {
+    return `BILL-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 }
 
 export default async function handler(req, res) {
@@ -45,7 +48,11 @@ export default async function handler(req, res) {
             }
 
             // Check if user already exists
-            if (users.has(email)) {
+            const existingUser = await sql`
+                SELECT id FROM users WHERE email = ${email}
+            `;
+            
+            if (existingUser.rows.length > 0) {
                 return res.status(400).json({ success: false, message: 'User already exists' });
             }
 
@@ -56,15 +63,14 @@ export default async function handler(req, res) {
 
             // Create new user
             const hashedPassword = hashPassword(password);
-            users.set(email, {
-                email,
-                password: hashedPassword,
-                createdAt: new Date().toISOString(),
-                paymentStatus: 'pending', // pending, paid
-                memberId: `BILL-${Date.now()}`
-            });
+            const memberId = generateMemberId();
+            
+            await sql`
+                INSERT INTO users (email, password_hash, member_id, payment_status)
+                VALUES (${email}, ${hashedPassword}, ${memberId}, 'pending')
+            `;
 
-            console.log(`✅ New user registered: ${email}`);
+            console.log(`✅ New user registered: ${email} (${memberId})`);
 
             return res.status(200).json({
                 success: true,
@@ -78,23 +84,39 @@ export default async function handler(req, res) {
                 return res.status(400).json({ success: false, message: 'Email and password required' });
             }
 
-            const user = users.get(email);
-            if (!user) {
+            // Get user from database
+            const userResult = await sql`
+                SELECT id, email, password_hash, member_id, payment_status 
+                FROM users 
+                WHERE email = ${email}
+            `;
+            
+            if (userResult.rows.length === 0) {
                 return res.status(401).json({ success: false, message: 'Invalid credentials' });
             }
 
+            const user = userResult.rows[0];
             const hashedPassword = hashPassword(password);
-            if (user.password !== hashedPassword) {
+            
+            if (user.password_hash !== hashedPassword) {
                 return res.status(401).json({ success: false, message: 'Invalid credentials' });
             }
+
+            // Update last login
+            await sql`
+                UPDATE users 
+                SET last_login = CURRENT_TIMESTAMP 
+                WHERE id = ${user.id}
+            `;
 
             // Create session
             const sessionToken = generateToken();
-            sessions.set(sessionToken, {
-                email: user.email,
-                createdAt: Date.now(),
-                expiresAt: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
-            });
+            const expiresAt = new Date(Date.now() + (24 * 60 * 60 * 1000)); // 24 hours
+            
+            await sql`
+                INSERT INTO sessions (token, user_id, expires_at)
+                VALUES (${sessionToken}, ${user.id}, ${expiresAt})
+            `;
 
             console.log(`✅ User logged in: ${email}`);
 
@@ -103,8 +125,8 @@ export default async function handler(req, res) {
                 token: sessionToken,
                 user: {
                     email: user.email,
-                    memberId: user.memberId,
-                    paymentStatus: user.paymentStatus
+                    memberId: user.member_id,
+                    paymentStatus: user.payment_status
                 }
             });
         }
@@ -115,28 +137,32 @@ export default async function handler(req, res) {
                 return res.status(401).json({ success: false, message: 'No token provided' });
             }
 
-            const session = sessions.get(token);
-            if (!session) {
+            // Get session from database
+            const sessionResult = await sql`
+                SELECT s.expires_at, u.id, u.email, u.member_id, u.payment_status
+                FROM sessions s
+                JOIN users u ON s.user_id = u.id
+                WHERE s.token = ${token}
+            `;
+            
+            if (sessionResult.rows.length === 0) {
                 return res.status(401).json({ success: false, message: 'Invalid session' });
             }
 
-            // Check if session expired
-            if (Date.now() > session.expiresAt) {
-                sessions.delete(token);
-                return res.status(401).json({ success: false, message: 'Session expired' });
-            }
+            const session = sessionResult.rows[0];
 
-            const user = users.get(session.email);
-            if (!user) {
-                return res.status(401).json({ success: false, message: 'User not found' });
+            // Check if session expired
+            if (new Date() > new Date(session.expires_at)) {
+                await sql`DELETE FROM sessions WHERE token = ${token}`;
+                return res.status(401).json({ success: false, message: 'Session expired' });
             }
 
             return res.status(200).json({
                 success: true,
                 user: {
-                    email: user.email,
-                    memberId: user.memberId,
-                    paymentStatus: user.paymentStatus
+                    email: session.email,
+                    memberId: session.member_id,
+                    paymentStatus: session.payment_status
                 }
             });
         }
@@ -144,7 +170,7 @@ export default async function handler(req, res) {
         // LOGOUT
         if (action === 'logout') {
             if (token) {
-                sessions.delete(token);
+                await sql`DELETE FROM sessions WHERE token = ${token}`;
             }
             return res.status(200).json({ success: true, message: 'Logged out successfully' });
         }
@@ -155,18 +181,26 @@ export default async function handler(req, res) {
                 return res.status(401).json({ success: false, message: 'Unauthorized' });
             }
 
-            const session = sessions.get(token);
-            if (!session) {
+            // Get user from session
+            const sessionResult = await sql`
+                SELECT u.id, u.email, u.member_id
+                FROM sessions s
+                JOIN users u ON s.user_id = u.id
+                WHERE s.token = ${token}
+            `;
+            
+            if (sessionResult.rows.length === 0) {
                 return res.status(401).json({ success: false, message: 'Invalid session' });
             }
 
-            const user = users.get(session.email);
-            if (!user) {
-                return res.status(404).json({ success: false, message: 'User not found' });
-            }
+            const user = sessionResult.rows[0];
 
-            user.paymentStatus = 'paid';
-            user.paidAt = new Date().toISOString();
+            // Update payment status
+            await sql`
+                UPDATE users 
+                SET payment_status = 'paid', paid_at = CURRENT_TIMESTAMP 
+                WHERE id = ${user.id}
+            `;
 
             console.log(`💰 Payment confirmed for: ${user.email}`);
 
@@ -175,8 +209,8 @@ export default async function handler(req, res) {
                 message: 'Payment status updated',
                 user: {
                     email: user.email,
-                    memberId: user.memberId,
-                    paymentStatus: user.paymentStatus
+                    memberId: user.member_id,
+                    paymentStatus: 'paid'
                 }
             });
         }
