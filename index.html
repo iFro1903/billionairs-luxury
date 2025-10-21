@@ -408,6 +408,24 @@
                             }
                         } else if (methodType === 'crypto') {
                             console.log('🪙 Initiating Cryptocurrency Payment...');
+                            
+                            // Validate form fields BEFORE showing crypto modal
+                            const fullName = document.getElementById('customerName')?.value?.trim();
+                            const email = document.getElementById('customerEmail')?.value?.trim();
+                            const phone = document.getElementById('customerPhone')?.value?.trim();
+                            
+                            if (!fullName || !email || !phone) {
+                                alert('Please fill in all required fields (Name, Email, Phone) before selecting cryptocurrency');
+                                return;
+                            }
+                            
+                            // Validate email format
+                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                            if (!emailRegex.test(email)) {
+                                alert('Please enter a valid email address');
+                                return;
+                            }
+                            
                             // Show crypto currency selection modal
                             showCryptoSelectionModal();
                         } else {
