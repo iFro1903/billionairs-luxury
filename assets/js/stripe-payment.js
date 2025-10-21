@@ -97,11 +97,11 @@ class StripePaymentProcessor {
             return;
         }
 
-        // Get customer information from form
-        const fullNameInput = document.getElementById('wireFullName');
-        const emailInput = document.getElementById('wireEmail');
-        const phoneInput = document.getElementById('wirePhone');
-        const companyInput = document.getElementById('wireCompany');
+        // Get customer information from common form fields
+        const fullNameInput = document.getElementById('customerName');
+        const emailInput = document.getElementById('customerEmail');
+        const phoneInput = document.getElementById('customerPhone');
+        const companyInput = document.getElementById('customerCompany');
 
         if (!fullNameInput || !emailInput || !phoneInput) {
             this.showPaymentError('Please fill in all required fields');
