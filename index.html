@@ -417,17 +417,29 @@
                         
                         const methodType = selectedMethod.dataset.method;
                         
-                        // For credit card - redirect to Stripe Checkout
+                        // Handle different payment methods
                         if (methodType === 'card') {
-                            console.log('🎯 Initiating Stripe Checkout...');
+                            console.log('🎯 Initiating Credit Card Checkout...');
                             if (window.stripeProcessor) {
                                 window.stripeProcessor.createCheckoutSession('full');
                             } else {
                                 console.error('❌ Stripe processor not initialized');
                                 alert('Payment system initializing. Please try again in a moment.');
                             }
+                        } else if (methodType === 'bank') {
+                            console.log('� Initiating SEPA Direct Debit Checkout...');
+                            if (window.stripeProcessor) {
+                                window.stripeProcessor.createSepaCheckoutSession();
+                            } else {
+                                console.error('❌ Stripe processor not initialized');
+                                alert('Payment system initializing. Please try again in a moment.');
+                            }
+                        } else if (methodType === 'wire') {
+                            alert('Wire Transfer: Coming soon! Please use Credit Card or SEPA for now.');
+                        } else if (methodType === 'crypto') {
+                            alert('Cryptocurrency: Coming soon! Please use Credit Card or SEPA for now.');
                         } else {
-                            alert(`${methodType.toUpperCase()} payment coming soon! Use Credit Card for now.`);
+                            alert(`${methodType.toUpperCase()} payment coming soon! Use Credit Card or SEPA for now.`);
                         }
                     }
                     </script>
