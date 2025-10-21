@@ -131,11 +131,11 @@ export default async function handler(req, res) {
         }
         
         .header { 
-            background: linear-gradient(135deg, #B76E79 0%, #B76E79 50%, #B76E79 100%); 
-            padding: 50px 40px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 50%, #f5f5f5 100%); 
+            padding: 60px 40px;
             text-align: center;
             position: relative;
-            border-bottom: 3px solid #9A5A64;
+            border-bottom: 3px solid #B76E79;
         }
         .header::before {
             content: '';
@@ -155,29 +155,29 @@ export default async function handler(req, res) {
             gap: 15px;
         }
         .logo-image {
-            width: 100px;
+            width: 140px;
             height: auto;
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+            filter: drop-shadow(0 6px 16px rgba(183, 110, 121, 0.4));
         }
         .logo-text {
             font-family: 'Playfair Display', serif;
             font-size: 38px;
             font-weight: 700;
-            color: #0a0a0a;
+            color: #B76E79;
             letter-spacing: 6px;
             margin: 0;
             text-transform: uppercase;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(183, 110, 121, 0.2);
         }
         .header-subtitle {
             font-family: 'Montserrat', sans-serif;
             font-size: 11px;
-            color: #0a0a0a;
+            color: #B76E79;
             letter-spacing: 4px;
             margin-top: 12px;
             font-weight: 600;
             text-transform: uppercase;
-            opacity: 0.8;
+            opacity: 0.9;
         }
         
         .hero-section {
@@ -444,8 +444,8 @@ export default async function handler(req, res) {
         @media only screen and (max-width: 600px) {
             .email-wrapper { padding: 20px 10px; }
             .container { border-radius: 0; }
-            .header { padding: 35px 20px; }
-            .logo-image { width: 70px; }
+            .header { padding: 40px 20px; }
+            .logo-image { width: 100px; }
             .logo-text { font-size: 28px; letter-spacing: 4px; }
             .hero-section { padding: 35px 20px; }
             .hero-title { font-size: 24px; }
