@@ -122,20 +122,20 @@ export default async function handler(req, res) {
             max-width: 650px; 
             margin: 0 auto; 
             background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%); 
-            border: 2px solid #D4AF37;
-            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2),
-                        0 0 100px rgba(212, 175, 55, 0.1),
-                        inset 0 0 100px rgba(212, 175, 55, 0.03);
+            border: 2px solid #B76E79;
+            box-shadow: 0 20px 60px rgba(183, 110, 121, 0.2),
+                        0 0 100px rgba(183, 110, 121, 0.1),
+                        inset 0 0 100px rgba(183, 110, 121, 0.03);
             border-radius: 8px;
             overflow: hidden;
         }
         
         .header { 
-            background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 50%, #D4AF37 100%); 
+            background: linear-gradient(135deg, #B76E79 0%, #E8B4B8 50%, #B76E79 100%); 
             padding: 50px 40px;
             text-align: center;
             position: relative;
-            border-bottom: 3px solid #C19B2D;
+            border-bottom: 3px solid #9A5A64;
         }
         .header::before {
             content: '';
@@ -181,16 +181,16 @@ export default async function handler(req, res) {
         }
         
         .hero-section {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(183, 110, 121, 0.15) 0%, rgba(183, 110, 121, 0.05) 100%);
             padding: 50px 40px;
             text-align: center;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            border-bottom: 1px solid rgba(183, 110, 121, 0.2);
         }
         .hero-title {
             font-family: 'Playfair Display', serif;
             font-size: 32px;
             font-weight: 700;
-            color: #D4AF37;
+            color: #B76E79;
             margin-bottom: 20px;
             letter-spacing: 1px;
         }
@@ -198,11 +198,11 @@ export default async function handler(req, res) {
             font-family: 'Playfair Display', serif;
             font-size: 56px;
             font-weight: 700;
-            color: #FFD700;
+            color: #E8B4B8;
             margin: 20px 0;
             letter-spacing: 2px;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.4),
-                         0 0 60px rgba(212, 175, 55, 0.2);
+            text-shadow: 0 0 30px rgba(232, 180, 184, 0.4),
+                         0 0 60px rgba(183, 110, 121, 0.2);
         }
         .hero-subtitle {
             font-size: 14px;
@@ -219,7 +219,7 @@ export default async function handler(req, res) {
             font-family: 'Playfair Display', serif;
             font-size: 24px;
             margin-bottom: 25px;
-            color: #D4AF37;
+            color: #B76E79;
             font-weight: 600;
         }
         .intro-text {
@@ -230,24 +230,24 @@ export default async function handler(req, res) {
         }
         
         .bank-details-section {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.03) 100%);
-            border: 2px solid rgba(212, 175, 55, 0.4);
+            background: linear-gradient(135deg, rgba(183, 110, 121, 0.08) 0%, rgba(183, 110, 121, 0.03) 100%);
+            border: 2px solid rgba(183, 110, 121, 0.4);
             border-radius: 8px;
             padding: 35px;
             margin: 35px 0;
-            box-shadow: 0 8px 32px rgba(212, 175, 55, 0.15),
-                        inset 0 0 60px rgba(212, 175, 55, 0.03);
+            box-shadow: 0 8px 32px rgba(183, 110, 121, 0.15),
+                        inset 0 0 60px rgba(183, 110, 121, 0.03);
         }
         .section-title {
             font-family: 'Playfair Display', serif;
             font-size: 22px;
-            color: #D4AF37;
+            color: #B76E79;
             margin: 0 0 25px 0;
             font-weight: 600;
             letter-spacing: 1px;
             text-align: center;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            border-bottom: 1px solid rgba(183, 110, 121, 0.3);
         }
         .detail-row { 
             display: flex;
@@ -262,7 +262,7 @@ export default async function handler(req, res) {
         }
         .detail-label { 
             font-size: 13px;
-            color: rgba(212, 175, 55, 0.9);
+            color: rgba(183, 110, 121, 0.9);
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -276,8 +276,8 @@ export default async function handler(req, res) {
             font-family: 'Courier New', monospace;
         }
         .reference-box {
-            background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
-            color: #0a0a0a;
+            background: linear-gradient(135deg, #B76E79 0%, #E8B4B8 100%);
+            color: #ffffff;
             padding: 18px 25px;
             border-radius: 6px;
             font-weight: 700;
@@ -285,7 +285,7 @@ export default async function handler(req, res) {
             text-align: center;
             margin-top: 25px;
             letter-spacing: 2px;
-            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3),
+            box-shadow: 0 8px 24px rgba(183, 110, 121, 0.3),
                         inset 0 -2px 4px rgba(0, 0, 0, 0.2);
             font-family: 'Courier New', monospace;
         }
@@ -332,7 +332,7 @@ export default async function handler(req, res) {
             content: "▸";
             position: absolute;
             left: 0;
-            color: #D4AF37;
+            color: #B76E79;
             font-size: 16px;
             font-weight: bold;
         }
@@ -343,7 +343,7 @@ export default async function handler(req, res) {
         .steps-title {
             font-family: 'Playfair Display', serif;
             font-size: 20px;
-            color: #D4AF37;
+            color: #B76E79;
             margin-bottom: 20px;
             font-weight: 600;
         }
@@ -353,7 +353,7 @@ export default async function handler(req, res) {
             align-items: flex-start;
         }
         .step-number {
-            background: linear-gradient(135deg, #D4AF37 0%, #C19B2D 100%);
+            background: linear-gradient(135deg, #B76E79 0%, #9A5A64 100%);
             color: #0a0a0a;
             width: 32px;
             height: 32px;
@@ -365,7 +365,7 @@ export default async function handler(req, res) {
             font-size: 14px;
             margin-right: 15px;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 12px rgba(183, 110, 121, 0.3);
         }
         .step-text {
             font-size: 14px;
@@ -375,7 +375,7 @@ export default async function handler(req, res) {
         }
         
         .contact-section {
-            background: rgba(212, 175, 55, 0.05);
+            background: rgba(183, 110, 121, 0.05);
             border-radius: 8px;
             padding: 25px;
             margin: 35px 0;
@@ -387,20 +387,20 @@ export default async function handler(req, res) {
             margin-bottom: 12px;
         }
         .contact-email {
-            color: #D4AF37;
+            color: #B76E79;
             text-decoration: none;
             font-weight: 600;
             font-size: 15px;
             letter-spacing: 0.5px;
         }
         .contact-email:hover {
-            color: #F4D03F;
+            color: #E8B4B8;
         }
         
         .signature {
             margin-top: 45px;
             padding-top: 30px;
-            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            border-top: 1px solid rgba(183, 110, 121, 0.2);
         }
         .signature-text {
             font-size: 14px;
@@ -410,7 +410,7 @@ export default async function handler(req, res) {
         .signature-name {
             font-family: 'Playfair Display', serif;
             font-size: 18px;
-            color: #D4AF37;
+            color: #B76E79;
             font-weight: 600;
             letter-spacing: 1px;
         }
@@ -419,12 +419,12 @@ export default async function handler(req, res) {
             background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
             text-align: center;
             padding: 40px 30px;
-            border-top: 2px solid rgba(212, 175, 55, 0.3);
+            border-top: 2px solid rgba(183, 110, 121, 0.3);
         }
         .footer-logo {
             font-family: 'Playfair Display', serif;
             font-size: 20px;
-            color: #D4AF37;
+            color: #B76E79;
             letter-spacing: 3px;
             margin-bottom: 15px;
             font-weight: 700;
@@ -437,7 +437,7 @@ export default async function handler(req, res) {
             line-height: 1.6;
         }
         .footer-year {
-            color: rgba(212, 175, 55, 0.6);
+            color: rgba(183, 110, 121, 0.6);
             font-weight: 600;
         }
         
@@ -478,7 +478,7 @@ export default async function handler(req, res) {
                 <p class="greeting">Dear ${fullName},</p>
                 
                 <p class="intro-text">
-                    Thank you for choosing BILLIONAIRS LUXURY. We are pleased to provide you with the complete wire transfer details to secure your exclusive membership access valued at <strong style="color: #D4AF37;">CHF 500,000</strong>.
+                    Thank you for choosing BILLIONAIRS LUXURY. We are pleased to provide you with the complete wire transfer details to secure your exclusive membership access valued at <strong style="color: #B76E79;">CHF 500,000</strong>.
                 </p>
                 
                 <div class="bank-details-section">
@@ -506,7 +506,7 @@ export default async function handler(req, res) {
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Transfer Amount</span>
-                        <span class="detail-value" style="color: #FFD700; font-size: 17px; font-weight: 700;">CHF 500,000</span>
+                        <span class="detail-value" style="color: #E8B4B8; font-size: 17px; font-weight: 700;">CHF 500,000</span>
                     </div>
                     
                     <div class="reference-box">
@@ -518,7 +518,7 @@ export default async function handler(req, res) {
                 <div class="critical-info">
                     <h3 class="critical-title">Critical Instructions</h3>
                     <div class="critical-item">
-                        <strong>MANDATORY:</strong> Include reference number <strong style="color: #FFD700;">${bankDetails.reference}</strong> in your wire transfer
+                        <strong>MANDATORY:</strong> Include reference number <strong style="color: #E8B4B8;">${bankDetails.reference}</strong> in your wire transfer
                     </div>
                     <div class="critical-item">
                         Wire transfer must originate from a bank account registered in your legal name
@@ -551,7 +551,7 @@ export default async function handler(req, res) {
                     <div class="step-item">
                         <div class="step-number">3</div>
                         <div class="step-text">
-                            Ensure the payment reference <strong style="color: #D4AF37;">${bankDetails.reference}</strong> is included
+                            Ensure the payment reference <strong style="color: #B76E79;">${bankDetails.reference}</strong> is included
                         </div>
                     </div>
                     <div class="step-item">
