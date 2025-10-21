@@ -409,25 +409,55 @@
                         } else if (methodType === 'crypto') {
                             console.log('🪙 Initiating Cryptocurrency Payment...');
                             
-                            // Validate form fields BEFORE showing crypto modal
-                            const fullName = document.getElementById('customerName')?.value?.trim();
-                            const email = document.getElementById('customerEmail')?.value?.trim();
-                            const phone = document.getElementById('customerPhone')?.value?.trim();
-                            
-                            if (!fullName || !email || !phone) {
-                                alert('Please fill in all required fields (Name, Email, Phone) before selecting cryptocurrency');
-                                return;
+                            // Make sure crypto form section is visible first
+                            const cryptoSection = document.getElementById('cryptoPaymentForm');
+                            if (!cryptoSection || !cryptoSection.classList.contains('active')) {
+                                console.log('⚠️ Crypto form not active yet, activating now...');
+                                // The payment method selector should have already activated it
+                                // But let's make sure
+                                if (cryptoSection) {
+                                    cryptoSection.classList.add('active');
+                                }
                             }
                             
-                            // Validate email format
-                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                            if (!emailRegex.test(email)) {
-                                alert('Please enter a valid email address');
-                                return;
-                            }
-                            
-                            // Show crypto currency selection modal
-                            showCryptoSelectionModal();
+                            // Small delay to ensure DOM is updated
+                            setTimeout(() => {
+                                // Validate form fields BEFORE showing crypto modal
+                                const fullNameEl = document.getElementById('customerName');
+                                const emailEl = document.getElementById('customerEmail');
+                                const phoneEl = document.getElementById('customerPhone');
+                                
+                                console.log('🔍 Crypto Form Elements:', {
+                                    fullNameEl: fullNameEl,
+                                    emailEl: emailEl,
+                                    phoneEl: phoneEl,
+                                    fullNameValue: fullNameEl?.value,
+                                    emailValue: emailEl?.value,
+                                    phoneValue: phoneEl?.value,
+                                    cryptoSectionActive: cryptoSection?.classList.contains('active')
+                                });
+                                
+                                const fullName = fullNameEl?.value?.trim();
+                                const email = emailEl?.value?.trim();
+                                const phone = phoneEl?.value?.trim();
+                                
+                                if (!fullName || !email || !phone) {
+                                    alert('Please fill in all required fields (Name, Email, Phone) in the crypto payment form');
+                                    // Scroll to the form
+                                    cryptoSection?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                    return;
+                                }
+                                
+                                // Validate email format
+                                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                if (!emailRegex.test(email)) {
+                                    alert('Please enter a valid email address');
+                                    return;
+                                }
+                                
+                                // Show crypto currency selection modal
+                                showCryptoSelectionModal();
+                            }, 100);
                         } else {
                             alert(`${methodType.toUpperCase()} payment coming soon! Use Credit Card or Wire Transfer for now.`);
                         }
