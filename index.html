@@ -69,6 +69,22 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/payment-methods.css">
     <link rel="stylesheet" href="assets/css/faq-footer.css">
+    
+    <!-- CRITICAL: Force dark background on autofill - inline to override everything -->
+    <style>
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.3) inset !important;
+            -webkit-text-fill-color: white !important;
+            box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.3) inset !important;
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            background-image: none !important;
+            color: white !important;
+            transition: background-color 5000s ease-in-out 0s !important;
+        }
+    </style>
 </head>
 <body>
     <!-- Particles Background - Always Visible -->
@@ -271,16 +287,19 @@
                             </div>
                             <div class="form-group">
                                 <label for="customerEmail">Email Address</label>
-                                <input type="email" id="customerEmail" name="customerEmail" placeholder="your.email@example.com" required>
+                                <input type="email" id="customerEmail" name="customerEmail" placeholder="your.email@example.com" required 
+                                       style="background: rgba(0, 0, 0, 0.3) !important; color: white !important; -webkit-text-fill-color: white !important;">
                             </div>
                             <div class="form-group">
                                 <label for="customerPassword">Password</label>
-                                <input type="password" id="customerPassword" name="customerPassword" placeholder="Create a secure password (min. 8 characters)" required minlength="8">
+                                <input type="password" id="customerPassword" name="customerPassword" placeholder="Create a secure password (min. 8 characters)" required minlength="8"
+                                       style="background: rgba(0, 0, 0, 0.3) !important; color: white !important; -webkit-text-fill-color: white !important;">
                                 <small style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 0.25rem; display: block;">This will be used to access your INNER CIRCLE account</small>
                             </div>
                             <div class="form-group">
                                 <label for="customerPasswordConfirm">Confirm Password</label>
-                                <input type="password" id="customerPasswordConfirm" name="customerPasswordConfirm" placeholder="Re-enter your password" required minlength="8">
+                                <input type="password" id="customerPasswordConfirm" name="customerPasswordConfirm" placeholder="Re-enter your password" required minlength="8"
+                                       style="background: rgba(0, 0, 0, 0.3) !important; color: white !important; -webkit-text-fill-color: white !important;">
                             </div>
                             <div class="form-group">
                                 <label for="customerPhone">Phone Number</label>
