@@ -531,31 +531,43 @@
                             window.stripeProcessor.isProcessing = false;
                         }
                         
-                        // GET AND VALIDATE FORM FIELDS HERE (not in stripe-payment.js)
-                        const fullNameEl = document.getElementById('customerName');
-                        const emailEl = document.getElementById('customerEmail');
-                        const phoneEl = document.getElementById('customerPhone');
-                        const companyEl = document.getElementById('customerCompany');
-                        
-                        console.log('🔍 Reading form fields:', {
-                            fullNameEl: fullNameEl,
-                            emailEl: emailEl,
-                            phoneEl: phoneEl,
-                            fullNameValue: fullNameEl ? fullNameEl.value : 'ELEMENT NOT FOUND',
-                            emailValue: emailEl ? emailEl.value : 'ELEMENT NOT FOUND',
-                            phoneValue: phoneEl ? phoneEl.value : 'ELEMENT NOT FOUND'
-                        });
-                        
-                        if (!fullNameEl || !emailEl || !phoneEl) {
-                            alert('Error: Form fields not found! Please refresh the page.');
-                            return;
-                        }
-                        
-                        const fullName = fullNameEl.value.trim();
-                        const email = emailEl.value.trim();
-                        const phone = phoneEl.value.trim();
-                        const company = companyEl ? companyEl.value.trim() : '';
-                        
+                        // Wait a tiny bit to ensure DOM is stable after modal interactions
+                        setTimeout(() => {
+                            // GET AND VALIDATE FORM FIELDS HERE (not in stripe-payment.js)
+                            const fullNameEl = document.getElementById('customerName');
+                            const emailEl = document.getElementById('customerEmail');
+                            const phoneEl = document.getElementById('customerPhone');
+                            const companyEl = document.getElementById('customerCompany');
+                            
+                            console.log('🔍 Reading form fields:', {
+                                fullNameEl: fullNameEl,
+                                emailEl: emailEl,
+                                phoneEl: phoneEl,
+                                fullNameValue: fullNameEl ? fullNameEl.value : 'ELEMENT NOT FOUND',
+                                emailValue: emailEl ? emailEl.value : 'ELEMENT NOT FOUND',
+                                phoneValue: phoneEl ? phoneEl.value : 'ELEMENT NOT FOUND'
+                            });
+                            
+                            if (!fullNameEl || !emailEl || !phoneEl) {
+                                alert('Error: Form fields not found! Please refresh the page.');
+                                return;
+                            }
+                            
+                            // Read values IMMEDIATELY and store in variables
+                            const fullName = (fullNameEl.value || '').trim();
+                            const email = (emailEl.value || '').trim();
+                            const phone = (phoneEl.value || '').trim();
+                            const company = companyEl ? (companyEl.value || '').trim() : '';
+                            
+                            console.log('📋 Captured values:', { fullName, email, phone, company });
+                            
+                            // Continue with validation
+                            window.processCryptoSelection(cryptocurrency, fullName, email, phone, company);
+                        }, 50);
+                    };
+                    
+                    window.processCryptoSelection = function(cryptocurrency, fullName, email, phone, company) {
+                    window.processCryptoSelection = function(cryptocurrency, fullName, email, phone, company) {
                         // Validate required fields with specific error messages
                         const missingFields = [];
                         if (!fullName) missingFields.push('Name');
@@ -567,11 +579,12 @@
                             // Close modal
                             const modals = document.querySelectorAll('body > div');
                             modals.forEach(modal => {
-                                if (modal.innerHTML.includes('Select Cryptocurrency')) {
+                                if (modal.innerHTML && modal.innerHTML.includes('Select Cryptocurrency')) {
                                     modal.remove();
                                 }
                             });
                             // Scroll to the form fields
+                            const fullNameEl = document.getElementById('customerName');
                             if (fullNameEl) {
                                 fullNameEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                             }
@@ -582,6 +595,13 @@
                         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                         if (!emailRegex.test(email)) {
                             alert('Please enter a valid email address');
+                            // Close modal
+                            const modals = document.querySelectorAll('body > div');
+                            modals.forEach(modal => {
+                                if (modal.innerHTML && modal.innerHTML.includes('Select Cryptocurrency')) {
+                                    modal.remove();
+                                }
+                            });
                             return;
                         }
                         
@@ -590,7 +610,7 @@
                         // Close the selection modal
                         const modals = document.querySelectorAll('body > div');
                         modals.forEach(modal => {
-                            if (modal.innerHTML.includes('Select Cryptocurrency')) {
+                            if (modal.innerHTML && modal.innerHTML.includes('Select Cryptocurrency')) {
                                 modal.remove();
                             }
                         });
