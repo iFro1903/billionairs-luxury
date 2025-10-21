@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Link elements
     const links = {
         faq: document.getElementById('faqLink'),
-        impressum: document.getElementById('impressumLink'),
+        impressum: document.getElementById('legalLink'),
         privacy: document.getElementById('privacyLink'),
         terms: document.getElementById('termsLink')
     };
