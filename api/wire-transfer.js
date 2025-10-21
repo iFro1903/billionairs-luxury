@@ -131,7 +131,7 @@ export default async function handler(req, res) {
         }
         
         .header { 
-            background: linear-gradient(135deg, #B76E79 0%, #E8B4B8 50%, #B76E79 100%); 
+            background: linear-gradient(135deg, #B76E79 0%, #B76E79 50%, #B76E79 100%); 
             padding: 50px 40px;
             text-align: center;
             position: relative;
@@ -198,10 +198,10 @@ export default async function handler(req, res) {
             font-family: 'Playfair Display', serif;
             font-size: 56px;
             font-weight: 700;
-            color: #E8B4B8;
+            color: #B76E79;
             margin: 20px 0;
             letter-spacing: 2px;
-            text-shadow: 0 0 30px rgba(232, 180, 184, 0.4),
+            text-shadow: 0 0 30px rgba(183, 110, 121, 0.4),
                          0 0 60px rgba(183, 110, 121, 0.2);
         }
         .hero-subtitle {
@@ -276,7 +276,7 @@ export default async function handler(req, res) {
             font-family: 'Courier New', monospace;
         }
         .reference-box {
-            background: linear-gradient(135deg, #B76E79 0%, #E8B4B8 100%);
+            background: linear-gradient(135deg, #B76E79 0%, #B76E79 100%);
             color: #ffffff;
             padding: 18px 25px;
             border-radius: 6px;
@@ -394,7 +394,7 @@ export default async function handler(req, res) {
             letter-spacing: 0.5px;
         }
         .contact-email:hover {
-            color: #E8B4B8;
+            color: #B76E79;
         }
         
         .signature {
@@ -506,7 +506,7 @@ export default async function handler(req, res) {
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Transfer Amount</span>
-                        <span class="detail-value" style="color: #E8B4B8; font-size: 17px; font-weight: 700;">CHF 500,000</span>
+                        <span class="detail-value" style="color: #B76E79; font-size: 17px; font-weight: 700;">CHF 500,000</span>
                     </div>
                     
                     <div class="reference-box">
@@ -518,7 +518,7 @@ export default async function handler(req, res) {
                 <div class="critical-info">
                     <h3 class="critical-title">Critical Instructions</h3>
                     <div class="critical-item">
-                        <strong>MANDATORY:</strong> Include reference number <strong style="color: #E8B4B8;">${bankDetails.reference}</strong> in your wire transfer
+                        <strong>MANDATORY:</strong> Include reference number <strong style="color: #B76E79;">${bankDetails.reference}</strong> in your wire transfer
                     </div>
                     <div class="critical-item">
                         Wire transfer must originate from a bank account registered in your legal name
