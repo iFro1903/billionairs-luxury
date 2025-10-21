@@ -384,13 +384,28 @@ class StripePaymentProcessor {
         }
 
         // Get customer information from form
-        const fullName = document.getElementById('customerName')?.value?.trim();
-        const email = document.getElementById('customerEmail')?.value?.trim();
-        const phone = document.getElementById('customerPhone')?.value?.trim();
-        const company = document.getElementById('customerCompany')?.value?.trim();
+        const fullNameElement = document.getElementById('customerName');
+        const emailElement = document.getElementById('customerEmail');
+        const phoneElement = document.getElementById('customerPhone');
+        const companyElement = document.getElementById('customerCompany');
+
+        console.log('🔍 Field Elements:', {
+            fullName: fullNameElement,
+            email: emailElement,
+            phone: phoneElement,
+            fullNameValue: fullNameElement?.value,
+            emailValue: emailElement?.value,
+            phoneValue: phoneElement?.value
+        });
+
+        const fullName = fullNameElement?.value?.trim();
+        const email = emailElement?.value?.trim();
+        const phone = phoneElement?.value?.trim();
+        const company = companyElement?.value?.trim();
 
         // Validate required fields
         if (!fullName || !email || !phone) {
+            console.error('❌ Validation failed:', { fullName, email, phone });
             alert('Please fill in all required fields (Name, Email, Phone)');
             return;
         }
