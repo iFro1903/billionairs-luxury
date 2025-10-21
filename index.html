@@ -526,6 +526,11 @@
                     window.selectCrypto = function(cryptocurrency) {
                         console.log('🪙 selectCrypto called with:', cryptocurrency);
                         
+                        // Reset processing flag in case it's stuck
+                        if (window.stripeProcessor) {
+                            window.stripeProcessor.isProcessing = false;
+                        }
+                        
                         // GET AND VALIDATE FORM FIELDS HERE (not in stripe-payment.js)
                         const fullNameEl = document.getElementById('customerName');
                         const emailEl = document.getElementById('customerEmail');
