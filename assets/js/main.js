@@ -17,9 +17,6 @@ class LuxuryTimepiece {
     }
 
     async init() {
-        // Show loading screen
-        await this.showLoadingScreen();
-        
         // Initialize event listeners
         this.initEventListeners();
         
@@ -37,43 +34,6 @@ class LuxuryTimepiece {
         
         // Check if payment was already completed (localStorage)
         this.checkPaymentStatus();
-        
-        // Hide loading screen and show main content
-        this.hideLoadingScreen();
-    }
-
-    async showLoadingScreen() {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve();
-            }, 2500); // Luxuriöse Loading Experience
-        });
-    }
-
-    hideLoadingScreen() {
-        const loadingScreen = document.getElementById('loadingScreen');
-        const mainContainer = document.getElementById('mainContainer');
-        const premiumNav = document.querySelector('.premium-nav');
-        
-        if (loadingScreen) {
-            loadingScreen.style.opacity = '0';
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-                if (mainContainer) {
-                    mainContainer.classList.remove('hidden');
-                }
-                // Show navigation after loading screen
-                if (premiumNav) {
-                    premiumNav.classList.add('visible');
-                }
-            }, 600);
-        } else {
-            console.error('❌ Loading screen element not found!');
-            // Zeige content trotzdem
-            if (mainContainer) {
-                mainContainer.classList.remove('hidden');
-            }
-        }
     }
 
     // Universal Transition für alle Seiten-Wechsel

@@ -71,19 +71,6 @@
     <link rel="stylesheet" href="assets/css/faq-footer.css">
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loadingScreen" class="loading-screen">
-        <div class="loading-content">
-            <div class="transition-logo">
-                <img src="assets/images/logo.png" alt="BILLIONAIRS" class="logo-transition">
-            </div>
-            <h2 class="transition-text">PREPARING ACCESS</h2>
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
-            </div>
-        </div>
-    </div>
-
     <!-- Particles Background - Always Visible -->
     <div id="particles-js"></div>
 
@@ -102,13 +89,13 @@
     <div id="contactPopup" class="contact-popup">
         <div class="popup-content">
             <button class="popup-close">&times;</button>
-            <div class="popup-icon">?</div>
+            <div class="popup-icon">✉</div>
             <h3 class="popup-title">Exclusive Inquiries</h3>
             <p class="popup-description">For access requests and private consultations</p>
             <div class="email-container">
                 <span class="popup-email" id="emailText">elite@billionairs.luxury</span>
                 <button class="copy-btn" id="copyBtn">
-                    <span class="copy-icon">??</span>
+                    <span class="copy-icon">📋</span>
                     <span class="copy-text">Copy</span>
                 </button>
             </div>
@@ -117,31 +104,26 @@
     </div>
 
     <!-- Main Container -->
-    <div id="mainContainer" class="main-container hidden">
+    <div id="mainContainer" class="main-container">
         
         <!-- Hero Section -->
         <section id="heroSection" class="hero-section">
             <div class="hero-container">
                 <div class="hero-content">
-                    <!-- Exclusivity Badge -->
-                    <div class="exclusivity-badge">
-                        <span class="badge-label">LIMITED ACCESS</span>
-                    </div>
-                    
                     <!-- Trust Indicators -->
                     <div class="trust-badges">
                         <div class="trust-item">
-                            <span class="trust-icon">??</span>
+                            <span class="trust-icon">🔒</span>
                             <span class="trust-label">Swiss Secured</span>
                         </div>
                         <div class="trust-separator">•</div>
                         <div class="trust-item">
-                            <span class="trust-icon">?</span>
+                            <span class="trust-icon">✓</span>
                             <span class="trust-label">Blockchain Verified</span>
                         </div>
                         <div class="trust-separator">•</div>
                         <div class="trust-item">
-                            <span class="trust-icon">8</span>
+                            <span class="trust-icon">★</span>
                             <span class="trust-label">Exclusive Access</span>
                         </div>
                     </div>
@@ -250,14 +232,14 @@
                     <div class="payment-method-selector">
                         <h3 class="payment-method-title">Choose Your Payment Method</h3>
                         <p style="text-align: center; color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 2rem;">
-                            For 500,000 CHF transactions, only high-limit methods are available
+                            Select your preferred payment method for secure processing
                         </p>
                         <div class="payment-methods">
                             <div class="payment-method active" data-method="card">
                                 <div class="method-icon">💳</div>
                                 <div class="method-info">
                                     <h4>Credit / Debit Card</h4>
-                                    <p>✓ Supports 500K CHF</p>
+                                    <p>✓ Instant Processing</p>
                                     <small>Visa, Mastercard, Amex</small>
                                 </div>
                             </div>
@@ -291,25 +273,10 @@
                     <form id="paymentForm" class="payment-form">
                         <!-- Card Payment Form (Default) -->
                         <div id="cardPaymentForm" class="payment-form-section active">
-                            <div class="form-group">
-                                <label for="cardNumber">Card Number</label>
-                                <input type="text" id="cardNumber" name="cardNumber" placeholder="•••• •••• •••• ••••" maxlength="19" required>
-                            </div>
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="expiryDate">Expires</label>
-                                    <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" maxlength="5" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="cvv">CVV</label>
-                                    <input type="text" id="cvv" name="cvv" placeholder="•••" maxlength="4" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="cardHolder">Cardholder</label>
-                                <input type="text" id="cardHolder" name="cardHolder" placeholder="Full Name" required>
+                            <div class="payment-info-text">
+                                <p style="text-align: center; color: rgba(255, 255, 255, 0.7); margin-bottom: 2rem;">
+                                    You will be redirected to our secure payment processor to complete your transaction.
+                                </p>
                             </div>
                         </div>
 
@@ -436,7 +403,7 @@
                         </div>
 
                         <button type="button" class="payment-button" id="stripeCheckoutButton" onclick="handleStripeCheckout()">
-                            <span class="button-text">SECURE PAYMENT - 500,000 CHF</span>
+                            <span class="button-text">SECURE PAYMENT</span>
                         </button>
                     </form>
                     
@@ -568,11 +535,11 @@
             <div class="footer-links">
                 <a href="#" class="footer-link" id="faqLink">FAQ</a>
                 <span class="footer-separator">•</span>
-                <a href="impressum.html" class="footer-link">Impressum</a>
+                <a href="impressum.html" class="footer-link">Legal Notice</a>
                 <span class="footer-separator">•</span>
-                <a href="datenschutz.html" class="footer-link">Datenschutz</a>
+                <a href="datenschutz.html" class="footer-link">Privacy Policy</a>
                 <span class="footer-separator">•</span>
-                <a href="agb.html" class="footer-link">AGB</a>
+                <a href="agb.html" class="footer-link">Terms & Conditions</a>
             </div>
             <p class="footer-copyright">© 2025 The Final Collection</p>
         </div>

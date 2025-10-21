@@ -113,115 +113,6 @@ body::before {
     display: none;
 }
 
-/* Ultra-Premium Loading Screen */
-.loading-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.loading-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3rem;
-}
-
-.transition-logo {
-    animation: logoFadeIn 0.8s ease-out forwards;
-}
-
-@keyframes logoFadeIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.transition-text {
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    color: rgba(255, 255, 255, 0.9);
-    animation: textFadeIn 0.6s ease-out 0.3s forwards;
-    opacity: 0;
-}
-
-@keyframes textFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.progress-bar {
-    width: 200px;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
-    overflow: hidden;
-    animation: barFadeIn 0.6s ease-out 0.5s forwards;
-    opacity: 0;
-}
-
-@keyframes barFadeIn {
-    0% {
-        opacity: 0;
-        transform: scaleX(0.5);
-    }
-    100% {
-        opacity: 1;
-        transform: scaleX(1);
-    }
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #E8B4A0, #D4A574, #F4C2A1);
-    border-radius: 2px;
-    animation: progressFill 2.3s ease-out forwards;
-    box-shadow: 0 0 10px rgba(232, 180, 160, 0.6);
-}
-
-@keyframes progressFill {
-    0% {
-        width: 0%;
-    }
-    100% {
-        width: 100%;
-    }
-}
-
-/* Remove old loading styles - now using transition styles */
-.luxury-spinner,
-.loading-title,
-.loading-subtitle,
-.loading-bar {
-    display: none;
-}
-
-@keyframes loading {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(300px); }
-}
-
 /* Main Container */
 .main-container {
     min-height: 100vh;
@@ -289,6 +180,7 @@ body::before {
     padding: 0;
     box-shadow: none;
     position: relative;
+    z-index: 50;
     transition: none;
 }
 
@@ -327,6 +219,8 @@ body::before {
     animation: fadeInDown 0.8s ease-out 0.5s both;
     transition: all 0.4s ease;
     opacity: 0.7;
+    position: relative;
+    z-index: 100;
 }
 
 .exclusivity-badge:hover {

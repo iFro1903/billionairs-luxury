@@ -1,0 +1,22 @@
+{
+  "watch": [
+    "stripe-server.js",
+    ".env",
+    "index.html",
+    "assets/js/**/*.js",
+    "assets/css/**/*.css"
+  ],
+  "ignore": [
+    "node_modules/",
+    "*.log",
+    ".git/",
+    "dist/",
+    "build/"
+  ],
+  "ext": "js,json,html,css,env",
+  "delay": 500,
+  "verbose": false,
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

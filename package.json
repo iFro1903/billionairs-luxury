@@ -5,9 +5,9 @@
   "main": "index.html",
   "scripts": {
     "start": "node stripe-server.js",
-    "dev": "set NODE_ENV=development && node stripe-server.js",
+    "dev": "nodemon stripe-server.js",
     "start:production": "set NODE_ENV=production && node stripe-server.js",
-    "test": "set NODE_ENV=development && node stripe-server.js",
+    "test": "set NODE_ENV=development && nodemon stripe-server.js",
     "build": "echo Production build ready",
     "pm2:start": "pm2 start stripe-server.js --name billionairs",
     "pm2:stop": "pm2 stop billionairs",
@@ -26,6 +26,7 @@
   "license": "Private",
   "devDependencies": {
     "live-server": "^1.2.2",
+    "nodemon": "^3.1.10",
     "terser": "^5.44.0"
   },
   "dependencies": {

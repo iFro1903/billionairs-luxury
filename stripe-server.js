@@ -82,11 +82,9 @@ app.post('/create-checkout-session', async (req, res) => {
                         name: paymentType === 'split' ? 
                             'BILLIONAIRS - Exclusive Access (First Payment)' : 
                             'BILLIONAIRS - Exclusive Access',
-                        description: isProduction ?
-                            (paymentType === 'split' ?
-                                '250,000 CHF - Initial payment for exclusive digital experience.' :
-                                '500,000 CHF - Complete access to exclusive digital experience beyond wealth.') :
-                            '5,000 CHF - TEST PAYMENT for exclusive digital experience.',
+                        description: paymentType === 'split' ?
+                            '250,000 CHF - Initial payment for exclusive digital experience.' :
+                            '500,000 CHF - Complete access to exclusive digital experience beyond wealth.',
                         images: ['https://billionairs.luxury/assets/images/og-image.png'],
                         metadata: {
                             tier: 'millionaire_segment',
