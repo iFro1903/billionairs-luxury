@@ -1,22 +1,30 @@
 // Database Setup Script for BILLIONAIRS
 // Run this once to create the necessary tables
 
-import { sql } from '@vercel/postgres';
+import pg from 'pg';
+const { Pool } = pg;
 
 export default async function handler(req, res) {
+    // Get database URL from environment
+    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.STORAGE_URL;
+    
+    if (!dbUrl) {
+        return res.status(500).json({
+            success: false,
+            message: 'Database connection not configured',
+            error: 'Missing POSTGRES_URL environment variable',
+            help: 'Please add database URL in Vercel Settings → Environment Variables'
+        });
+    }
+
+    const pool = new Pool({
+        connectionString: dbUrl,
+        ssl: { rejectUnauthorized: false }
+    });
+
     try {
-        // Check if database environment variables are set
-        const dbUrl = process.env.POSTGRES_URL || process.env.STORAGE_URL;
-        if (!dbUrl) {
-            return res.status(500).json({
-                success: false,
-                message: 'Database connection not configured',
-                error: 'Missing POSTGRES_URL or STORAGE_URL environment variable',
-                help: 'Please add database environment variables in Vercel Settings → Environment Variables'
-            });
-        }
         // Create users table
-        await sql`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS users (
                 id SERIAL PRIMARY KEY,
                 email VARCHAR(255) UNIQUE NOT NULL,
@@ -26,22 +34,22 @@ export default async function handler(req, res) {
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 paid_at TIMESTAMP,
                 last_login TIMESTAMP
-            );
-        `;
+            )
+        `);
 
         // Create sessions table
-        await sql`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS sessions (
                 id SERIAL PRIMARY KEY,
                 token VARCHAR(255) UNIQUE NOT NULL,
                 user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 expires_at TIMESTAMP NOT NULL
-            );
-        `;
+            )
+        `);
 
         // Create payments table (for tracking payment history)
-        await sql`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS payments (
                 id SERIAL PRIMARY KEY,
                 user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
@@ -52,25 +60,27 @@ export default async function handler(req, res) {
                 status VARCHAR(20) DEFAULT 'pending',
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 completed_at TIMESTAMP
-            );
-        `;
+            )
+        `);
 
         // Create downloads table (for tracking downloads)
-        await sql`
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS downloads (
                 id SERIAL PRIMARY KEY,
                 user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
                 file_name VARCHAR(255) NOT NULL,
                 downloaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 ip_address VARCHAR(50)
-            );
-        `;
+            )
+        `);
 
         // Create indexes for better performance
-        await sql`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);`;
-        await sql`CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(token);`;
-        await sql`CREATE INDEX IF NOT EXISTS idx_sessions_expires ON sessions(expires_at);`;
-        await sql`CREATE INDEX IF NOT EXISTS idx_payments_user ON payments(user_id);`;
+        await pool.query(`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`);
+        await pool.query(`CREATE INDEX IF NOT EXISTS idx_sessions_token ON sessions(token)`);
+        await pool.query(`CREATE INDEX IF NOT EXISTS idx_sessions_expires ON sessions(expires_at)`);
+        await pool.query(`CREATE INDEX IF NOT EXISTS idx_payments_user ON payments(user_id)`);
+
+        await pool.end();
 
         console.log('✅ Database tables created successfully!');
 
@@ -82,6 +92,9 @@ export default async function handler(req, res) {
 
     } catch (error) {
         console.error('❌ Database setup error:', error);
+        try {
+            await pool.end();
+        } catch (e) {}
         return res.status(500).json({
             success: false,
             message: 'Database setup failed',
