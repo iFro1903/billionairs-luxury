@@ -1,0 +1,201 @@
+<!-- HTTPS Redirect & Security Headers -->
+<!-- 
+  Dieses File muss auf deinem Webserver als .htaccess (Apache) 
+  oder in nginx.conf (Nginx) eingefügt werden.
+  
+  Für Apache: Speichere als ".htaccess" im Root-Verzeichnis
+  Für Nginx: Füge in nginx.conf ein
+-->
+
+<!-- ==================== APACHE (.htaccess) ==================== -->
+<!--
+# BILLIONAIRS - Security Configuration
+# Aktiviere Rewrite Engine
+RewriteEngine On
+
+# Force HTTPS Redirect
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Force WWW (optional - entferne # um zu aktivieren)
+# RewriteCond %{HTTP_HOST} !^www\.
+# RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Security Headers
+<IfModule mod_headers.c>
+    # HSTS - Force HTTPS für 1 Jahr
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    
+    # Verhindere Clickjacking
+    Header always set X-Frame-Options "DENY"
+    
+    # XSS Protection
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Content Type Sniffing verhindern
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # Referrer Policy
+    Header always set Referrer-Policy "no-referrer"
+    
+    # Permissions Policy (Kamera, Mikrofon, GPS blockieren)
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()"
+</IfModule>
+
+# 404 Error Page - Custom Error Document
+ErrorDocument 404 /404.html
+
+# Disable Directory Browsing
+Options -Indexes
+
+# Protect sensitive files
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Cache Control für bessere Performance
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Images
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    
+    # CSS & JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    
+    # Fonts
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    
+    # HTML
+    ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# Compression für schnellere Ladezeiten
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+-->
+
+<!-- ==================== NGINX (nginx.conf) ==================== -->
+<!--
+# BILLIONAIRS - Nginx Security Configuration
+
+server {
+    listen 80;
+    server_name billionairs.luxury www.billionairs.luxury;
+    
+    # Force HTTPS Redirect
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name billionairs.luxury www.billionairs.luxury;
+    
+    # SSL Certificates (von Let's Encrypt oder Cloudflare)
+    ssl_certificate /path/to/fullchain.pem;
+    ssl_certificate_key /path/to/privkey.pem;
+    
+    # SSL Optimization
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256';
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+    
+    # Security Headers
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "no-referrer" always;
+    add_header Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=()" always;
+    
+    # Root Directory
+    root /var/www/billionairs;
+    index index.html;
+    
+    # Custom 404 Error Page
+    error_page 404 /404.html;
+    location = /404.html {
+        internal;
+    }
+    
+    # Gzip Compression
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_types text/plain text/css text/javascript application/javascript application/json image/svg+xml;
+    
+    # Cache Control
+    location ~* \.(jpg|jpeg|png|gif|svg|webp)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+    
+    location ~* \.(css|js)$ {
+        expires 1M;
+        add_header Cache-Control "public";
+    }
+    
+    location ~* \.(woff|woff2|ttf|otf|eot)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+    
+    # Hide sensitive files
+    location ~ /\. {
+        deny all;
+    }
+    
+    # Main location
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+-->
+
+<!-- ==================== 404 ERROR PAGE TESTING ==================== -->
+<!--
+Um zu testen, ob die 404-Seite funktioniert:
+
+LOCAL (Development):
+- Live-Server unterstützt keine Custom Error Pages
+- Teste direkt: http://127.0.0.1:8080/404.html
+
+LIVE (Production):
+- Apache: .htaccess mit "ErrorDocument 404 /404.html" wird automatisch erkannt
+- Nginx: nginx.conf mit "error_page 404 /404.html;" muss eingetragen sein
+- Teste mit: https://deine-domain.com/irgendwas-falsches
+- Sollte automatisch 404.html anzeigen
+-->
+
+<!-- ==================== CLOUDFLARE PAGE RULES (Optional) ==================== -->
+<!--
+Wenn du Cloudflare verwendest:
+
+1. SSL/TLS Einstellung: "Full (strict)"
+2. Always Use HTTPS: ON
+3. Automatic HTTPS Rewrites: ON
+4. HSTS: Enable (max-age: 12 months, includeSubDomains, preload)
+5. Minimum TLS Version: TLS 1.2
+6. Browser Integrity Check: ON
+7. Security Level: High
+8. Challenge Passage: 30 Minutes
+
+Page Rules:
+- Rule 1: *billionairs.luxury/* → Always Use HTTPS
+- Rule 2: *billionairs.luxury/* → Cache Level: Standard
+- Rule 3: *billionairs.luxury/*.css → Cache Level: Cache Everything, Edge Cache TTL: 1 month
+- Rule 4: *billionairs.luxury/*.js → Cache Level: Cache Everything, Edge Cache TTL: 1 month
+-->

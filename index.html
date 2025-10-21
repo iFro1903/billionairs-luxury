@@ -1,0 +1,759 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BILLIONAIRS - Exclusive Access Beyond Wealth</title>
+    <meta name="description" content="An experience beyond conventional luxury. BILLIONAIRS offers exclusive digital access to moments that transcend wealth and status. Share on WhatsApp, Instagram, TikTok, Snapchat, Facebook, Twitter. Limited. Private. Irreversible.">
+    <meta name="keywords" content="billionairs, luxury, exclusive access, digital experience, wealth, status, WhatsApp, Instagram, TikTok, Snapchat, Facebook, Twitter, viral, exclusive, Rolex, Patek Philippe, Audemars Piguet, Richard Mille, Hublot, Omega, Cartier, Vacheron Constantin, Breguet, A. Lange & Söhne, Rolls-Royce, Bugatti, Lamborghini, Ferrari, Bentley, Aston Martin, McLaren, Pagani, Koenigsegg, Maybach, Hermès, Louis Vuitton, Gucci, Chanel, Dior, Prada, Burberry, Tom Ford, Saint Laurent, Balenciaga, private jet, yacht, Monaco, Dubai, Swiss banking, cryptocurrency, NFT, blockchain, millionaire, billionaire, high net worth">
+    
+    <!-- Content Security Policy - Enhanced for Multiple Payment Methods -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://js.stripe.com https://www.paypal.com https://www.paypalobjects.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.paypal.com; connect-src 'self' https://api.stripe.com https://www.paypal.com; frame-src 'self' https://js.stripe.com https://www.paypal.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+    
+    <!-- Privacy & Security Tags -->
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="X-DNS-Prefetch-Control" content="off">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Open Graph / Social Media (WhatsApp, Facebook, Instagram, TikTok, Snapchat) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="BILLIONAIRS - Exclusive Access">
+    <meta property="og:description" content="Beyond wealth. Beyond status. A moment that exists outside of time.">
+    <meta property="og:image" content="assets/images/og-image.png">
+    <meta property="og:image:secure_url" content="assets/images/og-image.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="BILLIONAIRS - Exclusive Digital Experience">
+    <meta property="og:url" content="https://billionairs.luxury">
+    <meta property="og:site_name" content="BILLIONAIRS">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter/X Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BILLIONAIRS - Exclusive Access">
+    <meta name="twitter:description" content="Beyond wealth. Beyond status. A moment that exists outside of time.">
+    <meta name="twitter:image" content="assets/images/og-image.png">
+    <meta name="twitter:image:alt" content="BILLIONAIRS Logo">
+    
+    <!-- Facebook Specific -->
+    <meta property="fb:app_id" content="your_app_id_here">
+    
+    <!-- Security & Privacy -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stripe Payment Processing -->
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- HTTPS Redirect (Fallback if server config fails) -->
+    <script>
+        // Force HTTPS in production
+        if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+            location.replace('https://' + location.hostname + location.pathname + location.search);
+        }
+    </script>
+    
+    <!-- Stylesheets (Minified for Performance) -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/payment-methods.css">
+    <link rel="stylesheet" href="assets/css/faq-footer.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="transition-logo">
+                <img src="assets/images/logo.png" alt="BILLIONAIRS" class="logo-transition">
+            </div>
+            <h2 class="transition-text">PREPARING ACCESS</h2>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Particles Background - Always Visible -->
+    <div id="particles-js"></div>
+
+    <!-- Premium Navigation -->
+    <nav class="premium-nav">
+        <div class="nav-logo">
+            <img src="assets/images/logo.png" alt="BILLIONAIRS" class="nav-logo-img">
+        </div>
+        <div class="nav-actions">
+            <button class="lang-switcher" id="langBtn">EN</button>
+            <button class="nav-contact" id="contactBtn">CONTACT</button>
+        </div>
+    </nav>
+
+    <!-- Contact Email Popup -->
+    <div id="contactPopup" class="contact-popup">
+        <div class="popup-content">
+            <button class="popup-close">&times;</button>
+            <div class="popup-icon">?</div>
+            <h3 class="popup-title">Exclusive Inquiries</h3>
+            <p class="popup-description">For access requests and private consultations</p>
+            <div class="email-container">
+                <span class="popup-email" id="emailText">elite@billionairs.luxury</span>
+                <button class="copy-btn" id="copyBtn">
+                    <span class="copy-icon">??</span>
+                    <span class="copy-text">Copy</span>
+                </button>
+            </div>
+            <p class="popup-footer">Response time: 24-48 hours</p>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div id="mainContainer" class="main-container hidden">
+        
+        <!-- Hero Section -->
+        <section id="heroSection" class="hero-section">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <!-- Exclusivity Badge -->
+                    <div class="exclusivity-badge">
+                        <span class="badge-label">LIMITED ACCESS</span>
+                    </div>
+                    
+                    <!-- Trust Indicators -->
+                    <div class="trust-badges">
+                        <div class="trust-item">
+                            <span class="trust-icon">??</span>
+                            <span class="trust-label">Swiss Secured</span>
+                        </div>
+                        <div class="trust-separator">•</div>
+                        <div class="trust-item">
+                            <span class="trust-icon">?</span>
+                            <span class="trust-label">Blockchain Verified</span>
+                        </div>
+                        <div class="trust-separator">•</div>
+                        <div class="trust-item">
+                            <span class="trust-icon">8</span>
+                            <span class="trust-label">Exclusive Access</span>
+                        </div>
+                    </div>
+                    
+                    <div class="brand-logo">
+                        <img src="assets/images/logo.png" alt="BILLIONAIRS" class="logo-image">
+                    </div>
+                    
+                    <h1 class="hero-title-new">
+                        <span class="title-main">BILLIONAIRS</span>
+                    </h1>
+                    
+                    <p class="hero-tagline">What you're about to see can't be bought. Only accessed.</p>
+                    
+                    <div class="hero-divider"></div>
+                    
+                    <div class="hero-message-minimal">
+                        <p class="message-line">Beyond wealth. Beyond status.</p>
+                        <p class="message-line">A moment that exists outside of time.</p>
+                        <p class="message-line">Where time bends to those who understand its true value.</p>
+                    </div>
+                    
+                    <div class="hero-actions-new">
+                        <button id="proceedBtn" class="proceed-button-new">
+                            <span class="btn-glow"></span>
+                            <span class="btn-content">
+                                <span class="btn-text-main">I DESERVE THIS</span>
+                            </span>
+                        </button>
+                        
+                        <button id="notReadyBtn" class="not-ready-button-new">
+                            <span class="btn-content">
+                                <span class="btn-text-main">I'M NOT THERE YET</span>
+                            </span>
+                        </button>
+                    </div>
+                    
+                    <div class="psychological-hook">
+                        <p class="hook-accept">Discover what transcends everything you own</p>
+                        <p class="hook-reject">Perhaps another time, when you're ready</p>
+                    </div>
+                    
+                    <div class="swiss-security-badge">
+                        <p class="security-text">Secured by Swiss Banking Standards • Encrypted Infrastructure • Zürich</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Transition Section -->
+        <section id="transitionSection" class="transition-section" style="display: none;">
+            <div class="transition-container">
+                <div class="transition-logo">
+                    <img src="assets/images/logo.png" alt="BILLIONAIRS" class="logo-transition">
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rejection Section (Not Ready) -->
+        <section id="rejectionSection" class="rejection-section" style="display: none;">
+            <div id="particles-rejection" class="rejection-particles"></div>
+            <div class="rejection-container">
+                <div class="rejection-content">
+                    <!-- Scarcity Counter - Show pressure on rejection screen -->
+                    <div class="scarcity-indicator">
+                        <span class="scarcity-total">100 TOTAL SLOTS</span>
+                    </div>
+                    
+                    <h1 class="rejection-title">NOT YET.</h1>
+                    <div class="rejection-divider"></div>
+                    <p class="rejection-message">Not every door opens on the first approach.</p>
+                    <p class="rejection-warning">Yet wisdom suggests—</p>
+                    <div class="rejection-truth">
+                        <p class="truth-line"><strong>Some doors open only once.</strong></p>
+                        <p class="truth-line"><strong>Certain moments exist outside of time.</strong></p>
+                        <p class="truth-line"><strong>True access is never forced.</strong></p>
+                    </div>
+                    <p class="rejection-final">When readiness arrives, the door remains. Until it doesn't.</p>
+                    <div class="rejection-actions">
+                        <button id="returnBtn" class="return-button">I'M READY NOW</button>
+                        <button id="leaveBtn" class="leave-button">NOT MY TIME</button>
+                    </div>
+                    <p class="rejection-reminder">Time moves for no one. Not even us.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Payment Section -->
+        <section id="paymentSection" class="payment-section">
+            <div class="payment-container">
+                <div class="luxury-header">
+                    <h1 class="main-title">
+                        <span class="title-luxury">EXCLUSIVE</span>
+                        <span class="title-emphasis">ACCESS</span>
+                    </h1>
+                    <div class="subtitle-container">
+                        <p class="subtitle">By Invitation Only</p>
+                    </div>
+                </div>
+
+                <div class="payment-form-container">
+                    <!-- Payment Method Selection -->
+                    <div class="payment-method-selector">
+                        <h3 class="payment-method-title">Choose Your Payment Method</h3>
+                        <p style="text-align: center; color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 2rem;">
+                            For 500,000 CHF transactions, only high-limit methods are available
+                        </p>
+                        <div class="payment-methods">
+                            <div class="payment-method active" data-method="card">
+                                <div class="method-icon">💳</div>
+                                <div class="method-info">
+                                    <h4>Credit / Debit Card</h4>
+                                    <p>✓ Supports 500K CHF</p>
+                                    <small>Visa, Mastercard, Amex</small>
+                                </div>
+                            </div>
+                            <div class="payment-method" data-method="bank">
+                                <div class="method-icon">🏦</div>
+                                <div class="method-info">
+                                    <h4>SEPA Direct Debit</h4>
+                                    <p>✓ No limit - 3-5 days</p>
+                                    <small>European Bank Transfer</small>
+                                </div>
+                            </div>
+                            <div class="payment-method" data-method="wire">
+                                <div class="method-icon">🏛️</div>
+                                <div class="method-info">
+                                    <h4>Bank Wire Transfer</h4>
+                                    <p>✓ Unlimited amount</p>
+                                    <small>Manual transfer details provided</small>
+                                </div>
+                            </div>
+                            <div class="payment-method" data-method="crypto">
+                                <div class="method-icon">₿</div>
+                                <div class="method-info">
+                                    <h4>Cryptocurrency</h4>
+                                    <p>✓ Unlimited - Fast</p>
+                                    <small>Bitcoin, Ethereum, USDT</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="paymentForm" class="payment-form">
+                        <!-- Card Payment Form (Default) -->
+                        <div id="cardPaymentForm" class="payment-form-section active">
+                            <div class="form-group">
+                                <label for="cardNumber">Card Number</label>
+                                <input type="text" id="cardNumber" name="cardNumber" placeholder="•••• •••• •••• ••••" maxlength="19" required>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="expiryDate">Expires</label>
+                                    <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" maxlength="5" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" id="cvv" name="cvv" placeholder="•••" maxlength="4" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cardHolder">Cardholder</label>
+                                <input type="text" id="cardHolder" name="cardHolder" placeholder="Full Name" required>
+                            </div>
+                        </div>
+
+                        <!-- Bank Payment Form -->
+                        <div id="bankPaymentForm" class="payment-form-section">
+                            <div class="bank-payment-info">
+                                <h4>SEPA Direct Debit - Perfect for Large Amounts</h4>
+                                <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem;">
+                                    SEPA Direct Debit has no transaction limits and is ideal for 500,000 CHF payments. 
+                                    Processing takes 3-5 business days.
+                                </p>
+                                <div class="form-group">
+                                    <label for="iban">IBAN</label>
+                                    <input type="text" id="iban" name="iban" placeholder="CH93 0076 2011 6238 5295 7" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="accountHolder">Account Holder Name</label>
+                                    <input type="text" id="accountHolder" name="accountHolder" placeholder="Full Name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bankName">Bank Name</label>
+                                    <input type="text" id="bankName" name="bankName" placeholder="Your Bank" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bank Wire Transfer Form -->
+                        <div id="wirePaymentForm" class="payment-form-section">
+                            <div class="wire-payment-info">
+                                <h4>Bank Wire Transfer - Unlimited Amount</h4>
+                                <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem;">
+                                    For 500,000 CHF, manual bank wire transfer is the most secure and reliable method. 
+                                    You will receive our bank details after confirmation.
+                                </p>
+                                <div class="wire-info-box" style="background: rgba(212, 175, 55, 0.1); border-left: 3px solid #D4AF37; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                                    <h5 style="color: #D4AF37; margin-bottom: 0.5rem;">How It Works:</h5>
+                                    <ol style="color: rgba(255,255,255,0.8); line-height: 1.8; padding-left: 1.5rem;">
+                                        <li>Complete your contact information below</li>
+                                        <li>Receive our bank account details via email</li>
+                                        <li>Initiate the wire transfer from your bank</li>
+                                        <li>Access granted within 24h after funds received</li>
+                                    </ol>
+                                </div>
+                                <div class="form-group">
+                                    <label for="wireFullName">Full Name</label>
+                                    <input type="text" id="wireFullName" name="wireFullName" placeholder="Your Full Legal Name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="wireEmail">Email Address</label>
+                                    <input type="email" id="wireEmail" name="wireEmail" placeholder="your.email@example.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="wirePhone">Phone Number</label>
+                                    <input type="tel" id="wirePhone" name="wirePhone" placeholder="+41 XX XXX XX XX" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="wireCompany">Company (Optional)</label>
+                                    <input type="text" id="wireCompany" name="wireCompany" placeholder="Your Company Name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cryptocurrency Payment Form -->
+                        <div id="cryptoPaymentForm" class="payment-form-section">
+                            <div class="crypto-payment-info">
+                                <h4>Cryptocurrency Payment - The Future of Large Transactions</h4>
+                                <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem;">
+                                    Crypto payments are becoming the preferred method for tech-savvy millionaires. 
+                                    No limits, fast processing (10-60 minutes), and complete privacy.
+                                </p>
+                                <div class="crypto-info-box" style="background: rgba(247, 147, 26, 0.1); border-left: 3px solid #F7931A; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                                    <h5 style="color: #F7931A; margin-bottom: 0.5rem;">✓ Why Crypto for 500K CHF?</h5>
+                                    <ul style="color: rgba(255,255,255,0.8); line-height: 1.8; padding-left: 1.5rem;">
+                                        <li><strong>Unlimited Amount:</strong> No transaction limits</li>
+                                        <li><strong>Fast:</strong> 10-60 minutes confirmation</li>
+                                        <li><strong>Low Fees:</strong> ~0.5-1% for large amounts</li>
+                                        <li><strong>Global:</strong> Works from anywhere</li>
+                                        <li><strong>Private:</strong> Maximum discretion</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="crypto-currency-selector" style="margin-bottom: 1.5rem;">
+                                    <h5 style="color: #D4AF37; margin-bottom: 1rem;">Select Cryptocurrency:</h5>
+                                    <div class="crypto-options" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                                        <div class="crypto-option active" data-crypto="btc" style="background: rgba(247, 147, 26, 0.1); border: 2px solid #F7931A; padding: 1rem; border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.3s;">
+                                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">₿</div>
+                                            <div style="font-weight: 600; color: #F7931A;">Bitcoin (BTC)</div>
+                                            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.6);">Most popular</div>
+                                        </div>
+                                        <div class="crypto-option" data-crypto="eth" style="background: rgba(98, 126, 234, 0.1); border: 2px solid #627EEA; padding: 1rem; border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.3s;">
+                                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">Ξ</div>
+                                            <div style="font-weight: 600; color: #627EEA;">Ethereum (ETH)</div>
+                                            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.6);">Fast & reliable</div>
+                                        </div>
+                                        <div class="crypto-option" data-crypto="usdt" style="background: rgba(38, 161, 123, 0.1); border: 2px solid #26A17B; padding: 1rem; border-radius: 8px; cursor: pointer; text-align: center; transition: all 0.3s;">
+                                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">₮</div>
+                                            <div style="font-weight: 600; color: #26A17B;">Tether (USDT)</div>
+                                            <div style="font-size: 0.85rem; color: rgba(255,255,255,0.6);">Stable value</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cryptoFullName">Full Name</label>
+                                    <input type="text" id="cryptoFullName" name="cryptoFullName" placeholder="Your Full Name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cryptoEmail">Email Address</label>
+                                    <input type="email" id="cryptoEmail" name="cryptoEmail" placeholder="your.email@example.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cryptoWallet">Your Wallet Address (Optional)</label>
+                                    <input type="text" id="cryptoWallet" name="cryptoWallet" placeholder="Your crypto wallet address for refunds">
+                                    <small style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">Only needed in case of refund</small>
+                                </div>
+                                
+                                <div class="crypto-note" style="background: rgba(212, 175, 55, 0.05); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin: 0;">
+                                        📧 After submitting, you'll receive a crypto payment address and exact amount in your chosen currency. 
+                                        Payment must be made within 30 minutes to lock in the exchange rate.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" class="payment-button" id="stripeCheckoutButton" onclick="handleStripeCheckout()">
+                            <span class="button-text">SECURE PAYMENT - 500,000 CHF</span>
+                        </button>
+                    </form>
+                    
+                    <script>
+                    function handleStripeCheckout() {
+                        // Get selected payment method - check for both 'active' and 'selected' class
+                        const selectedMethod = document.querySelector('.payment-method.active, .payment-method.selected');
+                        if (!selectedMethod) {
+                            alert('Please select a payment method');
+                            return;
+                        }
+                        
+                        const methodType = selectedMethod.dataset.method;
+                        
+                        // For credit card - redirect to Stripe Checkout
+                        if (methodType === 'card') {
+                            console.log('🎯 Initiating Stripe Checkout...');
+                            if (window.stripeProcessor) {
+                                window.stripeProcessor.createCheckoutSession('full');
+                            } else {
+                                console.error('❌ Stripe processor not initialized');
+                                alert('Payment system initializing. Please try again in a moment.');
+                            }
+                        } else {
+                            alert(`${methodType.toUpperCase()} payment coming soon! Use Credit Card for now.`);
+                        }
+                    }
+                    </script>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timepiece Section (Hidden initially) -->
+        <section id="timepieceSection" class="timepiece-section hidden">
+            <div class="timepiece-container">
+                <div class="welcome-message">
+                    <h2 class="welcome-title">Access Granted</h2>
+                </div>
+
+                <div class="luxury-clock">
+                    <div class="clock-frame">
+                        <div class="clock-face">
+                            <!-- Digital Time Display -->
+                            <div class="digital-time">
+                                <div class="time-display">
+                                    <span id="hours" class="time-unit">00</span>
+                                    <span class="time-separator">:</span>
+                                    <span id="minutes" class="time-unit">00</span>
+                                    <span class="time-separator">:</span>
+                                    <span id="seconds" class="time-unit">00</span>
+                                </div>
+                                <div class="date-display">
+                                    <span id="dayName" class="date-part"></span>,
+                                    <span id="date" class="date-part"></span>
+                                    <span id="month" class="date-part"></span>
+                                    <span id="year" class="date-part"></span>
+                                </div>
+                            </div>
+
+                            <!-- Analog Clock -->
+                            <div class="analog-clock">
+                                <div class="clock-center"></div>
+                                <div id="hourHand" class="clock-hand hour-hand"></div>
+                                <div id="minuteHand" class="clock-hand minute-hand"></div>
+                                <div id="secondHand" class="clock-hand second-hand"></div>
+                                
+                                <!-- Hour Markers -->
+                                <div class="hour-markers">
+                                    <div class="marker marker-12"></div>
+                                    <div class="marker marker-3"></div>
+                                    <div class="marker marker-6"></div>
+                                    <div class="marker marker-9"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="location-info">
+                    <div class="location-display">
+                        <span id="currentLocation" class="location-text">Locating...</span>
+                    </div>
+                    <div class="timezone-display">
+                        <span id="currentTimezone" class="timezone-text">Loading...</span>
+                    </div>
+                </div>
+
+                <div class="exclusive-features">
+                    <button class="feature-button" onclick="toggleClockStyle()">
+                        <span>Style</span>
+                    </button>
+                    <button class="feature-button" onclick="showWorldTime()">
+                        <span>Global</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- World Time Modal -->
+        <div id="worldTimeModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Global Time</h3>
+                    <button class="close-modal" onclick="closeWorldTime()">&times;</button>
+                </div>
+                <div class="world-clocks">
+                    <div class="world-clock-item">
+                        <h4>New York</h4>
+                        <div id="nyTime" class="world-time">--:--:--</div>
+                    </div>
+                    <div class="world-clock-item">
+                        <h4>London</h4>
+                        <div id="londonTime" class="world-time">--:--:--</div>
+                    </div>
+                    <div class="world-clock-item">
+                        <h4>Tokyo</h4>
+                        <div id="tokyoTime" class="world-time">--:--:--</div>
+                    </div>
+                    <div class="world-clock-item">
+                        <h4>Dubai</h4>
+                        <div id="dubaiTime" class="world-time">--:--:--</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Minimalist Footer -->
+        <div class="minimal-footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link" id="faqLink">FAQ</a>
+                <span class="footer-separator">•</span>
+                <a href="impressum.html" class="footer-link">Impressum</a>
+                <span class="footer-separator">•</span>
+                <a href="datenschutz.html" class="footer-link">Datenschutz</a>
+                <span class="footer-separator">•</span>
+                <a href="agb.html" class="footer-link">AGB</a>
+            </div>
+            <p class="footer-copyright">© 2025 The Final Collection</p>
+        </div>
+
+        <!-- FAQ Modal -->
+        <div id="faqModal" class="legal-modal">
+            <div id="particles-faq" class="modal-particles"></div>
+            <div class="legal-modal-inner">
+                <div class="modal-content">
+                <button class="modal-close">&times;</button>
+                <h2>FAQ</h2>
+                <div class="modal-divider"></div>
+                
+                <div class="faq-modal-list">
+                    <div class="faq-modal-item">
+                        <h3>What is BILLIONAIRS?</h3>
+                        <p>A gateway to experiences that exist beyond public reach. Not a marketplace. Not a service. A threshold into moments and access that cannot be replicated, advertised, or explained to those who haven't crossed it.<br><br>Think of it as the final collection—not of objects, but of perspective. Of transformation. Of access to realms where currency holds no meaning because what's offered cannot be purchased by any other means.<br><br>What lies beyond is yours to discover—but only if you're ready.</p>
+                    </div>
+                    
+                    <div class="faq-modal-item">
+                        <h3>Why the investment?</h3>
+                        <p>True exclusivity demands commitment. What you access here isn't sold—it's granted. The threshold exists to ensure only those who understand value beyond price ever cross it.<br><br>Collectors of rare experiences know: the barrier itself is part of the curation. It's not designed to extract—it's designed to protect. To preserve the integrity of what lies beyond from those who measure worth in conventional terms.<br><br>If the commitment feels steep, you're exactly where you should be: questioning. That hesitation is the filter. A threshold that reshapes your perception of what access truly means.</p>
+                    </div>
+                    
+                    <div class="faq-modal-item">
+                        <h3>Who is this for?</h3>
+                        <p>Those who have transcended conventional success. Individuals for whom money is no longer a question, but meaning is. People who've acquired everything publicly available and now seek what isn't.<br><br>Seekers of what exists between thought and reality. Those who understand that the rarest experiences don't appear in catalogs, aren't reviewed online, and leave no trace except in the transformation of those who encounter them.<br><br>If you're still measuring your worth by your portfolio, this isn't your moment yet.</p>
+                    </div>
+                    
+                    <div class="faq-modal-item">
+                        <h3>Security & Privacy</h3>
+                        <p>Zero-knowledge architecture. Swiss banking-grade encryption protocols. Your identity, your transaction, your access—protected to the maximum extent technically possible.<br><br>Minimal records. Minimal trail. We exist in the spaces between systems, where discretion isn't a feature—it's the foundation.</p>
+                    </div>
+                    
+                    <div class="faq-modal-item">
+                        <h3>What you may gain</h3>
+                        <p>Not a product. Not a service. Not a membership. Access to an exclusive digital experience crafted for those who exist beyond conventional boundaries.<br><br>What that becomes in your hands is entirely yours to shape. Just the experience itself. A perspective shift that cannot be purchased elsewhere. No records beyond those required by law. No sharing. No proof it ever existed—except in what it may unlock within you.<br><br>The experience is the transformation. Everything else is just context.</p>
+                    </div>
+                    
+                    <div class="faq-modal-item">
+                        <h3>How long does access take?</h3>
+                        <p>Your access begins upon commitment. Full experience typically delivered within 2-3 days.<br><br>The interval isn't delay—it's preparation. By design. Some things cannot be rushed without diminishing their essence. The wait is part of the curation, ensuring what you receive has been calibrated to the exact moment your readiness is confirmed.<br><br>True exclusivity operates on its own timeline.</p>
+                    </div>
+                    
+                    <div class="faq-modal-item">
+                        <h3>Can I see examples or testimonials?</h3>
+                        <p>No. If we displayed what participants have experienced, it would defeat the very essence of what we offer. Discretion isn't a policy—it's the product.<br><br>Those who've crossed this threshold understand why silence protects value. The moment exclusivity is proven publicly, it ceases to be exclusive. That's the paradox: the most valuable experiences are the ones that leave no evidence except in the eyes of those who lived them.<br><br>You're not buying proof. You're buying the absence of it.</p>
+                    </div>
+                    
+                    <div class="faq-modal-item">
+                        <h3>What if I change my mind?</h3>
+                        <p>Commitment is designed to be binding. Not as punishment, but as protection—for you, and for the integrity of what you're accessing. The finality ensures only those truly ready ever cross.<br><br>However: In certain jurisdictions, legal withdrawal rights may apply—please consult applicable consumer protection laws in your region before committing.<br><br>Hesitation is your last exit. Use it wisely.</p>
+                    </div>
+                    
+                    <div class="faq-modal-item">
+                        <h3>Availability</h3>
+                        <p>Because true exclusivity cannot scale. What we offer requires discretion, curation, and absolute focus on each individual who enters.<br><br>This operates on principles beyond supply and demand. When the parameters are met, access closes. Not artificially—inevitably. Scarcity isn't manufactured here. It's structural.</p>
+                    </div>
+                    
+                    <div class="faq-modal-item">
+                        <h3>How do I know this is real?</h3>
+                        <p>You don't. That's the point. Trust isn't built through testimonials, guarantees, or proof. It's earned through the gravity of the decision itself.<br><br>Many valuable experiences in history operated this way: private experiences that demanded faith before evidence. The ones who hesitated read about it later. The ones who moved—they lived it.<br><br>If you need validation, you're not ready. If you feel the pull despite the uncertainty—that's when you know.</p>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Impressum Modal -->
+        <div id="impressumModal" class="legal-modal">
+            <div id="particles-impressum" class="modal-particles"></div>
+            <div class="legal-modal-inner">
+                <div class="modal-content">
+                <button class="modal-close">&times;</button>
+                <h2>IMPRESSUM</h2>
+                <div class="modal-divider"></div>
+                
+                <div class="legal-section">
+                    <h3>Entity</h3>
+                    <p><strong>BILLIONAIRS</strong></p>
+                    <p>Premium Digital Experience Platform</p>
+                    <p>Registered in Zürich, Switzerland</p>
+                </div>
+
+                <div class="legal-section">
+                    <h3>Contact</h3>
+                    <p>Exclusive inquiries only:</p>
+                    <p><strong>elite@billionairs.luxury</strong></p>
+                    <p>Response time: 24-48 hours</p>
+                </div>
+
+                <div class="legal-section">
+                    <h3>Legal Notice</h3>
+                    <p>All intellectual property, designs, and content are protected by international copyright law. Unauthorized reproduction or distribution is strictly prohibited.</p>
+                    <p>BILLIONAIRS reserves the right to modify offerings, terms, and availability without notice. All sales are final.</p>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy Policy Modal -->
+        <div id="privacyModal" class="legal-modal">
+            <div id="particles-privacy" class="modal-particles"></div>
+            <div class="legal-modal-inner">
+                <div class="modal-content">
+                <button class="modal-close">&times;</button>
+                <h2>PRIVACY POLICY</h2>
+                <div class="modal-divider"></div>
+                
+                <div class="legal-section">
+                    <h3>Information We Collect</h3>
+                    <p>Only essential data required for transaction processing and access fulfillment. All information is encrypted using Swiss banking-grade security protocols.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h3>How We Use Your Data</h3>
+                    <p><strong>Transaction Processing:</strong> Secure verification and completion</p>
+                    <p><strong>Access Fulfillment:</strong> Activation of your exclusive experience</p>
+                    <p><strong>Communication:</strong> Encrypted correspondence regarding your experience</p>
+                    <p><strong>Legal Compliance:</strong> Regulatory requirements only</p>
+                </div>
+
+                <div class="legal-section">
+                    <h3>Data Protection</h3>
+                    <p>End-to-end encryption. Swiss banking standards. Blockchain verification. Zero third-party access. Your information never leaves our secure infrastructure.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h3>Your Rights</h3>
+                    <p>Access, correction, or deletion of personal data available upon request. Contact: <strong>elite@billionairs.luxury</strong></p>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terms of Service Modal -->
+        <div id="termsModal" class="legal-modal">
+            <div id="particles-terms" class="modal-particles"></div>
+            <div class="legal-modal-inner">
+                <div class="modal-content">
+                <button class="modal-close">&times;</button>
+                <h2>TERMS OF SERVICE</h2>
+                <div class="modal-divider"></div>
+                
+                <div class="legal-section">
+                    <h3>Agreement</h3>
+                    <p>By accessing BILLIONAIRS, you acknowledge full understanding and voluntary acceptance of these terms. This constitutes a binding agreement under Swiss law. Continued use indicates informed consent.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h3>Transaction Terms</h3>
+                    <p><strong>All engagements are final and binding.</strong> By proceeding, you acknowledge full understanding and acceptance. This experience operates beyond conventional frameworks—commitment is absolute and irreversible. No reversals, modifications, or reconsiderations are possible once initiated.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h3>Access & Eligibility</h3>
+                    <p>Limited to qualified individuals only. BILLIONAIRS reserves absolute discretion in granting or denying access without explanation or recourse. Criteria remain confidential. Participation is a privilege, not a right.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h3>Intellectual Property</h3>
+                    <p>All designs, concepts, and content are proprietary assets protected under international copyright and trademark law. Unauthorized reproduction, distribution, or use is strictly prohibited and subject to legal action.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h3>Limitation of Liability</h3>
+                    <p>BILLIONAIRS, its operators, and affiliates assume no liability for any direct, indirect, incidental, consequential, or punitive outcomes arising from your participation. You accept full responsibility for your decisions. This service is provided "as is" without warranties of any kind.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h3>Inquiries</h3>
+                    <p><strong>elite@billionairs.luxury</strong></p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts (Minified for Performance) -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/faq.js"></script>
+    <script src="assets/js/stripe-payment.js"></script>
+    <script src="assets/js/payment-methods-new.js"></script>
+</body>

@@ -1,0 +1,232 @@
+/* ==================== PAYMENT METHOD SELECTOR ==================== */
+.payment-method-selector {
+    margin-bottom: 2rem;
+}
+
+.payment-method-title {
+    font-size: 1.2rem;
+    color: var(--text-champagne);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.payment-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-method:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--cognac-gold);
+    transform: translateY(-2px);
+}
+
+.payment-method.active {
+    background: var(--champagne-gradient);
+    border-color: var(--cognac-gold);
+    color: #000;
+}
+
+.payment-method.active .method-info h4,
+.payment-method.active .method-info p {
+    color: #000;
+}
+
+.method-icon {
+    font-size: 1.8rem;
+    min-width: 40px;
+    text-align: center;
+}
+
+.method-info h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: var(--text-champagne);
+}
+
+.method-info p {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+}
+
+/* ==================== PAYMENT FORM SECTIONS ==================== */
+.payment-form-section {
+    display: none;
+}
+
+.payment-form-section.active {
+    display: block;
+}
+
+/* ==================== BANK PAYMENT METHODS ==================== */
+.bank-payment-info,
+.digital-payment-info {
+    text-align: center;
+}
+
+.bank-payment-info h4,
+.digital-payment-info h4 {
+    font-size: 1.1rem;
+    color: var(--text-champagne);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.bank-methods,
+.digital-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.bank-method,
+.digital-method {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.5rem 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.bank-method:hover,
+.digital-method:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--cognac-gold);
+    transform: translateY(-2px);
+}
+
+.bank-method.selected,
+.digital-method.selected {
+    background: var(--champagne-gradient);
+    border-color: var(--cognac-gold);
+    color: #000;
+}
+
+.bank-method img,
+.digital-method img {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+}
+
+.bank-method span,
+.digital-method span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-champagne);
+    text-align: center;
+}
+
+.bank-method.selected span,
+.digital-method.selected span {
+    color: #000;
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 768px) {
+    .payment-methods {
+        grid-template-columns: 1fr;
+    }
+    
+    .bank-methods,
+    .digital-methods {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .payment-method {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.8rem;
+    }
+    
+    .method-icon {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .bank-methods,
+    .digital-methods {
+        grid-template-columns: 1fr;
+    }
+}
+/* ==================== CRYPTO PAYMENT STYLING ==================== */
+.crypto-payment-info h4 {
+    font-size: 1.1rem;
+    color: var(--text-champagne);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.crypto-info-box h5 {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.crypto-info-box ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.crypto-info-box li {
+    margin-bottom: 0.5rem;
+}
+
+.crypto-option {
+    transition: all 0.3s ease;
+}
+
+.crypto-option:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(247, 147, 26, 0.3);
+}
+
+.crypto-option.active {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(247, 147, 26, 0.4);
+}
+
+.crypto-option[data-crypto="eth"]:hover,
+.crypto-option[data-crypto="eth"].active {
+    box-shadow: 0 12px 30px rgba(98, 126, 234, 0.4);
+}
+
+.crypto-option[data-crypto="usdt"]:hover,
+.crypto-option[data-crypto="usdt"].active {
+    box-shadow: 0 12px 30px rgba(38, 161, 123, 0.4);
+}
+
+.crypto-note {
+    border-left: 3px solid var(--cognac-gold);
+}
+
+/* ==================== MOBILE CRYPTO STYLING ==================== */
+@media (max-width: 768px) {
+    .crypto-options {
+        grid-template-columns: 1fr !important;
+    }
+}

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OG Image Generator - BILLIONAIRS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* OG Image Container - Genau 1200x630px */
+        .og-image-container {
+            width: 1200px;
+            height: 630px;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0d0d0d 100%);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #E8B4A0;
+        }
+
+        /* Particles Background Effect */
+        .particles-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(232, 180, 160, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(232, 180, 160, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(232, 180, 160, 0.05) 0%, transparent 70%);
+        }
+
+        /* Decorative Lines */
+        .decorative-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+        }
+
+        .line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, #E8B4A0, transparent);
+            height: 1px;
+        }
+
+        .line-1 { top: 20%; width: 60%; left: 20%; }
+        .line-2 { top: 80%; width: 50%; left: 25%; }
+        .line-3 { top: 50%; width: 40%; left: 30%; opacity: 0.05; }
+
+        /* Content Container */
+        .content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px;
+            text-align: center;
+        }
+
+        /* Logo */
+        .logo {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 30px rgba(232, 180, 160, 0.3))
+                    drop-shadow(0 0 15px rgba(232, 180, 160, 0.2))
+                    drop-shadow(0 5px 20px rgba(0, 0, 0, 0.5));
+            animation: logoFloat 8s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+                filter: drop-shadow(0 0 30px rgba(232, 180, 160, 0.3))
+                        drop-shadow(0 0 15px rgba(232, 180, 160, 0.2))
+                        drop-shadow(0 5px 20px rgba(0, 0, 0, 0.5));
+            }
+            50% {
+                transform: translateY(-10px) scale(1.02);
+                filter: drop-shadow(0 0 50px rgba(232, 180, 160, 0.5))
+                        drop-shadow(0 0 25px rgba(232, 180, 160, 0.3))
+                        drop-shadow(0 10px 30px rgba(0, 0, 0, 0.6));
+            }
+        }
+
+        /* Exclusivity Badge */
+        .badge {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(232, 180, 160, 0.7);
+            margin-bottom: 30px;
+            border: 1px solid rgba(232, 180, 160, 0.3);
+            padding: 8px 24px;
+            border-radius: 30px;
+            background: rgba(232, 180, 160, 0.05);
+        }
+
+        /* Main Title */
+        .title {
+            font-size: 120px;
+            font-weight: 700;
+            letter-spacing: -4px;
+            color: #ffffff;
+            text-shadow: 
+                0 0 80px rgba(232, 180, 160, 0.3),
+                0 0 40px rgba(232, 180, 160, 0.2),
+                0 5px 20px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+
+        /* Divider */
+        .divider {
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #E8B4A0, transparent);
+            margin: 30px auto;
+            box-shadow: 0 0 20px rgba(232, 180, 160, 0.4);
+        }
+
+        /* Tagline */
+        .tagline {
+            font-size: 28px;
+            font-weight: 400;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .trust-icon {
+            font-size: 16px;
+            opacity: 0.7;
+        }
+
+        .separator {
+            color: rgba(232, 180, 160, 0.3);
+        }
+
+        /* Corner Decorations */
+        .corner-decoration {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 2px solid rgba(232, 180, 160, 0.2);
+        }
+
+        .corner-top-left {
+            top: 40px;
+            left: 40px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .corner-bottom-right {
+            bottom: 40px;
+            right: 40px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* Instructions */
+        .instructions {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            font-family: monospace;
+            font-size: 14px;
+            max-width: 350px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: #E8B4A0;
+        }
+
+        .instructions ol {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        .instructions code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #50C878;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- OG Image Container -->
+    <div class="og-image-container">
+        <!-- Particles Background -->
+        <div class="particles-bg"></div>
+
+        <!-- Decorative Lines -->
+        <div class="decorative-lines">
+            <div class="line line-1"></div>
+            <div class="line line-2"></div>
+            <div class="line line-3"></div>
+        </div>
+
+        <!-- Corner Decorations -->
+        <div class="corner-decoration corner-top-left"></div>
+        <div class="corner-decoration corner-bottom-right"></div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Logo -->
+            <img src="logo.png" alt="BILLIONAIRS Logo" class="logo">
+            
+            <div class="badge">LIMITED ACCESS</div>
+            
+            <h1 class="title">BILLIONAIRS</h1>
+            
+            <div class="divider"></div>
+            
+            <p class="tagline">
+                Beyond wealth. Beyond status.<br>
+                A moment outside of time.
+            </p>
+            
+            <div class="trust-badges">
+                <div class="trust-item">
+                    <span class="trust-icon">🔒</span>
+                    <span>Swiss Secured</span>
+                </div>
+                <span class="separator">·</span>
+                <div class="trust-item">
+                    <span class="trust-icon">✓</span>
+                    <span>Blockchain Verified</span>
+                </div>
+                <span class="separator">·</span>
+                <div class="trust-item">
+                    <span class="trust-icon">∞</span>
+                    <span>Exclusive</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="instructions">
+        <h3>📸 OG Image Screenshot Anleitung</h3>
+        <ol>
+            <li>Drücke <code>F11</code> für Fullscreen</li>
+            <li>Zoom auf <code>100%</code> (Strg+0)</li>
+            <li>Screenshot mit <code>Win+Shift+S</code></li>
+            <li>Wähle nur die 1200x630px Box aus</li>
+            <li>Speichere als <code>og-image.png</code></li>
+            <li>In <code>assets/images/</code> einfügen</li>
+        </ol>
+        <p style="margin-top: 15px; color: #E8B4A0;">
+            Oder nutze Browser DevTools → Screenshot Node (1200x630px)
+        </p>
+    </div>
+</body>
+</html>

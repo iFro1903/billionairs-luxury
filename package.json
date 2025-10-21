@@ -1,0 +1,38 @@
+{
+  "name": "billionaire-exclusive-timepiece",
+  "version": "1.0.0",
+  "description": "Exklusive Milliardärs-Website mit luxuriöser Uhr - 500.000 CHF Premium Experience",
+  "main": "index.html",
+  "scripts": {
+    "start": "node stripe-server.js",
+    "dev": "set NODE_ENV=development && node stripe-server.js",
+    "start:production": "set NODE_ENV=production && node stripe-server.js",
+    "test": "set NODE_ENV=development && node stripe-server.js",
+    "build": "echo Production build ready",
+    "pm2:start": "pm2 start stripe-server.js --name billionairs",
+    "pm2:stop": "pm2 stop billionairs",
+    "pm2:restart": "pm2 restart billionairs",
+    "pm2:logs": "pm2 logs billionairs"
+  },
+  "keywords": [
+    "luxury",
+    "billionaire",
+    "exclusive",
+    "timepiece",
+    "premium",
+    "switzerland"
+  ],
+  "author": "Luxury Digital Experiences",
+  "license": "Private",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "terser": "^5.44.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "luxon": "^3.4.4",
+    "moment-timezone": "^0.5.43",
+    "stripe": "^13.11.0"
+  }
+}
