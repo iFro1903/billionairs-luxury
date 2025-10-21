@@ -75,13 +75,13 @@ export default async function handler(req, res) {
             email,
             phone,
             company: company || 'N/A',
-            amount: '500,000 CHF',
+            amount: '500'000.00 CHF',
             timestamp: new Date().toISOString()
         });
 
         // Bank account details - Furkan Akaslan UBS Switzerland
         const bankDetails = {
-            amount: '500,000 CHF',
+            amount: '500'000.00 CHF',
             bankName: 'UBS Switzerland AG',
             accountHolder: 'Furkan Akaslan',
             iban: 'CH13 0022 7227 1418 9140 B',
@@ -470,7 +470,7 @@ export default async function handler(req, res) {
             
             <div class="hero-section">
                 <h2 class="hero-title">Wire Transfer Payment Instructions</h2>
-                <div class="hero-amount">CHF 500,000</div>
+                <div class="hero-amount">CHF 500'000.00</div>
                 <p class="hero-subtitle">Elite Membership Access</p>
             </div>
             
@@ -478,7 +478,7 @@ export default async function handler(req, res) {
                 <p class="greeting">Dear ${fullName},</p>
                 
                 <p class="intro-text">
-                    Thank you for choosing BILLIONAIRS LUXURY. We are pleased to provide you with the complete wire transfer details to secure your exclusive membership access valued at <strong style="color: #B76E79;">CHF 500,000</strong>.
+                    Thank you for choosing BILLIONAIRS LUXURY. We are pleased to provide you with the complete wire transfer details to secure your exclusive membership access valued at <strong style="color: #B76E79;">CHF 500'000.00</strong>.
                 </p>
                 
                 <div class="bank-details-section">
@@ -506,7 +506,7 @@ export default async function handler(req, res) {
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Transfer Amount</span>
-                        <span class="detail-value" style="color: #B76E79; font-size: 17px; font-weight: 700;">CHF 500,000</span>
+                        <span class="detail-value" style="color: #B76E79; font-size: 17px; font-weight: 700;">CHF 500'000.00</span>
                     </div>
                     
                     <div class="reference-box">
@@ -608,7 +608,7 @@ export default async function handler(req, res) {
         // Send email to customer
         const emailSent = await sendEmail(
             email,
-            '💎 BILLIONAIRS LUXURY - CHF 500,000 Wire Transfer Instructions',
+            '💎 BILLIONAIRS LUXURY - CHF 500'000.00 Wire Transfer Instructions',
             emailHTML
         );
 
