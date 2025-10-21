@@ -191,13 +191,13 @@ class StripePaymentProcessor {
                 border-radius: 16px;
                 max-width: 600px;
                 width: 100%;
-                border: 1px solid rgba(212, 175, 55, 0.3);
+                border: 1px solid rgba(232, 180, 160, 0.3);
                 box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
             ">
                 <h2 style="
                     font-family: 'Playfair Display', serif;
                     font-size: 2rem;
-                    color: #D4AF37;
+                    color: #E8B4A0;
                     margin-bottom: 1rem;
                     text-align: center;
                 ">Bank Wire Transfer Details</h2>
@@ -210,38 +210,38 @@ class StripePaymentProcessor {
                 ">Please use the following details to complete your wire transfer</p>
 
                 <div style="
-                    background: rgba(212, 175, 55, 0.05);
-                    border-left: 3px solid #D4AF37;
+                    background: rgba(232, 180, 160, 0.05);
+                    border-left: 3px solid #E8B4A0;
                     padding: 1.5rem;
                     border-radius: 8px;
                     margin-bottom: 1.5rem;
                 ">
                     <div style="margin-bottom: 1rem;">
-                        <strong style="color: #D4AF37;">Amount:</strong>
+                        <strong style="color: #E8B4A0;">Amount:</strong>
                         <span style="color: #ffffff; font-size: 1.2rem; margin-left: 1rem;">${bankDetails.amount}</span>
                     </div>
                     <div style="margin-bottom: 1rem;">
-                        <strong style="color: #D4AF37;">Bank Name:</strong>
+                        <strong style="color: #E8B4A0;">Bank Name:</strong>
                         <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem;">${bankDetails.bankName}</span>
                     </div>
                     <div style="margin-bottom: 1rem;">
-                        <strong style="color: #D4AF37;">Account Holder:</strong>
+                        <strong style="color: #E8B4A0;">Account Holder:</strong>
                         <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem;">${bankDetails.accountHolder}</span>
                     </div>
                     <div style="margin-bottom: 1rem;">
-                        <strong style="color: #D4AF37;">IBAN:</strong>
+                        <strong style="color: #E8B4A0;">IBAN:</strong>
                         <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem; font-family: monospace;">${bankDetails.iban}</span>
                     </div>
                     <div style="margin-bottom: 1rem;">
-                        <strong style="color: #D4AF37;">SWIFT/BIC:</strong>
+                        <strong style="color: #E8B4A0;">SWIFT/BIC:</strong>
                         <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem; font-family: monospace;">${bankDetails.swift}</span>
                     </div>
                     <div style="margin-bottom: 1rem;">
-                        <strong style="color: #D4AF37;">Reference:</strong>
+                        <strong style="color: #E8B4A0;">Reference:</strong>
                         <span style="color: #FF6B6B; margin-left: 1rem; font-weight: 700; font-family: monospace;">${bankDetails.reference}</span>
                     </div>
                     <div style="margin-bottom: 0;">
-                        <strong style="color: #D4AF37;">Bank Address:</strong>
+                        <strong style="color: #E8B4A0;">Bank Address:</strong>
                         <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem; font-size: 0.85rem;">${bankDetails.address}</span>
                     </div>
                 </div>
@@ -262,7 +262,7 @@ class StripePaymentProcessor {
                 <button onclick="this.parentElement.parentElement.remove()" style="
                     width: 100%;
                     padding: 1rem;
-                    background: #D4AF37;
+                    background: #E8B4A0;
                     color: #000000;
                     border: none;
                     border-radius: 8px;
@@ -271,7 +271,7 @@ class StripePaymentProcessor {
                     letter-spacing: 2px;
                     cursor: pointer;
                     transition: all 0.3s ease;
-                " onmouseover="this.style.background='#E8C55B'" onmouseout="this.style.background='#D4AF37'">
+                " onmouseover="this.style.background='#F5D4C1'" onmouseout="this.style.background='#E8B4A0'">
                     I HAVE NOTED THE DETAILS
                 </button>
 
@@ -488,18 +488,18 @@ class StripePaymentProcessor {
         modal.innerHTML = `
             <div style="
                 background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-                border: 2px solid #B76E79;
+                border: 2px solid #E8B4A0;
                 border-radius: 12px;
                 padding: 3rem;
                 max-width: 600px;
                 width: 100%;
                 position: relative;
-                box-shadow: 0 20px 60px rgba(183, 110, 121, 0.3);
+                box-shadow: 0 20px 60px rgba(232, 180, 160, 0.3);
             ">
                 <h2 style="
                     font-family: 'Playfair Display', serif;
                     font-size: 2rem;
-                    color: #B76E79;
+                    color: #E8B4A0;
                     text-align: center;
                     margin-bottom: 0.5rem;
                     font-weight: 700;
@@ -523,7 +523,7 @@ class StripePaymentProcessor {
                     <img src="${data.wallet.qrCode}" alt="QR Code" style="
                         width: 300px;
                         height: 300px;
-                        border: 4px solid #B76E79;
+                        border: 4px solid #E8B4A0;
                         border-radius: 12px;
                         display: block;
                         margin: 0 auto;
@@ -534,8 +534,8 @@ class StripePaymentProcessor {
                 </div>
 
                 <div style="
-                    background: rgba(183, 110, 121, 0.1);
-                    border: 2px dashed #B76E79;
+                    background: rgba(232, 180, 160, 0.1);
+                    border: 2px dashed #E8B4A0;
                     border-radius: 8px;
                     padding: 1rem;
                     margin: 1.5rem 0;
@@ -549,7 +549,7 @@ class StripePaymentProcessor {
                         margin-bottom: 0.5rem;
                     ">Wallet Address</p>
                     <p style="
-                        color: #B76E79;
+                        color: #E8B4A0;
                         font-family: 'Courier New', monospace;
                         font-size: 0.85rem;
                         font-weight: 700;
@@ -564,13 +564,13 @@ class StripePaymentProcessor {
                     padding: 1.5rem;
                     margin: 1.5rem 0;
                 ">
-                    <div style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid rgba(183, 110, 121, 0.2);">
+                    <div style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid rgba(232, 180, 160, 0.2);">
                         <span style="color: rgba(255, 255, 255, 0.6); font-size: 0.85rem;">Network</span>
                         <span style="color: #ffffff; font-weight: 600; font-size: 0.85rem;">${data.wallet.network}</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid rgba(183, 110, 121, 0.2);">
+                    <div style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid rgba(232, 180, 160, 0.2);">
                         <span style="color: rgba(255, 255, 255, 0.6); font-size: 0.85rem;">Amount (CHF)</span>
-                        <span style="color: #B76E79; font-weight: 700; font-size: 0.9rem;">${data.amount.chf}</span>
+                        <span style="color: #E8B4A0; font-weight: 700; font-size: 0.9rem;">${data.amount.chf}</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; padding: 0.75rem 0;">
                         <span style="color: rgba(255, 255, 255, 0.6); font-size: 0.85rem;">Reference</span>
@@ -614,8 +614,8 @@ class StripePaymentProcessor {
                 " style="
                     width: 100%;
                     padding: 1rem 2rem;
-                    background: linear-gradient(135deg, #B76E79 0%, #9A5A64 100%);
-                    color: #ffffff;
+                    background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%);
+                    color: rgba(0,0,0,0.9);
                     border: none;
                     border-radius: 6px;
                     font-weight: 700;
@@ -624,7 +624,7 @@ class StripePaymentProcessor {
                     cursor: pointer;
                     transition: all 0.3s ease;
                     margin-top: 1rem;
-                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 30px rgba(183, 110, 121, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 30px rgba(232, 180, 160, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
                     I HAVE NOTED THE DETAILS
                 </button>
 
