@@ -147,23 +147,27 @@ export default async function handler(req, res) {
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path fill="%23ffffff" fill-opacity="0.05" d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25"/></svg>') no-repeat bottom;
             background-size: cover;
         }
-        .logo {
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .logo-image {
+            width: 100px;
+            height: auto;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+        }
+        .logo-text {
             font-family: 'Playfair Display', serif;
-            font-size: 42px;
+            font-size: 38px;
             font-weight: 700;
             color: #0a0a0a;
             letter-spacing: 6px;
             margin: 0;
             text-transform: uppercase;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
-        .logo-icon {
-            font-size: 36px;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
         }
         .header-subtitle {
             font-family: 'Montserrat', sans-serif;
@@ -441,7 +445,8 @@ export default async function handler(req, res) {
             .email-wrapper { padding: 20px 10px; }
             .container { border-radius: 0; }
             .header { padding: 35px 20px; }
-            .logo { font-size: 32px; letter-spacing: 4px; }
+            .logo-image { width: 70px; }
+            .logo-text { font-size: 28px; letter-spacing: 4px; }
             .hero-section { padding: 35px 20px; }
             .hero-title { font-size: 24px; }
             .hero-amount { font-size: 42px; }
@@ -456,10 +461,10 @@ export default async function handler(req, res) {
     <div class="email-wrapper">
         <div class="container">
             <div class="header">
-                <h1 class="logo">
-                    <span class="logo-icon">💎</span>
-                    <span>BILLIONAIRS</span>
-                </h1>
+                <div class="logo-container">
+                    <img src="https://billionairs-luxury.vercel.app/assets/images/logo.png" alt="BILLIONAIRS" class="logo-image">
+                    <h1 class="logo-text">BILLIONAIRS</h1>
+                </div>
                 <p class="header-subtitle">Exclusive Luxury Network</p>
             </div>
             
