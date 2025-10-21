@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BILLIONAIRS - Member Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        .dashboard-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(183, 110, 121, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .dashboard-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .dashboard-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #B76E79;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .dashboard-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.6);
+            font-weight: 300;
+        }
+
+        .member-card {
+            background: linear-gradient(135deg, rgba(183, 110, 121, 0.1) 0%, rgba(26, 26, 26, 0.8) 100%);
+            border: 2px solid rgba(183, 110, 121, 0.3);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .member-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: #B76E79;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .status-pending {
+            background: rgba(212, 175, 55, 0.2);
+            color: #D4AF37;
+            border: 1px solid #D4AF37;
+        }
+
+        .status-paid {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+        }
+
+        .reveal-section {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .reveal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #B76E79;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .reveal-description {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .download-button {
+            display: inline-block;
+            padding: 1.5rem 4rem;
+            background: linear-gradient(135deg, #B76E79 0%, #8B5A6B 100%);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(183, 110, 121, 0.3);
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(183, 110, 121, 0.5);
+        }
+
+        .pending-message {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .pending-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .pending-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .logout-button {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            padding: 0.8rem 2rem;
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <button class="logout-button" onclick="handleLogout()">Logout</button>
+
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Member Dashboard</h1>
+                <p class="dashboard-subtitle">Welcome to the Elite</p>
+            </div>
+
+            <div class="member-card">
+                <div class="member-info">
+                    <div class="info-item">
+                        <div class="info-label">Member ID</div>
+                        <div class="info-value" id="memberId">—</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Email</div>
+                        <div class="info-value" id="memberEmail">—</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Status</div>
+                        <div id="statusContainer">—</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shown when payment is pending -->
+            <div id="pendingSection" style="display: none;">
+                <div class="pending-message">
+                    <div class="pending-icon">⏳</div>
+                    <div class="pending-text">
+                        <strong>Payment Pending</strong><br><br>
+                        Complete your payment to unlock exclusive access.<br>
+                        The revelation awaits...
+                    </div>
+                    <button class="download-button" onclick="window.location.href='/'">Complete Payment</button>
+                </div>
+            </div>
+
+            <!-- Shown when payment is confirmed -->
+            <div id="revealSection" style="display: none;">
+                <div class="reveal-section">
+                    <h2 class="reveal-title">THE SECRET IS REVEALED</h2>
+                    <p class="reveal-description">
+                        Congratulations. You have gained access to what few will ever see.<br>
+                        <strong>TIME IS WEALTH</strong> — A digital masterpiece, exclusive to the elite.<br><br>
+                        Download your exclusive timepiece now.
+                    </p>
+                    <a href="#" class="download-button" onclick="handleDownload(event)">
+                        ⬇ DOWNLOAD YOUR EXCLUSIVE ACCESS
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/auth.js"></script>
+    <script>
+        // Check authentication on page load
+        async function initDashboard() {
+            const isValid = await window.authManager.verifySession();
+            
+            if (!isValid) {
+                alert('Please login first');
+                window.location.href = '/login.html';
+                return;
+            }
+
+            const user = window.authManager.getUser();
+            
+            // Display user info
+            document.getElementById('memberId').textContent = user.memberId;
+            document.getElementById('memberEmail').textContent = user.email;
+            
+            // Display status
+            const statusContainer = document.getElementById('statusContainer');
+            if (user.paymentStatus === 'paid') {
+                statusContainer.innerHTML = '<span class="status-badge status-paid">✓ Access Granted</span>';
+                document.getElementById('revealSection').style.display = 'block';
+            } else {
+                statusContainer.innerHTML = '<span class="status-badge status-pending">⏳ Pending Payment</span>';
+                document.getElementById('pendingSection').style.display = 'block';
+            }
+        }
+
+        async function handleLogout() {
+            await window.authManager.logout();
+            window.location.href = '/';
+        }
+
+        function handleDownload(event) {
+            event.preventDefault();
+            
+            // Check if user has paid
+            if (!window.authManager.hasPaid()) {
+                alert('Payment required to download');
+                return;
+            }
+
+            // TODO: Replace with actual download link
+            alert('Download feature coming soon!\n\nYour exclusive "TIME IS WEALTH" timepiece will be available here.');
+            
+            // In production, this would trigger the actual download:
+            // window.location.href = '/api/download?token=' + window.authManager.token;
+        }
+
+        // Initialize dashboard
+        initDashboard();
+    </script>
+</body>
+</html>

@@ -2544,3 +2544,27 @@ input::placeholder {
         transform: translateY(0);
     }
 }
+
+/* ===== NAVIGATION & MEMBER LOGIN STYLES ===== */
+.nav-member {
+    padding: 0.8rem 1.8rem;
+    background: linear-gradient(135deg, rgba(183, 110, 121, 0.2) 0%, rgba(139, 90, 107, 0.3) 100%);
+    border: 1px solid rgba(183, 110, 121, 0.4);
+    border-radius: 50px;
+    color: rgba(255,255,255,0.9);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+}
+
+.nav-member:hover {
+    background: linear-gradient(135deg, rgba(183, 110, 121, 0.3) 0%, rgba(139, 90, 107, 0.4) 100%);
+    border-color: rgba(183, 110, 121, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(183, 110, 121, 0.3);
+}
