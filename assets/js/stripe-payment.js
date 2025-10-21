@@ -594,7 +594,24 @@ class StripePaymentProcessor {
                     </ul>
                 </div>
 
-                <button onclick="this.parentElement.parentElement.remove()" style="
+                <button onclick="
+                    console.log('🧹 Cleaning up crypto wallet modal');
+                    // Reset processing flag
+                    if (window.stripeProcessor) {
+                        window.stripeProcessor.isProcessing = false;
+                        console.log('✅ Reset isProcessing flag');
+                    }
+                    // Remove this modal
+                    this.parentElement.parentElement.remove();
+                    // Clean up any other fixed modals that might be stuck
+                    document.querySelectorAll('body > div').forEach(modal => {
+                        if (modal.style.position === 'fixed' && modal.style.zIndex === '10000') {
+                            console.log('🗑️ Removing stray modal:', modal);
+                            modal.remove();
+                        }
+                    });
+                    console.log('✅ Cleanup complete - ready for next selection');
+                " style="
                     width: 100%;
                     padding: 1rem 2rem;
                     background: linear-gradient(135deg, #B76E79 0%, #9A5A64 100%);
