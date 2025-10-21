@@ -104,7 +104,7 @@ export default async function handler(req, res) {
             },
             ethereum: {
                 name: 'Ethereum (ETH)',
-                symbol: 'Ξ',
+                symbol: '<svg width="60" height="60" viewBox="0 0 784 1277" xmlns="http://www.w3.org/2000/svg"><g fill="#B76E79" fill-rule="evenodd"><path d="M392 0l-8.7 29.6v844.5l8.7 8.7 392-231.7z" opacity=".6"/><path d="M392 0L0 651.1l392 231.7V0z"/><path d="M392 956.7l-4.9 6v301.3l4.9 14.3L784 733z" opacity=".6"/><path d="M392 1278.3V956.7L0 733z"/><path d="M392 882.8l392-231.7-392-178.2z" opacity=".2"/><path d="M0 651.1l392 231.7V472.9z" opacity=".6"/></g></svg>',
                 address: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb',
                 network: 'Ethereum Mainnet (ERC-20)',
                 qrCode: 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=ethereum:0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb'
@@ -221,6 +221,14 @@ export default async function handler(req, res) {
             color: #B76E79;
             font-size: 60px;
             margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70px;
+        }
+        
+        .crypto-symbol svg {
+            filter: drop-shadow(0 0 20px rgba(183, 110, 121, 0.5));
         }
         
         .content {
