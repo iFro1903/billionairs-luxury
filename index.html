@@ -556,9 +556,14 @@
                         const phone = phoneEl.value.trim();
                         const company = companyEl ? companyEl.value.trim() : '';
                         
-                        // Validate required fields
-                        if (!fullName || !email || !phone) {
-                            alert('Please fill in all required fields (Name, Email, Phone) before selecting cryptocurrency');
+                        // Validate required fields with specific error messages
+                        const missingFields = [];
+                        if (!fullName) missingFields.push('Name');
+                        if (!email) missingFields.push('Email');
+                        if (!phone) missingFields.push('Phone');
+                        
+                        if (missingFields.length > 0) {
+                            alert(`Please fill in the following fields: ${missingFields.join(', ')}\n\nMake sure you scroll up and fill in ALL the form fields at the top of the payment section.`);
                             // Close modal
                             const modals = document.querySelectorAll('body > div');
                             modals.forEach(modal => {
@@ -566,6 +571,10 @@
                                     modal.remove();
                                 }
                             });
+                            // Scroll to the form fields
+                            if (fullNameEl) {
+                                fullNameEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
                             return;
                         }
                         
