@@ -377,6 +377,218 @@ class StripePaymentProcessor {
         this.showPaymentSuccess();
     }
 
+    async createCryptoPaymentRequest(cryptocurrency) {
+        if (this.isProcessing) {
+            console.log('Request already in progress...');
+            return;
+        }
+
+        // Get customer information from form
+        const fullName = document.getElementById('customerName')?.value?.trim();
+        const email = document.getElementById('customerEmail')?.value?.trim();
+        const phone = document.getElementById('customerPhone')?.value?.trim();
+        const company = document.getElementById('customerCompany')?.value?.trim();
+
+        // Validate required fields
+        if (!fullName || !email || !phone) {
+            alert('Please fill in all required fields (Name, Email, Phone)');
+            return;
+        }
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('Please enter a valid email address');
+            return;
+        }
+
+        this.isProcessing = true;
+
+        try {
+            console.log('🪙 Creating crypto payment request:', { fullName, email, phone, cryptocurrency });
+
+            const response = await fetch('/api/crypto-payment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    fullName,
+                    email,
+                    phone,
+                    company,
+                    cryptocurrency
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to create crypto payment request');
+            }
+
+            const data = await response.json();
+            console.log('✅ Crypto payment request created:', data);
+
+            // Show crypto wallet modal
+            this.showCryptoWalletModal(data);
+
+        } catch (error) {
+            console.error('Crypto payment error:', error);
+            alert('Failed to create crypto payment request. Please try again.');
+        } finally {
+            this.isProcessing = false;
+        }
+    }
+
+    showCryptoWalletModal(data) {
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-y: auto;
+        `;
+
+        modal.innerHTML = `
+            <div style="
+                background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+                border: 2px solid #B76E79;
+                border-radius: 12px;
+                padding: 3rem;
+                max-width: 600px;
+                width: 100%;
+                position: relative;
+                box-shadow: 0 20px 60px rgba(183, 110, 121, 0.3);
+            ">
+                <h2 style="
+                    font-family: 'Playfair Display', serif;
+                    font-size: 2rem;
+                    color: #B76E79;
+                    text-align: center;
+                    margin-bottom: 0.5rem;
+                    font-weight: 700;
+                ">${data.wallet.symbol} ${data.cryptocurrency} Payment</h2>
+                
+                <p style="
+                    text-align: center;
+                    color: rgba(255, 255, 255, 0.7);
+                    font-size: 0.9rem;
+                    margin-bottom: 2rem;
+                ">CHF 500'000.00</p>
+
+                <div style="
+                    text-align: center;
+                    margin: 2rem 0;
+                    padding: 2rem;
+                    background: rgba(255, 255, 255, 0.95);
+                    border-radius: 8px;
+                ">
+                    <img src="${data.wallet.qrCode}" alt="QR Code" style="
+                        width: 250px;
+                        height: 250px;
+                        border: 3px solid #B76E79;
+                        border-radius: 8px;
+                    ">
+                </div>
+
+                <div style="
+                    background: rgba(183, 110, 121, 0.1);
+                    border: 2px dashed #B76E79;
+                    border-radius: 8px;
+                    padding: 1rem;
+                    margin: 1.5rem 0;
+                    text-align: center;
+                ">
+                    <p style="
+                        color: rgba(255, 255, 255, 0.7);
+                        font-size: 0.75rem;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        margin-bottom: 0.5rem;
+                    ">Wallet Address</p>
+                    <p style="
+                        color: #B76E79;
+                        font-family: 'Courier New', monospace;
+                        font-size: 0.85rem;
+                        font-weight: 700;
+                        word-break: break-all;
+                        letter-spacing: 0.5px;
+                    ">${data.wallet.address}</p>
+                </div>
+
+                <div style="
+                    background: rgba(0, 0, 0, 0.3);
+                    border-radius: 8px;
+                    padding: 1.5rem;
+                    margin: 1.5rem 0;
+                ">
+                    <div style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid rgba(183, 110, 121, 0.2);">
+                        <span style="color: rgba(255, 255, 255, 0.6); font-size: 0.85rem;">Network</span>
+                        <span style="color: #ffffff; font-weight: 600; font-size: 0.85rem;">${data.wallet.network}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid rgba(183, 110, 121, 0.2);">
+                        <span style="color: rgba(255, 255, 255, 0.6); font-size: 0.85rem;">Amount (CHF)</span>
+                        <span style="color: #B76E79; font-weight: 700; font-size: 0.9rem;">${data.amount.chf}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 0.75rem 0;">
+                        <span style="color: rgba(255, 255, 255, 0.6); font-size: 0.85rem;">Reference</span>
+                        <span style="color: #ffffff; font-weight: 600; font-size: 0.85rem;">${data.reference}</span>
+                    </div>
+                </div>
+
+                <div style="
+                    background: rgba(255, 59, 48, 0.1);
+                    border-left: 4px solid #FF3B30;
+                    padding: 1rem;
+                    margin: 1.5rem 0;
+                    border-radius: 4px;
+                ">
+                    <p style="color: #FF3B30; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.5rem;">⚠️ IMPORTANT</p>
+                    <ul style="color: rgba(255, 255, 255, 0.8); font-size: 0.8rem; line-height: 1.6; margin: 0; padding-left: 1.5rem;">
+                        <li>Double-check the wallet address</li>
+                        <li>Only use ${data.wallet.network} network</li>
+                        <li>Transactions are irreversible</li>
+                        <li>Email us the transaction hash</li>
+                    </ul>
+                </div>
+
+                <button onclick="this.parentElement.parentElement.remove()" style="
+                    width: 100%;
+                    padding: 1rem 2rem;
+                    background: linear-gradient(135deg, #B76E79 0%, #9A5A64 100%);
+                    color: #ffffff;
+                    border: none;
+                    border-radius: 6px;
+                    font-weight: 700;
+                    font-size: 0.9rem;
+                    letter-spacing: 2px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    margin-top: 1rem;
+                " onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 30px rgba(183, 110, 121, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                    I HAVE NOTED THE DETAILS
+                </button>
+
+                <p style="
+                    text-align: center;
+                    color: rgba(255, 255, 255, 0.5);
+                    font-size: 0.75rem;
+                    margin-top: 1rem;
+                ">These details have also been sent to your email address</p>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+    }
+
     showPaymentSuccess() {
         // Create success overlay
         const successOverlay = document.createElement('div');
