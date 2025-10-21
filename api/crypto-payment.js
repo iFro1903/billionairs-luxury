@@ -93,28 +93,28 @@ export default async function handler(req, res) {
             timestamp: new Date().toISOString()
         });
 
-        // Crypto wallet addresses (REPLACE WITH YOUR REAL WALLETS!)
+        // Crypto wallet addresses - PRODUCTION WALLETS
         const wallets = {
             bitcoin: {
                 name: 'Bitcoin (BTC)',
                 symbol: '<svg width="60" height="60" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><circle cx="16" cy="16" r="16" fill="#B76E79"/><path fill="#FFF" fill-rule="nonzero" d="M23.189 14.02c.314-2.096-1.283-3.223-3.465-3.975l.708-2.84-1.728-.43-.69 2.765c-.454-.114-.92-.22-1.385-.326l.695-2.783L15.596 6l-.708 2.839c-.376-.086-.746-.17-1.104-.26l.002-.009-2.384-.595-.46 1.846s1.283.294 1.256.312c.7.175.826.638.805 1.006l-.806 3.235c.048.012.11.03.18.057l-.183-.045-1.13 4.532c-.086.212-.303.531-.793.41.018.025-1.256-.313-1.256-.313l-.858 1.978 2.25.561c.418.105.828.215 1.231.318l-.715 2.872 1.727.43.708-2.84c.472.127.93.245 1.378.357l-.706 2.828 1.728.43.715-2.866c2.948.558 5.164.333 6.097-2.333.752-2.146-.037-3.385-1.588-4.192 1.13-.26 1.98-1.003 2.207-2.538zm-3.95 5.538c-.533 2.147-4.148.986-5.32.695l.95-3.805c1.172.293 4.929.872 4.37 3.11zm.535-5.569c-.487 1.953-3.495.96-4.47.717l.86-3.45c.975.243 4.118.696 3.61 2.733z"/></g></svg>',
-                address: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
+                address: 'bc1qtwtlvm7r80hurly2aagcs3tk5x82chhhplxtsv',
                 network: 'Bitcoin Mainnet',
-                qrCode: 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=bitcoin:1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa?amount=500000'
+                qrCode: 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=bitcoin:bc1qtwtlvm7r80hurly2aagcs3tk5x82chhhplxtsv'
             },
             ethereum: {
                 name: 'Ethereum (ETH)',
                 symbol: '<svg width="60" height="60" viewBox="0 0 784 1277" xmlns="http://www.w3.org/2000/svg"><g fill="#B76E79" fill-rule="evenodd"><path d="M392 0l-8.7 29.6v844.5l8.7 8.7 392-231.7z" opacity=".6"/><path d="M392 0L0 651.1l392 231.7V0z"/><path d="M392 956.7l-4.9 6v301.3l4.9 14.3L784 733z" opacity=".6"/><path d="M392 1278.3V956.7L0 733z"/><path d="M392 882.8l392-231.7-392-178.2z" opacity=".2"/><path d="M0 651.1l392 231.7V472.9z" opacity=".6"/></g></svg>',
-                address: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb',
+                address: '0x39fEaB8AC5e9f322d43CD46DDd2c5d570aCF903E',
                 network: 'Ethereum Mainnet (ERC-20)',
-                qrCode: 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=ethereum:0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb'
+                qrCode: 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=ethereum:0x39fEaB8AC5e9f322d43CD46DDd2c5d570aCF903E'
             },
             usdt: {
                 name: 'Tether (USDT)',
                 symbol: '<svg width="60" height="60" viewBox="0 0 339.43 295.27" xmlns="http://www.w3.org/2000/svg"><path fill="#B76E79" d="M62.15 1.45l-61.89 130a2.52 2.52 0 0 0 .54 2.94l167.15 160.17a2.55 2.55 0 0 0 3.53 0L338.63 134.4a2.52 2.52 0 0 0 .54-2.94l-61.89-130A2.5 2.5 0 0 0 275 0H64.45a2.5 2.5 0 0 0-2.3 1.45z"/><path fill="#fff" d="M191.19 144.8v0c-1.2.09-7.4.46-21.23.46-11 0-18.81-.33-21.55-.46v0c-42.51-1.87-74.24-9.27-74.24-18.13s31.73-16.25 74.24-18.15v28.91c2.78.2 10.74.67 21.74.67 13.2 0 19.81-.55 21-0.66v-28.9c42.42 1.89 74.08 9.29 74.08 18.13s-31.65 16.24-74.08 18.12zm0-39.25V79.68h59.2V40.23H89.21v39.45H148.4v25.86c-48.11 2.21-84.29 11.74-84.29 23.16s36.18 20.94 84.29 23.16v82.9h42.78v-82.93c48-2.21 84.12-11.73 84.12-23.14s-36.09-20.93-84.12-23.15z"/></svg>',
-                address: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb',
+                address: '0x39fEaB8AC5e9f322d43CD46DDd2c5d570aCF903E',
                 network: 'Ethereum (ERC-20) / Tron (TRC-20)',
-                qrCode: 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb'
+                qrCode: 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=0x39fEaB8AC5e9f322d43CD46DDd2c5d570aCF903E'
             }
         };
 
