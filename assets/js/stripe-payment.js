@@ -113,7 +113,7 @@ class StripePaymentProcessor {
             
             // Reset after 3 seconds
             setTimeout(() => {
-                paymentButton.innerHTML = 'SECURE PAYMENT - 500,000 CHF';
+                paymentButton.innerHTML = '<span class="button-text">SECURE PAYMENT</span>';
                 paymentButton.classList.remove('error-state');
             }, 3000);
         }
