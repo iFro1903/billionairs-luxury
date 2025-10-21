@@ -133,19 +133,43 @@
         .form-input {
             width: 100%;
             padding: 1rem;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.3) !important;
             border: 1px solid rgba(232, 180, 160, 0.2);
             border-radius: 8px;
-            color: white;
+            color: white !important;
             font-family: 'Montserrat', sans-serif;
             font-size: 1rem;
             transition: all 0.3s ease;
+            -webkit-text-fill-color: white !important;
         }
 
         .form-input:focus {
             outline: none;
             border-color: #E8B4A0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.5) !important;
+        }
+
+        /* Override browser autofill styles -强力版本 */
+        .form-input:-webkit-autofill,
+        .form-input:-webkit-autofill:hover,
+        .form-input:-webkit-autofill:focus,
+        .form-input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5) inset !important;
+            -webkit-text-fill-color: white !important;
+            border: 1px solid rgba(232, 180, 160, 0.2) !important;
+            caret-color: white !important;
+            background-color: rgba(0, 0, 0, 0.5) !important;
+            background-image: none !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+        
+        input:-webkit-autofill::first-line {
+            color: white !important;
+            font-family: 'Montserrat', sans-serif !important;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.3) !important;
         }
 
         .submit-button {

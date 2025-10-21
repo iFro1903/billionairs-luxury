@@ -25,20 +25,21 @@
 .form-group input[type="password"] {
     width: 100%;
     padding: 1rem;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.3) !important;
     border: 1px solid rgba(232, 180, 160, 0.2);
     border-radius: 8px;
-    color: white;
+    color: white !important;
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
     transition: all 0.3s ease;
+    -webkit-text-fill-color: white !important;
 }
 
 .form-group input[type="text"]::placeholder,
 .form-group input[type="email"]::placeholder,
 .form-group input[type="tel"]::placeholder,
 .form-group input[type="password"]::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.3) !important;
 }
 
 .form-group input[type="text"]:focus,
@@ -47,8 +48,27 @@
 .form-group input[type="password"]:focus {
     outline: none;
     border-color: var(--rose-gold-primary);
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.5) !important;
     box-shadow: 0 0 20px rgba(232, 180, 160, 0.1);
+}
+
+/* Override browser autofill styles for payment form - STRONG VERSION */
+.form-group input:-webkit-autofill,
+.form-group input:-webkit-autofill:hover,
+.form-group input:-webkit-autofill:focus,
+.form-group input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5) inset !important;
+    -webkit-text-fill-color: white !important;
+    border: 1px solid rgba(232, 180, 160, 0.2) !important;
+    caret-color: white !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    background-image: none !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.form-group input:-webkit-autofill::first-line {
+    color: white !important;
+    font-family: 'Montserrat', sans-serif !important;
 }
 
 .payment-method-title {

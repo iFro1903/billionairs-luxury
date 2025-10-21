@@ -1433,25 +1433,45 @@ label {
 input {
     width: 100%;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(232, 180, 160, 0.3);
+    /* Dark, transparent background to match payment/login design */
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(232, 180, 160, 0.25);
     border-radius: 8px;
     color: var(--text-platinum);
     font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 input:focus {
     outline: none;
     border-color: rgba(232, 180, 160, 0.6);
-    box-shadow: 0 0 20px rgba(232, 180, 160, 0.2);
-    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 18px rgba(232, 180, 160, 0.12);
+    background: rgba(0, 0, 0, 0.5);
 }
 
 input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.35);
     font-size: 0.9rem;
+}
+
+/* Override browser autofill completely - dark background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5) inset !important;
+    -webkit-text-fill-color: white !important;
+    border: 1px solid rgba(232, 180, 160, 0.25) !important;
+    caret-color: white !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    background-image: none !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+input:-webkit-autofill::first-line {
+    color: white !important;
+    font-family: 'Montserrat', sans-serif !important;
 }
 
 .payment-button {
