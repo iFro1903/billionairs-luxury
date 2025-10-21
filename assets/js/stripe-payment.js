@@ -417,6 +417,19 @@ class StripePaymentProcessor {
             return;
         }
 
+        await this.createCryptoPaymentRequestWithData(cryptocurrency, { fullName, email, phone, company });
+    }
+
+    async createCryptoPaymentRequestWithData(cryptocurrency, customerData) {
+        if (this.isProcessing) {
+            console.log('Request already in progress...');
+            return;
+        }
+
+        const { fullName, email, phone, company } = customerData;
+
+        console.log('✅ Creating crypto payment with validated data:', { fullName, email, phone, cryptocurrency });
+
         this.isProcessing = true;
 
         try {

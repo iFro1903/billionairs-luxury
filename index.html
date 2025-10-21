@@ -524,6 +524,55 @@
 
                     // Handle crypto currency selection
                     window.selectCrypto = function(cryptocurrency) {
+                        console.log('🪙 selectCrypto called with:', cryptocurrency);
+                        
+                        // GET AND VALIDATE FORM FIELDS HERE (not in stripe-payment.js)
+                        const fullNameEl = document.getElementById('customerName');
+                        const emailEl = document.getElementById('customerEmail');
+                        const phoneEl = document.getElementById('customerPhone');
+                        const companyEl = document.getElementById('customerCompany');
+                        
+                        console.log('🔍 Reading form fields:', {
+                            fullNameEl: fullNameEl,
+                            emailEl: emailEl,
+                            phoneEl: phoneEl,
+                            fullNameValue: fullNameEl ? fullNameEl.value : 'ELEMENT NOT FOUND',
+                            emailValue: emailEl ? emailEl.value : 'ELEMENT NOT FOUND',
+                            phoneValue: phoneEl ? phoneEl.value : 'ELEMENT NOT FOUND'
+                        });
+                        
+                        if (!fullNameEl || !emailEl || !phoneEl) {
+                            alert('Error: Form fields not found! Please refresh the page.');
+                            return;
+                        }
+                        
+                        const fullName = fullNameEl.value.trim();
+                        const email = emailEl.value.trim();
+                        const phone = phoneEl.value.trim();
+                        const company = companyEl ? companyEl.value.trim() : '';
+                        
+                        // Validate required fields
+                        if (!fullName || !email || !phone) {
+                            alert('Please fill in all required fields (Name, Email, Phone) before selecting cryptocurrency');
+                            // Close modal
+                            const modals = document.querySelectorAll('body > div');
+                            modals.forEach(modal => {
+                                if (modal.innerHTML.includes('Select Cryptocurrency')) {
+                                    modal.remove();
+                                }
+                            });
+                            return;
+                        }
+                        
+                        // Validate email format
+                        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailRegex.test(email)) {
+                            alert('Please enter a valid email address');
+                            return;
+                        }
+                        
+                        console.log('✅ Validation passed:', { fullName, email, phone, cryptocurrency });
+                        
                         // Close the selection modal
                         const modals = document.querySelectorAll('body > div');
                         modals.forEach(modal => {
@@ -532,9 +581,15 @@
                             }
                         });
 
-                        // Call the crypto payment function
+                        // Call the crypto payment function WITH the validated data
                         if (window.stripeProcessor) {
-                            window.stripeProcessor.createCryptoPaymentRequest(cryptocurrency);
+                            // Pass the data directly to avoid reading fields again
+                            window.stripeProcessor.createCryptoPaymentRequestWithData(cryptocurrency, {
+                                fullName,
+                                email,
+                                phone,
+                                company
+                            });
                         } else {
                             console.error('❌ Stripe processor not initialized');
                             alert('Payment system initializing. Please try again in a moment.');
