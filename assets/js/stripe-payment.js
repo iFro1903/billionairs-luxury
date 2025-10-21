@@ -259,7 +259,7 @@ class StripePaymentProcessor {
                     `).join('')}
                 </div>
 
-                <button onclick="this.parentElement.parentElement.remove()" style="
+                <button onclick="window.location.href = '/create-account.html'" style="
                     width: 100%;
                     padding: 1rem;
                     background: #E8B4A0;
@@ -595,22 +595,14 @@ class StripePaymentProcessor {
                 </div>
 
                 <button onclick="
-                    console.log('🧹 Cleaning up crypto wallet modal');
+                    console.log('🧹 Crypto payment noted - redirecting to account setup');
                     // Reset processing flag
                     if (window.stripeProcessor) {
                         window.stripeProcessor.isProcessing = false;
                         console.log('✅ Reset isProcessing flag');
                     }
-                    // Remove this modal
-                    this.parentElement.parentElement.remove();
-                    // Clean up any other fixed modals that might be stuck
-                    document.querySelectorAll('body > div').forEach(modal => {
-                        if (modal.style.position === 'fixed' && modal.style.zIndex === '10000') {
-                            console.log('🗑️ Removing stray modal:', modal);
-                            modal.remove();
-                        }
-                    });
-                    console.log('✅ Cleanup complete - ready for next selection');
+                    // Redirect to account creation
+                    window.location.href = '/create-account.html';
                 " style="
                     width: 100%;
                     padding: 1rem 2rem;
@@ -651,19 +643,16 @@ class StripePaymentProcessor {
                 <p>Welcome to BILLIONAIRS</p>
                 <p>Your exclusive access has been activated.</p>
                 <div class="success-divider"></div>
-                <p class="success-note">You will receive confirmation shortly.</p>
+                <p class="success-note">Redirecting to account setup...</p>
             </div>
         `;
         
         document.body.appendChild(successOverlay);
         
-        // Proceed to timepiece section after animation
+        // Redirect to account creation page after animation
         setTimeout(() => {
-            successOverlay.remove();
-            if (typeof showTimepiece === 'function') {
-                showTimepiece();
-            }
-        }, 4000);
+            window.location.href = '/create-account.html';
+        }, 3000);
     }
 }
 
