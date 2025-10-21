@@ -360,7 +360,7 @@
                     </form>
                     
                     <script>
-                    function handleStripeCheckout() {
+                    window.handleStripeCheckout = function() {
                         // Get selected payment method - check for both 'active' and 'selected' class
                         const selectedMethod = document.querySelector('.payment-method.active, .payment-method.selected');
                         if (!selectedMethod) {
@@ -394,10 +394,10 @@
                         } else {
                             alert(`${methodType.toUpperCase()} payment coming soon! Use Credit Card or Wire Transfer for now.`);
                         }
-                    }
+                    };
 
                     // Crypto currency selection modal
-                    function showCryptoSelectionModal() {
+                    window.showCryptoSelectionModal = function() {
                         const modal = document.createElement('div');
                         modal.style.cssText = `
                             position: fixed;
@@ -520,7 +520,7 @@
                         `;
 
                         document.body.appendChild(modal);
-                    }
+                    };
 
                     // Handle crypto currency selection
                     window.selectCrypto = function(cryptocurrency) {
