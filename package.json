@@ -1,8 +1,11 @@
 {
   "name": "billionaire-exclusive-timepiece",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Exklusive Milliardärs-Website mit luxuriöser Uhr - 500.000 CHF Premium Experience",
   "main": "index.html",
+  "engines": {
+    "node": ">=18.x"
+  },
   "scripts": {
     "start": "node stripe-server.js",
     "dev": "nodemon stripe-server.js",
