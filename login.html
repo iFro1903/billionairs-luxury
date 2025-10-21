@@ -8,13 +8,26 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
     <style>
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
         .login-container {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(26, 26, 26, 0.98) 30%, rgba(13, 13, 13, 0.99) 100%);
             padding: 2rem;
             position: relative;
             overflow: hidden;
@@ -27,13 +40,13 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(183, 110, 121, 0.15) 0%, transparent 70%);
+            background: radial-gradient(circle at 50% 50%, rgba(232, 180, 160, 0.08) 0%, transparent 70%);
             pointer-events: none;
         }
 
         .login-box {
-            background: linear-gradient(135deg, rgba(183, 110, 121, 0.1) 0%, rgba(26, 26, 26, 0.9) 100%);
-            border: 2px solid rgba(183, 110, 121, 0.3);
+            background: linear-gradient(135deg, rgba(232, 180, 160, 0.08) 0%, rgba(26, 26, 26, 0.9) 100%);
+            border: 2px solid rgba(232, 180, 160, 0.2);
             border-radius: 20px;
             padding: 3rem;
             max-width: 500px;
@@ -59,7 +72,7 @@
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             font-weight: 900;
-            color: #B76E79;
+            color: #E8B4A0;
             text-align: center;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
@@ -99,8 +112,8 @@
         }
 
         .tab.active {
-            color: #B76E79;
-            border-bottom-color: #B76E79;
+            color: #E8B4A0;
+            border-bottom-color: #E8B4A0;
         }
 
         .form-group {
@@ -121,7 +134,7 @@
             width: 100%;
             padding: 1rem;
             background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(183, 110, 121, 0.3);
+            border: 1px solid rgba(232, 180, 160, 0.2);
             border-radius: 8px;
             color: white;
             font-family: 'Montserrat', sans-serif;
@@ -131,15 +144,15 @@
 
         .form-input:focus {
             outline: none;
-            border-color: #B76E79;
+            border-color: #E8B4A0;
             background: rgba(0, 0, 0, 0.5);
         }
 
         .submit-button {
             width: 100%;
             padding: 1.2rem;
-            background: linear-gradient(135deg, #B76E79 0%, #8B5A6B 100%);
-            color: white;
+            background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%);
+            color: rgba(0,0,0,0.9);
             font-family: 'Montserrat', sans-serif;
             font-size: 1rem;
             font-weight: 600;
@@ -154,7 +167,8 @@
 
         .submit-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(183, 110, 121, 0.4);
+            box-shadow: 0 10px 30px rgba(232, 180, 160, 0.4);
+            background: linear-gradient(135deg, #F5D4C1 0%, #E8B4A0 100%);
         }
 
         .submit-button:disabled {
@@ -200,7 +214,7 @@
         }
 
         .back-link a:hover {
-            color: #B76E79;
+            color: #E8B4A0;
         }
 
         .password-requirements {
@@ -212,6 +226,9 @@
     </style>
 </head>
 <body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
     <div class="login-container">
         <div class="login-box">
             <div class="login-logo">
@@ -375,6 +392,48 @@
                 window.location.href = '/dashboard.html';
             }
         };
+    </script>
+
+    <!-- Initialize Particles.js -->
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#E8B4A0' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.3, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#E8B4A0',
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'grab' },
+                    onclick: { enable: true, mode: 'push' },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 0.5 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
     </script>
 </body>
 </html>

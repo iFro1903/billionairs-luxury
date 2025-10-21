@@ -8,10 +8,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
     <style>
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
         .dashboard-container {
             min-height: 100vh;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(26, 26, 26, 0.98) 30%, rgba(13, 13, 13, 0.99) 100%);
             padding: 4rem 2rem;
             position: relative;
             overflow: hidden;
@@ -24,18 +37,18 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(183, 110, 121, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 50% 50%, rgba(232, 180, 160, 0.05) 0%, transparent 50%);
             pointer-events: none;
         }
-
-        .dashboard-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .dashboard-header {
+        .dashboard-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #E8B4A0;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }dashboard-header {
             text-align: center;
             margin-bottom: 4rem;
         }
@@ -58,8 +71,8 @@
         }
 
         .member-card {
-            background: linear-gradient(135deg, rgba(183, 110, 121, 0.1) 0%, rgba(26, 26, 26, 0.8) 100%);
-            border: 2px solid rgba(183, 110, 121, 0.3);
+            background: linear-gradient(135deg, rgba(232, 180, 160, 0.08) 0%, rgba(26, 26, 26, 0.8) 100%);
+            border: 2px solid rgba(232, 180, 160, 0.2);
             border-radius: 16px;
             padding: 3rem;
             margin-bottom: 3rem;
@@ -89,7 +102,7 @@
         .info-value {
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
-            color: #B76E79;
+            color: #E8B4A0;
             font-weight: 600;
         }
 
@@ -124,7 +137,7 @@
         .reveal-title {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
-            color: #B76E79;
+            color: #E8B4A0;
             margin-bottom: 1rem;
             font-weight: 700;
         }
@@ -143,8 +156,8 @@
         .download-button {
             display: inline-block;
             padding: 1.5rem 4rem;
-            background: linear-gradient(135deg, #B76E79 0%, #8B5A6B 100%);
-            color: white;
+            background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%);
+            color: rgba(0,0,0,0.9);
             font-family: 'Montserrat', sans-serif;
             font-size: 1.1rem;
             font-weight: 600;
@@ -155,12 +168,13 @@
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
-            box-shadow: 0 10px 30px rgba(183, 110, 121, 0.3);
+            box-shadow: 0 10px 30px rgba(232, 180, 160, 0.3);
         }
 
         .download-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(183, 110, 121, 0.5);
+            box-shadow: 0 15px 40px rgba(232, 180, 160, 0.5);
+            background: linear-gradient(135deg, #F5D4C1 0%, #E8B4A0 100%);
         }
 
         .pending-message {
@@ -203,6 +217,9 @@
     </style>
 </head>
 <body>
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+    
     <div class="dashboard-container">
         <button class="logout-button" onclick="handleLogout()">Logout</button>
 
@@ -311,6 +328,48 @@
 
         // Initialize dashboard
         initDashboard();
+    </script>
+
+    <!-- Initialize Particles.js -->
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: '#E8B4A0' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.3, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#E8B4A0',
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: { enable: true, mode: 'grab' },
+                    onclick: { enable: true, mode: 'push' },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 0.5 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
     </script>
 </body>
 </html>
