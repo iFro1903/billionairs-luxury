@@ -47,15 +47,15 @@ export default async function handler(req, res) {
             timestamp: new Date().toISOString()
         });
 
-        // Bank account details (REPLACE WITH YOUR REAL BANK DETAILS)
+        // Bank account details - Furkan Akaslan UBS Switzerland
         const bankDetails = {
             amount: '500,000 CHF',
             bankName: 'UBS Switzerland AG',
-            accountHolder: 'BILLIONAIRS LUXURY SARL',
-            iban: 'CH93 0076 2011 6238 5295 7',
+            accountHolder: 'Furkan Akaslan',
+            iban: 'CH13 0022 7227 1418 9140 B',
             swift: 'UBSWCHZH80A',
-            reference: `BILL-${Date.now()}`,
-            address: 'Bahnhofstrasse 45, 8001 Zürich, Switzerland',
+            reference: `BILLIONAIRS-${Date.now()}`,
+            address: 'UBS Switzerland AG, Zürich, Switzerland',
             instructions: [
                 'Please include the reference number in your transfer',
                 'Transfer must come from an account in your name',
