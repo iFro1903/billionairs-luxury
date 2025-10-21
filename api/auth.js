@@ -2,8 +2,10 @@
 // Handles user registration, login, and session management
 // NOW WITH REAL DATABASE INTEGRATION
 
-import { sql } from '@vercel/postgres';
+import pg from 'pg';
 import { createHash } from 'crypto';
+
+const { Pool } = pg;
 
 // Helper function to hash passwords
 function hashPassword(password) {
@@ -20,6 +22,15 @@ function generateMemberId() {
     return `BILL-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 }
 
+// Create connection pool
+function getPool() {
+    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.STORAGE_URL;
+    return new Pool({
+        connectionString: dbUrl,
+        ssl: { rejectUnauthorized: false }
+    });
+}
+
 export default async function handler(req, res) {
     // CORS headers
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -33,31 +44,34 @@ export default async function handler(req, res) {
     }
 
     const { action, email, password, token } = req.body;
+    const pool = getPool();
 
     try {
         // REGISTER
         if (action === 'register') {
             if (!email || !password) {
+                await pool.end();
                 return res.status(400).json({ success: false, message: 'Email and password required' });
             }
 
             // Validate email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
+                await pool.end();
                 return res.status(400).json({ success: false, message: 'Invalid email format' });
             }
 
             // Check if user already exists
-            const existingUser = await sql`
-                SELECT id FROM users WHERE email = ${email}
-            `;
+            const existingUser = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
             
             if (existingUser.rows.length > 0) {
+                await pool.end();
                 return res.status(400).json({ success: false, message: 'User already exists' });
             }
 
             // Validate password strength
             if (password.length < 8) {
+                await pool.end();
                 return res.status(400).json({ success: false, message: 'Password must be at least 8 characters' });
             }
 
@@ -65,11 +79,12 @@ export default async function handler(req, res) {
             const hashedPassword = hashPassword(password);
             const memberId = generateMemberId();
             
-            await sql`
-                INSERT INTO users (email, password_hash, member_id, payment_status)
-                VALUES (${email}, ${hashedPassword}, ${memberId}, 'pending')
-            `;
+            await pool.query(
+                'INSERT INTO users (email, password_hash, member_id, payment_status) VALUES ($1, $2, $3, $4)',
+                [email, hashedPassword, memberId, 'pending']
+            );
 
+            await pool.end();
             console.log(`✅ New user registered: ${email} (${memberId})`);
 
             return res.status(200).json({
@@ -81,17 +96,18 @@ export default async function handler(req, res) {
         // LOGIN
         if (action === 'login') {
             if (!email || !password) {
+                await pool.end();
                 return res.status(400).json({ success: false, message: 'Email and password required' });
             }
 
             // Get user from database
-            const userResult = await sql`
-                SELECT id, email, password_hash, member_id, payment_status 
-                FROM users 
-                WHERE email = ${email}
-            `;
+            const userResult = await pool.query(
+                'SELECT id, email, password_hash, member_id, payment_status FROM users WHERE email = $1',
+                [email]
+            );
             
             if (userResult.rows.length === 0) {
+                await pool.end();
                 return res.status(401).json({ success: false, message: 'Invalid credentials' });
             }
 
@@ -99,25 +115,23 @@ export default async function handler(req, res) {
             const hashedPassword = hashPassword(password);
             
             if (user.password_hash !== hashedPassword) {
+                await pool.end();
                 return res.status(401).json({ success: false, message: 'Invalid credentials' });
             }
 
             // Update last login
-            await sql`
-                UPDATE users 
-                SET last_login = CURRENT_TIMESTAMP 
-                WHERE id = ${user.id}
-            `;
+            await pool.query('UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = $1', [user.id]);
 
             // Create session
             const sessionToken = generateToken();
             const expiresAt = new Date(Date.now() + (24 * 60 * 60 * 1000)); // 24 hours
             
-            await sql`
-                INSERT INTO sessions (token, user_id, expires_at)
-                VALUES (${sessionToken}, ${user.id}, ${expiresAt})
-            `;
+            await pool.query(
+                'INSERT INTO sessions (token, user_id, expires_at) VALUES ($1, $2, $3)',
+                [sessionToken, user.id, expiresAt]
+            );
 
+            await pool.end();
             console.log(`✅ User logged in: ${email}`);
 
             return res.status(200).json({
@@ -134,18 +148,18 @@ export default async function handler(req, res) {
         // VERIFY SESSION
         if (action === 'verify') {
             if (!token) {
+                await pool.end();
                 return res.status(401).json({ success: false, message: 'No token provided' });
             }
 
             // Get session from database
-            const sessionResult = await sql`
-                SELECT s.expires_at, u.id, u.email, u.member_id, u.payment_status
-                FROM sessions s
-                JOIN users u ON s.user_id = u.id
-                WHERE s.token = ${token}
-            `;
+            const sessionResult = await pool.query(
+                'SELECT s.expires_at, u.id, u.email, u.member_id, u.payment_status FROM sessions s JOIN users u ON s.user_id = u.id WHERE s.token = $1',
+                [token]
+            );
             
             if (sessionResult.rows.length === 0) {
+                await pool.end();
                 return res.status(401).json({ success: false, message: 'Invalid session' });
             }
 
@@ -153,10 +167,12 @@ export default async function handler(req, res) {
 
             // Check if session expired
             if (new Date() > new Date(session.expires_at)) {
-                await sql`DELETE FROM sessions WHERE token = ${token}`;
+                await pool.query('DELETE FROM sessions WHERE token = $1', [token]);
+                await pool.end();
                 return res.status(401).json({ success: false, message: 'Session expired' });
             }
 
+            await pool.end();
             return res.status(200).json({
                 success: true,
                 user: {
@@ -170,38 +186,39 @@ export default async function handler(req, res) {
         // LOGOUT
         if (action === 'logout') {
             if (token) {
-                await sql`DELETE FROM sessions WHERE token = ${token}`;
+                await pool.query('DELETE FROM sessions WHERE token = $1', [token]);
             }
+            await pool.end();
             return res.status(200).json({ success: true, message: 'Logged out successfully' });
         }
 
         // UPDATE PAYMENT STATUS (called after successful payment)
         if (action === 'update_payment') {
             if (!token) {
+                await pool.end();
                 return res.status(401).json({ success: false, message: 'Unauthorized' });
             }
 
             // Get user from session
-            const sessionResult = await sql`
-                SELECT u.id, u.email, u.member_id
-                FROM sessions s
-                JOIN users u ON s.user_id = u.id
-                WHERE s.token = ${token}
-            `;
+            const sessionResult = await pool.query(
+                'SELECT u.id, u.email, u.member_id FROM sessions s JOIN users u ON s.user_id = u.id WHERE s.token = $1',
+                [token]
+            );
             
             if (sessionResult.rows.length === 0) {
+                await pool.end();
                 return res.status(401).json({ success: false, message: 'Invalid session' });
             }
 
             const user = sessionResult.rows[0];
 
             // Update payment status
-            await sql`
-                UPDATE users 
-                SET payment_status = 'paid', paid_at = CURRENT_TIMESTAMP 
-                WHERE id = ${user.id}
-            `;
+            await pool.query(
+                'UPDATE users SET payment_status = $1, paid_at = CURRENT_TIMESTAMP WHERE id = $2',
+                ['paid', user.id]
+            );
 
+            await pool.end();
             console.log(`💰 Payment confirmed for: ${user.email}`);
 
             return res.status(200).json({
@@ -215,10 +232,14 @@ export default async function handler(req, res) {
             });
         }
 
+        await pool.end();
         return res.status(400).json({ success: false, message: 'Invalid action' });
 
     } catch (error) {
         console.error('Authentication Error:', error);
+        try {
+            await pool.end();
+        } catch (e) {}
         return res.status(500).json({
             success: false,
             message: 'Server error',
