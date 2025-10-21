@@ -200,7 +200,7 @@ class StripePaymentProcessor {
                     color: #D4AF37;
                     margin-bottom: 1rem;
                     text-align: center;
-                ">🏦 Bank Wire Transfer Details</h2>
+                ">Bank Wire Transfer Details</h2>
                 
                 <p style="
                     color: rgba(255, 255, 255, 0.7);
