@@ -1,16 +1,16 @@
-// Stripe Configuration for BILLIONAIRS - Test Mode (99 EUR)
+// Stripe Configuration for BILLIONAIRS - 500K CHF (Price revealed only at checkout)
 class StripePaymentProcessor {
     constructor() {
         // Initialize Stripe with your test key
         this.stripe = Stripe('pk_test_51SJwwa8C64nNqkP2Qk3kpiNiNt167qAvG3i1ra3RGryHjEifqgqyOJxdToYzHnMuEMEGcMxUJP9Qyi8ro6sL4xcS007RY811CQ');
-        this.priceId = 'price_test_billionairs'; // Test price ID
+        this.priceId = 'price_1234567890_REPLACE_WITH_YOUR_PRICE_ID'; // 500,000 CHF
         this.isProcessing = false;
         
-        // Test mode pricing (99 EUR)
+        // Actual pricing - 500K CHF (only visible at Stripe Checkout)
         this.paymentTiers = {
-            full: 9900,      // 99.00 EUR - Test payment
-            split: 4950,     // 49.50 EUR - Split test payment
-            corporate: 9900  // 99.00 EUR - Corporate test
+            full: 50000000,      // 500,000 CHF - Exclusive access
+            split: 25000000,     // 250,000 CHF - Split payment option
+            corporate: 50000000  // 500,000 CHF - Corporate accounts
         };
     }
 
@@ -31,7 +31,7 @@ class StripePaymentProcessor {
             console.log('💳 Starting payment process:', {
                 amount,
                 paymentType,
-                currency: 'eur'
+                currency: 'chf'
             });
             
             // Create checkout session with millionaire-optimized settings
@@ -43,7 +43,7 @@ class StripePaymentProcessor {
                 body: JSON.stringify({
                     priceId: this.priceId,
                     mode: 'payment',
-                    currency: 'eur',
+                    currency: 'chf',
                     amount: amount,
                     paymentType: paymentType,
                     metadata: {
