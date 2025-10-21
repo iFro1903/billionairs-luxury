@@ -6,29 +6,34 @@
       "use": "@vercel/node"
     },
     {
-      "src": "index.html",
+      "src": "**/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "assets/**",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/create-checkout-session",
-      "dest": "stripe-server.js"
+      "dest": "/stripe-server.js"
     },
     {
       "src": "/webhook",
-      "dest": "stripe-server.js"
+      "dest": "/stripe-server.js"
     },
     {
       "src": "/assets/(.*)",
       "dest": "/assets/$1"
     },
     {
+      "src": "/(.*\\.(css|js|jpg|jpeg|png|gif|svg|ico|woff|woff2|ttf|eot))",
+      "dest": "/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/$1"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
