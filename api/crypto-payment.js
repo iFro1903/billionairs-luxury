@@ -173,15 +173,9 @@ export default async function handler(req, res) {
             gap: 15px;
         }
         
-        .logo-image {
-            width: 140px;
-            height: auto;
-            filter: drop-shadow(0 4px 12px rgba(183, 110, 121, 0.3));
-        }
-        
         .logo-text {
             font-family: 'Playfair Display', serif;
-            font-size: 38px;
+            font-size: 48px;
             font-weight: 900;
             letter-spacing: 6px;
             color: #B76E79;
@@ -496,12 +490,8 @@ export default async function handler(req, res) {
                 padding: 30px 20px !important;
             }
             
-            .logo-image {
-                width: 100px !important;
-            }
-            
             .logo-text {
-                font-size: 28px !important;
+                font-size: 32px !important;
                 letter-spacing: 4px !important;
             }
             
@@ -560,7 +550,6 @@ export default async function handler(req, res) {
         <!-- Header with Logo -->
         <div class="header">
             <div class="logo-container">
-                <img src="https://billionairs-luxury.vercel.app/assets/images/logo.png" alt="BILLIONAIRS" class="logo-image">
                 <div class="logo-text">BILLIONAIRS</div>
                 <div class="logo-subtitle">LUXURY REDEFINED</div>
             </div>
