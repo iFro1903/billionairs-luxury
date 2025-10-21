@@ -396,11 +396,17 @@
                                 alert('Payment system initializing. Please try again in a moment.');
                             }
                         } else if (methodType === 'wire') {
-                            alert('Wire Transfer: Coming soon! Please use Credit Card for now.');
+                            console.log('🏦 Initiating Bank Wire Transfer...');
+                            if (window.stripeProcessor) {
+                                window.stripeProcessor.createWireTransferRequest();
+                            } else {
+                                console.error('❌ Stripe processor not initialized');
+                                alert('Payment system initializing. Please try again in a moment.');
+                            }
                         } else if (methodType === 'crypto') {
-                            alert('Cryptocurrency: Coming soon! Please use Credit Card for now.');
+                            alert('Cryptocurrency: Coming soon! Please use Credit Card or Wire Transfer for now.');
                         } else {
-                            alert(`${methodType.toUpperCase()} payment coming soon! Use Credit Card for now.`);
+                            alert(`${methodType.toUpperCase()} payment coming soon! Use Credit Card or Wire Transfer for now.`);
                         }
                     }
                     </script>

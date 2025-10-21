@@ -91,6 +91,210 @@ class StripePaymentProcessor {
         }
     }
 
+    async createWireTransferRequest() {
+        if (this.isProcessing) {
+            console.log('Request already in progress...');
+            return;
+        }
+
+        // Get customer information from form
+        const fullNameInput = document.getElementById('wireFullName');
+        const emailInput = document.getElementById('wireEmail');
+        const phoneInput = document.getElementById('wirePhone');
+        const companyInput = document.getElementById('wireCompany');
+
+        if (!fullNameInput || !emailInput || !phoneInput) {
+            this.showPaymentError('Please fill in all required fields');
+            return;
+        }
+
+        const fullName = fullNameInput.value.trim();
+        const email = emailInput.value.trim();
+        const phone = phoneInput.value.trim();
+        const company = companyInput ? companyInput.value.trim() : '';
+
+        // Validation
+        if (!fullName || !email || !phone) {
+            this.showPaymentError('Please fill in all required fields');
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            this.showPaymentError('Please enter a valid email address');
+            return;
+        }
+
+        this.isProcessing = true;
+
+        try {
+            this.showPaymentLoading();
+
+            console.log('🏦 Starting Wire Transfer Request:', { fullName, email, phone, company });
+
+            const response = await fetch('/api/wire-transfer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    fullName,
+                    email,
+                    phone,
+                    company
+                })
+            });
+
+            console.log('📡 Wire Transfer Response status:', response.status);
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('❌ Wire Transfer error:', errorData);
+                throw new Error(errorData.message || 'Wire transfer request failed');
+            }
+
+            const result = await response.json();
+            console.log('✅ Wire Transfer Request successful:', result);
+
+            // Show bank details in a modal or alert
+            this.showBankDetailsModal(result.bankDetails, result.instructions);
+
+        } catch (error) {
+            console.error('Wire Transfer Error:', error);
+            this.showPaymentError(error.message);
+        } finally {
+            this.isProcessing = false;
+        }
+    }
+
+    showBankDetailsModal(bankDetails, instructions) {
+        // Create a beautiful modal with bank details
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        `;
+
+        modal.innerHTML = `
+            <div style="
+                background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+                padding: 3rem;
+                border-radius: 16px;
+                max-width: 600px;
+                width: 100%;
+                border: 1px solid rgba(212, 175, 55, 0.3);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            ">
+                <h2 style="
+                    font-family: 'Playfair Display', serif;
+                    font-size: 2rem;
+                    color: #D4AF37;
+                    margin-bottom: 1rem;
+                    text-align: center;
+                ">🏦 Bank Wire Transfer Details</h2>
+                
+                <p style="
+                    color: rgba(255, 255, 255, 0.7);
+                    text-align: center;
+                    margin-bottom: 2rem;
+                    font-size: 0.9rem;
+                ">Please use the following details to complete your wire transfer</p>
+
+                <div style="
+                    background: rgba(212, 175, 55, 0.05);
+                    border-left: 3px solid #D4AF37;
+                    padding: 1.5rem;
+                    border-radius: 8px;
+                    margin-bottom: 1.5rem;
+                ">
+                    <div style="margin-bottom: 1rem;">
+                        <strong style="color: #D4AF37;">Amount:</strong>
+                        <span style="color: #ffffff; font-size: 1.2rem; margin-left: 1rem;">${bankDetails.amount}</span>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <strong style="color: #D4AF37;">Bank Name:</strong>
+                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem;">${bankDetails.bankName}</span>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <strong style="color: #D4AF37;">Account Holder:</strong>
+                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem;">${bankDetails.accountHolder}</span>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <strong style="color: #D4AF37;">IBAN:</strong>
+                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem; font-family: monospace;">${bankDetails.iban}</span>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <strong style="color: #D4AF37;">SWIFT/BIC:</strong>
+                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem; font-family: monospace;">${bankDetails.swift}</span>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <strong style="color: #D4AF37;">Reference:</strong>
+                        <span style="color: #FF6B6B; margin-left: 1rem; font-weight: 700; font-family: monospace;">${bankDetails.reference}</span>
+                    </div>
+                    <div style="margin-bottom: 0;">
+                        <strong style="color: #D4AF37;">Bank Address:</strong>
+                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem; font-size: 0.85rem;">${bankDetails.address}</span>
+                    </div>
+                </div>
+
+                <div style="
+                    background: rgba(255, 107, 107, 0.1);
+                    border-left: 3px solid #FF6B6B;
+                    padding: 1rem;
+                    border-radius: 8px;
+                    margin-bottom: 2rem;
+                ">
+                    <strong style="color: #FF6B6B; display: block; margin-bottom: 0.5rem;">⚠️ Important:</strong>
+                    ${instructions.map(inst => `
+                        <p style="color: rgba(255, 255, 255, 0.8); margin: 0.5rem 0; font-size: 0.85rem;">• ${inst}</p>
+                    `).join('')}
+                </div>
+
+                <button onclick="this.parentElement.parentElement.remove()" style="
+                    width: 100%;
+                    padding: 1rem;
+                    background: #D4AF37;
+                    color: #000000;
+                    border: none;
+                    border-radius: 8px;
+                    font-weight: 700;
+                    font-size: 0.9rem;
+                    letter-spacing: 2px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                " onmouseover="this.style.background='#E8C55B'" onmouseout="this.style.background='#D4AF37'">
+                    I HAVE NOTED THE DETAILS
+                </button>
+
+                <p style="
+                    text-align: center;
+                    color: rgba(255, 255, 255, 0.5);
+                    font-size: 0.75rem;
+                    margin-top: 1rem;
+                ">These details have also been sent to your email address</p>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        // Reset payment button
+        const paymentButton = document.querySelector('.payment-button');
+        if (paymentButton) {
+            paymentButton.innerHTML = '<span class="button-text">SECURE PAYMENT</span>';
+            paymentButton.disabled = false;
+            paymentButton.style.opacity = '1';
+        }
+    }
+
     showPaymentLoading() {
         const paymentButton = document.querySelector('.payment-button');
         if (paymentButton) {
