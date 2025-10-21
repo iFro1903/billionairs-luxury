@@ -287,7 +287,12 @@ class LuxuryTimepiece {
             if (returnBtn) {
                 returnBtn.addEventListener('click', () => {
                     rejectionSection.style.display = 'none';
-                    heroSection.style.display = 'flex';
+                    // Go directly to payment section instead of hero
+                    this.showTransitionScreen();
+                    setTimeout(() => {
+                        this.hideTransitionScreen();
+                        this.showPaymentSection();
+                    }, 1500);
                 });
             }
             
