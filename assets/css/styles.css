@@ -1455,16 +1455,16 @@ input::placeholder {
     font-size: 0.9rem;
 }
 
-/* Override browser autofill completely - dark background */
+/* Override browser autofill completely - dark background matching all other fields */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5) inset !important;
+    -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.3) inset !important;
     -webkit-text-fill-color: white !important;
     border: 1px solid rgba(232, 180, 160, 0.25) !important;
     caret-color: white !important;
-    background-color: rgba(0, 0, 0, 0.5) !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
     background-image: none !important;
     transition: background-color 5000s ease-in-out 0s;
 }
