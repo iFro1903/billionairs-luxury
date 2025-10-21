@@ -156,6 +156,14 @@ export default async function handler(req, res) {
             margin: 0;
             text-transform: uppercase;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            font-size: 36px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
         }
         .header-subtitle {
             font-family: 'Montserrat', sans-serif;
@@ -448,7 +456,10 @@ export default async function handler(req, res) {
     <div class="email-wrapper">
         <div class="container">
             <div class="header">
-                <h1 class="logo">BILLIONAIRS</h1>
+                <h1 class="logo">
+                    <span class="logo-icon">💎</span>
+                    <span>BILLIONAIRS</span>
+                </h1>
                 <p class="header-subtitle">Exclusive Luxury Network</p>
             </div>
             
