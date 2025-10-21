@@ -242,14 +242,6 @@
                                     <small>Visa, Mastercard, Amex</small>
                                 </div>
                             </div>
-                            <div class="payment-method" data-method="bank">
-                                <div class="method-icon">🏦</div>
-                                <div class="method-info">
-                                    <h4>SEPA Direct Debit</h4>
-                                    <p>✓ No limit - 3-5 days</p>
-                                    <small>European Bank Transfer</small>
-                                </div>
-                            </div>
                             <div class="payment-method" data-method="wire">
                                 <div class="method-icon">🏛️</div>
                                 <div class="method-info">
@@ -275,28 +267,6 @@
                             <div class="payment-info-text">
                                 <p style="text-align: center; color: rgba(255, 255, 255, 0.7); margin-bottom: 2rem;">
                                     You will be redirected to our secure payment processor to complete your transaction.
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Bank Payment Form -->
-                        <div id="bankPaymentForm" class="payment-form-section">
-                            <div class="bank-payment-info">
-                                <h4>SEPA Direct Debit - Perfect for Large Amounts</h4>
-                                <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem;">
-                                    SEPA Direct Debit has no transaction limits and is ideal for large payments. 
-                                    Processing takes 3-5 business days.
-                                </p>
-                                <div class="form-group">
-                                    <label for="bankEmail">Your Email</label>
-                                    <input type="email" id="bankEmail" name="bankEmail" placeholder="your@email.com" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="bankName">Your Full Name</label>
-                                    <input type="text" id="bankName" name="bankName" placeholder="Full Name" required>
-                                </div>
-                                <p style="font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 1rem;">
-                                    You'll enter your IBAN details on the next secure page.
                                 </p>
                             </div>
                         </div>
@@ -425,20 +395,12 @@
                                 console.error('❌ Stripe processor not initialized');
                                 alert('Payment system initializing. Please try again in a moment.');
                             }
-                        } else if (methodType === 'bank') {
-                            console.log('� Initiating SEPA Direct Debit Checkout...');
-                            if (window.stripeProcessor) {
-                                window.stripeProcessor.createSepaCheckoutSession();
-                            } else {
-                                console.error('❌ Stripe processor not initialized');
-                                alert('Payment system initializing. Please try again in a moment.');
-                            }
                         } else if (methodType === 'wire') {
-                            alert('Wire Transfer: Coming soon! Please use Credit Card or SEPA for now.');
+                            alert('Wire Transfer: Coming soon! Please use Credit Card for now.');
                         } else if (methodType === 'crypto') {
-                            alert('Cryptocurrency: Coming soon! Please use Credit Card or SEPA for now.');
+                            alert('Cryptocurrency: Coming soon! Please use Credit Card for now.');
                         } else {
-                            alert(`${methodType.toUpperCase()} payment coming soon! Use Credit Card or SEPA for now.`);
+                            alert(`${methodType.toUpperCase()} payment coming soon! Use Credit Card for now.`);
                         }
                     }
                     </script>
