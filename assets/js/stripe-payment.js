@@ -517,14 +517,20 @@ class StripePaymentProcessor {
                     margin: 2rem 0;
                     padding: 2rem;
                     background: rgba(255, 255, 255, 0.95);
-                    border-radius: 8px;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
                 ">
                     <img src="${data.wallet.qrCode}" alt="QR Code" style="
-                        width: 250px;
-                        height: 250px;
-                        border: 3px solid #B76E79;
-                        border-radius: 8px;
-                    ">
+                        width: 300px;
+                        height: 300px;
+                        border: 4px solid #B76E79;
+                        border-radius: 12px;
+                        display: block;
+                        margin: 0 auto;
+                    " onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div style="display: none; color: #FF6B6B; padding: 2rem; font-size: 0.9rem;">
+                        ⚠️ QR Code could not be loaded. Please copy the wallet address manually.
+                    </div>
                 </div>
 
                 <div style="
