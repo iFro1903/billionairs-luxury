@@ -12,12 +12,12 @@ module.exports = async (req, res) => {
       mode: 'payment',
       line_items: [{
         price_data: {
-          currency: 'eur',
+          currency: 'chf',
           product_data: {
-            name: 'BILLIONAIRS Premium Zugang',
-            description: 'Lebenslanger Zugang zur exklusiven BILLIONAIRS Plattform'
+            name: 'BILLIONAIRS Exclusive Access',
+            description: 'Lifetime access to the exclusive BILLIONAIRS platform'
           },
-          unit_amount: 9900
+          unit_amount: 50000000  // 500,000 CHF (in cents)
         },
         quantity: 1
       }],
