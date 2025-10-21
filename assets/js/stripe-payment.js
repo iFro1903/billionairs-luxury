@@ -35,7 +35,7 @@ class StripePaymentProcessor {
             });
             
             // Create checkout session with millionaire-optimized settings
-            const response = await fetch('http://localhost:3000/create-checkout-session', {
+            const response = await fetch('/api/stripe-checkout', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
