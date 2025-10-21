@@ -73,21 +73,15 @@ class StripePaymentProcessor {
                 throw new Error(session.error);
             }
 
-            if (!session.id) {
-                console.error('❌ No session ID:', session);
-                throw new Error('No session ID received from server');
+            if (!session.url) {
+                console.error('❌ No session URL:', session);
+                throw new Error('No checkout URL received from server');
             }
 
             console.log('🚀 Redirecting to Stripe Checkout...');
             
-            // Redirect to Stripe Checkout
-            const result = await this.stripe.redirectToCheckout({
-                sessionId: session.id
-            });
-
-            if (result.error) {
-                throw new Error(result.error.message);
-            }
+            // Direct redirect to Stripe Checkout URL (modern method)
+            window.location.href = session.url;
 
         } catch (error) {
             console.error('Payment Error:', error);
