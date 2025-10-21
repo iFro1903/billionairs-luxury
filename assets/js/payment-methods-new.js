@@ -50,7 +50,6 @@ class PaymentMethodSelector {
 
         const sectionMap = {
             'card': 'cardPaymentForm',
-            'bank': 'bankPaymentForm',
             'wire': 'wirePaymentForm',
             'crypto': 'cryptoPaymentForm'
         };
@@ -83,18 +82,6 @@ class PaymentMethodSelector {
                     payment_tier: 'millionaire',
                     supports_amount: '500000_chf',
                     processing_note: 'May require bank authorization for amount'
-                };
-                break;
-
-            case 'bank':
-                // SEPA Direct Debit - No transaction limit
-                data.paymentMethodTypes = ['sepa_debit'];
-                data.description = 'SEPA Direct Debit - 500,000 CHF';
-                data.metadata = {
-                    payment_tier: 'millionaire',
-                    supports_amount: 'unlimited',
-                    processing_time: '3-5_business_days',
-                    processing_note: 'SEPA has no fixed limits - perfect for large amounts'
                 };
                 break;
 
@@ -140,14 +127,6 @@ class PaymentMethodSelector {
                 limit: 'Variable (bank-dependent)',
                 processing_time: 'Instant',
                 note: 'Requires bank authorization for high amounts',
-                recommended: true
-            },
-            bank: {
-                name: 'SEPA Direct Debit',
-                supports_500k: true,
-                limit: 'Unlimited',
-                processing_time: '3-5 business days',
-                note: 'No fixed limit - ideal for large transactions',
                 recommended: true
             },
             wire: {

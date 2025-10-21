@@ -66,9 +66,8 @@ app.post('/create-checkout-session', async (req, res) => {
         
         // For 500K CHF transactions, we support:
         // 1. Credit/Debit Cards (with bank authorization)
-        // 2. SEPA Direct Debit (3-5 day processing)
-        // 3. Manual bank wire transfer (handled separately)
-        // 4. Cryptocurrency (BTC/ETH/USDT - handled separately)
+        // 2. Manual bank wire transfer (handled separately)
+        // 3. Cryptocurrency (BTC/ETH/USDT - handled separately)
         
         console.log('Available payment methods for 500K CHF:', paymentMethods);
 
