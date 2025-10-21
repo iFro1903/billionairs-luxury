@@ -5,7 +5,7 @@
 
 .payment-method-title {
     font-size: 1.2rem;
-    color: var(--text-champagne);
+    color: var(--rose-gold-primary);
     margin-bottom: 1.5rem;
     text-align: center;
     font-weight: 600;
@@ -32,13 +32,13 @@
 
 .payment-method:hover {
     background: rgba(255, 255, 255, 0.05);
-    border-color: var(--cognac-gold);
+    border-color: var(--rose-gold-primary);
     transform: translateY(-2px);
 }
 
 .payment-method.active {
     background: var(--champagne-gradient);
-    border-color: var(--cognac-gold);
+    border-color: var(--rose-gold-primary);
     color: #000;
 }
 
@@ -57,7 +57,7 @@
     font-size: 1rem;
     font-weight: 600;
     margin-bottom: 0.3rem;
-    color: var(--text-champagne);
+    color: var(--rose-gold-primary);
 }
 
 .method-info p {
@@ -84,7 +84,7 @@
 .bank-payment-info h4,
 .digital-payment-info h4 {
     font-size: 1.1rem;
-    color: var(--text-champagne);
+    color: var(--rose-gold-primary);
     margin-bottom: 1.5rem;
     font-weight: 600;
 }
@@ -114,14 +114,14 @@
 .bank-method:hover,
 .digital-method:hover {
     background: rgba(255, 255, 255, 0.05);
-    border-color: var(--cognac-gold);
+    border-color: var(--rose-gold-primary);
     transform: translateY(-2px);
 }
 
 .bank-method.selected,
 .digital-method.selected {
     background: var(--champagne-gradient);
-    border-color: var(--cognac-gold);
+    border-color: var(--rose-gold-primary);
     color: #000;
 }
 
@@ -136,7 +136,7 @@
 .digital-method span {
     font-size: 0.9rem;
     font-weight: 600;
-    color: var(--text-champagne);
+    color: var(--rose-gold-primary);
     text-align: center;
 }
 
@@ -176,7 +176,7 @@
 /* ==================== CRYPTO PAYMENT STYLING ==================== */
 .crypto-payment-info h4 {
     font-size: 1.1rem;
-    color: var(--text-champagne);
+    color: var(--rose-gold-primary);
     margin-bottom: 1rem;
     font-weight: 600;
 }
@@ -202,26 +202,26 @@
 
 .crypto-option:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(247, 147, 26, 0.3);
+    box-shadow: 0 8px 20px rgba(232, 180, 160, 0.3);
 }
 
 .crypto-option.active {
     transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(247, 147, 26, 0.4);
+    box-shadow: 0 12px 30px rgba(232, 180, 160, 0.4);
 }
 
 .crypto-option[data-crypto="eth"]:hover,
 .crypto-option[data-crypto="eth"].active {
-    box-shadow: 0 12px 30px rgba(98, 126, 234, 0.4);
+    box-shadow: 0 12px 30px rgba(232, 180, 160, 0.4);
 }
 
 .crypto-option[data-crypto="usdt"]:hover,
 .crypto-option[data-crypto="usdt"].active {
-    box-shadow: 0 12px 30px rgba(38, 161, 123, 0.4);
+    box-shadow: 0 12px 30px rgba(232, 180, 160, 0.4);
 }
 
 .crypto-note {
-    border-left: 3px solid var(--cognac-gold);
+    border-left: 3px solid var(--rose-gold-primary);
 }
 
 /* ==================== MOBILE CRYPTO STYLING ==================== */
