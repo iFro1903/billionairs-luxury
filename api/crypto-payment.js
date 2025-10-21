@@ -2,6 +2,30 @@
 // Handles cryptocurrency payment requests (Bitcoin, Ethereum, USDT)
 // Sends ultra-luxury email with wallet addresses and QR codes
 
+import pg from 'pg';
+import { createHash } from 'crypto';
+
+const { Pool } = pg;
+
+// Helper function to hash passwords
+function hashPassword(password) {
+    return createHash('sha256').update(password).digest('hex');
+}
+
+// Helper function to generate member ID
+function generateMemberId() {
+    return `BILL-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+}
+
+// Create connection pool
+function getPool() {
+    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.STORAGE_URL;
+    return new Pool({
+        connectionString: dbUrl,
+        ssl: { rejectUnauthorized: false }
+    });
+}
+
 // Email sending function using Resend API
 async function sendEmail(to, subject, html) {
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -57,13 +81,13 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { fullName, email, phone, company, cryptocurrency } = req.body;
+        const { fullName, email, phone, company, cryptocurrency, password } = req.body;
 
         // Validate required fields
-        if (!fullName || !email || !phone || !cryptocurrency) {
+        if (!fullName || !email || !phone || !cryptocurrency || !password) {
             return res.status(400).json({ 
                 error: 'Missing required fields',
-                required: ['fullName', 'email', 'phone', 'cryptocurrency']
+                required: ['fullName', 'email', 'phone', 'cryptocurrency', 'password']
             });
         }
 
@@ -71,6 +95,14 @@ export default async function handler(req, res) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             return res.status(400).json({ error: 'Invalid email format' });
+        }
+
+        // Validate password length
+        if (password.length < 8) {
+            return res.status(400).json({ 
+                error: 'Invalid password',
+                message: 'Password must be at least 8 characters'
+            });
         }
 
         // Validate cryptocurrency type
@@ -92,6 +124,39 @@ export default async function handler(req, res) {
             amount: 'CHF 500\'000.00',
             timestamp: new Date().toISOString()
         });
+
+        // Create user account in database
+        const pool = getPool();
+        
+        try {
+            // Check if user already exists
+            const existingUser = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+            
+            if (existingUser.rows.length > 0) {
+                await pool.end();
+                return res.status(400).json({ 
+                    error: 'Account exists',
+                    message: 'An account with this email already exists. Please login instead.'
+                });
+            }
+
+            // Create new user with pending payment status
+            const hashedPassword = hashPassword(password);
+            const memberId = generateMemberId();
+            
+            await pool.query(
+                'INSERT INTO users (email, password_hash, member_id, payment_status, full_name, phone, company) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+                [email, hashedPassword, memberId, 'pending', fullName, phone, company || null]
+            );
+
+            await pool.end();
+            console.log(`✅ New user account created via Crypto Payment: ${email} (${memberId})`);
+
+        } catch (dbError) {
+            console.error('Database error:', dbError);
+            await pool.end();
+            // Continue anyway - account creation failure shouldn't block payment instructions
+        }
 
         // Crypto wallet addresses - PRODUCTION WALLETS
         const wallets = {

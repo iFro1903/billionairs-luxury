@@ -14,7 +14,7 @@ class StripePaymentProcessor {
         };
     }
 
-    async createCheckoutSession(paymentType = 'full') {
+    async createCheckoutSession(paymentType = 'full', customerData = null) {
         if (this.isProcessing) {
             console.log('Payment already in progress...');
             return;
@@ -31,8 +31,30 @@ class StripePaymentProcessor {
             console.log('💳 Starting payment process:', {
                 amount,
                 paymentType,
-                currency: 'chf'
+                currency: 'chf',
+                hasCustomerData: !!customerData
             });
+            
+            // Prepare metadata
+            const metadata = {
+                product: 'BILLIONAIRS_EXCLUSIVE_ACCESS',
+                tier: 'MILLIONAIRE_SEGMENT',
+                payment_type: paymentType,
+                timestamp: new Date().toISOString(),
+                user_agent: navigator.userAgent,
+                referrer: document.referrer || 'direct'
+            };
+            
+            // Add customer data to metadata if provided
+            if (customerData) {
+                metadata.customer_name = customerData.fullName;
+                metadata.customer_email = customerData.email;
+                metadata.customer_password = customerData.password; // Backend will use this to create account
+                metadata.customer_phone = customerData.phone;
+                if (customerData.company) {
+                    metadata.customer_company = customerData.company;
+                }
+            }
             
             // Create checkout session with millionaire-optimized settings
             const response = await fetch('/api/stripe-checkout', {
@@ -46,14 +68,8 @@ class StripePaymentProcessor {
                     currency: 'chf',
                     amount: amount,
                     paymentType: paymentType,
-                    metadata: {
-                        product: 'BILLIONAIRS_EXCLUSIVE_ACCESS',
-                        tier: 'MILLIONAIRE_SEGMENT',
-                        payment_type: paymentType,
-                        timestamp: new Date().toISOString(),
-                        user_agent: navigator.userAgent,
-                        referrer: document.referrer || 'direct'
-                    }
+                    customerData: customerData, // Send customer data to backend
+                    metadata: metadata
                 })
             });
 
@@ -100,22 +116,37 @@ class StripePaymentProcessor {
         // Get customer information from common form fields
         const fullNameInput = document.getElementById('customerName');
         const emailInput = document.getElementById('customerEmail');
+        const passwordInput = document.getElementById('customerPassword');
+        const passwordConfirmInput = document.getElementById('customerPasswordConfirm');
         const phoneInput = document.getElementById('customerPhone');
         const companyInput = document.getElementById('customerCompany');
 
-        if (!fullNameInput || !emailInput || !phoneInput) {
+        if (!fullNameInput || !emailInput || !passwordInput || !passwordConfirmInput || !phoneInput) {
             this.showPaymentError('Please fill in all required fields');
             return;
         }
 
         const fullName = fullNameInput.value.trim();
         const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        const passwordConfirm = passwordConfirmInput.value;
         const phone = phoneInput.value.trim();
         const company = companyInput ? companyInput.value.trim() : '';
 
         // Validation
-        if (!fullName || !email || !phone) {
+        if (!fullName || !email || !password || !passwordConfirm || !phone) {
             this.showPaymentError('Please fill in all required fields');
+            return;
+        }
+
+        // Password validation
+        if (password !== passwordConfirm) {
+            this.showPaymentError('Passwords do not match');
+            return;
+        }
+
+        if (password.length < 8) {
+            this.showPaymentError('Password must be at least 8 characters');
             return;
         }
 
@@ -140,6 +171,7 @@ class StripePaymentProcessor {
                 body: JSON.stringify({
                     fullName,
                     email,
+                    password,
                     phone,
                     company
                 })
@@ -259,7 +291,7 @@ class StripePaymentProcessor {
                     `).join('')}
                 </div>
 
-                <button onclick="window.location.href = '/create-account.html'" style="
+                <button onclick="window.location.href = '/login.html?message=Payment initiated! Your account has been created. Please login.'" style="
                     width: 100%;
                     padding: 1rem;
                     background: #E8B4A0;
@@ -426,7 +458,7 @@ class StripePaymentProcessor {
             return;
         }
 
-        const { fullName, email, phone, company } = customerData;
+        const { fullName, email, password, phone, company } = customerData;
 
         console.log('✅ Creating crypto payment with validated data:', { fullName, email, phone, cryptocurrency });
 
@@ -443,6 +475,7 @@ class StripePaymentProcessor {
                 body: JSON.stringify({
                     fullName,
                     email,
+                    password,
                     phone,
                     company,
                     cryptocurrency
@@ -595,14 +628,14 @@ class StripePaymentProcessor {
                 </div>
 
                 <button onclick="
-                    console.log('🧹 Crypto payment noted - redirecting to account setup');
+                    console.log('🧹 Crypto payment noted - account created, redirecting to login');
                     // Reset processing flag
                     if (window.stripeProcessor) {
                         window.stripeProcessor.isProcessing = false;
                         console.log('✅ Reset isProcessing flag');
                     }
-                    // Redirect to account creation
-                    window.location.href = '/create-account.html';
+                    // Redirect to login page
+                    window.location.href = '/login.html?message=Payment initiated! Your account has been created. Please login.';
                 " style="
                     width: 100%;
                     padding: 1rem 2rem;
@@ -643,15 +676,15 @@ class StripePaymentProcessor {
                 <p>Welcome to BILLIONAIRS</p>
                 <p>Your exclusive access has been activated.</p>
                 <div class="success-divider"></div>
-                <p class="success-note">Redirecting to account setup...</p>
+                <p class="success-note">Creating your INNER CIRCLE account...</p>
             </div>
         `;
         
         document.body.appendChild(successOverlay);
         
-        // Redirect to account creation page after animation
+        // Redirect to login page (account already created during payment)
         setTimeout(() => {
-            window.location.href = '/create-account.html';
+            window.location.href = '/login.html?message=Account created! Please login with your credentials.';
         }, 3000);
     }
 }

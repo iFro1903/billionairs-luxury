@@ -1,5 +1,28 @@
 // Vercel Serverless Function für Stripe Checkout
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const pg = require('pg');
+const crypto = require('crypto');
+
+const { Pool } = pg;
+
+// Helper function to hash passwords
+function hashPassword(password) {
+    return crypto.createHash('sha256').update(password).digest('hex');
+}
+
+// Helper function to generate member ID
+function generateMemberId() {
+    return `BILL-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+}
+
+// Create connection pool
+function getPool() {
+    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.STORAGE_URL;
+    return new Pool({
+        connectionString: dbUrl,
+        ssl: { rejectUnauthorized: false }
+    });
+}
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
@@ -7,6 +30,62 @@ module.exports = async (req, res) => {
   }
 
   try {
+    const { customerData, metadata } = req.body;
+
+    // If customer data is provided, create account before checkout
+    if (customerData && customerData.email && customerData.password) {
+      const { email, password, fullName, phone, company } = customerData;
+      
+      // Validate required fields
+      if (!email || !password) {
+        return res.status(400).json({ 
+          error: 'Missing required fields',
+          message: 'Email and password are required'
+        });
+      }
+
+      // Validate password length
+      if (password.length < 8) {
+        return res.status(400).json({ 
+          error: 'Invalid password',
+          message: 'Password must be at least 8 characters'
+        });
+      }
+
+      // Create user account in database
+      const pool = getPool();
+      
+      try {
+        // Check if user already exists
+        const existingUser = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+        
+        if (existingUser.rows.length > 0) {
+          await pool.end();
+          return res.status(400).json({ 
+            error: 'Account exists',
+            message: 'An account with this email already exists. Please login instead.'
+          });
+        }
+
+        // Create new user with pending payment status
+        const hashedPassword = hashPassword(password);
+        const memberId = generateMemberId();
+        
+        await pool.query(
+          'INSERT INTO users (email, password_hash, member_id, payment_status, full_name, phone, company) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+          [email, hashedPassword, memberId, 'pending', fullName || null, phone || null, company || null]
+        );
+
+        await pool.end();
+        console.log(`✅ New user account created via Stripe Checkout: ${email} (${memberId})`);
+
+      } catch (dbError) {
+        console.error('Database error:', dbError);
+        await pool.end();
+        // Continue anyway - account creation failure shouldn't block payment
+      }
+    }
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
@@ -21,8 +100,10 @@ module.exports = async (req, res) => {
         },
         quantity: 1
       }],
-      success_url: `${req.headers.origin || 'https://billionairs-luxury.vercel.app'}/payment-success.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.origin || 'https://billionairs-luxury.vercel.app'}/payment-cancelled.html`
+      metadata: metadata || {},
+      customer_email: customerData?.email || undefined,
+      success_url: `${req.headers.origin || 'https://billionairs-luxury.vercel.app'}/login.html?message=Payment successful! Your account has been created. Please login.`,
+      cancel_url: `${req.headers.origin || 'https://billionairs-luxury.vercel.app'}/?message=Payment cancelled`
     });
 
     res.status(200).json({ url: session.url });

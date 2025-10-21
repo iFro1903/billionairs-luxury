@@ -30,6 +30,9 @@ export default async function handler(req, res) {
                 email VARCHAR(255) UNIQUE NOT NULL,
                 password_hash VARCHAR(255) NOT NULL,
                 member_id VARCHAR(50) UNIQUE NOT NULL,
+                full_name VARCHAR(255),
+                phone VARCHAR(50),
+                company VARCHAR(255),
                 payment_status VARCHAR(20) DEFAULT 'pending',
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 paid_at TIMESTAMP,
@@ -80,6 +83,16 @@ export default async function handler(req, res) {
         await pool.query(`CREATE INDEX IF NOT EXISTS idx_sessions_expires ON sessions(expires_at)`);
         await pool.query(`CREATE INDEX IF NOT EXISTS idx_payments_user ON payments(user_id)`);
 
+        // Add new columns if they don't exist (migration for existing databases)
+        try {
+            await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS full_name VARCHAR(255)`);
+            await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS phone VARCHAR(50)`);
+            await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS company VARCHAR(255)`);
+            console.log('✅ Added new columns to users table (if not exists)');
+        } catch (migrationError) {
+            console.log('⚠️ Column migration skipped (might already exist):', migrationError.message);
+        }
+
         await pool.end();
 
         console.log('✅ Database tables created successfully!');
@@ -87,7 +100,8 @@ export default async function handler(req, res) {
         return res.status(200).json({
             success: true,
             message: 'Database setup complete',
-            tables: ['users', 'sessions', 'payments', 'downloads']
+            tables: ['users', 'sessions', 'payments', 'downloads'],
+            columns_added: ['full_name', 'phone', 'company']
         });
 
     } catch (error) {

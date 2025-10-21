@@ -274,6 +274,15 @@
                                 <input type="email" id="customerEmail" name="customerEmail" placeholder="your.email@example.com" required>
                             </div>
                             <div class="form-group">
+                                <label for="customerPassword">Password</label>
+                                <input type="password" id="customerPassword" name="customerPassword" placeholder="Create a secure password (min. 8 characters)" required minlength="8">
+                                <small style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 0.25rem; display: block;">This will be used to access your INNER CIRCLE account</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerPasswordConfirm">Confirm Password</label>
+                                <input type="password" id="customerPasswordConfirm" name="customerPasswordConfirm" placeholder="Re-enter your password" required minlength="8">
+                            </div>
+                            <div class="form-group">
                                 <label for="customerPhone">Phone Number</label>
                                 <input type="tel" id="customerPhone" name="customerPhone" placeholder="+41 XX XXX XX XX" required>
                             </div>
@@ -359,8 +368,44 @@
                         // Handle different payment methods
                         if (methodType === 'card') {
                             console.log('🎯 Initiating Credit Card Checkout...');
+                            
+                            // Collect and validate customer data including password
+                            const fullName = document.getElementById('customerName').value.trim();
+                            const email = document.getElementById('customerEmail').value.trim();
+                            const password = document.getElementById('customerPassword').value;
+                            const passwordConfirm = document.getElementById('customerPasswordConfirm').value;
+                            const phone = document.getElementById('customerPhone').value.trim();
+                            const company = document.getElementById('customerCompany').value.trim();
+                            
+                            // Validate required fields
+                            if (!fullName || !email || !password || !passwordConfirm || !phone) {
+                                alert('Please fill in all required fields');
+                                return;
+                            }
+                            
+                            // Validate passwords match
+                            if (password !== passwordConfirm) {
+                                alert('Passwords do not match');
+                                return;
+                            }
+                            
+                            // Validate password length
+                            if (password.length < 8) {
+                                alert('Password must be at least 8 characters');
+                                return;
+                            }
+                            
+                            // Prepare customer data
+                            const customerData = {
+                                fullName,
+                                email,
+                                password,
+                                phone,
+                                company
+                            };
+                            
                             if (window.stripeProcessor) {
-                                window.stripeProcessor.createCheckoutSession('full');
+                                window.stripeProcessor.createCheckoutSession('full', customerData);
                             } else {
                                 console.error('❌ Stripe processor not initialized');
                                 alert('Payment system initializing. Please try again in a moment.');
@@ -522,19 +567,22 @@
                             // GET AND VALIDATE FORM FIELDS HERE (not in stripe-payment.js)
                             const fullNameEl = document.getElementById('customerName');
                             const emailEl = document.getElementById('customerEmail');
+                            const passwordEl = document.getElementById('customerPassword');
+                            const passwordConfirmEl = document.getElementById('customerPasswordConfirm');
                             const phoneEl = document.getElementById('customerPhone');
                             const companyEl = document.getElementById('customerCompany');
                             
                             console.log('🔍 Reading form fields:', {
                                 fullNameEl: fullNameEl,
                                 emailEl: emailEl,
+                                passwordEl: passwordEl,
                                 phoneEl: phoneEl,
                                 fullNameValue: fullNameEl ? fullNameEl.value : 'ELEMENT NOT FOUND',
                                 emailValue: emailEl ? emailEl.value : 'ELEMENT NOT FOUND',
                                 phoneValue: phoneEl ? phoneEl.value : 'ELEMENT NOT FOUND'
                             });
                             
-                            if (!fullNameEl || !emailEl || !phoneEl) {
+                            if (!fullNameEl || !emailEl || !passwordEl || !passwordConfirmEl || !phoneEl) {
                                 alert('Error: Form fields not found! Please refresh the page.');
                                 return;
                             }
@@ -542,21 +590,25 @@
                             // Read values IMMEDIATELY and store in variables
                             const fullName = (fullNameEl.value || '').trim();
                             const email = (emailEl.value || '').trim();
+                            const password = passwordEl.value || '';
+                            const passwordConfirm = passwordConfirmEl.value || '';
                             const phone = (phoneEl.value || '').trim();
                             const company = companyEl ? (companyEl.value || '').trim() : '';
                             
                             console.log('📋 Captured values:', { fullName, email, phone, company });
                             
                             // Continue with validation
-                            window.processCryptoSelection(cryptocurrency, fullName, email, phone, company);
+                            window.processCryptoSelection(cryptocurrency, fullName, email, password, passwordConfirm, phone, company);
                         }, 50);
                     };
                     
-                    window.processCryptoSelection = function(cryptocurrency, fullName, email, phone, company) {
+                    window.processCryptoSelection = function(cryptocurrency, fullName, email, password, passwordConfirm, phone, company) {
                         // Validate required fields with specific error messages
                         const missingFields = [];
                         if (!fullName) missingFields.push('Name');
                         if (!email) missingFields.push('Email');
+                        if (!password) missingFields.push('Password');
+                        if (!passwordConfirm) missingFields.push('Confirm Password');
                         if (!phone) missingFields.push('Phone');
                         
                         if (missingFields.length > 0) {
@@ -573,6 +625,32 @@
                             if (fullNameEl) {
                                 fullNameEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                             }
+                            return;
+                        }
+
+                        // Validate passwords match
+                        if (password !== passwordConfirm) {
+                            alert('Passwords do not match');
+                            // Close modal
+                            const modals = document.querySelectorAll('body > div');
+                            modals.forEach(modal => {
+                                if (modal.innerHTML && modal.innerHTML.includes('Select Cryptocurrency')) {
+                                    modal.remove();
+                                }
+                            });
+                            return;
+                        }
+
+                        // Validate password length
+                        if (password.length < 8) {
+                            alert('Password must be at least 8 characters');
+                            // Close modal
+                            const modals = document.querySelectorAll('body > div');
+                            modals.forEach(modal => {
+                                if (modal.innerHTML && modal.innerHTML.includes('Select Cryptocurrency')) {
+                                    modal.remove();
+                                }
+                            });
                             return;
                         }
                         
@@ -606,6 +684,10 @@
                             window.stripeProcessor.createCryptoPaymentRequestWithData(cryptocurrency, {
                                 fullName,
                                 email,
+                                password,
+                                phone,
+                                company
+                            });
                                 phone,
                                 company
                             });
