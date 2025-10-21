@@ -3,6 +3,54 @@
     margin-bottom: 2rem;
 }
 
+/* ==================== FORM INPUTS STYLING ==================== */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85rem;
+    color: var(--rose-gold-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(232, 180, 160, 0.2);
+    border-radius: 8px;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group input[type="email"]::placeholder,
+.form-group input[type="tel"]::placeholder,
+.form-group input[type="password"]::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="tel"]:focus,
+.form-group input[type="password"]:focus {
+    outline: none;
+    border-color: var(--rose-gold-primary);
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 20px rgba(232, 180, 160, 0.1);
+}
+
 .payment-method-title {
     font-size: 1.2rem;
     color: var(--rose-gold-primary);
