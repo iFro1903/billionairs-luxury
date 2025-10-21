@@ -75,13 +75,13 @@ export default async function handler(req, res) {
             email,
             phone,
             company: company || 'N/A',
-            amount: '500'000.00 CHF',
+            amount: 'CHF 500\'000.00',
             timestamp: new Date().toISOString()
         });
 
         // Bank account details - Furkan Akaslan UBS Switzerland
         const bankDetails = {
-            amount: '500'000.00 CHF',
+            amount: 'CHF 500\'000.00',
             bankName: 'UBS Switzerland AG',
             accountHolder: 'Furkan Akaslan',
             iban: 'CH13 0022 7227 1418 9140 B',
@@ -608,7 +608,7 @@ export default async function handler(req, res) {
         // Send email to customer
         const emailSent = await sendEmail(
             email,
-            '💎 BILLIONAIRS LUXURY - CHF 500'000.00 Wire Transfer Instructions',
+            '💎 BILLIONAIRS LUXURY - CHF 500\'000.00 Wire Transfer Instructions',
             emailHTML
         );
 
