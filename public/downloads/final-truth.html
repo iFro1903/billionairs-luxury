@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BILLIONAIRS - The Final Truth</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         @page {
             size: A4;
@@ -15,105 +18,315 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: #d4af37;
-            padding: 60px;
+            font-family: 'Cormorant Garamond', serif;
+            background: #000000;
+            color: #E8B4A0;
+            padding: 0;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
         }
+        
+        /* Luxurious background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(232, 180, 160, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 80px 60px;
-            border: 2px solid #d4af37;
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
+            padding: 100px 80px;
+            position: relative;
+            z-index: 1;
         }
+        
+        /* Premium border frame */
+        .border-frame {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            bottom: 40px;
+            border: 1px solid rgba(232, 180, 160, 0.2);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .border-frame::before,
+        .border-frame::after {
+            content: '';
+            position: absolute;
+            background: linear-gradient(135deg, #E8B4A0 0%, #d4af37 100%);
+        }
+        
+        .border-frame::before {
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 1px;
+        }
+        
+        .border-frame::after {
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 1px;
+        }
+        
         .logo {
             text-align: center;
-            font-size: 48px;
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
             font-weight: 300;
-            letter-spacing: 12px;
-            margin-bottom: 60px;
-            color: #d4af37;
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            letter-spacing: 18px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #E8B4A0 0%, #d4af37 50%, #E8B4A0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            position: relative;
         }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #E8B4A0, transparent);
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 4px;
+            color: rgba(232, 180, 160, 0.5);
+            margin-bottom: 80px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+        
         .title {
             text-align: center;
-            font-size: 36px;
-            font-weight: 300;
-            letter-spacing: 8px;
-            margin-bottom: 40px;
-            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 400;
+            letter-spacing: 12px;
+            margin-bottom: 60px;
+            color: #ffffff;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 30px;
         }
-        .divider {
-            width: 200px;
+        
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #d4af37, transparent);
-            margin: 40px auto;
+            background: linear-gradient(90deg, transparent, #E8B4A0, transparent);
         }
+        
+        .ornament {
+            text-align: center;
+            color: rgba(232, 180, 160, 0.3);
+            font-size: 24px;
+            margin: 40px 0;
+            letter-spacing: 8px;
+        }
+        
         .content {
             text-align: center;
-            line-height: 2;
-            font-size: 18px;
-            color: #b8b8b8;
-            margin: 40px 0;
-        }
-        .content p {
-            margin-bottom: 30px;
-        }
-        .quote {
-            font-style: italic;
+            line-height: 2.2;
             font-size: 20px;
-            color: #d4af37;
+            color: rgba(255, 255, 255, 0.8);
             margin: 50px 0;
-            padding: 30px;
-            border-left: 3px solid #d4af37;
-            background: rgba(212, 175, 55, 0.05);
+            font-weight: 300;
         }
+        
+        .content p {
+            margin-bottom: 35px;
+        }
+        
+        .content strong {
+            color: #E8B4A0;
+            font-weight: 600;
+            font-size: 22px;
+        }
+        
+        .quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 24px;
+            line-height: 1.8;
+            color: #E8B4A0;
+            margin: 70px 0;
+            padding: 50px 40px;
+            position: relative;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(232, 180, 160, 0.03) 0%, rgba(212, 175, 55, 0.03) 100%);
+            border-top: 1px solid rgba(232, 180, 160, 0.2);
+            border-bottom: 1px solid rgba(232, 180, 160, 0.2);
+        }
+        
+        .quote::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 120px;
+            color: rgba(232, 180, 160, 0.15);
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+        }
+        
+        .divider {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(180deg, transparent, rgba(232, 180, 160, 0.5), transparent);
+            margin: 60px auto;
+        }
+        
+        .status-section {
+            margin-top: 80px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(232, 180, 160, 0.3);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(20, 20, 20, 0.4) 100%);
+            position: relative;
+        }
+        
+        .status-section::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #E8B4A0, transparent);
+        }
+        
+        .status-title {
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: rgba(232, 180, 160, 0.6);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        
+        .status-items {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 25px;
+        }
+        
+        .status-item {
+            font-size: 16px;
+            letter-spacing: 2px;
+            color: #00ff88;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+        
+        .status-item::before {
+            content: '✓';
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .verification {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 13px;
+            letter-spacing: 2px;
+            color: rgba(232, 180, 160, 0.4);
+            line-height: 1.8;
+        }
+        
+        .verification-code {
+            font-family: 'Courier New', monospace;
+            color: rgba(232, 180, 160, 0.6);
+            font-size: 11px;
+            margin-top: 15px;
+            letter-spacing: 1px;
+        }
+        
         .footer {
             text-align: center;
-            margin-top: 60px;
-            padding-top: 40px;
-            border-top: 1px solid rgba(212, 175, 55, 0.3);
-            font-size: 14px;
-            color: #808080;
-            letter-spacing: 2px;
-        }
-        .status {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            background: rgba(0, 128, 0, 0.1);
-            border: 1px solid #00ff00;
-            color: #00ff00;
-            font-size: 16px;
+            margin-top: 100px;
+            padding-top: 50px;
+            border-top: 1px solid rgba(232, 180, 160, 0.15);
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
             letter-spacing: 3px;
+            text-transform: uppercase;
+            line-height: 2;
+        }
+        
+        .amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: #E8B4A0;
+            margin: 20px 0;
+            letter-spacing: 4px;
+        }
+        
+        @media print {
+            body {
+                background: #000000;
+            }
+            .border-frame {
+                display: block;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="border-frame"></div>
+    
     <div class="container">
         <div class="logo">BILLIONAIRS</div>
+        <div class="subtitle">Exclusive Member Access</div>
         
         <div class="title">THE FINAL TRUTH</div>
         
-        <div class="divider"></div>
+        <div class="ornament">◆ ◆ ◆</div>
         
         <div class="content">
             <p>You have crossed the threshold few dare to approach.</p>
             
-            <p>What lies beyond is not gold. Not diamonds. Not material wealth.</p>
+            <p>What lies beyond is not gold.<br>Not diamonds.<br>Not material wealth.</p>
             
-            <p>It is the understanding that separates the builders from the dreamers.</p>
+            <p>It is the understanding that separates<br>the <strong>builders</strong> from the dreamers.</p>
         </div>
         
+        <div class="divider"></div>
+        
         <div class="quote">
-            "Time is not money. Time is the canvas upon which wealth is painted.<br>
-            Master your minutes, and millions follow."
+            Time is not money.<br>
+            Time is the canvas upon which wealth is painted.<br><br>
+            Master your minutes, and millions follow.
         </div>
         
         <div class="divider"></div>
@@ -121,24 +334,39 @@
         <div class="content">
             <p>The secret every titan of industry knows:</p>
             
-            <p><strong>Not gold. Not diamonds. Something far more precious.</strong></p>
+            <p><strong>Not gold. Not diamonds.<br>Something far more precious.</strong></p>
             
-            <p><strong>Something that moves in circles, yet never repeats.</strong></p>
-            
-            <p>One decision. One moment. Everything changes.</p>
-            
-            <p>You now possess what the elite measure their lives by.</p>
+            <p><strong>Something that moves in circles,<br>yet never repeats.</strong></p>
         </div>
         
-        <div class="status">
-            ✓ PAYMENT CONFIRMED<br>
-            ✓ ACCESS GRANTED<br>
-            ✓ MEMBER VERIFIED
+        <div class="ornament">◆</div>
+        
+        <div class="content">
+            <p>One decision. One moment.<br>Everything changes.</p>
+            
+            <p>You now possess what the elite<br>measure their lives by.</p>
+        </div>
+        
+        <div class="status-section">
+            <div class="status-title">Member Verification</div>
+            <div class="amount">CHF 500,000.00</div>
+            <div class="status-items">
+                <div class="status-item">Payment Confirmed</div>
+                <div class="status-item">Access Granted</div>
+                <div class="status-item">Member Verified</div>
+            </div>
+        </div>
+        
+        <div class="verification">
+            SECURED BY SWISS BANKING STANDARDS<br>
+            ENCRYPTED INFRASTRUCTURE • ZÜRICH<br>
+            <div class="verification-code">BILL-EXCLUSIVE-2025-VERIFIED</div>
         </div>
         
         <div class="footer">
-            BILLIONAIRS EXCLUSIVE ACCESS<br>
-            Est. 2025 • Premium Membership
+            BILLIONAIRS<br>
+            Private Member's Circle<br>
+            Est. 2025
         </div>
     </div>
 </body>
