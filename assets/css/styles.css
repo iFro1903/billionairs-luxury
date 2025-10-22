@@ -141,6 +141,14 @@ body::before {
     z-index: 5;
 }
 
+/* Ensure header/title elements that shouldn't be clickable keep the default cursor */
+.dashboard-title,
+.state-title,
+.login-title,
+.hero-title {
+    cursor: default !important;
+}
+
 .hero-section::before {
     content: '';
     position: absolute;
