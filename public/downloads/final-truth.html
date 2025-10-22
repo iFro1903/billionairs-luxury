@@ -114,20 +114,20 @@
         }
         
         .crest {
-            width: 60px;
-            height: 60px;
+            width: 100px;
+            height: 80px;
             margin: 0 auto 20px;
-            border: 2px solid #c9a961;
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle, rgba(201, 169, 97, 0.1) 0%, transparent 70%);
-            font-family: 'Bodoni Moda', serif;
-            font-size: 28px;
-            font-weight: 700;
-            color: #c9a961;
-            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .crest img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(1.1);
         }
         
         .institution-name {
@@ -378,7 +378,9 @@
         
         <!-- Header -->
         <div class="header">
-            <div class="crest">B</div>
+            <div class="crest">
+                <img src="../../assets/images/logo.png" alt="BILLIONAIRS">
+            </div>
             <div class="institution-name">Private Member's Circle</div>
             <div class="logo">BILLIONAIRS</div>
             <div class="tagline">Est. Zürich • MMXXV</div>
