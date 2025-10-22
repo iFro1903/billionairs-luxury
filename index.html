@@ -1007,4 +1007,26 @@
     <script src="assets/js/faq.js"></script>
     <script src="assets/js/stripe-payment.js"></script>
     <script src="assets/js/payment-methods-new.js"></script>
+    
+    <!-- Auto-scroll to payment section if hash is present -->
+    <script>
+        window.addEventListener('load', function() {
+            if (window.location.hash === '#paymentSection') {
+                // Wait for all sections to be loaded
+                setTimeout(function() {
+                    const paymentSection = document.getElementById('paymentSection');
+                    if (paymentSection) {
+                        // Make sure payment section is visible
+                        document.getElementById('heroSection').style.display = 'none';
+                        document.getElementById('transitionSection').style.display = 'none';
+                        document.getElementById('rejectionSection').style.display = 'none';
+                        paymentSection.style.display = 'block';
+                        
+                        // Scroll to it smoothly
+                        paymentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100);
+            }
+        });
+    </script>
 </body>
