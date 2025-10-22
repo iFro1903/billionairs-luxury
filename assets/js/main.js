@@ -94,6 +94,21 @@ class LuxuryTimepiece {
     }
 
     initEventListeners() {
+        // Logo click - always go to homepage
+        const navLogo = document.querySelector('.nav-logo');
+        const navLogoImg = document.querySelector('.nav-logo-img');
+        
+        if (navLogo) {
+            navLogo.style.cursor = 'pointer';
+            navLogo.addEventListener('click', () => {
+                window.location.href = '/';
+            });
+        }
+        
+        if (navLogoImg) {
+            navLogoImg.style.cursor = 'pointer';
+        }
+        
         // Hero section buttons
         const proceedBtn = document.getElementById('proceedBtn');
         const notReadyBtn = document.getElementById('notReadyBtn');
