@@ -3,7 +3,7 @@ class StripePaymentProcessor {
     constructor() {
         // Initialize Stripe with your test key
         this.stripe = Stripe('pk_test_51SJwwa8C64nNqkP2Qk3kpiNiNt167qAvG3i1ra3RGryHjEifqgqyOJxdToYzHnMuEMEGcMxUJP9Qyi8ro6sL4xcS007RY811CQ');
-        this.priceId = 'price_1234567890_REPLACE_WITH_YOUR_PRICE_ID'; // 500,000 CHF
+        this.priceId = 'price_1SL9Be7Fzwybk1NyQpd06DhZ'; // 500,000 CHF per year
         this.isProcessing = false;
         
         // Actual pricing - 500K CHF (only visible at Stripe Checkout)
