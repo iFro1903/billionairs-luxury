@@ -50,8 +50,14 @@ class LuxuryTimepiece {
             const rejectionSection = document.getElementById('rejectionSection');
             
             if (heroSection) heroSection.style.display = 'none';
-            if (transitionSection) transitionSection.style.display = 'none';
-            if (rejectionSection) rejectionSection.style.display = 'none';
+            if (transitionSection) {
+                transitionSection.style.display = 'none';
+                transitionSection.classList.remove('active');
+            }
+            if (rejectionSection) {
+                rejectionSection.style.display = 'none';
+                rejectionSection.classList.remove('active');
+            }
             
             setTimeout(() => {
                 this.showPaymentSection();
@@ -257,6 +263,13 @@ class LuxuryTimepiece {
     }
 
     handleProceed() {
+        const heroSection = document.getElementById('heroSection');
+        
+        // Remove active from hero section for smooth transition
+        if (heroSection) {
+            heroSection.classList.remove('active');
+        }
+        
         // Show transition screen first
         this.showTransitionScreen();
         
@@ -268,6 +281,13 @@ class LuxuryTimepiece {
     }
 
     handleNotReady() {
+        const heroSection = document.getElementById('heroSection');
+        
+        // Remove active from hero section
+        if (heroSection) {
+            heroSection.classList.remove('active');
+        }
+        
         // Show aggressive rejection screen
         this.showRejectionScreen();
     }
@@ -277,8 +297,12 @@ class LuxuryTimepiece {
         const rejectionSection = document.getElementById('rejectionSection');
         
         if (heroSection && rejectionSection) {
+            // Remove active from hero, add to rejection
+            heroSection.classList.remove('active');
             heroSection.style.display = 'none';
+            
             rejectionSection.style.display = 'flex';
+            rejectionSection.classList.add('active');
             
             // Initialize particles for rejection screen
             setTimeout(() => {
@@ -392,6 +416,9 @@ class LuxuryTimepiece {
         const transitionSection = document.getElementById('transitionSection');
         
         if (heroSection && transitionSection) {
+            // Remove active from hero
+            heroSection.classList.remove('active');
+            
             // Fade out hero section
             heroSection.style.transition = 'all 1s ease';
             heroSection.style.opacity = '0';
@@ -400,12 +427,11 @@ class LuxuryTimepiece {
             setTimeout(() => {
                 heroSection.classList.add('hidden');
                 transitionSection.style.display = 'flex';
+                transitionSection.classList.add('active');
                 
                 // Fade in transition section
-                transitionSection.style.opacity = '0';
                 setTimeout(() => {
                     transitionSection.style.transition = 'all 1s ease';
-                    transitionSection.style.opacity = '1';
                 }, 100);
             }, 1000);
         }
@@ -415,12 +441,13 @@ class LuxuryTimepiece {
         const transitionSection = document.getElementById('transitionSection');
         
         if (transitionSection) {
+            // Remove active class for smooth fade out
+            transitionSection.classList.remove('active');
             transitionSection.style.transition = 'all 1s ease';
-            transitionSection.style.opacity = '0';
             
             setTimeout(() => {
                 transitionSection.style.display = 'none';
-            }, 1000);
+            }, 600); // Match CSS transition duration
         }
     }
 
@@ -433,6 +460,7 @@ class LuxuryTimepiece {
             // Hide transition if it's showing
             if (transitionSection && transitionSection.style.display !== 'none') {
                 transitionSection.style.display = 'none';
+                transitionSection.classList.remove('active');
             }
             
             // Hide INNER CIRCLE button on payment section (only for new users)
@@ -441,16 +469,19 @@ class LuxuryTimepiece {
             }
             
             paymentSection.classList.remove('hidden');
+            paymentSection.classList.add('active');
             
-            // Fade in payment section
-            paymentSection.style.opacity = '0';
-            paymentSection.style.transform = 'translateY(20px)';
+            // Smooth visibility change
+            paymentSection.style.visibility = 'visible';
+            
+            // Fade in payment section - smoother
+            paymentSection.style.transform = 'translateY(10px)';
             
             setTimeout(() => {
-                paymentSection.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+                paymentSection.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
                 paymentSection.style.opacity = '1';
                 paymentSection.style.transform = 'translateY(0)';
-            }, 100);
+            }, 50);
         }
     }
 
