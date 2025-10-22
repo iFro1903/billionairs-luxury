@@ -57,27 +57,36 @@ module.exports = async (req, res) => {
       
       try {
         // Check if user already exists
-        const existingUser = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+        const existingUser = await pool.query('SELECT id, payment_status FROM users WHERE email = $1', [email]);
         
         if (existingUser.rows.length > 0) {
+          // User exists - just update their info and continue to payment
+          const userId = existingUser.rows[0].id;
+          const currentStatus = existingUser.rows[0].payment_status;
+          
+          console.log(`✅ Existing user attempting payment: ${email} (current status: ${currentStatus})`);
+          
+          // Update user info (in case they changed phone, name, etc.)
+          await pool.query(
+            'UPDATE users SET full_name = COALESCE($1, full_name), phone = COALESCE($2, phone), company = COALESCE($3, company) WHERE id = $4',
+            [fullName || null, phone || null, company || null, userId]
+          );
+          
           await pool.end();
-          return res.status(400).json({ 
-            error: 'Account exists',
-            message: 'An account with this email already exists. Please login instead.'
-          });
+          // Continue to payment checkout - don't block existing users from paying!
+        } else {
+          // Create new user with pending payment status
+          const hashedPassword = hashPassword(password);
+          const memberId = generateMemberId();
+          
+          await pool.query(
+            'INSERT INTO users (email, password_hash, member_id, payment_status, full_name, phone, company) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+            [email, hashedPassword, memberId, 'pending', fullName || null, phone || null, company || null]
+          );
+
+          await pool.end();
+          console.log(`✅ New user account created via Stripe Checkout: ${email} (${memberId})`);
         }
-
-        // Create new user with pending payment status
-        const hashedPassword = hashPassword(password);
-        const memberId = generateMemberId();
-        
-        await pool.query(
-          'INSERT INTO users (email, password_hash, member_id, payment_status, full_name, phone, company) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-          [email, hashedPassword, memberId, 'pending', fullName || null, phone || null, company || null]
-        );
-
-        await pool.end();
-        console.log(`✅ New user account created via Stripe Checkout: ${email} (${memberId})`);
 
       } catch (dbError) {
         console.error('Database error:', dbError);
