@@ -43,6 +43,16 @@ class LuxuryTimepiece {
         if (window.location.hash === '#paymentSection') {
             // Directly show payment section without transition
             console.log('🎯 Direct navigation to payment section detected');
+            
+            // Hide hero section immediately
+            const heroSection = document.getElementById('heroSection');
+            const transitionSection = document.getElementById('transitionSection');
+            const rejectionSection = document.getElementById('rejectionSection');
+            
+            if (heroSection) heroSection.style.display = 'none';
+            if (transitionSection) transitionSection.style.display = 'none';
+            if (rejectionSection) rejectionSection.style.display = 'none';
+            
             setTimeout(() => {
                 this.showPaymentSection();
             }, 100);
