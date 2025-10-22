@@ -3,31 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BILLIONAIRS - The Final Truth</title>
+    <title>BILLIONAIRS - Certificate of Exclusive Membership</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         @page {
             size: A4;
             margin: 0;
         }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        
         body {
-            font-family: 'Cormorant Garamond', serif;
-            background: #000000;
-            color: #E8B4A0;
-            padding: 0;
+            font-family: 'Crimson Text', serif;
+            background: #0a0a0a;
+            color: #c9a961;
             min-height: 100vh;
             position: relative;
-            overflow-x: hidden;
+            overflow: hidden;
         }
         
-        /* Luxurious background pattern */
+        /* Texture overlay */
         body::before {
             content: '';
             position: fixed;
@@ -35,338 +36,425 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(232, 180, 160, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 4px);
             pointer-events: none;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 100px 80px;
-            position: relative;
             z-index: 1;
         }
         
-        /* Premium border frame */
-        .border-frame {
-            position: fixed;
-            top: 40px;
-            left: 40px;
-            right: 40px;
-            bottom: 40px;
-            border: 1px solid rgba(232, 180, 160, 0.2);
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        .border-frame::before,
-        .border-frame::after {
+        /* Premium paper texture */
+        body::after {
             content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 30% 40%, rgba(201, 169, 97, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 60%, rgba(255, 215, 0, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .page {
+            position: relative;
+            max-width: 21cm;
+            min-height: 29.7cm;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #000000 0%, #0d0d0d 50%, #000000 100%);
+            padding: 3cm 2.5cm;
+            box-shadow: 
+                inset 0 0 0 1px rgba(201, 169, 97, 0.3),
+                inset 0 0 0 2px rgba(0, 0, 0, 0.8),
+                inset 0 0 0 3px rgba(201, 169, 97, 0.15),
+                0 50px 100px rgba(0, 0, 0, 0.8);
+            z-index: 2;
+            position: relative;
+        }
+        
+        /* Corner ornaments */
+        .corner-ornament {
             position: absolute;
-            background: linear-gradient(135deg, #E8B4A0 0%, #d4af37 100%);
+            width: 80px;
+            height: 80px;
+            border-style: solid;
+            border-color: rgba(201, 169, 97, 0.4);
         }
         
-        .border-frame::before {
-            top: -1px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 1px;
+        .corner-ornament.top-left {
+            top: 1.5cm;
+            left: 1.5cm;
+            border-width: 1px 0 0 1px;
         }
         
-        .border-frame::after {
-            bottom: -1px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 1px;
+        .corner-ornament.top-right {
+            top: 1.5cm;
+            right: 1.5cm;
+            border-width: 1px 1px 0 0;
+        }
+        
+        .corner-ornament.bottom-left {
+            bottom: 1.5cm;
+            left: 1.5cm;
+            border-width: 0 0 1px 1px;
+        }
+        
+        .corner-ornament.bottom-right {
+            bottom: 1.5cm;
+            right: 1.5cm;
+            border-width: 0 1px 1px 0;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3cm;
+            position: relative;
+        }
+        
+        .crest {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            border: 2px solid #c9a961;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, rgba(201, 169, 97, 0.1) 0%, transparent 70%);
+            font-family: 'Bodoni Moda', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #c9a961;
+            letter-spacing: 2px;
+        }
+        
+        .institution-name {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 11px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: rgba(201, 169, 97, 0.7);
+            margin-bottom: 5px;
+            font-weight: 400;
         }
         
         .logo {
-            text-align: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 56px;
-            font-weight: 300;
-            letter-spacing: 18px;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #E8B4A0 0%, #d4af37 50%, #E8B4A0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-family: 'Bodoni Moda', serif;
+            font-size: 52px;
+            font-weight: 700;
+            letter-spacing: 16px;
+            color: #c9a961;
+            margin-bottom: 15px;
             text-transform: uppercase;
-            position: relative;
         }
         
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #E8B4A0, transparent);
-        }
-        
-        .subtitle {
-            text-align: center;
-            font-size: 12px;
-            letter-spacing: 4px;
-            color: rgba(232, 180, 160, 0.5);
-            margin-bottom: 80px;
+        .tagline {
+            font-size: 10px;
+            letter-spacing: 5px;
+            color: rgba(201, 169, 97, 0.5);
             text-transform: uppercase;
-            font-weight: 300;
-        }
-        
-        .title {
-            text-align: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 42px;
             font-weight: 400;
-            letter-spacing: 12px;
-            margin-bottom: 60px;
-            color: #ffffff;
-            text-transform: uppercase;
-            position: relative;
-            padding-bottom: 30px;
-        }
-        
-        .title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #E8B4A0, transparent);
-        }
-        
-        .ornament {
-            text-align: center;
-            color: rgba(232, 180, 160, 0.3);
-            font-size: 24px;
-            margin: 40px 0;
-            letter-spacing: 8px;
-        }
-        
-        .content {
-            text-align: center;
-            line-height: 2.2;
-            font-size: 20px;
-            color: rgba(255, 255, 255, 0.8);
-            margin: 50px 0;
-            font-weight: 300;
-        }
-        
-        .content p {
-            margin-bottom: 35px;
-        }
-        
-        .content strong {
-            color: #E8B4A0;
-            font-weight: 600;
-            font-size: 22px;
-        }
-        
-        .quote {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 24px;
-            line-height: 1.8;
-            color: #E8B4A0;
-            margin: 70px 0;
-            padding: 50px 40px;
-            position: relative;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(232, 180, 160, 0.03) 0%, rgba(212, 175, 55, 0.03) 100%);
-            border-top: 1px solid rgba(232, 180, 160, 0.2);
-            border-bottom: 1px solid rgba(232, 180, 160, 0.2);
-        }
-        
-        .quote::before {
-            content: '"';
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 120px;
-            color: rgba(232, 180, 160, 0.15);
-            font-family: 'Playfair Display', serif;
-            line-height: 1;
         }
         
         .divider {
-            width: 1px;
-            height: 60px;
-            background: linear-gradient(180deg, transparent, rgba(232, 180, 160, 0.5), transparent);
-            margin: 60px auto;
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c9a961, transparent);
+            margin: 40px auto;
         }
         
-        .status-section {
-            margin-top: 80px;
+        /* Certificate title */
+        .certificate-title {
+            text-align: center;
+            margin: 50px 0 40px;
+        }
+        
+        .certificate-label {
+            font-size: 9px;
+            letter-spacing: 4px;
+            color: rgba(201, 169, 97, 0.5);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        
+        .certificate-name {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: 8px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+        
+        /* Content */
+        .content {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 2.4;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        
+        .content p {
+            margin-bottom: 28px;
+        }
+        
+        .content em {
+            font-style: italic;
+            color: #c9a961;
+        }
+        
+        .content strong {
+            font-weight: 700;
+            color: #c9a961;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Quote block */
+        .quote-block {
+            margin: 60px auto;
+            padding: 50px 40px;
+            max-width: 550px;
+            border-top: 1px solid rgba(201, 169, 97, 0.25);
+            border-bottom: 1px solid rgba(201, 169, 97, 0.25);
+            position: relative;
+            background: linear-gradient(180deg, transparent 0%, rgba(201, 169, 97, 0.02) 50%, transparent 100%);
+        }
+        
+        .quote-block::before {
+            content: '„';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Bodoni Moda', serif;
+            font-size: 80px;
+            color: rgba(201, 169, 97, 0.2);
+            line-height: 1;
+        }
+        
+        .quote-text {
+            font-family: 'Bodoni Moda', serif;
+            font-style: italic;
+            font-size: 19px;
+            line-height: 1.9;
+            color: #c9a961;
+            text-align: center;
+        }
+        
+        /* Amount section */
+        .amount-section {
+            margin: 70px 0;
             padding: 40px;
             text-align: center;
-            border: 1px solid rgba(232, 180, 160, 0.3);
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(20, 20, 20, 0.4) 100%);
+            border: 1px solid rgba(201, 169, 97, 0.25);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(20, 20, 20, 0.2) 100%);
             position: relative;
         }
         
-        .status-section::before {
+        .amount-section::before,
+        .amount-section::after {
             content: '';
             position: absolute;
-            top: -1px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
+            width: 40px;
             height: 1px;
-            background: linear-gradient(90deg, transparent, #E8B4A0, transparent);
+            background: #c9a961;
+            top: -1px;
         }
         
-        .status-title {
-            font-size: 14px;
+        .amount-section::before {
+            left: 50%;
+            transform: translateX(-60px);
+        }
+        
+        .amount-section::after {
+            left: 50%;
+            transform: translateX(20px);
+        }
+        
+        .amount-label {
+            font-size: 9px;
             letter-spacing: 3px;
-            color: rgba(232, 180, 160, 0.6);
-            margin-bottom: 20px;
+            color: rgba(201, 169, 97, 0.6);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        
+        .amount-value {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 42px;
+            font-weight: 600;
+            color: #c9a961;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+        }
+        
+        .amount-period {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
         }
         
-        .status-items {
+        /* Status badges */
+        .status-badges {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            margin-top: 25px;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
         }
         
-        .status-item {
-            font-size: 16px;
+        .badge {
+            font-size: 9px;
             letter-spacing: 2px;
-            color: #00ff88;
+            color: #2ecc71;
             text-transform: uppercase;
-            font-weight: 400;
+            padding: 8px 16px;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            background: rgba(46, 204, 113, 0.05);
         }
         
-        .status-item::before {
+        .badge::before {
             content: '✓';
-            margin-right: 8px;
-            font-size: 18px;
+            margin-right: 6px;
+            font-size: 11px;
         }
         
-        .verification {
-            margin-top: 50px;
+        /* Footer */
+        .footer {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(201, 169, 97, 0.2);
             text-align: center;
-            font-size: 13px;
-            letter-spacing: 2px;
-            color: rgba(232, 180, 160, 0.4);
-            line-height: 1.8;
+        }
+        
+        .security-info {
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: rgba(201, 169, 97, 0.4);
+            text-transform: uppercase;
+            line-height: 2;
+            margin-bottom: 20px;
         }
         
         .verification-code {
             font-family: 'Courier New', monospace;
-            color: rgba(232, 180, 160, 0.6);
-            font-size: 11px;
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: rgba(201, 169, 97, 0.35);
             margin-top: 15px;
-            letter-spacing: 1px;
         }
         
-        .footer {
-            text-align: center;
-            margin-top: 100px;
-            padding-top: 50px;
-            border-top: 1px solid rgba(232, 180, 160, 0.15);
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.3);
-            letter-spacing: 3px;
+        .establishment {
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.25);
             text-transform: uppercase;
-            line-height: 2;
-        }
-        
-        .amount {
-            font-family: 'Playfair Display', serif;
-            font-size: 28px;
-            color: #E8B4A0;
-            margin: 20px 0;
-            letter-spacing: 4px;
+            margin-top: 30px;
         }
         
         @media print {
             body {
-                background: #000000;
+                background: #000;
             }
-            .border-frame {
-                display: block;
+            .page {
+                box-shadow: none;
+                margin: 0;
             }
         }
     </style>
 </head>
 <body>
-    <div class="border-frame"></div>
-    
-    <div class="container">
-        <div class="logo">BILLIONAIRS</div>
-        <div class="subtitle">Exclusive Member Access</div>
+    <div class="page">
+        <!-- Corner ornaments -->
+        <div class="corner-ornament top-left"></div>
+        <div class="corner-ornament top-right"></div>
+        <div class="corner-ornament bottom-left"></div>
+        <div class="corner-ornament bottom-right"></div>
         
-        <div class="title">THE FINAL TRUTH</div>
-        
-        <div class="ornament">◆ ◆ ◆</div>
-        
-        <div class="content">
-            <p>You have crossed the threshold few dare to approach.</p>
-            
-            <p>What lies beyond is not gold.<br>Not diamonds.<br>Not material wealth.</p>
-            
-            <p>It is the understanding that separates<br>the <strong>builders</strong> from the dreamers.</p>
+        <!-- Header -->
+        <div class="header">
+            <div class="crest">B</div>
+            <div class="institution-name">Private Member's Circle</div>
+            <div class="logo">BILLIONAIRS</div>
+            <div class="tagline">Est. Zürich • MMXXV</div>
         </div>
         
         <div class="divider"></div>
         
-        <div class="quote">
-            Time is not money.<br>
-            Time is the canvas upon which wealth is painted.<br><br>
-            Master your minutes, and millions follow.
+        <!-- Certificate Title -->
+        <div class="certificate-title">
+            <div class="certificate-label">Certificate of Exclusive Access</div>
+            <div class="certificate-name">THE FINAL TRUTH</div>
         </div>
         
-        <div class="divider"></div>
-        
+        <!-- Content -->
         <div class="content">
-            <p>The secret every titan of industry knows:</p>
+            <p>You have crossed the threshold<br>few dare to approach.</p>
             
-            <p><strong>Not gold. Not diamonds.<br>Something far more precious.</strong></p>
+            <p>What lies beyond is <em>not gold</em>.<br>
+            <em>Not diamonds</em>. Not material wealth.</p>
             
-            <p><strong>Something that moves in circles,<br>yet never repeats.</strong></p>
+            <p>It is the understanding that separates<br>
+            the <strong>builders</strong> from the dreamers.</p>
         </div>
         
-        <div class="ornament">◆</div>
-        
-        <div class="content">
-            <p>One decision. One moment.<br>Everything changes.</p>
-            
-            <p>You now possess what the elite<br>measure their lives by.</p>
-        </div>
-        
-        <div class="status-section">
-            <div class="status-title">Member Verification</div>
-            <div class="amount">CHF 500,000.00</div>
-            <div class="status-items">
-                <div class="status-item">Payment Confirmed</div>
-                <div class="status-item">Access Granted</div>
-                <div class="status-item">Member Verified</div>
+        <!-- Quote -->
+        <div class="quote-block">
+            <div class="quote-text">
+                Time is not money.<br>
+                Time is the canvas upon which wealth is painted.<br><br>
+                Master your minutes, and millions follow.
             </div>
         </div>
         
-        <div class="verification">
-            SECURED BY SWISS BANKING STANDARDS<br>
-            ENCRYPTED INFRASTRUCTURE • ZÜRICH<br>
-            <div class="verification-code">BILL-EXCLUSIVE-2025-VERIFIED</div>
+        <!-- Content continued -->
+        <div class="content">
+            <p>The secret every titan of industry knows:</p>
+            
+            <p><strong>Not gold. Not diamonds.</strong><br>
+            <strong>Something far more precious.</strong></p>
+            
+            <p><em>Something that moves in circles,<br>
+            yet never repeats.</em></p>
+            
+            <p style="margin-top: 50px;">One decision. One moment.<br>
+            Everything changes.</p>
+            
+            <p>You now possess what the elite<br>
+            measure their lives by.</p>
         </div>
         
+        <!-- Amount Section -->
+        <div class="amount-section">
+            <div class="amount-label">Membership Investment</div>
+            <div class="amount-value">CHF 500,000</div>
+            <div class="amount-period">Annual Subscription</div>
+            
+            <div class="status-badges">
+                <div class="badge">Payment Confirmed</div>
+                <div class="badge">Access Granted</div>
+                <div class="badge">Member Verified</div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
         <div class="footer">
-            BILLIONAIRS<br>
-            Private Member's Circle<br>
-            Est. 2025
+            <div class="security-info">
+                Secured by Swiss Banking Standards<br>
+                Blockchain Verified • Encrypted Infrastructure<br>
+                Zürich, Switzerland
+            </div>
+            <div class="verification-code">
+                CERTIFICATE NO. BILL-EXCLUSIVE-2025-VERIFIED
+            </div>
+            <div class="establishment">
+                Billionairs Private Member's Circle • Established MMXXV
+            </div>
         </div>
     </div>
 </body>
