@@ -468,20 +468,15 @@ class LuxuryTimepiece {
                 memberBtn.style.display = 'none';
             }
             
+            // Remove hidden class and add active for smooth fade-in
             paymentSection.classList.remove('hidden');
+            paymentSection.style.display = 'block';
+            
+            // Force reflow to ensure display change is registered
+            paymentSection.offsetHeight;
+            
+            // Add active class for CSS transition
             paymentSection.classList.add('active');
-            
-            // Smooth visibility change
-            paymentSection.style.visibility = 'visible';
-            
-            // Fade in payment section - smoother
-            paymentSection.style.transform = 'translateY(10px)';
-            
-            setTimeout(() => {
-                paymentSection.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-                paymentSection.style.opacity = '1';
-                paymentSection.style.transform = 'translateY(0)';
-            }, 50);
         }
     }
 
