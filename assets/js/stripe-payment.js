@@ -96,6 +96,9 @@ class StripePaymentProcessor {
 
             console.log('🚀 Redirecting to Stripe Checkout...');
             
+            // Mark that payment was initiated
+            sessionStorage.setItem('paymentInitiated', 'true');
+            
             // Direct redirect to Stripe Checkout URL (modern method)
             window.location.href = session.url;
 
@@ -291,7 +294,10 @@ class StripePaymentProcessor {
                     `).join('')}
                 </div>
 
-                <button onclick="window.location.href = '/login.html?message=Payment initiated! Your account has been created. Please login.'" style="
+                <button onclick="
+                    sessionStorage.setItem('paymentInitiated', 'true');
+                    window.location.href = '/login.html?message=Payment initiated! Your account has been created. Please login.';
+                " style="
                     width: 100%;
                     padding: 1rem;
                     background: #E8B4A0;
@@ -629,6 +635,8 @@ class StripePaymentProcessor {
 
                 <button onclick="
                     console.log('🧹 Crypto payment noted - account created, redirecting to login');
+                    // Mark payment as initiated
+                    sessionStorage.setItem('paymentInitiated', 'true');
                     // Reset processing flag
                     if (window.stripeProcessor) {
                         window.stripeProcessor.isProcessing = false;
