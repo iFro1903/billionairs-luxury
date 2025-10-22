@@ -145,8 +145,20 @@ body::before {
 .dashboard-title,
 .state-title,
 .login-title,
-.hero-title {
+.hero-title,
+.dashboard-subtitle,
+.pending-text,
+.reveal-description,
+.info-label,
+.info-value,
+.member-info,
+.status-badge,
+h1, h2, h3, h4, h5, h6,
+p:not(.clickable),
+span:not(.clickable),
+div:not(.clickable) {
     cursor: default !important;
+    user-select: none;
 }
 
 .hero-section::before {
