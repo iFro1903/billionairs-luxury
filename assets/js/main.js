@@ -427,11 +427,17 @@ class LuxuryTimepiece {
     showPaymentSection() {
         const transitionSection = document.getElementById('transitionSection');
         const paymentSection = document.getElementById('paymentSection');
+        const memberBtn = document.getElementById('memberBtn');
         
         if (paymentSection) {
             // Hide transition if it's showing
             if (transitionSection && transitionSection.style.display !== 'none') {
                 transitionSection.style.display = 'none';
+            }
+            
+            // Hide INNER CIRCLE button on payment section (only for new users)
+            if (memberBtn) {
+                memberBtn.style.display = 'none';
             }
             
             paymentSection.classList.remove('hidden');
