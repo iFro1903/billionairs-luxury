@@ -34,6 +34,19 @@ class LuxuryTimepiece {
         
         // Check if payment was already completed (localStorage)
         this.checkPaymentStatus();
+        
+        // Check if we should navigate directly to payment section
+        this.checkHashNavigation();
+    }
+    
+    checkHashNavigation() {
+        if (window.location.hash === '#paymentSection') {
+            // Directly show payment section without transition
+            console.log('🎯 Direct navigation to payment section detected');
+            setTimeout(() => {
+                this.showPaymentSection();
+            }, 100);
+        }
     }
 
     // Universal Transition für alle Seiten-Wechsel
