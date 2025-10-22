@@ -76,9 +76,9 @@
         #transitionSection,
         #rejectionSection,
         #paymentSection {
-            display: none;
             opacity: 0;
             visibility: hidden;
+            pointer-events: none;
             transition: opacity 0.6s ease, visibility 0.6s ease;
         }
         
@@ -87,6 +87,7 @@
         #paymentSection.active {
             opacity: 1;
             visibility: visible;
+            pointer-events: auto;
         }
         
         /* Smooth autofill background */
