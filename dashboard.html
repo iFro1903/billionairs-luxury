@@ -373,7 +373,7 @@
             window.location.href = '/';
         }
 
-        function handleDownload(event) {
+        async function handleDownload(event) {
             event.preventDefault();
             
             // Check if user has paid
@@ -382,11 +382,39 @@
                 return;
             }
 
-            // TODO: Replace with actual download link
-            alert('Download feature coming soon!\n\nYour exclusive "TIME IS WEALTH" timepiece will be available here.');
-            
-            // In production, this would trigger the actual download:
-            // window.location.href = '/api/download?token=' + window.authManager.token;
+            try {
+                // Get user data
+                const userData = window.authManager.getCurrentUser();
+                
+                // Open the Final Truth PDF in a new window
+                const pdfWindow = window.open('/downloads/final-truth.html', '_blank');
+                
+                if (!pdfWindow) {
+                    alert('Please allow popups to download your exclusive content.');
+                    return;
+                }
+                
+                // Log the download
+                await fetch('/api/generate-pdf', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        userId: userData.id,
+                        email: userData.email
+                    })
+                });
+                
+                // Show success message
+                setTimeout(() => {
+                    alert('Your exclusive "FINAL TRUTH" has been opened!\n\nYou can print it as PDF using Ctrl+P (Windows) or Cmd+P (Mac).');
+                }, 500);
+                
+            } catch (error) {
+                console.error('Download error:', error);
+                alert('Download failed. Please try again or contact support.');
+            }
         }
 
         // Initialize dashboard
