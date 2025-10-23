@@ -114,8 +114,8 @@ module.exports = async (req, res) => {
         customer_email: customerData?.email || ''
       },
       customer_email: customerData?.email || undefined,
-      success_url: `${req.headers.origin || 'https://billionairs-luxury.vercel.app'}/dashboard.html?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.origin || 'https://billionairs-luxury.vercel.app'}/dashboard.html?message=Payment cancelled`
+      success_url: `https://billionairs-luxury.vercel.app/dashboard.html?session_id={CHECKOUT_SESSION_ID}&payment=success`,
+      cancel_url: `https://billionairs-luxury.vercel.app/dashboard.html?message=Payment cancelled`
     });
 
     res.status(200).json({ url: session.url });
