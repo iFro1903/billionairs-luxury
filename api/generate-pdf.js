@@ -15,8 +15,8 @@ export default async function handler(req, res) {
     try {
         const { userId, email } = req.body;
 
-        if (!userId || !email) {
-            return res.status(400).json({ error: 'Missing required fields' });
+        if (!email) {
+            return res.status(400).json({ error: 'Email is required' });
         }
 
         // Import database connection
@@ -24,30 +24,33 @@ export default async function handler(req, res) {
 
         // Verify user has paid
         const result = await sql`
-            SELECT payment_status 
+            SELECT id, payment_status, member_id
             FROM users 
-            WHERE id = ${userId} AND email = ${email}
+            WHERE email = ${email}
         `;
 
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        if (result.rows[0].payment_status !== 'paid') {
+        const user = result.rows[0];
+
+        if (user.payment_status !== 'paid') {
             return res.status(403).json({ error: 'Payment required' });
         }
 
         // Log download
         await sql`
             INSERT INTO downloads (user_id, downloaded_at)
-            VALUES (${userId}, NOW())
+            VALUES (${user.id}, NOW())
         `;
 
         // Return success - client will handle PDF generation
         res.status(200).json({ 
             success: true,
             message: 'Download authorized',
-            pdfUrl: '/downloads/final-truth.html'
+            pdfUrl: '/downloads/final-truth.html',
+            memberId: user.member_id
         });
 
     } catch (error) {
