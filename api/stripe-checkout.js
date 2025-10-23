@@ -97,22 +97,18 @@ module.exports = async (req, res) => {
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      mode: 'payment',
+      mode: 'subscription',
       line_items: [{
-        price_data: {
-          currency: 'chf',
-          product_data: {
-            name: 'BILLIONAIRS Exclusive Access',
-            description: 'Lifetime access to the exclusive BILLIONAIRS platform'
-          },
-          unit_amount: 50000000  // 500,000 CHF (in cents)
-        },
+        price: 'price_1SL9Be7Fzwybk1NyQpd06DhZ', // Your actual Price ID
         quantity: 1
       }],
-      metadata: metadata || {},
+      metadata: {
+        ...metadata,
+        customer_email: customerData?.email || ''
+      },
       customer_email: customerData?.email || undefined,
-      success_url: `${req.headers.origin || 'https://billionairs-luxury.vercel.app'}/login.html?message=Payment successful! Your account has been created. Please login.`,
-      cancel_url: `${req.headers.origin || 'https://billionairs-luxury.vercel.app'}/?message=Payment cancelled`
+      success_url: `${req.headers.origin || 'https://billionairs-luxury.vercel.app'}/dashboard.html?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.origin || 'https://billionairs-luxury.vercel.app'}/dashboard.html?message=Payment cancelled`
     });
 
     res.status(200).json({ url: session.url });
