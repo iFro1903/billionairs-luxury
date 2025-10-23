@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/easter-egg.css">
     
     <!-- Particles.js -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
@@ -294,6 +295,9 @@
                     <a href="#" class="download-button" onclick="handleDownload(event)">
                         ⬇ DOWNLOAD YOUR EXCLUSIVE ACCESS
                     </a>
+                    <a href="the-hidden-door.html" class="download-button" style="margin-top: 1.5rem; background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);">
+                        🔑 THE HIDDEN DOOR
+                    </a>
                 </div>
             </div>
         </div>
@@ -362,6 +366,11 @@
             if (user.paymentStatus === 'paid') {
                 statusContainer.innerHTML = '<span class="status-badge status-paid">Access Granted</span>';
                 document.getElementById('revealSection').style.display = 'block';
+                
+                // Initialize Easter Egg System for paid users
+                if (typeof EasterEggSystem !== 'undefined') {
+                    EasterEggSystem.init(user.email);
+                }
             } else {
                 statusContainer.innerHTML = '<span class="status-badge status-pending">Pending Payment</span>';
                 document.getElementById('pendingSection').style.display = 'block';
@@ -518,5 +527,8 @@
             retina_detect: true
         });
     </script>
+
+    <!-- Easter Egg System -->
+    <script src="assets/js/easter-egg.js"></script>
 </body>
 </html>

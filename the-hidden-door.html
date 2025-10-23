@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE HIDDEN DOOR - BILLIONAIRS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Cinzel:wght@400;500;600;700;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'EB Garamond', serif;
+            background: #0a0a0a;
+            color: #e8e8e8;
+            min-height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" /></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.03"/></svg>');
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.6) 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 400;
+            letter-spacing: 16px;
+            color: #ffffff;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .subtitle {
+            font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+            letter-spacing: 8px;
+            color: #D4AF37;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        .watch-container {
+            position: relative;
+            width: 700px;
+            height: 700px;
+            max-width: 90vw;
+            max-height: 90vw;
+            margin: 3rem 0;
+            animation: fadeInScale 3s ease-out 0.5s both;
+            filter: drop-shadow(0 40px 100px rgba(0, 0, 0, 0.8));
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .watch-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 650px;
+            height: 650px;
+            max-width: 93vw;
+            max-height: 93vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        .watch-bezel {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            max-width: 86vw;
+            max-height: 86vw;
+            border-radius: 50%;
+            background: linear-gradient(135deg, 
+                #D4AF37 0%, #E8C766 10%, #D4AF37 20%,
+                #C9A961 30%, #D4AF37 40%, #E8C766 50%,
+                #D4AF37 60%, #C9A961 70%, #D4AF37 80%,
+                #E8C766 90%, #D4AF37 100%
+            );
+            box-shadow: 
+                0 0 0 3px #1a1a1a,
+                0 30px 100px rgba(0, 0, 0, 0.9),
+                inset 0 4px 8px rgba(255, 255, 255, 0.3),
+                inset 0 -4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .watch-bezel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: repeating-conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                rgba(255, 255, 255, 0.15) 1.5deg,
+                transparent 3deg
+            );
+        }
+
+        .watch-case {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 560px;
+            height: 560px;
+            max-width: 80vw;
+            max-height: 80vw;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 50%, #0d0d0d 100%);
+            box-shadow: 
+                inset 0 0 0 2px rgba(212, 175, 55, 0.3),
+                inset 0 4px 12px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .watch-face {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 520px;
+            height: 520px;
+            max-width: 74vw;
+            max-height: 74vw;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, 
+                #1a1f2e 0%, #141823 40%, #0d0f15 100%
+            );
+            box-shadow: 
+                inset 0 0 80px rgba(0, 0, 0, 0.8),
+                inset 0 4px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        .watch-face::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(0deg, transparent 48%, rgba(255,255,255,0.015) 49%, rgba(255,255,255,0.015) 51%, transparent 52%),
+                linear-gradient(90deg, transparent 48%, rgba(255,255,255,0.015) 49%, rgba(255,255,255,0.015) 51%, transparent 52%);
+            background-size: 8px 8px;
+            border-radius: 50%;
+        }
+
+        .watch-face::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 92%;
+            height: 92%;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .brand {
+            position: absolute;
+            top: 16%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1rem, 2.2vw, 1.6rem);
+            letter-spacing: 10px;
+            color: #D4AF37;
+            text-transform: uppercase;
+            font-weight: 500;
+            text-shadow: 
+                0 0 10px rgba(212, 175, 55, 0.5),
+                0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .swiss-made {
+            position: absolute;
+            bottom: 16%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(0.65rem, 1.3vw, 0.9rem);
+            letter-spacing: 4px;
+            color: rgba(212, 175, 55, 0.7);
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        .markers {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+        }
+
+        .marker {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 3px;
+            height: 50%;
+            transform-origin: 50% 100%;
+            margin-left: -1.5px;
+            margin-top: -50%;
+        }
+
+        .marker::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 16px;
+            background: linear-gradient(to bottom, #D4AF37, #E8C766, #D4AF37);
+            border-radius: 1.5px;
+            box-shadow: 
+                0 0 8px rgba(212, 175, 55, 0.6),
+                inset 0 1px 2px rgba(255, 255, 255, 0.3),
+                inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .marker:nth-child(3n)::before {
+            height: 24px;
+            width: 4px;
+            background: linear-gradient(to bottom, #D4AF37, #E8C766, #C9A961, #D4AF37);
+            box-shadow: 
+                0 0 12px rgba(212, 175, 55, 0.8),
+                inset 0 2px 3px rgba(255, 255, 255, 0.4),
+                inset 0 -2px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        .hands {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+        }
+
+        .hand {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: 50% 100%;
+            margin-top: 0;
+        }
+
+        .hour-hand {
+            width: 10px;
+            height: 32%;
+            margin-left: -5px;
+            margin-top: -32%;
+            background: linear-gradient(to top, 
+                #C9A961 0%, #D4AF37 30%, #E8C766 50%, #D4AF37 70%, #C9A961 100%
+            );
+            clip-path: polygon(50% 0%, 100% 12%, 85% 100%, 15% 100%, 0% 12%);
+            box-shadow: 
+                inset 0 2px 4px rgba(255, 255, 255, 0.4),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+                0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .minute-hand {
+            width: 8px;
+            height: 42%;
+            margin-left: -4px;
+            margin-top: -42%;
+            background: linear-gradient(to top,
+                #C9A961 0%, #D4AF37 30%, #E8C766 50%, #D4AF37 70%, #C9A961 100%
+            );
+            clip-path: polygon(50% 0%, 100% 8%, 80% 100%, 20% 100%, 0% 8%);
+            box-shadow: 
+                inset 0 2px 4px rgba(255, 255, 255, 0.4),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+                0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .second-hand {
+            width: 2.5px;
+            height: 48%;
+            margin-left: -1.25px;
+            margin-top: -48%;
+            background: linear-gradient(to top,
+                #D4AF37 0%, #E8C766 50%, #ffffff 100%
+            );
+            border-radius: 1px;
+            box-shadow: 
+                0 0 12px rgba(212, 175, 55, 0.8),
+                0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .watch-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%,
+                #ffffff 0%, #E8C766 20%, #D4AF37 50%, #C9A961 100%
+            );
+            box-shadow: 
+                0 0 0 2px rgba(26, 26, 26, 0.8),
+                0 0 0 3px rgba(212, 175, 55, 0.5),
+                0 0 20px rgba(212, 175, 55, 0.6),
+                inset 0 2px 4px rgba(255, 255, 255, 0.5),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+
+        .description {
+            text-align: center;
+            max-width: 800px;
+            margin-top: 5rem;
+            padding: 0 2rem;
+            animation: fadeIn 3s ease-out 2s both;
+        }
+
+        .description p {
+            font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+            line-height: 2.4;
+            color: rgba(232, 232, 232, 0.85);
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .description .highlight {
+            color: #D4AF37;
+            font-weight: 600;
+            font-style: italic;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .price {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+            color: #D4AF37;
+            letter-spacing: 12px;
+            margin-top: 4rem;
+            font-weight: 500;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .watermark {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'EB Garamond', serif;
+            font-size: 0.8rem;
+            letter-spacing: 5px;
+            color: rgba(212, 175, 55, 0.25);
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .watch-container { width: 500px; height: 500px; }
+            .watch-bezel { width: 430px; height: 430px; }
+            .watch-case { width: 400px; height: 400px; }
+            .watch-face { width: 370px; height: 370px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">The Hidden Door</h1>
+            <p class="subtitle">Welcome to Eternity</p>
+        </div>
+
+        <div class="watch-container">
+            <div class="watch-glow"></div>
+            <div class="watch-bezel"></div>
+            <div class="watch-case"></div>
+            
+            <div class="watch-face">
+                <div class="brand">BILLIONAIRS</div>
+                <div class="swiss-made">Swiss Made</div>
+                
+                <div class="markers" id="markers"></div>
+                
+                <div class="hands">
+                    <div class="hour-hand hand" id="hourHand"></div>
+                    <div class="minute-hand hand" id="minuteHand"></div>
+                    <div class="second-hand hand" id="secondHand"></div>
+                </div>
+                
+                <div class="watch-center"></div>
+            </div>
+        </div>
+
+        <div class="description">
+            <p>Every billionaire buys the same things.</p>
+            <p>Yachts. Jets. Islands. Art.</p>
+            <p>You just bought something <span class="highlight">none of them have</span>.</p>
+            <p class="price">CHF 500,000</p>
+        </div>
+    </div>
+
+    <div class="watermark">BILLIONAIRS • Genève • MMXXV</div>
+
+    <script>
+        const markersContainer = document.getElementById('markers');
+        for (let i = 0; i < 12; i++) {
+            const marker = document.createElement('div');
+            marker.className = 'marker';
+            marker.style.transform = `rotate(${i * 30}deg)`;
+            markersContainer.appendChild(marker);
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const milliseconds = now.getMilliseconds();
+
+            const hourDeg = (hours * 30) + (minutes * 0.5) + (seconds * 0.00833);
+            const minuteDeg = (minutes * 6) + (seconds * 0.1);
+            const secondDeg = (seconds * 6) + (milliseconds * 0.006);
+
+            document.getElementById('hourHand').style.transform = `rotate(${hourDeg}deg)`;
+            document.getElementById('minuteHand').style.transform = `rotate(${minuteDeg}deg)`;
+            document.getElementById('secondHand').style.transform = `rotate(${secondDeg}deg)`;
+        }
+
+        updateClock();
+        setInterval(updateClock, 50);
+    </script>
+</body>
+</html>
