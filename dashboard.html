@@ -417,6 +417,17 @@
                 // Get user data
                 const userData = window.authManager.getCurrentUser();
                 
+                // Log the download attempt (don't wait for it)
+                fetch('/api/generate-pdf', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: userData.email
+                    })
+                }).catch(err => console.log('Download logging failed:', err));
+                
                 // Open the Final Truth PDF in a new window
                 const pdfWindow = window.open('/downloads/final-truth.html', '_blank');
                 
@@ -424,18 +435,6 @@
                     alert('Please allow popups to download your exclusive content.');
                     return;
                 }
-                
-                // Log the download
-                await fetch('/api/generate-pdf', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        userId: userData.id,
-                        email: userData.email
-                    })
-                });
                 
                 // Show success message
                 setTimeout(() => {
