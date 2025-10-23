@@ -102,6 +102,11 @@ module.exports = async (req, res) => {
         price: 'price_1SL9Be7Fzwybk1NyQpd06DhZ', // Your actual Price ID
         quantity: 1
       }],
+      subscription_data: {
+        metadata: {
+          customer_email: customerData?.email || ''
+        }
+      },
       metadata: {
         ...metadata,
         customer_email: customerData?.email || ''
