@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BILLIONAIRS - Certificate of Exclusive Membership</title>
+    <!-- Updated: 2025-10-23 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Crimson Text', serif;
+            background: #0a0a0a;
+            color: #c9a961;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.008) 2px, rgba(255,255,255,0.008) 4px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Premium paper texture */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 30% 40%, rgba(201, 169, 97, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 60%, rgba(255, 215, 0, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .page {
+            position: relative;
+            max-width: 21cm;
+            min-height: 29.7cm;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #000000 0%, #0d0d0d 50%, #000000 100%);
+            padding: 3cm 2.5cm;
+            box-shadow: 
+                inset 0 0 0 1px rgba(201, 169, 97, 0.3),
+                inset 0 0 0 2px rgba(0, 0, 0, 0.8),
+                inset 0 0 0 3px rgba(201, 169, 97, 0.15),
+                0 50px 100px rgba(0, 0, 0, 0.8);
+            z-index: 2;
+            position: relative;
+        }
+        
+        /* Corner ornaments */
+        .corner-ornament {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-style: solid;
+            border-color: rgba(201, 169, 97, 0.4);
+        }
+        
+        .corner-ornament.top-left {
+            top: 1.5cm;
+            left: 1.5cm;
+            border-width: 1px 0 0 1px;
+        }
+        
+        .corner-ornament.top-right {
+            top: 1.5cm;
+            right: 1.5cm;
+            border-width: 1px 1px 0 0;
+        }
+        
+        .corner-ornament.bottom-left {
+            bottom: 1.5cm;
+            left: 1.5cm;
+            border-width: 0 0 1px 1px;
+        }
+        
+        .corner-ornament.bottom-right {
+            bottom: 1.5cm;
+            right: 1.5cm;
+            border-width: 0 1px 1px 0;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3cm;
+            position: relative;
+        }
+        
+        .crest {
+            width: 100px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .crest img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(1.1);
+        }
+        
+        .institution-name {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 11px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: rgba(201, 169, 97, 0.7);
+            margin-bottom: 5px;
+            font-weight: 400;
+        }
+        
+        .logo {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 52px;
+            font-weight: 700;
+            letter-spacing: 16px;
+            color: #c9a961;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        .tagline {
+            font-size: 10px;
+            letter-spacing: 5px;
+            color: rgba(201, 169, 97, 0.5);
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+        
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c9a961, transparent);
+            margin: 40px auto;
+        }
+        
+        /* Certificate title */
+        .certificate-title {
+            text-align: center;
+            margin: 50px 0 40px;
+        }
+        
+        .certificate-label {
+            font-size: 9px;
+            letter-spacing: 4px;
+            color: rgba(201, 169, 97, 0.5);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        
+        .certificate-name {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: 8px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+        
+        /* Content */
+        .content {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 2.4;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        
+        .content p {
+            margin-bottom: 28px;
+        }
+        
+        .content em {
+            font-style: italic;
+            color: #c9a961;
+        }
+        
+        .content strong {
+            font-weight: 700;
+            color: #c9a961;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Quote block */
+        .quote-block {
+            margin: 60px auto;
+            padding: 50px 40px;
+            max-width: 550px;
+            border-top: 1px solid rgba(201, 169, 97, 0.25);
+            border-bottom: 1px solid rgba(201, 169, 97, 0.25);
+            position: relative;
+            background: linear-gradient(180deg, transparent 0%, rgba(201, 169, 97, 0.02) 50%, transparent 100%);
+        }
+        
+        .quote-block::before {
+            content: '„';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Bodoni Moda', serif;
+            font-size: 80px;
+            color: rgba(201, 169, 97, 0.2);
+            line-height: 1;
+        }
+        
+        .quote-text {
+            font-family: 'Bodoni Moda', serif;
+            font-style: italic;
+            font-size: 19px;
+            line-height: 1.9;
+            color: #c9a961;
+            text-align: center;
+        }
+        
+        /* Amount section */
+        .amount-section {
+            margin: 70px 0;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(201, 169, 97, 0.25);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(20, 20, 20, 0.2) 100%);
+            position: relative;
+        }
+        
+        .amount-section::before,
+        .amount-section::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 1px;
+            background: #c9a961;
+            top: -1px;
+        }
+        
+        .amount-section::before {
+            left: 50%;
+            transform: translateX(-60px);
+        }
+        
+        .amount-section::after {
+            left: 50%;
+            transform: translateX(20px);
+        }
+        
+        .amount-label {
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: rgba(201, 169, 97, 0.6);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        
+        .amount-value {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 42px;
+            font-weight: 600;
+            color: #c9a961;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+        }
+        
+        .amount-period {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+        }
+        
+        /* Status badges */
+        .status-badges {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: #2ecc71;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            background: rgba(46, 204, 113, 0.05);
+        }
+        
+        .badge::before {
+            content: '✓';
+            margin-right: 6px;
+            font-size: 11px;
+        }
+        
+        /* Footer */
+        .footer {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(201, 169, 97, 0.2);
+            text-align: center;
+        }
+        
+        .security-info {
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: rgba(201, 169, 97, 0.4);
+            text-transform: uppercase;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+        
+        .verification-code {
+            font-family: 'Courier New', monospace;
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: rgba(201, 169, 97, 0.35);
+            margin-top: 15px;
+        }
+        
+        .establishment {
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.25);
+            text-transform: uppercase;
+            margin-top: 30px;
+        }
+        
+        @media print {
+            body {
+                background: #000;
+            }
+            .page {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Corner ornaments -->
+        <div class="corner-ornament top-left"></div>
+        <div class="corner-ornament top-right"></div>
+        <div class="corner-ornament bottom-left"></div>
+        <div class="corner-ornament bottom-right"></div>
+        
+        <!-- Header -->
+        <div class="header">
+            <div class="crest">
+                <img src="../../assets/images/logo.png" alt="BILLIONAIRS">
+            </div>
+            <div class="institution-name">Private Member's Circle</div>
+            <div class="logo">BILLIONAIRS</div>
+            <div class="tagline">Est. Zürich • MMXXV</div>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <!-- Certificate Title -->
+        <div class="certificate-title">
+            <div class="certificate-label">Certificate of Exclusive Access</div>
+            <div class="certificate-name">THE FINAL TRUTH</div>
+        </div>
+        
+        <!-- Content -->
+        <div class="content">
+            <p>You have crossed the threshold<br>few dare to approach.</p>
+            
+            <p>What lies beyond is <em>not gold</em>.<br>
+            <em>Not diamonds</em>. Not material wealth.</p>
+            
+            <p>It is the understanding that separates<br>
+            the <strong>builders</strong> from the dreamers.</p>
+        </div>
+        
+        <!-- Quote -->
+        <div class="quote-block">
+            <div class="quote-text">
+                Time is not money.<br>
+                Time is the canvas upon which wealth is painted.<br><br>
+                Master your minutes, and millions follow.
+            </div>
+        </div>
+        
+        <!-- Content continued -->
+        <div class="content">
+            <p>The secret every titan of industry knows:</p>
+            
+            <p><strong>Not gold. Not diamonds.</strong><br>
+            <strong>Something far more precious.</strong></p>
+            
+            <p><em>Something that moves in circles,<br>
+            yet never repeats.</em></p>
+            
+            <p style="margin-top: 50px;">One decision. One moment.<br>
+            Everything changes.</p>
+            
+            <p>You now possess what the elite<br>
+            measure their lives by.</p>
+        </div>
+        
+        <!-- Amount Section -->
+        <div class="amount-section">
+            <div class="amount-label">Membership Investment</div>
+            <div class="amount-value">CHF 500,000</div>
+            <div class="amount-period">Annual Subscription</div>
+            
+            <div class="status-badges">
+                <div class="badge">Payment Confirmed</div>
+                <div class="badge">Access Granted</div>
+                <div class="badge">Member Verified</div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="security-info">
+                Secured by Swiss Banking Standards<br>
+                Blockchain Verified • Encrypted Infrastructure<br>
+                Zürich, Switzerland
+            </div>
+            <div class="verification-code">
+                CERTIFICATE NO. BILL-EXCLUSIVE-2025-VERIFIED
+            </div>
+            <div class="establishment">
+                Billionairs Private Member's Circle • Established MMXXV
+            </div>
+        </div>
+    </div>
+</body>
+</html>
