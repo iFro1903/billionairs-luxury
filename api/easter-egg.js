@@ -12,7 +12,16 @@ export default async function handler(req, res) {
 
   try {
     const sql = neon(process.env.DATABASE_URL);
-    const { email, action } = req.body;
+    
+    // Parse body manually for Vercel
+    let body;
+    if (typeof req.body === 'string') {
+      body = JSON.parse(req.body);
+    } else {
+      body = req.body;
+    }
+    
+    const { email, action } = body;
 
     if (!email || !action) {
       return res.status(400).json({ error: 'Email and action required' });
