@@ -319,9 +319,40 @@
             
             // Check if user just completed a payment (came from payment page or stripe)
             const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session_id');
             const justPaid = urlParams.get('payment') === 'success' || 
-                            urlParams.get('session_id') || 
+                            sessionId || 
                             sessionStorage.getItem('paymentInitiated') === 'true';
+            
+            // If there's a session_id, verify the payment immediately
+            if (sessionId && user.paymentStatus !== 'paid') {
+                console.log('🔍 Session ID detected, verifying payment...');
+                try {
+                    const response = await fetch('/api/verify-payment', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            sessionId: sessionId,
+                            email: user.email 
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    console.log('✅ Payment verification result:', result);
+                    
+                    if (result.success && result.paymentStatus === 'paid') {
+                        // Update local user data
+                        user.paymentStatus = 'paid';
+                        window.authManager.updateUser({ paymentStatus: 'paid' });
+                        
+                        // Reload page to show paid status
+                        window.location.href = '/dashboard.html';
+                        return;
+                    }
+                } catch (error) {
+                    console.error('❌ Payment verification error:', error);
+                }
+            }
             
             // Display status
             const statusContainer = document.getElementById('statusContainer');
