@@ -68,11 +68,16 @@ const EasterEggSystem = {
     updateUI() {
         if (!this.status) return;
 
-        // Show pyramid after 20 seconds if not unlocked
+        // Show pyramid after 20 seconds if not unlocked yet
         if (this.status.showPyramid && !this.status.pyramidUnlocked) {
             setTimeout(() => {
                 this.showPyramid();
             }, 20000); // 20 seconds
+        }
+
+        // Keep showing pyramid if unlocked but eye not ready
+        if (this.status.pyramidUnlocked && !this.status.eyeUnlocked && !this.status.eyeReady) {
+            this.showPyramid();
         }
 
         // Show eye if ready (72h + 3 logins)
