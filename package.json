@@ -33,6 +33,7 @@
     "terser": "^5.44.0"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^0.10.3",
     "dotenv": "^17.2.3",
     "express": "^4.21.2",
     "luxon": "^3.4.4",
