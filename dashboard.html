@@ -407,44 +407,47 @@
         async function handleDownload(event) {
             event.preventDefault();
             
+            console.log('Download button clicked');
+            
             // Check if user has paid
-            if (!window.authManager.hasPaid()) {
+            const hasPaid = window.authManager.hasPaid();
+            console.log('User has paid:', hasPaid);
+            
+            if (!hasPaid) {
                 alert('Payment required to download');
                 return;
             }
 
-            try {
-                // Get user data
-                const userData = window.authManager.getCurrentUser();
-                
-                // Log the download attempt (don't wait for it)
-                fetch('/api/generate-pdf', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email: userData.email
-                    })
-                }).catch(err => console.log('Download logging failed:', err));
-                
-                // Open the Final Truth PDF in a new window
-                const pdfWindow = window.open('/downloads/final-truth.html', '_blank');
-                
-                if (!pdfWindow) {
-                    alert('Please allow popups to download your exclusive content.');
-                    return;
-                }
-                
-                // Show success message
-                setTimeout(() => {
-                    alert('Your exclusive "FINAL TRUTH" has been opened!\n\nYou can print it as PDF using Ctrl+P (Windows) or Cmd+P (Mac).');
-                }, 500);
-                
-            } catch (error) {
-                console.error('Download error:', error);
-                alert('Download failed. Please try again or contact support.');
+            // Get user data
+            const userData = window.authManager.getUser();
+            console.log('User data:', userData);
+            
+            // Log the download attempt (don't wait for it)
+            fetch('/api/generate-pdf', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: userData.email
+                })
+            }).catch(err => console.log('Download logging failed:', err));
+            
+            // Open the Final Truth PDF in a new window
+            console.log('Opening PDF window...');
+            const pdfWindow = window.open('/downloads/final-truth.html', '_blank');
+            
+            if (!pdfWindow) {
+                alert('Please allow popups to download your exclusive content.');
+                return;
             }
+            
+            console.log('PDF window opened successfully');
+            
+            // Show success message
+            setTimeout(() => {
+                alert('Your exclusive "FINAL TRUTH" has been opened!\n\nYou can print it as PDF using Ctrl+P (Windows) or Cmd+P (Mac).');
+            }, 500);
         }
 
         // Initialize dashboard
