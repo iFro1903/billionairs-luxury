@@ -1,225 +1,195 @@
 import { neon } from '@neondatabase/serverless';
 
-export const config = {
-  runtime: 'edge',
-};
-
-export default async function handler(req) {
+export default async function handler(req, res) {
   // CORS Headers
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Content-Type': 'application/json',
-  };
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   if (req.method === 'OPTIONS') {
-    return new Response(null, { status: 200, headers });
+    return res.status(200).end();
   }
 
   try {
     const sql = neon(process.env.DATABASE_URL);
-    const { email, action } = await req.json();
+    const { email, action } = req.body;
 
     if (!email || !action) {
-      return new Response(
-        JSON.stringify({ error: 'Email and action required' }),
-        { status: 400, headers }
-      );
+      return res.status(400).json({ error: 'Email and action required' });
     }
 
-    const now = new Date().toISOString();
+    // Get user
+    const users = await sql`SELECT * FROM users WHERE email = ${email}`;
+    if (users.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    const user = users[0];
 
-    // Verschiedene Actions
     switch (action) {
-      case 'check_status':
-        // Gibt aktuellen Status des Easter Egg Systems zurück
-        const user = await sql`
-          SELECT 
-            first_dashboard_access,
-            pyramid_unlocked,
-            pyramid_opened_at,
-            eye_unlocked,
-            eye_opened_at,
-            chat_unlocked,
-            last_daily_login,
-            login_streak
-          FROM users 
-          WHERE email = ${email}
-        `;
-
-        if (user.length === 0) {
-          return new Response(
-            JSON.stringify({ error: 'User not found' }),
-            { status: 404, headers }
-          );
-        }
-
-        const userData = user[0];
-        const currentTime = new Date();
-
-        // Berechne ob Pyramide angezeigt werden soll (20 Sekunden nach erstem Zugriff)
+      // ===== CHECK STATUS =====
+      case 'check_status': {
+        const now = new Date();
         let showPyramid = false;
-        if (userData.first_dashboard_access && !userData.pyramid_unlocked) {
-          const firstAccess = new Date(userData.first_dashboard_access);
-          const secondsSinceFirstAccess = (currentTime - firstAccess) / 1000;
-          showPyramid = secondsSinceFirstAccess >= 20;
-        }
-
-        // Berechne ob Auge freigeschaltet ist (72h nach pyramid_opened_at)
         let eyeReady = false;
-        if (userData.pyramid_opened_at && !userData.eye_unlocked) {
-          const pyramidOpenedAt = new Date(userData.pyramid_opened_at);
-          const hoursSincePyramid = (currentTime - pyramidOpenedAt) / (1000 * 60 * 60);
-          eyeReady = hoursSincePyramid >= 72 && userData.login_streak >= 3;
+        let chatReady = false;
+
+        // Check if pyramid should show (20 seconds after first access)
+        if (user.first_dashboard_access && !user.pyramid_unlocked) {
+          const timeSinceFirst = now - new Date(user.first_dashboard_access);
+          showPyramid = timeSinceFirst >= 20000; // 20 seconds
         }
 
-        // Berechne ob Chat freigeschaltet ist (168h nach eye_opened_at)
-        let chatReady = false;
-        if (userData.eye_opened_at && !userData.chat_unlocked) {
-          const eyeOpenedAt = new Date(userData.eye_opened_at);
-          const hoursSinceEye = (currentTime - eyeOpenedAt) / (1000 * 60 * 60);
+        // Check if eye should be ready (72 hours + 3 logins)
+        if (user.pyramid_opened_at && !user.eye_unlocked && user.login_streak >= 3) {
+          const hoursSincePyramid = (now - new Date(user.pyramid_opened_at)) / (1000 * 60 * 60);
+          eyeReady = hoursSincePyramid >= 72;
+        }
+
+        // Check if chat should be ready (168 hours from eye unlock)
+        if (user.eye_opened_at && !user.chat_unlocked) {
+          const hoursSinceEye = (now - new Date(user.eye_opened_at)) / (1000 * 60 * 60);
           chatReady = hoursSinceEye >= 168;
         }
 
-        return new Response(
-          JSON.stringify({
-            success: true,
-            showPyramid,
-            pyramidUnlocked: userData.pyramid_unlocked,
-            eyeUnlocked: userData.eye_unlocked,
-            eyeReady,
-            chatUnlocked: userData.chat_unlocked,
-            chatReady,
-            loginStreak: userData.login_streak || 0,
-            firstDashboardAccess: userData.first_dashboard_access,
-          }),
-          { status: 200, headers }
-        );
+        return res.status(200).json({
+          showPyramid,
+          pyramidUnlocked: user.pyramid_unlocked || false,
+          eyeUnlocked: user.eye_unlocked || false,
+          eyeReady,
+          chatUnlocked: user.chat_unlocked || false,
+          chatReady,
+          loginStreak: user.login_streak || 0
+        });
+      }
 
-      case 'first_access':
-        // Setze first_dashboard_access wenn noch nicht gesetzt
-        await sql`
-          UPDATE users 
-          SET first_dashboard_access = ${now}
-          WHERE email = ${email} 
-          AND first_dashboard_access IS NULL
-        `;
-
-        return new Response(
-          JSON.stringify({ success: true, message: 'First access recorded' }),
-          { status: 200, headers }
-        );
-
-      case 'open_pyramid':
-        // User hat Pyramide angeklickt
-        await sql`
-          UPDATE users 
-          SET 
-            pyramid_unlocked = TRUE,
-            pyramid_opened_at = ${now}
-          WHERE email = ${email}
-        `;
-
-        return new Response(
-          JSON.stringify({ 
-            success: true, 
-            riddle: "The triangle has three sides.\nEach side demands your presence.\nReturn when the sun rises. Three times."
-          }),
-          { status: 200, headers }
-        );
-
-      case 'daily_login':
-        // Tracke täglichen Login für Streak
-        const userForStreak = await sql`
-          SELECT last_daily_login, login_streak 
-          FROM users 
-          WHERE email = ${email}
-        `;
-
-        if (userForStreak.length === 0) {
-          return new Response(
-            JSON.stringify({ error: 'User not found' }),
-            { status: 404, headers }
-          );
+      // ===== FIRST ACCESS =====
+      case 'first_access': {
+        if (!user.first_dashboard_access) {
+          await sql`
+            UPDATE users 
+            SET first_dashboard_access = NOW() 
+            WHERE email = ${email}
+          `;
         }
+        return res.status(200).json({ success: true });
+      }
 
-        const lastLogin = userForStreak[0].last_daily_login;
-        const currentStreak = userForStreak[0].login_streak || 0;
+      // ===== OPEN PYRAMID =====
+      case 'open_pyramid': {
+        await sql`
+          UPDATE users 
+          SET pyramid_unlocked = TRUE,
+              pyramid_opened_at = NOW()
+          WHERE email = ${email}
+        `;
+
+        const riddle = `The triangle has three sides.
+Each side demands your presence.
+Return when the sun rises. Three times.`;
+
+        return res.status(200).json({ 
+          success: true,
+          riddle
+        });
+      }
+
+      // ===== DAILY LOGIN =====
+      case 'daily_login': {
+        const now = new Date();
+        const lastLogin = user.last_daily_login ? new Date(user.last_daily_login) : null;
         let newStreak = 1;
 
         if (lastLogin) {
-          const lastLoginDate = new Date(lastLogin);
-          const daysSinceLastLogin = Math.floor((currentTime - lastLoginDate) / (1000 * 60 * 60 * 24));
-
-          if (daysSinceLastLogin === 1) {
-            // Aufeinanderfolgender Tag
-            newStreak = currentStreak + 1;
-          } else if (daysSinceLastLogin === 0) {
-            // Gleicher Tag, Streak bleibt
-            newStreak = currentStreak;
+          const hoursSinceLastLogin = (now - lastLogin) / (1000 * 60 * 60);
+          
+          if (hoursSinceLastLogin < 24) {
+            // Same day, keep streak
+            newStreak = user.login_streak || 1;
+          } else if (hoursSinceLastLogin < 48) {
+            // Next day, increment streak
+            newStreak = (user.login_streak || 0) + 1;
           } else {
-            // Streak unterbrochen
+            // Gap > 1 day, reset streak
             newStreak = 1;
           }
         }
 
         await sql`
           UPDATE users 
-          SET 
-            last_daily_login = ${now},
-            login_streak = ${newStreak}
+          SET last_daily_login = NOW(),
+              login_streak = ${newStreak}
           WHERE email = ${email}
         `;
 
-        return new Response(
-          JSON.stringify({ success: true, loginStreak: newStreak }),
-          { status: 200, headers }
-        );
+        return res.status(200).json({ 
+          success: true,
+          loginStreak: newStreak
+        });
+      }
 
-      case 'unlock_eye':
-        // Auge freischalten (nach 72h und 3 Logins)
+      // ===== UNLOCK EYE =====
+      case 'unlock_eye': {
+        const now = new Date();
+        const hoursSincePyramid = (now - new Date(user.pyramid_opened_at)) / (1000 * 60 * 60);
+        
+        if (hoursSincePyramid < 72 || user.login_streak < 3) {
+          return res.status(400).json({ 
+            error: 'Requirements not met',
+            hoursSincePyramid,
+            loginStreak: user.login_streak
+          });
+        }
+
         await sql`
           UPDATE users 
-          SET 
-            eye_unlocked = TRUE,
-            eye_opened_at = ${now}
+          SET eye_unlocked = TRUE,
+              eye_opened_at = NOW()
           WHERE email = ${email}
         `;
 
-        return new Response(
-          JSON.stringify({ 
-            success: true,
-            riddle: "The number of divine perfection.\nDays of creation. Wonders of the world.\nCount them. Return for each."
-          }),
-          { status: 200, headers }
-        );
+        const riddle = `The number of divine perfection.
+Days of creation. Wonders of the world.
+Count them. Return for each.`;
 
-      case 'unlock_chat':
-        // Chat freischalten (nach 168h)
+        return res.status(200).json({ 
+          success: true,
+          riddle
+        });
+      }
+
+      // ===== UNLOCK CHAT =====
+      case 'unlock_chat': {
+        const now = new Date();
+        const hoursSinceEye = (now - new Date(user.eye_opened_at)) / (1000 * 60 * 60);
+        
+        if (hoursSinceEye < 168) {
+          return res.status(400).json({ 
+            error: 'Must wait 168 hours',
+            hoursSinceEye
+          });
+        }
+
         await sql`
           UPDATE users 
           SET chat_unlocked = TRUE
           WHERE email = ${email}
         `;
 
-        return new Response(
-          JSON.stringify({ success: true, message: 'Chat unlocked' }),
-          { status: 200, headers }
-        );
+        return res.status(200).json({ 
+          success: true,
+          message: 'Chat unlocked!'
+        });
+      }
 
       default:
-        return new Response(
-          JSON.stringify({ error: 'Invalid action' }),
-          { status: 400, headers }
-        );
+        return res.status(400).json({ error: 'Invalid action' });
     }
 
   } catch (error) {
-    console.error('Easter egg error:', error);
-    return new Response(
-      JSON.stringify({ error: 'Server error', details: error.message }),
-      { status: 500, headers }
-    );
+    console.error('Easter Egg API Error:', error);
+    return res.status(500).json({ 
+      error: 'Internal server error',
+      details: error.message
+    });
   }
 }
