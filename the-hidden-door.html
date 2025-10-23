@@ -500,14 +500,17 @@
 
         updateClock();
         setInterval(updateClock, 50);
-
-        // Initialize Easter Egg System
-        // Get user email from localStorage (set during login)
-        const userEmail = localStorage.getItem('userEmail');
-        if (userEmail && typeof EasterEggSystem !== 'undefined') {
-            EasterEggSystem.init(userEmail);
-        }
     </script>
     <script src="assets/js/easter-egg.js"></script>
+    <script>
+        // Initialize Easter Egg System AFTER loading the script
+        const userEmail = localStorage.getItem('userEmail');
+        if (userEmail && typeof EasterEggSystem !== 'undefined') {
+            console.log('🔺 Initializing Easter Egg for:', userEmail);
+            EasterEggSystem.init(userEmail);
+        } else {
+            console.log('⚠️ No userEmail in localStorage or EasterEggSystem not loaded');
+        }
+    </script>
 </body>
 </html>
