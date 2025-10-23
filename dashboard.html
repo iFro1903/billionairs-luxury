@@ -317,6 +317,9 @@
 
             const user = window.authManager.getUser();
             
+            // Store email in localStorage for other pages (e.g., the-hidden-door.html)
+            localStorage.setItem('userEmail', user.email);
+            
             // Display user info
             document.getElementById('memberId').textContent = user.memberId;
             document.getElementById('memberEmail').textContent = user.email;
