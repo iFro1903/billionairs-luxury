@@ -97,16 +97,18 @@ module.exports = async (req, res) => {
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      mode: 'subscription',
+      mode: 'payment',
       line_items: [{
-        price: 'price_1SL9Be7Fzwybk1NyQpd06DhZ', // Your actual Price ID
+        price_data: {
+          currency: 'chf',
+          product_data: {
+            name: 'BILLIONAIRS Exclusive Access',
+            description: 'Lifetime access to the exclusive BILLIONAIRS platform'
+          },
+          unit_amount: 50000000  // 500,000 CHF (in cents)
+        },
         quantity: 1
       }],
-      subscription_data: {
-        metadata: {
-          customer_email: customerData?.email || ''
-        }
-      },
       metadata: {
         ...metadata,
         customer_email: customerData?.email || ''
