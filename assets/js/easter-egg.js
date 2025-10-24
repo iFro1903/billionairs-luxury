@@ -98,11 +98,7 @@ const EasterEggSystem = {
         const container = document.createElement('div');
         container.className = 'easter-egg-container';
         container.id = 'easterEgg';
-        container.innerHTML = `
-            <div class="pyramid">
-                <div class="pyramid-eye"></div>
-            </div>
-        `;
+        container.innerHTML = '<div class="pyramid"></div>';
         container.onclick = () => this.openPyramid();
         
         document.body.appendChild(container);
@@ -111,7 +107,7 @@ const EasterEggSystem = {
         container.style.opacity = '0';
         container.style.transform = 'scale(0)';
         setTimeout(() => {
-            container.style.transition = 'all 1s ease-out';
+            container.style.transition = 'all 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
             container.style.opacity = '1';
             container.style.transform = 'scale(1)';
         }, 100);

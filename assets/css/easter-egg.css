@@ -10,80 +10,64 @@
 }
 
 .pyramid {
-    width: 90px;
-    height: 90px;
+    width: 120px;
+    height: 120px;
     position: relative;
     animation: pyramidFloat 3s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Lichtstrahlen um die Pyramide */
+/* Umgedrehtes Billionairs Logo */
 .pyramid::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 110px;
-    height: 110px;
+    width: 100px;
+    height: 100px;
+    background-image: url('../images/logo.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: rotate(180deg);
+    filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.9)) 
+            drop-shadow(0 0 50px rgba(212, 175, 55, 0.6))
+            drop-shadow(0 0 80px rgba(255, 215, 0, 0.4));
+    animation: logoGlow 2s ease-in-out infinite;
+    z-index: 2;
+}
+
+/* Lichtstrahlen um das Logo */
+.pyramid::after {
+    content: '';
+    position: absolute;
+    width: 140px;
+    height: 140px;
     background: 
-        linear-gradient(0deg, transparent 48%, rgba(212, 175, 55, 0.3) 50%, transparent 52%),
-        linear-gradient(45deg, transparent 48%, rgba(212, 175, 55, 0.2) 50%, transparent 52%),
-        linear-gradient(90deg, transparent 48%, rgba(212, 175, 55, 0.3) 50%, transparent 52%),
-        linear-gradient(135deg, transparent 48%, rgba(212, 175, 55, 0.2) 50%, transparent 52%);
-    animation: raysRotate 10s linear infinite;
+        linear-gradient(0deg, transparent 48%, rgba(212, 175, 55, 0.25) 50%, transparent 52%),
+        linear-gradient(45deg, transparent 48%, rgba(212, 175, 55, 0.15) 50%, transparent 52%),
+        linear-gradient(90deg, transparent 48%, rgba(212, 175, 55, 0.25) 50%, transparent 52%),
+        linear-gradient(135deg, transparent 48%, rgba(212, 175, 55, 0.15) 50%, transparent 52%);
+    animation: raysRotate 12s linear infinite;
     pointer-events: none;
     z-index: 1;
 }
 
-/* Pyramiden-Dreieck */
-.pyramid::after {
-    content: '';
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 35px solid transparent;
-    border-right: 35px solid transparent;
-    border-bottom: 60px solid #D4AF37;
-    filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.9)) 
-            drop-shadow(0 5px 15px rgba(0, 0, 0, 0.4));
-    z-index: 2;
-}
-
-/* All-sehendes Auge */
-.pyramid-eye {
-    position: absolute;
-    top: 45px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 32px;
-    z-index: 10;
-    animation: eyePulse 2s ease-in-out infinite;
-    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1))
-            drop-shadow(0 0 40px rgba(212, 175, 55, 0.8));
-}
-
-.pyramid-eye::before {
-    content: '👁️';
+@keyframes logoGlow {
+    0%, 100% { 
+        filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.9)) 
+                drop-shadow(0 0 50px rgba(212, 175, 55, 0.6));
+    }
+    50% { 
+        filter: drop-shadow(0 0 50px rgba(255, 215, 0, 1)) 
+                drop-shadow(0 0 80px rgba(212, 175, 55, 0.9))
+                drop-shadow(0 0 120px rgba(255, 215, 0, 0.6));
+    }
 }
 
 @keyframes raysRotate {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes eyePulse {
-    0%, 100% { 
-        transform: translateX(-50%) scale(1);
-        filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1));
-    }
-    50% { 
-        transform: translateX(-50%) scale(1.15);
-        filter: drop-shadow(0 0 35px rgba(255, 215, 0, 1)) 
-                drop-shadow(0 0 50px rgba(212, 175, 55, 1));
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 /* Leuchtende Strahlen */
