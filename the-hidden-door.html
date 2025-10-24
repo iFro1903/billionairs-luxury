@@ -240,20 +240,19 @@
             top: 16%;
             left: 50%;
             transform: translateX(-50%);
-            width: clamp(80px, 15vw, 120px);
-            height: auto;
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1rem, 2.2vw, 1.6rem);
+            letter-spacing: 10px;
+            color: #E8B4A0;
+            text-transform: uppercase;
+            font-weight: 500;
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
-            filter: drop-shadow(0 0 10px rgba(232, 180, 160, 0.5)) 
-                    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
-        }
-
-        .brand img {
-            width: 100%;
-            height: auto;
-            display: block;
+            text-shadow: 
+                0 0 10px rgba(232, 180, 160, 0.5),
+                0 2px 4px rgba(0, 0, 0, 0.8);
         }
 
         .swiss-made {
@@ -467,9 +466,7 @@
             <div class="watch-case"></div>
             
             <div class="watch-face">
-                <div class="brand">
-                    <img src="assets/images/logo.png" alt="BILLIONAIRS">
-                </div>
+                <div class="brand">BILLIONAIRS</div>
                 <div class="swiss-made">Swiss Made</div>
                 
                 <div class="markers" id="markers"></div>
