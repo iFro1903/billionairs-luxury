@@ -68,7 +68,14 @@ const EasterEggSystem = {
     updateUI() {
         if (!this.status) return;
 
-        // Show eye if ready (72h + 3 logins) - PRIORITY
+        // PRIORITY 1: Show eye if already unlocked
+        if (this.status.eyeUnlocked) {
+            this.showEye();
+            this.updateStreakBadge();
+            return; // Stop here - no logo!
+        }
+
+        // PRIORITY 2: Show eye if ready (72h + 3 logins) but not yet unlocked
         if (this.status.eyeReady && !this.status.eyeUnlocked) {
             // First check if pyramid exists
             const existingPyramid = document.getElementById('easterEgg');
@@ -82,23 +89,17 @@ const EasterEggSystem = {
                     this.transformPyramidToEye();
                 }, 2000); // Wait 2 seconds after showing pyramid
             }
-            return; // Stop here
+            return; // Stop here - no duplicate logo!
         }
 
-        // Show eye if already unlocked
-        if (this.status.eyeUnlocked) {
-            this.showEye();
-            return; // Stop here
-        }
-
-        // Show pyramid after 20 seconds if not unlocked yet
+        // PRIORITY 3: Show pyramid after 20 seconds if not unlocked yet
         if (this.status.showPyramid && !this.status.pyramidUnlocked) {
             setTimeout(() => {
                 this.showPyramid();
             }, 20000); // 20 seconds
         }
 
-        // Keep showing pyramid if unlocked but eye not ready
+        // PRIORITY 4: Keep showing pyramid if unlocked but eye not ready
         if (this.status.pyramidUnlocked && !this.status.eyeReady) {
             this.showPyramid();
         }
@@ -222,13 +223,15 @@ const EasterEggSystem = {
             const container = document.createElement('div');
             container.className = 'easter-egg-container';
             container.id = 'easterEgg';
-            container.innerHTML = `
-                <div class="eye">
-                    <div class="rays"></div>
-                </div>
-            `;
+            container.innerHTML = `<div class="eye"></div>`;
             container.onclick = () => this.openEye();
             document.body.appendChild(container);
+        } else {
+            // Wenn Container existiert, ersetze Inhalt (falls noch Pyramid drin ist)
+            if (easterEgg.querySelector('.pyramid')) {
+                easterEgg.innerHTML = `<div class="eye"></div>`;
+                easterEgg.onclick = () => this.openEye();
+            }
         }
     },
 
