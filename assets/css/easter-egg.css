@@ -37,7 +37,7 @@
     z-index: 2;
 }
 
-/* Lichtstrahlen um das Logo */
+/* Lichtstrahlen um das Logo - TEMPORÄR DEAKTIVIERT ZUM TESTEN */
 .pyramid::after {
     content: '';
     position: absolute;
@@ -51,6 +51,7 @@
     animation: raysRotate 12s linear infinite;
     pointer-events: none;
     z-index: 1;
+    display: none; /* TEST: Strahlen ausblenden */
 }
 
 @keyframes logoGlow {
