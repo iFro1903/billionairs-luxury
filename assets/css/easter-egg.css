@@ -19,13 +19,13 @@
     justify-content: center;
 }
 
-/* Umgedrehtes Billionairs Logo (SVG - garantiert transparent) */
+/* Umgedrehtes Rose-Gold Dreieck-Logo - TRANSPARENT */
 .pyramid::before {
     content: '';
     position: absolute;
     width: 110px;
     height: 110px;
-    background-image: url('../images/logo.svg');
+    background-image: url('../images/billionairs-triangle-logo.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
