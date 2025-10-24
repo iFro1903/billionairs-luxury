@@ -95,6 +95,10 @@ const EasterEggSystem = {
     },
 
     showPyramid() {
+        // Only show pyramid on the-hidden-door.html
+        const isHiddenDoorPage = window.location.pathname.includes('the-hidden-door.html');
+        if (!isHiddenDoorPage) return;
+        
         const container = document.createElement('div');
         container.className = 'easter-egg-container';
         container.id = 'easterEgg';
@@ -132,6 +136,10 @@ const EasterEggSystem = {
     },
 
     transformPyramidToEye() {
+        // Only transform on the-hidden-door.html
+        const isHiddenDoorPage = window.location.pathname.includes('the-hidden-door.html');
+        if (!isHiddenDoorPage) return;
+        
         const easterEgg = document.getElementById('easterEgg');
         if (easterEgg) {
             easterEgg.innerHTML = '<div class="eye"></div>';
@@ -142,6 +150,10 @@ const EasterEggSystem = {
     },
 
     showEye() {
+        // Only show eye on the-hidden-door.html
+        const isHiddenDoorPage = window.location.pathname.includes('the-hidden-door.html');
+        if (!isHiddenDoorPage) return;
+        
         let easterEgg = document.getElementById('easterEgg');
         if (!easterEgg) {
             const container = document.createElement('div');
