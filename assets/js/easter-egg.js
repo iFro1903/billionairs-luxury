@@ -163,6 +163,30 @@ const EasterEggSystem = {
                 pyramid.style.opacity = '0';
                 pyramid.style.transform = 'scale(0.8) rotate(180deg)';
                 
+                // Gleichzeitig: Römische Zahlen Reset (III → I)
+                // Temporär login_streak auf 1 setzen für Badge-Anzeige während Transformation
+                const originalStreak = this.status.loginStreak;
+                
+                setTimeout(() => {
+                    // Reset Badge während Transformation
+                    const badge = document.getElementById('streakBadge');
+                    if (badge) {
+                        badge.style.transition = 'opacity 0.5s ease-out';
+                        badge.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            // Zeige "I" statt "III" - neuer Zyklus beginnt
+                            this.status.loginStreak = 1; // Temporär für Anzeige
+                            this.updateStreakBadge();
+                            badge.style.transition = 'opacity 0.5s ease-in';
+                            badge.style.opacity = '1';
+                            
+                            // Restore original streak
+                            this.status.loginStreak = originalStreak;
+                        }, 500);
+                    }
+                }, 300); // Starte Badge-Animation kurz nach Logo-Fade
+                
                 setTimeout(() => {
                     easterEgg.innerHTML = `
                         <div class="eye" style="opacity: 0; transform: scale(0.8);">
