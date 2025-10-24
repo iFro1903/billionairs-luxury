@@ -289,27 +289,17 @@ const EasterEggSystem = {
     },
 
     showChat() {
-        const modal = document.createElement('div');
-        modal.className = 'riddle-modal show';
-        
         if (this.status.chatUnlocked) {
-            modal.innerHTML = `
-                <div class="riddle-content">
-                    <div class="riddle-icon">💬</div>
-                    <h2 class="riddle-title">The Inner Circle</h2>
-                    <p class="riddle-text">Welcome to the conversation that shapes the world.</p>
-                    <div class="chat-preview">
-                        <p class="chat-locked-message">
-                            Anonymous chat coming soon...<br>
-                            You've unlocked access. Stay tuned.
-                        </p>
-                    </div>
-                    <button class="riddle-close" onclick="this.closest('.riddle-modal').remove()">
-                        Close
-                    </button>
-                </div>
-            `;
+            // Initialize and open luxury chat
+            if (!window.luxuryChat) {
+                window.luxuryChat = new LuxuryChat();
+                window.luxuryChat.init(this.userEmail);
+            }
+            window.luxuryChat.open();
         } else {
+            // Show locked message
+            const modal = document.createElement('div');
+            modal.className = 'riddle-modal show';
             modal.innerHTML = `
                 <div class="riddle-content">
                     <div class="riddle-icon">🔒</div>
@@ -320,9 +310,8 @@ const EasterEggSystem = {
                     </button>
                 </div>
             `;
+            document.body.appendChild(modal);
         }
-        
-        document.body.appendChild(modal);
     },
 
     updateStreakBadge() {
