@@ -144,12 +144,34 @@ const EasterEggSystem = {
         
         const easterEgg = document.getElementById('easterEgg');
         if (easterEgg) {
-            easterEgg.innerHTML = `
-                <div class="eye">
-                    <div class="rays"></div>
-                </div>
-            `;
-            easterEgg.onclick = () => this.openEye();
+            const pyramid = easterEgg.querySelector('.pyramid');
+            
+            if (pyramid) {
+                // Smooth Transformation: Fade out logo, fade in eye
+                pyramid.style.transition = 'opacity 1s ease-out, transform 1s ease-out';
+                pyramid.style.opacity = '0';
+                pyramid.style.transform = 'scale(0.8) rotate(180deg)';
+                
+                setTimeout(() => {
+                    easterEgg.innerHTML = `
+                        <div class="eye" style="opacity: 0; transform: scale(0.8);">
+                        </div>
+                    `;
+                    
+                    const eye = easterEgg.querySelector('.eye');
+                    setTimeout(() => {
+                        eye.style.transition = 'opacity 1s ease-in, transform 1s ease-in';
+                        eye.style.opacity = '1';
+                        eye.style.transform = 'scale(1)';
+                    }, 50);
+                    
+                    easterEgg.onclick = () => this.openEye();
+                }, 1000);
+            } else {
+                // Falls kein Pyramid da ist, zeige direkt das Auge
+                easterEgg.innerHTML = `<div class="eye"></div>`;
+                easterEgg.onclick = () => this.openEye();
+            }
         } else {
             this.showEye();
         }
