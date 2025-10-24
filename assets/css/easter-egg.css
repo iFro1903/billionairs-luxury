@@ -103,61 +103,95 @@
     }
 }
 
-/* Verwandeltes Auge (Phase 2) */
+/* Verwandeltes Auge (Phase 2) - Elegante Roségold Skizze */
 .eye {
-    width: 90px;
+    width: 100px;
     height: 60px;
     position: relative;
     animation: eyeFloat 3s ease-in-out infinite;
 }
 
+/* Äußere Augenform - Skizzen-Style */
 .eye::before {
-    content: '👁️';
-    font-size: 60px;
+    content: '';
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    filter: drop-shadow(0 0 25px rgba(212, 175, 55, 1))
-            drop-shadow(0 0 45px rgba(255, 215, 0, 0.8))
-            drop-shadow(0 0 60px rgba(212, 175, 55, 0.6));
-    animation: eyeBlink 5s ease-in-out infinite, eyeIntenseGlow 2.5s ease-in-out infinite;
+    width: 80px;
+    height: 35px;
+    border: 2px solid #D4AF37;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: transparent;
+    box-shadow: 
+        0 0 20px rgba(212, 175, 55, 0.6),
+        0 0 40px rgba(212, 175, 55, 0.4),
+        inset 0 0 15px rgba(212, 175, 55, 0.2);
+    animation: eyeSketchGlow 2.5s ease-in-out infinite;
 }
 
-/* Heiligenschein/Aura um das Auge */
+/* Iris - Roségold Kreis */
 .eye::after {
     content: '';
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     background: radial-gradient(circle, 
-        rgba(212, 175, 55, 0.3) 0%, 
-        rgba(212, 175, 55, 0.1) 50%, 
-        transparent 70%);
-    animation: auraExpand 3s ease-in-out infinite;
-    z-index: -1;
+        #F4D03F 0%,
+        #D4AF37 50%,
+        #C5A028 100%);
+    box-shadow: 
+        0 0 15px rgba(212, 175, 55, 0.8),
+        0 0 30px rgba(212, 175, 55, 0.5),
+        0 0 45px rgba(255, 215, 0, 0.3);
+    animation: irisPulse 2s ease-in-out infinite;
 }
 
 @keyframes eyeFloat {
     0%, 100% { 
-        transform: translateY(0px) rotate(0deg); 
+        transform: translateY(0px); 
     }
-    33% { 
-        transform: translateY(-12px) rotate(2deg); 
-    }
-    66% { 
-        transform: translateY(-6px) rotate(-2deg); 
+    50% { 
+        transform: translateY(-10px); 
     }
 }
 
-@keyframes eyeIntenseGlow {
+@keyframes eyeSketchGlow {
     0%, 100% { 
-        filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8))
-                drop-shadow(0 0 35px rgba(255, 215, 0, 0.6));
+        box-shadow: 
+            0 0 20px rgba(212, 175, 55, 0.6),
+            0 0 40px rgba(212, 175, 55, 0.4),
+            inset 0 0 15px rgba(212, 175, 55, 0.2);
+        border-color: #D4AF37;
+    }
+    50% { 
+        box-shadow: 
+            0 0 30px rgba(212, 175, 55, 0.9),
+            0 0 60px rgba(212, 175, 55, 0.6),
+            inset 0 0 25px rgba(212, 175, 55, 0.4);
+        border-color: #F4D03F;
+    }
+}
+
+@keyframes irisPulse {
+    0%, 100% { 
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow: 
+            0 0 15px rgba(212, 175, 55, 0.8),
+            0 0 30px rgba(212, 175, 55, 0.5);
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.1);
+        box-shadow: 
+            0 0 25px rgba(255, 215, 0, 1),
+            0 0 50px rgba(212, 175, 55, 0.7),
+            0 0 75px rgba(255, 215, 0, 0.4);
+    }
+}
     }
     50% { 
         filter: drop-shadow(0 0 35px rgba(212, 175, 55, 1))
