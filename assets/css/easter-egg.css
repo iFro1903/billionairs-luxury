@@ -108,7 +108,7 @@
     width: 120px;
     height: 120px;
     position: relative;
-    animation: eyeFloat 4s ease-in-out infinite;
+    animation: pyramidFloat 4s ease-in-out infinite;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,67 +123,26 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    filter: drop-shadow(0 0 30px rgba(232, 196, 168, 0.8))
-            drop-shadow(0 0 60px rgba(232, 196, 168, 0.5))
-            drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
-    animation: eyeBreathing 3s ease-in-out infinite;
+    animation: logoGlow 3s ease-in-out infinite;
+    z-index: 2;
 }
 
-/* Rotierender Strahlenkranz */
+/* Lichtstrahlen um das Auge - wie beim Logo */
 .eye .rays {
+    content: '';
     position: absolute;
-    width: 220px;
-    height: 220px;
-    background: conic-gradient(
-        from 0deg,
-        transparent 0deg,
-        rgba(232, 196, 168, 0.3) 45deg,
-        transparent 90deg,
-        rgba(232, 196, 168, 0.3) 135deg,
-        transparent 180deg,
-        rgba(232, 196, 168, 0.3) 225deg,
-        transparent 270deg,
-        rgba(232, 196, 168, 0.3) 315deg,
-        transparent 360deg
-    );
-    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+    background: 
+        linear-gradient(0deg, transparent 48%, rgba(212, 175, 55, 0.25) 50%, transparent 52%),
+        linear-gradient(45deg, transparent 48%, rgba(212, 175, 55, 0.15) 50%, transparent 52%),
+        linear-gradient(90deg, transparent 48%, rgba(212, 175, 55, 0.25) 50%, transparent 52%),
+        linear-gradient(135deg, transparent 48%, rgba(212, 175, 55, 0.15) 50%, transparent 52%);
     animation: raysRotate 12s linear infinite;
-    z-index: -1;
-    opacity: 0.5;
+    pointer-events: none;
+    z-index: 1;
 }
 
-@keyframes eyeFloat {
-    0%, 100% { 
-        transform: translateY(0px) scale(1); 
-    }
-    50% { 
-        transform: translateY(-15px) scale(1.03); 
-    }
-}
-
-@keyframes eyeBreathing {
-    0%, 100% { 
-        filter: drop-shadow(0 0 30px rgba(232, 196, 168, 0.8))
-                drop-shadow(0 0 60px rgba(232, 196, 168, 0.5))
-                drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
-        transform: scale(1);
-    }
-    50% { 
-        filter: drop-shadow(0 0 45px rgba(232, 196, 168, 1))
-                drop-shadow(0 0 90px rgba(232, 196, 168, 0.7))
-                drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
-        transform: scale(1.05);
-    }
-}
-
-@keyframes raysRotate {
-    from { 
-        transform: rotate(0deg); 
-    }
-    to { 
-        transform: rotate(360deg); 
-    }
-}
     }
     50% { 
         filter: drop-shadow(0 0 35px rgba(212, 175, 55, 1))
