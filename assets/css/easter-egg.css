@@ -19,13 +19,13 @@
     justify-content: center;
 }
 
-/* Umgedrehtes Premium Billionairs Logo - Transparent PNG */
+/* Umgedrehtes Billionairs Logo (SVG - garantiert transparent) */
 .pyramid::before {
     content: '';
     position: absolute;
     width: 110px;
     height: 110px;
-    background-image: url('../images/billionairs-logo-premium.png');
+    background-image: url('../images/logo.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
