@@ -247,20 +247,26 @@ const EasterEggSystem = {
     },
 
     updateStreakBadge() {
+        // Only show streak badge on the-hidden-door.html
+        const isHiddenDoorPage = window.location.pathname.includes('the-hidden-door.html');
+        
         let badge = document.getElementById('streakBadge');
-        if (!badge && this.status.loginStreak > 0) {
+        if (!badge && this.status.loginStreak > 0 && isHiddenDoorPage) {
             badge = document.createElement('div');
             badge.id = 'streakBadge';
             badge.className = 'login-streak-badge';
             document.body.appendChild(badge);
         }
 
-        if (badge && this.status.loginStreak > 0) {
+        if (badge && this.status.loginStreak > 0 && isHiddenDoorPage) {
             badge.innerHTML = `
                 <div style="font-size: 0.8rem; opacity: 0.8;">Login Streak</div>
                 <div class="login-streak-number">${this.status.loginStreak}</div>
                 <div style="font-size: 0.8rem; opacity: 0.8;">Days</div>
             `;
+        } else if (badge && !isHiddenDoorPage) {
+            // Remove badge if on dashboard
+            badge.remove();
         }
     },
 
