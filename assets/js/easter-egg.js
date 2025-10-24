@@ -70,8 +70,19 @@ const EasterEggSystem = {
 
         // Show eye if ready (72h + 3 logins) - PRIORITY
         if (this.status.eyeReady && !this.status.eyeUnlocked) {
-            this.transformPyramidToEye();
-            return; // Stop here, don't show pyramid
+            // First check if pyramid exists
+            const existingPyramid = document.getElementById('easterEgg');
+            if (existingPyramid && existingPyramid.querySelector('.pyramid')) {
+                // Pyramid exists, transform it
+                this.transformPyramidToEye();
+            } else {
+                // Pyramid doesn't exist yet, show it first then transform
+                this.showPyramid();
+                setTimeout(() => {
+                    this.transformPyramidToEye();
+                }, 2000); // Wait 2 seconds after showing pyramid
+            }
+            return; // Stop here
         }
 
         // Show eye if already unlocked
