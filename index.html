@@ -301,8 +301,12 @@
                         <!-- Common Customer Information Fields (Always Visible) -->
                         <div class="common-fields" style="margin-bottom: 2rem;">
                             <div class="form-group">
-                                <label for="customerName">Full Name</label>
-                                <input type="text" id="customerName" name="customerName" placeholder="Your Full Name" required>
+                                <label for="customerFirstName">First Name</label>
+                                <input type="text" id="customerFirstName" name="customerFirstName" placeholder="Your First Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerLastName">Last Name</label>
+                                <input type="text" id="customerLastName" name="customerLastName" placeholder="Your Last Name" required>
                             </div>
                             <div class="form-group">
                                 <label for="customerEmail">Email Address</label>
@@ -694,7 +698,8 @@
             console.log('🎯 Initiating Credit Card Checkout...');
             
             // Collect and validate customer data including password
-            const fullName = document.getElementById('customerName').value.trim();
+            const firstName = document.getElementById('customerFirstName').value.trim();
+            const lastName = document.getElementById('customerLastName').value.trim();
             const email = document.getElementById('customerEmail').value.trim();
             const password = document.getElementById('customerPassword').value;
             const passwordConfirm = document.getElementById('customerPasswordConfirm').value;
@@ -702,7 +707,7 @@
             const company = document.getElementById('customerCompany').value.trim();
             
             // Validate required fields
-            if (!fullName || !email || !password || !passwordConfirm || !phone) {
+            if (!firstName || !lastName || !email || !password || !passwordConfirm || !phone) {
                 alert('Please fill in all required fields');
                 return;
             }
@@ -721,7 +726,8 @@
             
             // Prepare customer data
             const customerData = {
-                fullName,
+                firstName,
+                lastName,
                 email,
                 password,
                 phone,
@@ -889,7 +895,8 @@
         // Wait a tiny bit to ensure DOM is stable after modal interactions
         setTimeout(() => {
             // GET AND VALIDATE FORM FIELDS HERE (not in stripe-payment.js)
-            const fullNameEl = document.getElementById('customerName');
+            const firstNameEl = document.getElementById('customerFirstName');
+            const lastNameEl = document.getElementById('customerLastName');
             const emailEl = document.getElementById('customerEmail');
             const passwordEl = document.getElementById('customerPassword');
             const passwordConfirmEl = document.getElementById('customerPasswordConfirm');
@@ -897,39 +904,43 @@
             const companyEl = document.getElementById('customerCompany');
             
             console.log('🔍 Reading form fields:', {
-                fullNameEl: fullNameEl,
+                firstNameEl: firstNameEl,
+                lastNameEl: lastNameEl,
                 emailEl: emailEl,
                 passwordEl: passwordEl,
                 phoneEl: phoneEl,
-                fullNameValue: fullNameEl ? fullNameEl.value : 'ELEMENT NOT FOUND',
+                firstNameValue: firstNameEl ? firstNameEl.value : 'ELEMENT NOT FOUND',
+                lastNameValue: lastNameEl ? lastNameEl.value : 'ELEMENT NOT FOUND',
                 emailValue: emailEl ? emailEl.value : 'ELEMENT NOT FOUND',
                 phoneValue: phoneEl ? phoneEl.value : 'ELEMENT NOT FOUND'
             });
             
-            if (!fullNameEl || !emailEl || !passwordEl || !passwordConfirmEl || !phoneEl) {
+            if (!firstNameEl || !lastNameEl || !emailEl || !passwordEl || !passwordConfirmEl || !phoneEl) {
                 alert('Error: Form fields not found! Please refresh the page.');
                 return;
             }
             
             // Read values IMMEDIATELY and store in variables
-            const fullName = (fullNameEl.value || '').trim();
+            const firstName = (firstNameEl.value || '').trim();
+            const lastName = (lastNameEl.value || '').trim();
             const email = (emailEl.value || '').trim();
             const password = passwordEl.value || '';
             const passwordConfirm = passwordConfirmEl.value || '';
             const phone = (phoneEl.value || '').trim();
             const company = companyEl ? (companyEl.value || '').trim() : '';
             
-            console.log('📋 Captured values:', { fullName, email, phone, company });
+            console.log('📋 Captured values:', { firstName, lastName, email, phone, company });
             
             // Continue with validation
-            window.processCryptoSelection(cryptocurrency, fullName, email, password, passwordConfirm, phone, company);
+            window.processCryptoSelection(cryptocurrency, firstName, lastName, email, password, passwordConfirm, phone, company);
         }, 50);
     };
     
-    window.processCryptoSelection = function(cryptocurrency, fullName, email, password, passwordConfirm, phone, company) {
+    window.processCryptoSelection = function(cryptocurrency, firstName, lastName, email, password, passwordConfirm, phone, company) {
         // Validate required fields with specific error messages
         const missingFields = [];
-        if (!fullName) missingFields.push('Name');
+        if (!firstName) missingFields.push('First Name');
+        if (!lastName) missingFields.push('Last Name');
         if (!email) missingFields.push('Email');
         if (!password) missingFields.push('Password');
         if (!passwordConfirm) missingFields.push('Confirm Password');
@@ -945,9 +956,9 @@
                 }
             });
             // Scroll to the form fields
-            const fullNameEl = document.getElementById('customerName');
-            if (fullNameEl) {
-                fullNameEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const firstNameEl = document.getElementById('customerFirstName');
+            if (firstNameEl) {
+                firstNameEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
             return;
         }
@@ -992,7 +1003,7 @@
             return;
         }
         
-        console.log('✅ Validation passed:', { fullName, email, phone, cryptocurrency });
+        console.log('✅ Validation passed:', { firstName, lastName, email, phone, cryptocurrency });
         
         // Close the selection modal
         const modals = document.querySelectorAll('body > div');
@@ -1006,7 +1017,8 @@
         if (window.stripeProcessor) {
             // Pass the data directly to avoid reading fields again
             window.stripeProcessor.createCryptoPaymentRequestWithData(cryptocurrency, {
-                fullName,
+                firstName,
+                lastName,
                 email,
                 password,
                 phone,
