@@ -56,9 +56,11 @@ export default async function handler(req, res) {
 
         // Check if chat should be ready (168 hours from eye unlock)
         let daysSinceEyeOpened = 0;
-        if (user.eye_opened_at && !user.chat_unlocked) {
+        if (user.eye_opened_at) {
           const hoursSinceEye = (now - new Date(user.eye_opened_at)) / (1000 * 60 * 60);
-          chatReady = hoursSinceEye >= 168;
+          if (!user.chat_unlocked) {
+            chatReady = hoursSinceEye >= 168;
+          }
           daysSinceEyeOpened = Math.min(Math.floor(hoursSinceEye / 24) + 1, 7); // 1-7 days
         }
 
