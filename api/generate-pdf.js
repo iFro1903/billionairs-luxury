@@ -39,11 +39,15 @@ export default async function handler(req, res) {
             return res.status(403).json({ error: 'Payment required' });
         }
 
-        // Log download
-        await sql`
-            INSERT INTO downloads (user_id, downloaded_at)
-            VALUES (${user.id}, NOW())
-        `;
+        // Try to log download (non-critical)
+        try {
+            await sql`
+                INSERT INTO downloads (user_id, downloaded_at)
+                VALUES (${user.id}, NOW())
+            `;
+        } catch (logError) {
+            console.error('Download logging failed (non-critical):', logError);
+        }
 
         // Return success - client will handle PDF generation
         res.status(200).json({ 
