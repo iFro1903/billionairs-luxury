@@ -92,9 +92,10 @@ export default async function handler(req, res) {
           WHERE email = ${email}
         `;
 
-        const riddle = `The triangle has three sides.
-Each side demands your presence.
-Return when the sun rises. Three times.`;
+        const riddle = `The mark of power inverted lies.
+Three dawns must break before your eyes.
+Only those who persist shall see
+What lies beyond eternity.`;
 
         return res.status(200).json({ 
           success: true,
@@ -156,9 +157,10 @@ Return when the sun rises. Three times.`;
           WHERE email = ${email}
         `;
 
-        const riddle = `The number of divine perfection.
-Days of creation. Wonders of the world.
-Count them. Return for each.`;
+        const riddle = `Count the days of creation.
+One for each wonder of the world.
+When seven suns have risen and fallen,
+The final door will open.`;
 
         return res.status(200).json({ 
           success: true,
