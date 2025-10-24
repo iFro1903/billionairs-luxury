@@ -239,6 +239,14 @@
             <!-- Create Account Form -->
             <form id="createAccountForm">
                 <div class="form-group">
+                    <label class="form-label" for="firstName">First Name</label>
+                    <input type="text" id="firstName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="lastName">Last Name</label>
+                    <input type="text" id="lastName" class="form-input" required>
+                </div>
+                <div class="form-group">
                     <label class="form-label" for="email">Email Address</label>
                     <input type="email" id="email" class="form-input" required>
                 </div>
@@ -281,10 +289,18 @@
             e.preventDefault();
             hideMessages();
 
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const passwordConfirm = document.getElementById('passwordConfirm').value;
             const submitBtn = e.target.querySelector('.submit-button');
+
+            // Validate names
+            if (!firstName || !lastName) {
+                showError('Please enter your first and last name');
+                return;
+            }
 
             // Validate passwords match
             if (password !== passwordConfirm) {
@@ -302,8 +318,8 @@
                 submitBtn.disabled = true;
                 submitBtn.textContent = 'CREATING YOUR ACCESS...';
 
-                // Register with payment_status = 'paid' since they just completed payment
-                await window.authManager.register(email, password);
+                // Register with first and last name
+                await window.authManager.register(email, password, firstName, lastName);
                 
                 showSuccess('Account created! Redirecting to your dashboard...');
                 

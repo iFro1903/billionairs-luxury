@@ -1,0 +1,72 @@
+⚠️ ⚠️ ⚠️ REMINDER: STRIPE AUF LIVE MODE UMSTELLEN! ⚠️ ⚠️ ⚠️
+
+█████████████████████████████████████████████████████████████
+█                                                           █
+█   🚨 VOR DEM LAUNCH UNBEDINGT LESEN! 🚨                  █
+█                                                           █
+█   Die Website läuft aktuell im STRIPE TEST MODE!         █
+█   Keine echten Zahlungen werden akzeptiert!              █
+█                                                           █
+█   ➡️  Öffne: LIVE-MODE-ANLEITUNG.md                      █
+█   ➡️  Folge ALLEN Schritten                              █
+█   ➡️  Dann erst live gehen!                              █
+█                                                           █
+█████████████████████████████████████████████████████████████
+
+AKTUELLE KONFIGURATION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ DATABASE: Produktionsbereit
+✅ RESEND_API_KEY: Konfiguriert
+⚠️  STRIPE: TEST MODE (Test-Karten only!)
+
+STRIPE TEST MODE BEDEUTET:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ Nur Test-Kreditkarten funktionieren (4242 4242 4242 4242)
+❌ KEIN echtes Geld wird transferiert
+❌ Kunden können NICHT mit echten Karten zahlen
+✅ Perfekt zum Testen & Development
+
+BEVOR DU LIVE GEHST:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+□ Lies LIVE-MODE-ANLEITUNG.md komplett durch
+□ Stripe Identity Verification abgeschlossen?
+□ Live Product mit 500K CHF/Jahr erstellt?
+□ Live Price ID kopiert?
+□ Live Secret Key kopiert?
+□ Code in stripe-payment.js aktualisiert?
+□ STRIPE_SECRET_KEY in Vercel ersetzt?
+□ Mit echter Karte getestet?
+□ Test-Zahlung storniert?
+
+QUICK LINKS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 Anleitung: LIVE-MODE-ANLEITUNG.md (in diesem Ordner!)
+🔴 Stripe Dashboard: https://dashboard.stripe.com
+🌐 Vercel Dashboard: https://vercel.com/ifro1903s-projects/billionairs-luxury
+⚙️  Environment Vars: https://vercel.com/ifro1903s-projects/billionairs-luxury/settings/environment-variables
+
+GESCHÄTZTE ZEIT FÜR LIVE MODE SETUP:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Identity Verification: 1-24 Stunden (Stripe Approval)
+Live Product erstellen: 5 Minuten
+Code updaten: 10 Minuten  
+Testing: 15 Minuten
+GESAMT: ~30 Minuten + Stripe Approval Wait Time
+
+SUPPORT:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Falls Probleme auftreten:
+- Stripe Support Chat: https://support.stripe.com
+- Stripe Docs: https://stripe.com/docs/payments/checkout
+- Vercel Docs: https://vercel.com/docs
+
+⚠️  DIESEN REMINDER NICHT LÖSCHEN BIS LIVE MODE AKTIV IST! ⚠️
+
+Erstellt: 23. Oktober 2025
+Status: TEST MODE AKTIV

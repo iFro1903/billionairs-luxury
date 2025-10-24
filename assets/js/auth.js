@@ -8,7 +8,7 @@ class AuthManager {
     }
 
     // Register new user
-    async register(email, password) {
+    async register(email, password, firstName = '', lastName = '') {
         try {
             const response = await fetch('/api/auth', {
                 method: 'POST',
@@ -16,7 +16,9 @@ class AuthManager {
                 body: JSON.stringify({
                     action: 'register',
                     email,
-                    password
+                    password,
+                    firstName,
+                    lastName
                 })
             });
 

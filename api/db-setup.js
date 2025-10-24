@@ -30,6 +30,8 @@ export default async function handler(req, res) {
                 email VARCHAR(255) UNIQUE NOT NULL,
                 password_hash VARCHAR(255) NOT NULL,
                 member_id VARCHAR(50) UNIQUE NOT NULL,
+                first_name VARCHAR(100),
+                last_name VARCHAR(100),
                 full_name VARCHAR(255),
                 phone VARCHAR(50),
                 company VARCHAR(255),

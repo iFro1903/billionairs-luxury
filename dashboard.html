@@ -278,7 +278,7 @@
         <div class="dashboard-content">
             <div class="dashboard-header">
                 <h1 class="dashboard-title">WELCOME TO THE ELITE</h1>
-                <p class="dashboard-subtitle">Welcome to the Elite</p>
+                <p class="dashboard-subtitle" id="welcomeSubtitle">Welcome to the Elite</p>
             </div>
 
             <div class="member-card">
@@ -373,6 +373,16 @@
             // Display user info
             document.getElementById('memberId').textContent = user.memberId;
             document.getElementById('memberEmail').textContent = user.email;
+            
+            // Display personalized greeting
+            const welcomeSubtitle = document.getElementById('welcomeSubtitle');
+            if (user.firstName && user.lastName) {
+                welcomeSubtitle.textContent = `Dear ${user.firstName} ${user.lastName}`;
+            } else if (user.firstName) {
+                welcomeSubtitle.textContent = `Dear ${user.firstName}`;
+            } else {
+                welcomeSubtitle.textContent = 'Dear Member';
+            }
             
             // Check if user just completed a payment (came from payment page or stripe)
             const urlParams = new URLSearchParams(window.location.search);

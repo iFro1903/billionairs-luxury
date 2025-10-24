@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BILLIONAIRS - Premium Design Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: 'Crimson Text', serif;
+            background: #0a0a0a;
+            color: #c9a961;
+            min-height: 100vh;
+        }
+        
+        .preview-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .preview-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: rgba(201, 169, 97, 0.05);
+            border: 1px solid rgba(201, 169, 97, 0.2);
+        }
+        
+        .preview-header h1 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 48px;
+            color: #c9a961;
+            margin-bottom: 20px;
+            letter-spacing: 8px;
+        }
+        
+        .preview-header p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .design-card {
+            background: #000;
+            border: 2px solid rgba(201, 169, 97, 0.3);
+            padding: 30px;
+            border-radius: 4px;
+        }
+        
+        .design-card h2 {
+            font-family: 'Bodoni Moda', serif;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #c9a961;
+        }
+        
+        .design-card.old h2 {
+            color: #888;
+        }
+        
+        .design-card ul {
+            list-style: none;
+            padding: 0;
+            line-height: 2.5;
+        }
+        
+        .design-card.new li::before {
+            content: '✓ ';
+            color: #00ff88;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        .design-card.old li::before {
+            content: '✗ ';
+            color: #ff4444;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        .preview-frame {
+            margin-top: 60px;
+            padding: 40px;
+            background: rgba(201, 169, 97, 0.03);
+            border: 1px solid rgba(201, 169, 97, 0.2);
+        }
+        
+        .preview-frame h2 {
+            font-family: 'Bodoni Moda', serif;
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: #c9a961;
+            letter-spacing: 6px;
+        }
+        
+        /* Embedded Certificate Preview */
+        .certificate-preview {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #000000 0%, #0d0d0d 50%, #000000 100%);
+            padding: 80px 60px;
+            border: 1px solid rgba(201, 169, 97, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+        
+        .corner-ornament {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-color: rgba(201, 169, 97, 0.4);
+            border-style: solid;
+        }
+        
+        .corner-ornament.tl { top: 20px; left: 20px; border-width: 1px 0 0 1px; }
+        .corner-ornament.tr { top: 20px; right: 20px; border-width: 1px 1px 0 0; }
+        .corner-ornament.bl { bottom: 20px; left: 20px; border-width: 0 0 1px 1px; }
+        .corner-ornament.br { bottom: 20px; right: 20px; border-width: 0 1px 1px 0; }
+        
+        .crest {
+            width: 100px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .crest img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(1.1);
+        }
+        
+        .cert-header {
+            text-align: center;
+        }
+        
+        .institution {
+            font-size: 9px;
+            letter-spacing: 4px;
+            color: rgba(201, 169, 97, 0.6);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        
+        .cert-logo {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: 12px;
+            color: #c9a961;
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            font-size: 8px;
+            letter-spacing: 3px;
+            color: rgba(201, 169, 97, 0.4);
+            text-transform: uppercase;
+        }
+        
+        .divider {
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c9a961, transparent);
+            margin: 30px auto;
+        }
+        
+        .cert-title {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .cert-label {
+            font-size: 8px;
+            letter-spacing: 3px;
+            color: rgba(201, 169, 97, 0.5);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        
+        .cert-name {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 6px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+        
+        .cert-content {
+            text-align: center;
+            font-size: 14px;
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 25px 0;
+        }
+        
+        .cert-amount {
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            border: 1px solid rgba(201, 169, 97, 0.25);
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .amount-value {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: #c9a961;
+            letter-spacing: 2px;
+        }
+        
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            font-size: 8px;
+            letter-spacing: 1px;
+            color: #2ecc71;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+        
+        .cert-footer {
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(201, 169, 97, 0.2);
+            text-align: center;
+            font-size: 7px;
+            letter-spacing: 2px;
+            color: rgba(201, 169, 97, 0.4);
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <div class="preview-header">
+            <h1>PREMIUM DESIGN PREVIEW</h1>
+            <p>
+                <strong>DAS IST DAS NEUE SWISS PRIVATE BANKING DESIGN</strong><br>
+                Wie ein Patek Philippe Zertifikat • Rolex Garantiekarte • UBS Vermögensdokument
+            </p>
+        </div>
+        
+        <div class="comparison">
+            <div class="design-card old">
+                <h2>❌ ALTE VERSION (Amateur)</h2>
+                <ul>
+                    <li>Einfacher Rahmen mit border</li>
+                    <li>Basic Georgia Schriftart</li>
+                    <li>Grüne Status-Box (zu grell)</li>
+                    <li>Keine Ornamente oder Details</li>
+                    <li>Sieht wie eine Website aus</li>
+                    <li>Keine Textur oder Tiefe</li>
+                    <li>Standard CSS Shadow</li>
+                    <li>Nicht druckbar/PDF-würdig</li>
+                </ul>
+            </div>
+            
+            <div class="design-card new">
+                <h2>✓ NEUE VERSION (500K CHF)</h2>
+                <ul>
+                    <li>Goldenes Wappen mit "B" Logo</li>
+                    <li>Bodoni Moda (Swiss Banking Font)</li>
+                    <li>Vier Eck-Ornamente (wie Banknoten)</li>
+                    <li>Feine Papier-Textur im Hintergrund</li>
+                    <li>Mehrschichtige Premium-Rahmen</li>
+                    <li>Römische Zahlen "MMXXV"</li>
+                    <li>Deutsche Anführungszeichen „"</li>
+                    <li>Zertifikat-Nummer mit Verifikation</li>
+                    <li>"Zürich • Swiss Banking Standards"</li>
+                    <li>Grüne Badges (wie Bank-Stempel)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="preview-frame">
+            <h2>LIVE PREVIEW - SO SIEHT ES AUS</h2>
+            
+            <div class="certificate-preview">
+                <div class="corner-ornament tl"></div>
+                <div class="corner-ornament tr"></div>
+                <div class="corner-ornament bl"></div>
+                <div class="corner-ornament br"></div>
+                
+                <div class="cert-header">
+                    <div class="crest">
+                        <img src="assets/images/logo.png" alt="BILLIONAIRS">
+                    </div>
+                    <div class="institution">Private Member's Circle</div>
+                    <div class="cert-logo">BILLIONAIRS</div>
+                    <div class="tagline">Est. Zürich • MMXXV</div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="cert-title">
+                    <div class="cert-label">Certificate of Exclusive Access</div>
+                    <div class="cert-name">THE FINAL TRUTH</div>
+                </div>
+                
+                <div class="cert-content">
+                    <p>You have crossed the threshold<br>few dare to approach.</p>
+                    <p style="margin-top: 20px; font-style: italic; color: #c9a961;">
+                        „Time is not money. Time is the canvas<br>upon which wealth is painted."
+                    </p>
+                </div>
+                
+                <div class="cert-amount">
+                    <div class="amount-value">CHF 500,000</div>
+                    <div class="badges">
+                        <div class="badge">✓ Payment Confirmed</div>
+                        <div class="badge">✓ Access Granted</div>
+                        <div class="badge">✓ Member Verified</div>
+                    </div>
+                </div>
+                
+                <div class="cert-footer">
+                    Secured by Swiss Banking Standards<br>
+                    Blockchain Verified • Encrypted Infrastructure • Zürich<br>
+                    Certificate No. BILL-EXCLUSIVE-2025-VERIFIED
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
