@@ -288,6 +288,11 @@
     color: #E8B4A0;
     font-size: 0.9rem;
     z-index: 999;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    cursor: default;
 }
 
 .login-streak-number {
@@ -295,6 +300,10 @@
     font-weight: bold;
     display: block;
     text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .chat-preview {
