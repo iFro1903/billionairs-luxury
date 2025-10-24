@@ -330,13 +330,15 @@ const EasterEggSystem = {
         }
 
         if (badge && this.status.loginStreak > 0 && isHiddenDoorPage) {
-            // Wenn Auge erschienen ist (eyeReady oder eyeUnlocked), zähle bis 7
-            // Sonst nur bis 3 (für das Logo)
             let displayStreak = this.status.loginStreak;
             let maxStreak = 3;
             
-            if (this.status.eyeReady || this.status.eyeUnlocked) {
-                // Eye Phase: Zähle 7 Tage
+            // Wenn Auge entsperrt ist, zeige Tage seit Eye Opening (1-7)
+            if (this.status.eyeUnlocked && this.status.daysSinceEyeOpened) {
+                displayStreak = this.status.daysSinceEyeOpened;
+                maxStreak = 7;
+            } else if (this.status.eyeReady) {
+                // Eye Phase: Zähle bis 7
                 maxStreak = 7;
             }
             
