@@ -478,9 +478,10 @@
                 })
             }).catch(err => console.log('Download logging failed:', err));
             
-            // Open the Final Truth PDF in a new window
+            // Open the Final Truth PDF in a new window (with cache buster)
             console.log('Opening PDF window...');
-            const pdfWindow = window.open('/premium-certificate.html', '_blank');
+            const timestamp = new Date().getTime();
+            const pdfWindow = window.open(`/premium-certificate.html?v=${timestamp}`, '_blank');
             
             if (!pdfWindow) {
                 alert('Please allow popups to download your exclusive content.');
