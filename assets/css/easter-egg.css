@@ -13,7 +13,7 @@
     width: 120px;
     height: 120px;
     position: relative;
-    animation: pyramidFloat 3s ease-in-out infinite;
+    /* animation: pyramidFloat 3s ease-in-out infinite; DEAKTIVIERT */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,7 +33,7 @@
     filter: drop-shadow(0 0 40px rgba(184, 115, 51, 1)) 
             drop-shadow(0 0 70px rgba(184, 115, 51, 0.8))
             drop-shadow(0 0 100px rgba(212, 175, 55, 0.6));
-    animation: logoGlow 2s ease-in-out infinite;
+    /* animation: logoGlow 2s ease-in-out infinite; DEAKTIVIERT */
     z-index: 2;
 }
 
