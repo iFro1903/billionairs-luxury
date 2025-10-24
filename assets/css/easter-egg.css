@@ -185,12 +185,16 @@
     margin: 0 auto 2rem;
     animation: riddleIconPulse 2s ease-in-out infinite;
     filter: drop-shadow(0 0 20px rgba(232, 180, 160, 0.6));
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .riddle-icon img {
     width: 100%;
     height: auto;
     display: block;
+    margin: 0 auto;
 }
 
 @keyframes riddleIconPulse {
