@@ -208,7 +208,7 @@ const EasterEggSystem = {
                 });
 
                 const data = await response.json();
-                this.showRiddle('👁️', 'The All-Seeing Eye', data.riddle);
+                this.showRiddle('<img src="assets/images/eye-simple.svg" alt="All-Seeing Eye" style="width: 80px; height: 80px;">', 'The All-Seeing Eye', data.riddle);
             } catch (error) {
                 console.error('Error opening eye:', error);
             }
