@@ -281,9 +281,19 @@ const EasterEggSystem = {
         }
 
         if (badge && this.status.loginStreak > 0 && isHiddenDoorPage) {
-            // Konvertiere zu römischen Zahlen
-            const romanNumerals = ['', 'I', 'II', 'III'];
-            const roman = romanNumerals[this.status.loginStreak] || this.status.loginStreak;
+            // Wenn Auge erschienen ist (eyeReady oder eyeUnlocked), zähle bis 7
+            // Sonst nur bis 3 (für das Logo)
+            let displayStreak = this.status.loginStreak;
+            let maxStreak = 3;
+            
+            if (this.status.eyeReady || this.status.eyeUnlocked) {
+                // Eye Phase: Zähle 7 Tage
+                maxStreak = 7;
+            }
+            
+            // Römische Zahlen bis 7
+            const romanNumerals = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
+            const roman = romanNumerals[Math.min(displayStreak, maxStreak)] || displayStreak;
             badge.innerHTML = `<div class="login-streak-number">${roman}</div>`;
         } else if (badge && !isHiddenDoorPage) {
             // Remove badge if on dashboard
