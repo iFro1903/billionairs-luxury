@@ -147,12 +147,6 @@ const EasterEggSystem = {
             easterEgg.innerHTML = `
                 <div class="eye">
                     <div class="rays"></div>
-                    <div class="eyeball">
-                        <div class="iris">
-                            <div class="pupil"></div>
-                        </div>
-                        <div class="reflection"></div>
-                    </div>
                 </div>
             `;
             easterEgg.onclick = () => this.openEye();
@@ -174,12 +168,6 @@ const EasterEggSystem = {
             container.innerHTML = `
                 <div class="eye">
                     <div class="rays"></div>
-                    <div class="eyeball">
-                        <div class="iris">
-                            <div class="pupil"></div>
-                        </div>
-                        <div class="reflection"></div>
-                    </div>
                 </div>
             `;
             container.onclick = () => this.openEye();

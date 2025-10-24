@@ -103,121 +103,37 @@
     }
 }
 
-/* Verwandeltes Auge (Phase 2) - Ultra-Realistisches All-Seeing Eye */
+/* Verwandeltes Auge (Phase 2) - Premium Illuminati Eye SVG */
 .eye {
-    width: 140px;
-    height: 140px;
+    width: 180px;
+    height: 180px;
     position: relative;
     animation: eyeFloat 4s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Äußere Pyramide mit Tiefeneffekt */
 .eye::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 0;
-    height: 0;
-    border-left: 70px solid transparent;
-    border-right: 70px solid transparent;
-    border-bottom: 120px solid #E8C4A8;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/illuminati-eye.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     filter: drop-shadow(0 0 30px rgba(232, 196, 168, 0.8))
             drop-shadow(0 0 60px rgba(232, 196, 168, 0.5))
-            drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-    animation: pyramidBreathing 3s ease-in-out infinite;
+            drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+    animation: eyeBreathing 3s ease-in-out infinite;
 }
 
-/* Inneres Auge - Realistischer Augapfel */
-.eye .eyeball {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    background: radial-gradient(circle at 35% 35%,
-        #ffffff 0%,
-        #f5f5f5 20%,
-        #e8e8e8 40%,
-        #d8d8d8 100%
-    );
-    border-radius: 50%;
-    box-shadow: 
-        inset 0 -3px 8px rgba(0, 0, 0, 0.2),
-        inset 0 3px 8px rgba(255, 255, 255, 0.4),
-        0 0 25px rgba(232, 196, 168, 0.8),
-        0 0 50px rgba(232, 196, 168, 0.4);
-    z-index: 2;
-    animation: eyeballPulse 3s ease-in-out infinite;
-}
-
-/* Iris */
-.eye .iris {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 28px;
-    height: 28px;
-    background: radial-gradient(circle at 40% 30%,
-        #f0d8c4 0%,
-        #E8C4A8 30%,
-        #d4a88a 60%,
-        #b88968 100%
-    );
-    border-radius: 50%;
-    box-shadow: 
-        inset 0 2px 4px rgba(0, 0, 0, 0.4),
-        0 0 15px rgba(232, 196, 168, 0.9);
-    z-index: 3;
-}
-
-/* Pupille */
-.eye .pupil {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 12px;
-    height: 12px;
-    background: radial-gradient(circle at 30% 30%,
-        #2a2a2a 0%,
-        #000000 70%
-    );
-    border-radius: 50%;
-    box-shadow: 
-        0 0 8px rgba(0, 0, 0, 0.8),
-        inset 0 1px 2px rgba(255, 255, 255, 0.1);
-    z-index: 4;
-    animation: pupilDilate 4s ease-in-out infinite;
-}
-
-/* Lichtreflex im Auge */
-.eye .reflection {
-    position: absolute;
-    top: 32%;
-    left: 38%;
-    width: 8px;
-    height: 8px;
-    background: radial-gradient(circle,
-        rgba(255, 255, 255, 0.9) 0%,
-        rgba(255, 255, 255, 0.3) 70%,
-        transparent 100%
-    );
-    border-radius: 50%;
-    z-index: 5;
-}
-
-/* Strahlenkranz um Pyramide */
+/* Rotierender Strahlenkranz */
 .eye .rays {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 160px;
-    height: 160px;
+    width: 220px;
+    height: 220px;
     background: conic-gradient(
         from 0deg,
         transparent 0deg,
@@ -231,9 +147,9 @@
         transparent 360deg
     );
     border-radius: 50%;
-    animation: raysRotate 8s linear infinite;
-    z-index: 0;
-    opacity: 0.6;
+    animation: raysRotate 12s linear infinite;
+    z-index: -1;
+    opacity: 0.5;
 }
 
 @keyframes eyeFloat {
@@ -241,49 +157,31 @@
         transform: translateY(0px) scale(1); 
     }
     50% { 
-        transform: translateY(-15px) scale(1.02); 
+        transform: translateY(-15px) scale(1.03); 
     }
 }
 
-@keyframes pyramidBreathing {
+@keyframes eyeBreathing {
     0%, 100% { 
         filter: drop-shadow(0 0 30px rgba(232, 196, 168, 0.8))
                 drop-shadow(0 0 60px rgba(232, 196, 168, 0.5))
-                drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-        border-bottom-color: #E8C4A8;
+                drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+        transform: scale(1);
     }
     50% { 
-        filter: drop-shadow(0 0 40px rgba(232, 196, 168, 1))
-                drop-shadow(0 0 80px rgba(232, 196, 168, 0.7))
-                drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
-        border-bottom-color: #f5d5bd;
-    }
-}
-
-@keyframes eyeballPulse {
-    0%, 100% { 
-        transform: translate(-50%, -50%) scale(1);
-    }
-    50% { 
-        transform: translate(-50%, -50%) scale(1.05);
-    }
-}
-
-@keyframes pupilDilate {
-    0%, 100% { 
-        transform: translate(-50%, -50%) scale(1);
-    }
-    50% { 
-        transform: translate(-50%, -50%) scale(0.85);
+        filter: drop-shadow(0 0 45px rgba(232, 196, 168, 1))
+                drop-shadow(0 0 90px rgba(232, 196, 168, 0.7))
+                drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+        transform: scale(1.05);
     }
 }
 
 @keyframes raysRotate {
     from { 
-        transform: translate(-50%, -50%) rotate(0deg); 
+        transform: rotate(0deg); 
     }
     to { 
-        transform: translate(-50%, -50%) rotate(360deg); 
+        transform: rotate(360deg); 
     }
 }
     }
