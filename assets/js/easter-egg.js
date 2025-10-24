@@ -271,11 +271,10 @@ const EasterEggSystem = {
         }
 
         if (badge && this.status.loginStreak > 0 && isHiddenDoorPage) {
-            badge.innerHTML = `
-                <div style="font-size: 0.8rem; opacity: 0.8;">Login Streak</div>
-                <div class="login-streak-number">${this.status.loginStreak}</div>
-                <div style="font-size: 0.8rem; opacity: 0.8;">Days</div>
-            `;
+            // Konvertiere zu römischen Zahlen
+            const romanNumerals = ['', 'I', 'II', 'III'];
+            const roman = romanNumerals[this.status.loginStreak] || this.status.loginStreak;
+            badge.innerHTML = `<div class="login-streak-number">${roman}</div>`;
         } else if (badge && !isHiddenDoorPage) {
             // Remove badge if on dashboard
             badge.remove();
