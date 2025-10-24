@@ -219,36 +219,47 @@
 
 .riddle-content {
     background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(10, 10, 10, 0.98) 100%);
-    border: 2px solid #D4AF37;
+    border: 2px solid #E8B4A0;
     border-radius: 20px;
     padding: 4rem 3rem;
     max-width: 600px;
     text-align: center;
-    box-shadow: 0 0 60px rgba(212, 175, 55, 0.5);
+    box-shadow: 0 0 60px rgba(232, 180, 160, 0.5);
 }
 
 .riddle-icon {
-    font-size: 5rem;
+    font-size: 3rem;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    letter-spacing: 8px;
+    color: #E8B4A0;
     margin-bottom: 2rem;
+    text-shadow: 0 0 20px rgba(232, 180, 160, 0.6);
     animation: riddleIconPulse 2s ease-in-out infinite;
 }
 
 @keyframes riddleIconPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    0%, 100% { 
+        transform: scale(1);
+        text-shadow: 0 0 20px rgba(232, 180, 160, 0.6);
+    }
+    50% { 
+        transform: scale(1.05);
+        text-shadow: 0 0 30px rgba(232, 180, 160, 0.9);
+    }
 }
 
 .riddle-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cinzel', serif;
     font-size: 2.5rem;
-    color: #D4AF37;
+    color: #E8B4A0;
     margin-bottom: 2rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
 
 .riddle-text {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'EB Garamond', serif;
     font-size: 1.3rem;
     color: #E8E8E8;
     line-height: 2;
@@ -259,11 +270,11 @@
 
 .riddle-close {
     padding: 1rem 3rem;
-    background: linear-gradient(135deg, #D4AF37 0%, #C9A961 100%);
+    background: linear-gradient(135deg, #E8B4A0 0%, #F4C2A1 100%);
     color: #000;
     border: none;
     border-radius: 50px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Cinzel', serif;
     font-size: 1rem;
     font-weight: 600;
     text-transform: uppercase;
