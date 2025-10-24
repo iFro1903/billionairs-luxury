@@ -228,24 +228,27 @@
 }
 
 .riddle-icon {
-    font-size: 3rem;
-    font-family: 'Cinzel', serif;
-    font-weight: 600;
-    letter-spacing: 8px;
-    color: #E8B4A0;
-    margin-bottom: 2rem;
-    text-shadow: 0 0 20px rgba(232, 180, 160, 0.6);
+    width: 120px;
+    height: auto;
+    margin: 0 auto 2rem;
     animation: riddleIconPulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(232, 180, 160, 0.6));
+}
+
+.riddle-icon img {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 @keyframes riddleIconPulse {
     0%, 100% { 
         transform: scale(1);
-        text-shadow: 0 0 20px rgba(232, 180, 160, 0.6);
+        filter: drop-shadow(0 0 20px rgba(232, 180, 160, 0.6));
     }
     50% { 
         transform: scale(1.05);
-        text-shadow: 0 0 30px rgba(232, 180, 160, 0.9);
+        filter: drop-shadow(0 0 30px rgba(232, 180, 160, 0.8));
     }
 }
 

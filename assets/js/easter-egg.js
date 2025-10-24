@@ -129,7 +129,7 @@ const EasterEggSystem = {
             });
 
             const data = await response.json();
-            this.showRiddle('BILLIONAIRS', 'The Pyramid', data.riddle);
+            this.showRiddle('<img src="assets/images/logo.png" alt="BILLIONAIRS">', 'The Pyramid', data.riddle);
         } catch (error) {
             console.error('Error opening pyramid:', error);
         }
