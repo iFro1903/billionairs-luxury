@@ -127,22 +127,6 @@
     z-index: 2;
 }
 
-/* Lichtstrahlen um das Auge - wie beim Logo */
-.eye .rays {
-    content: '';
-    position: absolute;
-    width: 140px;
-    height: 140px;
-    background: 
-        linear-gradient(0deg, transparent 48%, rgba(212, 175, 55, 0.25) 50%, transparent 52%),
-        linear-gradient(45deg, transparent 48%, rgba(212, 175, 55, 0.15) 50%, transparent 52%),
-        linear-gradient(90deg, transparent 48%, rgba(212, 175, 55, 0.25) 50%, transparent 52%),
-        linear-gradient(135deg, transparent 48%, rgba(212, 175, 55, 0.15) 50%, transparent 52%);
-    animation: raysRotate 12s linear infinite;
-    pointer-events: none;
-    z-index: 1;
-}
-
     }
     50% { 
         filter: drop-shadow(0 0 35px rgba(212, 175, 55, 1))
