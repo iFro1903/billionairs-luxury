@@ -68,6 +68,18 @@ const EasterEggSystem = {
     updateUI() {
         if (!this.status) return;
 
+        // Show eye if ready (72h + 3 logins) - PRIORITY
+        if (this.status.eyeReady && !this.status.eyeUnlocked) {
+            this.transformPyramidToEye();
+            return; // Stop here, don't show pyramid
+        }
+
+        // Show eye if already unlocked
+        if (this.status.eyeUnlocked) {
+            this.showEye();
+            return; // Stop here
+        }
+
         // Show pyramid after 20 seconds if not unlocked yet
         if (this.status.showPyramid && !this.status.pyramidUnlocked) {
             setTimeout(() => {
@@ -76,18 +88,8 @@ const EasterEggSystem = {
         }
 
         // Keep showing pyramid if unlocked but eye not ready
-        if (this.status.pyramidUnlocked && !this.status.eyeUnlocked && !this.status.eyeReady) {
+        if (this.status.pyramidUnlocked && !this.status.eyeReady) {
             this.showPyramid();
-        }
-
-        // Show eye if ready (72h + 3 logins)
-        if (this.status.eyeReady && !this.status.eyeUnlocked) {
-            this.transformPyramidToEye();
-        }
-
-        // Show eye if already unlocked
-        if (this.status.eyeUnlocked) {
-            this.showEye();
         }
 
         // Update streak badge
