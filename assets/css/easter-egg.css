@@ -278,8 +278,8 @@
 
 .login-streak-badge {
     position: fixed;
-    top: 8rem;
-    right: 2rem;
+    top: 2rem;
+    left: 2rem;
     padding: 1rem 1.5rem;
     background: rgba(212, 175, 55, 0.1);
     border: 1px solid rgba(212, 175, 55, 0.3);
