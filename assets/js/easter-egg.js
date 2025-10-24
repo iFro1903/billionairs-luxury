@@ -144,7 +144,17 @@ const EasterEggSystem = {
         
         const easterEgg = document.getElementById('easterEgg');
         if (easterEgg) {
-            easterEgg.innerHTML = '<div class="eye"></div>';
+            easterEgg.innerHTML = `
+                <div class="eye">
+                    <div class="rays"></div>
+                    <div class="eyeball">
+                        <div class="iris">
+                            <div class="pupil"></div>
+                        </div>
+                        <div class="reflection"></div>
+                    </div>
+                </div>
+            `;
             easterEgg.onclick = () => this.openEye();
         } else {
             this.showEye();
@@ -161,7 +171,17 @@ const EasterEggSystem = {
             const container = document.createElement('div');
             container.className = 'easter-egg-container';
             container.id = 'easterEgg';
-            container.innerHTML = '<div class="eye"></div>';
+            container.innerHTML = `
+                <div class="eye">
+                    <div class="rays"></div>
+                    <div class="eyeball">
+                        <div class="iris">
+                            <div class="pupil"></div>
+                        </div>
+                        <div class="reflection"></div>
+                    </div>
+                </div>
+            `;
             container.onclick = () => this.openEye();
             document.body.appendChild(container);
         }
