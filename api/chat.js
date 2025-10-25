@@ -56,23 +56,23 @@ export default async function handler(req) {
                     LIMIT 1000
                 `;
             } else {
-                // Regular users only see messages sent while they were online
-                // Get user's last_seen timestamp
-                const userLastSeen = await sql`
-                    SELECT last_seen, chat_opened_at
+                // Regular users only see messages since their current login session
+                // Get user's chat_opened_at timestamp (when they opened chat this session)
+                const userSession = await sql`
+                    SELECT chat_opened_at
                     FROM users
                     WHERE email = ${email}
                 `;
                 
-                const lastSeenTime = userLastSeen[0]?.last_seen || userLastSeen[0]?.chat_opened_at || new Date();
+                const sessionStart = userSession[0]?.chat_opened_at || new Date();
                 
-                // Only get messages from the last 5 minutes (current session)
+                // Only get messages since they opened the chat in this session
                 messages = await sql`
                     SELECT username, message, created_at
                     FROM chat_messages
-                    WHERE created_at >= NOW() - INTERVAL '5 minutes'
+                    WHERE created_at >= ${sessionStart}
                     ORDER BY created_at DESC
-                    LIMIT 100
+                    LIMIT 500
                 `;
             }
 

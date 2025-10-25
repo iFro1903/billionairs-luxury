@@ -167,9 +167,29 @@ class LuxuryChat {
             const overlay = document.getElementById('chatOverlay');
             overlay.classList.add('show');
             this.isOpen = true;
+            
+            // Mark session start time in database
+            this.markChatSession();
+            
             this.loadMessages();
             this.scrollToBottom();
         }, 9500);
+    }
+
+    async markChatSession() {
+        // Set chat_opened_at to NOW for this session
+        try {
+            await fetch('/api/easter-egg', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: this.userEmail,
+                    action: 'mark_chat_session'
+                })
+            });
+        } catch (error) {
+            console.error('Error marking chat session:', error);
+        }
     }
 
     close() {

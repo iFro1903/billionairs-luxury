@@ -211,6 +211,21 @@ The final door will open.`;
         });
       }
 
+      // ===== MARK CHAT SESSION =====
+      case 'mark_chat_session': {
+        // Update chat_opened_at to NOW for new session
+        await sql`
+          UPDATE users 
+          SET chat_opened_at = NOW()
+          WHERE email = ${email}
+        `;
+
+        return res.status(200).json({ 
+          success: true,
+          message: 'Session marked'
+        });
+      }
+
       default:
         return res.status(400).json({ error: 'Invalid action' });
     }
