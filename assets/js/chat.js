@@ -98,28 +98,42 @@ class LuxuryChat {
             easterEggContainer.style.opacity = '0';
             easterEggContainer.style.pointerEvents = 'none';
             
-            // Remove clone after animation
-            setTimeout(() => eyeClone.remove(), 1100);
+            // Start traveling to center after eyelids close
+            setTimeout(() => {
+                eyeClone.classList.add('traveling');
+            }, 600);
+            
+            // Remove clone after it reaches center
+            setTimeout(() => eyeClone.remove(), 2200);
         }
 
-        // Phase 2: Light beam with trail effect
+        // Phase 2: Light beam trail during travel
         setTimeout(() => {
             const beam = document.createElement('div');
             beam.className = 'eye-beam';
             document.body.appendChild(beam);
             
             setTimeout(() => beam.remove(), 2200);
-        }, 1000);
+        }, 600);
 
-        // Phase 3: Eye appears in center with aura
+        // Phase 3: Eye opening in center with aura
         setTimeout(() => {
+            // Aura background
+            const aura = document.createElement('div');
+            aura.className = 'eye-center-aura';
+            document.body.appendChild(aura);
+            
+            // Eye element
             const eyeCenter = document.createElement('div');
             eyeCenter.className = 'eye-center';
             eyeCenter.innerHTML = '<img src="assets/images/eye-simple.svg" style="width: 100%; height: 100%; position: relative; z-index: 2;">';
             document.body.appendChild(eyeCenter);
             
-            setTimeout(() => eyeCenter.remove(), 2200);
-        }, 1800);
+            setTimeout(() => {
+                aura.remove();
+                eyeCenter.remove();
+            }, 2500);
+        }, 2200);
 
         // Phase 4: Premium light explosion
         setTimeout(() => {
@@ -128,7 +142,7 @@ class LuxuryChat {
             document.body.appendChild(explosion);
             
             setTimeout(() => explosion.remove(), 2000);
-        }, 3800);
+        }, 4500);
 
         // Phase 5: Chat reveal with premium fade
         setTimeout(() => {
@@ -137,7 +151,7 @@ class LuxuryChat {
             this.isOpen = true;
             this.loadMessages();
             this.scrollToBottom();
-        }, 3800);
+        }, 4700);
     }
 
     close() {

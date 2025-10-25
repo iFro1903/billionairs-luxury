@@ -1,61 +1,77 @@
 /* Premium Luxury Chat System - 500K CHF Quality */
 
-/* Eye Closing Animation - Professional */
+/* Eye Closing Animation - Realistic Eyelids */
 .eye-closing {
     position: fixed;
-    top: 40px;
-    right: 40px;
     width: 80px;
     height: 80px;
     z-index: 9998;
     filter: drop-shadow(0 0 20px rgba(232, 196, 168, 0.8));
+    transition: top 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s,
+                left 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s,
+                right 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s;
 }
 
+/* Upper Eyelid */
 .eye-closing::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: -100%;
     left: 0;
     right: 0;
-    bottom: 0;
+    height: 100%;
     background: linear-gradient(180deg, 
-        rgba(10, 10, 10, 0) 0%,
-        rgba(10, 10, 10, 0.95) 50%,
-        rgba(10, 10, 10, 0.95) 50%,
-        rgba(10, 10, 10, 0) 100%
+        rgba(10, 10, 10, 0.98) 0%,
+        rgba(10, 10, 10, 0.95) 80%,
+        rgba(10, 10, 10, 0.7) 100%
     );
-    animation: eyelidClose 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    z-index: 1;
+    border-radius: 0 0 50% 50%;
+    z-index: 10;
+    animation: upperEyelidClose 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-.eye-closing img {
-    animation: eyeFadeOut 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+/* Lower Eyelid */
+.eye-closing::after {
+    content: '';
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(0deg, 
+        rgba(10, 10, 10, 0.98) 0%,
+        rgba(10, 10, 10, 0.95) 80%,
+        rgba(10, 10, 10, 0.7) 100%
+    );
+    border-radius: 50% 50% 0 0;
+    z-index: 10;
+    animation: lowerEyelidClose 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-@keyframes eyelidClose {
+@keyframes upperEyelidClose {
     0% {
-        clip-path: inset(0 0 100% 0);
-    }
-    50% {
-        clip-path: inset(0 0 0 0);
+        top: -100%;
     }
     100% {
-        clip-path: inset(0 0 0 0);
+        top: 0;
     }
 }
 
-@keyframes eyeFadeOut {
+@keyframes lowerEyelidClose {
     0% {
-        opacity: 1;
-        filter: brightness(1);
-    }
-    70% {
-        opacity: 0.8;
+        bottom: -100%;
     }
     100% {
-        opacity: 0;
-        filter: brightness(3);
+        bottom: 0;
     }
+}
+
+/* Eye traveling to center (while closed) */
+.eye-closing.traveling {
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translate(-50%, -50%) scale(1.5);
 }
 
 /* Light Beam - Premium Trail Effect */
@@ -129,65 +145,113 @@
     }
 }
 
-/* Eye in Center - Professional Appearance */
+/* Eye in Center - Opening Animation */
 .eye-center {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(1.5);
     width: 140px;
     height: 140px;
     z-index: 10001;
     opacity: 0;
     filter: drop-shadow(0 0 40px rgba(232, 196, 168, 1)) 
             drop-shadow(0 0 80px rgba(232, 196, 168, 0.6));
-    animation: eyeCenterAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards;
 }
 
+.eye-center img {
+    opacity: 0;
+    animation: eyeReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Upper Eyelid Opening */
 .eye-center::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle,
-        rgba(232, 196, 168, 0.3) 0%,
-        rgba(232, 196, 168, 0) 70%
-    );
-    transform: translate(-50%, -50%);
-    animation: eyeAura 2s ease-in-out 1.8s infinite;
-}
-
-.eye-center::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    background: linear-gradient(180deg,
-        rgba(10, 10, 10, 0) 0%,
-        rgba(10, 10, 10, 0.98) 50%,
-        rgba(10, 10, 10, 0.98) 50%,
-        rgba(10, 10, 10, 0) 100%
+    height: 50%;
+    background: linear-gradient(180deg, 
+        rgba(10, 10, 10, 0.98) 0%,
+        rgba(10, 10, 10, 0.7) 100%
     );
-    animation: eyeCenterClose 1s cubic-bezier(0.4, 0, 0.6, 1) 2.8s forwards;
-    z-index: 1;
+    border-radius: 0 0 50% 50%;
+    z-index: 10;
+    animation: eyelidOpenUpper 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
 }
 
-@keyframes eyeCenterAppear {
+/* Lower Eyelid Opening */
+.eye-center::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(0deg, 
+        rgba(10, 10, 10, 0.98) 0%,
+        rgba(10, 10, 10, 0.7) 100%
+    );
+    border-radius: 50% 50% 0 0;
+    z-index: 10;
+    animation: eyelidOpenLower 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards,
+               eyelidCloseAgain 0.8s cubic-bezier(0.4, 0, 0.6, 1) 1.5s forwards;
+}
+
+@keyframes eyeReveal {
     from {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5) rotate(-10deg);
     }
     to {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1) rotate(0deg);
     }
 }
 
-@keyframes eyeAura {
+@keyframes eyelidOpenUpper {
+    from {
+        top: 0;
+    }
+    to {
+        top: -100%;
+    }
+}
+
+@keyframes eyelidOpenLower {
+    from {
+        bottom: 0;
+    }
+    to {
+        bottom: -100%;
+    }
+}
+
+@keyframes eyelidCloseAgain {
+    from {
+        bottom: -100%;
+    }
+    to {
+        bottom: 0;
+    }
+}
+
+/* Aura around eye */
+.eye-center-aura {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle,
+        rgba(232, 196, 168, 0.3) 0%,
+        rgba(232, 196, 168, 0) 70%
+    );
+    z-index: 10000;
+    animation: eyeAuraPulse 2s ease-in-out infinite;
+}
+
+@keyframes eyeAuraPulse {
     0%, 100% {
         opacity: 0.6;
         transform: translate(-50%, -50%) scale(1);
@@ -195,15 +259,6 @@
     50% {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1.1);
-    }
-}
-
-@keyframes eyeCenterClose {
-    0% {
-        clip-path: inset(0 0 100% 0);
-    }
-    100% {
-        clip-path: inset(0 0 0 0);
     }
 }
 
