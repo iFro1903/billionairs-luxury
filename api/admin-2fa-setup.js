@@ -1,5 +1,6 @@
 // Two-Factor Auth Setup für CEO
 import { neon } from '@neondatabase/serverless';
+import bcrypt from 'bcryptjs';
 
 export const config = {
   runtime: 'edge'
@@ -18,7 +19,25 @@ export default async function handler(request) {
   try {
     const { email, password, action } = await request.json();
 
-    if (email !== CEO_EMAIL || password !== 'Masallah1,') {
+    // Verify credentials with bcrypt
+    if (email !== CEO_EMAIL) {
+      return new Response(JSON.stringify({ error: 'Invalid credentials' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    const passwordHash = process.env.ADMIN_PASSWORD_HASH;
+    if (!passwordHash) {
+      console.error('ADMIN_PASSWORD_HASH not set');
+      return new Response(JSON.stringify({ error: 'Server configuration error' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    const isValidPassword = await bcrypt.compare(password, passwordHash);
+    if (!isValidPassword) {
       return new Response(JSON.stringify({ error: 'Invalid credentials' }), {
         status: 401,
         headers: { 'Content-Type': 'application/json' }

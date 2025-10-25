@@ -1,5 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 import { rateLimiter } from './rate-limiter.js';
+import bcrypt from 'bcryptjs';
 
 export const config = {
     runtime: 'edge'
@@ -60,9 +61,18 @@ export default async function handler(req) {
             });
         }
 
-        // Check password first (no database needed)
-        const correctPassword = 'Masallah1,';
-        if (password !== correctPassword) {
+        // Check password with bcrypt hash from environment variable
+        const passwordHash = process.env.ADMIN_PASSWORD_HASH;
+        if (!passwordHash) {
+            console.error('ADMIN_PASSWORD_HASH not set in environment variables');
+            return new Response(JSON.stringify({ error: 'Server configuration error' }), {
+                status: 500,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }
+
+        const isValidPassword = await bcrypt.compare(password, passwordHash);
+        if (!isValidPassword) {
             // Audit Log
             await logAudit(sql, {
                 action: 'LOGIN_FAILED_WRONG_PASSWORD',

@@ -35,6 +35,7 @@
   "dependencies": {
     "@neondatabase/serverless": "^0.10.3",
     "@vercel/postgres": "^0.10.0",
+    "bcryptjs": "^3.0.2",
     "dotenv": "^17.2.3",
     "express": "^4.21.2",
     "luxon": "^3.4.4",

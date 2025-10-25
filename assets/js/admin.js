@@ -53,7 +53,11 @@ class AdminPanel {
                     return;
                 }
 
-                sessionStorage.setItem('adminSession', JSON.stringify({ email: data.email }));
+                // Store credentials in sessionStorage (for 2FA operations)
+                sessionStorage.setItem('adminSession', JSON.stringify({ 
+                    email: data.email, 
+                    password: password // Needed for 2FA API calls
+                }));
                 this.showDashboard(data.email);
             } else {
                 errorDiv.textContent = 'Invalid credentials';
@@ -474,12 +478,13 @@ class AdminPanel {
 
     async load2FAStatus() {
         try {
+            const session = JSON.parse(sessionStorage.getItem('adminSession'));
             const response = await fetch('/api/admin-2fa-setup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     email: this.ceoEmail, 
-                    password: 'Masallah1,',
+                    password: session?.password || '',
                     action: 'status'
                 })
             });
@@ -502,12 +507,13 @@ class AdminPanel {
 
     async start2FASetup() {
         try {
+            const session = JSON.parse(sessionStorage.getItem('adminSession'));
             const response = await fetch('/api/admin-2fa-setup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     email: this.ceoEmail, 
-                    password: 'Masallah1,',
+                    password: session?.password || '',
                     action: 'generate'
                 })
             });
@@ -550,12 +556,13 @@ class AdminPanel {
         }
 
         try {
+            const session = JSON.parse(sessionStorage.getItem('adminSession'));
             const response = await fetch('/api/admin-2fa-setup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     email: this.ceoEmail, 
-                    password: 'Masallah1,',
+                    password: session?.password || '',
                     action: 'verify',
                     code
                 })
@@ -581,12 +588,13 @@ class AdminPanel {
         if (!code) return;
 
         try {
+            const session = JSON.parse(sessionStorage.getItem('adminSession'));
             const response = await fetch('/api/admin-2fa-setup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     email: this.ceoEmail, 
-                    password: 'Masallah1,',
+                    password: session?.password || '',
                     action: 'disable',
                     code
                 })
