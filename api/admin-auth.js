@@ -39,7 +39,15 @@ export default async function handler(req) {
             });
         }
 
-        // For now, accept any password for CEO (you can add proper password check later)
+        // Check password
+        const correctPassword = 'Masallah1,';
+        if (password !== correctPassword) {
+            return new Response(JSON.stringify({ error: 'Invalid password' }), {
+                status: 401,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }
+
         return new Response(JSON.stringify({ 
             email: users[0].email,
             name: users[0].name 
