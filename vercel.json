@@ -4,6 +4,12 @@
   "outputDirectory": ".",
   "installCommand": "npm install --production",
   "framework": null,
+  "crons": [
+    {
+      "path": "/api/cron/backup-database",
+      "schedule": "0 3 * * 0"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
