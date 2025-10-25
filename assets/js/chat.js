@@ -5,6 +5,7 @@ class LuxuryChat {
         this.username = null;
         this.messages = [];
         this.isOpen = false;
+        this.lastMessageCount = 0;
     }
 
     init(userEmail) {
@@ -217,6 +218,14 @@ class LuxuryChat {
             const data = await response.json();
 
             if (data.messages) {
+                const newMessageCount = data.messages.length;
+                
+                // Check if new messages arrived while chat is closed
+                if (!this.isOpen && this.lastMessageCount > 0 && newMessageCount > this.lastMessageCount) {
+                    this.triggerEyeBlink();
+                }
+                
+                this.lastMessageCount = newMessageCount;
                 this.messages = data.messages;
                 this.renderMessages();
             }
@@ -227,6 +236,19 @@ class LuxuryChat {
         } catch (error) {
             console.error('Error loading messages:', error);
         }
+    }
+
+    triggerEyeBlink() {
+        const eye = document.querySelector('.easter-egg-container .eye');
+        if (!eye) return;
+        
+        // Add blink class
+        eye.classList.add('eye-blink-notification');
+        
+        // Remove after animation
+        setTimeout(() => {
+            eye.classList.remove('eye-blink-notification');
+        }, 1000);
     }
 
     renderMessages() {
@@ -279,11 +301,12 @@ class LuxuryChat {
     }
 
     startPolling() {
+        // Initial load to set baseline
+        this.loadMessages();
+        
         // Poll for new messages every 3 seconds
         setInterval(() => {
-            if (this.isOpen) {
-                this.loadMessages();
-            }
+            this.loadMessages();
         }, 3000);
     }
 }
