@@ -1,260 +1,109 @@
 /* Premium Luxury Chat System - 500K CHF Quality */
 
-/* Eye Closing Animation - Realistic Eyelids */
+/* Eye Closing Animation - Simple & Effective */
 .eye-closing {
     position: fixed;
     width: 80px;
     height: 80px;
     z-index: 9998;
     filter: drop-shadow(0 0 20px rgba(232, 196, 168, 0.8));
-    transition: top 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s,
-                left 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s,
-                right 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s;
+    overflow: hidden;
 }
 
-/* Upper Eyelid */
-.eye-closing::before {
-    content: '';
-    position: absolute;
-    top: -100%;
-    left: 0;
-    right: 0;
+/* Closing Effect with Clip Path */
+.eye-closing img {
+    width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, 
-        rgba(10, 10, 10, 0.98) 0%,
-        rgba(10, 10, 10, 0.95) 80%,
-        rgba(10, 10, 10, 0.7) 100%
-    );
-    border-radius: 0 0 50% 50%;
-    z-index: 10;
-    animation: upperEyelidClose 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation: eyeClipClose 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-/* Lower Eyelid */
-.eye-closing::after {
-    content: '';
-    position: absolute;
-    bottom: -100%;
-    left: 0;
-    right: 0;
-    height: 100%;
-    background: linear-gradient(0deg, 
-        rgba(10, 10, 10, 0.98) 0%,
-        rgba(10, 10, 10, 0.95) 80%,
-        rgba(10, 10, 10, 0.7) 100%
-    );
-    border-radius: 50% 50% 0 0;
-    z-index: 10;
-    animation: lowerEyelidClose 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes upperEyelidClose {
+@keyframes eyeClipClose {
     0% {
-        top: -100%;
+        clip-path: ellipse(100% 50% at 50% 50%);
+        opacity: 1;
     }
     100% {
-        top: 0;
+        clip-path: ellipse(100% 0% at 50% 50%);
+        opacity: 0.7;
     }
 }
 
-@keyframes lowerEyelidClose {
-    0% {
-        bottom: -100%;
-    }
-    100% {
-        bottom: 0;
-    }
-}
-
-/* Eye traveling to center (while closed) */
+/* Eye Flying to Center */
 .eye-closing.traveling {
+    transition: top 1.5s cubic-bezier(0.16, 1, 0.3, 1),
+                left 1.5s cubic-bezier(0.16, 1, 0.3, 1),
+                right 1.5s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
     top: 50% !important;
     left: 50% !important;
     right: auto !important;
-    transform: translate(-50%, -50%) scale(1.5);
+    transform: translate(-50%, -50%) scale(1.8);
 }
 
-/* Light Beam - Premium Trail Effect */
-.eye-beam {
+/* Eye Opening in Center */
+.eye-center {
     position: fixed;
-    z-index: 9999;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.8);
+    width: 80px;
+    height: 80px;
+    z-index: 10001;
+    filter: drop-shadow(0 0 40px rgba(232, 196, 168, 1)) 
+            drop-shadow(0 0 80px rgba(232, 196, 168, 0.6));
+    overflow: hidden;
 }
 
-.eye-beam::before {
-    content: '';
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    background: radial-gradient(circle,
-        rgba(232, 196, 168, 1) 0%,
-        rgba(232, 196, 168, 0.6) 30%,
-        rgba(232, 196, 168, 0.3) 60%,
-        rgba(232, 196, 168, 0) 100%
-    );
-    filter: blur(20px);
-    animation: beamCore 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.eye-center img {
+    width: 100%;
+    height: 100%;
+    animation: eyeOpen 1s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+               eyeCloseAgain 0.8s cubic-bezier(0.4, 0, 0.6, 1) 1.2s forwards;
 }
 
-.eye-beam::after {
-    content: '';
-    position: absolute;
-    width: 300px;
-    height: 300px;
+@keyframes eyeOpen {
+    0% {
+        clip-path: ellipse(100% 0% at 50% 50%);
+        opacity: 0.7;
+    }
+    100% {
+        clip-path: ellipse(100% 50% at 50% 50%);
+        opacity: 1;
+    }
+}
+
+@keyframes eyeCloseAgain {
+    0% {
+        clip-path: ellipse(100% 50% at 50% 50%);
+        opacity: 1;
+    }
+    100% {
+        clip-path: ellipse(100% 0% at 50% 50%);
+        opacity: 0.5;
+    }
+}
+
+/* Aura Pulse around Eye */
+.eye-center-aura {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    transform: translate(-50%, -50%);
     background: radial-gradient(circle,
         rgba(232, 196, 168, 0.4) 0%,
         rgba(232, 196, 168, 0.2) 40%,
         rgba(232, 196, 168, 0) 70%
     );
-    filter: blur(40px);
-    animation: beamGlow 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes beamCore {
-    0% {
-        top: 60px;
-        right: 60px;
-        transform: translate(50%, -50%) scale(0.3);
-        opacity: 0;
-    }
-    15% {
-        opacity: 1;
-    }
-    100% {
-        top: 50vh;
-        right: 50vw;
-        transform: translate(50%, -50%) scale(1.2);
-        opacity: 0.9;
-    }
-}
-
-@keyframes beamGlow {
-    0% {
-        top: 60px;
-        right: 60px;
-        transform: translate(50%, -50%) scale(0.5);
-        opacity: 0;
-    }
-    20% {
-        opacity: 0.6;
-    }
-    100% {
-        top: 50vh;
-        right: 50vw;
-        transform: translate(50%, -50%) scale(1);
-        opacity: 0.4;
-    }
-}
-
-/* Eye in Center - Opening Animation */
-.eye-center {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1.5);
-    width: 140px;
-    height: 140px;
-    z-index: 10001;
-    opacity: 0;
-    filter: drop-shadow(0 0 40px rgba(232, 196, 168, 1)) 
-            drop-shadow(0 0 80px rgba(232, 196, 168, 0.6));
-}
-
-.eye-center img {
-    opacity: 0;
-    animation: eyeReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Upper Eyelid Opening */
-.eye-center::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(180deg, 
-        rgba(10, 10, 10, 0.98) 0%,
-        rgba(10, 10, 10, 0.7) 100%
-    );
-    border-radius: 0 0 50% 50%;
-    z-index: 10;
-    animation: eyelidOpenUpper 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
-}
-
-/* Lower Eyelid Opening */
-.eye-center::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(0deg, 
-        rgba(10, 10, 10, 0.98) 0%,
-        rgba(10, 10, 10, 0.7) 100%
-    );
-    border-radius: 50% 50% 0 0;
-    z-index: 10;
-    animation: eyelidOpenLower 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards,
-               eyelidCloseAgain 0.8s cubic-bezier(0.4, 0, 0.6, 1) 1.5s forwards;
-}
-
-@keyframes eyeReveal {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes eyelidOpenUpper {
-    from {
-        top: 0;
-    }
-    to {
-        top: -100%;
-    }
-}
-
-@keyframes eyelidOpenLower {
-    from {
-        bottom: 0;
-    }
-    to {
-        bottom: -100%;
-    }
-}
-
-@keyframes eyelidCloseAgain {
-    from {
-        bottom: -100%;
-    }
-    to {
-        bottom: 0;
-    }
-}
-
-/* Aura around eye */
-.eye-center-aura {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    height: 300px;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle,
-        rgba(232, 196, 168, 0.3) 0%,
-        rgba(232, 196, 168, 0) 70%
-    );
     z-index: 10000;
-    animation: eyeAuraPulse 2s ease-in-out infinite;
+    animation: auraPulse 2s ease-in-out infinite;
 }
 
-@keyframes eyeAuraPulse {
+@keyframes auraPulse {
     0%, 100% {
         opacity: 0.6;
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(0.9);
     }
     50% {
         opacity: 1;
