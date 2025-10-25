@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEO Chat Monitor - BILLIONAIRS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #0a0a0a;
+            color: #e8e8e8;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #E8C4A8;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #E8C4A8;
+            letter-spacing: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .login-section {
+            max-width: 400px;
+            margin: 5rem auto;
+            text-align: center;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(232, 196, 168, 0.05);
+            border: 1px solid #E8C4A8;
+            border-radius: 8px;
+            color: #e8e8e8;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #E8C4A8;
+            color: #0a0a0a;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: #d4af37;
+            transform: translateY(-2px);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(232, 196, 168, 0.05);
+            border: 1px solid #E8C4A8;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #E8C4A8;
+        }
+
+        .messages-container {
+            background: rgba(232, 196, 168, 0.02);
+            border: 1px solid #E8C4A8;
+            border-radius: 12px;
+            padding: 2rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .message {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(232, 196, 168, 0.05);
+            border-left: 3px solid #E8C4A8;
+            border-radius: 4px;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-username {
+            font-weight: 600;
+            color: #E8C4A8;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: #666;
+        }
+
+        .message-text {
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #666;
+            padding: 3rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .error {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid #ff0000;
+            color: #ff6b6b;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        /* Custom scrollbar */
+        .messages-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .messages-container::-webkit-scrollbar-track {
+            background: rgba(232, 196, 168, 0.05);
+        }
+
+        .messages-container::-webkit-scrollbar-thumb {
+            background: #E8C4A8;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Section -->
+        <div id="loginSection" class="login-section">
+            <div class="header">
+                <h1>CEO CHAT MONITOR</h1>
+                <p>Executive Access Only</p>
+            </div>
+            <input type="email" id="ceoEmail" class="login-input" placeholder="CEO Email Address">
+            <button onclick="login()" class="login-btn">Access Monitor</button>
+            <div id="loginError" class="error hidden"></div>
+        </div>
+
+        <!-- Monitor Section -->
+        <div id="monitorSection" class="hidden">
+            <div class="header">
+                <h1>CEO CHAT MONITOR</h1>
+                <p>Complete Message History • Real-Time Updates</p>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-label">Total Messages</div>
+                    <div class="stat-value" id="totalMessages">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Online Users</div>
+                    <div class="stat-value" id="onlineUsers">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Last Update</div>
+                    <div class="stat-value" id="lastUpdate" style="font-size: 1.2rem;">--:--</div>
+                </div>
+            </div>
+
+            <div class="messages-container" id="messagesContainer">
+                <div class="empty-state">Loading messages...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let ceoEmail = null;
+        let pollInterval = null;
+
+        async function login() {
+            const email = document.getElementById('ceoEmail').value.trim();
+            const errorEl = document.getElementById('loginError');
+
+            if (!email) {
+                errorEl.textContent = 'Please enter your email';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            // Verify CEO access
+            if (email !== 'furkan_akaslan@hotmail.com') {
+                errorEl.textContent = 'Unauthorized: CEO access only';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            ceoEmail = email;
+            errorEl.classList.add('hidden');
+
+            // Show monitor
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('monitorSection').classList.remove('hidden');
+
+            // Start loading messages
+            await loadMessages();
+            
+            // Poll every 3 seconds
+            pollInterval = setInterval(loadMessages, 3000);
+        }
+
+        async function loadMessages() {
+            try {
+                const response = await fetch(`/api/chat?email=${ceoEmail}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    document.getElementById('totalMessages').textContent = data.messages.length;
+                    document.getElementById('onlineUsers').textContent = data.onlineCount;
+                    document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+
+                    renderMessages(data.messages);
+                }
+            } catch (error) {
+                console.error('Error loading messages:', error);
+            }
+        }
+
+        function renderMessages(messages) {
+            const container = document.getElementById('messagesContainer');
+
+            if (messages.length === 0) {
+                container.innerHTML = '<div class="empty-state">No messages yet</div>';
+                return;
+            }
+
+            container.innerHTML = messages.reverse().map(msg => `
+                <div class="message">
+                    <div class="message-header">
+                        <span class="message-username">${escapeHtml(msg.username)}</span>
+                        <span class="message-time">${new Date(msg.created_at).toLocaleString()}</span>
+                    </div>
+                    <div class="message-text">${escapeHtml(msg.message)}</div>
+                </div>
+            `).join('');
+
+            // Auto-scroll to bottom
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (pollInterval) {
+                clearInterval(pollInterval);
+            }
+        });
+    </script>
+</body>
+</html>

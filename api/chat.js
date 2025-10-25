@@ -41,13 +41,40 @@ export default async function handler(req) {
                 });
             }
 
-            // Get last 100 messages
-            const messages = await sql`
-                SELECT username, message, created_at
-                FROM chat_messages
-                ORDER BY created_at DESC
-                LIMIT 100
-            `;
+            // Get messages based on user type
+            let messages;
+            
+            // Check if user is CEO (you can change this email)
+            const isCEO = email === 'furkan_akaslan@hotmail.com';
+            
+            if (isCEO) {
+                // CEO sees ALL messages ever sent
+                messages = await sql`
+                    SELECT username, message, created_at
+                    FROM chat_messages
+                    ORDER BY created_at DESC
+                    LIMIT 1000
+                `;
+            } else {
+                // Regular users only see messages sent while they were online
+                // Get user's last_seen timestamp
+                const userLastSeen = await sql`
+                    SELECT last_seen, chat_opened_at
+                    FROM users
+                    WHERE email = ${email}
+                `;
+                
+                const lastSeenTime = userLastSeen[0]?.last_seen || userLastSeen[0]?.chat_opened_at || new Date();
+                
+                // Only get messages from the last 5 minutes (current session)
+                messages = await sql`
+                    SELECT username, message, created_at
+                    FROM chat_messages
+                    WHERE created_at >= NOW() - INTERVAL '5 minutes'
+                    ORDER BY created_at DESC
+                    LIMIT 100
+                `;
+            }
 
             // Reverse to show oldest first
             messages.reverse();
