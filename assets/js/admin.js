@@ -359,17 +359,29 @@ class AdminPanel {
             if (data.payments && data.payments.length > 0) {
                 data.payments.forEach(payment => {
                     const tr = document.createElement('tr');
+                    const canRefund = payment.status === 'paid' && (payment.method === 'stripe' || payment.method === 'credit_card');
+                    
                     tr.innerHTML = `
                         <td>${new Date(payment.created_at).toLocaleDateString('de-CH')}</td>
                         <td>${payment.email}</td>
                         <td>${formatCHF(payment.amount)}</td>
                         <td><span class="payment-method-badge ${payment.method}">${payment.method}</span></td>
-                        <td><span class="status-badge paid">${payment.status}</span></td>
+                        <td><span class="status-badge ${payment.status === 'refunded' ? 'refunded' : 'paid'}">${payment.status}</span></td>
+                        <td>
+                            ${canRefund ? 
+                                `<button onclick="admin.refundPayment('${payment.stripe_payment_intent_id || payment.id}', '${payment.email}')" class="btn-refund" title="Refund Payment">
+                                    💸 Refund
+                                </button>` : 
+                                payment.status === 'refunded' ? 
+                                '<span style="color: #888; font-size: 12px;">Refunded</span>' :
+                                '<span style="color: #888; font-size: 12px;">Manual refund required</span>'
+                            }
+                        </td>
                     `;
                     tbody.appendChild(tr);
                 });
             } else {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #888;">No payments yet</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #888;">No payments yet</td></tr>';
             }
 
         } catch (error) {
@@ -763,7 +775,51 @@ class AdminPanel {
             console.error('Load audit logs error:', error);
         }
     }
+
+    // Refund payment
+    async refundPayment(paymentId, userEmail) {
+        const reason = prompt(`Refund payment for ${userEmail}?\n\nOptional reason:`);
+        
+        if (reason === null) {
+            return; // User cancelled
+        }
+
+        const confirmRefund = confirm(`⚠️ CONFIRM REFUND\n\nUser: ${userEmail}\nPayment ID: ${paymentId}\nReason: ${reason || 'None provided'}\n\nThis action cannot be undone. Continue?`);
+        
+        if (!confirmRefund) {
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/admin-refund', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    paymentId: paymentId,
+                    reason: reason || 'Admin refund',
+                    adminEmail: localStorage.getItem('adminEmail')
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                alert(`✅ Refund successful!\n\nRefund ID: ${data.refund.refundId}\nAmount: ${data.refund.amount} ${data.refund.currency}\n\nThe user will receive an email confirmation and the refund will appear in their account within 5-10 business days.`);
+                
+                // Reload payments
+                this.loadPaymentsData();
+            } else {
+                alert(`❌ Refund failed\n\n${data.error || data.message || 'Unknown error'}`);
+            }
+        } catch (error) {
+            console.error('Refund error:', error);
+            alert(`❌ Refund failed\n\n${error.message}`);
+        }
+    }
 }
 
 // Initialize admin panel
 const adminPanel = new AdminPanel();
+
+// Expose to window for onclick handlers
+window.admin = adminPanel;

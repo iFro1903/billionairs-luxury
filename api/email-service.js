@@ -283,6 +283,79 @@ const templates = {
 </body>
 </html>
         `
+    }),
+
+    refund: (userName, amount, currency, refundId) => ({
+        subject: '💸 Refund Processed - BILLIONAIRS',
+        html: `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Montserrat', Arial, sans-serif; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%); padding: 40px 20px;">
+        <tr>
+            <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="background: rgba(26, 26, 46, 0.95); border-radius: 20px; border: 2px solid rgba(212, 175, 55, 0.3); overflow: hidden;">
+                    <tr>
+                        <td style="background: linear-gradient(135deg, rgba(255, 165, 0, 0.2), rgba(255, 140, 0, 0.1)); padding: 40px 30px; text-align: center; border-bottom: 1px solid rgba(212, 175, 55, 0.3);">
+                            <div style="font-size: 60px; margin-bottom: 15px;">💸</div>
+                            <h1 style="margin: 0; font-size: 32px; color: #d4af37; font-weight: 900;">REFUND PROCESSED</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 40px 30px; color: #ffffff;">
+                            <h2 style="margin: 0 0 20px 0; font-size: 24px; color: #d4af37;">Dear ${userName || 'Member'},</h2>
+                            <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.9);">
+                                Your refund has been successfully processed. The funds will be returned to your original payment method within 5-10 business days.
+                            </p>
+                            <div style="background: rgba(212, 175, 55, 0.1); border: 2px solid rgba(212, 175, 55, 0.3); padding: 25px; margin: 30px 0; border-radius: 12px;">
+                                <table width="100%" cellpadding="8" cellspacing="0">
+                                    <tr>
+                                        <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Refund Amount:</td>
+                                        <td style="color: #d4af37; font-weight: 600; text-align: right; font-size: 18px;">${amount} ${currency}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Refund ID:</td>
+                                        <td style="color: rgba(255, 255, 255, 0.9); font-weight: 600; text-align: right; font-size: 14px;">${refundId}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Status:</td>
+                                        <td style="color: #00ff00; font-weight: 600; text-align: right; font-size: 14px;">PROCESSED ✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Processing Time:</td>
+                                        <td style="color: rgba(255, 255, 255, 0.9); text-align: right; font-size: 14px;">5-10 business days</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="background: rgba(255, 165, 0, 0.1); border-left: 4px solid #ffa500; padding: 20px; margin: 30px 0; border-radius: 8px;">
+                                <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
+                                    <strong>⚠️ Important:</strong> The refund will appear in your account within 5-10 business days, depending on your bank or payment provider. You will receive a notification once the funds have been deposited.
+                                </p>
+                            </div>
+                            <p style="margin: 30px 0 20px 0; font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.9);">
+                                If you have any questions about this refund, please don't hesitate to contact our support team.
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background: rgba(0, 0, 0, 0.3); padding: 30px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                            <p style="margin: 0; font-size: 12px; color: rgba(255, 255, 255, 0.5);">
+                                BILLIONAIRS LUXURY<br>
+                                Questions? <a href="mailto:support@billionairs.luxury" style="color: #d4af37; text-decoration: none;">support@billionairs.luxury</a>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+        `
     })
 };
 
@@ -316,6 +389,9 @@ export default async function handler(req) {
                 break;
             case 'payment':
                 template = templates.paymentSuccess(data.userName, data.amount, data.currency, data.productName);
+                break;
+            case 'refund':
+                template = templates.refund(data.userName, data.amount, data.currency, data.refundId);
                 break;
             default:
                 return new Response(JSON.stringify({ error: 'Invalid email type' }), {
