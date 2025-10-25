@@ -305,6 +305,15 @@ const EasterEggSystem = {
         const isHiddenDoorPage = window.location.pathname.includes('the-hidden-door.html');
         
         let badge = document.getElementById('streakBadge');
+        
+        // Hide badge if chat is ready/unlocked
+        if (this.status.chatReady || this.status.chatUnlocked) {
+            if (badge) {
+                badge.remove();
+            }
+            return;
+        }
+        
         if (!badge && this.status.loginStreak > 0 && isHiddenDoorPage) {
             badge = document.createElement('div');
             badge.id = 'streakBadge';
