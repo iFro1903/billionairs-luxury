@@ -306,10 +306,18 @@ const EasterEggSystem = {
         
         let badge = document.getElementById('streakBadge');
         
-        // Hide badge if chat is ready/unlocked
+        // Show Billionairs logo if chat is ready/unlocked
         if (this.status.chatReady || this.status.chatUnlocked) {
-            if (badge) {
-                badge.remove();
+            if (!badge && isHiddenDoorPage) {
+                badge = document.createElement('div');
+                badge.id = 'streakBadge';
+                badge.className = 'login-streak-badge billionairs-logo-badge';
+                document.body.appendChild(badge);
+            }
+            
+            if (badge && isHiddenDoorPage) {
+                badge.className = 'login-streak-badge billionairs-logo-badge';
+                badge.innerHTML = '<img src="assets/images/billionairs-triangle-logo.png" alt="BILLIONAIRS" style="width: 80px; height: auto; filter: drop-shadow(0 0 20px rgba(232, 196, 168, 0.6));">';
             }
             return;
         }
@@ -322,6 +330,9 @@ const EasterEggSystem = {
         }
 
         if (badge && this.status.loginStreak > 0 && isHiddenDoorPage) {
+            // Remove billionairs-logo-badge class if present
+            badge.classList.remove('billionairs-logo-badge');
+            
             let displayStreak = this.status.loginStreak;
             let maxStreak = 3;
             
