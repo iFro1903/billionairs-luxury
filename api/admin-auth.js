@@ -68,41 +68,14 @@ export default async function handler(req) {
                 action: 'LOGIN_FAILED_WRONG_PASSWORD',
                 user: email,
                 ip: req.headers.get('x-forwarded-for') || 'unknown',
-    } catch (error) {
-        console.error('Admin auth error:', error);
-        return new Response(JSON.stringify({ error: 'Authentication failed' }), {
-            status: 500,
-            headers: { 'Content-Type': 'application/json' }
-        });
-    }
-}
+                details: JSON.stringify({ reason: 'wrong_password' })
+            });
 
-function getBaseUrl(request) {
-    const url = new URL(request.url);
-    return `${url.protocol}//${url.host}`;
-}
-
-async function logAudit(sql, { action, user, ip, details }) {
-    try {
-        await sql`
-            CREATE TABLE IF NOT EXISTS audit_logs (
-                id SERIAL PRIMARY KEY,
-                action VARCHAR(100) NOT NULL,
-                user_email VARCHAR(255),
-                ip VARCHAR(100),
-                details TEXT,
-                timestamp TIMESTAMP DEFAULT NOW()
-            )
-        `;
-
-        await sql`
-            INSERT INTO audit_logs (action, user_email, ip, details)
-            VALUES (${action}, ${user}, ${ip}, ${details})
-        `;
-    } catch (error) {
-        console.error('Audit log error:', error);
-    }
-}
+            return new Response(JSON.stringify({ error: 'Invalid credentials' }), {
+                status: 401,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }
 
         // Check if 2FA is enabled
         const twoFactorResult = await sql`
@@ -171,5 +144,32 @@ async function logAudit(sql, { action, user, ip, details }) {
             status: 500,
             headers: { 'Content-Type': 'application/json' }
         });
+    }
+}
+
+function getBaseUrl(request) {
+    const url = new URL(request.url);
+    return `${url.protocol}//${url.host}`;
+}
+
+async function logAudit(sql, { action, user, ip, details }) {
+    try {
+        await sql`
+            CREATE TABLE IF NOT EXISTS audit_logs (
+                id SERIAL PRIMARY KEY,
+                action VARCHAR(100) NOT NULL,
+                user_email VARCHAR(255),
+                ip VARCHAR(100),
+                details TEXT,
+                timestamp TIMESTAMP DEFAULT NOW()
+            )
+        `;
+
+        await sql`
+            INSERT INTO audit_logs (action, user_email, ip, details)
+            VALUES (${action}, ${user}, ${ip}, ${details})
+        `;
+    } catch (error) {
+        console.error('Audit log error:', error);
     }
 }
