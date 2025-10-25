@@ -18,7 +18,7 @@ ADMIN_PASSWORD_HASH
 
 **Value:**
 ```
-$2a$10$ixGBrp4borRNUeziNucSeu2qfYOyblVbrE7A9hZnOhekZNpIaEqrG
+f913ac00-5695-4c86-9c29-efabfe0ca8bb$98ed602b074b5f250b59df7ff8ad6c702ee420df1e7233b3eb1d50da6c39510b
 ```
 
 **Environment:** 
@@ -47,8 +47,9 @@ Falls du das Passwort später ändern möchtest:
 
 ### Lokaler Hash erstellen:
 ```bash
-node -e "const bcrypt = require('bcryptjs'); console.log(bcrypt.hashSync('DEIN_NEUES_PASSWORT', 10));"
+node generate-hash.js
 ```
+(Ändere zuerst das Passwort in `generate-hash.js`)
 
 ### In Vercel aktualisieren:
 1. Environment Variables → ADMIN_PASSWORD_HASH
@@ -61,9 +62,10 @@ node -e "const bcrypt = require('bcryptjs'); console.log(bcrypt.hashSync('DEIN_N
 ## 🔒 Sicherheitshinweise
 
 - ✅ Passwort nie im Code speichern
-- ✅ Nur bcrypt Hash in Environment Variables
+- ✅ Nur Hash in Environment Variables
 - ✅ Hash nie im Git Repository committen
 - ✅ Bei Verdacht auf Kompromittierung sofort ändern
+- ✅ Web Crypto API - Edge Runtime kompatibel
 
 **Aktuelles Passwort:** `Masallah1,` (nur du kennst es)
-**Hash-Algorithmus:** bcrypt (10 Rounds)
+**Hash-Algorithmus:** SHA-256 mit UUID Salt (Edge-kompatibel)
