@@ -157,6 +157,54 @@ body {
     gap: 1rem;
 }
 
+/* Emergency Kill Switch */
+.emergency-switch {
+    position: relative;
+}
+
+.emergency-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(40, 167, 69, 0.2);
+    border: 2px solid rgba(40, 167, 69, 0.5);
+    border-radius: 8px;
+    color: #28a745;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.emergency-btn:hover {
+    background: rgba(40, 167, 69, 0.3);
+    transform: translateY(-2px);
+}
+
+.emergency-btn[data-active="true"] {
+    background: rgba(220, 53, 69, 0.3);
+    border-color: rgba(220, 53, 69, 0.8);
+    color: #ff6b6b;
+    animation: emergencyPulse 2s infinite;
+}
+
+.emergency-btn[data-active="true"]:hover {
+    background: rgba(220, 53, 69, 0.4);
+}
+
+.emergency-icon {
+    font-size: 1.2rem;
+}
+
+@keyframes emergencyPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+    }
+}
+
 .logout-btn {
     padding: 0.5rem 1rem;
     background: rgba(232, 196, 168, 0.1);

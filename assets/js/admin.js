@@ -77,10 +77,72 @@ class AdminPanel {
             location.reload();
         });
 
+        // Setup emergency button
+        document.getElementById('emergencyBtn').addEventListener('click', () => {
+            this.toggleEmergencyMode();
+        });
+
+        // Check emergency mode status
+        this.checkEmergencyMode();
+
         // Load initial data
         this.loadUsersData();
         this.loadChatData();
         this.loadStatsData();
+    }
+
+    async checkEmergencyMode() {
+        try {
+            const response = await fetch('/api/check-emergency');
+            const data = await response.json();
+            this.updateEmergencyButton(data.isActive);
+        } catch (error) {
+            console.error('Error checking emergency mode:', error);
+        }
+    }
+
+    updateEmergencyButton(isActive) {
+        const btn = document.getElementById('emergencyBtn');
+        const text = btn.querySelector('.emergency-text');
+        
+        btn.dataset.active = isActive;
+        text.textContent = isActive ? 'Emergency Mode: ACTIVE' : 'Emergency Mode: OFF';
+    }
+
+    async toggleEmergencyMode() {
+        const btn = document.getElementById('emergencyBtn');
+        const isCurrentlyActive = btn.dataset.active === 'true';
+        
+        const action = isCurrentlyActive ? 'deactivate' : 'activate';
+        const confirmMsg = isCurrentlyActive 
+            ? '🟢 Bring website ONLINE?\n\nAll users will regain access.'
+            : '🚨 EMERGENCY SHUTDOWN?\n\nThis will show 404 to ALL users!\nOnly you can restore access.\n\nConfirm?';
+        
+        if (!confirm(confirmMsg)) return;
+
+        try {
+            const response = await fetch('/api/admin-emergency', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    email: this.ceoEmail,
+                    mode: action
+                })
+            });
+
+            if (response.ok) {
+                this.updateEmergencyButton(!isCurrentlyActive);
+                alert(isCurrentlyActive 
+                    ? '✅ Website is now ONLINE' 
+                    : '🚨 EMERGENCY MODE ACTIVE\n\nWebsite is now showing 404 to all users.'
+                );
+            } else {
+                alert('Failed to toggle emergency mode');
+            }
+        } catch (error) {
+            console.error('Error toggling emergency mode:', error);
+            alert('Error occurred');
+        }
     }
 
     switchTab(tabName) {

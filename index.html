@@ -59,6 +59,20 @@
     <!-- Particles.js -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
+    <!-- Emergency Mode Check -->
+    <script>
+        // Check if emergency mode is active
+        fetch('/api/check-emergency')
+            .then(res => res.json())
+            .then(data => {
+                if (data.isActive) {
+                    // Redirect to 404 page
+                    window.location.href = '/emergency-404.html';
+                }
+            })
+            .catch(err => console.log('Emergency check failed:', err));
+    </script>
+    
     <!-- HTTPS Redirect (Fallback if server config fails) -->
     <script>
         // Force HTTPS in production
