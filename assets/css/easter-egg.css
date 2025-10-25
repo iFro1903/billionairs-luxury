@@ -290,7 +290,7 @@
     display: block;
     width: 90px;
     height: auto;
-    filter: drop-shadow(0 0 20px rgba(232, 196, 168, 0.6));
+    filter: none !important;
     animation: none !important;
     transform: translateY(0) !important;
 }
