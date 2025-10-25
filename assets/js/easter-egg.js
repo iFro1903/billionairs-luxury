@@ -292,29 +292,12 @@ const EasterEggSystem = {
     },
 
     showChat() {
-        if (this.status.chatUnlocked) {
-            // Initialize and open luxury chat
-            if (!window.luxuryChat) {
-                window.luxuryChat = new LuxuryChat();
-                window.luxuryChat.init(this.userEmail);
-            }
-            window.luxuryChat.open();
-        } else {
-            // Show locked message
-            const modal = document.createElement('div');
-            modal.className = 'riddle-modal show';
-            modal.innerHTML = `
-                <div class="riddle-content">
-                    <div class="riddle-icon">🔒</div>
-                    <h2 class="riddle-title">Locked</h2>
-                    <p class="riddle-text">The eye sees, but does not yet speak.<br>Return when seven suns have set.</p>
-                    <button class="riddle-close" onclick="this.closest('.riddle-modal').remove()">
-                        Close
-                    </button>
-                </div>
-            `;
-            document.body.appendChild(modal);
+        // Initialize and open luxury chat
+        if (!window.luxuryChat) {
+            window.luxuryChat = new LuxuryChat();
+            window.luxuryChat.init(this.userEmail);
         }
+        window.luxuryChat.open();
     },
 
     updateStreakBadge() {
