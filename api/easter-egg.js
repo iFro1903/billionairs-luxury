@@ -60,6 +60,18 @@ export default async function handler(req, res) {
           const hoursSinceEye = (now - new Date(user.eye_opened_at)) / (1000 * 60 * 60);
           if (!user.chat_unlocked) {
             chatReady = hoursSinceEye >= 168;
+            
+            // Auto-unlock chat if ready
+            if (chatReady) {
+              await sql`
+                UPDATE users 
+                SET chat_ready = TRUE
+                WHERE email = ${email}
+              `;
+            }
+          } else {
+            // Already unlocked
+            chatReady = true;
           }
           daysSinceEyeOpened = Math.min(Math.floor(hoursSinceEye / 24) + 1, 7); // 1-7 days
         }
@@ -187,7 +199,9 @@ The final door will open.`;
 
         await sql`
           UPDATE users 
-          SET chat_unlocked = TRUE
+          SET chat_unlocked = TRUE,
+              chat_ready = TRUE,
+              chat_opened_at = NOW()
           WHERE email = ${email}
         `;
 
