@@ -273,6 +273,8 @@ class LuxuryChat {
             formData.append('file', file);
             formData.append('upload_preset', 'billionairs_chat'); // Using custom unsigned preset
 
+            console.log('Uploading to Cloudinary with preset: billionairs_chat');
+            
             const response = await fetch(
                 'https://api.cloudinary.com/v1_1/d8s8a93z/auto/upload',
                 {
@@ -281,6 +283,8 @@ class LuxuryChat {
                 }
             );
 
+            console.log('Cloudinary response status:', response.status);
+            
             if (response.ok) {
                 const data = await response.json();
                 
@@ -291,7 +295,9 @@ class LuxuryChat {
                 // Send message with file
                 await this.sendMessage(data.secure_url, file.name, fileType);
             } else {
-                alert('Upload failed. Please try again.');
+                const errorData = await response.json().catch(() => ({}));
+                console.error('Cloudinary error:', errorData);
+                alert(`Upload failed: ${errorData.error?.message || 'Unknown error'}`);
             }
         } catch (error) {
             console.error('Error uploading file:', error);
