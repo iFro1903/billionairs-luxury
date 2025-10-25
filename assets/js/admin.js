@@ -189,7 +189,22 @@ class AdminPanel {
     async loadChatData() {
         try {
             const response = await fetch('/api/chat?ceo=true');
+            
+            if (!response.ok) {
+                console.error('Chat API error:', response.status);
+                return;
+            }
+            
             const data = await response.json();
+
+            // Check if messages exist
+            if (!data.messages || !Array.isArray(data.messages)) {
+                console.error('Invalid chat data:', data);
+                document.getElementById('totalMessages').textContent = '0';
+                document.getElementById('todayMessages').textContent = '0';
+                document.getElementById('chatUsers').textContent = '0';
+                return;
+            }
 
             // Update stats
             document.getElementById('totalMessages').textContent = data.messages.length;

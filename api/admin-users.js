@@ -44,7 +44,7 @@ export default async function handler(req) {
         ).length;
 
         return new Response(JSON.stringify({
-            users,
+            users: users || [],
             total,
             paid,
             active
@@ -57,6 +57,7 @@ export default async function handler(req) {
         console.error('Admin users error:', error);
         return new Response(JSON.stringify({ 
             error: 'Failed to load users',
+            message: error.message,
             users: [],
             total: 0,
             paid: 0,
