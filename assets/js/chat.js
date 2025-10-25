@@ -286,19 +286,30 @@ class LuxuryChat {
             return; // Keep empty state
         }
 
-        // Remove empty state
+        // Remove empty state only once
         const emptyState = container.querySelector('.chat-empty');
         if (emptyState) {
             emptyState.remove();
         }
 
-        // Clear and render all messages
-        container.innerHTML = '';
+        // Get existing message IDs to avoid duplicates
+        const existingMessages = new Set(
+            Array.from(container.querySelectorAll('.message')).map(el => el.dataset.messageId)
+        );
 
-        this.messages.forEach(msg => {
+        // Only add new messages (don't re-render everything)
+        this.messages.forEach((msg, index) => {
+            const messageId = `${msg.created_at}_${msg.username}_${index}`;
+            
+            // Skip if message already exists
+            if (existingMessages.has(messageId)) {
+                return;
+            }
+
             const isOwn = msg.username === this.username;
             const messageEl = document.createElement('div');
             messageEl.className = `message ${isOwn ? 'own' : 'other'}`;
+            messageEl.dataset.messageId = messageId;
 
             const time = new Date(msg.created_at).toLocaleTimeString('de-DE', {
                 hour: '2-digit',
@@ -306,7 +317,7 @@ class LuxuryChat {
             });
 
             messageEl.innerHTML = `
-                <div class="message-header">${msg.username}</div>
+                <div class="message-header">${this.escapeHtml(msg.username)}</div>
                 <div class="message-bubble">${this.escapeHtml(msg.message)}</div>
                 <div class="message-time">${time}</div>
             `;
