@@ -1,5 +1,38 @@
 /* Premium Luxury Chat System */
 
+/* Light Beam Animation */
+.eye-beam {
+    position: fixed;
+    top: 60px;
+    right: 60px;
+    width: 4px;
+    height: 0;
+    background: linear-gradient(180deg, 
+        rgba(232, 196, 168, 0.9) 0%,
+        rgba(232, 196, 168, 0.6) 50%,
+        rgba(232, 196, 168, 0) 100%
+    );
+    box-shadow: 0 0 20px rgba(232, 196, 168, 0.8),
+                0 0 40px rgba(232, 196, 168, 0.6);
+    transform-origin: top center;
+    z-index: 9999;
+    animation: beamExpand 1.2s ease-out forwards;
+}
+
+@keyframes beamExpand {
+    0% {
+        height: 0;
+        opacity: 0;
+    }
+    30% {
+        opacity: 1;
+    }
+    100% {
+        height: calc(50vh - 60px);
+        opacity: 0.8;
+    }
+}
+
 .chat-overlay {
     position: fixed;
     top: 0;
@@ -19,6 +52,18 @@
     opacity: 1;
     align-items: center;
     justify-content: center;
+    animation: chatFadeIn 0.6s ease 1.2s both;
+}
+
+@keyframes chatFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .chat-container {

@@ -74,11 +74,24 @@ class LuxuryChat {
     }
 
     open() {
-        const overlay = document.getElementById('chatOverlay');
-        overlay.classList.add('show');
-        this.isOpen = true;
-        this.loadMessages();
-        this.scrollToBottom();
+        // Create light beam animation
+        const beam = document.createElement('div');
+        beam.className = 'eye-beam';
+        document.body.appendChild(beam);
+
+        // Remove beam after animation
+        setTimeout(() => {
+            beam.remove();
+        }, 1500);
+
+        // Show chat after beam animation
+        setTimeout(() => {
+            const overlay = document.getElementById('chatOverlay');
+            overlay.classList.add('show');
+            this.isOpen = true;
+            this.loadMessages();
+            this.scrollToBottom();
+        }, 1200);
     }
 
     close() {
