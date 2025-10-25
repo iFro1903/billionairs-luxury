@@ -534,3 +534,31 @@ tbody tr:hover {
     gap: 0.75rem;
 }
 
+/* Payment Method Badges */
+.payment-method-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.payment-method-badge.stripe,
+.payment-method-badge.card {
+    background: rgba(99, 91, 255, 0.2);
+    color: #635bff;
+    border: 1px solid rgba(99, 91, 255, 0.5);
+}
+
+.payment-method-badge.crypto {
+    background: rgba(247, 147, 26, 0.2);
+    color: #f7931a;
+    border: 1px solid rgba(247, 147, 26, 0.5);
+}
+
+.payment-method-badge.paypal {
+    background: rgba(0, 48, 135, 0.2);
+    color: #0070ba;
+    border: 1px solid rgba(0, 112, 186, 0.5);
+}
+

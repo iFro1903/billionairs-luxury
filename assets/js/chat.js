@@ -363,6 +363,12 @@ class LuxuryChat {
                 // Check if new messages arrived while chat is closed
                 if (!this.isOpen && this.lastMessageCount > 0 && newMessageCount > this.lastMessageCount) {
                     this.triggerEyeBlink();
+                    
+                    // Send push notification
+                    if (window.notificationManager && data.messages.length > 0) {
+                        const latestMessage = data.messages[data.messages.length - 1];
+                        window.notificationManager.notifyNewChatMessage(latestMessage.username);
+                    }
                 }
                 
                 // Check if new messages arrived while chat is open

@@ -265,7 +265,17 @@ class AdminPanel {
             const response = await fetch('/api/admin-payments');
             const data = await response.json();
 
-            document.getElementById('totalRevenue').textContent = `CHF ${data.totalRevenue || 0}`;
+            // Format revenue with thousand separators
+            const formatCHF = (amount) => {
+                return new Intl.NumberFormat('de-CH', { 
+                    style: 'currency', 
+                    currency: 'CHF',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(amount);
+            };
+
+            document.getElementById('totalRevenue').textContent = formatCHF(data.totalRevenue || 0);
             document.getElementById('stripePayments').textContent = data.stripeCount || 0;
             document.getElementById('cryptoPayments').textContent = data.cryptoCount || 0;
 
@@ -273,20 +283,27 @@ class AdminPanel {
             const tbody = document.getElementById('paymentsTableBody');
             tbody.innerHTML = '';
 
-            data.payments.forEach(payment => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${new Date(payment.created_at).toLocaleDateString()}</td>
-                    <td>${payment.email}</td>
-                    <td>CHF ${payment.amount}</td>
-                    <td>${payment.method}</td>
-                    <td><span class="status-badge paid">${payment.status}</span></td>
-                `;
-                tbody.appendChild(tr);
-            });
+            if (data.payments && data.payments.length > 0) {
+                data.payments.forEach(payment => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${new Date(payment.created_at).toLocaleDateString('de-CH')}</td>
+                        <td>${payment.email}</td>
+                        <td>${formatCHF(payment.amount)}</td>
+                        <td><span class="payment-method-badge ${payment.method}">${payment.method}</span></td>
+                        <td><span class="status-badge paid">${payment.status}</span></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } else {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #888;">No payments yet</td></tr>';
+            }
 
         } catch (error) {
             console.error('Error loading payments:', error);
+            document.getElementById('totalRevenue').textContent = 'CHF 0';
+            document.getElementById('stripePayments').textContent = '0';
+            document.getElementById('cryptoPayments').textContent = '0';
         }
     }
 
