@@ -1,11 +1,14 @@
 import { neon } from '@neondatabase/serverless';
+import { withRateLimit } from '../lib/rate-limiter.js';
 
 export const config = {
     runtime: 'edge',
 };
 
 export default async function handler(req) {
-    const sql = neon(process.env.DATABASE_URL);
+    // Rate Limiting: 100 Requests/Minute
+    return withRateLimit(req, async () => {
+        const sql = neon(process.env.DATABASE_URL);
 
     try {
         // GET: Load messages
@@ -178,4 +181,5 @@ export default async function handler(req) {
             headers: { 'Content-Type': 'application/json' }
         });
     }
+    });
 }

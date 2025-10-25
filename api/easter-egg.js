@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless';
+import { withRateLimit } from '../lib/rate-limiter.js';
 
 export default async function handler(req, res) {
   // CORS Headers
@@ -9,6 +10,9 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
+
+  // Rate Limiting: 50 Requests/Minute
+  return withRateLimit(req, async () => {
 
   try {
     const sql = neon(process.env.DATABASE_URL);
@@ -237,4 +241,5 @@ The final door will open.`;
       details: error.message
     });
   }
+  }, { limit: 50, windowMs: 60000 }); // 50 Requests pro Minute
 }

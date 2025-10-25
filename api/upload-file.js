@@ -1,3 +1,5 @@
+import { withRateLimit } from '../lib/rate-limiter.js';
+
 export const config = {
     runtime: 'edge'
 };
@@ -17,6 +19,9 @@ export default async function handler(req) {
             headers: { 'Content-Type': 'application/json' }
         });
     }
+
+    // Rate Limiting: 20 Uploads/Minute (strenger für File Uploads)
+    return withRateLimit(req, async () => {
 
     try {
         const formData = await req.formData();
@@ -100,4 +105,5 @@ export default async function handler(req) {
             headers: { 'Content-Type': 'application/json' }
         });
     }
+    }, { limit: 20, windowMs: 60000 }); // 20 Uploads pro Minute
 }

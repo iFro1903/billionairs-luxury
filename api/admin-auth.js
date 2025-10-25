@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless';
+import { withLoginRateLimit, resetLoginAttempts } from '../lib/rate-limiter.js';
 
 export const config = {
     runtime: 'edge'
@@ -14,8 +15,10 @@ export default async function handler(req) {
         });
     }
 
-    try {
-        const { email, password } = await req.json();
+    // Rate Limiting für Login: 5 Versuche/15 Minuten
+    return withLoginRateLimit(req, async () => {
+        try {
+            const { email, password } = await req.json();
 
         // CEO email check
         if (email.toLowerCase() !== CEO_EMAIL.toLowerCase()) {
@@ -34,7 +37,9 @@ export default async function handler(req) {
             });
         }
 
-        // Password is correct, return success
+        // Password is correct, reset login attempts
+        resetLoginAttempts(req);
+        
         return new Response(JSON.stringify({ 
             email: email.toLowerCase(),
             name: 'CEO'
@@ -50,4 +55,5 @@ export default async function handler(req) {
             headers: { 'Content-Type': 'application/json' }
         });
     }
+    });
 }
