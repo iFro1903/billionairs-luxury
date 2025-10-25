@@ -306,18 +306,10 @@ const EasterEggSystem = {
         
         let badge = document.getElementById('streakBadge');
         
-        // Show Billionairs logo if chat is ready/unlocked
+        // Hide badge completely if chat is ready/unlocked
         if (this.status.chatReady || this.status.chatUnlocked) {
-            if (!badge && isHiddenDoorPage) {
-                badge = document.createElement('div');
-                badge.id = 'streakBadge';
-                badge.className = 'login-streak-badge billionairs-logo-badge';
-                document.body.appendChild(badge);
-            }
-            
-            if (badge && isHiddenDoorPage) {
-                badge.className = 'login-streak-badge billionairs-logo-badge';
-                badge.innerHTML = '<img src="assets/images/billionairs-triangle-logo.png?v=2" alt="BILLIONAIRS">';
+            if (badge) {
+                badge.remove();
             }
             return;
         }
