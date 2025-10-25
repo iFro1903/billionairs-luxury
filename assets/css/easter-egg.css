@@ -279,17 +279,12 @@
 
 /* Billionairs Logo Badge when Chat is unlocked */
 .billionairs-logo-badge {
-    animation: logoFloat 3s ease-in-out infinite;
+    /* No animation - keep it static */
 }
 
 .billionairs-logo-badge img {
     display: block;
     transition: filter 0.3s ease;
-}
-
-@keyframes logoFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
 }
 
 .chat-preview {
