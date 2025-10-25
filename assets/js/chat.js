@@ -274,7 +274,7 @@ class LuxuryChat {
             formData.append('upload_preset', 'billionairs_chat'); // You need to create this preset in Cloudinary
 
             const response = await fetch(
-                'https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/auto/upload',
+                'https://api.cloudinary.com/v1_1/d8s8a93z/auto/upload',
                 {
                     method: 'POST',
                     body: formData
