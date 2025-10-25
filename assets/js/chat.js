@@ -74,13 +74,13 @@ class LuxuryChat {
     }
 
     open() {
-        // 1. Clone eye from top right and close it
+        // Phase 1: Eye closing (professional eyelid effect)
         const eyeClosing = document.createElement('div');
         eyeClosing.className = 'eye-closing';
         eyeClosing.innerHTML = '<img src="assets/images/eye-simple.svg" style="width: 100%; height: 100%;">';
         document.body.appendChild(eyeClosing);
 
-        // 2. Create light beam traveling to center
+        // Phase 2: Light beam with trail effect (starts after eye closes)
         setTimeout(() => {
             const beam = document.createElement('div');
             beam.className = 'eye-beam';
@@ -88,36 +88,36 @@ class LuxuryChat {
             
             eyeClosing.remove();
             
-            setTimeout(() => beam.remove(), 2000);
-        }, 800);
+            setTimeout(() => beam.remove(), 2200);
+        }, 1000);
 
-        // 3. Show eye in center
+        // Phase 3: Eye appears in center with aura
         setTimeout(() => {
             const eyeCenter = document.createElement('div');
             eyeCenter.className = 'eye-center';
-            eyeCenter.innerHTML = '<img src="assets/images/eye-simple.svg" style="width: 100%; height: 100%;">';
+            eyeCenter.innerHTML = '<img src="assets/images/eye-simple.svg" style="width: 100%; height: 100%; position: relative; z-index: 2;">';
             document.body.appendChild(eyeCenter);
             
-            setTimeout(() => eyeCenter.remove(), 2000);
-        }, 1500);
+            setTimeout(() => eyeCenter.remove(), 2200);
+        }, 1800);
 
-        // 4. Light explosion
+        // Phase 4: Premium light explosion
         setTimeout(() => {
             const explosion = document.createElement('div');
             explosion.className = 'light-explosion';
             document.body.appendChild(explosion);
             
             setTimeout(() => explosion.remove(), 2000);
-        }, 3100);
+        }, 3800);
 
-        // 5. Show chat after full sequence
+        // Phase 5: Chat reveal with premium fade
         setTimeout(() => {
             const overlay = document.getElementById('chatOverlay');
             overlay.classList.add('show');
             this.isOpen = true;
             this.loadMessages();
             this.scrollToBottom();
-        }, 3500);
+        }, 3800);
     }
 
     close() {

@@ -1,6 +1,6 @@
-/* Premium Luxury Chat System */
+/* Premium Luxury Chat System - 500K CHF Quality */
 
-/* Eye Closing Animation */
+/* Eye Closing Animation - Professional */
 .eye-closing {
     position: fixed;
     top: 40px;
@@ -8,129 +8,282 @@
     width: 80px;
     height: 80px;
     z-index: 9998;
-    animation: eyeClose 0.8s ease forwards;
+    filter: drop-shadow(0 0 20px rgba(232, 196, 168, 0.8));
 }
 
-@keyframes eyeClose {
+.eye-closing::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, 
+        rgba(10, 10, 10, 0) 0%,
+        rgba(10, 10, 10, 0.95) 50%,
+        rgba(10, 10, 10, 0.95) 50%,
+        rgba(10, 10, 10, 0) 100%
+    );
+    animation: eyelidClose 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    z-index: 1;
+}
+
+.eye-closing img {
+    animation: eyeFadeOut 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes eyelidClose {
     0% {
-        transform: scaleY(1);
-        opacity: 1;
+        clip-path: inset(0 0 100% 0);
+    }
+    50% {
+        clip-path: inset(0 0 0 0);
     }
     100% {
-        transform: scaleY(0.1);
-        opacity: 0.8;
+        clip-path: inset(0 0 0 0);
     }
 }
 
-/* Light Beam Animation */
-.eye-beam {
-    position: fixed;
-    top: 60px;
-    right: 60px;
-    width: 6px;
-    height: 4px;
-    background: radial-gradient(ellipse at center,
-        rgba(232, 196, 168, 1) 0%,
-        rgba(232, 196, 168, 0.8) 40%,
-        rgba(232, 196, 168, 0) 100%
-    );
-    box-shadow: 0 0 30px rgba(232, 196, 168, 1),
-                0 0 60px rgba(232, 196, 168, 0.8),
-                0 0 90px rgba(232, 196, 168, 0.6);
-    transform-origin: top right;
-    z-index: 9999;
-    animation: beamTravel 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+@keyframes eyeFadeOut {
+    0% {
+        opacity: 1;
+        filter: brightness(1);
+    }
+    70% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0;
+        filter: brightness(3);
+    }
 }
 
-@keyframes beamTravel {
+/* Light Beam - Premium Trail Effect */
+.eye-beam {
+    position: fixed;
+    z-index: 9999;
+}
+
+.eye-beam::before {
+    content: '';
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle,
+        rgba(232, 196, 168, 1) 0%,
+        rgba(232, 196, 168, 0.6) 30%,
+        rgba(232, 196, 168, 0.3) 60%,
+        rgba(232, 196, 168, 0) 100%
+    );
+    filter: blur(20px);
+    animation: beamCore 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.eye-beam::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle,
+        rgba(232, 196, 168, 0.4) 0%,
+        rgba(232, 196, 168, 0.2) 40%,
+        rgba(232, 196, 168, 0) 70%
+    );
+    filter: blur(40px);
+    animation: beamGlow 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes beamCore {
     0% {
         top: 60px;
         right: 60px;
-        width: 6px;
-        height: 4px;
+        transform: translate(50%, -50%) scale(0.3);
         opacity: 0;
     }
-    20% {
+    15% {
         opacity: 1;
     }
     100% {
-        top: 50%;
-        right: 50%;
-        width: 80px;
-        height: 80px;
-        opacity: 1;
-        transform: translate(50%, -50%);
+        top: 50vh;
+        right: 50vw;
+        transform: translate(50%, -50%) scale(1.2);
+        opacity: 0.9;
     }
 }
 
-/* Eye in Center */
+@keyframes beamGlow {
+    0% {
+        top: 60px;
+        right: 60px;
+        transform: translate(50%, -50%) scale(0.5);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.6;
+    }
+    100% {
+        top: 50vh;
+        right: 50vw;
+        transform: translate(50%, -50%) scale(1);
+        opacity: 0.4;
+    }
+}
+
+/* Eye in Center - Professional Appearance */
 .eye-center {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     z-index: 10001;
     opacity: 0;
-    animation: eyeAppear 0.6s ease 1.5s forwards, eyeCloseCenter 0.8s ease 2.3s forwards;
+    filter: drop-shadow(0 0 40px rgba(232, 196, 168, 1)) 
+            drop-shadow(0 0 80px rgba(232, 196, 168, 0.6));
+    animation: eyeCenterAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.8s forwards;
 }
 
-@keyframes eyeAppear {
+.eye-center::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle,
+        rgba(232, 196, 168, 0.3) 0%,
+        rgba(232, 196, 168, 0) 70%
+    );
+    transform: translate(-50%, -50%);
+    animation: eyeAura 2s ease-in-out 1.8s infinite;
+}
+
+.eye-center::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg,
+        rgba(10, 10, 10, 0) 0%,
+        rgba(10, 10, 10, 0.98) 50%,
+        rgba(10, 10, 10, 0.98) 50%,
+        rgba(10, 10, 10, 0) 100%
+    );
+    animation: eyeCenterClose 1s cubic-bezier(0.4, 0, 0.6, 1) 2.8s forwards;
+    z-index: 1;
+}
+
+@keyframes eyeCenterAppear {
     from {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
+        transform: translate(-50%, -50%) scale(0.5) rotate(-10deg);
     }
     to {
         opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+}
+
+@keyframes eyeAura {
+    0%, 100% {
+        opacity: 0.6;
         transform: translate(-50%, -50%) scale(1);
     }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
 }
 
-@keyframes eyeCloseCenter {
+@keyframes eyeCenterClose {
     0% {
-        transform: translate(-50%, -50%) scale(1) scaleY(1);
-        opacity: 1;
+        clip-path: inset(0 0 100% 0);
     }
     100% {
-        transform: translate(-50%, -50%) scale(1) scaleY(0.1);
-        opacity: 0.5;
+        clip-path: inset(0 0 0 0);
     }
 }
 
-/* Light Explosion */
+/* Light Explosion - Premium Quality */
 .light-explosion {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle,
-        rgba(232, 196, 168, 0.8) 0%,
-        rgba(232, 196, 168, 0.4) 30%,
-        rgba(232, 196, 168, 0) 70%
-    );
-    border-radius: 50%;
-    z-index: 10000;
-    opacity: 0;
-    animation: explode 1s ease 3.1s forwards;
+    width: 100px;
+    height: 100px;
+    z-index: 10002;
+    pointer-events: none;
 }
 
-@keyframes explode {
+.light-explosion::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle,
+        rgba(232, 196, 168, 1) 0%,
+        rgba(232, 196, 168, 0.8) 20%,
+        rgba(232, 196, 168, 0.4) 40%,
+        rgba(232, 196, 168, 0) 70%
+    );
+    transform: translate(-50%, -50%);
+    animation: explosionCore 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.light-explosion::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle,
+        rgba(232, 196, 168, 0.6) 0%,
+        rgba(232, 196, 168, 0.3) 30%,
+        rgba(232, 196, 168, 0) 60%
+    );
+    transform: translate(-50%, -50%);
+    animation: explosionGlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes explosionCore {
+    0% {
+        width: 100px;
+        height: 100px;
+        opacity: 1;
+    }
+    50% {
+        width: 1200px;
+        height: 1200px;
+        opacity: 0.9;
+    }
+    100% {
+        width: 2400px;
+        height: 2400px;
+        opacity: 0;
+    }
+}
+
+@keyframes explosionGlow {
     0% {
         width: 200px;
         height: 200px;
-        opacity: 0;
+        opacity: 0.8;
     }
-    50% {
-        width: 800px;
-        height: 800px;
-        opacity: 1;
+    60% {
+        width: 1600px;
+        height: 1600px;
+        opacity: 0.6;
     }
     100% {
-        width: 2000px;
-        height: 2000px;
+        width: 3000px;
+        height: 3000px;
         opacity: 0;
     }
 }
@@ -146,7 +299,6 @@
     z-index: 10000;
     display: none;
     opacity: 0;
-    transition: opacity 0.4s ease;
 }
 
 .chat-overlay.show {
@@ -154,17 +306,19 @@
     opacity: 1;
     align-items: center;
     justify-content: center;
-    animation: chatFadeIn 0.8s ease 3.5s both;
+    animation: chatPremiumFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes chatFadeIn {
+@keyframes chatPremiumFadeIn {
     from {
         opacity: 0;
-        transform: scale(0.9);
+        transform: scale(0.92);
+        filter: blur(10px);
     }
     to {
         opacity: 1;
         transform: scale(1);
+        filter: blur(0);
     }
 }
 
