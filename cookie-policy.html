@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie-Richtlinie - BILLIONAIRS</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            padding: 40px 20px;
+        }
+        .policy-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        h1 {
+            color: #d4af37;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #d4af37;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .cookie-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+        .cookie-table th,
+        .cookie-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        .cookie-table th {
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #d4af37;
+            text-decoration: none;
+            padding: 12px 24px;
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .back-link:hover {
+            background: #d4af37;
+            color: #1a1a2e;
+        }
+    </style>
+</head>
+<body>
+    <div class="policy-container">
+        <h1>🍪 Cookie-Richtlinie</h1>
+        <p><strong>Letzte Aktualisierung:</strong> <?php echo date('d.m.Y'); ?></p>
+
+        <h2>1. Was sind Cookies?</h2>
+        <p>Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden, wenn Sie eine Website besuchen. Sie ermöglichen es der Website, Ihre Präferenzen zu speichern und Ihre Nutzung zu analysieren.</p>
+
+        <h2>2. Welche Cookies verwenden wir?</h2>
+        
+        <table class="cookie-table">
+            <thead>
+                <tr>
+                    <th>Cookie-Kategorie</th>
+                    <th>Zweck</th>
+                    <th>Dauer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Notwendige Cookies</strong></td>
+                    <td>Erforderlich für grundlegende Funktionen wie Login, Sicherheit und Zugangsverwaltung</td>
+                    <td>Session / 365 Tage</td>
+                </tr>
+                <tr>
+                    <td><strong>Analyse Cookies</strong></td>
+                    <td>Google Analytics zur Analyse der Nutzung unserer Website (anonymisiert)</td>
+                    <td>2 Jahre</td>
+                </tr>
+                <tr>
+                    <td><strong>Marketing Cookies</strong></td>
+                    <td>Personalisierte Werbung und Marketing-Kommunikation</td>
+                    <td>1 Jahr</td>
+                </tr>
+                <tr>
+                    <td><strong>Funktionale Cookies</strong></td>
+                    <td>Speichern Ihrer Präferenzen (Sprache, Theme, etc.)</td>
+                    <td>1 Jahr</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>3. Google Analytics</h2>
+        <p>Wir verwenden Google Analytics 4, um zu verstehen, wie Besucher unsere Website nutzen. Diese Daten werden ausschließlich in aggregierter Form verwendet und enthalten keine persönlich identifizierbaren Informationen.</p>
+        <p><strong>Measurement ID:</strong> G-80P17E7RZK</p>
+        <p>Wir haben Google Consent Mode v2 implementiert, um sicherzustellen, dass keine Tracking-Cookies gesetzt werden, bevor Sie Ihre Einwilligung erteilt haben.</p>
+
+        <h2>4. Ihre Rechte</h2>
+        <p>Sie haben folgende Rechte bezüglich Cookies:</p>
+        <ul>
+            <li>Cookies jederzeit akzeptieren oder ablehnen</li>
+            <li>Ihre Cookie-Einstellungen jederzeit ändern</li>
+            <li>Cookies in Ihrem Browser löschen</li>
+            <li>Cookies in Ihren Browser-Einstellungen blockieren</li>
+        </ul>
+
+        <h2>5. Cookie-Einstellungen ändern</h2>
+        <p>Sie können Ihre Cookie-Einstellungen jederzeit ändern, indem Sie auf den "Cookie-Einstellungen" Link am unteren Rand jeder Seite klicken oder durch Löschen Ihrer gespeicherten Präferenzen im Browser.</p>
+
+        <h2>6. Kontakt</h2>
+        <p>Bei Fragen zu unserer Cookie-Richtlinie kontaktieren Sie uns bitte unter:</p>
+        <p><strong>E-Mail:</strong> privacy@billionairs.luxury</p>
+
+        <a href="/" class="back-link">← Zurück zur Startseite</a>
+    </div>
+
+    <script>
+        // Add cookie settings link
+        const settingsLink = document.createElement('a');
+        settingsLink.href = '#';
+        settingsLink.textContent = '🍪 Cookie-Einstellungen';
+        settingsLink.className = 'cookie-settings-link';
+        settingsLink.onclick = (e) => {
+            e.preventDefault();
+            if (window.cookieConsent) {
+                window.cookieConsent.showSettings();
+            }
+        };
+        document.body.appendChild(settingsLink);
+    </script>
+</body>
+</html>
