@@ -87,6 +87,52 @@ class LuxuryChat {
             this.handleFileUpload(e.target.files[0]);
         });
 
+        // Drag & Drop support
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        
+        // Prevent default drag behaviors on the whole chat
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            chatMessages.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+            chatInput.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+        });
+
+        // Highlight on drag over
+        ['dragenter', 'dragover'].forEach(eventName => {
+            chatMessages.addEventListener(eventName, () => {
+                chatMessages.style.background = 'rgba(232, 196, 168, 0.05)';
+            });
+            chatInput.addEventListener(eventName, () => {
+                chatInput.style.background = 'rgba(232, 196, 168, 0.08)';
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            chatMessages.addEventListener(eventName, () => {
+                chatMessages.style.background = '';
+            });
+            chatInput.addEventListener(eventName, () => {
+                chatInput.style.background = '';
+            });
+        });
+
+        // Handle dropped files
+        const handleDrop = (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                this.handleFileUpload(files[0]);
+            }
+        };
+
+        chatMessages.addEventListener('drop', handleDrop);
+        chatInput.addEventListener('drop', handleDrop);
+
         document.getElementById('chatSendBtn').addEventListener('click', () => {
             this.sendMessage();
         });
