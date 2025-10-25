@@ -50,7 +50,7 @@ export default async function handler(req) {
             if (isCEO) {
                 // CEO sees ALL messages ever sent
                 messages = await sql`
-                    SELECT username, message, created_at
+                    SELECT username, message, created_at, file_url, file_name, file_type
                     FROM chat_messages
                     ORDER BY created_at DESC
                     LIMIT 1000
@@ -68,7 +68,7 @@ export default async function handler(req) {
                 
                 // Only get messages since they opened the chat in this session
                 messages = await sql`
-                    SELECT username, message, created_at
+                    SELECT username, message, created_at, file_url, file_name, file_type
                     FROM chat_messages
                     WHERE created_at >= ${sessionStart}
                     ORDER BY created_at DESC
@@ -100,10 +100,18 @@ export default async function handler(req) {
         // POST: Send message
         if (req.method === 'POST') {
             const body = await req.json();
-            const { email, username, message } = body;
+            const { email, username, message, fileUrl, fileName, fileType } = body;
 
-            if (!email || !username || !message) {
+            if (!email || !username) {
                 return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+                    status: 400,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            }
+
+            // Must have either message or file
+            if (!message && !fileUrl) {
+                return new Response(JSON.stringify({ error: 'Message or file required' }), {
                     status: 400,
                     headers: { 'Content-Type': 'application/json' }
                 });
@@ -123,10 +131,10 @@ export default async function handler(req) {
                 });
             }
 
-            // Insert message
+            // Insert message with optional file data
             await sql`
-                INSERT INTO chat_messages (email, username, message)
-                VALUES (${email}, ${username}, ${message})
+                INSERT INTO chat_messages (email, username, message, file_url, file_name, file_type)
+                VALUES (${email}, ${username}, ${message || ''}, ${fileUrl || null}, ${fileName || null}, ${fileType || null})
             `;
 
             // Update user's last_seen

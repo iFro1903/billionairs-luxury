@@ -49,6 +49,15 @@ class LuxuryChat {
                     
                     <div class="chat-input-container">
                         <input 
+                            type="file" 
+                            id="chatFileInput" 
+                            accept="image/*,.pdf,.doc,.docx,.txt"
+                            style="display: none;"
+                        />
+                        <button class="chat-attach-btn" id="chatAttachBtn" title="Bild oder Datei anhängen">
+                            📎
+                        </button>
+                        <input 
                             type="text" 
                             class="chat-input" 
                             id="chatInput" 
@@ -68,6 +77,14 @@ class LuxuryChat {
         // Event listeners
         document.getElementById('chatCloseBtn').addEventListener('click', () => {
             this.close();
+        });
+
+        document.getElementById('chatAttachBtn').addEventListener('click', () => {
+            document.getElementById('chatFileInput').click();
+        });
+
+        document.getElementById('chatFileInput').addEventListener('change', (e) => {
+            this.handleFileUpload(e.target.files[0]);
         });
 
         document.getElementById('chatSendBtn').addEventListener('click', () => {
@@ -205,21 +222,30 @@ class LuxuryChat {
         }
     }
 
-    async sendMessage() {
+    async sendMessage(fileUrl = null, fileName = null, fileType = null) {
         const input = document.getElementById('chatInput');
         const message = input.value.trim();
 
-        if (!message) return;
+        if (!message && !fileUrl) return;
 
         try {
+            const payload = {
+                email: this.userEmail,
+                username: this.username,
+                message: message || ''
+            };
+
+            // Add file data if present
+            if (fileUrl) {
+                payload.fileUrl = fileUrl;
+                payload.fileName = fileName;
+                payload.fileType = fileType;
+            }
+
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email: this.userEmail,
-                    username: this.username,
-                    message: message
-                })
+                body: JSON.stringify(payload)
             });
 
             if (response.ok) {
@@ -229,6 +255,52 @@ class LuxuryChat {
             }
         } catch (error) {
             console.error('Error sending message:', error);
+        }
+    }
+
+    async handleFileUpload(file) {
+        if (!file) return;
+
+        // Show loading state
+        const input = document.getElementById('chatInput');
+        const originalPlaceholder = input.placeholder;
+        input.placeholder = 'Uploading file...';
+        input.disabled = true;
+
+        try {
+            // Upload to Cloudinary
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', 'billionairs_chat'); // You need to create this preset in Cloudinary
+
+            const response = await fetch(
+                'https://api.cloudinary.com/v1_1/YOUR_CLOUD_NAME/auto/upload',
+                {
+                    method: 'POST',
+                    body: formData
+                }
+            );
+
+            if (response.ok) {
+                const data = await response.json();
+                
+                // Determine file type
+                const isImage = file.type.startsWith('image/');
+                const fileType = isImage ? 'image' : 'file';
+                
+                // Send message with file
+                await this.sendMessage(data.secure_url, file.name, fileType);
+            } else {
+                alert('Upload failed. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            alert('Upload error. Please try again.');
+        } finally {
+            input.placeholder = originalPlaceholder;
+            input.disabled = false;
+            // Clear file input
+            document.getElementById('chatFileInput').value = '';
         }
     }
 
@@ -316,9 +388,37 @@ class LuxuryChat {
                 minute: '2-digit'
             });
 
+            let contentHTML = '';
+            
+            // Add file if present
+            if (msg.file_url) {
+                if (msg.file_type === 'image') {
+                    contentHTML += `
+                        <div class="message-image">
+                            <img src="${msg.file_url}" alt="${this.escapeHtml(msg.file_name)}" 
+                                 onclick="window.open('${msg.file_url}', '_blank')"
+                                 style="max-width: 300px; max-height: 300px; border-radius: 8px; cursor: pointer;">
+                        </div>
+                    `;
+                } else {
+                    contentHTML += `
+                        <div class="message-file">
+                            <a href="${msg.file_url}" target="_blank" class="file-link">
+                                📄 ${this.escapeHtml(msg.file_name)}
+                            </a>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Add text message if present
+            if (msg.message) {
+                contentHTML += `<div class="message-bubble">${this.escapeHtml(msg.message)}</div>`;
+            }
+
             messageEl.innerHTML = `
                 <div class="message-header">${this.escapeHtml(msg.username)}</div>
-                <div class="message-bubble">${this.escapeHtml(msg.message)}</div>
+                ${contentHTML}
                 <div class="message-time">${time}</div>
             `;
 
