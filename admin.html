@@ -48,6 +48,8 @@
             <button class="nav-btn" data-tab="chat">💬 Chat</button>
             <button class="nav-btn" data-tab="payments">💰 Payments</button>
             <button class="nav-btn" data-tab="stats">📊 Statistics</button>
+            <button class="nav-btn" data-tab="security">🔒 Security</button>
+            <button class="nav-btn" data-tab="audit">📋 Audit Logs</button>
         </nav>
 
         <!-- Content Area -->
@@ -229,9 +231,121 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Security Tab -->
+            <div id="securityTab" class="tab-content">
+                <h2>🔒 Security Management</h2>
+                
+                <!-- Two-Factor Auth Setup -->
+                <div class="stat-card">
+                    <h3>Two-Factor Authentication</h3>
+                    <div id="twoFactorStatus" class="security-section">
+                        <div class="status-indicator">
+                            <span id="2faStatusText">Loading...</span>
+                        </div>
+                        <div id="twoFactorSetup" class="hidden">
+                            <div class="qr-code-container">
+                                <img id="qrCodeImage" alt="QR Code" style="display:none;">
+                                <canvas id="qrCodeCanvas"></canvas>
+                                <p>Scan this QR code with your authenticator app (Google Authenticator, Authy, etc.)</p>
+                            </div>
+                            <div class="backup-codes" id="backupCodes" style="display:none;">
+                                <h4>Backup Codes</h4>
+                                <p>Save these codes in a secure location. Each can be used once:</p>
+                                <div id="backupCodesList"></div>
+                            </div>
+                            <div class="verification-form">
+                                <input type="text" id="verificationCode" placeholder="Enter 6-digit code" maxlength="6">
+                                <button id="verify2FA" class="btn btn-primary">Verify & Enable</button>
+                            </div>
+                        </div>
+                        <div class="action-buttons">
+                            <button id="enable2FA" class="btn btn-primary">Enable 2FA</button>
+                            <button id="disable2FA" class="btn btn-danger hidden">Disable 2FA</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IP Blocking -->
+                <div class="stat-card">
+                    <h3>IP Address Management</h3>
+                    <div class="ip-blocking-section">
+                        <div class="block-ip-form">
+                            <input type="text" id="blockIpAddress" placeholder="Enter IP address to block">
+                            <input type="text" id="blockReason" placeholder="Reason for blocking">
+                            <select id="blockDuration">
+                                <option value="3600000">1 Hour</option>
+                                <option value="86400000">24 Hours</option>
+                                <option value="604800000">7 Days</option>
+                                <option value="">Permanent</option>
+                            </select>
+                            <button id="blockIpBtn" class="btn btn-danger">Block IP</button>
+                        </div>
+                        <div id="blockedIpsList" class="blocked-ips-list">
+                            <!-- Dynamic blocked IPs -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rate Limit Stats -->
+                <div class="stat-card">
+                    <h3>Rate Limiting Statistics</h3>
+                    <div id="rateLimitStats" class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">Total Requests Today</span>
+                            <span class="stat-value" id="totalRequests">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Blocked Requests</span>
+                            <span class="stat-value" id="blockedRequests">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Auto-Blocked IPs</span>
+                            <span class="stat-value" id="autoBlockedIps">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Audit Logs Tab -->
+            <div id="auditTab" class="tab-content">
+                <h2>📋 Audit Logs</h2>
+                
+                <div class="filters">
+                    <select id="auditActionFilter">
+                        <option value="">All Actions</option>
+                        <option value="LOGIN_SUCCESS">Login Success</option>
+                        <option value="LOGIN_FAILED">Login Failed</option>
+                        <option value="2FA_ENABLED">2FA Enabled</option>
+                        <option value="2FA_DISABLED">2FA Disabled</option>
+                        <option value="IP_BLOCKED">IP Blocked</option>
+                        <option value="IP_UNBLOCKED">IP Unblocked</option>
+                        <option value="USER_DELETED">User Deleted</option>
+                        <option value="EMERGENCY_ACTIVATED">Emergency Mode On</option>
+                        <option value="EMERGENCY_DEACTIVATED">Emergency Mode Off</option>
+                    </select>
+                    <input type="number" id="auditLimit" placeholder="Limit" value="100" min="10" max="1000">
+                    <button id="refreshAuditLogs" class="btn btn-primary">Refresh</button>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Action Statistics</h3>
+                    <div id="auditStats" class="stats-grid">
+                        <!-- Dynamic stats -->
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Recent Logs</h3>
+                    <div id="auditLogsList" class="audit-logs-table">
+                        <!-- Dynamic audit logs -->
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script src="assets/js/admin.js"></script>
 </body>
 </html>

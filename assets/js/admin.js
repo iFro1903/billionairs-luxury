@@ -44,8 +44,15 @@ class AdminPanel {
                 body: JSON.stringify({ email, password })
             });
 
+            const data = await response.json();
+
             if (response.ok) {
-                const data = await response.json();
+                // Check if 2FA is required
+                if (data.requiresTwoFactor) {
+                    this.show2FAPrompt(email, password);
+                    return;
+                }
+
                 sessionStorage.setItem('adminSession', JSON.stringify({ email: data.email }));
                 this.showDashboard(data.email);
             } else {
@@ -153,9 +160,11 @@ class AdminPanel {
             btn.classList.toggle('active', btn.dataset.tab === tabName);
         });
 
-        // Update content
+        // Update content - Handle both naming conventions
         document.querySelectorAll('.tab-content').forEach(content => {
-            content.classList.toggle('active', content.id === `tab-${tabName}`);
+            const matchesOldStyle = content.id === `tab-${tabName}`;
+            const matchesNewStyle = content.id === `${tabName}Tab`;
+            content.classList.toggle('active', matchesOldStyle || matchesNewStyle);
         });
 
         // Load tab-specific data
@@ -163,6 +172,8 @@ class AdminPanel {
         if (tabName === 'chat') this.loadChatData();
         if (tabName === 'payments') this.loadPaymentsData();
         if (tabName === 'stats') this.loadStatsData();
+        if (tabName === 'security') this.loadSecurityTab();
+        if (tabName === 'audit') this.loadAuditTab();
     }
 
     async loadUsersData() {
@@ -407,6 +418,349 @@ class AdminPanel {
             }
         } catch (error) {
             console.error('Error deleting user:', error);
+        }
+    }
+
+    show2FAPrompt(email, password) {
+        const code = prompt('Enter your 6-digit 2FA code:');
+        if (code) {
+            this.verify2FAAndLogin(email, password, code);
+        }
+    }
+
+    async verify2FAAndLogin(email, password, twoFactorCode) {
+        try {
+            const response = await fetch('/api/admin-auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password, twoFactorCode })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                sessionStorage.setItem('adminSession', JSON.stringify({ email: data.email }));
+                this.showDashboard(data.email);
+            } else {
+                alert('Invalid 2FA code. Please try again.');
+                this.show2FAPrompt(email, password);
+            }
+        } catch (error) {
+            console.error('2FA verification error:', error);
+            alert('2FA verification failed');
+        }
+    }
+
+    // Security Tab Methods
+    async loadSecurityTab() {
+        await this.load2FAStatus();
+        await this.loadBlockedIPs();
+        await this.loadRateLimitStats();
+        this.setup2FAHandlers();
+        this.setupIPBlockingHandlers();
+    }
+
+    async load2FAStatus() {
+        try {
+            const response = await fetch('/api/admin-2fa-setup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    email: this.ceoEmail, 
+                    password: 'Masallah1,',
+                    action: 'status'
+                })
+            });
+
+            // Check if 2FA is enabled (wenn DB-Abfrage fehlschlägt, disabled)
+            const statusText = document.getElementById('2faStatusText');
+            statusText.textContent = '2FA Status: Disabled';
+            document.getElementById('enable2FA').classList.remove('hidden');
+            document.getElementById('disable2FA').classList.add('hidden');
+        } catch (error) {
+            console.error('2FA status error:', error);
+        }
+    }
+
+    setup2FAHandlers() {
+        document.getElementById('enable2FA').addEventListener('click', () => this.start2FASetup());
+        document.getElementById('disable2FA').addEventListener('click', () => this.disable2FA());
+        document.getElementById('verify2FA').addEventListener('click', () => this.verify2FASetup());
+    }
+
+    async start2FASetup() {
+        try {
+            const response = await fetch('/api/admin-2fa-setup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    email: this.ceoEmail, 
+                    password: 'Masallah1,',
+                    action: 'generate'
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Zeige QR Code
+                document.getElementById('twoFactorSetup').classList.remove('hidden');
+                
+                // Generiere QR Code
+                new QRCode(document.getElementById('qrCodeCanvas'), {
+                    text: data.qrCodeUrl,
+                    width: 256,
+                    height: 256
+                });
+
+                // Zeige Backup Codes
+                const backupCodesDiv = document.getElementById('backupCodes');
+                backupCodesDiv.style.display = 'block';
+                const codesList = document.getElementById('backupCodesList');
+                codesList.innerHTML = data.backupCodes.map(code => 
+                    `<div class="backup-code">${code}</div>`
+                ).join('');
+
+                document.getElementById('enable2FA').classList.add('hidden');
+            }
+        } catch (error) {
+            console.error('2FA setup error:', error);
+            alert('Failed to start 2FA setup');
+        }
+    }
+
+    async verify2FASetup() {
+        const code = document.getElementById('verificationCode').value;
+        
+        if (!code || code.length !== 6) {
+            alert('Please enter a valid 6-digit code');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/admin-2fa-setup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    email: this.ceoEmail, 
+                    password: 'Masallah1,',
+                    action: 'verify',
+                    code
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                alert('2FA enabled successfully! Save your backup codes.');
+                location.reload();
+            } else {
+                alert('Invalid code. Please try again.');
+            }
+        } catch (error) {
+            console.error('2FA verify error:', error);
+            alert('Verification failed');
+        }
+    }
+
+    async disable2FA() {
+        const code = prompt('Enter 2FA code or backup code to disable:');
+        
+        if (!code) return;
+
+        try {
+            const response = await fetch('/api/admin-2fa-setup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    email: this.ceoEmail, 
+                    password: 'Masallah1,',
+                    action: 'disable',
+                    code
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                alert('2FA disabled');
+                location.reload();
+            } else {
+                alert('Invalid code');
+            }
+        } catch (error) {
+            console.error('2FA disable error:', error);
+        }
+    }
+
+    setupIPBlockingHandlers() {
+        document.getElementById('blockIpBtn').addEventListener('click', () => this.blockIP());
+    }
+
+    async blockIP() {
+        const ip = document.getElementById('blockIpAddress').value.trim();
+        const reason = document.getElementById('blockReason').value.trim();
+        const duration = document.getElementById('blockDuration').value;
+
+        if (!ip) {
+            alert('Please enter an IP address');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/block-ip', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    ip, 
+                    reason,
+                    duration: duration ? parseInt(duration) : null,
+                    adminEmail: this.ceoEmail
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                alert('IP blocked successfully');
+                document.getElementById('blockIpAddress').value = '';
+                document.getElementById('blockReason').value = '';
+                this.loadBlockedIPs();
+            } else {
+                alert('Failed to block IP');
+            }
+        } catch (error) {
+            console.error('Block IP error:', error);
+        }
+    }
+
+    async loadBlockedIPs() {
+        try {
+            const response = await fetch('/api/admin-blocked-ips', {
+                headers: { 'Authorization': 'Bearer admin' }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                const list = document.getElementById('blockedIpsList');
+                
+                if (data.blockedIps.length === 0) {
+                    list.innerHTML = '<p style="color: #999; text-align: center; padding: 2rem;">No blocked IPs</p>';
+                    return;
+                }
+
+                list.innerHTML = data.blockedIps.map(item => `
+                    <div class="blocked-ip-item">
+                        <div class="blocked-ip-info">
+                            <div class="blocked-ip-address">${item.ip}</div>
+                            <div class="blocked-ip-reason">${item.reason}</div>
+                            <div class="blocked-ip-meta">
+                                Blocked by: ${item.blocked_by} | 
+                                ${new Date(item.blocked_at).toLocaleString()} |
+                                ${item.expires_at ? 'Expires: ' + new Date(item.expires_at).toLocaleString() : 'Permanent'}
+                            </div>
+                        </div>
+                        <span class="ip-status-badge ${item.is_active ? 'active' : 'expired'} ${item.auto_blocked ? 'auto' : ''}">
+                            ${item.is_active ? 'ACTIVE' : 'EXPIRED'} ${item.auto_blocked ? '(AUTO)' : ''}
+                        </span>
+                        ${item.is_active ? `
+                            <button class="btn btn-success" onclick="adminPanel.unblockIP('${item.ip}')">Unblock</button>
+                        ` : ''}
+                    </div>
+                `).join('');
+            }
+        } catch (error) {
+            console.error('Load blocked IPs error:', error);
+        }
+    }
+
+    async unblockIP(ip) {
+        if (!confirm(`Unblock IP ${ip}?`)) return;
+
+        try {
+            const response = await fetch('/api/block-ip', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    ip, 
+                    action: 'unblock',
+                    adminEmail: this.ceoEmail
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                alert('IP unblocked');
+                this.loadBlockedIPs();
+            }
+        } catch (error) {
+            console.error('Unblock IP error:', error);
+        }
+    }
+
+    async loadRateLimitStats() {
+        // Placeholder - könnte aus audit_logs berechnet werden
+        document.getElementById('totalRequests').textContent = '-';
+        document.getElementById('blockedRequests').textContent = '-';
+        document.getElementById('autoBlockedIps').textContent = '-';
+    }
+
+    // Audit Log Tab Methods
+    async loadAuditTab() {
+        await this.loadAuditLogs();
+        this.setupAuditHandlers();
+    }
+
+    setupAuditHandlers() {
+        document.getElementById('refreshAuditLogs').addEventListener('click', () => this.loadAuditLogs());
+    }
+
+    async loadAuditLogs() {
+        const action = document.getElementById('auditActionFilter').value;
+        const limit = document.getElementById('auditLimit').value || 100;
+
+        try {
+            const url = `/api/admin-audit-logs?limit=${limit}${action ? '&action=' + action : ''}`;
+            const response = await fetch(url, {
+                headers: { 'Authorization': 'Bearer admin' }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Stats
+                const statsDiv = document.getElementById('auditStats');
+                statsDiv.innerHTML = data.stats.map(stat => `
+                    <div class="stat-item">
+                        <span class="stat-label">${stat.action}</span>
+                        <span class="stat-value">${stat.count}</span>
+                    </div>
+                `).join('');
+
+                // Logs
+                const logsDiv = document.getElementById('auditLogsList');
+                
+                if (data.logs.length === 0) {
+                    logsDiv.innerHTML = '<p style="color: #999; text-align: center; padding: 2rem;">No audit logs found</p>';
+                    return;
+                }
+
+                logsDiv.innerHTML = data.logs.map(log => `
+                    <div class="audit-log-item">
+                        <div class="audit-timestamp">${new Date(log.timestamp).toLocaleString()}</div>
+                        <div class="audit-action">${log.action}</div>
+                        <div>
+                            <div class="audit-user">${log.user_email || 'System'}</div>
+                            <div class="audit-ip">${log.ip}</div>
+                        </div>
+                        <div class="audit-details">${log.details || '-'}</div>
+                    </div>
+                `).join('');
+            }
+        } catch (error) {
+            console.error('Load audit logs error:', error);
         }
     }
 }

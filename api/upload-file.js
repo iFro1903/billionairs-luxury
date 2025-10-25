@@ -1,4 +1,4 @@
-import { withRateLimit } from '../lib/rate-limiter.js';
+import { rateLimiter } from './rate-limiter.js';
 
 export const config = {
     runtime: 'edge'
@@ -20,8 +20,20 @@ export default async function handler(req) {
         });
     }
 
-    // Rate Limiting: 20 Uploads/Minute (strenger für File Uploads)
-    return withRateLimit(req, async () => {
+    // Rate Limiting: Max 20 File Uploads pro Minute
+    const rateLimitResult = await rateLimiter(req, 'file-upload', 20, 60000);
+    if (!rateLimitResult.allowed) {
+        return new Response(JSON.stringify({ 
+            error: rateLimitResult.error,
+            retryAfter: rateLimitResult.retryAfter
+        }), {
+            status: rateLimitResult.status,
+            headers: { 
+                'Content-Type': 'application/json',
+                'Retry-After': rateLimitResult.retryAfter?.toString() || '60'
+            }
+        });
+    }
 
     try {
         const formData = await req.formData();
@@ -105,5 +117,4 @@ export default async function handler(req) {
             headers: { 'Content-Type': 'application/json' }
         });
     }
-    }, { limit: 20, windowMs: 60000 }); // 20 Uploads pro Minute
 }

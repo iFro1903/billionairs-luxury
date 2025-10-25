@@ -610,3 +610,285 @@ tbody tr:hover {
     border: 1px solid rgba(0, 112, 186, 0.5);
 }
 
+/* ===================================
+   SECURITY TAB
+   =================================== */
+
+.security-section {
+    padding: 1.5rem;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(232, 196, 168, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(232, 196, 168, 0.1);
+}
+
+#2faStatusText {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.qr-code-container {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+#qrCodeCanvas {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.backup-codes {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: 8px;
+}
+
+.backup-codes h4 {
+    color: #ffc107;
+    margin-bottom: 0.5rem;
+}
+
+#backupCodesList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.backup-code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.5rem;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.verification-form {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.verification-form input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: rgba(232, 196, 168, 0.05);
+    border: 1px solid rgba(232, 196, 168, 0.2);
+    border-radius: 8px;
+    color: #e8e8e8;
+    font-size: 1.2rem;
+    text-align: center;
+    letter-spacing: 0.5rem;
+    font-family: monospace;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.ip-blocking-section {
+    padding: 1.5rem;
+}
+
+.block-ip-form {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr auto;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.block-ip-form input,
+.block-ip-form select {
+    padding: 0.75rem 1rem;
+    background: rgba(232, 196, 168, 0.05);
+    border: 1px solid rgba(232, 196, 168, 0.2);
+    border-radius: 8px;
+    color: #e8e8e8;
+    font-size: 0.95rem;
+}
+
+.blocked-ips-list {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.blocked-ip-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(232, 196, 168, 0.05);
+    border: 1px solid rgba(232, 196, 168, 0.1);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.blocked-ip-info {
+    flex: 1;
+}
+
+.blocked-ip-address {
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #E8C4A8;
+}
+
+.blocked-ip-reason {
+    color: #999;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.blocked-ip-meta {
+    color: #666;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.ip-status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-left: 1rem;
+}
+
+.ip-status-badge.active {
+    background: rgba(244, 67, 54, 0.2);
+    color: #f44336;
+    border: 1px solid rgba(244, 67, 54, 0.5);
+}
+
+.ip-status-badge.expired {
+    background: rgba(158, 158, 158, 0.2);
+    color: #9e9e9e;
+    border: 1px solid rgba(158, 158, 158, 0.5);
+}
+
+.ip-status-badge.auto {
+    background: rgba(255, 152, 0, 0.2);
+    color: #ff9800;
+    border: 1px solid rgba(255, 152, 0, 0.5);
+}
+
+/* ===================================
+   AUDIT LOGS TAB
+   =================================== */
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.filters select,
+.filters input {
+    padding: 0.75rem 1rem;
+    background: rgba(232, 196, 168, 0.05);
+    border: 1px solid rgba(232, 196, 168, 0.2);
+    border-radius: 8px;
+    color: #e8e8e8;
+    font-size: 0.95rem;
+}
+
+.audit-logs-table {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.audit-log-item {
+    display: grid;
+    grid-template-columns: 150px 200px 150px 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(232, 196, 168, 0.05);
+    border: 1px solid rgba(232, 196, 168, 0.1);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.audit-timestamp {
+    color: #999;
+    font-family: monospace;
+}
+
+.audit-action {
+    font-weight: 600;
+    color: #E8C4A8;
+}
+
+.audit-user {
+    color: #4fc3f7;
+}
+
+.audit-details {
+    color: #aaa;
+    font-size: 0.85rem;
+}
+
+.audit-ip {
+    font-family: monospace;
+    color: #999;
+    font-size: 0.85rem;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #E8C4A8 0%, #B89968 100%);
+    color: #0a0a0a;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(232, 196, 168, 0.4);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+    color: white;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(244, 67, 54, 0.4);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+    color: white;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(76, 175, 80, 0.4);
+}
