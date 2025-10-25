@@ -245,9 +245,17 @@ class LuxuryChat {
                     this.triggerEyeBlink();
                 }
                 
+                // Check if new messages arrived while chat is open
+                const hasNewMessages = newMessageCount > this.lastMessageCount;
+                
                 this.lastMessageCount = newMessageCount;
                 this.messages = data.messages;
                 this.renderMessages();
+                
+                // Auto-scroll if chat is open and new messages arrived
+                if (this.isOpen && hasNewMessages) {
+                    this.scrollToBottom();
+                }
             }
 
             if (data.onlineCount) {
