@@ -1,35 +1,137 @@
 /* Premium Luxury Chat System */
 
+/* Eye Closing Animation */
+.eye-closing {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    width: 80px;
+    height: 80px;
+    z-index: 9998;
+    animation: eyeClose 0.8s ease forwards;
+}
+
+@keyframes eyeClose {
+    0% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scaleY(0.1);
+        opacity: 0.8;
+    }
+}
+
 /* Light Beam Animation */
 .eye-beam {
     position: fixed;
     top: 60px;
     right: 60px;
-    width: 4px;
-    height: 0;
-    background: linear-gradient(180deg, 
-        rgba(232, 196, 168, 0.9) 0%,
-        rgba(232, 196, 168, 0.6) 50%,
+    width: 6px;
+    height: 4px;
+    background: radial-gradient(ellipse at center,
+        rgba(232, 196, 168, 1) 0%,
+        rgba(232, 196, 168, 0.8) 40%,
         rgba(232, 196, 168, 0) 100%
     );
-    box-shadow: 0 0 20px rgba(232, 196, 168, 0.8),
-                0 0 40px rgba(232, 196, 168, 0.6);
-    transform-origin: top center;
+    box-shadow: 0 0 30px rgba(232, 196, 168, 1),
+                0 0 60px rgba(232, 196, 168, 0.8),
+                0 0 90px rgba(232, 196, 168, 0.6);
+    transform-origin: top right;
     z-index: 9999;
-    animation: beamExpand 1.2s ease-out forwards;
+    animation: beamTravel 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-@keyframes beamExpand {
+@keyframes beamTravel {
     0% {
-        height: 0;
+        top: 60px;
+        right: 60px;
+        width: 6px;
+        height: 4px;
         opacity: 0;
     }
-    30% {
+    20% {
         opacity: 1;
     }
     100% {
-        height: calc(50vh - 60px);
-        opacity: 0.8;
+        top: 50%;
+        right: 50%;
+        width: 80px;
+        height: 80px;
+        opacity: 1;
+        transform: translate(50%, -50%);
+    }
+}
+
+/* Eye in Center */
+.eye-center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    z-index: 10001;
+    opacity: 0;
+    animation: eyeAppear 0.6s ease 1.5s forwards, eyeCloseCenter 0.8s ease 2.3s forwards;
+}
+
+@keyframes eyeAppear {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes eyeCloseCenter {
+    0% {
+        transform: translate(-50%, -50%) scale(1) scaleY(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) scaleY(0.1);
+        opacity: 0.5;
+    }
+}
+
+/* Light Explosion */
+.light-explosion {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle,
+        rgba(232, 196, 168, 0.8) 0%,
+        rgba(232, 196, 168, 0.4) 30%,
+        rgba(232, 196, 168, 0) 70%
+    );
+    border-radius: 50%;
+    z-index: 10000;
+    opacity: 0;
+    animation: explode 1s ease 3.1s forwards;
+}
+
+@keyframes explode {
+    0% {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+    }
+    50% {
+        width: 800px;
+        height: 800px;
+        opacity: 1;
+    }
+    100% {
+        width: 2000px;
+        height: 2000px;
+        opacity: 0;
     }
 }
 
@@ -52,13 +154,13 @@
     opacity: 1;
     align-items: center;
     justify-content: center;
-    animation: chatFadeIn 0.6s ease 1.2s both;
+    animation: chatFadeIn 0.8s ease 3.5s both;
 }
 
 @keyframes chatFadeIn {
     from {
         opacity: 0;
-        transform: scale(0.95);
+        transform: scale(0.9);
     }
     to {
         opacity: 1;

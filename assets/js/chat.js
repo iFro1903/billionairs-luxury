@@ -74,24 +74,50 @@ class LuxuryChat {
     }
 
     open() {
-        // Create light beam animation
-        const beam = document.createElement('div');
-        beam.className = 'eye-beam';
-        document.body.appendChild(beam);
+        // 1. Clone eye from top right and close it
+        const eyeClosing = document.createElement('div');
+        eyeClosing.className = 'eye-closing';
+        eyeClosing.innerHTML = '<img src="assets/images/eye-simple.svg" style="width: 100%; height: 100%;">';
+        document.body.appendChild(eyeClosing);
 
-        // Remove beam after animation
+        // 2. Create light beam traveling to center
         setTimeout(() => {
-            beam.remove();
+            const beam = document.createElement('div');
+            beam.className = 'eye-beam';
+            document.body.appendChild(beam);
+            
+            eyeClosing.remove();
+            
+            setTimeout(() => beam.remove(), 2000);
+        }, 800);
+
+        // 3. Show eye in center
+        setTimeout(() => {
+            const eyeCenter = document.createElement('div');
+            eyeCenter.className = 'eye-center';
+            eyeCenter.innerHTML = '<img src="assets/images/eye-simple.svg" style="width: 100%; height: 100%;">';
+            document.body.appendChild(eyeCenter);
+            
+            setTimeout(() => eyeCenter.remove(), 2000);
         }, 1500);
 
-        // Show chat after beam animation
+        // 4. Light explosion
+        setTimeout(() => {
+            const explosion = document.createElement('div');
+            explosion.className = 'light-explosion';
+            document.body.appendChild(explosion);
+            
+            setTimeout(() => explosion.remove(), 2000);
+        }, 3100);
+
+        // 5. Show chat after full sequence
         setTimeout(() => {
             const overlay = document.getElementById('chatOverlay');
             overlay.classList.add('show');
             this.isOpen = true;
             this.loadMessages();
             this.scrollToBottom();
-        }, 1200);
+        }, 3500);
     }
 
     close() {
