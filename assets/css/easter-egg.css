@@ -285,7 +285,9 @@
 
 .billionairs-logo-badge img {
     display: block;
-    transition: filter 0.3s ease;
+    width: 90px;
+    height: auto;
+    filter: drop-shadow(0 0 20px rgba(232, 196, 168, 0.6));
     animation: none !important;
     transform: none !important;
 }
