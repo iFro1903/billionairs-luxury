@@ -74,19 +74,39 @@ class LuxuryChat {
     }
 
     open() {
-        // Phase 1: Eye closing (professional eyelid effect)
-        const eyeClosing = document.createElement('div');
-        eyeClosing.className = 'eye-closing';
-        eyeClosing.innerHTML = '<img src="assets/images/eye-simple.svg" style="width: 100%; height: 100%;">';
-        document.body.appendChild(eyeClosing);
+        // Get the existing eye element
+        const existingEye = document.querySelector('.easter-egg-container .eye');
+        
+        if (existingEye) {
+            // Clone the existing eye to animate it
+            const eyeClone = existingEye.cloneNode(true);
+            const easterEggContainer = document.querySelector('.easter-egg-container');
+            const rect = easterEggContainer.getBoundingClientRect();
+            
+            // Position clone at same position as original
+            eyeClone.style.position = 'fixed';
+            eyeClone.style.top = rect.top + 'px';
+            eyeClone.style.right = (window.innerWidth - rect.right) + 'px';
+            eyeClone.style.zIndex = '9998';
+            eyeClone.style.width = '80px';
+            eyeClone.style.height = '80px';
+            eyeClone.classList.add('eye-closing');
+            
+            document.body.appendChild(eyeClone);
+            
+            // Hide original eye
+            easterEggContainer.style.opacity = '0';
+            easterEggContainer.style.pointerEvents = 'none';
+            
+            // Remove clone after animation
+            setTimeout(() => eyeClone.remove(), 1100);
+        }
 
-        // Phase 2: Light beam with trail effect (starts after eye closes)
+        // Phase 2: Light beam with trail effect
         setTimeout(() => {
             const beam = document.createElement('div');
             beam.className = 'eye-beam';
             document.body.appendChild(beam);
-            
-            eyeClosing.remove();
             
             setTimeout(() => beam.remove(), 2200);
         }, 1000);
