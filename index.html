@@ -62,14 +62,14 @@
     <!-- Emergency Mode Check -->
     <script>
         // Only check on main pages, not on emergency or admin pages
-        if (!window.location.pathname.includes('emergency-404') && 
+        if (!window.location.pathname.includes('404') && 
             !window.location.pathname.includes('admin')) {
             fetch('/api/check-emergency')
                 .then(res => res.json())
                 .then(data => {
                     if (data.isActive) {
                         // Redirect to 404 page
-                        window.location.replace('/emergency-404.html');
+                        window.location.replace('/404.html');
                     }
                 })
                 .catch(err => console.log('Emergency check failed:', err));
