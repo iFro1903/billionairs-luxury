@@ -34,7 +34,7 @@ class LuxuryChat {
                                 <div class="chat-online-dot"></div>
                                 <span id="onlineCount">1</span> Online
                             </div>
-                            <button class="chat-close" onclick="luxuryChat.close()">×</button>
+                            <button class="chat-close" id="chatCloseBtn">×</button>
                         </div>
                     </div>
                     
@@ -54,7 +54,7 @@ class LuxuryChat {
                             placeholder="Share your thoughts..."
                             maxlength="500"
                         />
-                        <button class="chat-send-btn" onclick="luxuryChat.sendMessage()">
+                        <button class="chat-send-btn" id="chatSendBtn">
                             ➤
                         </button>
                     </div>
@@ -63,6 +63,15 @@ class LuxuryChat {
         `;
 
         document.body.insertAdjacentHTML('beforeend', chatHTML);
+
+        // Event listeners
+        document.getElementById('chatCloseBtn').addEventListener('click', () => {
+            this.close();
+        });
+
+        document.getElementById('chatSendBtn').addEventListener('click', () => {
+            this.sendMessage();
+        });
 
         // Enter key to send
         document.getElementById('chatInput').addEventListener('keypress', (e) => {
