@@ -271,7 +271,7 @@ class LuxuryChat {
             // Upload to Cloudinary
             const formData = new FormData();
             formData.append('file', file);
-            formData.append('upload_preset', 'd8s8a93z'); // Using default unsigned preset
+            formData.append('upload_preset', 'billionairs_chat'); // Using custom unsigned preset
 
             const response = await fetch(
                 'https://api.cloudinary.com/v1_1/d8s8a93z/auto/upload',
