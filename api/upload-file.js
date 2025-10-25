@@ -1,8 +1,14 @@
-import { createClient } from '@vercel/postgres';
-
 export const config = {
     runtime: 'edge'
 };
+
+// SHA-1 hash function for Edge Runtime
+async function sha1(message) {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
 export default async function handler(req) {
     if (req.method !== 'POST') {
@@ -35,20 +41,19 @@ export default async function handler(req) {
             });
         }
 
-        // Convert file to buffer
+        // Convert file to base64
         const arrayBuffer = await file.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
-        const base64File = buffer.toString('base64');
+        const bytes = new Uint8Array(arrayBuffer);
+        let binary = '';
+        for (let i = 0; i < bytes.byteLength; i++) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        const base64File = btoa(binary);
         const dataURI = `data:${file.type};base64,${base64File}`;
 
         // Generate timestamp and signature
         const timestamp = Math.round(new Date().getTime() / 1000);
-        const crypto = await import('crypto');
-        
-        const signature = crypto
-            .createHash('sha1')
-            .update(`timestamp=${timestamp}${apiSecret}`)
-            .digest('hex');
+        const signature = await sha1(`timestamp=${timestamp}${apiSecret}`);
 
         // Upload to Cloudinary
         const uploadData = new FormData();
