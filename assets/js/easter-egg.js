@@ -306,7 +306,7 @@ const EasterEggSystem = {
         
         let badge = document.getElementById('streakBadge');
         
-        // Hide badge completely if chat is ready/unlocked
+        // Hide badge if chat is ready/unlocked
         if (this.status.chatReady || this.status.chatUnlocked) {
             if (badge) {
                 badge.remove();
@@ -322,9 +322,6 @@ const EasterEggSystem = {
         }
 
         if (badge && this.status.loginStreak > 0 && isHiddenDoorPage) {
-            // Remove billionairs-logo-badge class if present
-            badge.classList.remove('billionairs-logo-badge');
-            
             let displayStreak = this.status.loginStreak;
             let maxStreak = 3;
             
