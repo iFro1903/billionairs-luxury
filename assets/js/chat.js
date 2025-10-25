@@ -74,51 +74,59 @@ class LuxuryChat {
     }
 
     open() {
+        // Prevent any shifts - lock the original eye in place
+        const easterEggContainer = document.querySelector('.easter-egg-container');
+        if (!easterEggContainer) return;
+        
+        easterEggContainer.style.pointerEvents = 'none';
+        
         // Get the existing eye element
-        const existingEye = document.querySelector('.easter-egg-container .eye');
+        const existingEye = easterEggContainer.querySelector('.eye');
         
         if (existingEye) {
             // Clone the existing eye to animate it
             const eyeClone = existingEye.cloneNode(true);
-            const easterEggContainer = document.querySelector('.easter-egg-container');
             const rect = easterEggContainer.getBoundingClientRect();
             
-            // Position clone at same position as original
+            // Position clone EXACTLY at original position
             eyeClone.style.position = 'fixed';
             eyeClone.style.top = rect.top + 'px';
-            eyeClone.style.right = (window.innerWidth - rect.right) + 'px';
-            eyeClone.style.zIndex = '9998';
+            eyeClone.style.left = rect.left + 'px';
             eyeClone.style.width = '80px';
             eyeClone.style.height = '80px';
+            eyeClone.style.zIndex = '9998';
             eyeClone.classList.add('eye-closing');
             
             document.body.appendChild(eyeClone);
             
-            // Hide original eye
+            // Hide original immediately
             easterEggContainer.style.opacity = '0';
-            easterEggContainer.style.pointerEvents = 'none';
             
-            // Start traveling to center after eyelids close
+            // Create particle trail during flight
+            let particleInterval = setInterval(() => {
+                const particle = document.createElement('div');
+                particle.className = 'eye-particles';
+                const cloneRect = eyeClone.getBoundingClientRect();
+                particle.style.top = (cloneRect.top + 40) + 'px';
+                particle.style.left = (cloneRect.left + 40) + 'px';
+                document.body.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 1500);
+            }, 80);
+            
+            // Start flying to center after dramatic close
             setTimeout(() => {
                 eyeClone.classList.add('traveling');
-            }, 600);
+                clearInterval(particleInterval);
+            }, 2000);
             
             // Remove clone after it reaches center
-            setTimeout(() => eyeClone.remove(), 2200);
+            setTimeout(() => eyeClone.remove(), 4600);
         }
 
-        // Phase 2: Light beam trail during travel
+        // Phase 2: Eye opening in center with expanding aura rings
         setTimeout(() => {
-            const beam = document.createElement('div');
-            beam.className = 'eye-beam';
-            document.body.appendChild(beam);
-            
-            setTimeout(() => beam.remove(), 2200);
-        }, 600);
-
-        // Phase 3: Eye opening in center with aura
-        setTimeout(() => {
-            // Aura background
+            // Multiple aura layers for drama
             const aura = document.createElement('div');
             aura.className = 'eye-center-aura';
             document.body.appendChild(aura);
@@ -126,32 +134,32 @@ class LuxuryChat {
             // Eye element
             const eyeCenter = document.createElement('div');
             eyeCenter.className = 'eye-center';
-            eyeCenter.innerHTML = '<img src="assets/images/eye-simple.svg" style="width: 100%; height: 100%; position: relative; z-index: 2;">';
+            eyeCenter.innerHTML = '<img src="assets/images/eye-simple.svg" style="width: 100%; height: 100%;">';
             document.body.appendChild(eyeCenter);
             
             setTimeout(() => {
                 aura.remove();
                 eyeCenter.remove();
-            }, 2500);
-        }, 2200);
+            }, 5000);
+        }, 4600);
 
-        // Phase 4: Premium light explosion
+        // Phase 3: EPIC light explosion
         setTimeout(() => {
             const explosion = document.createElement('div');
             explosion.className = 'light-explosion';
             document.body.appendChild(explosion);
             
             setTimeout(() => explosion.remove(), 2000);
-        }, 4500);
+        }, 9300);
 
-        // Phase 5: Chat reveal with premium fade
+        // Phase 4: Chat reveal - THE GRAND FINALE
         setTimeout(() => {
             const overlay = document.getElementById('chatOverlay');
             overlay.classList.add('show');
             this.isOpen = true;
             this.loadMessages();
             this.scrollToBottom();
-        }, 4700);
+        }, 9500);
     }
 
     close() {
