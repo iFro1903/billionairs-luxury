@@ -317,7 +317,7 @@ const EasterEggSystem = {
             
             if (badge && isHiddenDoorPage) {
                 badge.className = 'login-streak-badge billionairs-logo-badge';
-                badge.innerHTML = '<img src="assets/images/billionairs-triangle-logo.png" alt="BILLIONAIRS" style="width: 80px; height: auto; filter: drop-shadow(0 0 20px rgba(232, 196, 168, 0.6));">';
+                badge.innerHTML = '<img src="assets/images/billionairs-triangle-logo.png" alt="BILLIONAIRS" style="width: 60px; height: auto; filter: drop-shadow(0 0 20px rgba(232, 196, 168, 0.6));">';
             }
             return;
         }
