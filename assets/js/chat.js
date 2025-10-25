@@ -175,6 +175,13 @@ class LuxuryChat {
         const overlay = document.getElementById('chatOverlay');
         overlay.classList.remove('show');
         this.isOpen = false;
+        
+        // Restore the eye
+        const easterEggContainer = document.querySelector('.easter-egg-container');
+        if (easterEggContainer) {
+            easterEggContainer.style.opacity = '1';
+            easterEggContainer.style.pointerEvents = 'auto';
+        }
     }
 
     async sendMessage() {
