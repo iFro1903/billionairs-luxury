@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BILLIONAIRS - CEO Admin Panel</title>
+    <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+    <!-- CEO Login Screen -->
+    <div id="adminLogin" class="admin-login">
+        <div class="login-container">
+            <h1>🔒 CEO ACCESS</h1>
+            <p>Restricted Area - CEO Only</p>
+            <form id="adminLoginForm">
+                <input type="email" id="adminEmail" placeholder="CEO Email" required>
+                <input type="password" id="adminPassword" placeholder="Password" required>
+                <button type="submit">ACCESS PANEL</button>
+            </form>
+            <div id="loginError" class="error-message"></div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-dashboard hidden">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-left">
+                <h1>BILLIONAIRS</h1>
+                <span class="ceo-badge">CEO PANEL</span>
+            </div>
+            <div class="header-right">
+                <span id="adminUserName"></span>
+                <button id="adminLogout" class="logout-btn">Logout</button>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="admin-nav">
+            <button class="nav-btn active" data-tab="users">👥 Users</button>
+            <button class="nav-btn" data-tab="easter-eggs">🥚 Easter Eggs</button>
+            <button class="nav-btn" data-tab="chat">💬 Chat</button>
+            <button class="nav-btn" data-tab="payments">💰 Payments</button>
+            <button class="nav-btn" data-tab="stats">📊 Statistics</button>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="admin-content">
+            <!-- Users Tab -->
+            <div id="tab-users" class="tab-content active">
+                <div class="content-header">
+                    <h2>User Management</h2>
+                    <div class="search-bar">
+                        <input type="text" id="userSearch" placeholder="Search users...">
+                    </div>
+                </div>
+
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <h3 id="totalUsers">0</h3>
+                        <p>Total Users</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="paidUsers">0</h3>
+                        <p>Paid Users</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="activeUsers">0</h3>
+                        <p>Active Today</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th>Registered</th>
+                                <th>Status</th>
+                                <th>Progress</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Easter Eggs Tab -->
+            <div id="tab-easter-eggs" class="tab-content">
+                <div class="content-header">
+                    <h2>Easter Egg Control</h2>
+                </div>
+
+                <div class="control-section">
+                    <h3>User Progress Override</h3>
+                    <div class="form-group">
+                        <label>Select User:</label>
+                        <select id="easterEggUserSelect">
+                            <option value="">Choose user...</option>
+                        </select>
+                    </div>
+                    <div class="unlock-buttons">
+                        <button class="unlock-btn" data-unlock="pyramid">Unlock Pyramid</button>
+                        <button class="unlock-btn" data-unlock="eye">Unlock Eye</button>
+                        <button class="unlock-btn" data-unlock="chat">Unlock Chat</button>
+                        <button class="unlock-btn reset" data-unlock="reset">Reset All</button>
+                    </div>
+                </div>
+
+                <div id="easterEggUsersList" class="users-progress">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+
+            <!-- Chat Tab -->
+            <div id="tab-chat" class="tab-content">
+                <div class="content-header">
+                    <h2>Chat Management</h2>
+                    <button id="refreshChat" class="refresh-btn">Refresh</button>
+                </div>
+
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <h3 id="totalMessages">0</h3>
+                        <p>Total Messages</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="todayMessages">0</h3>
+                        <p>Today</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="chatUsers">0</h3>
+                        <p>Chat Users</p>
+                    </div>
+                </div>
+
+                <div class="chat-messages-admin" id="adminChatMessages">
+                    <!-- Dynamic chat messages -->
+                </div>
+            </div>
+
+            <!-- Payments Tab -->
+            <div id="tab-payments" class="tab-content">
+                <div class="content-header">
+                    <h2>Payment Overview</h2>
+                </div>
+
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <h3 id="totalRevenue">CHF 0</h3>
+                        <p>Total Revenue</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="stripePayments">0</h3>
+                        <p>Stripe</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="cryptoPayments">0</h3>
+                        <p>Crypto</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>User</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentsTableBody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Statistics Tab -->
+            <div id="tab-stats" class="tab-content">
+                <div class="content-header">
+                    <h2>Platform Statistics</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card large">
+                        <h3>User Journey</h3>
+                        <div class="journey-stats">
+                            <div class="journey-item">
+                                <span>Registered</span>
+                                <strong id="statsRegistered">0</strong>
+                            </div>
+                            <div class="journey-item">
+                                <span>Paid</span>
+                                <strong id="statsPaid">0</strong>
+                            </div>
+                            <div class="journey-item">
+                                <span>Pyramid Unlocked</span>
+                                <strong id="statsPyramid">0</strong>
+                            </div>
+                            <div class="journey-item">
+                                <span>Eye Unlocked</span>
+                                <strong id="statsEye">0</strong>
+                            </div>
+                            <div class="journey-item">
+                                <span>Chat Access</span>
+                                <strong id="statsChat">0</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card large">
+                        <h3>Recent Activity</h3>
+                        <div id="recentActivity" class="activity-list">
+                            <!-- Dynamic activity -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="assets/js/admin.js"></script>
+</body>
+</html>
