@@ -286,11 +286,22 @@
     left: 8rem !important;
 }
 
+.billionairs-logo-badge * {
+    animation: none !important;
+    transform: translateY(0) !important;
+}
+
 .billionairs-logo-badge img {
     display: block;
     width: 90px;
     height: auto;
     filter: none !important;
+    animation: none !important;
+    transform: translateY(0) !important;
+}
+
+/* Override any inherited animations for logo badge */
+#streakBadge.billionairs-logo-badge {
     animation: none !important;
     transform: translateY(0) !important;
 }
