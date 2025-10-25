@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline - BILLIONAIRS</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .offline-container {
+            max-width: 600px;
+            padding: 40px 20px;
+        }
+        .offline-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        h1 {
+            font-size: 36px;
+            color: #d4af37;
+            margin-bottom: 20px;
+            font-weight: 900;
+            letter-spacing: 3px;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+        .retry-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #d4af37, #f4e4a8);
+            color: #1a1a2e;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.3s ease;
+        }
+        .retry-button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">📡</div>
+        <h1>OFFLINE</h1>
+        <p>
+            You are currently offline. Please check your internet connection and try again.
+        </p>
+        <p style="font-size: 14px; color: rgba(255, 255, 255, 0.6);">
+            Some content may be available from cache.
+        </p>
+        <button class="retry-button" onclick="window.location.reload()">
+            RETRY CONNECTION
+        </button>
+    </div>
+</body>
+</html>
