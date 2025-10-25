@@ -7,6 +7,13 @@ import { createHash } from 'crypto';
 
 const { Pool } = pg;
 
+// Helper function to get base URL
+function getBaseUrl(req) {
+    const protocol = req.headers['x-forwarded-proto'] || 'https';
+    const host = req.headers.host || req.headers['x-forwarded-host'];
+    return `${protocol}://${host}`;
+}
+
 // Helper function to hash passwords
 function hashPassword(password) {
     return createHash('sha256').update(password).digest('hex');
@@ -86,6 +93,24 @@ export default async function handler(req, res) {
 
             await pool.end();
             console.log(`✅ New user registered: ${email} (${memberId}) - ${firstName} ${lastName}`);
+
+            // Send Welcome Email
+            try {
+                const userName = `${firstName || ''} ${lastName || ''}`.trim() || email.split('@')[0];
+                await fetch(`${getBaseUrl(req)}/api/email-service`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'welcome',
+                        to: email,
+                        userName: userName
+                    })
+                });
+                console.log(`📧 Welcome email sent to ${email}`);
+            } catch (emailError) {
+                console.error('Failed to send welcome email:', emailError);
+                // Don't fail registration if email fails
+            }
 
             return res.status(200).json({
                 success: true,

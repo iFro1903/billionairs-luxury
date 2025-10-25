@@ -1,5 +1,11 @@
 import { neon } from '@neondatabase/serverless';
-import { withRateLimit } from '../lib/rate-limiter.js';
+
+// Helper function to get base URL
+function getBaseUrl(req) {
+  const protocol = req.headers['x-forwarded-proto'] || 'https';
+  const host = req.headers.host || req.headers['x-forwarded-host'];
+  return `${protocol}://${host}`;
+}
 
 export default async function handler(req, res) {
   // CORS Headers
@@ -10,9 +16,6 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
-
-  // Rate Limiting: 50 Requests/Minute
-  return withRateLimit(req, async () => {
 
   try {
     const sql = neon(process.env.DATABASE_URL);
@@ -118,6 +121,25 @@ Three dawns must break before your eyes.
 Only those who persist shall see
 What lies beyond eternity.`;
 
+        // Send Easter Egg Email
+        try {
+          const userName = user.first_name || user.last_name ? `${user.first_name || ''} ${user.last_name || ''}`.trim() : email.split('@')[0];
+          await fetch(`${getBaseUrl(req)}/api/email-service`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              type: 'easterEgg',
+              to: email,
+              userName: userName,
+              eggName: '🔺 The Pyramid Awakens',
+              eggDescription: 'You have discovered the hidden pyramid. A riddle awaits those who dare to look beyond the surface.'
+            })
+          });
+          console.log(`📧 Pyramid unlock email sent to ${email}`);
+        } catch (emailError) {
+          console.error('Failed to send pyramid email:', emailError);
+        }
+
         return res.status(200).json({ 
           success: true,
           riddle
@@ -183,6 +205,25 @@ One for each wonder of the world.
 When seven suns have risen and fallen,
 The final door will open.`;
 
+        // Send Easter Egg Email
+        try {
+          const userName = user.first_name || user.last_name ? `${user.first_name || ''} ${user.last_name || ''}`.trim() : email.split('@')[0];
+          await fetch(`${getBaseUrl(req)}/api/email-service`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              type: 'easterEgg',
+              to: email,
+              userName: userName,
+              eggName: '👁️ The All-Seeing Eye',
+              eggDescription: 'The eye has opened. You see what others cannot. Seven suns must rise before the final door reveals itself.'
+            })
+          });
+          console.log(`📧 Eye unlock email sent to ${email}`);
+        } catch (emailError) {
+          console.error('Failed to send eye email:', emailError);
+        }
+
         return res.status(200).json({ 
           success: true,
           riddle
@@ -208,6 +249,25 @@ The final door will open.`;
               chat_opened_at = NOW()
           WHERE email = ${email}
         `;
+
+        // Send Final Easter Egg Email
+        try {
+          const userName = user.first_name || user.last_name ? `${user.first_name || ''} ${user.last_name || ''}`.trim() : email.split('@')[0];
+          await fetch(`${getBaseUrl(req)}/api/email-service`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              type: 'easterEgg',
+              to: email,
+              userName: userName,
+              eggName: '💬 The Global Elite Chat',
+              eggDescription: 'Seven days have passed. The final door opens. You are now among the elite few who have unlocked the complete experience. Welcome to the inner circle.'
+            })
+          });
+          console.log(`📧 Chat unlock email sent to ${email}`);
+        } catch (emailError) {
+          console.error('Failed to send chat email:', emailError);
+        }
 
         return res.status(200).json({ 
           success: true,
@@ -241,5 +301,4 @@ The final door will open.`;
       details: error.message
     });
   }
-  }, { limit: 50, windowMs: 60000 }); // 50 Requests pro Minute
 }
