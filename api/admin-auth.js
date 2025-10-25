@@ -25,21 +25,7 @@ export default async function handler(req) {
             });
         }
 
-        // Verify user exists in database
-        const sql = neon(process.env.DATABASE_URL);
-        const users = await sql`
-            SELECT email, name FROM users 
-            WHERE LOWER(email) = ${email.toLowerCase()}
-        `;
-
-        if (users.length === 0) {
-            return new Response(JSON.stringify({ error: 'User not found' }), {
-                status: 404,
-                headers: { 'Content-Type': 'application/json' }
-            });
-        }
-
-        // Check password
+        // Check password first (no database needed)
         const correctPassword = 'Masallah1,';
         if (password !== correctPassword) {
             return new Response(JSON.stringify({ error: 'Invalid password' }), {
@@ -48,9 +34,10 @@ export default async function handler(req) {
             });
         }
 
+        // Password is correct, return success
         return new Response(JSON.stringify({ 
-            email: users[0].email,
-            name: users[0].name 
+            email: email.toLowerCase(),
+            name: 'CEO'
         }), {
             status: 200,
             headers: { 'Content-Type': 'application/json' }
