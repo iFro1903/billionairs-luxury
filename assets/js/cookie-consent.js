@@ -147,16 +147,41 @@ class CookieConsent {
         // Wait for DOM to be ready
         if (document.body) {
             document.body.appendChild(banner);
+            // Add event listeners immediately after appending
+            this.attachEventListeners();
         } else {
             document.addEventListener('DOMContentLoaded', () => {
                 document.body.appendChild(banner);
+                this.attachEventListeners();
+            });
+        }
+    }
+
+    attachEventListeners() {
+        const acceptAllBtn = document.getElementById('acceptAllCookies');
+        const acceptSelectedBtn = document.getElementById('acceptSelectedCookies');
+        const rejectAllBtn = document.getElementById('rejectAllCookies');
+
+        if (acceptAllBtn) {
+            acceptAllBtn.addEventListener('click', () => {
+                console.log('Accept All clicked');
+                this.acceptAll();
             });
         }
 
-        // Event Listeners
-        document.getElementById('acceptAllCookies').addEventListener('click', () => this.acceptAll());
-        document.getElementById('acceptSelectedCookies').addEventListener('click', () => this.acceptSelected());
-        document.getElementById('rejectAllCookies').addEventListener('click', () => this.rejectAll());
+        if (acceptSelectedBtn) {
+            acceptSelectedBtn.addEventListener('click', () => {
+                console.log('Accept Selected clicked');
+                this.acceptSelected();
+            });
+        }
+
+        if (rejectAllBtn) {
+            rejectAllBtn.addEventListener('click', () => {
+                console.log('Reject All clicked');
+                this.rejectAll();
+            });
+        }
     }
 
     acceptAll() {
@@ -232,9 +257,14 @@ class CookieConsent {
 
     hideConsentBanner() {
         const banner = document.getElementById('cookieConsentBanner');
+        console.log('Hiding banner...', banner);
         if (banner) {
             banner.style.opacity = '0';
-            setTimeout(() => banner.remove(), 300);
+            banner.style.pointerEvents = 'none';
+            setTimeout(() => {
+                banner.remove();
+                console.log('Banner removed');
+            }, 300);
         }
     }
 
