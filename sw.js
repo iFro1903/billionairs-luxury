@@ -146,12 +146,32 @@ self.addEventListener('fetch', (event) => {
     );
 });
 
-// Background Sync - for offline actions
+// ============================================================================
+// Background Sync
+// ============================================================================
+
+/**
+ * Background Sync Event Handler
+ * Triggers when connection is restored or sync is registered
+ */
 self.addEventListener('sync', (event) => {
-    console.log('[Service Worker] Background sync:', event.tag);
+    console.log('[Service Worker] Background sync triggered:', event.tag);
     
-    if (event.tag === 'sync-messages') {
-        event.waitUntil(syncMessages());
+    switch (event.tag) {
+        case 'sync-messages':
+            event.waitUntil(syncMessages());
+            break;
+        
+        case 'sync-payments':
+            event.waitUntil(syncPayments());
+            break;
+        
+        case 'sync-actions':
+            event.waitUntil(syncActions());
+            break;
+        
+        default:
+            console.log('[Service Worker] Unknown sync tag:', event.tag);
     }
 });
 
@@ -200,41 +220,334 @@ self.addEventListener('notificationclick', (event) => {
     }
 });
 
-// Helper function for background sync
+/**
+ * Sync pending messages from IndexedDB
+ */
 async function syncMessages() {
     try {
-        // Get pending messages from IndexedDB
+        console.log('[Service Worker] Syncing messages...');
+        
         const pendingMessages = await getPendingMessages();
+        console.log(`[Service Worker] Found ${pendingMessages.length} pending messages`);
+        
+        let syncedCount = 0;
+        const errors = [];
         
         for (const message of pendingMessages) {
             try {
                 const response = await fetch('/api/chat', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify(message)
                 });
                 
                 if (response.ok) {
                     await removePendingMessage(message.id);
+                    syncedCount++;
+                    console.log(`[Service Worker] Message synced: ${message.id}`);
+                } else {
+                    errors.push({ id: message.id, status: response.status });
                 }
             } catch (error) {
-                console.error('[Service Worker] Sync failed for message:', error);
+                console.error('[Service Worker] Failed to sync message:', error);
+                errors.push({ id: message.id, error: error.message });
             }
         }
+        
+        console.log(`[Service Worker] Messages sync complete: ${syncedCount}/${pendingMessages.length} synced`);
+        
+        // Show notification if there were messages synced
+        if (syncedCount > 0) {
+            await self.registration.showNotification('BILLIONAIRS - Messages Synced', {
+                body: `${syncedCount} message${syncedCount > 1 ? 's' : ''} synchronized`,
+                icon: '/assets/images/icon-192x192.png',
+                badge: '/assets/images/icon-72x72.png',
+                tag: 'sync-complete',
+                requireInteraction: false
+            });
+        }
+        
+        return { syncedCount, errors };
     } catch (error) {
-        console.error('[Service Worker] Background sync failed:', error);
+        console.error('[Service Worker] Message sync failed:', error);
+        throw error;
     }
 }
 
-// IndexedDB helpers (simplified)
-async function getPendingMessages() {
-    // TODO: Implement IndexedDB logic if needed
-    return [];
+/**
+ * Sync pending payments from IndexedDB
+ */
+async function syncPayments() {
+    try {
+        console.log('[Service Worker] Syncing payments...');
+        
+        const pendingPayments = await getPendingPayments();
+        console.log(`[Service Worker] Found ${pendingPayments.length} pending payments`);
+        
+        let syncedCount = 0;
+        const errors = [];
+        
+        for (const payment of pendingPayments) {
+            try {
+                const response = await fetch('/api/payment', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payment)
+                });
+                
+                if (response.ok) {
+                    await removePendingPayment(payment.id);
+                    syncedCount++;
+                    console.log(`[Service Worker] Payment synced: ${payment.id}`);
+                } else {
+                    errors.push({ id: payment.id, status: response.status });
+                }
+            } catch (error) {
+                console.error('[Service Worker] Failed to sync payment:', error);
+                errors.push({ id: payment.id, error: error.message });
+            }
+        }
+        
+        console.log(`[Service Worker] Payments sync complete: ${syncedCount}/${pendingPayments.length} synced`);
+        
+        if (syncedCount > 0) {
+            await self.registration.showNotification('BILLIONAIRS - Payments Synced', {
+                body: `${syncedCount} payment${syncedCount > 1 ? 's' : ''} synchronized`,
+                icon: '/assets/images/icon-192x192.png',
+                badge: '/assets/images/icon-72x72.png',
+                tag: 'sync-complete',
+                requireInteraction: false
+            });
+        }
+        
+        return { syncedCount, errors };
+    } catch (error) {
+        console.error('[Service Worker] Payment sync failed:', error);
+        throw error;
+    }
 }
 
+/**
+ * Sync pending actions from IndexedDB
+ */
+async function syncActions() {
+    try {
+        console.log('[Service Worker] Syncing actions...');
+        
+        const pendingActions = await getPendingActions();
+        console.log(`[Service Worker] Found ${pendingActions.length} pending actions`);
+        
+        let syncedCount = 0;
+        const errors = [];
+        
+        for (const action of pendingActions) {
+            try {
+                const response = await fetch(`/api/${action.type}`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(action.data)
+                });
+                
+                if (response.ok) {
+                    await removePendingAction(action.id);
+                    syncedCount++;
+                    console.log(`[Service Worker] Action synced: ${action.id} (${action.type})`);
+                } else {
+                    errors.push({ id: action.id, type: action.type, status: response.status });
+                }
+            } catch (error) {
+                console.error('[Service Worker] Failed to sync action:', error);
+                errors.push({ id: action.id, type: action.type, error: error.message });
+            }
+        }
+        
+        console.log(`[Service Worker] Actions sync complete: ${syncedCount}/${pendingActions.length} synced`);
+        
+        if (syncedCount > 0) {
+            await self.registration.showNotification('BILLIONAIRS - Actions Synced', {
+                body: `${syncedCount} action${syncedCount > 1 ? 's' : ''} synchronized`,
+                icon: '/assets/images/icon-192x192.png',
+                badge: '/assets/images/icon-72x72.png',
+                tag: 'sync-complete',
+                requireInteraction: false
+            });
+        }
+        
+        return { syncedCount, errors };
+    } catch (error) {
+        console.error('[Service Worker] Action sync failed:', error);
+        throw error;
+    }
+}
+
+/**
+ * Get pending messages from IndexedDB
+ */
+async function getPendingMessages() {
+    try {
+        const db = await openIndexedDB();
+        
+        return await new Promise((resolve, reject) => {
+            const transaction = db.transaction(['pendingMessages'], 'readonly');
+            const store = transaction.objectStore('pendingMessages');
+            const request = store.getAll();
+            
+            request.onsuccess = () => resolve(request.result || []);
+            request.onerror = () => reject(request.error);
+        });
+    } catch (error) {
+        console.error('[Service Worker] Failed to get pending messages:', error);
+        return [];
+    }
+}
+
+/**
+ * Get pending payments from IndexedDB
+ */
+async function getPendingPayments() {
+    try {
+        const db = await openIndexedDB();
+        
+        return await new Promise((resolve, reject) => {
+            const transaction = db.transaction(['pendingPayments'], 'readonly');
+            const store = transaction.objectStore('pendingPayments');
+            const request = store.getAll();
+            
+            request.onsuccess = () => resolve(request.result || []);
+            request.onerror = () => reject(request.error);
+        });
+    } catch (error) {
+        console.error('[Service Worker] Failed to get pending payments:', error);
+        return [];
+    }
+}
+
+/**
+ * Get pending actions from IndexedDB
+ */
+async function getPendingActions() {
+    try {
+        const db = await openIndexedDB();
+        
+        return await new Promise((resolve, reject) => {
+            const transaction = db.transaction(['pendingActions'], 'readonly');
+            const store = transaction.objectStore('pendingActions');
+            const request = store.getAll();
+            
+            request.onsuccess = () => resolve(request.result || []);
+            request.onerror = () => reject(request.error);
+        });
+    } catch (error) {
+        console.error('[Service Worker] Failed to get pending actions:', error);
+        return [];
+    }
+}
+
+/**
+ * Remove synced message from IndexedDB
+ */
 async function removePendingMessage(id) {
-    // TODO: Implement IndexedDB logic if needed
-    return true;
+    try {
+        const db = await openIndexedDB();
+        
+        return await new Promise((resolve, reject) => {
+            const transaction = db.transaction(['pendingMessages'], 'readwrite');
+            const store = transaction.objectStore('pendingMessages');
+            const request = store.delete(id);
+            
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    } catch (error) {
+        console.error('[Service Worker] Failed to remove pending message:', error);
+    }
+}
+
+/**
+ * Remove synced payment from IndexedDB
+ */
+async function removePendingPayment(id) {
+    try {
+        const db = await openIndexedDB();
+        
+        return await new Promise((resolve, reject) => {
+            const transaction = db.transaction(['pendingPayments'], 'readwrite');
+            const store = transaction.objectStore('pendingPayments');
+            const request = store.delete(id);
+            
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    } catch (error) {
+        console.error('[Service Worker] Failed to remove pending payment:', error);
+    }
+}
+
+/**
+ * Remove synced action from IndexedDB
+ */
+async function removePendingAction(id) {
+    try {
+        const db = await openIndexedDB();
+        
+        return await new Promise((resolve, reject) => {
+            const transaction = db.transaction(['pendingActions'], 'readwrite');
+            const store = transaction.objectStore('pendingActions');
+            const request = store.delete(id);
+            
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
+        });
+    } catch (error) {
+        console.error('[Service Worker] Failed to remove pending action:', error);
+    }
+}
+
+/**
+ * Open IndexedDB connection
+ */
+function openIndexedDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open('billionairs-sync', 1);
+        
+        request.onerror = () => reject(request.error);
+        request.onsuccess = () => resolve(request.result);
+        
+        request.onupgradeneeded = (event) => {
+            const db = event.target.result;
+            
+            if (!db.objectStoreNames.contains('pendingMessages')) {
+                const messageStore = db.createObjectStore('pendingMessages', { 
+                    keyPath: 'id', 
+                    autoIncrement: true 
+                });
+                messageStore.createIndex('timestamp', 'timestamp', { unique: false });
+            }
+            
+            if (!db.objectStoreNames.contains('pendingPayments')) {
+                const paymentStore = db.createObjectStore('pendingPayments', { 
+                    keyPath: 'id', 
+                    autoIncrement: true 
+                });
+                paymentStore.createIndex('timestamp', 'timestamp', { unique: false });
+            }
+            
+            if (!db.objectStoreNames.contains('pendingActions')) {
+                const actionStore = db.createObjectStore('pendingActions', { 
+                    keyPath: 'id', 
+                    autoIncrement: true 
+                });
+                actionStore.createIndex('timestamp', 'timestamp', { unique: false });
+                actionStore.createIndex('type', 'type', { unique: false });
+            }
+        };
+    });
 }
 
 // ============================================================================
