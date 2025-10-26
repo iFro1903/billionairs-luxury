@@ -143,6 +143,63 @@ class I18nManager {
             const key = element.getAttribute('data-i18n-aria-label');
             element.setAttribute('aria-label', this.t(key));
         });
+
+        // Auto-translate common elements without data-i18n
+        this.autoTranslateCommonElements();
+    }
+
+    /**
+     * Auto-translate common UI elements
+     */
+    autoTranslateCommonElements() {
+        // Get current translations
+        const t = this.translations[this.currentLang];
+        if (!t) return;
+
+        // Translate navigation buttons
+        const memberBtn = document.getElementById('memberBtn');
+        if (memberBtn && t.nav) {
+            memberBtn.textContent = this.currentLang === 'de' ? 'INNER CIRCLE' : 'INNER CIRCLE';
+        }
+
+        const contactBtn = document.getElementById('contactBtn');
+        if (contactBtn && t.nav) {
+            contactBtn.textContent = this.currentLang === 'de' ? 'KONTAKT' : 'CONTACT';
+        }
+
+        // Translate popup titles
+        const popupTitle = document.querySelector('.popup-title');
+        if (popupTitle) {
+            popupTitle.textContent = this.currentLang === 'de' ? 'Exklusive Anfragen' : 'Exclusive Inquiries';
+        }
+
+        const popupDescription = document.querySelector('.popup-description');
+        if (popupDescription) {
+            popupDescription.textContent = this.currentLang === 'de' 
+                ? 'Für Zugriffsanfragen und private Beratungen' 
+                : 'For access requests and private consultations';
+        }
+
+        const popupFooter = document.querySelector('.popup-footer');
+        if (popupFooter) {
+            popupFooter.textContent = this.currentLang === 'de' ? 'Antwortzeit: 24-48 Stunden' : 'Response time: 24-48 hours';
+        }
+
+        // Translate copy button
+        const copyText = document.querySelector('.copy-text');
+        if (copyText) {
+            copyText.textContent = this.currentLang === 'de' ? 'Kopieren' : 'Copy';
+        }
+
+        // Translate trust badges
+        const trustLabels = document.querySelectorAll('.trust-label');
+        if (trustLabels.length >= 3) {
+            trustLabels[0].textContent = this.currentLang === 'de' ? 'Swiss Gesichert' : 'Swiss Secured';
+            trustLabels[1].textContent = this.currentLang === 'de' ? 'Blockchain Verifiziert' : 'Blockchain Verified';
+            trustLabels[2].textContent = this.currentLang === 'de' ? 'Exklusiver Zugang' : 'Exclusive Access';
+        }
+
+        console.log(`✅ Auto-translation applied for: ${this.currentLang}`);
     }
 
     /**
