@@ -237,4 +237,112 @@ async function removePendingMessage(id) {
     return true;
 }
 
+// ============================================================================
+// Push Notifications
+// ============================================================================
+
+/**
+ * Handle incoming Push Notifications
+ */
+self.addEventListener('push', (event) => {
+    console.log('[Service Worker] Push notification received');
+    
+    let notificationData = {
+        title: 'BILLIONAIRS',
+        body: 'You have a new notification',
+        icon: '/assets/images/icon-192x192.png',
+        badge: '/assets/images/icon-72x72.png',
+        data: {
+            url: '/'
+        }
+    };
+
+    // Parse notification data if available
+    if (event.data) {
+        try {
+            const data = event.data.json();
+            notificationData = {
+                title: data.title || notificationData.title,
+                body: data.message || data.body || notificationData.body,
+                icon: data.icon || notificationData.icon,
+                badge: data.badge || notificationData.badge,
+                image: data.image,
+                tag: data.tag || 'billionairs-notification',
+                requireInteraction: data.requireInteraction || false,
+                actions: data.actions || [],
+                data: {
+                    url: data.url || '/',
+                    ...data.data
+                }
+            };
+        } catch (err) {
+            console.error('[Service Worker] Error parsing push data:', err);
+        }
+    }
+
+    // Show notification
+    event.waitUntil(
+        self.registration.showNotification(notificationData.title, {
+            body: notificationData.body,
+            icon: notificationData.icon,
+            badge: notificationData.badge,
+            image: notificationData.image,
+            tag: notificationData.tag,
+            requireInteraction: notificationData.requireInteraction,
+            actions: notificationData.actions,
+            data: notificationData.data,
+            vibrate: [200, 100, 200],
+            timestamp: Date.now()
+        })
+    );
+});
+
+/**
+ * Handle notification click
+ */
+self.addEventListener('notificationclick', (event) => {
+    console.log('[Service Worker] Notification clicked');
+    
+    event.notification.close();
+
+    // Get URL from notification data
+    const urlToOpen = event.notification.data?.url || '/';
+
+    event.waitUntil(
+        clients.matchAll({ type: 'window', includeUncontrolled: true })
+            .then((clientList) => {
+                // Check if there's already a window open
+                for (const client of clientList) {
+                    if (client.url === urlToOpen && 'focus' in client) {
+                        return client.focus();
+                    }
+                }
+                
+                // Open new window if none found
+                if (clients.openWindow) {
+                    return clients.openWindow(urlToOpen);
+                }
+            })
+    );
+});
+
+/**
+ * Handle notification close
+ */
+self.addEventListener('notificationclose', (event) => {
+    console.log('[Service Worker] Notification closed', event.notification.tag);
+    
+    // Optional: Send analytics event that notification was dismissed
+    // event.waitUntil(
+    //     fetch('/api/analytics', {
+    //         method: 'POST',
+    //         body: JSON.stringify({
+    //             event: 'notification_dismissed',
+    //             tag: event.notification.tag
+    //         })
+    //     })
+    // );
+});
+
 console.log('[Service Worker] Loaded successfully ✓');
+
