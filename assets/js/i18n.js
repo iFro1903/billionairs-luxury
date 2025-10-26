@@ -42,8 +42,8 @@ class I18nManager {
         // Apply translations to current page
         this.applyTranslations();
 
-        // Setup language switcher
-        this.setupLanguageSwitcher();
+        // Setup language switcher (DISABLED - using lang-dropdown-simple.js instead)
+        // this.setupLanguageSwitcher();
 
         // Add HTML lang attribute
         document.documentElement.lang = this.currentLang;
