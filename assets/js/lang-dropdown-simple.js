@@ -58,11 +58,22 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', async (e) => {
                 e.preventDefault();
                 const lang = link.getAttribute('data-lang');
-                console.log('🌐 Selected:', lang);
+                console.log('🌐 Language clicked:', lang);
+                console.log('🔍 i18n available?', !!window.i18n);
+                console.log('🔍 switchLanguage available?', !!(window.i18n && window.i18n.switchLanguage));
                 
-                if (window.i18n && window.i18n.switchLanguage) {
-                    await window.i18n.switchLanguage(lang);
-                    langBtn.textContent = lang.toUpperCase();
+                if (window.i18n && typeof window.i18n.switchLanguage === 'function') {
+                    console.log('✅ Calling switchLanguage...');
+                    try {
+                        await window.i18n.switchLanguage(lang);
+                        console.log('✅ Language switched to:', lang);
+                        langBtn.textContent = lang.toUpperCase();
+                    } catch (error) {
+                        console.error('❌ Error switching language:', error);
+                    }
+                } else {
+                    console.error('❌ i18n.switchLanguage not available!');
+                    console.log('window.i18n:', window.i18n);
                 }
                 
                 dropdown.classList.remove('show');
