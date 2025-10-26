@@ -1,5 +1,7 @@
 // Centralized Email Service using Resend API
-// Templates for all email types
+// Templates for all email types with GDPR compliance
+
+import { addEmailFooter, wrapEmailTemplate } from '../lib/email-utils.js';
 
 export const config = {
     runtime: 'edge'
@@ -8,14 +10,20 @@ export const config = {
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM_EMAIL = 'BILLIONAIRS <onboarding@resend.dev>';
 
-// Main email sending function
-async function sendEmail(to, subject, html) {
+// Main email sending function with auto-footer
+async function sendEmail(to, subject, html, skipFooter = false) {
     if (!RESEND_API_KEY) {
         console.error('RESEND_API_KEY is not configured');
         return { success: false, error: 'Email service not configured' };
     }
 
     try {
+        // Add unsubscribe footer unless explicitly skipped (for transactional emails)
+        let finalHtml = html;
+        if (!skipFooter) {
+            finalHtml = await addEmailFooter(html, to);
+        }
+
         const response = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
@@ -26,7 +34,7 @@ async function sendEmail(to, subject, html) {
                 from: FROM_EMAIL,
                 to: [to],
                 subject: subject,
-                html: html
+                html: finalHtml
             })
         });
 
