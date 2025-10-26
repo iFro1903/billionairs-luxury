@@ -190,7 +190,6 @@
     "actions": "Actions"
   },
   "accessibility": {
-    "skip_to_content": "Skip to main content",
     "toggle_navigation": "Toggle navigation",
     "close_modal": "Close modal",
     "open_menu": "Open menu",
