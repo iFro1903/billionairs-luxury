@@ -380,8 +380,12 @@ class AdminPanel {
                                     💰 Partial
                                 </button>` : 
                                 payment.status === 'refunded' ? 
-                                '<span style="color: #888; font-size: 12px;">Refunded</span>' :
-                                '<span style="color: #888; font-size: 12px;">Manual refund required</span>'
+                                '<span style="color: #888; font-size: 12px;">✅ Refunded</span>' :
+                                payment.method === 'crypto' || payment.method === 'bitcoin' || payment.method === 'ethereum' ?
+                                `<button onclick="admin.showCryptoRefund('${payment.email}', ${payment.amount})" class="btn-manual-refund" title="Crypto Manual Refund Instructions">
+                                    🔐 Manual Refund
+                                </button>` :
+                                '<span style="color: #888; font-size: 12px; cursor: help;" title="Contact payment provider">⚠️ Manual refund required</span>'
                             }
                         </td>
                     `;
@@ -884,6 +888,52 @@ class AdminPanel {
         } catch (error) {
             console.error('Refund error:', error);
             alert(`❌ Refund failed\n\n${error.message}`);
+        }
+    }
+
+    showCryptoRefund(userEmail, amount) {
+        const walletAddresses = {
+            bitcoin: 'bc1q...[Your Bitcoin Wallet Address]',
+            ethereum: '0x...[Your Ethereum Wallet Address]',
+            usdt: '0x...[Your USDT Wallet Address]'
+        };
+
+        const message = `🔐 CRYPTO MANUAL REFUND INSTRUCTIONS
+
+User: ${userEmail}
+Amount: CHF ${amount.toLocaleString()}
+
+═══════════════════════════════════════════
+
+REFUND WALLET ADDRESSES:
+
+📍 Bitcoin (BTC):
+${walletAddresses.bitcoin}
+
+📍 Ethereum (ETH):
+${walletAddresses.ethereum}
+
+📍 USDT (Tether):
+${walletAddresses.usdt}
+
+═══════════════════════════════════════════
+
+STEPS:
+1. Calculate equivalent crypto amount at current rate
+2. Send refund from your wallet to customer's wallet
+3. Copy transaction hash
+4. Email customer with transaction details
+5. Mark refund as completed in database
+
+⚠️ Remember to include transaction fees!`;
+
+        alert(message);
+
+        // Copy first wallet address to clipboard
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(walletAddresses.bitcoin).then(() => {
+                console.log('Bitcoin address copied to clipboard');
+            });
         }
     }
 }
