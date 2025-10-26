@@ -622,46 +622,70 @@ class I18nManager {
 
         console.log('🌍 Setting up language switcher...');
 
-        // Create dropdown if it doesn't exist
-        let dropdown = document.getElementById('langDropdown');
-        if (!dropdown) {
-            console.log('📝 Creating language dropdown...');
-            dropdown = this.createLanguageDropdown();
-            langBtn.parentElement.appendChild(dropdown);
-            console.log('✅ Dropdown created with', dropdown.querySelectorAll('.lang-option').length, 'languages');
-        } else {
-            console.log('♻️ Dropdown already exists');
-        }
-
-        // Update button text
-        this.updateLanguageSwitcher();
-
-        // Add click event to toggle dropdown
-        langBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const isShown = dropdown.classList.toggle('show');
-            console.log('🔄 Dropdown toggled:', isShown ? 'SHOWN' : 'HIDDEN');
-            console.log('📍 Dropdown position:', dropdown.getBoundingClientRect());
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!langBtn.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.classList.remove('show');
+        try {
+            // Create dropdown if it doesn't exist
+            let dropdown = document.getElementById('langDropdown');
+            if (!dropdown) {
+                console.log('📝 Creating language dropdown...');
+                dropdown = this.createLanguageDropdown();
+                
+                // Find parent element (nav-actions)
+                const parent = langBtn.parentElement;
+                if (!parent) {
+                    throw new Error('Parent element not found');
+                }
+                
+                parent.appendChild(dropdown);
+                console.log('✅ Dropdown created with', dropdown.querySelectorAll('.lang-option').length, 'languages');
+            } else {
+                console.log('♻️ Dropdown already exists');
             }
-        });
 
-        // Add click events to language options
-        dropdown.querySelectorAll('.lang-option').forEach(option => {
-            option.addEventListener('click', (e) => {
+            // Update button text
+            this.updateLanguageSwitcher();
+
+            // Add click event to toggle dropdown
+            langBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                const lang = option.getAttribute('data-lang');
-                console.log('🌐 Language selected:', lang);
-                this.switchLanguage(lang);
-                dropdown.classList.remove('show');
+                e.stopPropagation();
+                const isShown = dropdown.classList.toggle('show');
+                console.log('🔄 Dropdown toggled:', isShown ? 'SHOWN' : 'HIDDEN');
+                console.log('📍 Dropdown classes:', dropdown.className);
+                console.log('📍 Dropdown position:', dropdown.getBoundingClientRect());
             });
-        });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!langBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+
+            // Add click events to language options
+            dropdown.querySelectorAll('.lang-option').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const lang = option.getAttribute('data-lang');
+                    console.log('🌐 Language selected:', lang);
+                    this.switchLanguage(lang);
+                    dropdown.classList.remove('show');
+                });
+            });
+            
+            console.log('✅ Language switcher setup complete!');
+            
+        } catch (error) {
+            console.error('❌ Error setting up language dropdown:', error);
+            console.log('⚠️ Falling back to simple toggle between EN/DE');
+            
+            // Fallback: Simple toggle between EN and DE
+            langBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const newLang = this.currentLang === 'en' ? 'de' : 'en';
+                console.log('🔄 Toggling language to:', newLang);
+                this.switchLanguage(newLang);
+            });
+        }
     }
 
     /**
