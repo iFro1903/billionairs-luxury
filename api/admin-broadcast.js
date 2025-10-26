@@ -7,7 +7,7 @@ import { neon } from '@neondatabase/serverless';
 import webpush from 'web-push';
 
 export const config = {
-    runtime: 'edge'
+    runtime: 'nodejs'
 };
 
 // Configure VAPID details
