@@ -14,6 +14,8 @@ class I18nManager {
         this.cookieExpiry = 365; // Days
         this.supportedLangs = ['de', 'en', 'fr', 'es', 'zh', 'ar', 'it', 'ru', 'ja'];
         this.rtlLangs = ['ar']; // Right-to-left languages
+        this.originalTexts = new Map(); // Store original English texts
+        this.hasInitialized = false; // Track if we've saved original texts
     }
 
     /**
@@ -174,6 +176,12 @@ class I18nManager {
 
         // Recursively translate text nodes
         this.translateTextNodes(document.body, textMap, this.currentLang !== 'en');
+        
+        // Mark as initialized after first translation
+        if (!this.hasInitialized) {
+            this.hasInitialized = true;
+            console.log('📝 Original texts saved for translation');
+        }
     }
 
     /**
@@ -541,22 +549,29 @@ class I18nManager {
         // Process text nodes
         if (node.nodeType === Node.TEXT_NODE) {
             const text = node.textContent.trim();
-            if (text) {
-                // If we're translating (not English), find English and replace with target language
+            if (text && text.length > 1) {
+                
+                // Save original text on first run
+                if (!this.hasInitialized && this.currentLang === 'en') {
+                    this.originalTexts.set(node, text);
+                }
+                
+                // Get original text if stored
+                const originalText = this.originalTexts.get(node) || text;
+                
                 if (isTranslating) {
+                    // Translating from English to target language
                     for (const [english, translated] of Object.entries(textMap)) {
-                        if (text === english || text.includes(english)) {
-                            node.textContent = node.textContent.replace(english, translated);
+                        // Check against original text, not current text
+                        if (originalText === english || originalText.includes(english)) {
+                            node.textContent = node.textContent.replace(originalText, translated);
                             break;
                         }
                     }
                 } else {
-                    // If switching to English, reverse translate
-                    for (const [english, translated] of Object.entries(textMap)) {
-                        if (text === translated || text.includes(translated)) {
-                            node.textContent = node.textContent.replace(translated, english);
-                            break;
-                        }
+                    // Translating back to English
+                    if (this.originalTexts.has(node)) {
+                        node.textContent = this.originalTexts.get(node);
                     }
                 }
             }
