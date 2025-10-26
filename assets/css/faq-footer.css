@@ -35,6 +35,11 @@
     display: flex;
     align-items: center;
     gap: 2rem;
+    position: relative;
+}
+
+.lang-switcher {
+    position: relative;
 }
 
 .lang-switcher {
