@@ -11,6 +11,8 @@
     border: 1px solid rgba(232, 180, 184, 0.3);
     border-radius: 12px;
     min-width: 200px;
+    max-height: 400px;
+    overflow-y: auto;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 
                 0 0 20px rgba(232, 180, 184, 0.1);
     z-index: 10000;
@@ -19,7 +21,6 @@
     transform: translateY(-10px) scale(0.95);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     backdrop-filter: blur(10px);
-    overflow: hidden;
 }
 
 .language-dropdown.show {
