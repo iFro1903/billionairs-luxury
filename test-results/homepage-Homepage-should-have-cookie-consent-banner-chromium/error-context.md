@@ -1,0 +1,105 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e4]:
+    - img "BILLIONAIRS" [ref=e6] [cursor=pointer]
+    - generic [ref=e7]:
+      - button "INNER CIRCLE" [ref=e8] [cursor=pointer]
+      - button "EN" [ref=e9] [cursor=pointer]
+      - button "CONTACT" [ref=e10] [cursor=pointer]
+  - generic:
+    - generic:
+      - button "×"
+      - generic: ✉
+      - heading "Exclusive Inquiries" [level=3]
+      - paragraph: For access requests and private consultations
+      - generic:
+        - generic: elite@billionairs.luxury
+        - button "Copy":
+          - generic: Copy
+      - paragraph: "Response time: 24-48 hours"
+  - generic [ref=e11]:
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - generic [ref=e16]:
+          - generic [ref=e17]: 🔒
+          - generic [ref=e18]: Swiss Secured
+        - generic [ref=e19]: •
+        - generic [ref=e20]:
+          - generic [ref=e21]: ✓
+          - generic [ref=e22]: Blockchain Verified
+        - generic [ref=e23]: •
+        - generic [ref=e24]:
+          - generic [ref=e25]: ★
+          - generic [ref=e26]: Exclusive Access
+      - img "BILLIONAIRS" [ref=e28]
+      - heading "BILLIONAIRS" [level=1] [ref=e29]:
+        - generic [ref=e30]: BILLIONAIRS
+      - paragraph [ref=e31]: What you're about to see can't be bought. Only accessed.
+      - generic [ref=e33]:
+        - paragraph [ref=e34]: Beyond wealth. Beyond status.
+        - paragraph [ref=e35]: A moment that exists outside of time.
+        - paragraph [ref=e36]: Where time bends to those who understand its true value.
+      - generic [ref=e37]:
+        - button "I DESERVE THIS" [ref=e38] [cursor=pointer]:
+          - generic [ref=e40]: I DESERVE THIS
+        - button "I'M NOT THERE YET" [ref=e41] [cursor=pointer]:
+          - generic [ref=e42]: I'M NOT THERE YET
+      - generic [ref=e43]:
+        - paragraph [ref=e44]: Discover what transcends everything you own
+        - paragraph [ref=e45]: Perhaps another time, when you're ready
+      - paragraph [ref=e47]: Secured by Swiss Banking Standards • Encrypted Infrastructure • Zürich
+    - generic [ref=e48]:
+      - generic [ref=e49]:
+        - link "FAQ" [ref=e50] [cursor=pointer]:
+          - /url: "#"
+        - generic [ref=e51]: •
+        - link "Legal Notice" [ref=e52] [cursor=pointer]:
+          - /url: "#"
+        - generic [ref=e53]: •
+        - link "Privacy Policy" [ref=e54] [cursor=pointer]:
+          - /url: "#"
+        - generic [ref=e55]: •
+        - link "Terms & Conditions" [ref=e56] [cursor=pointer]:
+          - /url: "#"
+      - paragraph [ref=e57]: © 2025 The Final Collection
+  - generic [ref=e59]:
+    - heading "🍪 We Respect Your Privacy" [level=3] [ref=e61]
+    - generic [ref=e62]:
+      - paragraph [ref=e63]: We use cookies and similar technologies to enhance your experience, analyze our website, and provide you with personalized content.
+      - generic [ref=e64]:
+        - generic [ref=e65]:
+          - generic [ref=e66]:
+            - generic [ref=e67]:
+              - checkbox [checked] [disabled]
+            - strong [ref=e69]: Essential Cookies
+          - paragraph [ref=e70]: Required for basic functions such as security and access management.
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - generic [ref=e73]:
+              - checkbox [checked]
+            - strong [ref=e75]: Analytics Cookies
+          - paragraph [ref=e76]: Help us understand how visitors interact with our website (Google Analytics).
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]:
+              - checkbox
+            - strong [ref=e81]: Marketing Cookies
+          - paragraph [ref=e82]: Enable personalized advertising and marketing communications.
+        - generic [ref=e83]:
+          - generic [ref=e84]:
+            - generic [ref=e85]:
+              - checkbox [checked]
+            - strong [ref=e87]: Functional Cookies
+          - paragraph [ref=e88]: Store your preferences for a better user experience.
+      - generic [ref=e89]:
+        - link "Privacy Policy" [ref=e90] [cursor=pointer]:
+          - /url: /privacy-policy.html
+        - link "Cookie Policy" [ref=e91] [cursor=pointer]:
+          - /url: /cookie-policy.html
+    - generic [ref=e92]:
+      - button "Accept All" [ref=e93] [cursor=pointer]
+      - button "Save Selection" [ref=e94] [cursor=pointer]
+      - button "Necessary Only" [ref=e95] [cursor=pointer]
+```

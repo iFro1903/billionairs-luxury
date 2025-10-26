@@ -1,0 +1,50 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - heading "🔒 CEO ACCESS" [level=1] [ref=e4]
+    - paragraph [ref=e5]: Restricted Area - CEO Only
+    - generic [ref=e6]:
+      - textbox "CEO Email" [ref=e7]: invalid-email
+      - textbox "Password" [active] [ref=e8]: SomePassword123
+      - button "ACCESS PANEL" [ref=e9] [cursor=pointer]
+  - generic [ref=e11]:
+    - heading "🍪 We Respect Your Privacy" [level=3] [ref=e13]
+    - generic [ref=e14]:
+      - paragraph [ref=e15]: We use cookies and similar technologies to enhance your experience, analyze our website, and provide you with personalized content.
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - generic [ref=e18]:
+            - generic [ref=e19]:
+              - checkbox [checked] [disabled]
+            - strong [ref=e21]: Essential Cookies
+          - paragraph [ref=e22]: Required for basic functions such as security and access management.
+        - generic [ref=e23]:
+          - generic [ref=e24]:
+            - generic [ref=e25]:
+              - checkbox [checked]
+            - strong [ref=e27]: Analytics Cookies
+          - paragraph [ref=e28]: Help us understand how visitors interact with our website (Google Analytics).
+        - generic [ref=e29]:
+          - generic [ref=e30]:
+            - generic [ref=e31]:
+              - checkbox
+            - strong [ref=e33]: Marketing Cookies
+          - paragraph [ref=e34]: Enable personalized advertising and marketing communications.
+        - generic [ref=e35]:
+          - generic [ref=e36]:
+            - generic [ref=e37]:
+              - checkbox [checked]
+            - strong [ref=e39]: Functional Cookies
+          - paragraph [ref=e40]: Store your preferences for a better user experience.
+      - generic [ref=e41]:
+        - link "Privacy Policy" [ref=e42] [cursor=pointer]:
+          - /url: /privacy-policy.html
+        - link "Cookie Policy" [ref=e43] [cursor=pointer]:
+          - /url: /cookie-policy.html
+    - generic [ref=e44]:
+      - button "Accept All" [ref=e45] [cursor=pointer]
+      - button "Save Selection" [ref=e46] [cursor=pointer]
+      - button "Necessary Only" [ref=e47] [cursor=pointer]
+```
