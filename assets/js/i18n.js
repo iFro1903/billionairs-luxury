@@ -520,21 +520,6 @@ class I18nManager {
         // Return map for current language, fallback to empty if English
         return maps[lang] || {};
     }
-            'Functional': 'Funktional',
-            'Store preferences for enhanced user experience.': 'Präferenzen speichern für verbesserte Benutzererfahrung.',
-            'Privacy Policy': 'Datenschutzerklärung',
-            'Cookie Policy': 'Cookie-Richtlinie',
-            'ACCEPT ALL': 'ALLE AKZEPTIEREN',
-            'SAVE SELECTION': 'AUSWAHL SPEICHERN',
-            'NECESSARY ONLY': 'NUR NOTWENDIGE'
-        };
-
-        // Apply translations by finding and replacing text content
-        // Recursively translate text nodes
-        this.translateTextNodes(document.body, textMap, this.currentLang !== 'en');
-
-        console.log(`✅ Auto-translation applied for: ${this.currentLang}`);
-    }
 
     /**
      * Recursively translate text nodes
