@@ -58,6 +58,11 @@ class I18nManager {
         }
 
         console.log(`✅ i18n initialized: ${this.currentLang}`);
+        
+        // Dispatch ready event for other scripts
+        window.dispatchEvent(new CustomEvent('i18nReady', { 
+            detail: { language: this.currentLang, i18n: this } 
+        }));
     }
 
     /**

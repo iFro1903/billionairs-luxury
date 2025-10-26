@@ -3,7 +3,8 @@
  * Standalone implementation without dependencies
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+// Wait for both DOM and i18n to be ready
+function initLanguageDropdown() {
     console.log('🚀 Simple Language Dropdown Loading...');
     
     const langBtn = document.getElementById('langBtn');
@@ -14,6 +15,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     console.log('✅ Language button found:', langBtn);
+    
+    // Check if i18n is available
+    if (!window.i18n || typeof window.i18n.switchLanguage !== 'function') {
+        console.warn('⚠️ i18n not ready yet, waiting for i18nReady event...');
+        
+        // Wait for i18n ready event
+        window.addEventListener('i18nReady', () => {
+            console.log('✅ i18n ready event received!');
+            initLanguageDropdown();
+        }, { once: true });
+        return;
+    }
+    
+    console.log('✅ i18n system ready:', window.i18n);
     
     // Create dropdown HTML
     const dropdownHTML = `
@@ -118,4 +133,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     console.log('✅ Simple Language Dropdown Ready!');
+}
+
+// Start initialization when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    initLanguageDropdown();
 });
