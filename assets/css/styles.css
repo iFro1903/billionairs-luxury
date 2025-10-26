@@ -1,26 +1,5 @@
 /* ===== ULTRA LUXURY TIMEPIECE STYLES ===== */
 
-/* ===== ACCESSIBILITY: SKIP LINK ===== */
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--rose-gold-primary, #E8B4A0);
-    color: #000;
-    padding: 8px 16px;
-    text-decoration: none;
-    font-weight: 600;
-    z-index: 10000;
-    border-radius: 0 0 4px 0;
-    transition: top 0.3s ease;
-}
-
-.skip-link:focus {
-    top: 0;
-    outline: 3px solid var(--luxury-gold, #FFD700);
-    outline-offset: 2px;
-}
-
 /* ===== ROOT VARIABLES ===== */
 
 /* Ultra-Premium Rose Gold Palette - ENHANCED */
