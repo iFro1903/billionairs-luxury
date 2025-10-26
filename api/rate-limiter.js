@@ -1,5 +1,7 @@
 // Rate Limiting Middleware für Vercel Edge Functions
-// Speichert Rate Limit Counter in Neon PostgreSQL
+// Nutzt Upstash Redis für schnelles Distributed Rate Limiting
+
+import { Redis } from '@upstash/redis';
 
 export default async function rateLimiter(request, endpoint, maxRequests = 10, windowMs = 60000) {
   try {
@@ -23,56 +25,77 @@ export default async function rateLimiter(request, endpoint, maxRequests = 10, w
       };
     }
 
-    // Rate Limit Check mit Neon Database
-    const { neon } = await import('@neondatabase/serverless');
-    const sql = neon(process.env.DATABASE_URL);
+    // Redis Connection (falls Upstash konfiguriert)
+    let redis = null;
+    if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+      redis = new Redis({
+        url: process.env.UPSTASH_REDIS_REST_URL,
+        token: process.env.UPSTASH_REDIS_REST_TOKEN,
+      });
+    }
 
-    // Erstelle rate_limits Tabelle falls nicht existiert
-    await sql`
-      CREATE TABLE IF NOT EXISTS rate_limits (
-        id SERIAL PRIMARY KEY,
-        ip VARCHAR(100) NOT NULL,
-        endpoint VARCHAR(255) NOT NULL,
-        count INTEGER DEFAULT 1,
-        window_start TIMESTAMP DEFAULT NOW(),
-        last_request TIMESTAMP DEFAULT NOW(),
-        UNIQUE(ip, endpoint)
-      )
-    `;
+    // Rate Limit Check mit Redis (wenn verfügbar) oder PostgreSQL Fallback
+    let count = 0;
+    
+    if (redis) {
+      // Redis Rate Limiting (schnell & distributed)
+      const key = `rate:${ip}:${endpoint}`;
+      count = await redis.incr(key);
+      
+      if (count === 1) {
+        // Erste Request in diesem Window - setze Expiry
+        await redis.expire(key, Math.ceil(windowMs / 1000));
+      }
+    } else {
+      // PostgreSQL Fallback (wenn Redis nicht konfiguriert)
+      const { neon } = await import('@neondatabase/serverless');
+      const sql = neon(process.env.DATABASE_URL);
 
-    const windowStartTime = new Date(Date.now() - windowMs);
+      await sql`
+        CREATE TABLE IF NOT EXISTS rate_limits (
+          id SERIAL PRIMARY KEY,
+          ip VARCHAR(100) NOT NULL,
+          endpoint VARCHAR(255) NOT NULL,
+          count INTEGER DEFAULT 1,
+          window_start TIMESTAMP DEFAULT NOW(),
+          last_request TIMESTAMP DEFAULT NOW(),
+          UNIQUE(ip, endpoint)
+        )
+      `;
 
-    // Hole oder erstelle Rate Limit Entry
-    const result = await sql`
-      INSERT INTO rate_limits (ip, endpoint, count, window_start, last_request)
-      VALUES (${ip}, ${endpoint}, 1, NOW(), NOW())
-      ON CONFLICT (ip, endpoint) 
-      DO UPDATE SET
-        count = CASE 
-          WHEN rate_limits.window_start < ${windowStartTime.toISOString()}
-          THEN 1
-          ELSE rate_limits.count + 1
-        END,
-        window_start = CASE 
-          WHEN rate_limits.window_start < ${windowStartTime.toISOString()}
-          THEN NOW()
-          ELSE rate_limits.window_start
-        END,
-        last_request = NOW()
-      RETURNING *
-    `;
+      const windowStartTime = new Date(Date.now() - windowMs);
 
-    const record = result[0];
+      const result = await sql`
+        INSERT INTO rate_limits (ip, endpoint, count, window_start, last_request)
+        VALUES (${ip}, ${endpoint}, 1, NOW(), NOW())
+        ON CONFLICT (ip, endpoint) 
+        DO UPDATE SET
+          count = CASE 
+            WHEN rate_limits.window_start < ${windowStartTime.toISOString()}
+            THEN 1
+            ELSE rate_limits.count + 1
+          END,
+          window_start = CASE 
+            WHEN rate_limits.window_start < ${windowStartTime.toISOString()}
+            THEN NOW()
+            ELSE rate_limits.window_start
+          END,
+          last_request = NOW()
+        RETURNING *
+      `;
 
-    if (record.count > maxRequests) {
+      count = result[0].count;
+    }
+
+    if (count > maxRequests) {
       // Zu viele Requests - automatische IP-Blockierung nach mehrfachen Verstößen
-      if (record.count > maxRequests * 3) {
+      if (count > maxRequests * 3) {
         await fetch(`${getBaseUrl(request)}/api/block-ip`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
             ip, 
-            reason: `Automatic block: ${record.count} requests to ${endpoint}`,
+            reason: `Automatic block: ${count} requests to ${endpoint}`,
             duration: 3600000 // 1 Stunde
           })
         });
@@ -82,7 +105,7 @@ export default async function rateLimiter(request, endpoint, maxRequests = 10, w
         allowed: false,
         error: 'Rate limit exceeded. Please try again later.',
         status: 429,
-        retryAfter: Math.ceil((new Date(record.window_start).getTime() + windowMs - Date.now()) / 1000)
+        retryAfter: Math.ceil(windowMs / 1000)
       };
     }
 
