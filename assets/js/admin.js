@@ -95,6 +95,12 @@ class AdminPanel {
             location.reload();
         });
 
+        // Setup export buttons
+        this.setupExportButtons();
+
+        // Setup broadcast notification button
+        this.setupBroadcastButton();
+
         // Setup emergency button
         document.getElementById('emergencyBtn').addEventListener('click', () => {
             this.toggleEmergencyMode();
@@ -107,6 +113,7 @@ class AdminPanel {
         this.loadUsersData();
         this.loadChatData();
         this.loadStatsData();
+        this.loadEnhancedAnalytics(); // Load enhanced analytics dashboard
     }
 
     async checkEmergencyMode() {
@@ -927,6 +934,304 @@ STEPS:
             navigator.clipboard.writeText(walletAddresses.bitcoin).then(() => {
                 console.log('Bitcoin address copied to clipboard');
             });
+        }
+    }
+
+    // ===== EXPORT FUNCTIONS =====
+    
+    setupExportButtons() {
+        // Add export buttons dynamically if not present
+        const usersTab = document.querySelector('[data-tab="users"]')?.closest('.tab-content');
+        if (usersTab && !usersTab.querySelector('.export-buttons')) {
+            const exportDiv = document.createElement('div');
+            exportDiv.className = 'export-buttons';
+            exportDiv.innerHTML = `
+                <button onclick="admin.exportData('users', 'csv')" class="export-btn">📊 Export Users (CSV)</button>
+                <button onclick="admin.exportData('users', 'json')" class="export-btn">📄 Export Users (JSON)</button>
+            `;
+            usersTab.insertBefore(exportDiv, usersTab.firstChild);
+        }
+
+        const paymentsTab = document.querySelector('[data-tab="payments"]')?.closest('.tab-content');
+        if (paymentsTab && !paymentsTab.querySelector('.export-buttons')) {
+            const exportDiv = document.createElement('div');
+            exportDiv.className = 'export-buttons';
+            exportDiv.innerHTML = `
+                <button onclick="admin.exportData('payments', 'csv')" class="export-btn">📊 Export Payments (CSV)</button>
+                <button onclick="admin.exportData('payments', 'json')" class="export-btn">📄 Export Payments (JSON)</button>
+            `;
+            paymentsTab.insertBefore(exportDiv, paymentsTab.firstChild);
+        }
+
+        const chatTab = document.querySelector('[data-tab="chat"]')?.closest('.tab-content');
+        if (chatTab && !chatTab.querySelector('.export-buttons')) {
+            const exportDiv = document.createElement('div');
+            exportDiv.className = 'export-buttons';
+            exportDiv.innerHTML = `
+                <button onclick="admin.exportData('chat', 'txt')" class="export-btn">📝 Export Chat History (TXT)</button>
+                <button onclick="admin.exportData('chat', 'json')" class="export-btn">📄 Export Chat (JSON)</button>
+            `;
+            chatTab.insertBefore(exportDiv, chatTab.firstChild);
+        }
+
+        const auditTab = document.querySelector('[data-tab="audit"]')?.closest('.tab-content');
+        if (auditTab && !auditTab.querySelector('.export-buttons')) {
+            const exportDiv = document.createElement('div');
+            exportDiv.className = 'export-buttons';
+            exportDiv.innerHTML = `
+                <button onclick="admin.exportData('audit-logs', 'json')" class="export-btn">📄 Export Audit Logs (JSON)</button>
+                <button onclick="admin.exportData('audit-logs', 'txt')" class="export-btn">📝 Export Audit Logs (TXT)</button>
+            `;
+            auditTab.insertBefore(exportDiv, auditTab.firstChild);
+        }
+    }
+
+    async exportData(type, format) {
+        const session = JSON.parse(sessionStorage.getItem('adminSession'));
+        if (!session) {
+            alert('❌ Session expired. Please login again.');
+            location.reload();
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/admin-export?type=${type}&format=${format}`, {
+                method: 'GET',
+                headers: {
+                    'x-admin-email': session.email,
+                    'x-admin-password': session.password
+                }
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.error || 'Export failed');
+            }
+
+            // Download file
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            
+            // Extract filename from Content-Disposition header
+            const contentDisposition = response.headers.get('Content-Disposition');
+            const filenameMatch = contentDisposition?.match(/filename="(.+)"/);
+            const filename = filenameMatch ? filenameMatch[1] : `export-${type}-${Date.now()}.${format}`;
+            
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+
+            alert(`✅ Export successful!\n\nFile: ${filename}`);
+        } catch (error) {
+            console.error('Export error:', error);
+            alert(`❌ Export failed\n\n${error.message}`);
+        }
+    }
+
+    async loadEnhancedAnalytics() {
+        const session = JSON.parse(sessionStorage.getItem('adminSession'));
+        if (!session) return;
+
+        try {
+            const response = await fetch('/api/admin-analytics', {
+                method: 'GET',
+                headers: {
+                    'x-admin-email': session.email,
+                    'x-admin-password': session.password
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to load analytics');
+            }
+
+            const analytics = await response.json();
+
+            // Display analytics in dashboard
+            const analyticsSection = document.getElementById('analyticsSection');
+            if (!analyticsSection) {
+                // Create analytics section if not exists
+                const statsSection = document.querySelector('.stats-grid');
+                const newSection = document.createElement('div');
+                newSection.id = 'analyticsSection';
+                newSection.className = 'analytics-enhanced';
+                statsSection.insertAdjacentElement('afterend', newSection);
+            }
+
+            document.getElementById('analyticsSection').innerHTML = `
+                <h3>📊 Enhanced Analytics</h3>
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h4>💰 Revenue Statistics</h4>
+                        <p>Total Revenue: CHF ${analytics.revenue.totalRevenue.toLocaleString()}</p>
+                        <p>Average Payment: CHF ${analytics.revenue.avgPayment.toLocaleString()}</p>
+                        <p>Conversion Rate: ${analytics.conversion.conversionRate}%</p>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h4>👥 User Engagement</h4>
+                        <p>Active Users (30d): ${analytics.users.activeUsers}</p>
+                        <p>New Registrations (7d): ${analytics.users.recentRegistrations}</p>
+                        <p>2FA Adoption: ${analytics.security.twoFactorAdoptionRate}%</p>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h4>💬 Chat Activity</h4>
+                        <p>Total Messages: ${analytics.chat.totalMessages}</p>
+                        <p>Unique Users: ${analytics.chat.uniqueUsers}</p>
+                        <p>Unread: ${analytics.chat.unreadMessages}</p>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h4>🔔 Push Notifications</h4>
+                        <p>Total Subscriptions: ${analytics.pushNotifications.totalSubscriptions}</p>
+                        <p>Active: ${analytics.pushNotifications.activeSubscriptions}</p>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h4>🔄 Refunds</h4>
+                        <p>Total Refunds: ${analytics.refunds.totalRefunds}</p>
+                        <p>Amount: CHF ${(analytics.refunds.totalRefundAmount / 100).toLocaleString()}</p>
+                        <p>Rate: ${analytics.refunds.refundRate}%</p>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h4>🏆 Top Customer</h4>
+                        <p>${analytics.customers[0]?.user_email || 'N/A'}</p>
+                        <p>Spent: CHF ${(analytics.customers[0]?.total_spent / 100 || 0).toLocaleString()}</p>
+                        <p>Payments: ${analytics.customers[0]?.payment_count || 0}</p>
+                    </div>
+                </div>
+            `;
+
+        } catch (error) {
+            console.error('Analytics loading error:', error);
+        }
+    }
+
+    // ===== BROADCAST NOTIFICATIONS =====
+    
+    setupBroadcastButton() {
+        const dashboardHeader = document.querySelector('.dashboard-header');
+        if (dashboardHeader && !document.getElementById('broadcastBtn')) {
+            const broadcastBtn = document.createElement('button');
+            broadcastBtn.id = 'broadcastBtn';
+            broadcastBtn.className = 'btn-primary';
+            broadcastBtn.innerHTML = '📢 Broadcast Notification';
+            broadcastBtn.onclick = () => this.showBroadcastModal();
+            dashboardHeader.appendChild(broadcastBtn);
+        }
+    }
+
+    showBroadcastModal() {
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.id = 'broadcastModal';
+        modal.innerHTML = `
+            <div class="modal-content broadcast-modal">
+                <h2>📢 Broadcast Push Notification</h2>
+                <form id="broadcastForm">
+                    <div class="form-group">
+                        <label>Target Audience:</label>
+                        <select id="broadcastAudience" required>
+                            <option value="all">All Users</option>
+                            <option value="paid">Paid Users Only</option>
+                            <option value="unpaid">Unpaid Users Only</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Notification Title:</label>
+                        <input type="text" id="broadcastTitle" maxlength="50" placeholder="e.g., New Feature Available!" required />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Message:</label>
+                        <textarea id="broadcastMessage" maxlength="200" rows="4" placeholder="Enter your message..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Click URL (Optional):</label>
+                        <input type="text" id="broadcastUrl" placeholder="e.g., /dashboard or https://..." />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Icon URL (Optional):</label>
+                        <input type="text" id="broadcastIcon" placeholder="Default: /assets/images/icon-192x192.png" />
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">📤 Send Broadcast</button>
+                        <button type="button" class="btn-secondary" onclick="document.getElementById('broadcastModal').remove()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        document.getElementById('broadcastForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.sendBroadcastNotification();
+        });
+    }
+
+    async sendBroadcastNotification() {
+        const session = JSON.parse(sessionStorage.getItem('adminSession'));
+        if (!session) {
+            alert('❌ Session expired. Please login again.');
+            location.reload();
+            return;
+        }
+
+        const title = document.getElementById('broadcastTitle').value.trim();
+        const message = document.getElementById('broadcastMessage').value.trim();
+        const url = document.getElementById('broadcastUrl').value.trim();
+        const icon = document.getElementById('broadcastIcon').value.trim();
+        const targetAudience = document.getElementById('broadcastAudience').value;
+
+        if (!title || !message) {
+            alert('❌ Title and message are required!');
+            return;
+        }
+
+        const confirm = window.confirm(`⚠️ CONFIRM BROADCAST\n\nTarget: ${targetAudience}\nTitle: ${title}\nMessage: ${message}\n\nSend notification to all ${targetAudience} users?`);
+        
+        if (!confirm) return;
+
+        try {
+            const response = await fetch('/api/admin-broadcast', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-admin-email': session.email,
+                    'x-admin-password': session.password
+                },
+                body: JSON.stringify({
+                    title,
+                    message,
+                    url: url || '/',
+                    icon: icon || '/assets/images/icon-192x192.png',
+                    targetAudience
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                alert(`✅ Broadcast Notification Sent!\n\nTarget: ${data.details.targetAudience}\nTotal Recipients: ${data.total}\nSuccessfully Sent: ${data.sent}\nFailed: ${data.failed}`);
+                document.getElementById('broadcastModal').remove();
+            } else {
+                throw new Error(data.error || 'Broadcast failed');
+            }
+        } catch (error) {
+            console.error('Broadcast error:', error);
+            alert(`❌ Broadcast failed\n\n${error.message}`);
         }
     }
 }

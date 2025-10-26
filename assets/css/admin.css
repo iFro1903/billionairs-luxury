@@ -965,3 +965,201 @@ tbody tr:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 20px rgba(76, 175, 80, 0.4);
 }
+
+/* ===================================
+   EXPORT BUTTONS
+   =================================== */
+
+.export-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(232, 196, 168, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(232, 196, 168, 0.1);
+}
+
+.export-btn {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #E8C4A8 0%, #B89968 100%);
+    color: #0a0a0a;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.export-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(232, 196, 168, 0.4);
+}
+
+/* ===================================
+   ENHANCED ANALYTICS SECTION
+   =================================== */
+
+.analytics-enhanced {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(232, 196, 168, 0.2);
+    border-radius: 12px;
+}
+
+.analytics-enhanced h3 {
+    color: #E8C4A8;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.analytics-card {
+    background: rgba(232, 196, 168, 0.05);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid rgba(232, 196, 168, 0.1);
+    transition: all 0.3s ease;
+}
+
+.analytics-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(232, 196, 168, 0.3);
+    box-shadow: 0 4px 20px rgba(232, 196, 168, 0.2);
+}
+
+.analytics-card h4 {
+    color: #E8C4A8;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(232, 196, 168, 0.2);
+}
+
+.analytics-card p {
+    color: #b0b0b0;
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+.analytics-card p:first-of-type {
+    margin-top: 0;
+}
+
+/* ===================================
+   BROADCAST NOTIFICATION MODAL
+   =================================== */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.broadcast-modal {
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid rgba(232, 196, 168, 0.3);
+    border-radius: 12px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.broadcast-modal h2 {
+    color: #E8C4A8;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.broadcast-modal .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.broadcast-modal label {
+    display: block;
+    color: #E8C4A8;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.broadcast-modal input,
+.broadcast-modal textarea,
+.broadcast-modal select {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(232, 196, 168, 0.1);
+    border: 1px solid rgba(232, 196, 168, 0.2);
+    border-radius: 6px;
+    color: #e8e8e8;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.broadcast-modal input:focus,
+.broadcast-modal textarea:focus,
+.broadcast-modal select:focus {
+    outline: none;
+    border-color: #E8C4A8;
+    box-shadow: 0 0 0 3px rgba(232, 196, 168, 0.1);
+}
+
+.broadcast-modal textarea {
+    resize: vertical;
+    font-family: inherit;
+}
+
+.broadcast-modal .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.broadcast-modal .form-actions button {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1rem;
+}
+
+.btn-secondary {
+    background: rgba(232, 196, 168, 0.1);
+    color: #E8C4A8;
+    border: 1px solid rgba(232, 196, 168, 0.3);
+}
+
+.btn-secondary:hover {
+    background: rgba(232, 196, 168, 0.2);
+    transform: translateY(-2px);
+}
+
+#broadcastBtn {
+    margin-left: auto;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+}
+
