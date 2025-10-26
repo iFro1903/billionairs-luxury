@@ -85,14 +85,29 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Language selection
     dropdown.querySelectorAll('.lang-option').forEach(option => {
-        option.addEventListener('click', (e) => {
+        option.addEventListener('click', async (e) => {
             e.preventDefault();
             const lang = option.getAttribute('data-lang');
             console.log('🌐 Language selected:', lang);
             
             // Call i18n switchLanguage if available
             if (window.i18n && typeof window.i18n.switchLanguage === 'function') {
-                window.i18n.switchLanguage(lang);
+                console.log('✅ Calling i18n.switchLanguage...');
+                await window.i18n.switchLanguage(lang);
+                console.log('✅ Language switched successfully!');
+                
+                // Update button text
+                const flags = {
+                    'de': '🇩🇪', 'en': '🇬🇧', 'fr': '🇫🇷', 'es': '🇪🇸',
+                    'zh': '🇨🇳', 'ar': '🇦🇪', 'it': '🇮🇹', 'ru': '🇷🇺', 'ja': '🇯🇵'
+                };
+                langBtn.innerHTML = `${flags[lang]} ${lang.toUpperCase()}`;
+                
+                // Update active state in dropdown
+                dropdown.querySelectorAll('.lang-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                option.classList.add('active');
             } else {
                 console.warn('⚠️ i18n not available, just changing button text');
                 langBtn.textContent = lang.toUpperCase();
