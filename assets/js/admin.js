@@ -60,7 +60,14 @@ class AdminPanel {
                 }));
                 this.showDashboard(data.email);
             } else {
-                errorDiv.textContent = 'Invalid credentials';
+                // Show specific error message from server
+                if (response.status === 429) {
+                    errorDiv.textContent = data.error || '⚠️ Too many login attempts. Please wait 1 minute and try again.';
+                } else if (response.status === 403) {
+                    errorDiv.textContent = data.error || '🚫 IP address blocked';
+                } else {
+                    errorDiv.textContent = data.error || 'Invalid credentials';
+                }
                 errorDiv.classList.add('show');
             }
         } catch (error) {
