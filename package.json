@@ -15,7 +15,9 @@
     "test:debug": "playwright test --debug",
     "test:ui": "playwright test --ui",
     "test:report": "playwright show-report",
-    "build": "echo Production build ready",
+    "typecheck": "tsc --noEmit",
+    "typecheck:watch": "tsc --noEmit --watch",
+    "build": "tsc && echo Production build ready",
     "pm2:start": "pm2 start stripe-server.js --name billionairs",
     "pm2:stop": "pm2 stop billionairs",
     "pm2:restart": "pm2 restart billionairs",
@@ -33,9 +35,11 @@
   "license": "Private",
   "devDependencies": {
     "@playwright/test": "^1.56.1",
+    "@types/node": "^24.9.1",
     "live-server": "^1.2.2",
     "nodemon": "^3.1.10",
-    "terser": "^5.44.0"
+    "terser": "^5.44.0",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.3",

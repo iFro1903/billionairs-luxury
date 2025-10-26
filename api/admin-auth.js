@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Admin Authentication API Endpoint
+ * @typedef {import('../types/api.js').AdminAuthRequest} AdminAuthRequest
+ * @typedef {import('../types/api.js').AdminAuthResponse} AdminAuthResponse
+ */
+
 import { neon } from '@neondatabase/serverless';
 import { rateLimiter } from './rate-limiter.js';
 import { verifyPassword } from '../lib/password-hash.js';
@@ -8,6 +14,12 @@ export const config = {
 };
 
 const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
+
+/**
+ * Admin Authentication Handler
+ * @param {Request} req - The incoming request
+ * @returns {Promise<Response>} Authentication response
+ */
 
 export default async function handler(req) {
     if (req.method !== 'POST') {
