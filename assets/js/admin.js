@@ -373,8 +373,11 @@ class AdminPanel {
                         <td><span class="status-badge ${payment.status === 'refunded' ? 'refunded' : 'paid'}">${payment.status}</span></td>
                         <td>
                             ${canRefund ? 
-                                `<button onclick="admin.refundPayment('${payment.stripe_payment_intent_id || payment.id}', '${payment.email}')" class="btn-refund" title="Refund Payment">
-                                    💸 Refund
+                                `<button onclick="admin.refundPayment('${payment.stripe_payment_intent_id || payment.id}', '${payment.email}', ${payment.amount})" class="btn-refund" title="Full Refund">
+                                    💸 Full Refund
+                                </button>
+                                <button onclick="admin.partialRefund('${payment.stripe_payment_intent_id || payment.id}', '${payment.email}', ${payment.amount})" class="btn-refund-partial" title="Partial Refund">
+                                    💰 Partial
                                 </button>` : 
                                 payment.status === 'refunded' ? 
                                 '<span style="color: #888; font-size: 12px;">Refunded</span>' :
@@ -785,14 +788,14 @@ class AdminPanel {
     }
 
     // Refund payment
-    async refundPayment(paymentId, userEmail) {
-        const reason = prompt(`Refund payment for ${userEmail}?\n\nOptional reason:`);
+    async refundPayment(paymentId, userEmail, amount) {
+        const reason = prompt(`Full Refund for ${userEmail}?\n\nAmount: CHF ${amount.toLocaleString()}\nOptional reason:`);
         
         if (reason === null) {
             return; // User cancelled
         }
 
-        const confirmRefund = confirm(`⚠️ CONFIRM REFUND\n\nUser: ${userEmail}\nPayment ID: ${paymentId}\nReason: ${reason || 'None provided'}\n\nThis action cannot be undone. Continue?`);
+        const confirmRefund = confirm(`⚠️ CONFIRM FULL REFUND\n\nUser: ${userEmail}\nPayment ID: ${paymentId}\nAmount: CHF ${amount.toLocaleString()}\nReason: ${reason || 'None provided'}\n\nThis action cannot be undone. Continue?`);
         
         if (!confirmRefund) {
             return;
@@ -813,6 +816,65 @@ class AdminPanel {
 
             if (response.ok && data.success) {
                 alert(`✅ Refund successful!\n\nRefund ID: ${data.refund.refundId}\nAmount: ${data.refund.amount} ${data.refund.currency}\n\nThe user will receive an email confirmation and the refund will appear in their account within 5-10 business days.`);
+                
+                // Reload payments
+                this.loadPaymentsData();
+            } else {
+                alert(`❌ Refund failed\n\n${data.error || data.message || 'Unknown error'}`);
+            }
+        } catch (error) {
+            console.error('Refund error:', error);
+            alert(`❌ Refund failed\n\n${error.message}`);
+        }
+    }
+
+    async partialRefund(paymentId, userEmail, maxAmount) {
+        const amountStr = prompt(`Partial Refund for ${userEmail}\n\nMaximum: CHF ${maxAmount.toLocaleString()}\n\nEnter refund amount (CHF):`);
+        
+        if (!amountStr) {
+            return; // User cancelled
+        }
+
+        const amount = parseFloat(amountStr.replace(/[^0-9.]/g, ''));
+        
+        if (isNaN(amount) || amount <= 0) {
+            alert('❌ Invalid amount. Please enter a valid number.');
+            return;
+        }
+
+        if (amount > maxAmount) {
+            alert(`❌ Amount exceeds maximum of CHF ${maxAmount.toLocaleString()}`);
+            return;
+        }
+
+        const reason = prompt(`Partial Refund: CHF ${amount.toLocaleString()}\n\nOptional reason:`);
+        
+        if (reason === null) {
+            return; // User cancelled
+        }
+
+        const confirmRefund = confirm(`⚠️ CONFIRM PARTIAL REFUND\n\nUser: ${userEmail}\nPayment ID: ${paymentId}\nRefund Amount: CHF ${amount.toLocaleString()} (of CHF ${maxAmount.toLocaleString()})\nReason: ${reason || 'None provided'}\n\nThis action cannot be undone. Continue?`);
+        
+        if (!confirmRefund) {
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/admin-refund', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    paymentId: paymentId,
+                    amount: Math.round(amount * 100), // Convert to cents
+                    reason: reason || 'Partial admin refund',
+                    adminEmail: localStorage.getItem('adminEmail')
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                alert(`✅ Partial refund successful!\n\nRefund ID: ${data.refund.refundId}\nAmount: CHF ${amount.toLocaleString()}\n\nThe user will receive an email confirmation and the refund will appear in their account within 5-10 business days.`);
                 
                 // Reload payments
                 this.loadPaymentsData();

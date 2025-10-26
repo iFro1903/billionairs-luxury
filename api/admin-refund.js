@@ -19,7 +19,7 @@ export default async function handler(req) {
     }
 
     try {
-        const { paymentId, reason, adminEmail } = await req.json();
+        const { paymentId, amount, reason, adminEmail } = await req.json();
 
         if (!paymentId) {
             return new Response(JSON.stringify({ error: 'Payment ID required' }), {
@@ -95,9 +95,17 @@ export default async function handler(req) {
             }
 
             try {
-                const refund = await stripe.refunds.create({
+                const refundOptions = {
                     payment_intent: payment.stripe_payment_intent_id,
                     reason: reason || 'requested_by_customer',
+                };
+
+                // If amount is specified, do partial refund
+                if (amount) {
+                    refundOptions.amount = amount; // Amount in cents
+                }
+
+                const refund = await stripe.refunds.create(refundOptions);
                     metadata: {
                         admin_email: adminEmail,
                         refund_reason: reason || 'Admin refund'
