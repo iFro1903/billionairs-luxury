@@ -98,6 +98,10 @@ export default async function handler(req) {
                 const refundOptions = {
                     payment_intent: payment.stripe_payment_intent_id,
                     reason: reason || 'requested_by_customer',
+                    metadata: {
+                        admin_email: adminEmail,
+                        refund_reason: reason || 'Admin refund'
+                    }
                 };
 
                 // If amount is specified, do partial refund
@@ -106,11 +110,6 @@ export default async function handler(req) {
                 }
 
                 const refund = await stripe.refunds.create(refundOptions);
-                    metadata: {
-                        admin_email: adminEmail,
-                        refund_reason: reason || 'Admin refund'
-                    }
-                });
 
                 refundId = refund.id;
                 refundResult = {
