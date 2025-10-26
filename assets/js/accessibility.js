@@ -222,41 +222,11 @@ class AccessibilityManager {
     }
 
     /**
-     * Setup skip links
+     * Setup skip links - DISABLED per user request
      */
     setupSkipLinks() {
-        // Create skip link if it doesn't exist
-        let skipLink = document.getElementById('skip-to-main');
-        if (!skipLink) {
-            skipLink = document.createElement('a');
-            skipLink.id = 'skip-to-main';
-            skipLink.href = '#main-content';
-            skipLink.className = 'skip-link';
-            skipLink.textContent = 'Skip to main content';
-            skipLink.setAttribute('aria-label', 'Skip to main content');
-            document.body.insertBefore(skipLink, document.body.firstChild);
-
-            // Add target ID to main content if missing
-            let mainContent = document.getElementById('main-content');
-            if (!mainContent) {
-                mainContent = document.querySelector('main') || document.querySelector('.container');
-                if (mainContent) {
-                    mainContent.id = 'main-content';
-                    mainContent.setAttribute('tabindex', '-1');
-                }
-            }
-
-            skipLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.getElementById('main-content');
-                if (target) {
-                    target.focus();
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        }
-
-        console.log('✅ Skip links enabled');
+        // Skip link feature disabled
+        console.log('⚠️ Skip links disabled');
     }
 
     /**
