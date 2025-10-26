@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.3",
-    "@sentry/node": "^10.22.0",
+    "@sentry/browser": "^10.22.0",
     "@upstash/redis": "^1.35.6",
     "@vercel/postgres": "^0.10.0",
     "dotenv": "^17.2.3",
