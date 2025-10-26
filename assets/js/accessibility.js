@@ -19,7 +19,7 @@ class AccessibilityManager {
         this.setupFocusManagement();
         this.setupARIALabels();
         this.setupScreenReaderSupport();
-        this.setupSkipLinks();
+        // this.setupSkipLinks(); // DISABLED per user request
         this.setupFocusIndicators();
         this.setupModalAccessibility();
         
@@ -258,27 +258,6 @@ class AccessibilityManager {
                 clip: rect(0, 0, 0, 0);
                 white-space: nowrap;
                 border-width: 0;
-            }
-
-            /* Skip Link */
-            .skip-link {
-                position: absolute;
-                top: -40px;
-                left: 0;
-                background: #d4af37;
-                color: #000;
-                padding: 12px 20px;
-                text-decoration: none;
-                font-weight: bold;
-                z-index: 10000;
-                border-radius: 0 0 4px 0;
-                transition: top 0.3s ease;
-            }
-
-            .skip-link:focus {
-                top: 0;
-                outline: 3px solid #fff;
-                outline-offset: 2px;
             }
 
             /* Enhanced Focus Indicators */
