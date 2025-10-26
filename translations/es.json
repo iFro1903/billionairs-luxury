@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "services": "Servicios",
+    "contact": "Contacto",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "dashboard": "Panel",
+    "logout": "Cerrar sesión",
+    "language": "Idioma"
+  },
+  "hero": {
+    "title": "Bienvenido al Club exclusivo Billionairs",
+    "subtitle": "Lujo, prestigio y experiencias únicas para miembros selectos",
+    "cta": "Hacerse miembro",
+    "learn_more": "Saber más"
+  },
+  "common": {
+    "inner_circle": "CÍRCULO INTERIOR",
+    "contact": "CONTACTO",
+    "exclusive_inquiries": "Consultas exclusivas",
+    "for_access_requests": "Para solicitudes de acceso y consultas privadas",
+    "response_time": "Tiempo de respuesta: 24-48 horas",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "swiss_secured": "Seguridad Suiza",
+    "blockchain_verified": "Verificado Blockchain",
+    "exclusive_access": "Acceso Exclusivo"
+  },
+  "hero_section": {
+    "what_you_see": "Lo que está a punto de ver no se puede comprar. Solo acceder.",
+    "beyond_wealth": "Más allá de la riqueza. Más allá del estatus.",
+    "moment_in_time": "Un momento que existe fuera del tiempo.",
+    "time_bends": "Donde el tiempo se dobla para aquellos que entienden su verdadero valor.",
+    "i_deserve": "LO MEREZCO",
+    "not_ready": "AÚN NO ESTOY LISTO",
+    "discover": "Descubra lo que trasciende todo lo que posee",
+    "another_time": "Quizás en otro momento, cuando esté listo"
+  },
+  "payment": {
+    "final_collection": "LA COLECCIÓN FINAL",
+    "access_granted": "Acceso concedido",
+    "gateway": "Su puerta a lo extraordinario",
+    "one_time": "Acceso exclusivo único",
+    "lifetime": "Membresía de por vida",
+    "concierge": "Servicio de conserjería prioritario",
+    "invitation": "Invitación a eventos privados",
+    "secure_access": "ASEGURAR SU ACCESO",
+    "secured_payment": "Pago seguro por"
+  },
+  "timepiece": {
+    "title": "La Pieza del Tiempo",
+    "subtitle": "Un momento capturado en la eternidad",
+    "not_a_watch": "Esto no es un reloj. Es una filosofía.",
+    "crafted": "Elaborado en los talleres ocultos del tiempo mismo, esta pieza existe solo en 7 dimensiones.",
+    "world_time": "HORA MUNDIAL"
+  },
+  "footer": {
+    "secured_by": "ASEGURADO POR ESTÁNDARES BANCARIOS SUIZOS",
+    "encrypted": "INFRAESTRUCTURA ENCRIPTADA",
+    "copyright": "© 2025 La Colección Final"
+  },
+  "cookie": {
+    "title": "Respetamos su privacidad",
+    "description": "Utilizamos cookies para mejorar su experiencia, analizar el rendimiento del sitio y proporcionar contenido personalizado. Su privacidad es nuestra prioridad.",
+    "essential": "Esencial",
+    "essential_desc": "Requerido para seguridad y gestión de acceso.",
+    "analytics": "Analítica",
+    "analytics_desc": "Comprender las interacciones de los visitantes y mejorar el rendimiento.",
+    "marketing": "Marketing",
+    "marketing_desc": "Publicidad y comunicaciones personalizadas.",
+    "functional": "Funcional",
+    "functional_desc": "Almacenar preferencias para una mejor experiencia de usuario.",
+    "privacy_policy": "Política de privacidad",
+    "cookie_policy": "Política de cookies",
+    "accept_all": "ACEPTAR TODO",
+    "save_selection": "GUARDAR SELECCIÓN",
+    "necessary_only": "SOLO NECESARIAS"
+  }
+}

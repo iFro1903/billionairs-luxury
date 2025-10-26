@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "Chi siamo",
+    "services": "Servizi",
+    "contact": "Contatti",
+    "login": "Accedi",
+    "register": "Registrati",
+    "dashboard": "Dashboard",
+    "logout": "Esci",
+    "language": "Lingua"
+  },
+  "hero": {
+    "title": "Benvenuto al Club esclusivo Billionairs",
+    "subtitle": "Lusso, prestigio ed esperienze uniche per membri selezionati",
+    "cta": "Diventa membro",
+    "learn_more": "Scopri di più"
+  },
+  "common": {
+    "inner_circle": "CERCHIA INTERNA",
+    "contact": "CONTATTI",
+    "exclusive_inquiries": "Richieste esclusive",
+    "for_access_requests": "Per richieste di accesso e consultazioni private",
+    "response_time": "Tempo di risposta: 24-48 ore",
+    "copy": "Copia",
+    "copied": "Copiato!",
+    "swiss_secured": "Sicurezza Svizzera",
+    "blockchain_verified": "Verificato Blockchain",
+    "exclusive_access": "Accesso Esclusivo"
+  },
+  "hero_section": {
+    "what_you_see": "Ciò che stai per vedere non può essere acquistato. Solo accessibile.",
+    "beyond_wealth": "Oltre la ricchezza. Oltre lo status.",
+    "moment_in_time": "Un momento che esiste fuori dal tempo.",
+    "time_bends": "Dove il tempo si piega per coloro che comprendono il suo vero valore.",
+    "i_deserve": "LO MERITO",
+    "not_ready": "NON SONO ANCORA PRONTO",
+    "discover": "Scopri ciò che trascende tutto ciò che possiedi",
+    "another_time": "Forse un'altra volta, quando sarai pronto"
+  },
+  "payment": {
+    "final_collection": "LA COLLEZIONE FINALE",
+    "access_granted": "Accesso concesso",
+    "gateway": "La tua porta verso lo straordinario",
+    "one_time": "Accesso esclusivo unico",
+    "lifetime": "Membership a vita",
+    "concierge": "Servizio concierge prioritario",
+    "invitation": "Invito a eventi privati",
+    "secure_access": "ASSICURA IL TUO ACCESSO",
+    "secured_payment": "Pagamento sicuro da"
+  },
+  "timepiece": {
+    "title": "Il Segnatempo",
+    "subtitle": "Un momento catturato nell'eternità",
+    "not_a_watch": "Questo non è un orologio. È una filosofia.",
+    "crafted": "Realizzato nei laboratori nascosti del tempo stesso, questo pezzo esiste solo in 7 dimensioni.",
+    "world_time": "ORA MONDIALE"
+  },
+  "footer": {
+    "secured_by": "GARANTITO DA STANDARD BANCARI SVIZZERI",
+    "encrypted": "INFRASTRUTTURA CRITTOGRAFATA",
+    "copyright": "© 2025 La Collezione Finale"
+  },
+  "cookie": {
+    "title": "Rispettiamo la tua privacy",
+    "description": "Utilizziamo i cookie per migliorare la tua esperienza, analizzare le prestazioni del sito e fornire contenuti personalizzati. La tua privacy è la nostra priorità.",
+    "essential": "Essenziali",
+    "essential_desc": "Richiesti per sicurezza e gestione dell'accesso.",
+    "analytics": "Analitici",
+    "analytics_desc": "Comprendere le interazioni dei visitatori e migliorare le prestazioni.",
+    "marketing": "Marketing",
+    "marketing_desc": "Pubblicità e comunicazioni personalizzate.",
+    "functional": "Funzionali",
+    "functional_desc": "Memorizzare le preferenze per una migliore esperienza utente.",
+    "privacy_policy": "Informativa sulla privacy",
+    "cookie_policy": "Politica sui cookie",
+    "accept_all": "ACCETTA TUTTO",
+    "save_selection": "SALVA SELEZIONE",
+    "necessary_only": "SOLO NECESSARI"
+  }
+}

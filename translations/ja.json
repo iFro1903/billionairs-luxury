@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "about": "会社概要",
+    "services": "サービス",
+    "contact": "お問い合わせ",
+    "login": "ログイン",
+    "register": "登録",
+    "dashboard": "ダッシュボード",
+    "logout": "ログアウト",
+    "language": "言語"
+  },
+  "hero": {
+    "title": "ビリオネアーズ限定クラブへようこそ",
+    "subtitle": "選ばれた会員のための贅沢、名声、そしてユニークな体験",
+    "cta": "会員になる",
+    "learn_more": "詳しく見る"
+  },
+  "common": {
+    "inner_circle": "インナーサークル",
+    "contact": "お問い合わせ",
+    "exclusive_inquiries": "限定お問い合わせ",
+    "for_access_requests": "アクセスリクエストとプライベート相談用",
+    "response_time": "応答時間：24〜48時間",
+    "copy": "コピー",
+    "copied": "コピーされました！",
+    "swiss_secured": "スイス認証済み",
+    "blockchain_verified": "ブロックチェーン検証済み",
+    "exclusive_access": "限定アクセス"
+  },
+  "hero_section": {
+    "what_you_see": "これからご覧になるものは購入できません。アクセスのみ可能です。",
+    "beyond_wealth": "富を超えて。ステータスを超えて。",
+    "moment_in_time": "時間の外に存在する瞬間。",
+    "time_bends": "その真の価値を理解する者のために時間が曲がる場所。",
+    "i_deserve": "私はこれに値する",
+    "not_ready": "まだ準備ができていない",
+    "discover": "あなたが所有するすべてを超越するものを発見してください",
+    "another_time": "また別の機会に、準備ができたときに"
+  },
+  "payment": {
+    "final_collection": "最終コレクション",
+    "access_granted": "アクセス許可",
+    "gateway": "非凡への扉",
+    "one_time": "一度限りの限定アクセス",
+    "lifetime": "生涯会員資格",
+    "concierge": "優先コンシェルジュサービス",
+    "invitation": "プライベートイベントへの招待",
+    "secure_access": "アクセスを確保する",
+    "secured_payment": "安全な支払い提供元"
+  },
+  "timepiece": {
+    "title": "時計",
+    "subtitle": "永遠に捉えられた瞬間",
+    "not_a_watch": "これは時計ではありません。哲学です。",
+    "crafted": "時間そのものの隠れた工房で作られたこの作品は、7つの次元にのみ存在します。",
+    "world_time": "世界時間"
+  },
+  "footer": {
+    "secured_by": "スイス銀行基準により保護",
+    "encrypted": "暗号化されたインフラストラクチャ",
+    "copyright": "© 2025 最終コレクション"
+  },
+  "cookie": {
+    "title": "お客様のプライバシーを尊重します",
+    "description": "私たちは、お客様の体験を向上させ、サイトのパフォーマンスを分析し、パーソナライズされたコンテンツを提供するためにCookieを使用しています。お客様のプライバシーが最優先です。",
+    "essential": "必須",
+    "essential_desc": "セキュリティとアクセス管理に必要です。",
+    "analytics": "分析",
+    "analytics_desc": "訪問者のインタラクションを理解し、パフォーマンスを向上させます。",
+    "marketing": "マーケティング",
+    "marketing_desc": "パーソナライズされた広告とコミュニケーション。",
+    "functional": "機能的",
+    "functional_desc": "より良いユーザーエクスペリエンスのために設定を保存します。",
+    "privacy_policy": "プライバシーポリシー",
+    "cookie_policy": "Cookie ポリシー",
+    "accept_all": "すべて受け入れる",
+    "save_selection": "選択を保存",
+    "necessary_only": "必須のみ"
+  }
+}

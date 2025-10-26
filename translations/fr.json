@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "services": "Services",
+    "contact": "Contact",
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "dashboard": "Tableau de bord",
+    "logout": "Déconnexion",
+    "language": "Langue"
+  },
+  "hero": {
+    "title": "Bienvenue au Club exclusif Billionairs",
+    "subtitle": "Luxe, prestige et expériences uniques pour les membres sélectionnés",
+    "cta": "Devenir membre",
+    "learn_more": "En savoir plus"
+  },
+  "common": {
+    "inner_circle": "CERCLE INTÉRIEUR",
+    "contact": "CONTACT",
+    "exclusive_inquiries": "Demandes exclusives",
+    "for_access_requests": "Pour les demandes d'accès et les consultations privées",
+    "response_time": "Temps de réponse: 24-48 heures",
+    "copy": "Copier",
+    "copied": "Copié!",
+    "swiss_secured": "Sécurisé Suisse",
+    "blockchain_verified": "Vérifié Blockchain",
+    "exclusive_access": "Accès Exclusif"
+  },
+  "hero_section": {
+    "what_you_see": "Ce que vous êtes sur le point de voir ne peut pas être acheté. Seulement accédé.",
+    "beyond_wealth": "Au-delà de la richesse. Au-delà du statut.",
+    "moment_in_time": "Un moment qui existe en dehors du temps.",
+    "time_bends": "Où le temps se plie pour ceux qui comprennent sa vraie valeur.",
+    "i_deserve": "JE LE MÉRITE",
+    "not_ready": "PAS ENCORE PRÊT",
+    "discover": "Découvrez ce qui transcende tout ce que vous possédez",
+    "another_time": "Peut-être une autre fois, quand vous serez prêt"
+  },
+  "payment": {
+    "final_collection": "LA COLLECTION FINALE",
+    "access_granted": "Accès accordé",
+    "gateway": "Votre porte vers l'extraordinaire",
+    "one_time": "Accès exclusif unique",
+    "lifetime": "Adhésion à vie",
+    "concierge": "Service de conciergerie prioritaire",
+    "invitation": "Invitation à des événements privés",
+    "secure_access": "SÉCURISER VOTRE ACCÈS",
+    "secured_payment": "Paiement sécurisé par"
+  },
+  "timepiece": {
+    "title": "La Pièce d'Horlogerie",
+    "subtitle": "Un moment capturé dans l'éternité",
+    "not_a_watch": "Ce n'est pas une montre. C'est une philosophie.",
+    "crafted": "Fabriqué dans les ateliers cachés du temps lui-même, cette pièce n'existe que dans 7 dimensions.",
+    "world_time": "HEURE MONDIALE"
+  },
+  "footer": {
+    "secured_by": "SÉCURISÉ PAR LES NORMES BANCAIRES SUISSES",
+    "encrypted": "INFRASTRUCTURE CRYPTÉE",
+    "copyright": "© 2025 La Collection Finale"
+  },
+  "cookie": {
+    "title": "Nous respectons votre vie privée",
+    "description": "Nous utilisons des cookies pour améliorer votre expérience, analyser les performances du site et fournir du contenu personnalisé. Votre vie privée est notre priorité.",
+    "essential": "Essentiel",
+    "essential_desc": "Requis pour la sécurité et la gestion d'accès.",
+    "analytics": "Analytique",
+    "analytics_desc": "Comprendre les interactions des visiteurs et améliorer les performances.",
+    "marketing": "Marketing",
+    "marketing_desc": "Publicité et communications personnalisées.",
+    "functional": "Fonctionnel",
+    "functional_desc": "Stocker les préférences pour une meilleure expérience utilisateur.",
+    "privacy_policy": "Politique de confidentialité",
+    "cookie_policy": "Politique des cookies",
+    "accept_all": "TOUT ACCEPTER",
+    "save_selection": "ENREGISTRER LA SÉLECTION",
+    "necessary_only": "NÉCESSAIRE UNIQUEMENT"
+  }
+}

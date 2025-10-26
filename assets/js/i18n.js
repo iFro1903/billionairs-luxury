@@ -1,16 +1,19 @@
 /**
  * BILLIONAIRS i18n Manager
  * Multi-language support with cookie-based persistence
- * Supports: Deutsch (de), English (en)
+ * Supports: Deutsch (de), English (en), Français (fr), Español (es), 
+ *           中文 (zh), العربية (ar), Italiano (it), Русский (ru), 日本語 (ja)
  */
 
 class I18nManager {
     constructor() {
         this.currentLang = 'de'; // Default language
         this.translations = {};
-        this.fallbackLang = 'de';
+        this.fallbackLang = 'en';
         this.cookieName = 'billionairs_lang';
         this.cookieExpiry = 365; // Days
+        this.supportedLangs = ['de', 'en', 'fr', 'es', 'zh', 'ar', 'it', 'ru', 'ja'];
+        this.rtlLangs = ['ar']; // Right-to-left languages
     }
 
     /**
@@ -19,15 +22,17 @@ class I18nManager {
     async init() {
         // Load saved language from cookie
         const savedLang = this.getCookie(this.cookieName);
-        if (savedLang && (savedLang === 'de' || savedLang === 'en')) {
+        if (savedLang && this.supportedLangs.includes(savedLang)) {
             this.currentLang = savedLang;
         } else {
             // Detect browser language
             const browserLang = navigator.language.toLowerCase();
-            if (browserLang.startsWith('de')) {
-                this.currentLang = 'de';
-            } else if (browserLang.startsWith('en')) {
-                this.currentLang = 'en';
+            const langCode = browserLang.split('-')[0]; // e.g., 'en-US' -> 'en'
+            
+            if (this.supportedLangs.includes(langCode)) {
+                this.currentLang = langCode;
+            } else {
+                this.currentLang = 'en'; // Default to English if unsupported
             }
         }
 
@@ -43,6 +48,13 @@ class I18nManager {
         // Add HTML lang attribute
         document.documentElement.lang = this.currentLang;
 
+        // Set text direction for RTL languages
+        if (this.rtlLangs.includes(this.currentLang)) {
+            document.documentElement.dir = 'rtl';
+        } else {
+            document.documentElement.dir = 'ltr';
+        }
+
         console.log(`✅ i18n initialized: ${this.currentLang}`);
     }
 
@@ -51,17 +63,18 @@ class I18nManager {
      */
     async loadTranslations() {
         try {
-            // Load German translations
-            const deResponse = await fetch('/translations/de.json');
-            if (deResponse.ok) {
-                this.translations.de = await deResponse.json();
-            }
+            // Load all supported language translations
+            const loadPromises = this.supportedLangs.map(async (lang) => {
+                const response = await fetch(`/translations/${lang}.json`);
+                if (response.ok) {
+                    this.translations[lang] = await response.json();
+                    console.log(`✅ Loaded ${lang}.json`);
+                } else {
+                    console.warn(`⚠️ Could not load ${lang}.json`);
+                }
+            });
 
-            // Load English translations
-            const enResponse = await fetch('/translations/en.json');
-            if (enResponse.ok) {
-                this.translations.en = await enResponse.json();
-            }
+            await Promise.all(loadPromises);
 
             console.log('✅ Translations loaded:', Object.keys(this.translations));
         } catch (error) {
@@ -156,85 +169,344 @@ class I18nManager {
         const t = this.translations[this.currentLang];
         if (!t) return;
 
-        const isGerman = this.currentLang === 'de';
+        // Text mapping: English → All Languages
+        const textMap = this.getTextMapForLanguage(this.currentLang);
 
-        // Text mapping: English → German
-        const textMap = {
-            // Navigation
-            'INNER CIRCLE': 'INNER CIRCLE',
-            'CONTACT': 'KONTAKT',
-            'EN': 'DE',
-            'DE': 'EN',
-            
-            // Popup
-            'Exclusive Inquiries': 'Exklusive Anfragen',
-            'For access requests and private consultations': 'Für Zugriffsanfragen und private Beratungen',
-            'Response time: 24-48 hours': 'Antwortzeit: 24-48 Stunden',
-            'Copy': 'Kopieren',
-            'Copied!': 'Kopiert!',
-            
-            // Trust Badges
-            'Swiss Secured': 'Swiss Gesichert',
-            'Blockchain Verified': 'Blockchain Verifiziert',
-            'Exclusive Access': 'Exklusiver Zugang',
-            
-            // Hero Section
-            'BILLIONAIRS': 'BILLIONAIRS',
-            "What you're about to see can't be bought. Only accessed.": 'Was Sie gleich sehen, kann man nicht kaufen. Nur erleben.',
-            'Beyond wealth. Beyond status.': 'Jenseits von Reichtum. Jenseits von Status.',
-            'A moment that exists outside of time.': 'Ein Moment, der außerhalb der Zeit existiert.',
-            'Where time bends to those who understand its true value.': 'Wo die Zeit sich für jene beugt, die ihren wahren Wert verstehen.',
-            'I DESERVE THIS': 'ICH VERDIENE DIES',
-            "I'M NOT THERE YET": 'NOCH NICHT BEREIT',
-            'Discover what transcends everything you own': 'Entdecken Sie, was alles übertrifft, was Sie besitzen',
-            'Perhaps another time, when you\'re ready': 'Vielleicht ein andermal, wenn Sie bereit sind',
-            
-            // Payment Section
-            'THE FINAL COLLECTION': 'DIE FINALE KOLLEKTION',
-            'Access Granted': 'Zugang Gewährt',
-            'Your gateway to the extraordinary': 'Ihr Tor zum Außergewöhnlichen',
-            'One-time exclusive access': 'Einmaliger exklusiver Zugang',
-            'Lifetime membership': 'Lebenslange Mitgliedschaft',
-            'Priority concierge service': 'Prioritärer Concierge-Service',
-            'Invitation to private events': 'Einladung zu privaten Events',
-            'SECURE YOUR ACCESS': 'SICHERN SIE IHREN ZUGANG',
-            'Secured Payment by': 'Gesicherte Zahlung durch',
-            
-            // Timepiece Section
-            'The Timepiece': 'Das Zeitstück',
-            'A Moment Captured in Eternity': 'Ein Moment, eingefangen in der Ewigkeit',
-            'This is not a watch. This is a philosophy.': 'Dies ist keine Uhr. Dies ist eine Philosophie.',
-            'Crafted in the hidden workshops of time itself, this piece exists in only 7 dimensions.': 'Gefertigt in den verborgenen Werkstätten der Zeit selbst, existiert dieses Stück nur in 7 Dimensionen.',
-            'WORLD TIME': 'WELTZEIT',
-            'New York': 'New York',
-            'London': 'London',
-            'Tokyo': 'Tokyo',
-            'Dubai': 'Dubai',
-            
-            // Footer
-            'SECURED BY SWISS BANKING STANDARDS': 'GESICHERT NACH SCHWEIZER BANKENSTANDARDS',
-            'ENCRYPTED INFRASTRUCTURE': 'VERSCHLÜSSELTE INFRASTRUKTUR',
-            'ZÜRICH': 'ZÜRICH',
-            '© 2025 The Final Collection': '© 2025 Die Finale Kollektion',
-            
-            // Payment Methods
-            'Payment Methods': 'Zahlungsmethoden',
-            'Select your preferred payment method': 'Wählen Sie Ihre bevorzugte Zahlungsmethode',
-            'Credit Card': 'Kreditkarte',
-            'Bank Transfer': 'Banküberweisung',
-            'Cryptocurrency': 'Kryptowährung',
-            'Continue': 'Weiter',
-            
-            // Cookie Consent
-            'We Respect Your Privacy': 'Wir respektieren Ihre Privatsphäre',
-            'We use cookies to enhance your experience, analyze site performance, and provide personalized content. Your privacy is our priority.': 
-                'Wir verwenden Cookies, um Ihr Erlebnis zu verbessern, die Website-Leistung zu analysieren und personalisierte Inhalte bereitzustellen. Ihre Privatsphäre hat für uns Priorität.',
-            'Essential': 'Essentiell',
-            'Required for security and access management.': 'Erforderlich für Sicherheit und Zugriffsverwaltung.',
-            'Analytics': 'Analyse',
-            'Understand visitor interactions and improve performance.': 'Besucherinteraktionen verstehen und Leistung verbessern.',
-            'Marketing': 'Marketing',
-            'Personalized advertising and communications.': 'Personalisierte Werbung und Kommunikation.',
+        // Recursively translate text nodes
+        this.translateTextNodes(document.body, textMap, this.currentLang !== 'en');
+    }
+
+    /**
+     * Get text translation map for specific language
+     */
+    getTextMapForLanguage(lang) {
+        const maps = {
+            'de': {
+                // Navigation
+                'CONTACT': 'KONTAKT',
+                'Exclusive Inquiries': 'Exklusive Anfragen',
+                'For access requests and private consultations': 'Für Zugriffsanfragen und private Beratungen',
+                'Response time: 24-48 hours': 'Antwortzeit: 24-48 Stunden',
+                'Copy': 'Kopieren',
+                'Copied!': 'Kopiert!',
+                'Swiss Secured': 'Swiss Gesichert',
+                'Blockchain Verified': 'Blockchain Verifiziert',
+                'Exclusive Access': 'Exklusiver Zugang',
+                "What you're about to see can't be bought. Only accessed.": 'Was Sie gleich sehen, kann man nicht kaufen. Nur erleben.',
+                'Beyond wealth. Beyond status.': 'Jenseits von Reichtum. Jenseits von Status.',
+                'A moment that exists outside of time.': 'Ein Moment, der außerhalb der Zeit existiert.',
+                'Where time bends to those who understand its true value.': 'Wo die Zeit sich für jene beugt, die ihren wahren Wert verstehen.',
+                'I DESERVE THIS': 'ICH VERDIENE DIES',
+                "I'M NOT THERE YET": 'NOCH NICHT BEREIT',
+                'Discover what transcends everything you own': 'Entdecken Sie, was alles übertrifft, was Sie besitzen',
+                'Perhaps another time, when you\'re ready': 'Vielleicht ein andermal, wenn Sie bereit sind',
+                'THE FINAL COLLECTION': 'DIE FINALE KOLLEKTION',
+                'Access Granted': 'Zugang Gewährt',
+                'Your gateway to the extraordinary': 'Ihr Tor zum Außergewöhnlichen',
+                'One-time exclusive access': 'Einmaliger exklusiver Zugang',
+                'Lifetime membership': 'Lebenslange Mitgliedschaft',
+                'Priority concierge service': 'Prioritärer Concierge-Service',
+                'Invitation to private events': 'Einladung zu privaten Events',
+                'SECURE YOUR ACCESS': 'SICHERN SIE IHREN ZUGANG',
+                'Secured Payment by': 'Gesicherte Zahlung durch',
+                'The Timepiece': 'Das Zeitstück',
+                'A Moment Captured in Eternity': 'Ein Moment, eingefangen in der Ewigkeit',
+                'This is not a watch. This is a philosophy.': 'Dies ist keine Uhr. Dies ist eine Philosophie.',
+                'Crafted in the hidden workshops of time itself, this piece exists in only 7 dimensions.': 'Gefertigt in den verborgenen Werkstätten der Zeit selbst, existiert dieses Stück nur in 7 Dimensionen.',
+                'WORLD TIME': 'WELTZEIT',
+                'SECURED BY SWISS BANKING STANDARDS': 'GESICHERT NACH SCHWEIZER BANKENSTANDARDS',
+                'ENCRYPTED INFRASTRUCTURE': 'VERSCHLÜSSELTE INFRASTRUKTUR',
+                '© 2025 The Final Collection': '© 2025 Die Finale Kollektion',
+                'We Respect Your Privacy': 'Wir respektieren Ihre Privatsphäre',
+                'ACCEPT ALL': 'ALLE AKZEPTIEREN',
+                'SAVE SELECTION': 'AUSWAHL SPEICHERN',
+                'NECESSARY ONLY': 'NUR NOTWENDIGE'
+            },
+            'fr': {
+                'CONTACT': 'CONTACT',
+                'Exclusive Inquiries': 'Demandes exclusives',
+                'For access requests and private consultations': 'Pour les demandes d\'accès et les consultations privées',
+                'Response time: 24-48 hours': 'Temps de réponse: 24-48 heures',
+                'Copy': 'Copier',
+                'Copied!': 'Copié!',
+                'Swiss Secured': 'Sécurisé Suisse',
+                'Blockchain Verified': 'Vérifié Blockchain',
+                'Exclusive Access': 'Accès Exclusif',
+                "What you're about to see can't be bought. Only accessed.": 'Ce que vous êtes sur le point de voir ne peut pas être acheté. Seulement accédé.',
+                'Beyond wealth. Beyond status.': 'Au-delà de la richesse. Au-delà du statut.',
+                'A moment that exists outside of time.': 'Un moment qui existe en dehors du temps.',
+                'Where time bends to those who understand its true value.': 'Où le temps se plie pour ceux qui comprennent sa vraie valeur.',
+                'I DESERVE THIS': 'JE LE MÉRITE',
+                "I'M NOT THERE YET": 'PAS ENCORE PRÊT',
+                'Discover what transcends everything you own': 'Découvrez ce qui transcende tout ce que vous possédez',
+                'Perhaps another time, when you\'re ready': 'Peut-être une autre fois, quand vous serez prêt',
+                'THE FINAL COLLECTION': 'LA COLLECTION FINALE',
+                'Access Granted': 'Accès accordé',
+                'Your gateway to the extraordinary': 'Votre porte vers l\'extraordinaire',
+                'One-time exclusive access': 'Accès exclusif unique',
+                'Lifetime membership': 'Adhésion à vie',
+                'Priority concierge service': 'Service de conciergerie prioritaire',
+                'Invitation to private events': 'Invitation à des événements privés',
+                'SECURE YOUR ACCESS': 'SÉCURISER VOTRE ACCÈS',
+                'Secured Payment by': 'Paiement sécurisé par',
+                'The Timepiece': 'La Pièce d\'Horlogerie',
+                'A Moment Captured in Eternity': 'Un moment capturé dans l\'éternité',
+                'This is not a watch. This is a philosophy.': 'Ce n\'est pas une montre. C\'est une philosophie.',
+                'Crafted in the hidden workshops of time itself, this piece exists in only 7 dimensions.': 'Fabriqué dans les ateliers cachés du temps lui-même, cette pièce n\'existe que dans 7 dimensions.',
+                'WORLD TIME': 'HEURE MONDIALE',
+                'SECURED BY SWISS BANKING STANDARDS': 'SÉCURISÉ PAR LES NORMES BANCAIRES SUISSES',
+                'ENCRYPTED INFRASTRUCTURE': 'INFRASTRUCTURE CRYPTÉE',
+                '© 2025 The Final Collection': '© 2025 La Collection Finale',
+                'We Respect Your Privacy': 'Nous respectons votre vie privée',
+                'ACCEPT ALL': 'TOUT ACCEPTER',
+                'SAVE SELECTION': 'ENREGISTRER LA SÉLECTION',
+                'NECESSARY ONLY': 'NÉCESSAIRE UNIQUEMENT'
+            },
+            'es': {
+                'CONTACT': 'CONTACTO',
+                'Exclusive Inquiries': 'Consultas exclusivas',
+                'For access requests and private consultations': 'Para solicitudes de acceso y consultas privadas',
+                'Response time: 24-48 hours': 'Tiempo de respuesta: 24-48 horas',
+                'Copy': 'Copiar',
+                'Copied!': '¡Copiado!',
+                'Swiss Secured': 'Seguridad Suiza',
+                'Blockchain Verified': 'Verificado Blockchain',
+                'Exclusive Access': 'Acceso Exclusivo',
+                "What you're about to see can't be bought. Only accessed.": 'Lo que está a punto de ver no se puede comprar. Solo acceder.',
+                'Beyond wealth. Beyond status.': 'Más allá de la riqueza. Más allá del estatus.',
+                'A moment that exists outside of time.': 'Un momento que existe fuera del tiempo.',
+                'Where time bends to those who understand its true value.': 'Donde el tiempo se dobla para aquellos que entienden su verdadero valor.',
+                'I DESERVE THIS': 'LO MEREZCO',
+                "I'M NOT THERE YET": 'AÚN NO ESTOY LISTO',
+                'Discover what transcends everything you own': 'Descubra lo que trasciende todo lo que posee',
+                'Perhaps another time, when you\'re ready': 'Quizás en otro momento, cuando esté listo',
+                'THE FINAL COLLECTION': 'LA COLECCIÓN FINAL',
+                'Access Granted': 'Acceso concedido',
+                'Your gateway to the extraordinary': 'Su puerta a lo extraordinario',
+                'One-time exclusive access': 'Acceso exclusivo único',
+                'Lifetime membership': 'Membresía de por vida',
+                'Priority concierge service': 'Servicio de conserjería prioritario',
+                'Invitation to private events': 'Invitación a eventos privados',
+                'SECURE YOUR ACCESS': 'ASEGURAR SU ACCESO',
+                'Secured Payment by': 'Pago seguro por',
+                'The Timepiece': 'La Pieza del Tiempo',
+                'A Moment Captured in Eternity': 'Un momento capturado en la eternidad',
+                'This is not a watch. This is a philosophy.': 'Esto no es un reloj. Es una filosofía.',
+                'Crafted in the hidden workshops of time itself, this piece exists in only 7 dimensions.': 'Elaborado en los talleres ocultos del tiempo mismo, esta pieza existe solo en 7 dimensiones.',
+                'WORLD TIME': 'HORA MUNDIAL',
+                'SECURED BY SWISS BANKING STANDARDS': 'ASEGURADO POR ESTÁNDARES BANCARIOS SUIZOS',
+                'ENCRYPTED INFRASTRUCTURE': 'INFRAESTRUCTURA ENCRIPTADA',
+                '© 2025 The Final Collection': '© 2025 La Colección Final',
+                'We Respect Your Privacy': 'Respetamos su privacidad',
+                'ACCEPT ALL': 'ACEPTAR TODO',
+                'SAVE SELECTION': 'GUARDAR SELECCIÓN',
+                'NECESSARY ONLY': 'SOLO NECESARIAS'
+            },
+            'zh': {
+                'CONTACT': '联系方式',
+                'Exclusive Inquiries': '专属咨询',
+                'For access requests and private consultations': '用于访问请求和私人咨询',
+                'Response time: 24-48 hours': '响应时间：24-48小时',
+                'Copy': '复制',
+                'Copied!': '已复制！',
+                'Swiss Secured': '瑞士安全保障',
+                'Blockchain Verified': '区块链验证',
+                'Exclusive Access': '专属访问',
+                "What you're about to see can't be bought. Only accessed.": '您即将看到的无法购买。只能访问。',
+                'Beyond wealth. Beyond status.': '超越财富。超越地位。',
+                'A moment that exists outside of time.': '存在于时间之外的时刻。',
+                'Where time bends to those who understand its true value.': '时间为那些理解其真正价值的人而弯曲。',
+                'I DESERVE THIS': '我值得拥有',
+                "I'M NOT THERE YET": '我还没准备好',
+                'Discover what transcends everything you own': '发现超越您所拥有一切的东西',
+                'Perhaps another time, when you\'re ready': '也许下次，当您准备好时',
+                'THE FINAL COLLECTION': '最终收藏',
+                'Access Granted': '访问权限已授予',
+                'Your gateway to the extraordinary': '您通往非凡的门户',
+                'One-time exclusive access': '一次性专属访问',
+                'Lifetime membership': '终身会员资格',
+                'Priority concierge service': '优先礼宾服务',
+                'Invitation to private events': '私人活动邀请',
+                'SECURE YOUR ACCESS': '确保您的访问权限',
+                'Secured Payment by': '安全支付由以下提供',
+                'The Timepiece': '时计',
+                'A Moment Captured in Eternity': '永恒中捕获的瞬间',
+                'This is not a watch. This is a philosophy.': '这不是一块手表。这是一种哲学。',
+                'Crafted in the hidden workshops of time itself, this piece exists in only 7 dimensions.': '在时间本身的隐秘工坊中制作，这件作品仅存在于7个维度中。',
+                'WORLD TIME': '世界时间',
+                'SECURED BY SWISS BANKING STANDARDS': '瑞士银行标准保障',
+                'ENCRYPTED INFRASTRUCTURE': '加密基础设施',
+                '© 2025 The Final Collection': '© 2025 最终收藏',
+                'We Respect Your Privacy': '我们尊重您的隐私',
+                'ACCEPT ALL': '全部接受',
+                'SAVE SELECTION': '保存选择',
+                'NECESSARY ONLY': '仅必要'
+            },
+            'ar': {
+                'CONTACT': 'اتصل',
+                'Exclusive Inquiries': 'استفسارات حصرية',
+                'For access requests and private consultations': 'لطلبات الوصول والاستشارات الخاصة',
+                'Response time: 24-48 hours': 'وقت الاستجابة: 24-48 ساعة',
+                'Copy': 'نسخ',
+                'Copied!': 'تم النسخ!',
+                'Swiss Secured': 'مؤمن سويسري',
+                'Blockchain Verified': 'مُصادق عليه بالبلوكشين',
+                'Exclusive Access': 'وصول حصري',
+                "What you're about to see can't be bought. Only accessed.": 'ما أنت على وشك رؤيته لا يمكن شراؤه. يمكن الوصول إليه فقط.',
+                'Beyond wealth. Beyond status.': 'ما وراء الثروة. ما وراء المكانة.',
+                'A moment that exists outside of time.': 'لحظة موجودة خارج الزمن.',
+                'Where time bends to those who understand its true value.': 'حيث ينحني الزمن لمن يفهمون قيمته الحقيقية.',
+                'I DESERVE THIS': 'أنا أستحق هذا',
+                "I'M NOT THERE YET": 'لست جاهزاً بعد',
+                'Discover what transcends everything you own': 'اكتشف ما يتجاوز كل ما تملك',
+                'Perhaps another time, when you\'re ready': 'ربما في وقت آخر، عندما تكون جاهزاً',
+                'THE FINAL COLLECTION': 'المجموعة النهائية',
+                'Access Granted': 'تم منح الوصول',
+                'Your gateway to the extraordinary': 'بوابتك إلى الاستثنائي',
+                'One-time exclusive access': 'وصول حصري لمرة واحدة',
+                'Lifetime membership': 'عضوية مدى الحياة',
+                'Priority concierge service': 'خدمة كونسيرج ذات أولوية',
+                'Invitation to private events': 'دعوة لفعاليات خاصة',
+                'SECURE YOUR ACCESS': 'تأمين وصولك',
+                'Secured Payment by': 'دفع آمن من',
+                'The Timepiece': 'قطعة الوقت',
+                'A Moment Captured in Eternity': 'لحظة محفوظة في الأبدية',
+                'This is not a watch. This is a philosophy.': 'هذه ليست ساعة. إنها فلسفة.',
+                'Crafted in the hidden workshops of time itself, this piece exists in only 7 dimensions.': 'صُنعت في ورش العمل المخفية للزمن نفسه، هذه القطعة موجودة فقط في 7 أبعاد.',
+                'WORLD TIME': 'الوقت العالمي',
+                'SECURED BY SWISS BANKING STANDARDS': 'مؤمن بمعايير البنوك السويسرية',
+                'ENCRYPTED INFRASTRUCTURE': 'بنية تحتية مشفرة',
+                '© 2025 The Final Collection': '© 2025 المجموعة النهائية',
+                'We Respect Your Privacy': 'نحن نحترم خصوصيتك',
+                'ACCEPT ALL': 'قبول الكل',
+                'SAVE SELECTION': 'حفظ الاختيار',
+                'NECESSARY ONLY': 'الضرورية فقط'
+            },
+            'it': {
+                'CONTACT': 'CONTATTI',
+                'Exclusive Inquiries': 'Richieste esclusive',
+                'For access requests and private consultations': 'Per richieste di accesso e consultazioni private',
+                'Response time: 24-48 hours': 'Tempo di risposta: 24-48 ore',
+                'Copy': 'Copia',
+                'Copied!': 'Copiato!',
+                'Swiss Secured': 'Sicurezza Svizzera',
+                'Blockchain Verified': 'Verificato Blockchain',
+                'Exclusive Access': 'Accesso Esclusivo',
+                "What you're about to see can't be bought. Only accessed.": 'Ciò che stai per vedere non può essere acquistato. Solo accessibile.',
+                'Beyond wealth. Beyond status.': 'Oltre la ricchezza. Oltre lo status.',
+                'A moment that exists outside of time.': 'Un momento che esiste fuori dal tempo.',
+                'Where time bends to those who understand its true value.': 'Dove il tempo si piega per coloro che comprendono il suo vero valore.',
+                'I DESERVE THIS': 'LO MERITO',
+                "I'M NOT THERE YET": 'NON SONO ANCORA PRONTO',
+                'Discover what transcends everything you own': 'Scopri ciò che trascende tutto ciò che possiedi',
+                'Perhaps another time, when you\'re ready': 'Forse un\'altra volta, quando sarai pronto',
+                'THE FINAL COLLECTION': 'LA COLLEZIONE FINALE',
+                'Access Granted': 'Accesso concesso',
+                'Your gateway to the extraordinary': 'La tua porta verso lo straordinario',
+                'One-time exclusive access': 'Accesso esclusivo unico',
+                'Lifetime membership': 'Membership a vita',
+                'Priority concierge service': 'Servizio concierge prioritario',
+                'Invitation to private events': 'Invito a eventi privati',
+                'SECURE YOUR ACCESS': 'ASSICURA IL TUO ACCESSO',
+                'Secured Payment by': 'Pagamento sicuro da',
+                'The Timepiece': 'Il Segnatempo',
+                'A Moment Captured in Eternity': 'Un momento catturato nell\'eternità',
+                'This is not a watch. This is a philosophy.': 'Questo non è un orologio. È una filosofia.',
+                'Crafted in the hidden workshops of time itself, this piece exists in only 7 dimensions.': 'Realizzato nei laboratori nascosti del tempo stesso, questo pezzo esiste solo in 7 dimensioni.',
+                'WORLD TIME': 'ORA MONDIALE',
+                'SECURED BY SWISS BANKING STANDARDS': 'GARANTITO DA STANDARD BANCARI SVIZZERI',
+                'ENCRYPTED INFRASTRUCTURE': 'INFRASTRUTTURA CRITTOGRAFATA',
+                '© 2025 The Final Collection': '© 2025 La Collezione Finale',
+                'We Respect Your Privacy': 'Rispettiamo la tua privacy',
+                'ACCEPT ALL': 'ACCETTA TUTTO',
+                'SAVE SELECTION': 'SALVA SELEZIONE',
+                'NECESSARY ONLY': 'SOLO NECESSARI'
+            },
+            'ru': {
+                'CONTACT': 'КОНТАКТЫ',
+                'Exclusive Inquiries': 'Эксклюзивные запросы',
+                'For access requests and private consultations': 'Для запросов на доступ и частных консультаций',
+                'Response time: 24-48 hours': 'Время ответа: 24-48 часов',
+                'Copy': 'Копировать',
+                'Copied!': 'Скопировано!',
+                'Swiss Secured': 'Швейцарская безопасность',
+                'Blockchain Verified': 'Верифицировано Blockchain',
+                'Exclusive Access': 'Эксклюзивный доступ',
+                "What you're about to see can't be bought. Only accessed.": 'То, что вы собираетесь увидеть, нельзя купить. Только получить доступ.',
+                'Beyond wealth. Beyond status.': 'За пределами богатства. За пределами статуса.',
+                'A moment that exists outside of time.': 'Момент, существующий вне времени.',
+                'Where time bends to those who understand its true value.': 'Где время изгибается для тех, кто понимает его истинную ценность.',
+                'I DESERVE THIS': 'Я ЭТОГО ДОСТОИН',
+                "I'M NOT THERE YET": 'Я ЕЩЕ НЕ ГОТОВ',
+                'Discover what transcends everything you own': 'Откройте то, что превосходит все, что у вас есть',
+                'Perhaps another time, when you\'re ready': 'Возможно, в другой раз, когда вы будете готовы',
+                'THE FINAL COLLECTION': 'ФИНАЛЬНАЯ КОЛЛЕКЦИЯ',
+                'Access Granted': 'Доступ предоставлен',
+                'Your gateway to the extraordinary': 'Ваши врата в исключительное',
+                'One-time exclusive access': 'Единоразовый эксклюзивный доступ',
+                'Lifetime membership': 'Пожизненное членство',
+                'Priority concierge service': 'Приоритетный консьерж-сервис',
+                'Invitation to private events': 'Приглашение на частные мероприятия',
+                'SECURE YOUR ACCESS': 'ОБЕСПЕЧЬТЕ СВОЙ ДОСТУП',
+                'Secured Payment by': 'Защищенный платеж от',
+                'The Timepiece': 'Хронометр',
+                'A Moment Captured in Eternity': 'Момент, запечатленный в вечности',
+                'This is not a watch. This is a philosophy.': 'Это не часы. Это философия.',
+                'Crafted in the hidden workshops of time itself, this piece exists in only 7 dimensions.': 'Созданный в скрытых мастерских самого времени, этот экземпляр существует только в 7 измерениях.',
+                'WORLD TIME': 'МИРОВОЕ ВРЕМЯ',
+                'SECURED BY SWISS BANKING STANDARDS': 'ЗАЩИЩЕНО ШВЕЙЦАРСКИМИ БАНКОВСКИМИ СТАНДАРТАМИ',
+                'ENCRYPTED INFRASTRUCTURE': 'ЗАШИФРОВАННАЯ ИНФРАСТРУКТУРА',
+                '© 2025 The Final Collection': '© 2025 Финальная Коллекция',
+                'We Respect Your Privacy': 'Мы уважаем вашу конфиденциальность',
+                'ACCEPT ALL': 'ПРИНЯТЬ ВСЕ',
+                'SAVE SELECTION': 'СОХРАНИТЬ ВЫБОР',
+                'NECESSARY ONLY': 'ТОЛЬКО НЕОБХОДИМЫЕ'
+            },
+            'ja': {
+                'CONTACT': 'お問い合わせ',
+                'Exclusive Inquiries': '限定お問い合わせ',
+                'For access requests and private consultations': 'アクセスリクエストとプライベート相談用',
+                'Response time: 24-48 hours': '応答時間：24〜48時間',
+                'Copy': 'コピー',
+                'Copied!': 'コピーされました！',
+                'Swiss Secured': 'スイス認証済み',
+                'Blockchain Verified': 'ブロックチェーン検証済み',
+                'Exclusive Access': '限定アクセス',
+                "What you're about to see can't be bought. Only accessed.": 'これからご覧になるものは購入できません。アクセスのみ可能です。',
+                'Beyond wealth. Beyond status.': '富を超えて。ステータスを超えて。',
+                'A moment that exists outside of time.': '時間の外に存在する瞬間。',
+                'Where time bends to those who understand its true value.': 'その真の価値を理解する者のために時間が曲がる場所。',
+                'I DESERVE THIS': '私はこれに値する',
+                "I'M NOT THERE YET": 'まだ準備ができていない',
+                'Discover what transcends everything you own': 'あなたが所有するすべてを超越するものを発見してください',
+                'Perhaps another time, when you\'re ready': 'また別の機会に、準備ができたときに',
+                'THE FINAL COLLECTION': '最終コレクション',
+                'Access Granted': 'アクセス許可',
+                'Your gateway to the extraordinary': '非凡への扉',
+                'One-time exclusive access': '一度限りの限定アクセス',
+                'Lifetime membership': '生涯会員資格',
+                'Priority concierge service': '優先コンシェルジュサービス',
+                'Invitation to private events': 'プライベートイベントへの招待',
+                'SECURE YOUR ACCESS': 'アクセスを確保する',
+                'Secured Payment by': '安全な支払い提供元',
+                'The Timepiece': '時計',
+                'A Moment Captured in Eternity': '永遠に捉えられた瞬間',
+                'This is not a watch. This is a philosophy.': 'これは時計ではありません。哲学です。',
+                'Crafted in the hidden workshops of time itself, this piece exists in only 7 dimensions.': '時間そのものの隠れた工房で作られたこの作品は、7つの次元にのみ存在します。',
+                'WORLD TIME': '世界時間',
+                'SECURED BY SWISS BANKING STANDARDS': 'スイス銀行基準により保護',
+                'ENCRYPTED INFRASTRUCTURE': '暗号化されたインフラストラクチャ',
+                '© 2025 The Final Collection': '© 2025 最終コレクション',
+                'We Respect Your Privacy': 'お客様のプライバシーを尊重します',
+                'ACCEPT ALL': 'すべて受け入れる',
+                'SAVE SELECTION': '選択を保存',
+                'NECESSARY ONLY': '必須のみ'
+            }
+        };
+
+        // Return map for current language, fallback to empty if English
+        return maps[lang] || {};
+    }
             'Functional': 'Funktional',
             'Store preferences for enhanced user experience.': 'Präferenzen speichern für verbesserte Benutzererfahrung.',
             'Privacy Policy': 'Datenschutzerklärung',
@@ -245,7 +517,8 @@ class I18nManager {
         };
 
         // Apply translations by finding and replacing text content
-        this.translateTextNodes(document.body, textMap, isGerman);
+        // Recursively translate text nodes
+        this.translateTextNodes(document.body, textMap, this.currentLang !== 'en');
 
         console.log(`✅ Auto-translation applied for: ${this.currentLang}`);
     }
@@ -254,13 +527,13 @@ class I18nManager {
      * Recursively translate text nodes
      * @param {Node} node - DOM node to process
      * @param {Object} textMap - Translation mapping
-     * @param {Boolean} isGerman - True if translating to German
+     * @param {Boolean} isTranslating - True if translating from English
      */
-    translateTextNodes(node, textMap, isGerman) {
+    translateTextNodes(node, textMap, isTranslating) {
         // Skip script and style tags
         if (node.nodeType === Node.ELEMENT_NODE) {
             const tagName = node.tagName.toLowerCase();
-            if (tagName === 'script' || tagName === 'style') {
+            if (tagName === 'script' || tagName === 'style' || tagName === 'svg') {
                 return;
             }
         }
@@ -269,14 +542,21 @@ class I18nManager {
         if (node.nodeType === Node.TEXT_NODE) {
             const text = node.textContent.trim();
             if (text) {
-                // Check if text matches any key in our map
-                for (const [english, german] of Object.entries(textMap)) {
-                    if (isGerman && text === english) {
-                        node.textContent = node.textContent.replace(english, german);
-                        break;
-                    } else if (!isGerman && text === german) {
-                        node.textContent = node.textContent.replace(german, english);
-                        break;
+                // If we're translating (not English), find English and replace with target language
+                if (isTranslating) {
+                    for (const [english, translated] of Object.entries(textMap)) {
+                        if (text === english || text.includes(english)) {
+                            node.textContent = node.textContent.replace(english, translated);
+                            break;
+                        }
+                    }
+                } else {
+                    // If switching to English, reverse translate
+                    for (const [english, translated] of Object.entries(textMap)) {
+                        if (text === translated || text.includes(translated)) {
+                            node.textContent = node.textContent.replace(translated, english);
+                            break;
+                        }
                     }
                 }
             }
@@ -285,17 +565,17 @@ class I18nManager {
         // Recursively process child nodes
         if (node.childNodes) {
             node.childNodes.forEach(child => {
-                this.translateTextNodes(child, textMap, isGerman);
+                this.translateTextNodes(child, textMap, isTranslating);
             });
         }
     }
 
     /**
      * Switch language
-     * @param {string} lang - Language code (de/en)
+     * @param {string} lang - Language code (de/en/fr/es/zh/ar/it/ru/ja)
      */
     async switchLanguage(lang) {
-        if (lang !== 'de' && lang !== 'en') {
+        if (!this.supportedLangs.includes(lang)) {
             console.error('❌ Unsupported language:', lang);
             return;
         }
@@ -303,6 +583,13 @@ class I18nManager {
         this.currentLang = lang;
         this.setCookie(this.cookieName, lang, this.cookieExpiry);
         document.documentElement.lang = lang;
+
+        // Set text direction for RTL languages
+        if (this.rtlLangs.includes(lang)) {
+            document.documentElement.dir = 'rtl';
+        } else {
+            document.documentElement.dir = 'ltr';
+        }
 
         // Reload translations if not loaded
         if (!this.translations[lang]) {
@@ -324,7 +611,7 @@ class I18nManager {
     }
 
     /**
-     * Setup language switcher button
+     * Setup language switcher dropdown
      */
     setupLanguageSwitcher() {
         const langBtn = document.getElementById('langBtn');
@@ -333,15 +620,76 @@ class I18nManager {
             return;
         }
 
+        // Create dropdown if it doesn't exist
+        let dropdown = document.getElementById('langDropdown');
+        if (!dropdown) {
+            dropdown = this.createLanguageDropdown();
+            langBtn.parentElement.appendChild(dropdown);
+        }
+
         // Update button text
         this.updateLanguageSwitcher();
 
-        // Add click event
+        // Add click event to toggle dropdown
         langBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            const newLang = this.currentLang === 'de' ? 'en' : 'de';
-            this.switchLanguage(newLang);
+            e.stopPropagation();
+            dropdown.classList.toggle('show');
         });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!langBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        // Add click events to language options
+        dropdown.querySelectorAll('.lang-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = option.getAttribute('data-lang');
+                this.switchLanguage(lang);
+                dropdown.classList.remove('show');
+            });
+        });
+    }
+
+    /**
+     * Create language dropdown menu
+     */
+    createLanguageDropdown() {
+        const dropdown = document.createElement('div');
+        dropdown.id = 'langDropdown';
+        dropdown.className = 'language-dropdown';
+
+        const languages = [
+            { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+            { code: 'en', name: 'English', flag: '🇬🇧' },
+            { code: 'fr', name: 'Français', flag: '🇫🇷' },
+            { code: 'es', name: 'Español', flag: '🇪🇸' },
+            { code: 'zh', name: '中文', flag: '🇨🇳' },
+            { code: 'ar', name: 'العربية', flag: '🇦🇪' },
+            { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+            { code: 'ru', name: 'Русский', flag: '🇷🇺' },
+            { code: 'ja', name: '日本語', flag: '🇯🇵' }
+        ];
+
+        languages.forEach(lang => {
+            const option = document.createElement('a');
+            option.href = '#';
+            option.className = 'lang-option';
+            option.setAttribute('data-lang', lang.code);
+            option.innerHTML = `<span class="lang-flag">${lang.flag}</span> <span class="lang-name">${lang.name}</span>`;
+            
+            if (lang.code === this.currentLang) {
+                option.classList.add('active');
+            }
+            
+            dropdown.appendChild(option);
+        });
+
+        return dropdown;
     }
 
     /**
@@ -351,13 +699,34 @@ class I18nManager {
         const langBtn = document.getElementById('langBtn');
         if (!langBtn) return;
 
-        // Show current language or switch option
-        if (this.currentLang === 'de') {
-            langBtn.innerHTML = '<i class="fas fa-globe"></i> EN';
-            langBtn.title = 'Switch to English';
-        } else {
-            langBtn.innerHTML = '<i class="fas fa-globe"></i> DE';
-            langBtn.title = 'Zu Deutsch wechseln';
+        const languageFlags = {
+            'de': '🇩🇪',
+            'en': '🇬🇧',
+            'fr': '🇫🇷',
+            'es': '🇪🇸',
+            'zh': '🇨🇳',
+            'ar': '🇦🇪',
+            'it': '🇮🇹',
+            'ru': '🇷🇺',
+            'ja': '🇯🇵'
+        };
+
+        const flag = languageFlags[this.currentLang] || '🌍';
+        const langCode = this.currentLang.toUpperCase();
+        
+        langBtn.innerHTML = `<i class="fas fa-globe"></i> ${flag} ${langCode}`;
+        langBtn.title = 'Change Language';
+
+        // Update active state in dropdown
+        const dropdown = document.getElementById('langDropdown');
+        if (dropdown) {
+            dropdown.querySelectorAll('.lang-option').forEach(option => {
+                if (option.getAttribute('data-lang') === this.currentLang) {
+                    option.classList.add('active');
+                } else {
+                    option.classList.remove('active');
+                }
+            });
         }
     }
 

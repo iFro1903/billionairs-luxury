@@ -1,0 +1,81 @@
+{
+  "nav": {
+    "home": "首页",
+    "about": "关于",
+    "services": "服务",
+    "contact": "联系",
+    "login": "登录",
+    "register": "注册",
+    "dashboard": "控制台",
+    "logout": "退出",
+    "language": "语言"
+  },
+  "hero": {
+    "title": "欢迎来到亿万富翁专属俱乐部",
+    "subtitle": "为精选会员提供奢华、尊贵和独特体验",
+    "cta": "成为会员",
+    "learn_more": "了解更多"
+  },
+  "common": {
+    "inner_circle": "核心圈子",
+    "contact": "联系方式",
+    "exclusive_inquiries": "专属咨询",
+    "for_access_requests": "用于访问请求和私人咨询",
+    "response_time": "响应时间：24-48小时",
+    "copy": "复制",
+    "copied": "已复制！",
+    "swiss_secured": "瑞士安全保障",
+    "blockchain_verified": "区块链验证",
+    "exclusive_access": "专属访问"
+  },
+  "hero_section": {
+    "what_you_see": "您即将看到的无法购买。只能访问。",
+    "beyond_wealth": "超越财富。超越地位。",
+    "moment_in_time": "存在于时间之外的时刻。",
+    "time_bends": "时间为那些理解其真正价值的人而弯曲。",
+    "i_deserve": "我值得拥有",
+    "not_ready": "我还没准备好",
+    "discover": "发现超越您所拥有一切的东西",
+    "another_time": "也许下次，当您准备好时"
+  },
+  "payment": {
+    "final_collection": "最终收藏",
+    "access_granted": "访问权限已授予",
+    "gateway": "您通往非凡的门户",
+    "one_time": "一次性专属访问",
+    "lifetime": "终身会员资格",
+    "concierge": "优先礼宾服务",
+    "invitation": "私人活动邀请",
+    "secure_access": "确保您的访问权限",
+    "secured_payment": "安全支付由以下提供"
+  },
+  "timepiece": {
+    "title": "时计",
+    "subtitle": "永恒中捕获的瞬间",
+    "not_a_watch": "这不是一块手表。这是一种哲学。",
+    "crafted": "在时间本身的隐秘工坊中制作，这件作品仅存在于7个维度中。",
+    "world_time": "世界时间"
+  },
+  "footer": {
+    "secured_by": "瑞士银行标准保障",
+    "encrypted": "加密基础设施",
+    "copyright": "© 2025 最终收藏"
+  },
+  "cookie": {
+    "title": "我们尊重您的隐私",
+    "description": "我们使用Cookie来改善您的体验、分析网站性能并提供个性化内容。您的隐私是我们的首要任务。",
+    "essential": "必要",
+    "essential_desc": "安全和访问管理所需。",
+    "analytics": "分析",
+    "analytics_desc": "了解访客互动并改善性能。",
+    "marketing": "营销",
+    "marketing_desc": "个性化广告和通信。",
+    "functional": "功能",
+    "functional_desc": "存储偏好以提供更好的用户体验。",
+    "privacy_policy": "隐私政策",
+    "cookie_policy": "Cookie政策",
+    "accept_all": "全部接受",
+    "save_selection": "保存选择",
+    "necessary_only": "仅必要"
+  }
+}
