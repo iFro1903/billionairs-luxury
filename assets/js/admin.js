@@ -372,21 +372,7 @@ class AdminPanel {
                         <td><span class="payment-method-badge ${payment.method}">${payment.method}</span></td>
                         <td><span class="status-badge ${payment.status === 'refunded' ? 'refunded' : 'paid'}">${payment.status}</span></td>
                         <td>
-                            ${canRefund ? 
-                                `<button onclick="admin.refundPayment('${payment.stripe_payment_intent_id || payment.id}', '${payment.email}', ${payment.amount})" class="btn-refund" title="Full Refund">
-                                    💸 Full Refund
-                                </button>
-                                <button onclick="admin.partialRefund('${payment.stripe_payment_intent_id || payment.id}', '${payment.email}', ${payment.amount})" class="btn-refund-partial" title="Partial Refund">
-                                    💰 Partial
-                                </button>` : 
-                                payment.status === 'refunded' ? 
-                                '<span style="color: #888; font-size: 12px;">✅ Refunded</span>' :
-                                payment.method === 'crypto' || payment.method === 'bitcoin' || payment.method === 'ethereum' ?
-                                `<button onclick="admin.showCryptoRefund('${payment.email}', ${payment.amount})" class="btn-manual-refund" title="Crypto Manual Refund Instructions">
-                                    🔐 Manual Refund
-                                </button>` :
-                                '<span style="color: #888; font-size: 12px; cursor: help;" title="Contact payment provider">⚠️ Manual refund required</span>'
-                            }
+                            <span style="color: #888; font-size: 12px;">—</span>
                         </td>
                     `;
                     tbody.appendChild(tr);
