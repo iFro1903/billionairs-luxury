@@ -40,6 +40,11 @@ Thumbs.db
 logs
 *.log
 
+# Playwright Test Results
+test-results/
+playwright-report/
+playwright/.cache/
+
 # Environment variables
 .env
 .env.local
