@@ -143,7 +143,15 @@ class CookieConsent {
                 </div>
             </div>
         `;
-        document.body.appendChild(banner);
+        
+        // Wait for DOM to be ready
+        if (document.body) {
+            document.body.appendChild(banner);
+        } else {
+            document.addEventListener('DOMContentLoaded', () => {
+                document.body.appendChild(banner);
+            });
+        }
 
         // Event Listeners
         document.getElementById('acceptAllCookies').addEventListener('click', () => this.acceptAll());
