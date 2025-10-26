@@ -150,23 +150,23 @@
     <div id="particles-js"></div>
 
     <!-- Premium Navigation -->
-    <nav class="premium-nav">
+    <nav class="premium-nav" role="navigation" aria-label="Main navigation">
         <div class="nav-logo">
-            <img src="assets/images/logo.png" alt="BILLIONAIRS" class="nav-logo-img">
+            <img src="assets/images/logo.png" alt="BILLIONAIRS luxury brand logo" class="nav-logo-img">
         </div>
         <div class="nav-actions">
-            <button class="nav-member" id="memberBtn" onclick="window.location.href='/login.html'">INNER CIRCLE</button>
-            <button class="lang-switcher" id="langBtn">EN</button>
-            <button class="nav-contact" id="contactBtn">CONTACT</button>
+            <button class="nav-member" id="memberBtn" onclick="window.location.href='/login.html'" aria-label="Access Inner Circle member login">INNER CIRCLE</button>
+            <button class="lang-switcher" id="langBtn" aria-label="Switch language between English and German">EN</button>
+            <button class="nav-contact" id="contactBtn" aria-label="Open contact information">CONTACT</button>
         </div>
     </nav>
 
     <!-- Contact Email Popup -->
-    <div id="contactPopup" class="contact-popup">
+    <div id="contactPopup" class="contact-popup" role="dialog" aria-modal="true" aria-labelledby="popup-title">
         <div class="popup-content">
-            <button class="popup-close">&times;</button>
-            <div class="popup-icon">✉</div>
-            <h3 class="popup-title">Exclusive Inquiries</h3>
+            <button class="popup-close" aria-label="Close contact dialog" aria-keyshortcuts="Escape">&times;</button>
+            <div class="popup-icon" aria-hidden="true">✉</div>
+            <h3 class="popup-title" id="popup-title">Exclusive Inquiries</h3>
             <p class="popup-description">For access requests and private consultations</p>
             <div class="email-container">
                 <span class="popup-email" id="emailText">elite@billionairs.luxury</span>
@@ -179,35 +179,35 @@
     </div>
 
     <!-- Main Container -->
-    <div id="mainContainer" class="main-container">
+    <main id="mainContainer" class="main-container" role="main" aria-label="Main content">
         
         <!-- Hero Section -->
-        <section id="heroSection" class="hero-section">
+        <section id="heroSection" class="hero-section" aria-labelledby="hero-title">
             <div class="hero-container">
                 <div class="hero-content">
                     <!-- Trust Indicators -->
-                    <div class="trust-badges">
-                        <div class="trust-item">
-                            <span class="trust-icon">🔒</span>
+                    <div class="trust-badges" role="list" aria-label="Security features">
+                        <div class="trust-item" role="listitem">
+                            <span class="trust-icon" aria-hidden="true">🔒</span>
                             <span class="trust-label">Swiss Secured</span>
                         </div>
-                        <div class="trust-separator">•</div>
-                        <div class="trust-item">
-                            <span class="trust-icon">✓</span>
+                        <div class="trust-separator" aria-hidden="true">•</div>
+                        <div class="trust-item" role="listitem">
+                            <span class="trust-icon" aria-hidden="true">✓</span>
                             <span class="trust-label">Blockchain Verified</span>
                         </div>
-                        <div class="trust-separator">•</div>
-                        <div class="trust-item">
-                            <span class="trust-icon">★</span>
+                        <div class="trust-separator" aria-hidden="true">•</div>
+                        <div class="trust-item" role="listitem">
+                            <span class="trust-icon" aria-hidden="true">★</span>
                             <span class="trust-label">Exclusive Access</span>
                         </div>
                     </div>
                     
                     <div class="brand-logo">
-                        <img src="assets/images/logo.png" alt="BILLIONAIRS" class="logo-image">
+                        <img src="assets/images/logo.png" alt="BILLIONAIRS luxury brand logo with gold lettering" class="logo-image">
                     </div>
                     
-                    <h1 class="hero-title-new">
+                    <h1 class="hero-title-new" id="hero-title">
                         <span class="title-main">BILLIONAIRS</span>
                     </h1>
                     
@@ -534,18 +534,18 @@
         </div>
 
         <!-- Minimalist Footer -->
-        <div class="minimal-footer">
-            <div class="footer-links">
-                <a href="#" class="footer-link" id="faqLink">FAQ</a>
-                <span class="footer-separator">•</span>
-                <a href="#" class="footer-link" id="legalLink">Legal Notice</a>
-                <span class="footer-separator">•</span>
-                <a href="#" class="footer-link" id="privacyLink">Privacy Policy</a>
-                <span class="footer-separator">•</span>
-                <a href="#" class="footer-link" id="termsLink">Terms & Conditions</a>
-            </div>
-            <p class="footer-copyright">© 2025 The Final Collection</p>
-        </div>
+        <footer class="minimal-footer" role="contentinfo" aria-label="Site footer">
+            <nav class="footer-links" role="navigation" aria-label="Footer navigation">
+                <a href="#" class="footer-link" id="faqLink" aria-label="Frequently asked questions">FAQ</a>
+                <span class="footer-separator" aria-hidden="true">•</span>
+                <a href="#" class="footer-link" id="legalLink" aria-label="Legal notice and imprint">Legal Notice</a>
+                <span class="footer-separator" aria-hidden="true">•</span>
+                <a href="#" class="footer-link" id="privacyLink" aria-label="Privacy policy and data protection">Privacy Policy</a>
+                <span class="footer-separator" aria-hidden="true">•</span>
+                <a href="#" class="footer-link" id="termsLink" aria-label="Terms and conditions of service">Terms & Conditions</a>
+            </nav>
+            <p class="footer-copyright">&copy; 2025 The Final Collection</p>
+        </footer>
 
         <!-- FAQ Modal -->
         <div id="faqModal" class="legal-modal">
@@ -1073,6 +1073,9 @@
 
     <!-- PWA Support -->
     <script src="assets/js/pwa.js"></script>
+
+    <!-- Accessibility (WCAG 2.1 AA) -->
+    <script src="assets/js/accessibility.js"></script>
 
     <!-- Background Sync -->
     <script src="assets/js/background-sync.js"></script>
