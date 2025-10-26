@@ -79,10 +79,10 @@ class CookieConsent {
             <div class="cookie-consent-overlay">
                 <div class="cookie-consent-container">
                     <div class="cookie-consent-header">
-                        <h3>🍪 We Respect Your Privacy</h3>
+                        <h3>We Respect Your Privacy</h3>
                     </div>
                     <div class="cookie-consent-body">
-                        <p>We use cookies and similar technologies to enhance your experience, analyze our website, and provide you with personalized content.</p>
+                        <p>We use cookies to enhance your experience, analyze site performance, and provide personalized content. Your privacy is our priority.</p>
                         
                         <div class="cookie-options">
                             <div class="cookie-category">
@@ -91,9 +91,9 @@ class CookieConsent {
                                         <input type="checkbox" id="consent-essential" checked disabled>
                                         <span class="cookie-slider"></span>
                                     </label>
-                                    <strong>Essential Cookies</strong>
+                                    <strong>Essential</strong>
                                 </div>
-                                <p class="cookie-description">Required for basic functions such as security and access management.</p>
+                                <p class="cookie-description">Required for security and access management.</p>
                             </div>
 
                             <div class="cookie-category">
@@ -102,9 +102,9 @@ class CookieConsent {
                                         <input type="checkbox" id="consent-analytics" checked>
                                         <span class="cookie-slider"></span>
                                     </label>
-                                    <strong>Analytics Cookies</strong>
+                                    <strong>Analytics</strong>
                                 </div>
-                                <p class="cookie-description">Help us understand how visitors interact with our website (Google Analytics).</p>
+                                <p class="cookie-description">Understand visitor interactions and improve performance.</p>
                             </div>
 
                             <div class="cookie-category">
@@ -113,9 +113,9 @@ class CookieConsent {
                                         <input type="checkbox" id="consent-marketing">
                                         <span class="cookie-slider"></span>
                                     </label>
-                                    <strong>Marketing Cookies</strong>
+                                    <strong>Marketing</strong>
                                 </div>
-                                <p class="cookie-description">Enable personalized advertising and marketing communications.</p>
+                                <p class="cookie-description">Personalized advertising and communications.</p>
                             </div>
 
                             <div class="cookie-category">
@@ -124,9 +124,9 @@ class CookieConsent {
                                         <input type="checkbox" id="consent-functional" checked>
                                         <span class="cookie-slider"></span>
                                     </label>
-                                    <strong>Functional Cookies</strong>
+                                    <strong>Functional</strong>
                                 </div>
-                                <p class="cookie-description">Store your preferences for a better user experience.</p>
+                                <p class="cookie-description">Store preferences for enhanced user experience.</p>
                             </div>
                         </div>
 
@@ -136,9 +136,9 @@ class CookieConsent {
                         </div>
                     </div>
                     <div class="cookie-consent-footer">
-                        <button id="acceptAllCookies" class="cookie-btn cookie-btn-accept">Accept All</button>
-                        <button id="acceptSelectedCookies" class="cookie-btn cookie-btn-selected">Save Selection</button>
-                        <button id="rejectAllCookies" class="cookie-btn cookie-btn-reject">Necessary Only</button>
+                        <button id="acceptAllCookies" class="cookie-btn cookie-btn-accept">ACCEPT ALL</button>
+                        <button id="acceptSelectedCookies" class="cookie-btn cookie-btn-selected">SAVE SELECTION</button>
+                        <button id="rejectAllCookies" class="cookie-btn cookie-btn-reject">NECESSARY ONLY</button>
                     </div>
                 </div>
             </div>
