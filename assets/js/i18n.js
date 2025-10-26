@@ -156,50 +156,138 @@ class I18nManager {
         const t = this.translations[this.currentLang];
         if (!t) return;
 
-        // Translate navigation buttons
-        const memberBtn = document.getElementById('memberBtn');
-        if (memberBtn && t.nav) {
-            memberBtn.textContent = this.currentLang === 'de' ? 'INNER CIRCLE' : 'INNER CIRCLE';
-        }
+        const isGerman = this.currentLang === 'de';
 
-        const contactBtn = document.getElementById('contactBtn');
-        if (contactBtn && t.nav) {
-            contactBtn.textContent = this.currentLang === 'de' ? 'KONTAKT' : 'CONTACT';
-        }
+        // Text mapping: English → German
+        const textMap = {
+            // Navigation
+            'INNER CIRCLE': 'INNER CIRCLE',
+            'CONTACT': 'KONTAKT',
+            'EN': 'DE',
+            'DE': 'EN',
+            
+            // Popup
+            'Exclusive Inquiries': 'Exklusive Anfragen',
+            'For access requests and private consultations': 'Für Zugriffsanfragen und private Beratungen',
+            'Response time: 24-48 hours': 'Antwortzeit: 24-48 Stunden',
+            'Copy': 'Kopieren',
+            'Copied!': 'Kopiert!',
+            
+            // Trust Badges
+            'Swiss Secured': 'Swiss Gesichert',
+            'Blockchain Verified': 'Blockchain Verifiziert',
+            'Exclusive Access': 'Exklusiver Zugang',
+            
+            // Hero Section
+            'BILLIONAIRS': 'BILLIONAIRS',
+            "What you're about to see can't be bought. Only accessed.": 'Was Sie gleich sehen, kann man nicht kaufen. Nur erleben.',
+            'Beyond wealth. Beyond status.': 'Jenseits von Reichtum. Jenseits von Status.',
+            'A moment that exists outside of time.': 'Ein Moment, der außerhalb der Zeit existiert.',
+            'Where time bends to those who understand its true value.': 'Wo die Zeit sich für jene beugt, die ihren wahren Wert verstehen.',
+            'I DESERVE THIS': 'ICH VERDIENE DIES',
+            "I'M NOT THERE YET": 'NOCH NICHT BEREIT',
+            'Discover what transcends everything you own': 'Entdecken Sie, was alles übertrifft, was Sie besitzen',
+            'Perhaps another time, when you\'re ready': 'Vielleicht ein andermal, wenn Sie bereit sind',
+            
+            // Payment Section
+            'THE FINAL COLLECTION': 'DIE FINALE KOLLEKTION',
+            'Access Granted': 'Zugang Gewährt',
+            'Your gateway to the extraordinary': 'Ihr Tor zum Außergewöhnlichen',
+            'One-time exclusive access': 'Einmaliger exklusiver Zugang',
+            'Lifetime membership': 'Lebenslange Mitgliedschaft',
+            'Priority concierge service': 'Prioritärer Concierge-Service',
+            'Invitation to private events': 'Einladung zu privaten Events',
+            'SECURE YOUR ACCESS': 'SICHERN SIE IHREN ZUGANG',
+            'Secured Payment by': 'Gesicherte Zahlung durch',
+            
+            // Timepiece Section
+            'The Timepiece': 'Das Zeitstück',
+            'A Moment Captured in Eternity': 'Ein Moment, eingefangen in der Ewigkeit',
+            'This is not a watch. This is a philosophy.': 'Dies ist keine Uhr. Dies ist eine Philosophie.',
+            'Crafted in the hidden workshops of time itself, this piece exists in only 7 dimensions.': 'Gefertigt in den verborgenen Werkstätten der Zeit selbst, existiert dieses Stück nur in 7 Dimensionen.',
+            'WORLD TIME': 'WELTZEIT',
+            'New York': 'New York',
+            'London': 'London',
+            'Tokyo': 'Tokyo',
+            'Dubai': 'Dubai',
+            
+            // Footer
+            'SECURED BY SWISS BANKING STANDARDS': 'GESICHERT NACH SCHWEIZER BANKENSTANDARDS',
+            'ENCRYPTED INFRASTRUCTURE': 'VERSCHLÜSSELTE INFRASTRUKTUR',
+            'ZÜRICH': 'ZÜRICH',
+            '© 2025 The Final Collection': '© 2025 Die Finale Kollektion',
+            
+            // Payment Methods
+            'Payment Methods': 'Zahlungsmethoden',
+            'Select your preferred payment method': 'Wählen Sie Ihre bevorzugte Zahlungsmethode',
+            'Credit Card': 'Kreditkarte',
+            'Bank Transfer': 'Banküberweisung',
+            'Cryptocurrency': 'Kryptowährung',
+            'Continue': 'Weiter',
+            
+            // Cookie Consent
+            'We Respect Your Privacy': 'Wir respektieren Ihre Privatsphäre',
+            'We use cookies to enhance your experience, analyze site performance, and provide personalized content. Your privacy is our priority.': 
+                'Wir verwenden Cookies, um Ihr Erlebnis zu verbessern, die Website-Leistung zu analysieren und personalisierte Inhalte bereitzustellen. Ihre Privatsphäre hat für uns Priorität.',
+            'Essential': 'Essentiell',
+            'Required for security and access management.': 'Erforderlich für Sicherheit und Zugriffsverwaltung.',
+            'Analytics': 'Analyse',
+            'Understand visitor interactions and improve performance.': 'Besucherinteraktionen verstehen und Leistung verbessern.',
+            'Marketing': 'Marketing',
+            'Personalized advertising and communications.': 'Personalisierte Werbung und Kommunikation.',
+            'Functional': 'Funktional',
+            'Store preferences for enhanced user experience.': 'Präferenzen speichern für verbesserte Benutzererfahrung.',
+            'Privacy Policy': 'Datenschutzerklärung',
+            'Cookie Policy': 'Cookie-Richtlinie',
+            'ACCEPT ALL': 'ALLE AKZEPTIEREN',
+            'SAVE SELECTION': 'AUSWAHL SPEICHERN',
+            'NECESSARY ONLY': 'NUR NOTWENDIGE'
+        };
 
-        // Translate popup titles
-        const popupTitle = document.querySelector('.popup-title');
-        if (popupTitle) {
-            popupTitle.textContent = this.currentLang === 'de' ? 'Exklusive Anfragen' : 'Exclusive Inquiries';
-        }
-
-        const popupDescription = document.querySelector('.popup-description');
-        if (popupDescription) {
-            popupDescription.textContent = this.currentLang === 'de' 
-                ? 'Für Zugriffsanfragen und private Beratungen' 
-                : 'For access requests and private consultations';
-        }
-
-        const popupFooter = document.querySelector('.popup-footer');
-        if (popupFooter) {
-            popupFooter.textContent = this.currentLang === 'de' ? 'Antwortzeit: 24-48 Stunden' : 'Response time: 24-48 hours';
-        }
-
-        // Translate copy button
-        const copyText = document.querySelector('.copy-text');
-        if (copyText) {
-            copyText.textContent = this.currentLang === 'de' ? 'Kopieren' : 'Copy';
-        }
-
-        // Translate trust badges
-        const trustLabels = document.querySelectorAll('.trust-label');
-        if (trustLabels.length >= 3) {
-            trustLabels[0].textContent = this.currentLang === 'de' ? 'Swiss Gesichert' : 'Swiss Secured';
-            trustLabels[1].textContent = this.currentLang === 'de' ? 'Blockchain Verifiziert' : 'Blockchain Verified';
-            trustLabels[2].textContent = this.currentLang === 'de' ? 'Exklusiver Zugang' : 'Exclusive Access';
-        }
+        // Apply translations by finding and replacing text content
+        this.translateTextNodes(document.body, textMap, isGerman);
 
         console.log(`✅ Auto-translation applied for: ${this.currentLang}`);
+    }
+
+    /**
+     * Recursively translate text nodes
+     * @param {Node} node - DOM node to process
+     * @param {Object} textMap - Translation mapping
+     * @param {Boolean} isGerman - True if translating to German
+     */
+    translateTextNodes(node, textMap, isGerman) {
+        // Skip script and style tags
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            const tagName = node.tagName.toLowerCase();
+            if (tagName === 'script' || tagName === 'style') {
+                return;
+            }
+        }
+
+        // Process text nodes
+        if (node.nodeType === Node.TEXT_NODE) {
+            const text = node.textContent.trim();
+            if (text) {
+                // Check if text matches any key in our map
+                for (const [english, german] of Object.entries(textMap)) {
+                    if (isGerman && text === english) {
+                        node.textContent = node.textContent.replace(english, german);
+                        break;
+                    } else if (!isGerman && text === german) {
+                        node.textContent = node.textContent.replace(german, english);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Recursively process child nodes
+        if (node.childNodes) {
+            node.childNodes.forEach(child => {
+                this.translateTextNodes(child, textMap, isGerman);
+            });
+        }
     }
 
     /**
