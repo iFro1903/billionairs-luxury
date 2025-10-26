@@ -620,11 +620,17 @@ class I18nManager {
             return;
         }
 
+        console.log('🌍 Setting up language switcher...');
+
         // Create dropdown if it doesn't exist
         let dropdown = document.getElementById('langDropdown');
         if (!dropdown) {
+            console.log('📝 Creating language dropdown...');
             dropdown = this.createLanguageDropdown();
             langBtn.parentElement.appendChild(dropdown);
+            console.log('✅ Dropdown created with', dropdown.querySelectorAll('.lang-option').length, 'languages');
+        } else {
+            console.log('♻️ Dropdown already exists');
         }
 
         // Update button text
@@ -634,7 +640,9 @@ class I18nManager {
         langBtn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            dropdown.classList.toggle('show');
+            const isShown = dropdown.classList.toggle('show');
+            console.log('🔄 Dropdown toggled:', isShown ? 'SHOWN' : 'HIDDEN');
+            console.log('📍 Dropdown position:', dropdown.getBoundingClientRect());
         });
 
         // Close dropdown when clicking outside
@@ -649,6 +657,7 @@ class I18nManager {
             option.addEventListener('click', (e) => {
                 e.preventDefault();
                 const lang = option.getAttribute('data-lang');
+                console.log('🌐 Language selected:', lang);
                 this.switchLanguage(lang);
                 dropdown.classList.remove('show');
             });
