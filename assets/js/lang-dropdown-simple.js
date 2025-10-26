@@ -16,19 +16,25 @@ function initLanguageDropdown() {
     
     console.log('✅ Language button found:', langBtn);
     
-    // Check if i18n is available
-    if (!window.i18n || typeof window.i18n.switchLanguage !== 'function') {
-        console.warn('⚠️ i18n not ready yet, waiting for i18nReady event...');
+    // Check if i18n is available and ready
+    if (!window.i18n) {
+        console.warn('⚠️ window.i18n not available, waiting for i18nReady event...');
         
         // Wait for i18n ready event
         window.addEventListener('i18nReady', () => {
-            console.log('✅ i18n ready event received!');
-            initLanguageDropdown();
+            console.log('📢 i18nReady event received, retrying initialization...');
+            setupDropdown(langBtn);
         }, { once: true });
         return;
     }
     
-    console.log('✅ i18n system ready:', window.i18n);
+    // i18n exists, set up dropdown immediately
+    console.log('✅ i18n available:', window.i18n);
+    setupDropdown(langBtn);
+}
+
+function setupDropdown(langBtn) {
+    console.log('🔧 Setting up dropdown...');
     
     // Create dropdown HTML
     const dropdownHTML = `
