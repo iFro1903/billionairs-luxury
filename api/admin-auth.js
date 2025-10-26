@@ -1,6 +1,7 @@
 import { neon } from '@neondatabase/serverless';
 import { rateLimiter } from './rate-limiter.js';
 import { verifyPassword } from '../lib/password-hash.js';
+import { captureError, captureMessage } from '../lib/sentry.js';
 
 export const config = {
     runtime: 'edge'
@@ -64,7 +65,11 @@ export default async function handler(req) {
         // Check password with Web Crypto API hash from environment variable
         const passwordHash = process.env.ADMIN_PASSWORD_HASH;
         if (!passwordHash) {
-            console.error('ADMIN_PASSWORD_HASH not set in environment variables');
+            const error = new Error('ADMIN_PASSWORD_HASH not set in environment variables');
+            console.error(error.message);
+            captureError(error, {
+                tags: { category: 'config', endpoint: 'admin-auth' }
+            });
             return new Response(JSON.stringify({ error: 'Server configuration error' }), {
                 status: 500,
                 headers: { 'Content-Type': 'application/json' }
@@ -150,6 +155,17 @@ export default async function handler(req) {
 
     } catch (error) {
         console.error('Admin auth error:', error);
+        captureError(error, {
+            tags: { 
+                category: 'authentication',
+                endpoint: 'admin-auth'
+            },
+            extra: {
+                method: req.method,
+                hasPassword: !!password,
+                hasTwoFactorCode: !!twoFactorCode
+            }
+        });
         return new Response(JSON.stringify({ error: 'Authentication failed' }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }

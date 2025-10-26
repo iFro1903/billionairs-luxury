@@ -1,6 +1,7 @@
 // Stripe Webhook Handler - Automatically updates payment status
 import Stripe from 'stripe';
 import { neon } from '@neondatabase/serverless';
+import { captureError, captureMessage } from '../lib/sentry.js';
 
 export const config = {
     runtime: 'edge'
@@ -17,7 +18,11 @@ export default async function handler(req) {
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
     if (!webhookSecret) {
-        console.error('STRIPE_WEBHOOK_SECRET not configured');
+        const error = new Error('STRIPE_WEBHOOK_SECRET not configured');
+        console.error(error.message);
+        captureError(error, {
+            tags: { category: 'config', endpoint: 'stripe-webhook' }
+        });
         return new Response('Webhook secret not configured', { status: 500 });
     }
 
@@ -29,6 +34,13 @@ export default async function handler(req) {
         event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
     } catch (err) {
         console.error('⚠️ Webhook signature verification failed:', err.message);
+        captureError(err, {
+            tags: { 
+                category: 'webhook',
+                endpoint: 'stripe-webhook',
+                error_type: 'signature_verification'
+            }
+        });
         return new Response(`Webhook Error: ${err.message}`, { status: 400 });
     }
 
@@ -155,6 +167,17 @@ export default async function handler(req) {
 
     } catch (error) {
         console.error('❌ Webhook handler error:', error);
+        captureError(error, {
+            tags: { 
+                category: 'payment',
+                endpoint: 'stripe-webhook',
+                event_type: event?.type || 'unknown'
+            },
+            extra: {
+                event_id: event?.id,
+                stripe_account: event?.account
+            }
+        });
         return new Response(JSON.stringify({ 
             error: 'Webhook handler failed', 
             details: error.message 
