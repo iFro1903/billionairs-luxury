@@ -1,7 +1,6 @@
 // Password Reset API
 // Setzt neues Passwort mit Token
 import { neon } from '@neondatabase/serverless';
-import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 
 export const config = {
@@ -40,8 +39,12 @@ export default async function handler(request) {
 
     const sql = neon(process.env.DATABASE_URL);
 
-    // Hash den Token (wie beim Speichern)
-    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+    // Hash den Token mit Web Crypto API (Edge-kompatibel)
+    const encoder = new TextEncoder();
+    const data = encoder.encode(token);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const tokenHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
     // Finde User und Token
     const users = await sql`
