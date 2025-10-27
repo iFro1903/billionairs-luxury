@@ -115,33 +115,6 @@ test.describe('Multi-Language Support', () => {
     const langBtn = page.locator('#langBtn');
     await expect(langBtn).toContainText('DE');
   });
-    // Start with English
-    await page.context().addCookies([{
-      name: 'billionairs_lang',
-      value: 'en',
-      domain: 'www.billionairs.luxury',
-      path: '/',
-      sameSite: 'Lax'
-    }]);
-    
-    await page.goto(BASE_URL);
-    await page.waitForLoadState('networkidle');
-    
-    // Verify English is active
-    await expect(page.locator('.hero-content')).toContainText('Welcome');
-    
-    // Switch to German
-    await page.click('button[data-lang="de"]');
-    await page.waitForTimeout(500);
-    
-    // Verify German text
-    await expect(page.locator('.hero-content')).toContainText('Willkommen');
-    
-    // Check cookie updated
-    const cookies = await page.context().cookies();
-    const langCookie = cookies.find(c => c.name === 'billionairs_lang');
-    expect(langCookie.value).toBe('de');
-  });
 
   test('should translate all navigation items', async ({ page }) => {
     await page.goto(BASE_URL);
