@@ -95,6 +95,35 @@ export default async function handler(req, res) {
             console.log('⚠️ Column migration skipped (might already exist):', migrationError.message);
         }
 
+        // Create password_reset_tokens table
+        try {
+            await pool.query(`
+                CREATE TABLE IF NOT EXISTS password_reset_tokens (
+                    id SERIAL PRIMARY KEY,
+                    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                    token_hash VARCHAR(64) NOT NULL,
+                    expires_at TIMESTAMP NOT NULL,
+                    used BOOLEAN DEFAULT FALSE,
+                    created_at TIMESTAMP DEFAULT NOW(),
+                    UNIQUE(user_id)
+                )
+            `);
+            
+            await pool.query(`
+                CREATE INDEX IF NOT EXISTS idx_password_reset_tokens_hash 
+                ON password_reset_tokens(token_hash)
+            `);
+            
+            await pool.query(`
+                CREATE INDEX IF NOT EXISTS idx_password_reset_tokens_expires 
+                ON password_reset_tokens(expires_at)
+            `);
+            
+            console.log('✅ Created password_reset_tokens table');
+        } catch (resetError) {
+            console.log('⚠️ Password reset table skipped:', resetError.message);
+        }
+
         await pool.end();
 
         console.log('✅ Database tables created successfully!');
@@ -102,7 +131,7 @@ export default async function handler(req, res) {
         return res.status(200).json({
             success: true,
             message: 'Database setup complete',
-            tables: ['users', 'sessions', 'payments', 'downloads'],
+            tables: ['users', 'sessions', 'payments', 'downloads', 'password_reset_tokens'],
             columns_added: ['full_name', 'phone', 'company']
         });
 
