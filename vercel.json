@@ -4,14 +4,13 @@
   "outputDirectory": ".",
   "installCommand": "npm install --production",
   "framework": null,
-  "routes": [
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "error": [
     {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "status": 404,
-      "dest": "/404.html"
+      "src": ".*",
+      "dest": "/404.html",
+      "status": 404
     }
   ],
   "crons": [
