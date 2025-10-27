@@ -176,16 +176,81 @@ class I18nManager {
         const t = this.translations[this.currentLang];
         if (!t) return;
 
+        // Save original texts on first run (always save, regardless of language)
+        if (!this.hasInitialized) {
+            this.saveOriginalTexts(document.body);
+            this.hasInitialized = true;
+            console.log('📝 Original texts saved:', this.originalTexts.size, 'nodes');
+        }
+
         // Text mapping: English → All Languages
         const textMap = this.getTextMapForLanguage(this.currentLang);
 
-        // Recursively translate text nodes
-        this.translateTextNodes(document.body, textMap, this.currentLang !== 'en');
+        // Apply translations
+        this.applyTextTranslations(document.body, textMap);
         
-        // Mark as initialized after first translation
-        if (!this.hasInitialized) {
-            this.hasInitialized = true;
-            console.log('📝 Original texts saved for translation');
+        console.log(`✅ Translations applied for: ${this.currentLang}`);
+    }
+    
+    /**
+     * Save original text content of all text nodes
+     */
+    saveOriginalTexts(node) {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            const tagName = node.tagName.toLowerCase();
+            if (tagName === 'script' || tagName === 'style' || tagName === 'svg') {
+                return;
+            }
+        }
+
+        if (node.nodeType === Node.TEXT_NODE) {
+            const text = node.textContent.trim();
+            if (text && text.length > 1) {
+                this.originalTexts.set(node, text);
+            }
+        }
+
+        if (node.childNodes) {
+            node.childNodes.forEach(child => this.saveOriginalTexts(child));
+        }
+    }
+    
+    /**
+     * Apply translations to text nodes
+     */
+    applyTextTranslations(node, textMap) {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            const tagName = node.tagName.toLowerCase();
+            if (tagName === 'script' || tagName === 'style' || tagName === 'svg') {
+                return;
+            }
+        }
+
+        if (node.nodeType === Node.TEXT_NODE) {
+            const originalText = this.originalTexts.get(node);
+            if (originalText) {
+                // If translating to English, restore original
+                if (this.currentLang === 'en') {
+                    node.textContent = originalText;
+                } else {
+                    // Translate from original English to target language
+                    let translated = originalText;
+                    for (const [english, targetText] of Object.entries(textMap)) {
+                        if (originalText === english) {
+                            translated = targetText;
+                            break;
+                        } else if (originalText.includes(english)) {
+                            translated = originalText.replace(english, targetText);
+                            break;
+                        }
+                    }
+                    node.textContent = translated;
+                }
+            }
+        }
+
+        if (node.childNodes) {
+            node.childNodes.forEach(child => this.applyTextTranslations(child, textMap));
         }
     }
 
@@ -519,60 +584,6 @@ class I18nManager {
 
         // Return map for current language, fallback to empty if English
         return maps[lang] || {};
-    }
-
-    /**
-     * Recursively translate text nodes
-     * @param {Node} node - DOM node to process
-     * @param {Object} textMap - Translation mapping
-     * @param {Boolean} isTranslating - True if translating from English
-     */
-    translateTextNodes(node, textMap, isTranslating) {
-        // Skip script and style tags
-        if (node.nodeType === Node.ELEMENT_NODE) {
-            const tagName = node.tagName.toLowerCase();
-            if (tagName === 'script' || tagName === 'style' || tagName === 'svg') {
-                return;
-            }
-        }
-
-        // Process text nodes
-        if (node.nodeType === Node.TEXT_NODE) {
-            const text = node.textContent.trim();
-            if (text && text.length > 1) {
-                
-                // Save original text on first run
-                if (!this.hasInitialized && this.currentLang === 'en') {
-                    this.originalTexts.set(node, text);
-                }
-                
-                // Get original text if stored
-                const originalText = this.originalTexts.get(node) || text;
-                
-                if (isTranslating) {
-                    // Translating from English to target language
-                    for (const [english, translated] of Object.entries(textMap)) {
-                        // Check against original text, not current text
-                        if (originalText === english || originalText.includes(english)) {
-                            node.textContent = node.textContent.replace(originalText, translated);
-                            break;
-                        }
-                    }
-                } else {
-                    // Translating back to English
-                    if (this.originalTexts.has(node)) {
-                        node.textContent = this.originalTexts.get(node);
-                    }
-                }
-            }
-        }
-
-        // Recursively process child nodes
-        if (node.childNodes) {
-            node.childNodes.forEach(child => {
-                this.translateTextNodes(child, textMap, isTranslating);
-            });
-        }
     }
 
     /**
