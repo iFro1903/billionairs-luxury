@@ -75,6 +75,13 @@ class CookieConsent {
     showConsentBanner() {
         const banner = document.createElement('div');
         banner.id = 'cookieConsentBanner';
+        
+        // Auto-hide after 8 seconds if no interaction
+        this.autoHideTimer = setTimeout(() => {
+            console.log('🍪 Auto-hiding cookie banner after 8 seconds...');
+            this.hideConsentBanner();
+        }, 8000);
+        
         banner.innerHTML = `
             <div class="cookie-consent-overlay">
                 <div class="cookie-consent-container">
@@ -161,10 +168,20 @@ class CookieConsent {
         const acceptAllBtn = document.getElementById('acceptAllCookies');
         const acceptSelectedBtn = document.getElementById('acceptSelectedCookies');
         const rejectAllBtn = document.getElementById('rejectAllCookies');
+        
+        // Clear auto-hide timer on any interaction
+        const banner = document.getElementById('cookieConsentBanner');
+        if (banner && this.autoHideTimer) {
+            banner.addEventListener('click', () => {
+                clearTimeout(this.autoHideTimer);
+                console.log('🍪 Auto-hide cancelled by user interaction');
+            });
+        }
 
         if (acceptAllBtn) {
             acceptAllBtn.addEventListener('click', () => {
                 console.log('Accept All clicked');
+                clearTimeout(this.autoHideTimer);
                 this.acceptAll();
             });
         }
@@ -172,6 +189,7 @@ class CookieConsent {
         if (acceptSelectedBtn) {
             acceptSelectedBtn.addEventListener('click', () => {
                 console.log('Accept Selected clicked');
+                clearTimeout(this.autoHideTimer);
                 this.acceptSelected();
             });
         }
@@ -179,6 +197,7 @@ class CookieConsent {
         if (rejectAllBtn) {
             rejectAllBtn.addEventListener('click', () => {
                 console.log('Reject All clicked');
+                clearTimeout(this.autoHideTimer);
                 this.rejectAll();
             });
         }
