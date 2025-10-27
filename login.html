@@ -277,6 +277,25 @@
             color: rgba(255,255,255,0.4);
             margin-top: 0.5rem;
         }
+
+        /* Forgot Password Link Styles */
+        #forgotPasswordLink:hover {
+            color: #E8B4A0 !important;
+        }
+
+        #backToLoginLink:hover {
+            color: #E8B4A0 !important;
+        }
+
+        /* Smooth transitions for modal */
+        #forgotPasswordModal, #loginForm {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -309,8 +328,36 @@
                     <input type="password" id="loginPassword" class="form-input" required
                            style="background: rgba(0, 0, 0, 0.3) !important; color: white !important; -webkit-text-fill-color: white !important;">
                 </div>
+                
+                <div style="text-align: right; margin-bottom: 1.5rem;">
+                    <a href="#" id="forgotPasswordLink" style="color: rgba(232, 180, 160, 0.8); font-size: 13px; text-decoration: none; letter-spacing: 1px; transition: all 0.3s ease;">
+                        Passwort vergessen?
+                    </a>
+                </div>
+                
                 <button type="submit" class="submit-button">Enter</button>
             </form>
+
+            <!-- Forgot Password Modal -->
+            <div id="forgotPasswordModal" style="display: none;">
+                <h2 class="login-subtitle" style="margin-bottom: 1rem;">Passwort zurücksetzen</h2>
+                <p style="color: rgba(255, 255, 255, 0.7); font-size: 13px; margin-bottom: 1.5rem; line-height: 1.6;">
+                    Geben Sie Ihre E-Mail-Adresse ein. Wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts.
+                </p>
+                <form id="forgotPasswordForm">
+                    <div class="form-group">
+                        <label class="form-label" for="forgotEmail">E-Mail-Adresse</label>
+                        <input type="email" id="forgotEmail" class="form-input" required
+                               style="background: rgba(0, 0, 0, 0.3) !important; color: white !important; -webkit-text-fill-color: white !important;">
+                    </div>
+                    <button type="submit" class="submit-button" id="sendResetBtn">Reset-Link senden</button>
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <a href="#" id="backToLoginLink" style="color: rgba(232, 180, 160, 0.8); font-size: 13px; text-decoration: none;">
+                            ← Zurück zur Anmeldung
+                        </a>
+                    </div>
+                </form>
+            </div>
 
             <!-- Registration is only available after purchase - kept out of the public login portal -->
 
@@ -376,6 +423,57 @@
                 window.location.href = '/dashboard.html';
             }
         };
+
+        // Forgot Password Modal Toggle
+        document.getElementById('forgotPasswordLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('forgotPasswordModal').style.display = 'block';
+            hideMessages();
+        });
+
+        document.getElementById('backToLoginLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('forgotPasswordModal').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            hideMessages();
+        });
+
+        // Handle Forgot Password Submit
+        document.getElementById('forgotPasswordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideMessages();
+
+            const email = document.getElementById('forgotEmail').value;
+            const submitBtn = document.getElementById('sendResetBtn');
+
+            // Loading State
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Wird gesendet...';
+
+            try {
+                const response = await fetch('/api/forgot-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showSuccess(data.message);
+                    document.getElementById('forgotEmail').value = '';
+                } else {
+                    showError(data.error || 'Ein Fehler ist aufgetreten.');
+                }
+            } catch (error) {
+                console.error('Forgot password error:', error);
+                showError('Verbindungsfehler. Bitte versuchen Sie es erneut.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Reset-Link senden';
+            }
+        });
     </script>
 
     <!-- Initialize Particles.js -->
