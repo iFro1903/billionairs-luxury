@@ -2,9 +2,10 @@
 // Setzt neues Passwort mit Token
 import { neon } from '@neondatabase/serverless';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 export const config = {
-  runtime: 'edge'
+  runtime: 'nodejs'
 };
 
 export default async function handler(request) {
@@ -39,12 +40,8 @@ export default async function handler(request) {
 
     const sql = neon(process.env.DATABASE_URL);
 
-    // Hash den Token mit Web Crypto API (Edge-kompatibel)
-    const encoder = new TextEncoder();
-    const data = encoder.encode(token);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const tokenHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    // Hash den Token (wie beim Speichern)
+    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
 
     // Finde User und Token
     const users = await sql`

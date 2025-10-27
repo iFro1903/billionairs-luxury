@@ -1,9 +1,10 @@
 // Password Reset Request API
 // Sendet Email mit Reset-Link
 import { neon } from '@neondatabase/serverless';
+import crypto from 'crypto';
 
 export const config = {
-  runtime: 'edge'
+  runtime: 'nodejs'
 };
 
 export default async function handler(request) {
@@ -49,18 +50,9 @@ export default async function handler(request) {
 
     const user = users[0];
 
-    // Generiere sicheren Reset Token mit Web Crypto API (Edge-kompatibel)
-    const tokenArray = new Uint8Array(32);
-    crypto.getRandomValues(tokenArray);
-    const resetToken = Array.from(tokenArray, byte => byte.toString(16).padStart(2, '0')).join('');
-    
-    // Hash mit Web Crypto API
-    const encoder = new TextEncoder();
-    const data = encoder.encode(resetToken);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const resetTokenHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    
+    // Generiere sicheren Reset Token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetTokenHash = crypto.createHash('sha256').update(resetToken).digest('hex');
     const expiresAt = new Date(Date.now() + 3600000); // 1 Stunde gültig
 
     // Speichere Reset Token in Datenbank
