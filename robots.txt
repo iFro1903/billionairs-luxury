@@ -1,0 +1,30 @@
+# BILLIONAIRS LUXURY - Robots.txt
+# Only homepage is public, everything else is exclusive and private
+
+User-agent: *
+
+# Allow only homepage
+Allow: /$
+Allow: /assets/
+Allow: /manifest.json
+
+# Block everything else - Admin, API, Private Pages
+Disallow: /admin.html
+Disallow: /admin/
+Disallow: /api/
+Disallow: /privacy-policy.html
+Disallow: /terms-and-conditions.html
+Disallow: /legal-notice.html
+
+# Sitemap location (only contains homepage)
+Sitemap: https://billionairs.luxury/sitemap.xml
+
+# Block common bots that ignore robots.txt
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
