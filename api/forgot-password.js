@@ -71,14 +71,9 @@ export default async function handler(request) {
     const baseUrl = request.headers.get('origin') || 'https://billionairs.luxury';
     const resetLink = `${baseUrl}/reset-password.html?token=${resetToken}&email=${encodeURIComponent(email)}`;
 
-    // Sende Email (verwende bestehenden Email-Service)
-    const emailResponse = await fetch(`${baseUrl}/api/email-service`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        to: email,
-        subject: 'BILLIONAIRS - Passwort zurücksetzen',
-        html: `
+    // Sende Email direkt mit Resend API
+    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+    const emailHtml = `
 <!DOCTYPE html>
 <html>
 <head>
@@ -204,8 +199,9 @@ export default async function handler(request) {
   </div>
 </body>
 </html>
-        `,
-        text: `
+`;
+
+    const emailText = `
 BILLIONAIRS - Passwort zurücksetzen
 
 Hallo ${user.first_name || 'Member'},
@@ -222,13 +218,31 @@ Falls Sie diese Anfrage nicht gestellt haben, ignorieren Sie diese E-Mail.
 Bei Fragen: support@billionairs.luxury
 
 © ${new Date().getFullYear()} BILLIONAIRS
-        `
+`;
+
+    // Sende Email direkt mit Resend API
+    const emailResponse = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        from: 'BILLIONAIRS <onboarding@resend.dev>',
+        to: [email],
+        subject: 'BILLIONAIRS - Passwort zurücksetzen',
+        html: emailHtml,
+        text: emailText
       })
     });
 
+    const emailData = await emailResponse.json();
+
     if (!emailResponse.ok) {
-      console.error('Email sending failed:', await emailResponse.text());
-      throw new Error('Email konnte nicht versendet werden');
+      console.error('Resend API error:', emailData);
+      // Trotzdem Erfolg zurückgeben aus Sicherheitsgründen (Email Enumeration Prevention)
+    } else {
+      console.log('Email sent successfully. Resend ID:', emailData.id);
     }
 
     return new Response(JSON.stringify({ 
