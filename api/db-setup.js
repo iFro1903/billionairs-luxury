@@ -58,6 +58,7 @@ export default async function handler(req, res) {
             CREATE TABLE IF NOT EXISTS payments (
                 id SERIAL PRIMARY KEY,
                 user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+                stripe_payment_id VARCHAR(255) UNIQUE,
                 amount DECIMAL(10, 2) NOT NULL,
                 currency VARCHAR(10) DEFAULT 'CHF',
                 payment_method VARCHAR(50),
