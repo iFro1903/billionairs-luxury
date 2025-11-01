@@ -94,7 +94,7 @@ export default async function handler(req, res) {
             await pool.end();
             console.log(`✅ New user registered: ${email} (${memberId}) - ${firstName} ${lastName}`);
 
-            // Send Welcome Email
+            // Send Welcome Email with credentials
             try {
                 const userName = `${firstName || ''} ${lastName || ''}`.trim() || email.split('@')[0];
                 await fetch(`${getBaseUrl(req)}/api/email-service`, {
@@ -103,10 +103,12 @@ export default async function handler(req, res) {
                     body: JSON.stringify({
                         type: 'welcome',
                         to: email,
-                        userName: userName
+                        userName: userName,
+                        userEmail: email,
+                        userPassword: password  // Send plain password for initial email
                     })
                 });
-                console.log(`📧 Welcome email sent to ${email}`);
+                console.log(`📧 Premium welcome email sent to ${email} with credentials`);
             } catch (emailError) {
                 console.error('Failed to send welcome email:', emailError);
                 // Don't fail registration if email fails
