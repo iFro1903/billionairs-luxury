@@ -200,39 +200,18 @@ const templates = {
                         </td>
                     </tr>
                     
-                    <!-- Exclusive Features -->
+                    <!-- Mysterious Message -->
                     <tr>
-                        <td style="padding: 20px 40px 40px;">
-                            <div style="background: linear-gradient(135deg, rgba(232, 180, 184, 0.08), rgba(247, 202, 201, 0.03)); border-left: 4px solid #e8b4b8; border-radius: 12px; padding: 30px; margin: 0;">
-                                <h3 style="margin: 0 0 20px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 20px; color: #e8b4b8; font-weight: 700;">Your Membership Privileges:</h3>
-                                <table width="100%" cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td style="padding: 10px 0;">
-                                            <span style="margin-left: 0px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f7cac9;">Ultra-Rare Access</strong> — Limited to the discerning few</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 10px 0;">
-                                            <span style="margin-left: 0px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f7cac9;">Hidden Achievements</strong> — Unlock exclusive rewards & Easter eggs</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 10px 0;">
-                                            <span style="margin-left: 0px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f7cac9;">Global Elite Network</strong> — Connect with visionaries worldwide</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 10px 0;">
-                                            <span style="margin-left: 0px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f7cac9;">Bespoke Experiences</strong> — Curated content for the sophisticated</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 10px 0;">
-                                            <span style="color: #d4af37; font-size: 18px;">🔮</span>
-                                            <span style="margin-left: 0px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f7cac9;">Mystic Discoveries</strong> — Explore secrets hidden in plain sight</span>
-                                        </td>
-                                    </tr>
-                                </table>
+                        <td style="padding: 40px 40px 20px;">
+                            <div style="background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(232, 180, 184, 0.3); border-radius: 15px; padding: 35px 40px; text-align: center; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 2px 20px rgba(232, 180, 184, 0.1);">
+                                <p style="margin: 0 0 15px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 18px; color: #e8b4b8; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;">
+                                    Access Granted
+                                </p>
+                                <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(232, 180, 184, 0.5), transparent); margin: 20px 0;"></div>
+                                <p style="margin: 15px 0 0 0; font-size: 14px; line-height: 1.8; color: rgba(255, 255, 255, 0.75); font-style: italic; letter-spacing: 0.5px;">
+                                    Some doors remain closed until the right moment arrives.<br/>
+                                    What lies beyond is revealed only to those who enter.
+                                </p>
                             </div>
                         </td>
                     </tr>
