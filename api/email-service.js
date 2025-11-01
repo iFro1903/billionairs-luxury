@@ -56,7 +56,7 @@ async function sendEmail(to, subject, html, skipFooter = false) {
 // Email Templates
 const templates = {
     welcome: (userName, userEmail, userPassword) => ({
-        subject: '🎩 Welcome to BILLIONAIRS - Your Exclusive Access Credentials',
+        subject: 'Welcome to BILLIONAIRS - Your Exclusive Access Credentials',
         html: `
 <!DOCTYPE html>
 <html>
@@ -81,27 +81,27 @@ const templates = {
                     <!-- Gold Border Glow Effect -->
                     <tr>
                         <td style="position: relative;">
-                            <div style="position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; background: linear-gradient(135deg, #d4af37 0%, #f4e4a8 25%, #d4af37 50%, #f4e4a8 75%, #d4af37 100%); border-radius: 24px; z-index: -1;"></div>
+                            <div style="position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; background: linear-gradient(135deg, #e8b4b8 0%, #f7cac9 25%, #e8b4b8 50%, #f7cac9 75%, #e8b4b8 100%); border-radius: 24px; z-index: -1;"></div>
                         </td>
                     </tr>
                     
                     <!-- Luxury Header with Logo -->
                     <tr>
-                        <td style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(244, 228, 168, 0.05) 100%); padding: 50px 40px; text-align: center; border-bottom: 2px solid rgba(212, 175, 55, 0.4); position: relative;">
+                        <td style="background: linear-gradient(135deg, rgba(232, 180, 184, 0.15) 0%, rgba(247, 202, 201, 0.05) 100%); padding: 50px 40px; text-align: center; border-bottom: 2px solid rgba(232, 180, 184, 0.4); position: relative;">
                             <!-- Decorative Corner Elements -->
-                            <div style="position: absolute; top: 20px; left: 20px; width: 40px; height: 40px; border-top: 3px solid #d4af37; border-left: 3px solid #d4af37; opacity: 0.6;"></div>
-                            <div style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-top: 3px solid #d4af37; border-right: 3px solid #d4af37; opacity: 0.6;"></div>
+                            <div style="position: absolute; top: 20px; left: 20px; width: 40px; height: 40px; border-top: 3px solid #e8b4b8; border-left: 3px solid #e8b4b8; opacity: 0.6;"></div>
+                            <div style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-top: 3px solid #e8b4b8; border-right: 3px solid #e8b4b8; opacity: 0.6;"></div>
                             
                             <!-- Logo Image -->
-                            <img src="https://billionairs-luxury.vercel.app/assets/images/logo.png" alt="BILLIONAIRS" style="max-width: 180px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.6));" />
+                            <img src="https://billionairs-luxury.vercel.app/assets/images/logo.png" alt="BILLIONAIRS" style="max-width: 180px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 30px rgba(232, 180, 184, 0.6));" />
                             
-                            <h1 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 48px; color: #d4af37; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; text-shadow: 0 0 40px rgba(212, 175, 55, 0.5), 0 2px 4px rgba(0, 0, 0, 0.8);">
+                            <h1 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 48px; color: #e8b4b8; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; text-shadow: 0 0 40px rgba(232, 180, 184, 0.5), 0 2px 4px rgba(0, 0, 0, 0.8);">
                                 BILLIONAIRS
                             </h1>
                             <p style="margin: 15px 0 0 0; font-size: 13px; color: rgba(255, 255, 255, 0.8); letter-spacing: 4px; font-weight: 300; text-transform: uppercase;">
                                 Beyond Wealth. Beyond Status. Beyond Limits.
                             </p>
-                            <div style="width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #d4af37, transparent); margin: 20px auto 0;"></div>
+                            <div style="width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #e8b4b8, transparent); margin: 20px auto 0;"></div>
                         </td>
                     </tr>
                     
@@ -109,12 +109,12 @@ const templates = {
                     <tr>
                         <td style="padding: 50px 40px 30px; color: #ffffff;">
                             <h2 style="margin: 0 0 25px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 32px; color: #ffffff; font-weight: 700; text-align: center; line-height: 1.3;">
-                                Welcome to the <span style="color: #d4af37;">Elite Circle</span>,<br/>
-                                ${userName || 'Distinguished Member'} 🎩
+                                Welcome to the <span style="color: #e8b4b8;">Elite Circle</span>,<br/>
+                                ${userName || 'Distinguished Member'}
                             </h2>
                             
                             <p style="margin: 0 0 30px 0; font-size: 17px; line-height: 1.9; color: rgba(255, 255, 255, 0.85); text-align: center; font-weight: 300;">
-                                Congratulations. You have been granted access to the most exclusive digital sanctuary reserved for those who understand that <strong style="color: #d4af37;">true luxury is an experience</strong>, not a possession.
+                                Congratulations. You have been granted access to the most exclusive digital sanctuary reserved for those who understand that <strong style="color: #e8b4b8;">true luxury is an experience</strong>, not a possession.
                             </p>
                         </td>
                     </tr>
@@ -122,12 +122,12 @@ const templates = {
                     <!-- Premium Credentials Box -->
                     <tr>
                         <td style="padding: 0 40px 40px;">
-                            <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(244, 228, 168, 0.05) 100%); border-radius: 16px; border: 2px solid rgba(212, 175, 55, 0.4); overflow: hidden; box-shadow: 0 10px 40px rgba(212, 175, 55, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);">
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, rgba(232, 180, 184, 0.12) 0%, rgba(247, 202, 201, 0.05) 100%); border-radius: 16px; border: 2px solid rgba(232, 180, 184, 0.4); overflow: hidden; box-shadow: 0 10px 40px rgba(232, 180, 184, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);">
                                 <!-- Credentials Header -->
                                 <tr>
-                                    <td style="background: linear-gradient(90deg, rgba(212, 175, 55, 0.25), rgba(244, 228, 168, 0.15)); padding: 25px 30px; border-bottom: 1px solid rgba(212, 175, 55, 0.3);">
-                                        <h3 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 22px; color: #d4af37; font-weight: 700; letter-spacing: 1px; text-align: center;">
-                                            🔐 Your Exclusive Access Credentials
+                                    <td style="background: linear-gradient(90deg, rgba(232, 180, 184, 0.25), rgba(247, 202, 201, 0.15)); padding: 25px 30px; border-bottom: 1px solid rgba(232, 180, 184, 0.3);">
+                                        <h3 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 22px; color: #e8b4b8; font-weight: 700; letter-spacing: 1px; text-align: center;">
+                                            Your Exclusive Access Credentials
                                         </h3>
                                         <p style="margin: 8px 0 0 0; font-size: 13px; color: rgba(255, 255, 255, 0.7); text-align: center; font-weight: 300;">
                                             Guard these details with the utmost discretion
@@ -146,8 +146,8 @@ const templates = {
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 10px; padding: 18px 22px; font-family: 'Courier New', monospace; font-size: 16px; color: #ffffff; letter-spacing: 0.5px; box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);">
-                                                        <strong style="color: #f4e4a8;">${userEmail || 'your-email@example.com'}</strong>
+                                                    <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(232, 180, 184, 0.3); border-radius: 10px; padding: 18px 22px; font-family: 'Courier New', monospace; font-size: 16px; color: #ffffff; letter-spacing: 0.5px; box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);">
+                                                        <strong style="color: #f7cac9;">${userEmail || 'your-email@example.com'}</strong>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -166,8 +166,8 @@ const templates = {
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 10px; padding: 18px 22px; font-family: 'Courier New', monospace; font-size: 16px; color: #ffffff; letter-spacing: 1px; box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);">
-                                                        <strong style="color: #f4e4a8;">${userPassword || '••••••••••'}</strong>
+                                                    <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(232, 180, 184, 0.3); border-radius: 10px; padding: 18px 22px; font-family: 'Courier New', monospace; font-size: 16px; color: #ffffff; letter-spacing: 1px; box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);">
+                                                        <strong style="color: #f7cac9;">${userPassword || '••••••••••'}</strong>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -177,9 +177,9 @@ const templates = {
                                 
                                 <!-- Security Notice -->
                                 <tr>
-                                    <td style="background: rgba(212, 175, 55, 0.08); padding: 20px 30px; border-top: 1px solid rgba(212, 175, 55, 0.2);">
+                                    <td style="background: rgba(232, 180, 184, 0.08); padding: 20px 30px; border-top: 1px solid rgba(232, 180, 184, 0.2);">
                                         <p style="margin: 0; font-size: 13px; color: rgba(255, 255, 255, 0.75); line-height: 1.6; text-align: center;">
-                                            🛡️ <strong style="color: #d4af37;">Security Recommendation:</strong> Change your password upon first login.<br/>
+                                            <strong style="color: #e8b4b8;">Security Recommendation:</strong> Change your password upon first login.<br/>
                                             <span style="font-size: 12px; opacity: 0.8;">Your privacy and security are paramount to us.</span>
                                         </p>
                                     </td>
@@ -191,37 +191,33 @@ const templates = {
                     <!-- Exclusive Features -->
                     <tr>
                         <td style="padding: 20px 40px 40px;">
-                            <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(244, 228, 168, 0.03)); border-left: 4px solid #d4af37; border-radius: 12px; padding: 30px; margin: 0;">
-                                <h3 style="margin: 0 0 20px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 20px; color: #d4af37; font-weight: 700;">Your Membership Privileges:</h3>
+                            <div style="background: linear-gradient(135deg, rgba(232, 180, 184, 0.08), rgba(247, 202, 201, 0.03)); border-left: 4px solid #e8b4b8; border-radius: 12px; padding: 30px; margin: 0;">
+                                <h3 style="margin: 0 0 20px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 20px; color: #e8b4b8; font-weight: 700;">Your Membership Privileges:</h3>
                                 <table width="100%" cellpadding="0" cellspacing="0">
                                     <tr>
                                         <td style="padding: 10px 0;">
-                                            <span style="color: #d4af37; font-size: 18px;">💎</span>
-                                            <span style="margin-left: 15px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f4e4a8;">Ultra-Rare Access</strong> — Limited to the discerning few</span>
+                                            <span style="margin-left: 0px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f7cac9;">Ultra-Rare Access</strong> — Limited to the discerning few</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="padding: 10px 0;">
-                                            <span style="color: #d4af37; font-size: 18px;">🏆</span>
-                                            <span style="margin-left: 15px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f4e4a8;">Hidden Achievements</strong> — Unlock exclusive rewards & Easter eggs</span>
+                                            <span style="margin-left: 0px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f7cac9;">Hidden Achievements</strong> — Unlock exclusive rewards & Easter eggs</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="padding: 10px 0;">
-                                            <span style="color: #d4af37; font-size: 18px;">🌐</span>
-                                            <span style="margin-left: 15px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f4e4a8;">Global Elite Network</strong> — Connect with visionaries worldwide</span>
+                                            <span style="margin-left: 0px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f7cac9;">Global Elite Network</strong> — Connect with visionaries worldwide</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="padding: 10px 0;">
-                                            <span style="color: #d4af37; font-size: 18px;">🎭</span>
-                                            <span style="margin-left: 15px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f4e4a8;">Bespoke Experiences</strong> — Curated content for the sophisticated</span>
+                                            <span style="margin-left: 0px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f7cac9;">Bespoke Experiences</strong> — Curated content for the sophisticated</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="padding: 10px 0;">
                                             <span style="color: #d4af37; font-size: 18px;">🔮</span>
-                                            <span style="margin-left: 15px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f4e4a8;">Mystic Discoveries</strong> — Explore secrets hidden in plain sight</span>
+                                            <span style="margin-left: 0px; color: rgba(255, 255, 255, 0.9); font-size: 15px;"><strong style="color: #f7cac9;">Mystic Discoveries</strong> — Explore secrets hidden in plain sight</span>
                                         </td>
                                     </tr>
                                 </table>
@@ -233,22 +229,22 @@ const templates = {
                     <tr>
                         <td style="padding: 20px 40px 50px; text-align: center;">
                             <p style="margin: 0 0 25px 0; font-size: 16px; line-height: 1.7; color: rgba(255, 255, 255, 0.85); font-weight: 300;">
-                                Your journey into a world where <em style="color: #d4af37;">luxury meets mystery</em> begins now.<br/>
+                                Your journey into a world where <em style="color: #e8b4b8;">luxury meets mystery</em> begins now.<br/>
                                 Step through the gilded gates and discover what awaits beyond.
                             </p>
                             
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td align="center" style="padding: 10px 0;">
-                                        <a href="https://billionairs-luxury.vercel.app/login.html" style="display: inline-block; padding: 18px 50px; background: linear-gradient(135deg, #d4af37 0%, #f4e4a8 50%, #d4af37 100%); background-size: 200% 100%; color: #000000; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 16px; letter-spacing: 2px; text-transform: uppercase; box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3); border: 2px solid rgba(212, 175, 55, 0.8); transition: all 0.3s ease;">
-                                            ✨ Enter Your Sanctuary
+                                        <a href="https://billionairs-luxury.vercel.app/login.html" style="display: inline-block; padding: 18px 50px; background: linear-gradient(135deg, #e8b4b8 0%, #f7cac9 50%, #e8b4b8 100%); background-size: 200% 100%; color: #000000; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 16px; letter-spacing: 2px; text-transform: uppercase; box-shadow: 0 8px 25px rgba(232, 180, 184, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3); border: 2px solid rgba(232, 180, 184, 0.8); transition: all 0.3s ease;">
+                                            Enter Your Sanctuary
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td align="center" style="padding: 15px 0 0;">
                                         <p style="margin: 0; font-size: 12px; color: rgba(255, 255, 255, 0.5); font-style: italic;">
-                                            Alternative access: <a href="https://billionairs-luxury.vercel.app/dashboard" style="color: #d4af37; text-decoration: none; border-bottom: 1px solid rgba(212, 175, 55, 0.4);">Direct Dashboard Entry</a>
+                                            Alternative access: <a href="https://billionairs-luxury.vercel.app/dashboard" style="color: #e8b4b8; text-decoration: none; border-bottom: 1px solid rgba(232, 180, 184, 0.4);">Direct Dashboard Entry</a>
                                         </p>
                                     </td>
                                 </tr>
@@ -259,7 +255,7 @@ const templates = {
                     <!-- Divider Line -->
                     <tr>
                         <td style="padding: 0 40px;">
-                            <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);"></div>
+                            <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(232, 180, 184, 0.5), transparent);"></div>
                         </td>
                     </tr>
                     
@@ -268,11 +264,11 @@ const templates = {
                         <td style="background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.4)); padding: 40px 40px 50px; text-align: center;">
                             <!-- Decorative Bottom Corners -->
                             <div style="position: relative;">
-                                <div style="position: absolute; bottom: 20px; left: 20px; width: 40px; height: 40px; border-bottom: 3px solid #d4af37; border-left: 3px solid #d4af37; opacity: 0.6;"></div>
-                                <div style="position: absolute; bottom: 20px; right: 20px; width: 40px; height: 40px; border-bottom: 3px solid #d4af37; border-right: 3px solid #d4af37; opacity: 0.6;"></div>
+                                <div style="position: absolute; bottom: 20px; left: 20px; width: 40px; height: 40px; border-bottom: 3px solid #e8b4b8; border-left: 3px solid #e8b4b8; opacity: 0.6;"></div>
+                                <div style="position: absolute; bottom: 20px; right: 20px; width: 40px; height: 40px; border-bottom: 3px solid #e8b4b8; border-right: 3px solid #e8b4b8; opacity: 0.6;"></div>
                             </div>
                             
-                            <p style="margin: 0 0 8px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 16px; color: #d4af37; font-weight: 700; letter-spacing: 3px;">
+                            <p style="margin: 0 0 8px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 16px; color: #e8b4b8; font-weight: 700; letter-spacing: 3px;">
                                 BILLIONAIRS
                             </p>
                             <p style="margin: 0 0 20px 0; font-size: 11px; color: rgba(255, 255, 255, 0.5); letter-spacing: 2px; text-transform: uppercase;">
@@ -280,15 +276,15 @@ const templates = {
                             </p>
                             
                             <p style="margin: 0 0 15px 0; font-size: 14px; color: rgba(255, 255, 255, 0.7);">
-                                <a href="https://billionairs-luxury.vercel.app" style="color: #d4af37; text-decoration: none; border-bottom: 1px solid rgba(212, 175, 55, 0.3);">billionairs-luxury.vercel.app</a>
+                                <a href="https://billionairs-luxury.vercel.app" style="color: #e8b4b8; text-decoration: none; border-bottom: 1px solid rgba(232, 180, 184, 0.3);">billionairs-luxury.vercel.app</a>
                             </p>
                             
                             <p style="margin: 15px 0 0 0; font-size: 12px; line-height: 1.6; color: rgba(255, 255, 255, 0.5);">
                                 This email contains sensitive credentials. Do not forward.<br/>
-                                <span style="font-size: 11px;">Concierge Support: <a href="mailto:support@billionairs.luxury" style="color: #d4af37; text-decoration: none;">support@billionairs.luxury</a></span>
+                                <span style="font-size: 11px;">Concierge Support: <a href="mailto:support@billionairs.luxury" style="color: #e8b4b8; text-decoration: none;">support@billionairs.luxury</a></span>
                             </p>
                             
-                            <div style="width: 100px; height: 1px; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent); margin: 20px auto 15px;"></div>
+                            <div style="width: 100px; height: 1px; background: linear-gradient(90deg, transparent, rgba(232, 180, 184, 0.4), transparent); margin: 20px auto 15px;"></div>
                             
                             <p style="margin: 0; font-size: 10px; color: rgba(255, 255, 255, 0.4); line-height: 1.5;">
                                 © ${new Date().getFullYear()} BILLIONAIRS. All rights reserved.<br/>
