@@ -7,9 +7,9 @@
 
 class I18nManager {
     constructor() {
-        this.currentLang = 'de'; // Default language
+        this.currentLang = 'en'; // Default language (English)
         this.translations = {};
-        this.fallbackLang = 'de'; // Fallback to German (Swiss market)
+        this.fallbackLang = 'en'; // Fallback to English
         this.cookieName = 'billionairs_lang';
         this.cookieExpiry = 365; // Days
         this.supportedLangs = ['de', 'en', 'fr', 'es', 'zh', 'ar', 'it', 'ru', 'ja'];
@@ -34,7 +34,7 @@ class I18nManager {
             if (this.supportedLangs.includes(langCode)) {
                 this.currentLang = langCode;
             } else {
-                this.currentLang = 'de'; // Default to German (Swiss market)
+                this.currentLang = 'en'; // Default to English if unsupported
             }
         }
 
