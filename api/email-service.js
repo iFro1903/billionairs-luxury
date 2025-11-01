@@ -292,6 +292,123 @@ const templates = {
         `
     }),
 
+    'password-reset': (userName, resetLink) => ({
+        subject: 'BILLIONAIRS - Reset Your Password',
+        html: `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;600;700&display=swap');
+    </style>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif; background: #000000;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #1a1a1a 100%); padding: 60px 20px;">
+        <tr>
+            <td align="center">
+                <table width="650" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, rgba(15, 15, 25, 0.98) 0%, rgba(25, 25, 40, 0.98) 100%); border-radius: 24px; border: 3px solid rgba(232, 180, 184, 0.5); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8); overflow: hidden;">
+                    
+                    <!-- Header with Logo -->
+                    <tr>
+                        <td style="padding: 50px 40px 30px; text-align: center; background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(10, 10, 10, 0.8)); position: relative;">
+                            <div style="position: absolute; top: 20px; left: 20px; width: 50px; height: 50px; border-top: 4px solid #e8b4b8; border-left: 4px solid #e8b4b8; opacity: 0.6;"></div>
+                            <div style="position: absolute; top: 20px; right: 20px; width: 50px; height: 50px; border-top: 4px solid #e8b4b8; border-right: 4px solid #e8b4b8; opacity: 0.6;"></div>
+                            
+                            <img src="https://billionairs-luxury.vercel.app/assets/images/logo.png" alt="BILLIONAIRS" style="width: 80px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 4px 12px rgba(232, 180, 184, 0.4));" />
+                            
+                            <h1 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 36px; font-weight: 900; color: #e8b4b8; letter-spacing: 4px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(232, 180, 184, 0.3);">
+                                BILLIONAIRS
+                            </h1>
+                            <p style="margin: 10px 0 0; font-size: 13px; color: rgba(247, 202, 201, 0.7); letter-spacing: 3px; text-transform: uppercase; font-weight: 300;">
+                                Password Reset Request
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Main Content -->
+                    <tr>
+                        <td style="padding: 40px 40px 20px; background: rgba(0, 0, 0, 0.3);">
+                            <p style="margin: 0 0 20px; font-size: 16px; line-height: 1.6; color: rgba(255, 255, 255, 0.9);">
+                                Hello <strong style="color: #e8b4b8;">${userName}</strong>,
+                            </p>
+                            <p style="margin: 0 0 25px; font-size: 15px; line-height: 1.7; color: rgba(255, 255, 255, 0.85);">
+                                We received a request to reset your password for your BILLIONAIRS account. Click the button below to create a new password:
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Reset Button -->
+                    <tr>
+                        <td style="padding: 20px 40px; text-align: center; background: rgba(0, 0, 0, 0.3);">
+                            <a href="${resetLink}" style="display: inline-block; padding: 18px 50px; background: linear-gradient(135deg, #e8b4b8 0%, #f7cac9 50%, #e8b4b8 100%); background-size: 200% 100%; color: #000000; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 16px; letter-spacing: 2px; text-transform: uppercase; box-shadow: 0 8px 25px rgba(232, 180, 184, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3); border: 2px solid rgba(232, 180, 184, 0.8);">
+                                Reset Password
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <!-- Security Info -->
+                    <tr>
+                        <td style="padding: 30px 40px; background: rgba(232, 180, 184, 0.08); border-top: 1px solid rgba(232, 180, 184, 0.2);">
+                            <div style="background: rgba(255, 193, 7, 0.1); border-left: 4px solid #FFC107; padding: 20px; margin: 0; border-radius: 8px;">
+                                <p style="margin: 0 0 10px; font-size: 14px; color: #FFC107; font-weight: 700; letter-spacing: 1px;">
+                                    ⚠️ SECURITY NOTICE
+                                </p>
+                                <p style="margin: 0; font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.75);">
+                                    • This link expires in <strong style="color: #e8b4b8;">1 hour</strong><br/>
+                                    • Link can only be used <strong style="color: #e8b4b8;">once</strong><br/>
+                                    • If you didn't request this, ignore this email<br/>
+                                    • Never share this link with anyone
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Alternative Link -->
+                    <tr>
+                        <td style="padding: 20px 40px; background: rgba(0, 0, 0, 0.3);">
+                            <p style="margin: 0 0 10px; font-size: 12px; color: rgba(255, 255, 255, 0.6);">
+                                If the button doesn't work, copy and paste this link:
+                            </p>
+                            <p style="margin: 0; font-size: 11px; word-break: break-all; color: #e8b4b8;">
+                                ${resetLink}
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Divider -->
+                    <tr>
+                        <td style="padding: 0 40px;">
+                            <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(232, 180, 184, 0.5), transparent);"></div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding: 40px; text-align: center; background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.4));">
+                            <p style="margin: 0 0 8px; font-family: 'Playfair Display', Georgia, serif; font-size: 16px; color: #e8b4b8; font-weight: 700; letter-spacing: 3px;">
+                                BILLIONAIRS
+                            </p>
+                            <p style="margin: 0 0 15px; font-size: 11px; color: rgba(255, 255, 255, 0.5); letter-spacing: 2px; text-transform: uppercase;">
+                                Exclusive Luxury Platform
+                            </p>
+                            <p style="margin: 0; font-size: 11px; color: rgba(255, 255, 255, 0.4); line-height: 1.6;">
+                                © ${new Date().getFullYear()} BILLIONAIRS. All rights reserved.<br/>
+                                This is an automated message. Please do not reply.
+                            </p>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+        `
+    }),
+
     easterEggUnlock: (userName, eggName, eggDescription) => ({
         subject: `🎁 Achievement Unlocked: ${eggName}`,
         html: `
@@ -545,6 +662,9 @@ export default async function handler(req) {
         switch (type) {
             case 'welcome':
                 template = templates.welcome(data.userName, data.userEmail, data.userPassword);
+                break;
+            case 'password-reset':
+                template = templates['password-reset'](data.userName, data.resetLink);
                 break;
             case 'easterEgg':
                 template = templates.easterEggUnlock(data.userName, data.eggName, data.eggDescription);
