@@ -227,7 +227,7 @@ const templates = {
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td align="center" style="padding: 10px 0;">
-                                        <a href="https://billionairs-luxury.vercel.app/login.html" style="display: inline-block; padding: 18px 50px; background: linear-gradient(135deg, #e8b4b8 0%, #f7cac9 50%, #e8b4b8 100%); background-size: 200% 100%; color: #000000; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 16px; letter-spacing: 2px; text-transform: uppercase; box-shadow: 0 8px 25px rgba(232, 180, 184, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3); border: 2px solid rgba(232, 180, 184, 0.8); transition: all 0.3s ease;">
+                                        <a href="https://www.billionairs.luxury/login.html" style="display: inline-block; padding: 18px 50px; background: linear-gradient(135deg, #e8b4b8 0%, #f7cac9 50%, #e8b4b8 100%); background-size: 200% 100%; color: #000000; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 16px; letter-spacing: 2px; text-transform: uppercase; box-shadow: 0 8px 25px rgba(232, 180, 184, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3); border: 2px solid rgba(232, 180, 184, 0.8); transition: all 0.3s ease;">
                                             Enter Your Sanctuary
                                         </a>
                                     </td>
@@ -235,7 +235,7 @@ const templates = {
                                 <tr>
                                     <td align="center" style="padding: 15px 0 0;">
                                         <p style="margin: 0; font-size: 12px; color: rgba(255, 255, 255, 0.5); font-style: italic;">
-                                            Alternative access: <a href="https://billionairs-luxury.vercel.app/dashboard" style="color: #e8b4b8; text-decoration: none; border-bottom: 1px solid rgba(232, 180, 184, 0.4);">Direct Dashboard Entry</a>
+                                            Alternative access: <a href="https://www.billionairs.luxury/dashboard" style="color: #e8b4b8; text-decoration: none; border-bottom: 1px solid rgba(232, 180, 184, 0.4);">Direct Dashboard Entry</a>
                                         </p>
                                     </td>
                                 </tr>
