@@ -24,8 +24,8 @@ window.addEventListener('i18nReady', () => {
     dropdown.id = 'langDropdownSimple';
     dropdown.className = 'language-dropdown';
     dropdown.innerHTML = `
-        <a href="#" data-lang="de"> Deutsch</a>
         <a href="#" data-lang="en"> English</a>
+        <a href="#" data-lang="de"> Deutsch</a>
         <a href="#" data-lang="fr"> Français</a>
         <a href="#" data-lang="es"> Español</a>
         <a href="#" data-lang="zh"> 中文</a>

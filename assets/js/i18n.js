@@ -12,7 +12,7 @@ class I18nManager {
         this.fallbackLang = 'en'; // Fallback to English
         this.cookieName = 'billionairs_lang';
         this.cookieExpiry = 365; // Days
-        this.supportedLangs = ['de', 'en', 'fr', 'es', 'zh', 'ar', 'it', 'ru', 'ja'];
+        this.supportedLangs = ['en', 'de', 'fr', 'es', 'zh', 'ar', 'it', 'ru', 'ja'];
         this.rtlLangs = ['ar']; // Right-to-left languages
         this.originalTexts = new Map(); // Store original English texts
         this.hasInitialized = false; // Track if we've saved original texts
