@@ -86,6 +86,33 @@ module.exports = async (req, res) => {
 
           await pool.end();
           console.log(`✅ New user account created via Stripe Checkout: ${email} (${memberId})`);
+          
+          // Send welcome email with credentials
+          try {
+            const userName = fullName || email.split('@')[0];
+            const baseUrl = `https://${req.headers.host}`;
+            
+            const emailResponse = await fetch(`${baseUrl}/api/email-service`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                type: 'welcome',
+                to: email,
+                userName: userName,
+                userEmail: email,
+                userPassword: password
+              })
+            });
+            
+            if (emailResponse.ok) {
+              console.log(`📧 Premium welcome email sent to ${email} with credentials`);
+            } else {
+              console.error(`❌ Email sending failed: ${emailResponse.status}`);
+            }
+          } catch (emailError) {
+            console.error('❌ Email service error:', emailError.message);
+            // Don't block registration if email fails
+          }
         }
 
       } catch (dbError) {
