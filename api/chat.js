@@ -1,14 +1,11 @@
 import { neon } from '@neondatabase/serverless';
-import { withRateLimit } from '../lib/rate-limiter.js';
 
 export const config = {
     runtime: 'edge',
 };
 
 export default async function handler(req) {
-    // Rate Limiting: 100 Requests/Minute
-    return withRateLimit(req, async () => {
-        const sql = neon(process.env.DATABASE_URL);
+    const sql = neon(process.env.DATABASE_URL);
 
     try {
         // GET: Load messages
@@ -60,38 +57,30 @@ export default async function handler(req) {
                 });
             }
 
-            // Get messages based on user type
+            // Get messages from last 7 days only (performance optimization)
+            // CEO can see more, regular users see limited amount
             let messages;
             
-            // Check if user is CEO (you can change this email)
+            // Check if user is CEO
             const isCEO = email === 'furkan_akaslan@hotmail.com';
             
             if (isCEO) {
-                // CEO sees ALL messages ever sent
+                // CEO sees last 30 days (more context, but still limited)
                 messages = await sql`
                     SELECT username, message, created_at, file_url, file_name, file_type
                     FROM chat_messages
+                    WHERE created_at >= NOW() - INTERVAL '30 days'
                     ORDER BY created_at DESC
-                    LIMIT 1000
+                    LIMIT 200
                 `;
             } else {
-                // Regular users only see messages since their current login session
-                // Get user's chat_opened_at timestamp (when they opened chat this session)
-                const userSession = await sql`
-                    SELECT chat_opened_at
-                    FROM users
-                    WHERE email = ${email}
-                `;
-                
-                const sessionStart = userSession[0]?.chat_opened_at || new Date();
-                
-                // Only get messages since they opened the chat in this session
+                // Regular users see last 7 days, max 100 messages
                 messages = await sql`
                     SELECT username, message, created_at, file_url, file_name, file_type
                     FROM chat_messages
-                    WHERE created_at >= ${sessionStart}
+                    WHERE created_at >= NOW() - INTERVAL '7 days'
                     ORDER BY created_at DESC
-                    LIMIT 500
+                    LIMIT 100
                 `;
             }
 
@@ -181,5 +170,4 @@ export default async function handler(req) {
             headers: { 'Content-Type': 'application/json' }
         });
     }
-    });
 }

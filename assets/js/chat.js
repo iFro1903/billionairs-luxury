@@ -497,10 +497,10 @@ class LuxuryChat {
         // Initial load to set baseline
         this.loadMessages();
         
-        // Poll for new messages every 3 seconds
+        // Poll for new messages every 5 seconds (optimized for performance)
         setInterval(() => {
             this.loadMessages();
-        }, 3000);
+        }, 5000);
     }
 }
 
