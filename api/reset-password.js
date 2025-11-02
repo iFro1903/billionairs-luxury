@@ -64,36 +64,27 @@ module.exports = async (req, res) => {
 
     console.log('Updating password for user:', user.id);
 
-    await sql`BEGIN`;
-    
-    try {
-      await sql`
-        UPDATE users 
-        SET password_hash = ${passwordHash}, 
-            updated_at = NOW() 
-        WHERE id = ${user.id}
-      `;
+    // Update password
+    await sql`
+      UPDATE users 
+      SET password_hash = ${passwordHash}, 
+          updated_at = NOW() 
+      WHERE id = ${user.id}
+    `;
 
-      await sql`
-        UPDATE password_reset_tokens 
-        SET used = true 
-        WHERE user_id = ${user.id}
-      `;
+    // Mark token as used
+    await sql`
+      UPDATE password_reset_tokens 
+      SET used = true 
+      WHERE user_id = ${user.id}
+    `;
 
-      await sql`COMMIT`;
+    console.log('Password reset successful for user:', user.id);
 
-      console.log('Password reset successful for user:', user.id);
-
-      return res.status(200).json({ 
-        success: true,
-        message: 'Passwort erfolgreich geändert. Sie können sich jetzt anmelden.' 
-      });
-
-    } catch (error) {
-      await sql`ROLLBACK`;
-      console.error('Transaction error:', error);
-      throw error;
-    }
+    return res.status(200).json({ 
+      success: true,
+      message: 'Passwort erfolgreich geändert. Sie können sich jetzt anmelden.' 
+    });
 
   } catch (error) {
     console.error('Password reset error:', error);
