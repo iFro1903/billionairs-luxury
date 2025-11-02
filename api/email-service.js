@@ -8,7 +8,7 @@ export const config = {
 };
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const FROM_EMAIL = 'BILLIONAIRS <onboarding@resend.dev>';
+const FROM_EMAIL = 'BILLIONAIRS <noreply@billionairs.luxury>';
 const TEST_MODE_EMAIL = 'furkan_akaslan@hotmail.com'; // Resend test mode restriction
 
 // Main email sending function with auto-footer
