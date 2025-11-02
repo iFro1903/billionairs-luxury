@@ -26,7 +26,19 @@ module.exports = async (req, res) => {
 
     const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
 
-    const users = await sql`SELECT u.id, u.email, prt.token_hash, prt.expires_at, prt.used FROM users u INNER JOIN password_reset_tokens prt ON u.id = prt.user_id WHERE u.email = ${email.toLowerCase()} AND prt.token_hash = ${tokenHash} LIMIT 1`;
+    console.log('Looking for token hash:', tokenHash);
+    console.log('For email:', email.toLowerCase());
+
+    const users = await sql`
+      SELECT u.id, u.email, prt.token_hash, prt.expires_at, prt.used
+      FROM users u
+      INNER JOIN password_reset_tokens prt ON u.id = prt.user_id
+      WHERE u.email = ${email.toLowerCase()}
+      AND prt.token_hash = ${tokenHash}
+      LIMIT 1
+    `;
+
+    console.log('Found users:', users.length);
 
     if (users.length === 0) {
       return res.status(400).json({ 
@@ -50,14 +62,27 @@ module.exports = async (req, res) => {
 
     const passwordHash = await bcrypt.hash(newPassword, 10);
 
+    console.log('Updating password for user:', user.id);
+
     await sql`BEGIN`;
     
     try {
-      await sql`UPDATE users SET password_hash = ${passwordHash}, updated_at = NOW() WHERE id = ${user.id}`;
+      await sql`
+        UPDATE users 
+        SET password_hash = ${passwordHash}, 
+            updated_at = NOW() 
+        WHERE id = ${user.id}
+      `;
 
-      await sql`UPDATE password_reset_tokens SET used = true WHERE user_id = ${user.id}`;
+      await sql`
+        UPDATE password_reset_tokens 
+        SET used = true 
+        WHERE user_id = ${user.id}
+      `;
 
       await sql`COMMIT`;
+
+      console.log('Password reset successful for user:', user.id);
 
       return res.status(200).json({ 
         success: true,
@@ -66,6 +91,7 @@ module.exports = async (req, res) => {
 
     } catch (error) {
       await sql`ROLLBACK`;
+      console.error('Transaction error:', error);
       throw error;
     }
 
