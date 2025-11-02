@@ -1,4 +1,5 @@
 ﻿import { neon } from '@neondatabase/serverless';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
 
 export const config = {
   runtime: 'edge',
@@ -9,6 +10,30 @@ export default async function handler(req) {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
       status: 405,
       headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  // Apply rate limiting
+  const clientIp = getClientIp(req);
+  const rateLimit = checkRateLimit(clientIp, RATE_LIMITS.PASSWORD_RESET.maxRequests, RATE_LIMITS.PASSWORD_RESET.windowMs);
+  
+  const rateLimitHeaders = {
+    'Content-Type': 'application/json',
+    'X-RateLimit-Limit': RATE_LIMITS.PASSWORD_RESET.maxRequests.toString(),
+    'X-RateLimit-Remaining': rateLimit.remaining.toString(),
+    'X-RateLimit-Reset': new Date(rateLimit.resetAt).toISOString()
+  };
+  
+  if (!rateLimit.allowed) {
+    return new Response(JSON.stringify({ 
+      error: RATE_LIMITS.PASSWORD_RESET.message,
+      retryAfter: rateLimit.retryAfter
+    }), {
+      status: 429,
+      headers: {
+        ...rateLimitHeaders,
+        'Retry-After': rateLimit.retryAfter.toString()
+      }
     });
   }
 

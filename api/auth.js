@@ -4,6 +4,7 @@
 
 import pg from 'pg';
 import { createHash } from 'crypto';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
 
 const { Pool } = pg;
 
@@ -73,6 +74,27 @@ export default async function handler(req, res) {
     }
 
     const { action, email, password, token, firstName, lastName } = req.body;
+    
+    // Apply rate limiting for auth actions
+    if (action === 'register' || action === 'login') {
+        const clientIp = getClientIp(req);
+        const rateLimit = checkRateLimit(clientIp, RATE_LIMITS.AUTH.maxRequests, RATE_LIMITS.AUTH.windowMs);
+        
+        // Add rate limit headers
+        res.setHeader('X-RateLimit-Limit', RATE_LIMITS.AUTH.maxRequests);
+        res.setHeader('X-RateLimit-Remaining', rateLimit.remaining);
+        res.setHeader('X-RateLimit-Reset', new Date(rateLimit.resetAt).toISOString());
+        
+        if (!rateLimit.allowed) {
+            res.setHeader('Retry-After', rateLimit.retryAfter);
+            return res.status(429).json({ 
+                success: false, 
+                message: RATE_LIMITS.AUTH.message,
+                retryAfter: rateLimit.retryAfter
+            });
+        }
+    }
+    
     const pool = getPool();
 
     try {
