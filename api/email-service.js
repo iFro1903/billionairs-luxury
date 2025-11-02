@@ -342,8 +342,8 @@ const templates = {
                     <!-- Reset Button -->
                     <tr>
                         <td style="padding: 20px 40px; text-align: center; background: rgba(0, 0, 0, 0.3);">
-                            <a href="${resetLink}" style="display: inline-block; padding: 18px 50px; background: linear-gradient(135deg, #e8b4b8 0%, #f7cac9 50%, #e8b4b8 100%); background-size: 200% 100%; color: #000000; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 16px; letter-spacing: 2px; text-transform: uppercase; box-shadow: 0 8px 25px rgba(232, 180, 184, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3); border: 2px solid rgba(232, 180, 184, 0.8);">
-                                Reset Password
+                            <a href="${resetLink}" style="display: inline-block; padding: 20px 55px; background: linear-gradient(135deg, #d4a59a 0%, #c9958b 100%); color: #FFFFFF; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 17px; letter-spacing: 3px; text-transform: uppercase; box-shadow: 0 10px 30px rgba(212, 165, 154, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3); border: 3px solid #e8b4b8; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">
+                                🔑 RESET PASSWORD
                             </a>
                         </td>
                     </tr>
