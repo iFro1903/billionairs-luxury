@@ -343,7 +343,7 @@ const templates = {
                     <tr>
                         <td style="padding: 20px 40px; text-align: center; background: rgba(0, 0, 0, 0.3);">
                             <a href="${resetLink}" style="display: inline-block; padding: 20px 55px; background: linear-gradient(135deg, #d4a59a 0%, #c9958b 100%); color: #FFFFFF; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 17px; letter-spacing: 3px; text-transform: uppercase; box-shadow: 0 10px 30px rgba(212, 165, 154, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3); border: 3px solid #e8b4b8; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">
-                                🔑 RESET PASSWORD
+                                RESET PASSWORD
                             </a>
                         </td>
                     </tr>
@@ -353,7 +353,7 @@ const templates = {
                         <td style="padding: 30px 40px; background: rgba(232, 180, 184, 0.08); border-top: 1px solid rgba(232, 180, 184, 0.2);">
                             <div style="background: rgba(255, 193, 7, 0.1); border-left: 4px solid #FFC107; padding: 20px; margin: 0; border-radius: 8px;">
                                 <p style="margin: 0 0 10px; font-size: 14px; color: #FFC107; font-weight: 700; letter-spacing: 1px;">
-                                    ⚠️ SECURITY NOTICE
+                                    SECURITY NOTICE
                                 </p>
                                 <p style="margin: 0; font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.75);">
                                     • This link expires in <strong style="color: #e8b4b8;">1 hour</strong><br/>

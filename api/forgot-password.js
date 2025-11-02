@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
         body: JSON.stringify({
           type: 'password-reset',
           to: email,
-          userName: user.first_name || 'Member',
+          userName: user.first_name || email,
           resetLink: resetLink
         })
       });
