@@ -8,10 +8,6 @@
     {
       "path": "/api/cron/backup-database",
       "schedule": "0 3 * * 0"
-    },
-    {
-      "path": "/api/cron/cleanup-chat",
-      "schedule": "0 3 * * *"
     }
   ],
   "headers": [
