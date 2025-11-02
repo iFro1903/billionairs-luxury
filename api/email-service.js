@@ -9,7 +9,6 @@ export const config = {
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM_EMAIL = 'BILLIONAIRS <noreply@billionairs.luxury>';
-const TEST_MODE_EMAIL = 'furkan_akaslan@hotmail.com'; // Resend test mode restriction
 
 // Main email sending function with auto-footer
 async function sendEmail(to, subject, html, skipFooter = false) {
@@ -19,16 +18,8 @@ async function sendEmail(to, subject, html, skipFooter = false) {
     }
 
     try {
-        // In test mode, redirect all emails to verified address
-        // but keep original recipient info in subject for debugging
-        let finalRecipient = to;
-        let finalSubject = subject;
-        
-        if (!to.includes('@resend.dev') && !to.includes('billionairs.luxury')) {
-            console.log(`📧 Test mode: Redirecting email from ${to} to ${TEST_MODE_EMAIL}`);
-            finalRecipient = TEST_MODE_EMAIL;
-            finalSubject = `[TEST for ${to}] ${subject}`;
-        }
+        // Domain is verified - send emails to actual recipients
+        console.log(`📧 Sending email to: ${to}`);
         
         // Add unsubscribe footer unless explicitly skipped (for transactional emails)
         let finalHtml = html;
@@ -44,8 +35,8 @@ async function sendEmail(to, subject, html, skipFooter = false) {
             },
             body: JSON.stringify({
                 from: FROM_EMAIL,
-                to: [finalRecipient],
-                subject: finalSubject,
+                to: [to],
+                subject: subject,
                 html: finalHtml
             })
         });
