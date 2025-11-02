@@ -14,9 +14,31 @@ function getBaseUrl(req) {
     return `${protocol}://${host}`;
 }
 
-// Helper function to hash passwords
-function hashPassword(password) {
-    return createHash('sha256').update(password).digest('hex');
+// Helper function to hash passwords with salt (compatible with reset-password)
+async function hashPassword(password) {
+    const salt = crypto.randomUUID();
+    const combined = salt + password;
+    const encoder = new TextEncoder();
+    const data = encoder.encode(combined);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return `${salt}$${hashHex}`;
+}
+
+// Helper function to verify password against stored hash
+async function verifyPassword(password, storedHash) {
+    const [salt, hash] = storedHash.split('$');
+    if (!salt || !hash) return false;
+    
+    const combined = salt + password;
+    const encoder = new TextEncoder();
+    const data = encoder.encode(combined);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    
+    return hashHex === hash;
 }
 
 // Helper function to generate session token
@@ -83,7 +105,7 @@ export default async function handler(req, res) {
             }
 
             // Create new user with first and last name
-            const hashedPassword = hashPassword(password);
+            const hashedPassword = await hashPassword(password);
             const memberId = generateMemberId();
             
             await pool.query(
@@ -139,9 +161,9 @@ export default async function handler(req, res) {
             }
 
             const user = userResult.rows[0];
-            const hashedPassword = hashPassword(password);
+            const isValidPassword = await verifyPassword(password, user.password_hash);
             
-            if (user.password_hash !== hashedPassword) {
+            if (!isValidPassword) {
                 await pool.end();
                 return res.status(401).json({ success: false, message: 'Invalid credentials' });
             }
