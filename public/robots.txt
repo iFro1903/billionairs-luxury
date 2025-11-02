@@ -1,0 +1,23 @@
+# robots.txt for billionairs.luxury
+
+# Allow all search engines
+User-agent: *
+
+# Public pages
+Allow: /
+Allow: /login.html
+Allow: /privacy-policy.html
+Allow: /cookie-policy.html
+
+# Block private/sensitive areas
+Disallow: /dashboard.html
+Disallow: /admin/
+Disallow: /api/
+Disallow: /assets/uploads/
+Disallow: /reset-password.html
+
+# Sitemap location
+Sitemap: https://billionairs.luxury/sitemap.xml
+
+# Crawl-delay for politeness (optional)
+Crawl-delay: 1
