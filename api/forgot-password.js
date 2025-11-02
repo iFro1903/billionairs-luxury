@@ -1,17 +1,26 @@
-﻿const { neon } = require('@neondatabase/serverless');
-const crypto = require('crypto');
+﻿import { neon } from '@neondatabase/serverless';
 
-module.exports = async (req, res) => {
+export const config = {
+  runtime: 'edge',
+};
+
+export default async function handler(req) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   try {
-    const { email } = req.body;
+    const { email } = await req.json();
 
     if (!email || !email.includes('@')) {
-      return res.status(400).json({ 
-        error: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.' 
+      return new Response(JSON.stringify({ 
+        error: 'Please enter a valid email address.' 
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
       });
     }
 
@@ -20,20 +29,37 @@ module.exports = async (req, res) => {
     const users = await sql`SELECT id, email, first_name FROM users WHERE email = ${email.toLowerCase()} LIMIT 1`;
 
     if (users.length === 0) {
-      return res.status(200).json({ 
+      return new Response(JSON.stringify({ 
         success: true,
-        message: 'Falls ein Konto mit dieser E-Mail existiert, wurde ein Reset-Link versendet.' 
+        message: 'If an account exists with this email, a reset link has been sent.' 
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
       });
     }
 
     const user = users[0];
-    const resetToken = crypto.randomBytes(32).toString('hex');
-    const resetTokenHash = crypto.createHash('sha256').update(resetToken).digest('hex');
-    const expiresAt = new Date(Date.now() + 3600000);
+    
+    // Generate reset token using Web Crypto API (Edge Runtime compatible)
+    const tokenBytes = new Uint8Array(32);
+    crypto.getRandomValues(tokenBytes);
+    const resetToken = Array.from(tokenBytes).map(b => b.toString(16).padStart(2, '0')).join('');
+    
+    // Hash token using Web Crypto API
+    const encoder = new TextEncoder();
+    const data = encoder.encode(resetToken);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const resetTokenHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    
+    const expiresAt = new Date(Date.now() + 3600000); // 1 hour
 
-    await sql`INSERT INTO password_reset_tokens (user_id, token_hash, expires_at, used) VALUES (${user.id}, ${resetTokenHash}, ${expiresAt}, false) ON CONFLICT (user_id) DO UPDATE SET token_hash = ${resetTokenHash}, expires_at = ${expiresAt}, used = false, created_at = NOW()`;
+    await sql`INSERT INTO password_reset_tokens (user_id, token_hash, expires_at, used) 
+              VALUES (${user.id}, ${resetTokenHash}, ${expiresAt}, false) 
+              ON CONFLICT (user_id) 
+              DO UPDATE SET token_hash = ${resetTokenHash}, expires_at = ${expiresAt}, used = false, created_at = NOW()`;
 
-    const baseUrl = `https://${req.headers.host}`;
+    const baseUrl = `https://${req.headers.get('host')}`;
     const resetLink = `${baseUrl}/reset-password.html?token=${resetToken}&email=${encodeURIComponent(email)}`;
 
     try {
@@ -58,16 +84,22 @@ module.exports = async (req, res) => {
       console.error('Email sending failed:', emailError.message);
     }
 
-    return res.status(200).json({ 
+    return new Response(JSON.stringify({ 
       success: true,
-      message: 'Falls ein Konto mit dieser E-Mail existiert, wurde ein Reset-Link versendet.' 
+      message: 'If an account exists with this email, a reset link has been sent.' 
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
     });
 
   } catch (error) {
     console.error('Password reset request error:', error);
-    return res.status(500).json({ 
-      error: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.',
+    return new Response(JSON.stringify({ 
+      error: 'An error occurred. Please try again later.',
       details: error.message
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
     });
   }
-};
+}
