@@ -45,6 +45,7 @@
     "@neondatabase/serverless": "^0.10.3",
     "@upstash/redis": "^1.35.6",
     "@vercel/postgres": "^0.10.0",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^17.2.3",
     "express": "^4.21.2",
     "luxon": "^3.4.4",
