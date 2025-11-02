@@ -16,6 +16,23 @@
     "cta": "Devenir membre",
     "learn_more": "En savoir plus"
   },
+  "login": {
+    "title": "Connexion",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "submit": "Se connecter",
+    "forgot_password": "Mot de passe oublié?",
+    "no_account": "Pas encore de compte?",
+    "register_link": "S'inscrire maintenant",
+    "error": "Identifiants invalides",
+    "success": "Connexion réussie!",
+    "reset_password_title": "Réinitialiser le mot de passe",
+    "reset_password_description": "Entrez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+    "email_label": "Adresse e-mail",
+    "send_reset_link": "Envoyer le lien de réinitialisation",
+    "back_to_login": "← Retour à la connexion",
+    "sending": "Envoi en cours..."
+  },
   "common": {
     "inner_circle": "CERCLE INTÉRIEUR",
     "contact": "CONTACT",

@@ -51,7 +51,13 @@
     "no_account": "Noch kein Konto?",
     "register_link": "Jetzt registrieren",
     "error": "Ungültige Anmeldedaten",
-    "success": "Erfolgreich eingeloggt!"
+    "success": "Erfolgreich eingeloggt!",
+    "reset_password_title": "Passwort zurücksetzen",
+    "reset_password_description": "Geben Sie Ihre E-Mail-Adresse ein. Wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts.",
+    "email_label": "E-Mail-Adresse",
+    "send_reset_link": "Reset-Link senden",
+    "back_to_login": "← Zurück zur Anmeldung",
+    "sending": "Wird gesendet..."
   },
   "register": {
     "title": "Registrierung",

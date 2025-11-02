@@ -16,6 +16,23 @@
     "cta": "Diventa membro",
     "learn_more": "Scopri di più"
   },
+  "login": {
+    "title": "Accedi",
+    "email": "Indirizzo email",
+    "password": "Password",
+    "submit": "Entra",
+    "forgot_password": "Password dimenticata?",
+    "no_account": "Non hai un account?",
+    "register_link": "Registrati ora",
+    "error": "Credenziali non valide",
+    "success": "Accesso riuscito!",
+    "reset_password_title": "Reimposta password",
+    "reset_password_description": "Inserisci il tuo indirizzo email e ti invieremo un link per reimpostare la tua password.",
+    "email_label": "Indirizzo email",
+    "send_reset_link": "Invia link di ripristino",
+    "back_to_login": "← Torna al login",
+    "sending": "Invio in corso..."
+  },
   "common": {
     "inner_circle": "CERCHIA INTERNA",
     "contact": "CONTATTI",
