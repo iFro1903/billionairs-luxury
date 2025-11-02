@@ -175,6 +175,7 @@
     <link rel="stylesheet" href="assets/css/payment-methods.css">
     <link rel="stylesheet" href="assets/css/language-selector.css">
     <link rel="stylesheet" href="assets/css/faq-footer.css">
+    <link rel="stylesheet" href="assets/css/mobile-nav.css">
     
     <!-- CRITICAL: Force dark background on autofill - inline to override everything -->
     <style>
@@ -224,8 +225,24 @@
             <button class="nav-member" id="memberBtn" onclick="window.location.href='/login.html'" aria-label="Access Inner Circle member login">INNER CIRCLE</button>
             <button class="lang-switcher" id="langBtn" aria-label="Switch language between English and German">EN</button>
             <button class="nav-contact" id="contactBtn" aria-label="Open contact information">CONTACT</button>
+            
+            <!-- Hamburger Menu (Mobile Only) -->
+            <button class="hamburger-menu" id="hamburgerBtn" aria-label="Open mobile menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div class="mobile-menu-content">
+            <button class="mobile-menu-item" onclick="window.location.href='/login.html'">INNER CIRCLE</button>
+            <button class="mobile-menu-item" id="mobileLangBtn">🌐 LANGUAGE</button>
+            <button class="mobile-menu-item" id="mobileContactBtn">✉ CONTACT</button>
+        </div>
+    </div>
 
     <!-- Contact Email Popup -->
     <div id="contactPopup" class="contact-popup" role="dialog" aria-modal="true" aria-labelledby="popup-title">
@@ -310,6 +327,79 @@
                     <div class="swiss-security-badge">
                         <p class="security-text">Secured by Swiss Banking Standards • Encrypted Infrastructure • Zürich</p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW: Trust & Value Section (Mixed Approach) -->
+        <section id="trustValueSection" class="trust-value-section" style="display: none;">
+            <div class="trust-value-container">
+                <div class="trust-intro">
+                    <p class="trust-tagline">
+                        Some experiences can't be explained.<br>
+                        They can only be lived.
+                    </p>
+                    
+                    <p class="trust-subtitle">
+                        Where wealth is the entry requirement. Not the achievement.
+                    </p>
+                </div>
+
+                <div class="trust-benefits">
+                    <div class="trust-benefit-card">
+                        <h4>Global Access</h4>
+                        <p>Quarterly gatherings in Monaco, Dubai, Zürich</p>
+                    </div>
+                    
+                    <div class="trust-benefit-card">
+                        <h4>Private Circle</h4>
+                        <p>47 verified UHNWIs worldwide</p>
+                    </div>
+                    
+                    <div class="trust-benefit-card">
+                        <h4>Pre-Market</h4>
+                        <p>Opportunities before they're public</p>
+                    </div>
+                    
+                    <div class="trust-benefit-card">
+                        <h4>Discretion</h4>
+                        <p>What happens here, stays here</p>
+                    </div>
+                </div>
+
+                <div class="trust-social-proof">
+                    <h3>Trusted by members across 12 countries</h3>
+                    <div class="trust-member-grid">
+                        <span>F.K. • Tech Exit • SF</span>
+                        <span>A.M. • Family Office • ZH</span>
+                        <span>Anon • Crypto OG • Dubai</span>
+                        <span>M.R. • Real Estate • London</span>
+                        <span>S.L. • Private Equity • NYC</span>
+                        <span>+ 42 others</span>
+                    </div>
+                </div>
+
+                <div class="trust-reality-check">
+                    <h3>Let's be clear:</h3>
+                    <ul>
+                        <li>No trial period</li>
+                        <li>No payment plans</li>
+                        <li>No refunds</li>
+                        <li>You either fit in, or you don't</li>
+                    </ul>
+                </div>
+
+                <div class="trust-cta-container">
+                    <button id="proceedToPaymentBtn" class="trust-proceed-button">
+                        <span class="btn-glow"></span>
+                        <span class="btn-content">
+                            <span class="btn-text-main">PROCEED TO ACCESS</span>
+                        </span>
+                    </button>
+                    
+                    <p class="trust-rejection-bait">
+                        Not ready? That's perfectly fine.
+                    </p>
                 </div>
             </div>
         </section>
@@ -1161,4 +1251,59 @@
     <script src="assets/js/faq.js"></script>
     <script src="assets/js/stripe-payment.js"></script>
     <script src="assets/js/payment-methods-new.js"></script>
+    
+    <!-- Mobile Navigation Handler -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileLangBtn = document.getElementById('mobileLangBtn');
+            const mobileContactBtn = document.getElementById('mobileContactBtn');
+            
+            // Toggle mobile menu
+            if (hamburgerBtn && mobileMenu) {
+                hamburgerBtn.addEventListener('click', () => {
+                    hamburgerBtn.classList.toggle('active');
+                    mobileMenu.classList.toggle('active');
+                    document.body.classList.toggle('mobile-menu-open');
+                });
+                
+                // Close menu when clicking menu items
+                const menuItems = mobileMenu.querySelectorAll('.mobile-menu-item');
+                menuItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        if (!item.id.includes('Lang') && !item.id.includes('Contact')) {
+                            hamburgerBtn.classList.remove('active');
+                            mobileMenu.classList.remove('active');
+                            document.body.classList.remove('mobile-menu-open');
+                        }
+                    });
+                });
+            }
+            
+            // Mobile language button
+            if (mobileLangBtn) {
+                mobileLangBtn.addEventListener('click', () => {
+                    const langBtn = document.getElementById('langBtn');
+                    if (langBtn) {
+                        langBtn.click(); // Trigger existing language dropdown
+                    }
+                });
+            }
+            
+            // Mobile contact button
+            if (mobileContactBtn) {
+                mobileContactBtn.addEventListener('click', () => {
+                    const contactBtn = document.getElementById('contactBtn');
+                    if (contactBtn) {
+                        contactBtn.click(); // Trigger existing contact popup
+                        // Close mobile menu
+                        hamburgerBtn.classList.remove('active');
+                        mobileMenu.classList.remove('active');
+                        document.body.classList.remove('mobile-menu-open');
+                    }
+                });
+            }
+        });
+    </script>
 </body>

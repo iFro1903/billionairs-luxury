@@ -127,6 +127,12 @@ class LuxuryTimepiece {
             notReadyBtn.addEventListener('click', () => this.handleNotReady());
         }
 
+        // Trust & Value Section button
+        const proceedToPaymentBtn = document.getElementById('proceedToPaymentBtn');
+        if (proceedToPaymentBtn) {
+            proceedToPaymentBtn.addEventListener('click', () => this.handleProceedToPayment());
+        }
+
         // Payment form submission
         const paymentForm = document.getElementById('paymentForm');
         if (paymentForm) {
@@ -264,16 +270,36 @@ class LuxuryTimepiece {
 
     handleProceed() {
         const heroSection = document.getElementById('heroSection');
+        const trustValueSection = document.getElementById('trustValueSection');
         
         // Remove active from hero section for smooth transition
         if (heroSection) {
             heroSection.classList.remove('active');
+            heroSection.style.display = 'none';
+        }
+        
+        // Show Trust & Value Section
+        if (trustValueSection) {
+            trustValueSection.style.display = 'flex';
+            setTimeout(() => {
+                trustValueSection.classList.add('active');
+            }, 50);
+        }
+    }
+
+    handleProceedToPayment() {
+        const trustValueSection = document.getElementById('trustValueSection');
+        
+        // Hide Trust & Value Section
+        if (trustValueSection) {
+            trustValueSection.classList.remove('active');
+            trustValueSection.style.display = 'none';
         }
         
         // Show transition screen first
         this.showTransitionScreen();
         
-        // After 1.5 seconds, show payment section - schneller!
+        // After 1.5 seconds, show payment section
         setTimeout(() => {
             this.hideTransitionScreen();
             this.showPaymentSection();
@@ -1132,5 +1158,60 @@ window.addEventListener('load', function() {
         console.log('🎯 Particles will repulse from mouse with 150px distance');
     } else {
         console.error('❌ Particles.js library not loaded');
+    }
+});
+
+// ===== HAMBURGER MENU (MOBILE ONLY) =====
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileLangBtn = document.getElementById('mobileLangBtn');
+    const mobileContactBtn = document.getElementById('mobileContactBtn');
+    const contactPopup = document.getElementById('contactPopup');
+    
+    if (hamburgerBtn && mobileMenu) {
+        // Toggle mobile menu
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            console.log('📱 Mobile menu toggled');
+        });
+        
+        // Close menu when clicking outside
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target === mobileMenu) {
+                hamburgerBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            }
+        });
+        
+        // Mobile language button - trigger desktop dropdown
+        if (mobileLangBtn) {
+            mobileLangBtn.addEventListener('click', () => {
+                // Close mobile menu
+                hamburgerBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                
+                // Trigger language dropdown
+                const langBtn = document.getElementById('langBtn');
+                if (langBtn) {
+                    langBtn.click();
+                }
+            });
+        }
+        
+        // Mobile contact button - open contact popup
+        if (mobileContactBtn) {
+            mobileContactBtn.addEventListener('click', () => {
+                // Close mobile menu
+                hamburgerBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                
+                // Open contact popup
+                if (contactPopup) {
+                    contactPopup.classList.add('active');
+                }
+            });
+        }
     }
 });
