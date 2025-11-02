@@ -2840,3 +2840,10 @@ input:-webkit-autofill::first-line {
     }
 }
 
+/* ===== MOBILE NAVIGATION FIX - Hide Desktop Items ===== */
+@media (max-width: 768px) {
+    .nav-member,
+    .nav-contact {
+        display: none !important;
+    }
+}
