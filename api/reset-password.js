@@ -3,12 +3,20 @@ const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
 module.exports = async (req, res) => {
+  // Set CORS headers
+  res.setHeader('Content-Type', 'application/json');
+  
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
     const { token, email, newPassword } = req.body;
+
+    console.log('Reset password request received');
+    console.log('Email:', email);
+    console.log('Token length:', token?.length);
+    console.log('Password length:', newPassword?.length);
 
     if (!token || !email || !newPassword) {
       return res.status(400).json({ 
