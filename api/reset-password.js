@@ -119,18 +119,15 @@ export default async function handler(req) {
     const passwordHash = await hashPassword(newPassword);
 
     console.log('Updating password for user:', user.id);
-    console.log('New password hash:', passwordHash);
 
     // Update password
-    const updateResult = await sql`
+    await sql`
       UPDATE users 
-      SET password_hash = ${passwordHash}, 
-          updated_at = NOW() 
+      SET password_hash = ${passwordHash}
       WHERE id = ${user.id}
-      RETURNING id, email
     `;
 
-    console.log('Update result:', updateResult);
+    console.log('Password updated successfully');
 
     // Mark token as used
     await sql`
