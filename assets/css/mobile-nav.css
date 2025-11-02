@@ -13,10 +13,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 2rem;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 100%);
-    backdrop-filter: blur(10px);
+    background: transparent;
+    backdrop-filter: none;
     z-index: 1000;
-    border-bottom: 1px solid rgba(232, 180, 184, 0.1);
+    border-bottom: none;
 }
 
 .nav-logo {
