@@ -1,9 +1,20 @@
 ﻿import { neon } from '@neondatabase/serverless';
-import { hashPassword } from '../lib/password-hash.js';
 
 export const config = {
   runtime: 'edge',
 };
+
+// Hash password with Web Crypto API (Edge Runtime compatible)
+async function hashPassword(password) {
+    const salt = crypto.randomUUID();
+    const combined = salt + password;
+    const encoder = new TextEncoder();
+    const data = encoder.encode(combined);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return `${salt}$${hashHex}`;
+}
 
 export default async function handler(req) {
   // Handle CORS
