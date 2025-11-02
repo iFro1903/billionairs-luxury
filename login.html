@@ -344,19 +344,19 @@
 
             <!-- Forgot Password Modal -->
             <div id="forgotPasswordModal" style="display: none;">
-                <h2 class="login-subtitle" data-i18n="login.reset_password_title" style="margin-bottom: 1rem;">Reset Password</h2>
-                <p data-i18n="login.reset_password_description" style="color: rgba(255, 255, 255, 0.7); font-size: 13px; margin-bottom: 1.5rem; line-height: 1.6;">
+                <h2 class="login-subtitle" style="margin-bottom: 1rem;">Reset Password</h2>
+                <p style="color: rgba(255, 255, 255, 0.7); font-size: 13px; margin-bottom: 1.5rem; line-height: 1.6;">
                     Enter your email address and we'll send you a link to reset your password.
                 </p>
                 <form id="forgotPasswordForm">
                     <div class="form-group">
-                        <label class="form-label" data-i18n="login.email_label" for="forgotEmail">Email Address</label>
+                        <label class="form-label" for="forgotEmail">Email Address</label>
                         <input type="email" id="forgotEmail" class="form-input" required
                                style="background: rgba(0, 0, 0, 0.3) !important; color: white !important; -webkit-text-fill-color: white !important;">
                     </div>
-                    <button type="submit" class="submit-button" id="sendResetBtn" data-i18n="login.send_reset_link">Send Reset Link</button>
+                    <button type="submit" class="submit-button" id="sendResetBtn">Send Reset Link</button>
                     <div style="text-align: center; margin-top: 1rem;">
-                        <a href="#" id="backToLoginLink" data-i18n="login.back_to_login" style="color: rgba(232, 180, 160, 0.8); font-size: 13px; text-decoration: none;">
+                        <a href="#" id="backToLoginLink" style="color: rgba(232, 180, 160, 0.8); font-size: 13px; text-decoration: none;">
                             ← Back to Login
                         </a>
                     </div>
