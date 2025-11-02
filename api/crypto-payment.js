@@ -139,10 +139,15 @@ export default async function handler(req, res) {
                 
                 console.log(`✅ Existing user requesting crypto payment: ${email} (current status: ${currentStatus})`);
                 
+                // Split full name into first and last name
+                const nameParts = fullName.trim().split(' ');
+                const firstName = nameParts[0] || '';
+                const lastName = nameParts.slice(1).join(' ') || '';
+                
                 // Update user info (in case they changed phone, name, etc.)
                 await pool.query(
-                    'UPDATE users SET full_name = COALESCE($1, full_name), phone = COALESCE($2, phone), company = COALESCE($3, company) WHERE id = $4',
-                    [fullName, phone, company || null, userId]
+                    'UPDATE users SET first_name = COALESCE($1, first_name), last_name = COALESCE($2, last_name), phone = COALESCE($3, phone), company = COALESCE($4, company) WHERE id = $5',
+                    [firstName, lastName, phone, company || null, userId]
                 );
                 
                 await pool.end();
@@ -152,9 +157,14 @@ export default async function handler(req, res) {
                 const hashedPassword = hashPassword(password);
                 const memberId = generateMemberId();
                 
+                // Split full name into first and last name
+                const nameParts = fullName.trim().split(' ');
+                const firstName = nameParts[0] || '';
+                const lastName = nameParts.slice(1).join(' ') || '';
+                
                 await pool.query(
-                    'INSERT INTO users (email, password_hash, member_id, payment_status, full_name, phone, company) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-                    [email, hashedPassword, memberId, 'pending', fullName, phone, company || null]
+                    'INSERT INTO users (email, password_hash, member_id, payment_status, first_name, last_name, phone, company) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+                    [email, hashedPassword, memberId, 'pending', firstName, lastName, phone, company || null]
                 );
 
                 await pool.end();
