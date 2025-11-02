@@ -1,17 +1,33 @@
-﻿const { neon } = require('@neondatabase/serverless');
-const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
+﻿import { neon } from '@neondatabase/serverless';
+import { hashPassword } from '../lib/password-hash.js';
 
-module.exports = async (req, res) => {
-  // Set CORS headers
-  res.setHeader('Content-Type', 'application/json');
-  
+export const config = {
+  runtime: 'edge',
+};
+
+export default async function handler(req) {
+  // Handle CORS
+  if (req.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+    });
+  }
+
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   try {
-    const { token, email, newPassword } = req.body;
+    const body = await req.json();
+    const { token, email, newPassword } = body;
 
     console.log('Reset password request received');
     console.log('Email:', email);
@@ -19,20 +35,31 @@ module.exports = async (req, res) => {
     console.log('Password length:', newPassword?.length);
 
     if (!token || !email || !newPassword) {
-      return res.status(400).json({ 
-        error: 'Token, E-Mail und neues Passwort sind erforderlich.' 
+      return new Response(JSON.stringify({ 
+        error: 'Token, email and new password are required.' 
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
     if (newPassword.length < 8) {
-      return res.status(400).json({ 
-        error: 'Passwort muss mindestens 8 Zeichen lang sein.' 
+      return new Response(JSON.stringify({ 
+        error: 'Password must be at least 8 characters long.' 
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
     const sql = neon(process.env.DATABASE_URL);
 
-    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+    // Hash token with Web Crypto API
+    const encoder = new TextEncoder();
+    const data = encoder.encode(token);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const tokenHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
     console.log('Looking for token hash:', tokenHash);
     console.log('For email:', email.toLowerCase());
@@ -49,56 +76,77 @@ module.exports = async (req, res) => {
     console.log('Found users:', users.length);
 
     if (users.length === 0) {
-      return res.status(400).json({ 
-        error: 'Ungültiger oder abgelaufener Reset-Link.' 
+      return new Response(JSON.stringify({ 
+        error: 'Invalid or expired reset link.' 
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
     const user = users[0];
 
     if (user.used) {
-      return res.status(400).json({ 
-        error: 'Dieser Reset-Link wurde bereits verwendet.' 
+      return new Response(JSON.stringify({ 
+        error: 'This reset link has already been used.' 
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
     if (new Date(user.expires_at) < new Date()) {
-      return res.status(400).json({ 
-        error: 'Dieser Reset-Link ist abgelaufen. Bitte fordern Sie einen neuen an.' 
+      return new Response(JSON.stringify({ 
+        error: 'This reset link has expired. Please request a new one.' 
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    const passwordHash = await bcrypt.hash(newPassword, 10);
+    // Hash new password with Web Crypto API
+    const passwordHash = await hashPassword(newPassword);
 
     console.log('Updating password for user:', user.id);
+    console.log('New password hash:', passwordHash);
 
     // Update password
-    await sql`
+    const updateResult = await sql`
       UPDATE users 
       SET password_hash = ${passwordHash}, 
           updated_at = NOW() 
       WHERE id = ${user.id}
+      RETURNING id, email
     `;
+
+    console.log('Update result:', updateResult);
 
     // Mark token as used
     await sql`
       UPDATE password_reset_tokens 
       SET used = true 
-      WHERE user_id = ${user.id}
+      WHERE user_id = ${user.id} 
+      AND token_hash = ${tokenHash}
     `;
 
     console.log('Password reset successful for user:', user.id);
 
-    return res.status(200).json({ 
+    return new Response(JSON.stringify({ 
       success: true,
-      message: 'Passwort erfolgreich geändert. Sie können sich jetzt anmelden.' 
+      message: 'Password successfully changed. You can now log in.' 
+    }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
     });
 
   } catch (error) {
     console.error('Password reset error:', error);
-    return res.status(500).json({ 
-      error: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.',
+    return new Response(JSON.stringify({ 
+      error: 'An error occurred. Please try again later.',
       details: error.message
+    }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
     });
   }
-};
+}
