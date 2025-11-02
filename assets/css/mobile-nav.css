@@ -96,16 +96,17 @@
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.98) 0%, rgba(20, 20, 20, 0.98) 100%);
     backdrop-filter: blur(20px);
     z-index: 10000;
-    display: none;
+    display: flex;
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .mobile-menu-overlay.active {
-    display: flex;
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 
 .mobile-menu-content {

@@ -1171,9 +1171,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (hamburgerBtn && mobileMenu) {
         // Toggle mobile menu
-        hamburgerBtn.addEventListener('click', () => {
+        hamburgerBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             hamburgerBtn.classList.toggle('active');
             mobileMenu.classList.toggle('active');
+            
+            // Block body scroll when menu is open
+            if (mobileMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+            
             console.log('📱 Mobile menu toggled');
         });
         
@@ -1182,30 +1191,37 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target === mobileMenu) {
                 hamburgerBtn.classList.remove('active');
                 mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
             }
         });
         
         // Mobile language button - trigger desktop dropdown
         if (mobileLangBtn) {
-            mobileLangBtn.addEventListener('click', () => {
+            mobileLangBtn.addEventListener('click', (e) => {
+                e.preventDefault();
                 // Close mobile menu
                 hamburgerBtn.classList.remove('active');
                 mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
                 
                 // Trigger language dropdown
-                const langBtn = document.getElementById('langBtn');
-                if (langBtn) {
-                    langBtn.click();
-                }
+                setTimeout(() => {
+                    const langBtn = document.getElementById('langBtn');
+                    if (langBtn) {
+                        langBtn.click();
+                    }
+                }, 100);
             });
         }
         
         // Mobile contact button - open contact popup
         if (mobileContactBtn) {
-            mobileContactBtn.addEventListener('click', () => {
+            mobileContactBtn.addEventListener('click', (e) => {
+                e.preventDefault();
                 // Close mobile menu
                 hamburgerBtn.classList.remove('active');
                 mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
                 
                 // Open contact popup
                 if (contactPopup) {
