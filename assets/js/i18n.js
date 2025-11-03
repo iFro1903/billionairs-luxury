@@ -305,6 +305,11 @@ class I18nManager {
                 'Swiss Secured': 'Sécurisé Suisse',
                 'Blockchain Verified': 'Vérifié Blockchain',
                 'Exclusive Access': 'Accès Exclusif',
+                
+                // Trust Section
+                "Some experiences can't be explained.<br>They can only be lived.": 'Certaines expériences ne peuvent être expliquées.<br>Elles ne peuvent qu\'être vécues.',
+                "Where wealth is the entry requirement. Not the achievement.": 'Où la richesse est la condition d\'entrée. Pas l\'accomplissement.',
+                
                 "What you're about to see can't be bought. Only accessed.": 'Ce que vous êtes sur le point de voir ne peut pas être acheté. Seulement accédé.',
                 'Beyond wealth. Beyond status.': 'Au-delà de la richesse. Au-delà du statut.',
                 'A moment that exists outside of time.': 'Un moment qui existe en dehors du temps.',
@@ -345,6 +350,11 @@ class I18nManager {
                 'Swiss Secured': 'Seguridad Suiza',
                 'Blockchain Verified': 'Verificado Blockchain',
                 'Exclusive Access': 'Acceso Exclusivo',
+                
+                // Trust Section
+                "Some experiences can't be explained.<br>They can only be lived.": 'Algunas experiencias no se pueden explicar.<br>Solo se pueden vivir.',
+                "Where wealth is the entry requirement. Not the achievement.": 'Donde la riqueza es el requisito de entrada. No el logro.',
+                
                 "What you're about to see can't be bought. Only accessed.": 'Lo que está a punto de ver no se puede comprar. Solo acceder.',
                 'Beyond wealth. Beyond status.': 'Más allá de la riqueza. Más allá del estatus.',
                 'A moment that exists outside of time.': 'Un momento que existe fuera del tiempo.',
