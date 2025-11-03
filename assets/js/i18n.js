@@ -22,11 +22,17 @@ class I18nManager {
      * Initialize i18n system
      */
     async init() {
-        // ALWAYS start with English - ignore saved language and browser language
-        this.currentLang = 'en';
+        // Check for saved language preference first
+        const savedLang = this.getCookie(this.cookieName);
         
-        // Clear any saved language preference to force English
-        this.setCookie(this.cookieName, 'en', 365);
+        if (savedLang && this.languages[savedLang]) {
+            // Use saved language if valid
+            this.currentLang = savedLang;
+        } else {
+            // Default to English for first-time visitors
+            this.currentLang = 'en';
+            this.setCookie(this.cookieName, 'en', 365);
+        }
 
         // Load translation files
         await this.loadTranslations();
@@ -262,7 +268,8 @@ class I18nManager {
                 'Exclusive Access': 'Exklusiver Zugang',
                 
                 // Trust Section
-                "Some experiences can't be explained.<br>They can only be lived.": 'Manche Erlebnisse lassen sich nicht erklären.<br>Sie können nur erlebt werden.',
+                "Some experiences can't be explained.": 'Manche Erlebnisse lassen sich nicht erklären.',
+                "They can only be lived.": 'Sie können nur erlebt werden.',
                 "Where wealth is the entry requirement. Not the achievement.": 'Wo Reichtum die Eintrittsbedingung ist. Nicht die Errungenschaft.',
                 
                 "What you're about to see can't be bought. Only accessed.": 'Was Sie gleich sehen, kann man nicht kaufen. Nur erleben.',
@@ -307,7 +314,8 @@ class I18nManager {
                 'Exclusive Access': 'Accès Exclusif',
                 
                 // Trust Section
-                "Some experiences can't be explained.<br>They can only be lived.": 'Certaines expériences ne peuvent être expliquées.<br>Elles ne peuvent qu\'être vécues.',
+                "Some experiences can't be explained.": 'Certaines expériences ne peuvent être expliquées.',
+                "They can only be lived.": 'Elles ne peuvent qu\'être vécues.',
                 "Where wealth is the entry requirement. Not the achievement.": 'Où la richesse est la condition d\'entrée. Pas l\'accomplissement.',
                 
                 "What you're about to see can't be bought. Only accessed.": 'Ce que vous êtes sur le point de voir ne peut pas être acheté. Seulement accédé.',
@@ -352,7 +360,8 @@ class I18nManager {
                 'Exclusive Access': 'Acceso Exclusivo',
                 
                 // Trust Section
-                "Some experiences can't be explained.<br>They can only be lived.": 'Algunas experiencias no se pueden explicar.<br>Solo se pueden vivir.',
+                "Some experiences can't be explained.": 'Algunas experiencias no se pueden explicar.',
+                "They can only be lived.": 'Solo se pueden vivir.',
                 "Where wealth is the entry requirement. Not the achievement.": 'Donde la riqueza es el requisito de entrada. No el logro.',
                 
                 "What you're about to see can't be bought. Only accessed.": 'Lo que está a punto de ver no se puede comprar. Solo acceder.',
@@ -397,7 +406,8 @@ class I18nManager {
                 'Exclusive Access': '专属访问',
                 
                 // Trust Section
-                "Some experiences can't be explained.<br>They can only be lived.": '有些体验无法用言语解释。<br>只能亲身体验。',
+                "Some experiences can't be explained.": '有些体验无法用言语解释。',
+                "They can only be lived.": '只能亲身体验。',
                 "Where wealth is the entry requirement. Not the achievement.": '财富是入场条件。而非成就。',
                 
                 "What you're about to see can't be bought. Only accessed.": '您即将看到的无法购买。只能访问。',
@@ -442,7 +452,8 @@ class I18nManager {
                 'Exclusive Access': 'وصول حصري',
                 
                 // Trust Section
-                "Some experiences can't be explained.<br>They can only be lived.": 'بعض التجارب لا يمكن شرحها.<br>يمكن فقط عيشها.',
+                "Some experiences can't be explained.": 'بعض التجارب لا يمكن شرحها.',
+                "They can only be lived.": 'يمكن فقط عيشها.',
                 "Where wealth is the entry requirement. Not the achievement.": 'حيث الثروة هي شرط الدخول. وليس الإنجاز.',
                 
                 "What you're about to see can't be bought. Only accessed.": 'ما أنت على وشك رؤيته لا يمكن شراؤه. يمكن الوصول إليه فقط.',
@@ -487,7 +498,8 @@ class I18nManager {
                 'Exclusive Access': 'Accesso Esclusivo',
                 
                 // Trust Section
-                "Some experiences can't be explained.<br>They can only be lived.": 'Alcune esperienze non possono essere spiegate.<br>Possono solo essere vissute.',
+                "Some experiences can't be explained.": 'Alcune esperienze non possono essere spiegate.',
+                "They can only be lived.": 'Possono solo essere vissute.',
                 "Where wealth is the entry requirement. Not the achievement.": 'Dove la ricchezza è il requisito d\'ingresso. Non il risultato.',
                 
                 "What you're about to see can't be bought. Only accessed.": 'Ciò che stai per vedere non può essere acquistato. Solo accessibile.',
@@ -532,7 +544,8 @@ class I18nManager {
                 'Exclusive Access': 'Эксклюзивный доступ',
                 
                 // Trust Section
-                "Some experiences can't be explained.<br>They can only be lived.": 'Некоторые переживания невозможно объяснить.<br>Их можно только прожить.',
+                "Some experiences can't be explained.": 'Некоторые переживания невозможно объяснить.',
+                "They can only be lived.": 'Их можно только прожить.',
                 "Where wealth is the entry requirement. Not the achievement.": 'Где богатство - это входное требование. А не достижение.',
                 
                 "What you're about to see can't be bought. Only accessed.": 'То, что вы собираетесь увидеть, нельзя купить. Только получить доступ.',
@@ -577,7 +590,8 @@ class I18nManager {
                 'Exclusive Access': '限定アクセス',
                 
                 // Trust Section
-                "Some experiences can't be explained.<br>They can only be lived.": '説明できない体験があります。<br>体験することしかできません。',
+                "Some experiences can't be explained.": '説明できない体験があります。',
+                "They can only be lived.": '体験することしかできません。',
                 "Where wealth is the entry requirement. Not the achievement.": '富は入場条件です。達成ではありません。',
                 
                 "What you're about to see can't be bought. Only accessed.": 'これからご覧になるものは購入できません。アクセスのみ可能です。',
