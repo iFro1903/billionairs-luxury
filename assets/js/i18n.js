@@ -22,6 +22,14 @@ class I18nManager {
      * Initialize i18n system
      */
     async init() {
+        // CRITICAL: Wait for next render frame to ensure ALL DOM elements are ready
+        // This prevents timing issues where text nodes aren't fully loaded yet
+        await new Promise(resolve => {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(resolve);
+            });
+        });
+        
         // CRITICAL: Save original English texts BEFORE loading any language
         // This ensures we always have the English source texts for translation
         this.saveOriginalTexts(document.body);
