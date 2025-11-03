@@ -1285,13 +1285,17 @@
 
             // Contact button - trigger desktop contact button
             contactBtn.addEventListener('click', function() {
-                const desktopContactBtn = document.getElementById('contactBtn');
-                if (desktopContactBtn) {
-                    desktopContactBtn.click();
-                }
-                // Close mobile menu
+                // Close mobile menu first
                 hamburger.classList.remove('active');
                 overlay.classList.remove('active');
+                
+                // Wait for menu to close, then trigger contact popup
+                setTimeout(function() {
+                    const desktopContactBtn = document.getElementById('contactBtn');
+                    if (desktopContactBtn) {
+                        desktopContactBtn.click();
+                    }
+                }, 300);
             });
         });
     </script>
