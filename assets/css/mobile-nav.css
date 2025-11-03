@@ -1,97 +1,191 @@
-/**
+/* ==================== MOBILE NAVIGATION ==================== *//**
+
  * BILLIONAIRS Mobile Navigation Optimization
- * Fixes overlapping elements on mobile devices
- */
 
-/* Premium Navigation Base Styles */
+/* Hide hamburger on desktop, show on mobile */ * Fixes overlapping elements on mobile devices
+
+.mobile-hamburger { */
+
+    display: none;
+
+}/* Premium Navigation Base Styles */
+
 .premium-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 2rem;
-    background: transparent;
-    backdrop-filter: none;
-    z-index: 1000;
-    border-bottom: none;
-}
 
-.nav-logo {
-    flex-shrink: 0;
+/* Hamburger button styles */    position: fixed;
+
+.mobile-hamburger {    top: 0;
+
+    background: none;    left: 0;
+
+    border: none;    right: 0;
+
+    cursor: pointer;    display: flex;
+
+    padding: 5px;    justify-content: space-between;
+
+    z-index: 999999;    align-items: center;
+
+    position: relative;    padding: 1.5rem 2rem;
+
+}    background: transparent;
+
+    backdrop-filter: none;
+
+.mobile-hamburger span {    z-index: 1000;
+
+    display: block;    border-bottom: none;
+
+    width: 25px;}
+
+    height: 3px;
+
+    background: #e8b4b8;.nav-logo {
+
+    margin: 5px 0;    flex-shrink: 0;
+
+    transition: 0.3s;}
+
 }
 
 .nav-logo-img {
-    height: 40px;
-    width: auto;
-    filter: drop-shadow(0 0 10px rgba(232, 180, 184, 0.3));
-}
 
-.nav-actions {
-    display: flex;
-    align-items: center;
+/* Hamburger animation when active */    height: 40px;
+
+.mobile-hamburger.active span:nth-child(1) {    width: auto;
+
+    transform: rotate(-45deg) translate(-5px, 6px);    filter: drop-shadow(0 0 10px rgba(232, 180, 184, 0.3));
+
+}}
+
+
+
+.mobile-hamburger.active span:nth-child(2) {.nav-actions {
+
+    opacity: 0;    display: flex;
+
+}    align-items: center;
+
     gap: 1rem;
-    position: relative;
+
+.mobile-hamburger.active span:nth-child(3) {    position: relative;
+
+    transform: rotate(45deg) translate(-5px, -6px);}
+
 }
 
 /* Navigation Buttons */
-.nav-member,
-.nav-contact,
-.lang-switcher {
-    padding: 0.6rem 1.2rem;
-    background: linear-gradient(135deg, rgba(232, 180, 184, 0.15) 0%, rgba(212, 165, 116, 0.15) 100%);
-    border: 1px solid rgba(232, 180, 184, 0.3);
-    border-radius: 50px;
-    color: rgba(255, 255, 255, 0.9);
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
+
+/* Mobile menu overlay */.nav-member,
+
+.mobile-overlay {.nav-contact,
+
+    position: fixed;.lang-switcher {
+
+    top: 0;    padding: 0.6rem 1.2rem;
+
+    left: 0;    background: linear-gradient(135deg, rgba(232, 180, 184, 0.15) 0%, rgba(212, 165, 116, 0.15) 100%);
+
+    width: 100%;    border: 1px solid rgba(232, 180, 184, 0.3);
+
+    height: 100%;    border-radius: 50px;
+
+    background: rgba(0, 0, 0, 0.98);    color: rgba(255, 255, 255, 0.9);
+
+    z-index: 999998;    font-family: 'Montserrat', sans-serif;
+
+    display: none;    font-size: 0.75rem;
+
+    flex-direction: column;    font-weight: 600;
+
+    justify-content: center;    text-transform: uppercase;
+
+    align-items: center;    letter-spacing: 0.1em;
+
+    gap: 3rem;    cursor: pointer;
+
+}    transition: all 0.3s ease;
+
     white-space: nowrap;
-}
 
-.nav-member:hover,
+.mobile-overlay.active {}
+
+    display: flex;
+
+}.nav-member:hover,
+
 .nav-contact:hover,
-.lang-switcher:hover {
-    background: linear-gradient(135deg, rgba(232, 180, 184, 0.25) 0%, rgba(212, 165, 116, 0.25) 100%);
-    border-color: rgba(232, 180, 184, 0.5);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(232, 180, 184, 0.2);
-}
 
-/* Hamburger Menu - Hidden on Desktop */
-.hamburger-menu {
-    display: none;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 30px;
-    height: 24px;
+/* Mobile menu buttons */.lang-switcher:hover {
+
+.mobile-btn {    background: linear-gradient(135deg, rgba(232, 180, 184, 0.25) 0%, rgba(212, 165, 116, 0.25) 100%);
+
+    background: rgba(255, 255, 255, 0.05);    border-color: rgba(232, 180, 184, 0.5);
+
+    border: 1px solid rgba(232, 180, 184, 0.3);    transform: translateY(-2px);
+
+    color: #ffffff;    box-shadow: 0 5px 15px rgba(232, 180, 184, 0.2);
+
+    padding: 1.5rem 3rem;}
+
+    font-size: 1.2rem;
+
+    font-weight: 600;/* Hamburger Menu - Hidden on Desktop */
+
+    letter-spacing: 2px;.hamburger-menu {
+
+    cursor: pointer;    display: none;
+
+    transition: all 0.3s ease;    flex-direction: column;
+
+    min-width: 250px;    justify-content: space-around;
+
+    text-align: center;    width: 30px;
+
+}    height: 24px;
+
     background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 999999;
-    position: relative;
+
+.mobile-btn:hover {    border: none;
+
+    background: rgba(232, 180, 184, 0.2);    cursor: pointer;
+
+    border-color: #e8b4b8;    padding: 0;
+
+    transform: scale(1.05);    z-index: 999999;
+
+}    position: relative;
+
     pointer-events: auto;
-}
 
-.hamburger-line {
-    width: 100%;
-    height: 2px;
-    background: #e8b4b8;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-}
+/* Media Query for Mobile */}
 
-/* Mobile Menu Overlay */
-.mobile-menu-overlay {
-    position: fixed;
-    top: 0;
+@media (max-width: 768px) {
+
+    /* Show hamburger on mobile */.hamburger-line {
+
+    .mobile-hamburger {    width: 100%;
+
+        display: block !important;    height: 2px;
+
+    }    background: #e8b4b8;
+
+        border-radius: 2px;
+
+    /* Hide desktop nav buttons on mobile */    transition: all 0.3s ease;
+
+    .nav-member,}
+
+    .lang-switcher,
+
+    .nav-contact {/* Mobile Menu Overlay */
+
+        display: none !important;.mobile-menu-overlay {
+
+    }    position: fixed;
+
+}    top: 0;
+
     left: 0;
     right: 0;
     bottom: 0;

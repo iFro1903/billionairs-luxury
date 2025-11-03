@@ -226,22 +226,20 @@
             <button class="lang-switcher" id="langBtn" aria-label="Switch language between English and German">EN</button>
             <button class="nav-contact" id="contactBtn" aria-label="Open contact information">CONTACT</button>
             
-            <!-- Hamburger Menu (Mobile Only) -->
-            <button class="hamburger-menu" id="hamburgerBtn" aria-label="Open mobile menu">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
+            <!-- Mobile Hamburger (only visible on mobile) -->
+            <button class="mobile-hamburger" id="mobileHamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
         </div>
     </nav>
 
     <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay" id="mobileMenu">
-        <div class="mobile-menu-content">
-            <button class="mobile-menu-item" onclick="window.location.href='/login.html'">INNER CIRCLE</button>
-            <button class="mobile-menu-item" id="mobileLangBtn">🌐 LANGUAGE</button>
-            <button class="mobile-menu-item" id="mobileContactBtn">✉ CONTACT</button>
-        </div>
+    <div class="mobile-overlay" id="mobileOverlay">
+        <button class="mobile-btn" id="mobileInnerCircle">INNER CIRCLE</button>
+        <button class="mobile-btn" id="mobileLanguage">🌐 LANGUAGE</button>
+        <button class="mobile-btn" id="mobileContact">✉ CONTACT</button>
     </div>
 
     <!-- Contact Email Popup -->
@@ -1242,6 +1240,58 @@
     <!-- Background Sync -->
     <script src="assets/js/background-sync.js"></script>
 
+    <!-- Mobile Navigation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('mobileHamburger');
+            const overlay = document.getElementById('mobileOverlay');
+            const innerCircleBtn = document.getElementById('mobileInnerCircle');
+            const languageBtn = document.getElementById('mobileLanguage');
+            const contactBtn = document.getElementById('mobileContact');
+
+            // Toggle menu
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+
+            // Close menu when clicking overlay background
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    hamburger.classList.remove('active');
+                    overlay.classList.remove('active');
+                }
+            });
+
+            // Inner Circle button
+            innerCircleBtn.addEventListener('click', function() {
+                window.location.href = '/login.html';
+            });
+
+            // Language button - trigger desktop language button
+            languageBtn.addEventListener('click', function() {
+                const desktopLangBtn = document.getElementById('langBtn');
+                if (desktopLangBtn) {
+                    desktopLangBtn.click();
+                }
+                // Close mobile menu
+                hamburger.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            // Contact button - trigger desktop contact button
+            contactBtn.addEventListener('click', function() {
+                const desktopContactBtn = document.getElementById('contactBtn');
+                if (desktopContactBtn) {
+                    desktopContactBtn.click();
+                }
+                // Close mobile menu
+                hamburger.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        });
+    </script>
+
     <!-- Push Notifications -->
     <script src="assets/js/push-notifications.js"></script>
 
@@ -1252,81 +1302,4 @@
     <script src="assets/js/stripe-payment.js"></script>
     <script src="assets/js/payment-methods-new.js"></script>
     
-    <!-- Mobile Navigation Handler -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('🍔 Mobile menu script loaded');
-            
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const mobileMenu = document.getElementById('mobileMenu');
-            const mobileLangBtn = document.getElementById('mobileLangBtn');
-            const mobileContactBtn = document.getElementById('mobileContactBtn');
-            
-            console.log('Elements found:', {
-                hamburgerBtn: !!hamburgerBtn,
-                mobileMenu: !!mobileMenu,
-                mobileLangBtn: !!mobileLangBtn,
-                mobileContactBtn: !!mobileContactBtn
-            });
-            
-            // Toggle mobile menu
-            if (hamburgerBtn && mobileMenu) {
-                hamburgerBtn.addEventListener('click', (e) => {
-                    console.log('🍔 Hamburger clicked!');
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    hamburgerBtn.classList.toggle('active');
-                    mobileMenu.classList.toggle('active');
-                    document.body.classList.toggle('mobile-menu-open');
-                    
-                    console.log('Menu state:', {
-                        hamburgerActive: hamburgerBtn.classList.contains('active'),
-                        menuActive: mobileMenu.classList.contains('active')
-                    });
-                });
-                
-                // Close menu when clicking menu items
-                const menuItems = mobileMenu.querySelectorAll('.mobile-menu-item');
-                menuItems.forEach(item => {
-                    item.addEventListener('click', () => {
-                        console.log('Menu item clicked:', item.id);
-                        if (!item.id.includes('Lang') && !item.id.includes('Contact')) {
-                            hamburgerBtn.classList.remove('active');
-                            mobileMenu.classList.remove('active');
-                            document.body.classList.remove('mobile-menu-open');
-                        }
-                    });
-                });
-            } else {
-                console.error('❌ Mobile menu elements not found!');
-            }
-            
-            // Mobile language button
-            if (mobileLangBtn) {
-                mobileLangBtn.addEventListener('click', () => {
-                    console.log('🌐 Language button clicked');
-                    const langBtn = document.getElementById('langBtn');
-                    if (langBtn) {
-                        langBtn.click(); // Trigger existing language dropdown
-                    }
-                });
-            }
-            
-            // Mobile contact button
-            if (mobileContactBtn) {
-                mobileContactBtn.addEventListener('click', () => {
-                    console.log('✉ Contact button clicked');
-                    const contactBtn = document.getElementById('contactBtn');
-                    if (contactBtn) {
-                        contactBtn.click(); // Trigger existing contact popup
-                        // Close mobile menu
-                        hamburgerBtn.classList.remove('active');
-                        mobileMenu.classList.remove('active');
-                        document.body.classList.remove('mobile-menu-open');
-                    }
-                });
-            }
-        });
-    </script>
 </body>
