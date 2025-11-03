@@ -35,13 +35,40 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.98);
+    background: linear-gradient(135deg, 
+        rgba(10, 10, 10, 0.98) 0%, 
+        rgba(20, 15, 15, 0.98) 50%, 
+        rgba(15, 10, 12, 0.98) 100%);
+    backdrop-filter: blur(30px) saturate(120%);
     z-index: 999998;
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 3rem;
+    overflow: hidden;
+}
+
+/* Subtle shine effect on overlay */
+.mobile-overlay::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle at center,
+        rgba(232, 180, 184, 0.03) 0%,
+        transparent 50%
+    );
+    animation: overlayPulse 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes overlayPulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.2); opacity: 0.6; }
 }
 
 .mobile-overlay.active {
@@ -65,6 +92,7 @@
     border-radius: 2px;
     position: relative;
     overflow: hidden;
+    z-index: 1;
 }
 
 .mobile-btn::before {
