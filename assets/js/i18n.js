@@ -395,6 +395,11 @@ class I18nManager {
                 'Swiss Secured': '瑞士安全保障',
                 'Blockchain Verified': '区块链验证',
                 'Exclusive Access': '专属访问',
+                
+                // Trust Section
+                "Some experiences can't be explained.<br>They can only be lived.": '有些体验无法用言语解释。<br>只能亲身体验。',
+                "Where wealth is the entry requirement. Not the achievement.": '财富是入场条件。而非成就。',
+                
                 "What you're about to see can't be bought. Only accessed.": '您即将看到的无法购买。只能访问。',
                 'Beyond wealth. Beyond status.': '超越财富。超越地位。',
                 'A moment that exists outside of time.': '存在于时间之外的时刻。',
@@ -435,6 +440,11 @@ class I18nManager {
                 'Swiss Secured': 'مؤمن سويسري',
                 'Blockchain Verified': 'مُصادق عليه بالبلوكشين',
                 'Exclusive Access': 'وصول حصري',
+                
+                // Trust Section
+                "Some experiences can't be explained.<br>They can only be lived.": 'بعض التجارب لا يمكن شرحها.<br>يمكن فقط عيشها.',
+                "Where wealth is the entry requirement. Not the achievement.": 'حيث الثروة هي شرط الدخول. وليس الإنجاز.',
+                
                 "What you're about to see can't be bought. Only accessed.": 'ما أنت على وشك رؤيته لا يمكن شراؤه. يمكن الوصول إليه فقط.',
                 'Beyond wealth. Beyond status.': 'ما وراء الثروة. ما وراء المكانة.',
                 'A moment that exists outside of time.': 'لحظة موجودة خارج الزمن.',
@@ -475,6 +485,11 @@ class I18nManager {
                 'Swiss Secured': 'Sicurezza Svizzera',
                 'Blockchain Verified': 'Verificato Blockchain',
                 'Exclusive Access': 'Accesso Esclusivo',
+                
+                // Trust Section
+                "Some experiences can't be explained.<br>They can only be lived.": 'Alcune esperienze non possono essere spiegate.<br>Possono solo essere vissute.',
+                "Where wealth is the entry requirement. Not the achievement.": 'Dove la ricchezza è il requisito d\'ingresso. Non il risultato.',
+                
                 "What you're about to see can't be bought. Only accessed.": 'Ciò che stai per vedere non può essere acquistato. Solo accessibile.',
                 'Beyond wealth. Beyond status.': 'Oltre la ricchezza. Oltre lo status.',
                 'A moment that exists outside of time.': 'Un momento che esiste fuori dal tempo.',
@@ -515,6 +530,11 @@ class I18nManager {
                 'Swiss Secured': 'Швейцарская безопасность',
                 'Blockchain Verified': 'Верифицировано Blockchain',
                 'Exclusive Access': 'Эксклюзивный доступ',
+                
+                // Trust Section
+                "Some experiences can't be explained.<br>They can only be lived.": 'Некоторые переживания невозможно объяснить.<br>Их можно только прожить.',
+                "Where wealth is the entry requirement. Not the achievement.": 'Где богатство - это входное требование. А не достижение.',
+                
                 "What you're about to see can't be bought. Only accessed.": 'То, что вы собираетесь увидеть, нельзя купить. Только получить доступ.',
                 'Beyond wealth. Beyond status.': 'За пределами богатства. За пределами статуса.',
                 'A moment that exists outside of time.': 'Момент, существующий вне времени.',
@@ -555,6 +575,11 @@ class I18nManager {
                 'Swiss Secured': 'スイス認証済み',
                 'Blockchain Verified': 'ブロックチェーン検証済み',
                 'Exclusive Access': '限定アクセス',
+                
+                // Trust Section
+                "Some experiences can't be explained.<br>They can only be lived.": '説明できない体験があります。<br>体験することしかできません。',
+                "Where wealth is the entry requirement. Not the achievement.": '富は入場条件です。達成ではありません。',
+                
                 "What you're about to see can't be bought. Only accessed.": 'これからご覧になるものは購入できません。アクセスのみ可能です。',
                 'Beyond wealth. Beyond status.': '富を超えて。ステータスを超えて。',
                 'A moment that exists outside of time.': '時間の外に存在する瞬間。',
