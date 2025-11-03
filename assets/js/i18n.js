@@ -22,6 +22,12 @@ class I18nManager {
      * Initialize i18n system
      */
     async init() {
+        // CRITICAL: Save original English texts BEFORE loading any language
+        // This ensures we always have the English source texts for translation
+        this.saveOriginalTexts(document.body);
+        this.hasInitialized = true;
+        console.log('📝 Original English texts saved:', this.originalTexts.size, 'nodes');
+        
         // Check for saved language preference first
         const savedLang = this.getCookie(this.cookieName);
         
@@ -37,7 +43,7 @@ class I18nManager {
         // Load translation files
         await this.loadTranslations();
 
-        // Apply translations to current page
+        // Apply translations to current page (will skip if English)
         this.applyTranslations();
 
         // Setup language switcher (DISABLED - using lang-dropdown-simple.js instead)
@@ -171,13 +177,6 @@ class I18nManager {
         // Get current translations
         const t = this.translations[this.currentLang];
         if (!t) return;
-
-        // Save original texts on first run (always save, regardless of language)
-        if (!this.hasInitialized) {
-            this.saveOriginalTexts(document.body);
-            this.hasInitialized = true;
-            console.log('📝 Original texts saved:', this.originalTexts.size, 'nodes');
-        }
 
         // Text mapping: English → All Languages
         const textMap = this.getTextMapForLanguage(this.currentLang);
