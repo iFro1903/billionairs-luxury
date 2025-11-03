@@ -260,6 +260,11 @@ class I18nManager {
                 'Swiss Secured': 'Swiss Gesichert',
                 'Blockchain Verified': 'Blockchain Verifiziert',
                 'Exclusive Access': 'Exklusiver Zugang',
+                
+                // Trust Section
+                "Some experiences can't be explained.<br>They can only be lived.": 'Manche Erlebnisse lassen sich nicht erklären.<br>Sie können nur erlebt werden.',
+                "Where wealth is the entry requirement. Not the achievement.": 'Wo Reichtum die Eintrittsbedingung ist. Nicht die Errungenschaft.',
+                
                 "What you're about to see can't be bought. Only accessed.": 'Was Sie gleich sehen, kann man nicht kaufen. Nur erleben.',
                 'Beyond wealth. Beyond status.': 'Jenseits von Reichtum. Jenseits von Status.',
                 'A moment that exists outside of time.': 'Ein Moment, der außerhalb der Zeit existiert.',
