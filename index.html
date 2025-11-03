@@ -1270,13 +1270,17 @@
 
             // Language button - trigger desktop language button
             languageBtn.addEventListener('click', function() {
-                const desktopLangBtn = document.getElementById('langBtn');
-                if (desktopLangBtn) {
-                    desktopLangBtn.click();
-                }
-                // Close mobile menu
+                // Close mobile menu first
                 hamburger.classList.remove('active');
                 overlay.classList.remove('active');
+                
+                // Wait for menu to close, then trigger language dropdown
+                setTimeout(function() {
+                    const desktopLangBtn = document.getElementById('langBtn');
+                    if (desktopLangBtn) {
+                        desktopLangBtn.click();
+                    }
+                }, 300);
             });
 
             // Contact button - trigger desktop contact button
