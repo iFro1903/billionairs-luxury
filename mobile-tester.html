@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Responsive Tester - Billionairs Luxury</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e8b4b8;
+            font-size: 2rem;
+        }
+
+        .controls {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .device-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #e8b4b8 0%, #f7cac9 100%);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .device-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(232, 180, 184, 0.3);
+        }
+
+        .device-btn.active {
+            background: linear-gradient(135deg, #f7cac9 0%, #e8b4b8 100%);
+            box-shadow: 0 0 20px rgba(232, 180, 184, 0.5);
+        }
+
+        .url-input {
+            flex: 1;
+            min-width: 300px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(232, 180, 184, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .test-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .iframe-container {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            margin: 0 auto;
+        }
+
+        .device-frame {
+            border: 2px solid #333;
+            border-radius: 20px;
+            padding: 10px;
+            background: #000;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        iframe {
+            border: none;
+            display: block;
+            background: #fff;
+        }
+
+        .device-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .issue-list {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .issue-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            border-left: 3px solid #ff6b6b;
+        }
+
+        .success {
+            border-left-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .orientation-toggle {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(232, 180, 184, 0.3);
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #e8b4b8;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Mobile Responsive Tester</h1>
+        
+        <div class="controls">
+            <button class="device-btn active" onclick="setDevice('iphone-se')">iPhone SE</button>
+            <button class="device-btn" onclick="setDevice('iphone-12')">iPhone 12</button>
+            <button class="device-btn" onclick="setDevice('iphone-pro-max')">iPhone 14 Pro Max</button>
+            <button class="device-btn" onclick="setDevice('ipad')">iPad</button>
+            <button class="device-btn" onclick="setDevice('desktop')">Desktop</button>
+            
+            <input type="text" class="url-input" id="urlInput" 
+                   value="https://billionairs-luxury.vercel.app" 
+                   placeholder="Enter URL to test...">
+            
+            <button class="test-btn" onclick="loadURL()">Test URL</button>
+            
+            <button class="orientation-toggle" onclick="toggleOrientation()">
+                🔄 Rotate
+            </button>
+        </div>
+
+        <div id="frameContainer" class="iframe-container">
+            <div class="device-frame" id="deviceFrame">
+                <iframe id="testFrame" src="https://billionairs-luxury.vercel.app"></iframe>
+            </div>
+        </div>
+
+        <div class="device-info" id="deviceInfo">
+            <strong>Current Device:</strong> iPhone SE (375 x 667px) • Portrait
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="widthStat">375px</div>
+                <div class="stat-label">Width</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="heightStat">667px</div>
+                <div class="stat-label">Height</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="ratioDPR">1x</div>
+                <div class="stat-label">Device Pixel Ratio</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="loadTime">-</div>
+                <div class="stat-label">Load Time</div>
+            </div>
+        </div>
+
+        <div class="issue-list" id="issueList" style="display: none;">
+            <h3>🔍 Detected Issues:</h3>
+            <div id="issues"></div>
+        </div>
+    </div>
+
+    <script>
+        const devices = {
+            'iphone-se': { width: 375, height: 667, name: 'iPhone SE', dpr: 2 },
+            'iphone-12': { width: 390, height: 844, name: 'iPhone 12/13/14', dpr: 3 },
+            'iphone-pro-max': { width: 430, height: 932, name: 'iPhone 14 Pro Max', dpr: 3 },
+            'ipad': { width: 768, height: 1024, name: 'iPad', dpr: 2 },
+            'desktop': { width: 1920, height: 1080, name: 'Desktop', dpr: 1 }
+        };
+
+        let currentDevice = 'iphone-se';
+        let isLandscape = false;
+        let loadStartTime = 0;
+
+        function setDevice(deviceId) {
+            currentDevice = deviceId;
+            isLandscape = false;
+            
+            // Update active button
+            document.querySelectorAll('.device-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            updateFrame();
+        }
+
+        function toggleOrientation() {
+            isLandscape = !isLandscape;
+            updateFrame();
+        }
+
+        function updateFrame() {
+            const device = devices[currentDevice];
+            const frame = document.getElementById('testFrame');
+            const container = document.getElementById('frameContainer');
+            
+            let width = device.width;
+            let height = device.height;
+            
+            if (isLandscape) {
+                [width, height] = [height, width];
+            }
+            
+            frame.style.width = width + 'px';
+            frame.style.height = height + 'px';
+            container.style.width = (width + 40) + 'px';
+            
+            // Update info
+            document.getElementById('deviceInfo').innerHTML = 
+                `<strong>Current Device:</strong> ${device.name} (${width} x ${height}px) • ${isLandscape ? 'Landscape' : 'Portrait'}`;
+            
+            // Update stats
+            document.getElementById('widthStat').textContent = width + 'px';
+            document.getElementById('heightStat').textContent = height + 'px';
+            document.getElementById('ratioDPR').textContent = device.dpr + 'x';
+            
+            // Reload frame to test
+            loadStartTime = Date.now();
+            frame.src = frame.src;
+        }
+
+        function loadURL() {
+            const url = document.getElementById('urlInput').value;
+            const frame = document.getElementById('testFrame');
+            loadStartTime = Date.now();
+            frame.src = url;
+        }
+
+        // Track load time
+        document.getElementById('testFrame').addEventListener('load', function() {
+            const loadTime = Date.now() - loadStartTime;
+            document.getElementById('loadTime').textContent = (loadTime / 1000).toFixed(2) + 's';
+            
+            // Check for issues
+            checkIssues();
+        });
+
+        function checkIssues() {
+            const issues = [];
+            const frame = document.getElementById('testFrame');
+            const device = devices[currentDevice];
+            
+            try {
+                // Try to access iframe content (will fail for cross-origin)
+                const doc = frame.contentDocument || frame.contentWindow.document;
+                
+                // Check for horizontal scroll
+                if (doc.body.scrollWidth > device.width) {
+                    issues.push({
+                        type: 'warning',
+                        message: `Horizontal scrolling detected! Content width: ${doc.body.scrollWidth}px exceeds viewport: ${device.width}px`
+                    });
+                }
+                
+                // Check for small text
+                const textElements = doc.querySelectorAll('p, span, div, a, button');
+                textElements.forEach(el => {
+                    const fontSize = window.getComputedStyle(el).fontSize;
+                    if (parseInt(fontSize) < 16) {
+                        issues.push({
+                            type: 'warning',
+                            message: `Small text detected: ${fontSize} (should be min 16px)`
+                        });
+                    }
+                });
+                
+                // Check for small touch targets
+                const interactive = doc.querySelectorAll('button, a, input, select');
+                interactive.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.width < 44 || rect.height < 44) {
+                        issues.push({
+                            type: 'warning',
+                            message: `Small touch target: ${rect.width}x${rect.height}px (should be min 44x44px)`
+                        });
+                    }
+                });
+                
+            } catch (e) {
+                // Cross-origin restriction - show generic message
+                issues.push({
+                    type: 'info',
+                    message: '✅ Manual testing required (cross-origin restriction)'
+                });
+            }
+            
+            // Display issues
+            displayIssues(issues);
+        }
+
+        function displayIssues(issues) {
+            const issueList = document.getElementById('issueList');
+            const issuesContainer = document.getElementById('issues');
+            
+            if (issues.length === 0) {
+                issuesContainer.innerHTML = '<div class="issue-item success">✅ No issues detected!</div>';
+            } else {
+                issuesContainer.innerHTML = issues.map(issue => 
+                    `<div class="issue-item ${issue.type === 'info' ? 'success' : ''}">${issue.message}</div>`
+                ).join('');
+            }
+            
+            issueList.style.display = 'block';
+        }
+
+        // Initialize
+        updateFrame();
+    </script>
+</body>
+</html>

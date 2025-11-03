@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BILLIONAIRS - 3 Luxury Approaches Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation between versions */
+        .version-nav {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .version-nav button {
+            padding: 12px 24px;
+            background: rgba(232, 180, 184, 0.2);
+            border: 1px solid rgba(232, 180, 184, 0.5);
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .version-nav button:hover,
+        .version-nav button.active {
+            background: rgba(232, 180, 184, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Version containers */
+        .version {
+            display: none;
+            min-height: 100vh;
+            padding: 100px 40px 60px;
+        }
+
+        .version.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Common styles */
+        h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            color: #E8B4A0;
+            text-shadow: 0 0 20px rgba(232, 180, 160, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* Version labels */
+        .version-label {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 8px 16px;
+            background: rgba(232, 180, 184, 0.2);
+            border: 1px solid rgba(232, 180, 184, 0.5);
+            border-radius: 6px;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+        }
+
+        /* ========== OPTION A: ULTRA-MYSTERY ========== */
+        .mystery-hint {
+            margin: 3rem 0;
+            padding: 2rem;
+            border-top: 1px solid rgba(232, 180, 184, 0.2);
+            border-bottom: 1px solid rgba(232, 180, 184, 0.2);
+        }
+
+        .mystery-hint p {
+            font-size: 1.1rem;
+            margin: 1rem 0;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .whisper-text {
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+        }
+
+        /* ========== OPTION B: VAGUE LUXURY ========== */
+        .what-it-is {
+            margin: 4rem 0;
+            text-align: left;
+        }
+
+        .what-it-is h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #e8b4b8;
+        }
+
+        .benefit {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 2px solid #e8b4b8;
+            transition: all 0.3s ease;
+        }
+
+        .benefit:hover {
+            background: rgba(232, 180, 184, 0.1);
+            transform: translateX(10px);
+        }
+
+        .benefit .icon {
+            font-size: 2rem;
+        }
+
+        .benefit p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .members {
+            margin: 4rem 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(232, 180, 184, 0.2);
+            border-radius: 12px;
+        }
+
+        .members h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #e8b4b8;
+        }
+
+        .member-hints {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .member-hints span {
+            padding: 0.8rem;
+            background: rgba(232, 180, 184, 0.1);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .small-print {
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ========== OPTION C: FUCK-YOU-MONEY ========== */
+        .hard-truths {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(232, 180, 184, 0.3);
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .hard-truths p {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            padding-left: 1rem;
+        }
+
+        .who-this-is-for {
+            margin: 4rem 0;
+            text-align: left;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(232, 180, 184, 0.05) 0%, transparent 100%);
+            border-left: 3px solid #e8b4b8;
+        }
+
+        .who-this-is-for h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #e8b4b8;
+        }
+
+        .who-this-is-for p {
+            font-size: 1.1rem;
+            margin: 1.2rem 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .rejection-bait {
+            margin-top: 2rem;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+        }
+
+        /* Buttons */
+        .access-button,
+        .brutal-cta {
+            margin-top: 3rem;
+            padding: 1.5rem 3rem;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #e8b4b8 0%, #f7cac9 100%);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(232, 180, 184, 0.3);
+        }
+
+        .access-button:hover,
+        .brutal-cta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(232, 180, 184, 0.5);
+        }
+
+        /* ========== OPTION D: MIXED (RECOMMENDED) ========== */
+        .mixed-intro {
+            margin-bottom: 4rem;
+        }
+
+        .mixed-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .mixed-benefit-card {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(232, 180, 184, 0.2);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .mixed-benefit-card:hover {
+            background: rgba(232, 180, 184, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(232, 180, 184, 0.2);
+        }
+
+        .mixed-benefit-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #E8B4A0;
+            text-shadow: 0 0 10px rgba(232, 180, 160, 0.2);
+        }
+
+        .mixed-benefit-card p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .mixed-social-proof {
+            margin: 4rem 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(232, 180, 184, 0.3);
+            border-bottom: 1px solid rgba(232, 180, 184, 0.3);
+        }
+
+        .mixed-social-proof h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 300;
+        }
+
+        .member-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .member-grid span {
+            padding: 1rem;
+            background: rgba(232, 180, 184, 0.05);
+            border: 1px solid rgba(232, 180, 184, 0.2);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .mixed-reality-check {
+            margin: 4rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(232, 180, 184, 0.1) 0%, transparent 100%);
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .mixed-reality-check h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #e8b4b8;
+        }
+
+        .mixed-reality-check ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mixed-reality-check li {
+            padding: 0.8rem 0;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            border-bottom: 1px solid rgba(232, 180, 184, 0.1);
+        }
+
+        .mixed-reality-check li:before {
+            content: '✗ ';
+            color: rgba(255, 255, 255, 0.4);
+            margin-right: 0.5rem;
+        }
+
+        .mixed-reality-check li:last-child:before {
+            content: '✓ ';
+            color: #e8b4b8;
+        }
+
+        .price-reveal {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #e8b4b8;
+            border-radius: 12px;
+        }
+
+        .price-reveal .amount {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #E8B4A0;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 15px rgba(232, 180, 160, 0.3);
+        }
+
+        .price-reveal .terms {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .version-nav {
+                top: 10px;
+                right: 10px;
+                flex-direction: column;
+            }
+
+            .version-nav button {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .mixed-benefits {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Version Navigation -->
+    <div class="version-nav">
+        <button onclick="showVersion('mystery')" class="active" id="btn-mystery">A: Mystery</button>
+        <button onclick="showVersion('vague')" id="btn-vague">B: Vague</button>
+        <button onclick="showVersion('brutal')" id="btn-brutal">C: Brutal</button>
+        <button onclick="showVersion('mixed')" id="btn-mixed">D: Mixed ⭐</button>
+    </div>
+
+    <!-- ========== OPTION A: ULTRA-MYSTERY ========== -->
+    <div class="version active" id="version-mystery">
+        <div class="version-label">OPTION A: ULTRA-MYSTERY</div>
+        <div class="container">
+            <h1>BILLIONAIRS</h1>
+            
+            <p class="tagline">
+                Some experiences can't be explained.<br>
+                They can only be lived.
+            </p>
+
+            <div class="mystery-hint">
+                <p>47 verified members worldwide.</p>
+                <p>No waiting list. No applications.</p>
+                <p>You either know, or you don't.</p>
+            </div>
+
+            <button class="access-button">REQUEST ACCESS</button>
+
+            <p class="whisper-text">
+                Members include: Tech Founders • Family Offices • Anonymous HNWIs
+            </p>
+        </div>
+    </div>
+
+    <!-- ========== OPTION B: VAGUE LUXURY ========== -->
+    <div class="version" id="version-vague">
+        <div class="version-label">OPTION B: VAGUE LUXURY</div>
+        <div class="container">
+            <h1>BILLIONAIRS</h1>
+            
+            <p class="tagline">
+                Where wealth is the entry requirement.<br>
+                Not the achievement.
+            </p>
+
+            <div class="what-it-is">
+                <h3>What to Expect</h3>
+                
+                <div class="benefit">
+                    <span class="icon">🌍</span>
+                    <p>Quarterly gatherings in Monaco, Dubai, Zürich</p>
+                </div>
+                
+                <div class="benefit">
+                    <span class="icon">🤝</span>
+                    <p>Private circle of 50 verified UHNWIs</p>
+                </div>
+                
+                <div class="benefit">
+                    <span class="icon">💡</span>
+                    <p>Opportunities unavailable to the public</p>
+                </div>
+                
+                <div class="benefit">
+                    <span class="icon">🔐</span>
+                    <p>What happens here, stays here</p>
+                </div>
+            </div>
+
+            <div class="members">
+                <h3>Current Circle</h3>
+                <div class="member-hints">
+                    <span>F.K. • Tech Exit $180M • San Francisco</span>
+                    <span>A.M. • Family Office • Zürich</span>
+                    <span>Anonymous • Crypto OG • Dubai</span>
+                    <span>M.R. • Real Estate Portfolio • London</span>
+                    <span>+ 43 others</span>
+                </div>
+            </div>
+
+            <button class="access-button">REQUEST ACCESS</button>
+
+            <p class="small-print">
+                Annual membership • Blockchain verified • No refunds
+            </p>
+        </div>
+    </div>
+
+    <!-- ========== OPTION C: FUCK-YOU-MONEY ========== -->
+    <div class="version" id="version-brutal">
+        <div class="version-label">OPTION C: BRUTAL HONESTY</div>
+        <div class="container">
+            <h1>BILLIONAIRS</h1>
+            
+            <p class="tagline">
+                Not for everyone.<br>
+                Actually, not for most people.
+            </p>
+
+            <div class="hard-truths">
+                <p>✗ No trial period</p>
+                <p>✗ No payment plans</p>
+                <p>✗ No questions answered before payment</p>
+                <p>✓ Investment required</p>
+                <p>✓ Take it or leave it</p>
+            </div>
+
+            <div class="who-this-is-for">
+                <h3>This is for you if:</h3>
+                <p>→ You've already "made it" but something's still missing</p>
+                <p>→ You're tired of networking events full of "aspiring entrepreneurs"</p>
+                <p>→ You want access to deals that never hit the market</p>
+                <p>→ You understand that some things can't be Googled</p>
+            </div>
+
+            <button class="brutal-cta">PAY NOW</button>
+
+            <p class="rejection-bait">
+                Or go back to your regular life. No hard feelings.
+            </p>
+        </div>
+    </div>
+
+    <!-- ========== OPTION D: MIXED (RECOMMENDED) ========== -->
+    <div class="version" id="version-mixed">
+        <div class="version-label">OPTION D: MIXED APPROACH ⭐ RECOMMENDED</div>
+        <div class="container">
+            <h1>BILLIONAIRS</h1>
+            
+            <div class="mixed-intro">
+                <p class="tagline">
+                    Some experiences can't be explained.<br>
+                    They can only be lived.
+                </p>
+                
+                <p style="margin-top: 2rem; font-size: 1.1rem; color: rgba(255, 255, 255, 0.6);">
+                    Where wealth is the entry requirement. Not the achievement.
+                </p>
+            </div>
+
+            <div class="mixed-benefits">
+                <div class="mixed-benefit-card">
+                    <h4>Global Access</h4>
+                    <p>Quarterly gatherings in Monaco, Dubai, Zürich</p>
+                </div>
+                
+                <div class="mixed-benefit-card">
+                    <h4>Private Circle</h4>
+                    <p>47 verified UHNWIs worldwide</p>
+                </div>
+                
+                <div class="mixed-benefit-card">
+                    <h4>Pre-Market</h4>
+                    <p>Opportunities before they're public</p>
+                </div>
+                
+                <div class="mixed-benefit-card">
+                    <h4>Discretion</h4>
+                    <p>What happens here, stays here</p>
+                </div>
+            </div>
+
+            <div class="mixed-social-proof">
+                <h3>Trusted by members across 12 countries</h3>
+                <div class="member-grid">
+                    <span>F.K. • Tech Exit • SF</span>
+                    <span>A.M. • Family Office • ZH</span>
+                    <span>Anon • Crypto OG • Dubai</span>
+                    <span>M.R. • Real Estate • London</span>
+                    <span>S.L. • Private Equity • NYC</span>
+                    <span>+ 42 others</span>
+                </div>
+            </div>
+
+            <div class="mixed-reality-check">
+                <h3>Let's be clear:</h3>
+                <ul>
+                    <li>No trial period</li>
+                    <li>No payment plans</li>
+                    <li>No refunds</li>
+                    <li>You either fit in, or you don't</li>
+                </ul>
+            </div>
+
+            <div class="price-reveal">
+                <div class="amount">Exclusive Access</div>
+                <div class="terms">Annual membership • Blockchain verified • 47/50 spots filled</div>
+            </div>
+
+            <button class="brutal-cta">REQUEST ACCESS</button>
+
+            <p class="rejection-bait">
+                Not ready? That's perfectly fine.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function showVersion(version) {
+            // Hide all versions
+            document.querySelectorAll('.version').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.version-nav button').forEach(b => b.classList.remove('active'));
+            
+            // Show selected version
+            document.getElementById('version-' + version).classList.add('active');
+            document.getElementById('btn-' + version).classList.add('active');
+        }
+    </script>
+</body>
+</html>

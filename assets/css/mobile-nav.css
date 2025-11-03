@@ -75,7 +75,9 @@
     border: none;
     cursor: pointer;
     padding: 0;
-    z-index: 999998;
+    z-index: 999999;
+    position: relative;
+    pointer-events: auto;
 }
 
 .hamburger-line {
@@ -225,6 +227,18 @@
     /* Show hamburger menu */
     .hamburger-menu {
         display: flex !important;
+        z-index: 999999 !important;
+        pointer-events: auto !important;
+    }
+    
+    /* Ensure nav doesn't block hamburger clicks */
+    .premium-nav {
+        pointer-events: none;
+    }
+    
+    .premium-nav .hamburger-menu,
+    .premium-nav .nav-logo-img {
+        pointer-events: auto;
     }
     
     /* Hide desktop nav items (language/contact buttons) on mobile */
