@@ -22,21 +22,11 @@ class I18nManager {
      * Initialize i18n system
      */
     async init() {
-        // Load saved language from cookie
-        const savedLang = this.getCookie(this.cookieName);
-        if (savedLang && this.supportedLangs.includes(savedLang)) {
-            this.currentLang = savedLang;
-        } else {
-            // Detect browser language
-            const browserLang = navigator.language.toLowerCase();
-            const langCode = browserLang.split('-')[0]; // e.g., 'en-US' -> 'en'
-            
-            if (this.supportedLangs.includes(langCode)) {
-                this.currentLang = langCode;
-            } else {
-                this.currentLang = 'en'; // Default to English if unsupported
-            }
-        }
+        // ALWAYS start with English - ignore saved language and browser language
+        this.currentLang = 'en';
+        
+        // Clear any saved language preference to force English
+        this.setCookie(this.cookieName, 'en', 365);
 
         // Load translation files
         await this.loadTranslations();
