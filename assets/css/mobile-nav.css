@@ -227,6 +227,11 @@
         display: flex !important;
     }
     
+    /* Hide desktop nav items (language/contact buttons) on mobile */
+    .nav-actions > *:not(.hamburger-menu) {
+        display: none !important;
+    }
+    
     /* Adjust nav-actions spacing */
     .nav-actions {
         gap: 0.5rem;
