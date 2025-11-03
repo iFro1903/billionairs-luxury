@@ -1253,6 +1253,13 @@
             hamburger.addEventListener('click', function() {
                 hamburger.classList.toggle('active');
                 overlay.classList.toggle('active');
+                
+                // Prevent scrolling when menu is open
+                if (overlay.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
             });
 
             // Close menu when clicking overlay background
@@ -1260,6 +1267,7 @@
                 if (e.target === overlay) {
                     hamburger.classList.remove('active');
                     overlay.classList.remove('active');
+                    document.body.style.overflow = '';
                 }
             });
 
@@ -1273,6 +1281,7 @@
                 // Close mobile menu first
                 hamburger.classList.remove('active');
                 overlay.classList.remove('active');
+                document.body.style.overflow = '';
                 
                 // Wait for menu to close, then trigger language dropdown
                 setTimeout(function() {
@@ -1288,6 +1297,7 @@
                 // Close mobile menu first
                 hamburger.classList.remove('active');
                 overlay.classList.remove('active');
+                document.body.style.overflow = '';
                 
                 // Wait for menu to close, then trigger contact popup
                 setTimeout(function() {
