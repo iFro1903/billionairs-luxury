@@ -21,7 +21,8 @@
     "pm2:start": "pm2 start stripe-server.js --name billionairs",
     "pm2:stop": "pm2 stop billionairs",
     "pm2:restart": "pm2 restart billionairs",
-    "pm2:logs": "pm2 logs billionairs"
+    "pm2:logs": "pm2 logs billionairs",
+    "generate:admin-password": "node scripts/generate-admin-password-hash.js"
   },
   "keywords": [
     "luxury",

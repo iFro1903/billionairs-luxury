@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0C0C0C"/>
+  
+  <!-- Gold Border with rounded corners -->
+  <rect x="50" y="50" width="412" height="412" rx="75" ry="75" 
+        fill="none" stroke="#E8B4A0" stroke-width="8" 
+        filter="url(#glow)"/>
+  
+  <!-- Letter B -->
+  <text x="256" y="300" font-family="Playfair Display, Georgia, serif" 
+        font-size="280" font-weight="bold" fill="#E8B4A0" 
+        text-anchor="middle" letter-spacing="-10">B</text>
+  
+  <!-- Glow effect -->
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+</svg>
