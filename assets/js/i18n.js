@@ -327,7 +327,7 @@ class I18nManager {
                 '+ 42 others': '+ 42 weitere',
                 
                 // Final Section
-                "Let's be clear:": 'Seien wir klar:',
+                "Let's be honest:": 'Seien wir ehrlich:',
                 'No trial period': 'Keine Testphase',
                 'No payment plans': 'Keine Ratenzahlung',
                 'No refunds': 'Keine Rückerstattungen',
@@ -402,7 +402,7 @@ class I18nManager {
                 '+ 42 others': '+ 42 autres',
                 
                 // Final Section
-                "Let's be clear:": 'Soyons clairs:',
+                "Let's be honest:": 'Soyons honnêtes:',
                 'No trial period': 'Pas de période d\'essai',
                 'No payment plans': 'Pas de plans de paiement',
                 'No refunds': 'Pas de remboursements',
@@ -477,7 +477,7 @@ class I18nManager {
                 '+ 42 others': '+ 42 otros',
                 
                 // Final Section
-                "Let's be clear:": 'Seamos claros:',
+                "Let's be honest:": 'Seamos honestos:',
                 'No trial period': 'Sin período de prueba',
                 'No payment plans': 'Sin planes de pago',
                 'No refunds': 'Sin reembolsos',
@@ -552,7 +552,7 @@ class I18nManager {
                 '+ 42 others': '+ 42 其他',
                 
                 // Final Section
-                "Let's be clear:": '让我们明确：',
+                "Let's be honest:": '让我们诚实：',
                 'No trial period': '无试用期',
                 'No payment plans': '无分期付款',
                 'No refunds': '不退款',
@@ -627,7 +627,7 @@ class I18nManager {
                 '+ 42 others': '+ 42 آخرون',
                 
                 // Final Section
-                "Let's be clear:": 'لنكن واضحين:',
+                "Let's be honest:": 'لنكن صادقين:',
                 'No trial period': 'لا توجد فترة تجريبية',
                 'No payment plans': 'لا توجد خطط دفع',
                 'No refunds': 'لا استرداد',
@@ -702,7 +702,7 @@ class I18nManager {
                 '+ 42 others': '+ 42 altri',
                 
                 // Final Section
-                "Let's be clear:": 'Chiariamo:',
+                "Let's be honest:": 'Siamo onesti:',
                 'No trial period': 'Nessun periodo di prova',
                 'No payment plans': 'Nessun piano di pagamento',
                 'No refunds': 'Nessun rimborso',
@@ -777,7 +777,7 @@ class I18nManager {
                 '+ 42 others': '+ 42 других',
                 
                 // Final Section
-                "Let's be clear:": 'Давайте внесем ясность:',
+                "Let's be honest:": 'Давайте будем честными:',
                 'No trial period': 'Без пробного периода',
                 'No payment plans': 'Без планов оплаты',
                 'No refunds': 'Без возвратов',
@@ -852,7 +852,7 @@ class I18nManager {
                 '+ 42 others': '+ 42 その他',
                 
                 // Final Section
-                "Let's be clear:": '明確にしましょう：',
+                "Let's be honest:": '正直に言いましょう：',
                 'No trial period': '試用期間なし',
                 'No payment plans': '支払いプランなし',
                 'No refunds': '返金なし',
