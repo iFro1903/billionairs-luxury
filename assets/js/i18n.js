@@ -307,7 +307,35 @@ class I18nManager {
                 'We Respect Your Privacy': 'Wir respektieren Ihre Privatsphäre',
                 'ACCEPT ALL': 'ALLE AKZEPTIEREN',
                 'SAVE SELECTION': 'AUSWAHL SPEICHERN',
-                'NECESSARY ONLY': 'NUR NOTWENDIGE'
+                'NECESSARY ONLY': 'NUR NOTWENDIGE',
+                
+                // Trust Benefits Section
+                'Global Access': 'Globaler Zugang',
+                'Quarterly gatherings in Monaco, Dubai, Zürich': 'Vierteljährliche Treffen in Monaco, Dubai, Zürich',
+                'Private Circle': 'Privater Kreis',
+                '47 verified UHNWIs worldwide': '47 verifizierte UHNWIs weltweit',
+                'Pre-Market': 'Vormarkt',
+                "Opportunities before they're public": 'Möglichkeiten bevor sie öffentlich sind',
+                'Discretion': 'Diskretion',
+                'What happens here, stays here': 'Was hier passiert, bleibt hier',
+                'Trusted by members across 12 countries': 'Vertraut von Mitgliedern aus 12 Ländern',
+                'Tech Exit': 'Tech Exit',
+                'Family Office': 'Family Office',
+                'Crypto OG': 'Crypto OG',
+                'Real Estate': 'Immobilien',
+                'Private Equity': 'Private Equity',
+                '+ 42 others': '+ 42 weitere',
+                
+                // Final Section
+                "Let's be clear:": 'Seien wir klar:',
+                'No trial period': 'Keine Testphase',
+                'No payment plans': 'Keine Ratenzahlung',
+                'No refunds': 'Keine Rückerstattungen',
+                'FAQ': 'FAQ',
+                'LEGAL NOTICE': 'RECHTLICHE HINWEISE',
+                'PRIVACY POLICY': 'DATENSCHUTZ',
+                'TERMS & CONDITIONS': 'AGB',
+                'Install App': 'App Installieren'
             },
             'fr': {
                 'CONTACT': 'CONTACT',
@@ -352,8 +380,36 @@ class I18nManager {
                 '© 2025 The Final Collection': '© 2025 La Collection Finale',
                 'We Respect Your Privacy': 'Nous respectons votre vie privée',
                 'ACCEPT ALL': 'TOUT ACCEPTER',
-                'SAVE SELECTION': 'ENREGISTRER LA SÉLECTION',
-                'NECESSARY ONLY': 'NÉCESSAIRE UNIQUEMENT'
+                'SAVE SELECTION': 'SAUVEGARDER LA SÉLECTION',
+                'NECESSARY ONLY': 'NÉCESSAIRE SEULEMENT',
+                
+                // Trust Benefits Section
+                'Global Access': 'Accès Mondial',
+                'Quarterly gatherings in Monaco, Dubai, Zürich': 'Rassemblements trimestriels à Monaco, Dubaï, Zürich',
+                'Private Circle': 'Cercle Privé',
+                '47 verified UHNWIs worldwide': '47 UHNWIs vérifiés dans le monde',
+                'Pre-Market': 'Pré-Marché',
+                "Opportunities before they're public": 'Opportunités avant qu\'elles ne soient publiques',
+                'Discretion': 'Discrétion',
+                'What happens here, stays here': 'Ce qui se passe ici, reste ici',
+                'Trusted by members across 12 countries': 'Approuvé par des membres dans 12 pays',
+                'Tech Exit': 'Sortie Tech',
+                'Family Office': 'Family Office',
+                'Crypto OG': 'Crypto OG',
+                'Real Estate': 'Immobilier',
+                'Private Equity': 'Capital Investissement',
+                '+ 42 others': '+ 42 autres',
+                
+                // Final Section
+                "Let's be clear:": 'Soyons clairs:',
+                'No trial period': 'Pas de période d\'essai',
+                'No payment plans': 'Pas de plans de paiement',
+                'No refunds': 'Pas de remboursements',
+                'FAQ': 'FAQ',
+                'LEGAL NOTICE': 'MENTION LÉGALE',
+                'PRIVACY POLICY': 'POLITIQUE DE CONFIDENTIALITÉ',
+                'TERMS & CONDITIONS': 'TERMES & CONDITIONS',
+                'Install App': 'Installer l\'Application'
             },
             'es': {
                 'CONTACT': 'CONTACTO',
