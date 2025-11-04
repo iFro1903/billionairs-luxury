@@ -455,7 +455,35 @@ class I18nManager {
                 'We Respect Your Privacy': 'Respetamos su privacidad',
                 'ACCEPT ALL': 'ACEPTAR TODO',
                 'SAVE SELECTION': 'GUARDAR SELECCIÓN',
-                'NECESSARY ONLY': 'SOLO NECESARIAS'
+                'NECESSARY ONLY': 'SOLO NECESARIAS',
+                
+                // Trust Benefits Section
+                'Global Access': 'Acceso Global',
+                'Quarterly gatherings in Monaco, Dubai, Zürich': 'Reuniones trimestrales en Mónaco, Dubái, Zúrich',
+                'Private Circle': 'Círculo Privado',
+                '47 verified UHNWIs worldwide': '47 UHNWIs verificados en todo el mundo',
+                'Pre-Market': 'Pre-Mercado',
+                "Opportunities before they're public": 'Oportunidades antes de que sean públicas',
+                'Discretion': 'Discreción',
+                'What happens here, stays here': 'Lo que pasa aquí, se queda aquí',
+                'Trusted by members across 12 countries': 'Confiado por miembros en 12 países',
+                'Tech Exit': 'Salida Tecnológica',
+                'Family Office': 'Oficina Familiar',
+                'Crypto OG': 'Crypto OG',
+                'Real Estate': 'Bienes Raíces',
+                'Private Equity': 'Capital Privado',
+                '+ 42 others': '+ 42 otros',
+                
+                // Final Section
+                "Let's be clear:": 'Seamos claros:',
+                'No trial period': 'Sin período de prueba',
+                'No payment plans': 'Sin planes de pago',
+                'No refunds': 'Sin reembolsos',
+                'FAQ': 'Preguntas frecuentes',
+                'LEGAL NOTICE': 'AVISO LEGAL',
+                'PRIVACY POLICY': 'POLÍTICA DE PRIVACIDAD',
+                'TERMS & CONDITIONS': 'TÉRMINOS Y CONDICIONES',
+                'Install App': 'Instalar Aplicación'
             },
             'zh': {
                 'CONTACT': '联系方式',
@@ -501,7 +529,35 @@ class I18nManager {
                 'We Respect Your Privacy': '我们尊重您的隐私',
                 'ACCEPT ALL': '全部接受',
                 'SAVE SELECTION': '保存选择',
-                'NECESSARY ONLY': '仅必要'
+                'NECESSARY ONLY': '仅必要',
+                
+                // Trust Benefits Section
+                'Global Access': '全球访问',
+                'Quarterly gatherings in Monaco, Dubai, Zürich': '每季度在摩纳哥、迪拜、苏黎世聚会',
+                'Private Circle': '私人圈子',
+                '47 verified UHNWIs worldwide': '全球47位已验证的超高净值人士',
+                'Pre-Market': '预市场',
+                "Opportunities before they're public": '公开前的机会',
+                'Discretion': '谨慎',
+                'What happens here, stays here': '这里发生的事，留在这里',
+                'Trusted by members across 12 countries': '受到12个国家会员的信任',
+                'Tech Exit': '科技退出',
+                'Family Office': '家族办公室',
+                'Crypto OG': '加密元老',
+                'Real Estate': '房地产',
+                'Private Equity': '私募股权',
+                '+ 42 others': '+ 42 其他',
+                
+                // Final Section
+                "Let's be clear:": '让我们明确：',
+                'No trial period': '无试用期',
+                'No payment plans': '无分期付款',
+                'No refunds': '不退款',
+                'FAQ': '常见问题',
+                'LEGAL NOTICE': '法律声明',
+                'PRIVACY POLICY': '隐私政策',
+                'TERMS & CONDITIONS': '条款与条件',
+                'Install App': '安装应用'
             },
             'ar': {
                 'CONTACT': 'اتصل',
@@ -547,7 +603,35 @@ class I18nManager {
                 'We Respect Your Privacy': 'نحن نحترم خصوصيتك',
                 'ACCEPT ALL': 'قبول الكل',
                 'SAVE SELECTION': 'حفظ الاختيار',
-                'NECESSARY ONLY': 'الضرورية فقط'
+                'NECESSARY ONLY': 'الضرورية فقط',
+                
+                // Trust Benefits Section
+                'Global Access': 'وصول عالمي',
+                'Quarterly gatherings in Monaco, Dubai, Zürich': 'لقاءات فصلية في موناكو ودبي وزيورخ',
+                'Private Circle': 'دائرة خاصة',
+                '47 verified UHNWIs worldwide': '47 من أصحاب الثروات الفائقة المعتمدين عالمياً',
+                'Pre-Market': 'ما قبل السوق',
+                "Opportunities before they're public": 'فرص قبل أن تصبح عامة',
+                'Discretion': 'تكتم',
+                'What happens here, stays here': 'ما يحدث هنا، يبقى هنا',
+                'Trusted by members across 12 countries': 'موثوق به من قبل الأعضاء في 12 دولة',
+                'Tech Exit': 'خروج تقني',
+                'Family Office': 'مكتب عائلي',
+                'Crypto OG': 'رائد العملات الرقمية',
+                'Real Estate': 'عقارات',
+                'Private Equity': 'أسهم خاصة',
+                '+ 42 others': '+ 42 آخرون',
+                
+                // Final Section
+                "Let's be clear:": 'لنكن واضحين:',
+                'No trial period': 'لا توجد فترة تجريبية',
+                'No payment plans': 'لا توجد خطط دفع',
+                'No refunds': 'لا استرداد',
+                'FAQ': 'الأسئلة الشائعة',
+                'LEGAL NOTICE': 'إشعار قانوني',
+                'PRIVACY POLICY': 'سياسة الخصوصية',
+                'TERMS & CONDITIONS': 'الشروط والأحكام',
+                'Install App': 'تثبيت التطبيق'
             },
             'it': {
                 'CONTACT': 'CONTATTI',
@@ -593,7 +677,35 @@ class I18nManager {
                 'We Respect Your Privacy': 'Rispettiamo la tua privacy',
                 'ACCEPT ALL': 'ACCETTA TUTTO',
                 'SAVE SELECTION': 'SALVA SELEZIONE',
-                'NECESSARY ONLY': 'SOLO NECESSARI'
+                'NECESSARY ONLY': 'SOLO NECESSARI',
+                
+                // Trust Benefits Section
+                'Global Access': 'Accesso Globale',
+                'Quarterly gatherings in Monaco, Dubai, Zürich': 'Incontri trimestrali a Monaco, Dubai, Zurigo',
+                'Private Circle': 'Cerchia Privata',
+                '47 verified UHNWIs worldwide': '47 UHNWI verificati in tutto il mondo',
+                'Pre-Market': 'Pre-Mercato',
+                "Opportunities before they're public": 'Opportunità prima che diventino pubbliche',
+                'Discretion': 'Discrezione',
+                'What happens here, stays here': 'Ciò che accade qui, rimane qui',
+                'Trusted by members across 12 countries': 'Affidato da membri in 12 paesi',
+                'Tech Exit': 'Uscita Tecnologica',
+                'Family Office': 'Family Office',
+                'Crypto OG': 'Crypto OG',
+                'Real Estate': 'Immobiliare',
+                'Private Equity': 'Private Equity',
+                '+ 42 others': '+ 42 altri',
+                
+                // Final Section
+                "Let's be clear:": 'Chiariamo:',
+                'No trial period': 'Nessun periodo di prova',
+                'No payment plans': 'Nessun piano di pagamento',
+                'No refunds': 'Nessun rimborso',
+                'FAQ': 'Domande frequenti',
+                'LEGAL NOTICE': 'AVVISO LEGALE',
+                'PRIVACY POLICY': 'POLITICA SULLA PRIVACY',
+                'TERMS & CONDITIONS': 'TERMINI E CONDIZIONI',
+                'Install App': 'Installa App'
             },
             'ru': {
                 'CONTACT': 'КОНТАКТЫ',
@@ -639,7 +751,35 @@ class I18nManager {
                 'We Respect Your Privacy': 'Мы уважаем вашу конфиденциальность',
                 'ACCEPT ALL': 'ПРИНЯТЬ ВСЕ',
                 'SAVE SELECTION': 'СОХРАНИТЬ ВЫБОР',
-                'NECESSARY ONLY': 'ТОЛЬКО НЕОБХОДИМЫЕ'
+                'NECESSARY ONLY': 'ТОЛЬКО НЕОБХОДИМЫЕ',
+                
+                // Trust Benefits Section
+                'Global Access': 'Глобальный доступ',
+                'Quarterly gatherings in Monaco, Dubai, Zürich': 'Ежеквартальные встречи в Монако, Дубае, Цюрихе',
+                'Private Circle': 'Частный круг',
+                '47 verified UHNWIs worldwide': '47 верифицированных сверхсостоятельных лиц по всему миру',
+                'Pre-Market': 'Предрыночный',
+                "Opportunities before they're public": 'Возможности до их обнародования',
+                'Discretion': 'Конфиденциальность',
+                'What happens here, stays here': 'То, что происходит здесь, остается здесь',
+                'Trusted by members across 12 countries': 'Доверяют участники из 12 стран',
+                'Tech Exit': 'Выход из технологий',
+                'Family Office': 'Семейный офис',
+                'Crypto OG': 'Крипто-ветеран',
+                'Real Estate': 'Недвижимость',
+                'Private Equity': 'Частный капитал',
+                '+ 42 others': '+ 42 других',
+                
+                // Final Section
+                "Let's be clear:": 'Давайте внесем ясность:',
+                'No trial period': 'Без пробного периода',
+                'No payment plans': 'Без планов оплаты',
+                'No refunds': 'Без возвратов',
+                'FAQ': 'Часто задаваемые вопросы',
+                'LEGAL NOTICE': 'ПРАВОВОЕ УВЕДОМЛЕНИЕ',
+                'PRIVACY POLICY': 'ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ',
+                'TERMS & CONDITIONS': 'УСЛОВИЯ И ПОЛОЖЕНИЯ',
+                'Install App': 'Установить приложение'
             },
             'ja': {
                 'CONTACT': 'お問い合わせ',
@@ -685,7 +825,35 @@ class I18nManager {
                 'We Respect Your Privacy': 'お客様のプライバシーを尊重します',
                 'ACCEPT ALL': 'すべて受け入れる',
                 'SAVE SELECTION': '選択を保存',
-                'NECESSARY ONLY': '必須のみ'
+                'NECESSARY ONLY': '必須のみ',
+                
+                // Trust Benefits Section
+                'Global Access': 'グローバルアクセス',
+                'Quarterly gatherings in Monaco, Dubai, Zürich': 'モナコ、ドバイ、チューリッヒでの四半期ごとの集まり',
+                'Private Circle': 'プライベートサークル',
+                '47 verified UHNWIs worldwide': '世界中で47人の検証済み超富裕層',
+                'Pre-Market': 'プレマーケット',
+                "Opportunities before they're public": '公開前の機会',
+                'Discretion': '裁量',
+                'What happens here, stays here': 'ここで起こることは、ここにとどまる',
+                'Trusted by members across 12 countries': '12カ国のメンバーから信頼されています',
+                'Tech Exit': 'テック出口',
+                'Family Office': 'ファミリーオフィス',
+                'Crypto OG': '暗号資産OG',
+                'Real Estate': '不動産',
+                'Private Equity': 'プライベートエクイティ',
+                '+ 42 others': '+ 42 その他',
+                
+                // Final Section
+                "Let's be clear:": '明確にしましょう：',
+                'No trial period': '試用期間なし',
+                'No payment plans': '支払いプランなし',
+                'No refunds': '返金なし',
+                'FAQ': 'よくある質問',
+                'LEGAL NOTICE': '法的通知',
+                'PRIVACY POLICY': 'プライバシーポリシー',
+                'TERMS & CONDITIONS': '利用規約',
+                'Install App': 'アプリをインストール'
             }
         };
 
