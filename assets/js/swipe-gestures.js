@@ -9,73 +9,104 @@ class SwipeGestures {
         this.touchStartY = 0;
         this.touchEndX = 0;
         this.touchEndY = 0;
-        this.minSwipeDistance = 50; // Minimum distance for swipe to register
-        this.edgeThreshold = 50; // Distance from edge for back gesture
+        this.minSwipeDistance = 80; // Minimum distance for swipe to register
+        this.edgeThreshold = 80; // Distance from edge for back gesture (larger for easier activation)
         this.isSwipeActive = false;
         this.swipeIndicator = null;
+        this.swipeOverlay = null;
         
         this.init();
     }
 
     init() {
-        // Only activate on touch devices
-        if (!('ontouchstart' in window)) return;
+        // Force activation - check multiple ways
+        const isTouchDevice = ('ontouchstart' in window) || 
+                            (navigator.maxTouchPoints > 0) || 
+                            (navigator.msMaxTouchPoints > 0);
+        
+        console.log('📱 Touch device detected:', isTouchDevice);
+        console.log('📱 User agent:', navigator.userAgent);
 
-        // Add touch event listeners
+        // Add touch event listeners with passive: false to prevent default
         document.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: false });
         document.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false });
         document.addEventListener('touchend', this.handleTouchEnd.bind(this), { passive: false });
 
-        // Create visual swipe indicator
+        // Create visual swipe indicator and overlay
         this.createSwipeIndicator();
+        this.createSwipeOverlay();
 
         console.log('🔄 Swipe Gestures Activated (iOS/Android)');
+        console.log('👈 Try swiping from left edge to go back!');
     }
 
     createSwipeIndicator() {
         this.swipeIndicator = document.createElement('div');
         this.swipeIndicator.className = 'swipe-back-indicator';
         this.swipeIndicator.innerHTML = `
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         `;
         document.body.appendChild(this.swipeIndicator);
     }
 
+    createSwipeOverlay() {
+        this.swipeOverlay = document.createElement('div');
+        this.swipeOverlay.className = 'swipe-overlay';
+        document.body.appendChild(this.swipeOverlay);
+    }
+
     handleTouchStart(e) {
-        this.touchStartX = e.changedTouches[0].screenX;
-        this.touchStartY = e.changedTouches[0].screenY;
+        this.touchStartX = e.touches[0].clientX;
+        this.touchStartY = e.touches[0].clientY;
+        
+        console.log('👆 Touch start at X:', this.touchStartX);
         
         // Check if swipe starts from left edge (for back gesture)
-        if (this.touchStartX < this.edgeThreshold && window.history.length > 1) {
+        if (this.touchStartX < this.edgeThreshold) {
             this.isSwipeActive = true;
             document.body.classList.add('swipe-active');
+            
+            console.log('✅ Edge swipe activated! Swipe from:', this.touchStartX);
+            
+            // Show edge indicator
+            if (this.swipeOverlay) {
+                this.swipeOverlay.classList.add('active');
+            }
         }
     }
 
     handleTouchMove(e) {
         if (!this.isSwipeActive) return;
 
-        this.touchEndX = e.changedTouches[0].screenX;
-        this.touchEndY = e.changedTouches[0].screenY;
+        this.touchEndX = e.touches[0].clientX;
+        this.touchEndY = e.touches[0].clientY;
 
         const swipeDistance = this.touchEndX - this.touchStartX;
         const verticalDistance = Math.abs(this.touchEndY - this.touchStartY);
 
+        console.log('👉 Swipe distance:', swipeDistance);
+
         // Only show indicator if mostly horizontal swipe
-        if (verticalDistance < 50 && swipeDistance > 0) {
-            const progress = Math.min(swipeDistance / 150, 1);
+        if (verticalDistance < 80 && swipeDistance > 0) {
+            const progress = Math.min(swipeDistance / 200, 1);
             
             // Update indicator position and opacity
             if (this.swipeIndicator) {
                 this.swipeIndicator.style.opacity = progress;
-                this.swipeIndicator.style.transform = `translateX(${swipeDistance / 3}px) scale(${0.8 + (progress * 0.2)})`;
+                this.swipeIndicator.style.left = `${20 + (swipeDistance / 4)}px`;
+                this.swipeIndicator.style.transform = `translateY(-50%) scale(${0.8 + (progress * 0.4)})`;
             }
 
-            // Add haptic feedback on iOS (if available)
-            if (progress > 0.7 && window.navigator.vibrate) {
-                window.navigator.vibrate(10);
+            // Update overlay opacity
+            if (this.swipeOverlay) {
+                this.swipeOverlay.style.opacity = progress * 0.3;
+            }
+
+            // Prevent default scrolling during swipe
+            if (swipeDistance > 20) {
+                e.preventDefault();
             }
         }
     }
@@ -83,50 +114,62 @@ class SwipeGestures {
     handleTouchEnd(e) {
         if (!this.isSwipeActive) return;
 
-        this.touchEndX = e.changedTouches[0].screenX;
-        this.touchEndY = e.changedTouches[0].screenY;
+        this.touchEndX = e.changedTouches[0].clientX;
+        this.touchEndY = e.changedTouches[0].clientY;
 
         const swipeDistance = this.touchEndX - this.touchStartX;
         const verticalDistance = Math.abs(this.touchEndY - this.touchStartY);
 
+        console.log('🏁 Swipe ended. Distance:', swipeDistance);
+
         // Reset indicator
         if (this.swipeIndicator) {
             this.swipeIndicator.style.opacity = '0';
-            this.swipeIndicator.style.transform = 'translateX(0) scale(0.8)';
+            this.swipeIndicator.style.left = '20px';
+            this.swipeIndicator.style.transform = 'translateY(-50%) scale(0.8)';
+        }
+
+        if (this.swipeOverlay) {
+            this.swipeOverlay.classList.remove('active');
+            this.swipeOverlay.style.opacity = '0';
         }
 
         document.body.classList.remove('swipe-active');
 
         // Execute swipe action if conditions met
-        if (swipeDistance > this.minSwipeDistance && verticalDistance < 50) {
+        if (swipeDistance > this.minSwipeDistance && verticalDistance < 100) {
+            console.log('✅ SWIPE SUCCESSFUL - Going back!');
             this.handleSwipeRight();
+        } else {
+            console.log('❌ Swipe too short:', swipeDistance, 'Need:', this.minSwipeDistance);
         }
 
         this.isSwipeActive = false;
     }
 
     handleSwipeRight() {
-        // iOS-like back navigation
-        console.log('👈 Swipe Right detected - Going back');
-
-        // Add smooth transition
-        document.body.style.transition = 'transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)';
-        document.body.style.transform = 'translateX(100vw)';
+        console.log('👈 Executing back navigation...');
+        console.log('History length:', window.history.length);
 
         // Haptic feedback
         if (window.navigator.vibrate) {
-            window.navigator.vibrate(15);
+            window.navigator.vibrate(20);
         }
 
-        // Navigate back after animation
-        setTimeout(() => {
+        // Try multiple back navigation methods
+        if (window.history.length > 1) {
+            // Method 1: Standard history.back()
+            console.log('📍 Using history.back()');
             window.history.back();
-            // Reset transform after navigation
-            setTimeout(() => {
-                document.body.style.transition = '';
-                document.body.style.transform = '';
-            }, 100);
-        }, 300);
+        } else if (document.referrer) {
+            // Method 2: Go to referrer
+            console.log('📍 Using referrer:', document.referrer);
+            window.location.href = document.referrer;
+        } else {
+            // Method 3: Go to homepage
+            console.log('📍 Fallback to homepage');
+            window.location.href = '/';
+        }
     }
 
     // Additional gesture: Pull down to refresh (optional)
