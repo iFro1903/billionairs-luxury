@@ -142,11 +142,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+Arabic:wght@300;400;500;700&display=swap" rel="stylesheet">
     
+    <!-- Mobile Performance (Light) - NUR Speed, kein Design -->
+    <link rel="stylesheet" href="assets/css/mobile-performance-light.css">
+    
     <!-- Stripe Payment Processing -->
-    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://js.stripe.com/v3/" defer></script>
     
     <!-- Particles.js -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
     
     <!-- Emergency Mode Check -->
     <script>
@@ -1229,14 +1232,17 @@
     };
     </script>
 
+    <!-- Mobile Performance (Light) - NUR Speed -->
+    <script src="assets/js/mobile-performance-light.js"></script>
+
     <!-- PWA Support -->
-    <script src="assets/js/pwa.js"></script>
+    <script src="assets/js/pwa.js" defer></script>
 
     <!-- PROFESSIONAL LANGUAGE SYSTEM V2 - Simple, Reliable, Ultra-High Z-Index -->
-    <script src="assets/js/language-system.js"></script>
+    <script src="assets/js/language-system.js" defer></script>
 
     <!-- i18n Multi-Language Support -->
-    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/i18n.js" defer></script>
 
     <!-- Accessibility (WCAG 2.1 AA) -->
     <script src="assets/js/accessibility.js"></script>
@@ -1315,13 +1321,13 @@
     </script>
 
     <!-- Push Notifications -->
-    <script src="assets/js/push-notifications.js"></script>
+    <script src="assets/js/push-notifications.js" defer></script>
 
-    <!-- Scripts (Minified for Performance) -->
-    <script src="assets/js/notifications.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/faq.js"></script>
-    <script src="assets/js/stripe-payment.js"></script>
-    <script src="assets/js/payment-methods-new.js"></script>
+    <!-- Scripts - Deferred for Performance -->
+    <script src="assets/js/notifications.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+    <script src="assets/js/faq.js" defer></script>
+    <script src="assets/js/stripe-payment.js" defer></script>
+    <script src="assets/js/payment-methods-new.js" defer></script>
     
 </body>
