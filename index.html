@@ -137,10 +137,13 @@
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="assets/images/logo.png">
     
-    <!-- Premium Fonts -->
+    <!-- Premium Fonts - Optimized for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+Arabic:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+Arabic:wght@300;400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'; this.onload=null;">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+Arabic:wght@300;400;500;700&display=swap" rel="stylesheet">
+    </noscript>
     
     <!-- Mobile Performance (Light) - NUR Speed, kein Design -->
     <link rel="stylesheet" href="assets/css/mobile-performance-light.css">
@@ -148,8 +151,10 @@
     <!-- Stripe Payment Processing -->
     <script src="https://js.stripe.com/v3/" defer></script>
     
-    <!-- Particles.js -->
+    <!-- Particles.js - Deferred for Performance -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     
     <!-- Emergency Mode Check -->
     <script>
@@ -176,13 +181,17 @@
         }
     </script>
     
-    <!-- Stylesheets (Minified for Performance) -->
+    <!-- Stylesheets - Optimized Loading Order (Critical First) -->
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/payment-methods.css">
-    <!-- PROFESSIONAL LANGUAGE SYSTEM V2 -->
-    <link rel="stylesheet" href="assets/css/language-dropdown.css">
-    <link rel="stylesheet" href="assets/css/faq-footer.css">
     <link rel="stylesheet" href="assets/css/mobile-nav.css">
+    <link rel="stylesheet" href="assets/css/payment-methods.css" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="assets/css/language-dropdown.css" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="assets/css/faq-footer.css" media="print" onload="this.media='all'; this.onload=null;">
+    <noscript>
+        <link rel="stylesheet" href="assets/css/payment-methods.css">
+        <link rel="stylesheet" href="assets/css/language-dropdown.css">
+        <link rel="stylesheet" href="assets/css/faq-footer.css">
+    </noscript>
     
     <!-- CRITICAL: Force dark background on autofill - inline to override everything -->
     <style>
@@ -223,7 +232,7 @@
     <!-- Particles Background - Always Visible -->
     <div id="particles-js"></div>
 
-    <!-- Premium Navigation -->
+            <img src="assets/images/logo.png" alt="BILLIONAIRS luxury brand logo" class="nav-logo-img" loading="eager" fetchpriority="high">
     <nav class="premium-nav" role="navigation" aria-label="Main navigation">
         <div class="nav-logo">
             <img src="assets/images/logo.png" alt="BILLIONAIRS luxury brand logo" class="nav-logo-img">
@@ -292,7 +301,7 @@
                     </div>
                     
                     <div class="brand-logo">
-                        <img src="assets/images/logo.png" alt="BILLIONAIRS luxury brand logo with gold lettering" class="logo-image">
+                        <img src="assets/images/logo.png" alt="BILLIONAIRS luxury brand logo with gold lettering" class="logo-image" loading="eager" fetchpriority="high">
                     </div>
                     
                     <h1 class="hero-title-new" id="hero-title">
@@ -413,7 +422,7 @@
         <section id="transitionSection" class="transition-section" style="display: none;">
             <div class="transition-container">
                 <div class="transition-logo">
-                    <img src="assets/images/logo.png" alt="BILLIONAIRS" class="logo-transition">
+                    <img src="assets/images/logo.png" alt="BILLIONAIRS" class="logo-transition" loading="lazy">
                 </div>
                 <div class="progress-bar">
                     <div class="progress-fill"></div>
