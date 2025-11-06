@@ -103,6 +103,9 @@
     position: relative;
     overflow: hidden;
     z-index: 1;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
 }
 
 .mobile-btn::before {
@@ -120,6 +123,12 @@
     left: 100%;
 }
 
+.mobile-btn:active {
+    transform: scale(0.97);
+    background: linear-gradient(135deg, rgba(232, 180, 184, 0.2) 0%, rgba(232, 180, 184, 0.3) 100%);
+    border-color: #e8b4b8;
+}
+
 .mobile-btn:hover {
     background: linear-gradient(135deg, rgba(232, 180, 184, 0.15) 0%, rgba(232, 180, 184, 0.25) 100%);
     border-color: #e8b4b8;
@@ -131,10 +140,19 @@
 @media (max-width: 768px) {
     .mobile-hamburger {
         display: block !important;
+        min-width: 44px;
+        min-height: 44px;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
     }
     .nav-member,
     .lang-switcher,
     .nav-contact {
         display: none !important;
+    }
+    
+    .mobile-btn {
+        min-height: 60px;
+        font-size: 0.8rem;
     }
 }

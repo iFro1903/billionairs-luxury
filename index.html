@@ -1259,6 +1259,22 @@
             const languageBtn = document.getElementById('mobileLanguage');
             const contactBtn = document.getElementById('mobileContact');
 
+            // Touch feedback for buttons
+            function addTouchFeedback(button) {
+                button.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.97)';
+                }, { passive: true });
+                
+                button.addEventListener('touchend', function() {
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                }, { passive: true });
+            }
+
+            // Add touch feedback to all mobile buttons
+            [innerCircleBtn, languageBtn, contactBtn].forEach(btn => addTouchFeedback(btn));
+
             // Toggle menu
             hamburger.addEventListener('click', function() {
                 hamburger.classList.toggle('active');
