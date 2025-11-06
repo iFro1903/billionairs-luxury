@@ -5,7 +5,8 @@
     border: none;
     cursor: pointer;
     padding: 5px;
-    z-index: 999999;
+    z-index: 10001;
+    position: relative;
 }
 
 .mobile-hamburger span {
@@ -41,13 +42,14 @@
         rgba(25, 15, 18, 0.97) 60%,
         rgba(20, 12, 15, 0.98) 100%);
     backdrop-filter: blur(30px) saturate(120%);
-    z-index: 999998;
+    z-index: 10000;
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 3rem;
     overflow: hidden;
+    pointer-events: none;
 }
 
 /* Visible shine effect on overlay */
@@ -78,9 +80,10 @@
         opacity: 1; 
     }
 }
-
 .mobile-overlay.active {
     display: flex;
+    pointer-events: auto;
+}   display: flex;
 }
 
 .mobile-btn {
