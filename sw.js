@@ -1,8 +1,9 @@
 // Service Worker for BILLIONAIRS PWA
 // Provides offline support and performance caching
 
-const CACHE_NAME = 'billionairs-v1.0.2';
-const RUNTIME_CACHE = 'billionairs-runtime-v1.0.2';
+const CACHE_NAME = 'billionairs-v1.0.3';
+const RUNTIME_CACHE = 'billionairs-runtime-v1.0.3';
+const IMAGE_CACHE = 'billionairs-images-v1.0.3';
 
 // Resources to cache immediately on install
 const PRECACHE_URLS = [
@@ -18,7 +19,10 @@ const PRECACHE_URLS = [
     '/assets/css/cookie-consent.css',
     '/assets/js/analytics.js',
     '/assets/js/cookie-consent.js',
+    '/assets/js/i18n.js',
+    '/assets/js/lang-dropdown-simple.js',
     '/assets/images/logo.png',
+    '/assets/images/og-image.jpg',
     '/manifest.json'
 ];
 
@@ -46,11 +50,13 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
     console.log('[Service Worker] Activating...');
     
+    const currentCaches = [CACHE_NAME, RUNTIME_CACHE, IMAGE_CACHE];
+    
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
-                    if (cacheName !== CACHE_NAME && cacheName !== RUNTIME_CACHE) {
+                    if (!currentCaches.includes(cacheName)) {
                         console.log('[Service Worker] Deleting old cache:', cacheName);
                         return caches.delete(cacheName);
                     }
@@ -110,7 +116,7 @@ self.addEventListener('fetch', (event) => {
         caches.match(request)
             .then((cachedResponse) => {
                 if (cachedResponse) {
-                    // Return cached version
+                    // Return cached version immediately
                     return cachedResponse;
                 }
 
@@ -122,9 +128,11 @@ self.addEventListener('fetch', (event) => {
                             return response;
                         }
 
-                        // Cache the fetched resource
+                        // Choose cache based on resource type
                         const responseClone = response.clone();
-                        caches.open(RUNTIME_CACHE).then((cache) => {
+                        const cacheToUse = request.destination === 'image' ? IMAGE_CACHE : RUNTIME_CACHE;
+                        
+                        caches.open(cacheToUse).then((cache) => {
                             cache.put(request, responseClone);
                         });
 
