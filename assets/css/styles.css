@@ -564,11 +564,11 @@ div:not(.clickable) {
 }
 
 .hook-accept {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.85);
     font-weight: 400;
     letter-spacing: 0.5px;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
     line-height: 1.6;
 }
 
