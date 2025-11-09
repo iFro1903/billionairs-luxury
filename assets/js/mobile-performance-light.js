@@ -47,12 +47,7 @@
 
     // ===== PRELOAD CRITICAL RESOURCES =====
     function preloadCritical() {
-        // Logo sofort preloaden
-        const logoLink = document.createElement('link');
-        logoLink.rel = 'preload';
-        logoLink.as = 'image';
-        logoLink.href = 'assets/images/logo.png';
-        document.head.appendChild(logoLink);
+        // Logo wird bereits im HTML <head> preloaded
         
         // Kritische CSS für Buttons preloaden
         const stylesheets = ['styles.css', 'mobile-nav.css'];
