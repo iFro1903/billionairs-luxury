@@ -1,9 +1,9 @@
 // Service Worker for BILLIONAIRS PWA
 // Provides offline support and performance caching
 
-const CACHE_NAME = 'billionairs-v1.0.3';
-const RUNTIME_CACHE = 'billionairs-runtime-v1.0.3';
-const IMAGE_CACHE = 'billionairs-images-v1.0.3';
+const CACHE_NAME = 'billionairs-v1.0.4';
+const RUNTIME_CACHE = 'billionairs-runtime-v1.0.4';
+const IMAGE_CACHE = 'billionairs-images-v1.0.4';
 
 // Resources to cache immediately on install
 const PRECACHE_URLS = [
@@ -111,17 +111,13 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // Cache-first strategy for assets (CSS, JS, images)
+    // Stale-While-Revalidate strategy for assets (CSS, JS, images)
+    // Shows cached version immediately, but updates in background
     event.respondWith(
         caches.match(request)
             .then((cachedResponse) => {
-                if (cachedResponse) {
-                    // Return cached version immediately
-                    return cachedResponse;
-                }
-
-                // Not in cache, fetch from network
-                return fetch(request)
+                // Fetch fresh version in background
+                const fetchPromise = fetch(request)
                     .then((response) => {
                         // Don't cache if not successful
                         if (!response || response.status !== 200 || response.type === 'error') {
@@ -151,8 +147,21 @@ self.addEventListener('fetch', (event) => {
                         
                         throw error;
                     });
+
+                // Return cached version immediately, or wait for network
+                return cachedResponse || fetchPromise;
             })
     );
+});
+
+// ============================================================================
+// Message Event - Allow skipping waiting for immediate activation
+// ============================================================================
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        console.log('[Service Worker] Skipping waiting - activating immediately');
+        self.skipWaiting();
+    }
 });
 
 // ============================================================================
