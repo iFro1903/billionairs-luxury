@@ -9,8 +9,8 @@
     // ===== LAZY LOADING FÜR SECTIONS =====
     const observerOptions = {
         root: null,
-        rootMargin: '50px',
-        threshold: 0.1
+        rootMargin: '400px', // Erhöht von 50px - lädt Inhalte früher beim Scrollen
+        threshold: 0.01 // Reduziert von 0.1 - reagiert schneller
     };
 
     const sectionObserver = new IntersectionObserver((entries) => {
@@ -25,6 +25,13 @@
     function initLazyLoading() {
         const sections = document.querySelectorAll('section');
         sections.forEach(section => {
+            // Hero Section NICHT lazy loaden - sofort anzeigen
+            if (section.classList.contains('hero') || section.id === 'heroSection') {
+                section.classList.add('visible');
+                return;
+            }
+            
+            // Alle anderen Sections lazy loaden
             section.classList.add('fade-in-section');
             sectionObserver.observe(section);
         });
@@ -40,11 +47,22 @@
 
     // ===== PRELOAD CRITICAL RESOURCES =====
     function preloadCritical() {
+        // Logo sofort preloaden
         const logoLink = document.createElement('link');
         logoLink.rel = 'preload';
         logoLink.as = 'image';
         logoLink.href = 'assets/images/logo.png';
         document.head.appendChild(logoLink);
+        
+        // Kritische CSS für Buttons preloaden
+        const stylesheets = ['styles.css', 'mobile-nav.css'];
+        stylesheets.forEach(css => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = 'style';
+            link.href = `assets/css/${css}`;
+            document.head.appendChild(link);
+        });
     }
 
     // ===== REQUEST IDLE CALLBACK =====
