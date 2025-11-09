@@ -270,6 +270,9 @@
 @media (max-width: 768px) {
     .cookie-consent-overlay {
         padding: 10px;
+        max-height: 90vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .cookie-consent-container {
@@ -278,6 +281,10 @@
 
     .cookie-consent-header {
         padding: 15px 20px;
+        position: sticky;
+        top: 0;
+        background: linear-gradient(135deg, rgba(232, 180, 184, 0.08), rgba(232, 180, 184, 0.03));
+        z-index: 1;
     }
 
     .cookie-consent-header h3 {
@@ -286,6 +293,7 @@
 
     .cookie-consent-body {
         padding: 20px;
+        max-height: none;
     }
 
     .cookie-description {
@@ -296,6 +304,11 @@
     .cookie-consent-footer {
         flex-direction: column;
         padding: 15px 20px;
+        position: sticky;
+        bottom: 0;
+        background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+        z-index: 1;
+        border-top: 1px solid rgba(232, 180, 184, 0.15);
     }
 
     .cookie-btn {
@@ -317,6 +330,11 @@
 }
 
 @media (max-width: 480px) {
+    .cookie-consent-overlay {
+        max-height: 85vh;
+        padding: 5px;
+    }
+    
     .cookie-consent-header h3 {
         font-size: 1.1rem;
     }
