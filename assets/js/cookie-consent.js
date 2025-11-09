@@ -76,11 +76,8 @@ class CookieConsent {
         const banner = document.createElement('div');
         banner.id = 'cookieConsentBanner';
         
-        // Auto-hide after 8 seconds if no interaction
-        this.autoHideTimer = setTimeout(() => {
-            console.log('🍪 Auto-hiding cookie banner after 8 seconds...');
-            this.hideConsentBanner();
-        }, 8000);
+        // GDPR COMPLIANT: Banner bleibt bis User eine Wahl trifft
+        // Kein Auto-Hide mehr!
         
         banner.innerHTML = `
             <div class="cookie-consent-overlay">
@@ -168,36 +165,24 @@ class CookieConsent {
         const acceptAllBtn = document.getElementById('acceptAllCookies');
         const acceptSelectedBtn = document.getElementById('acceptSelectedCookies');
         const rejectAllBtn = document.getElementById('rejectAllCookies');
-        
-        // Clear auto-hide timer on any interaction
-        const banner = document.getElementById('cookieConsentBanner');
-        if (banner && this.autoHideTimer) {
-            banner.addEventListener('click', () => {
-                clearTimeout(this.autoHideTimer);
-                console.log('🍪 Auto-hide cancelled by user interaction');
-            });
-        }
 
         if (acceptAllBtn) {
             acceptAllBtn.addEventListener('click', () => {
-                console.log('Accept All clicked');
-                clearTimeout(this.autoHideTimer);
+                console.log('✅ Accept All clicked');
                 this.acceptAll();
             });
         }
 
         if (acceptSelectedBtn) {
             acceptSelectedBtn.addEventListener('click', () => {
-                console.log('Accept Selected clicked');
-                clearTimeout(this.autoHideTimer);
+                console.log('✅ Accept Selected clicked');
                 this.acceptSelected();
             });
         }
 
         if (rejectAllBtn) {
             rejectAllBtn.addEventListener('click', () => {
-                console.log('Reject All clicked');
-                clearTimeout(this.autoHideTimer);
+                console.log('✅ Reject All clicked');
                 this.rejectAll();
             });
         }
