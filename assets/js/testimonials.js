@@ -101,15 +101,9 @@ document.addEventListener('DOMContentLoaded', function() {
             showTestimonial(memberId);
         });
 
-        // Add inline preview comment to member tile
-        const id = element.getAttribute('data-member');
-        if (memberTestimonials[id]) {
-            const short = memberTestimonials[id].text.split('\n')[0];
-            const preview = document.createElement('div');
-            preview.className = 'member-comment';
-            preview.textContent = short;
-            element.parentNode.insertBefore(preview, element.nextSibling);
-        }
+        // NOTE: Inline preview removed — comments will appear only in the modal
+        // when the user clicks a testimonial. This preserves anonymity and
+        // avoids cluttering the grid. The modal is populated in showTestimonial().
     });
     
     // Close modal handlers
