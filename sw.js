@@ -139,8 +139,8 @@ self.addEventListener('fetch', (event) => {
                         
                         // Return placeholder for images if offline
                         if (request.destination === 'image') {
-                            return new Response(
-                                '<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><rect fill="#1a1a2e" width="200" height="200"/><text fill="#d4af37" x="50%" y="50%" text-anchor="middle" dy=".3em" font-family="Arial" font-size="16">Offline</text></svg>',
+                                return new Response(
+                                '<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><rect fill="#1a1a2e" width="200" height="200"/><text fill="#D4A574" x="50%" y="50%" text-anchor="middle" dy=".3em" font-family="Arial" font-size="16">Offline</text></svg>',
                                 { headers: { 'Content-Type': 'image/svg+xml' } }
                             );
                         }

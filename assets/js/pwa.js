@@ -72,7 +72,7 @@ function createFloatingInstallButton() {
         position: fixed;
         bottom: 80px;
         right: 20px;
-        background: linear-gradient(135deg, #d4af37, #f4e4a8);
+    background: linear-gradient(135deg, #E8B4A0, #f4e4a8);
         color: #1a1a2e;
         border: none;
         border-radius: 50px;
@@ -80,7 +80,7 @@ function createFloatingInstallButton() {
         font-size: 14px;
         font-weight: 700;
         cursor: pointer;
-        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+    box-shadow: 0 4px 20px rgba(232, 180, 160, 0.4);
         z-index: 999998;
         display: flex;
         align-items: center;
@@ -92,11 +92,11 @@ function createFloatingInstallButton() {
     button.addEventListener('click', installApp);
     button.addEventListener('mouseenter', () => {
         button.style.transform = 'translateY(-2px)';
-        button.style.boxShadow = '0 6px 25px rgba(212, 175, 55, 0.6)';
+    button.style.boxShadow = '0 6px 25px rgba(232, 180, 160, 0.6)';
     });
     button.addEventListener('mouseleave', () => {
         button.style.transform = 'translateY(0)';
-        button.style.boxShadow = '0 4px 20px rgba(212, 175, 55, 0.4)';
+    button.style.boxShadow = '0 4px 20px rgba(232, 180, 160, 0.4)';
     });
     
     document.body.appendChild(button);

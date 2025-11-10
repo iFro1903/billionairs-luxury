@@ -1,0 +1,236 @@
+/*
+═══════════════════════════════════════════════════════════════════════════
+  MEMBER TESTIMONIALS STYLES
+  Click-to-reveal authentic member reviews
+═══════════════════════════════════════════════════════════════════════════
+*/
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CLICKABLE MEMBERS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.member-testimonial {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 12px 20px;
+    border: 1px solid rgba(232, 180, 160, 0.3);
+    border-radius: 5px;
+}
+
+.member-testimonial:hover {
+    background: rgba(232, 180, 160, 0.1);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(232, 180, 160, 0.2);
+}
+
+.member-testimonial::after {
+    content: '→';
+    position: absolute;
+    right: 15px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    color: var(--gold);
+}
+
+.member-testimonial:hover::after {
+    opacity: 1;
+    right: 10px;
+}
+
+.member-info {
+    padding: 12px 20px;
+    border: 1px solid rgba(232, 180, 160, 0.2);
+    border-radius: 5px;
+    opacity: 0.7;
+    cursor: default;
+}
+
+.testimonial-hint {
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(232, 180, 160, 0.7);
+    margin-top: 20px;
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
+
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TESTIMONIAL MODAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.testimonial-modal {
+    display: none;
+    position: fixed;
+    z-index: 100000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.testimonial-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
+.testimonial-modal-content {
+    background: var(--luxury-gradient);
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    padding: 50px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(232, 180, 160, 0.3);
+    will-change: transform, opacity;
+    animation: modalPopIn 220ms cubic-bezier(.2,.9,.3,1);
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.testimonial-close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--gold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    line-height: 1;
+}
+
+.testimonial-close:hover {
+    color: var(--champagne-light);
+    transform: rotate(90deg);
+}
+
+.testimonial-body {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.testimonial-member-info h3 {
+    font-size: 1.8rem;
+         border: 1px solid rgba(232, 180, 160, 0.3);
+    margin: 0 0 10px 0;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+         border-color: var(--rose-gold-primary);
+.testimonial-member-info p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.testimonial-divider {
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(to right, 
+        transparent, 
+        var(--gold), 
+        transparent
+    );
+         color: rgba(232, 180, 160, 0.7);
+}
+
+.testimonial-body blockquote {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+         border: 2px solid var(--rose-gold-primary);
+    border: none;
+    font-weight: 300;
+    white-space: pre-line;
+}
+
+.testimonial-date {
+    margin-top: 30px;
+         box-shadow: 0 20px 60px rgba(232, 180, 160, 0.3);
+    border-top: 1px solid rgba(232, 180, 160, 0.2);
+    font-size: 0.9rem;
+    color: rgba(232, 180, 160, 0.7);
+    text-align: right;
+    font-style: italic;
+}
+         color: var(--rose-gold-primary);
+/* Scrollbar for modal content */
+.testimonial-modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.testimonial-modal-content::-webkit-scrollbar-track {
+    background: rgba(232, 180, 160, 0.1);
+    border-radius: 10px;
+         background: linear-gradient(to right, 
+              transparent, 
+              var(--rose-gold-primary), 
+              transparent
+         );
+}
+
+.testimonial-modal-content::-webkit-scrollbar-thumb:hover {
+    background: #f4c2a1;
+}
+
+         border-top: 1px solid rgba(232, 180, 160, 0.2);
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+         color: rgba(232, 180, 160, 0.7);
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@media (max-width: 768px) {
+    .testimonial-modal-content {
+        padding: 30px 25px;
+         background: rgba(232, 180, 160, 0.1);
+        max-height: 90vh;
+    }
+    
+    .testimonial-close {
+         background: var(--rose-gold-primary);
+        right: 20px;
+        font-size: 1.5rem;
+    }
+    
+         background: #f4c2a1;
+        font-size: 1.4rem;
+    }
+    
+    .testimonial-member-info p {
+        font-size: 0.9rem;
+    }
+    
+    .testimonial-body blockquote {
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+    
+    .testimonial-hint {
+        font-size: 0.8rem;
+    }
+    
+    .member-testimonial::after {
+        display: none; /* Hide arrow on mobile */
+    }
+}

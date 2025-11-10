@@ -1,0 +1,34 @@
+/* Inline member comment preview - matches site text color, not blue */
+.member-comment {
+    font-size: 0.9rem;
+    color: var(--text-platinum); /* match site text color */
+    margin-top: 10px;
+    max-width: 420px;
+    line-height: 1.4;
+    opacity: 0.95;
+}
+
+/* Remove default link color from any anchors in comments */
+.member-comment a, .member-comment a:visited {
+    color: var(--luxury-gold); /* gold link like everywhere */
+    text-decoration: none;
+}
+
+.member-comment a:hover {
+    color: var(--champagne-light);
+    text-decoration: underline;
+}
+
+/* Truncate long previews on desktop */
+@media (min-width: 769px) {
+    .member-comment {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 768px) {
+    .member-comment { font-size: 0.85rem; max-width: 100%; }
+}
