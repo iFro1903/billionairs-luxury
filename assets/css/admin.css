@@ -74,7 +74,7 @@ body {
 .login-container button {
     width: 100%;
     padding: 1rem;
-    background: linear-gradient(135deg, #E8C4A8 0%, #d4af37 100%);
+    background: linear-gradient(135deg, var(--rose-gold-primary) 0%, var(--rose-gold-secondary) 100%);
     border: none;
     border-radius: 8px;
     color: #0a0a0a;
@@ -142,7 +142,7 @@ body {
 }
 
 .ceo-badge {
-    background: linear-gradient(135deg, #E8C4A8 0%, #d4af37 100%);
+    background: linear-gradient(135deg, var(--rose-gold-primary) 0%, var(--rose-gold-secondary) 100%);
     color: #0a0a0a;
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
@@ -246,7 +246,7 @@ body {
 }
 
 .nav-btn.active {
-    background: linear-gradient(135deg, #E8C4A8 0%, #d4af37 100%);
+    background: linear-gradient(135deg, var(--rose-gold-primary) 0%, var(--rose-gold-secondary) 100%);
     color: #0a0a0a;
     border-color: transparent;
 }
@@ -537,8 +537,8 @@ tbody tr:hover {
 
 .btn-refund-partial {
     padding: 0.35rem 0.75rem;
-    background: linear-gradient(135deg, #d4af37 0%, #c99b2a 100%);
-    border: 1px solid rgba(212, 175, 55, 0.5);
+    background: linear-gradient(135deg, var(--rose-gold-secondary) 0%, #c99b2a 100%);
+    border: 1px solid rgba(232, 180, 160, 0.5);
     border-radius: 6px;
     color: #0a0a0a;
     cursor: pointer;
@@ -548,8 +548,8 @@ tbody tr:hover {
 }
 
 .btn-refund-partial:hover {
-    background: linear-gradient(135deg, #e5c047 0%, #d4af37 100%);
-    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    background: linear-gradient(135deg, var(--rose-gold-primary) 0%, var(--rose-gold-secondary) 100%);
+    box-shadow: 0 4px 12px rgba(232, 180, 160, 0.3);
     transform: translateY(-1px);
 }
 

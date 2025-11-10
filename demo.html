@@ -188,10 +188,8 @@
     
     <!-- Stylesheets - Optimized Loading Order (Critical First) -->
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/demo-enhancements.css">
     <link rel="stylesheet" href="assets/css/mobile-nav.css">
-    <link rel="stylesheet" href="assets/css/testimonials.css">
-    <link rel="stylesheet" href="assets/css/member-comments.css">
-    <link rel="stylesheet" href="assets/css/benefits.css">
     <link rel="stylesheet" href="assets/css/payment-methods.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/language-dropdown.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/faq-footer.css" media="print" onload="this.media='all'; this.onload=null;">
@@ -412,22 +410,22 @@
                 </div>
 
                 <div class="trust-benefits">
-                    <div class="trust-benefit-card benefit-card" data-benefit="global" role="button" tabindex="0" title="Click for more details">
+                    <div class="trust-benefit-card">
                         <h4>Global Access</h4>
                         <p>Quarterly gatherings in Monaco, Dubai, Zürich</p>
                     </div>
                     
-                    <div class="trust-benefit-card benefit-card" data-benefit="circle" role="button" tabindex="0" title="Click for more details">
+                    <div class="trust-benefit-card">
                         <h4>Private Circle</h4>
                         <p>47 verified UHNWIs worldwide</p>
                     </div>
                     
-                    <div class="trust-benefit-card benefit-card" data-benefit="premarket" role="button" tabindex="0" title="Click for more details">
+                    <div class="trust-benefit-card">
                         <h4>Pre-Market</h4>
                         <p>Opportunities before they're public</p>
                     </div>
                     
-                    <div class="trust-benefit-card benefit-card" data-benefit="discretion" role="button" tabindex="0" title="Click for more details">
+                    <div class="trust-benefit-card">
                         <h4>Discretion</h4>
                         <p>What happens here, stays here</p>
                     </div>
@@ -436,46 +434,53 @@
                 <div class="trust-social-proof">
                     <h3>Trusted by members across 12 countries</h3>
                     <div class="trust-member-grid">
-                        <span class="member-testimonial" data-member="fk">F.K. • Tech Exit • SF</span>
-                        <span class="member-testimonial" data-member="am">A.M. • Family Office • ZH</span>
-                        <span class="member-testimonial" data-member="anon">Anon • Crypto OG • Dubai</span>
-                        <span class="member-testimonial" data-member="mr">M.R. • Real Estate • London</span>
-                        <span class="member-testimonial" data-member="sl">S.L. • Private Equity • NYC</span>
-                        <span class="member-info">+ 42 others</span>
-                    </div>
-                    <p class="testimonial-hint">Click on members to read their experience</p>
-                </div>
-
-                <!-- Member Testimonial Modal -->
-                <div id="testimonialModal" class="testimonial-modal">
-                    <div class="testimonial-modal-content">
-                        <span class="testimonial-close">&times;</span>
-                        <div class="testimonial-body">
-                            <div class="testimonial-member-info">
-                                <h3 id="testimonialMemberName"></h3>
-                                <p id="testimonialMemberRole"></p>
-                            </div>
-                            <div class="testimonial-divider"></div>
-                            <blockquote id="testimonialText"></blockquote>
-                            <div class="testimonial-date" id="testimonialDate"></div>
-                        </div>
+                        <span>F.K. • Tech Exit • SF</span>
+                        <span>A.M. • Family Office • ZH</span>
+                        <span>Anon • Crypto OG • Dubai</span>
+                        <span>M.R. • Real Estate • London</span>
+                        <span>S.L. • Private Equity • NYC</span>
+                        <span>+ 42 others</span>
                     </div>
                 </div>
 
-                <!-- Benefit Detail Modal -->
-                <div id="benefitModal" class="benefit-modal">
-                    <div class="benefit-modal-content">
-                        <span class="benefit-close">&times;</span>
-                        <div class="benefit-body">
-                            <div class="benefit-head">
-                                <h3 id="benefitTitle"></h3>
-                                <p id="benefitSubtitle"></p>
+                <!-- DEMO: Proof of Events Section -->
+                <div class="trust-events-proof">
+                    <h3>Recent Gatherings</h3>
+                    <div class="events-grid">
+                        <div class="event-card">
+                            <div class="event-image-placeholder">
+                                <div class="event-blur-overlay">
+                                    <span>📸</span>
+                                    <p>Monaco</p>
+                                </div>
                             </div>
-                            <div class="benefit-divider"></div>
-                            <div id="benefitText" class="benefit-text"></div>
+                            <div class="event-details">
+                                <p class="event-location">Monaco • Le Méridien Beach Plaza</p>
+                                <p class="event-date">September 2025</p>
+                                <p class="event-note">Private yacht gathering • 23 members</p>
+                            </div>
+                        </div>
+                        
+                        <div class="event-card upcoming">
+                            <div class="event-image-placeholder upcoming-badge">
+                                <div class="event-blur-overlay">
+                                    <span>📅</span>
+                                    <p>Dubai</p>
+                                </div>
+                            </div>
+                            <div class="event-details">
+                                <p class="event-location">Dubai • Burj Al Arab</p>
+                                <p class="event-date">December 2025</p>
+                                <p class="event-note">Members-only: Pre-market real estate tour</p>
+                            </div>
                         </div>
                     </div>
+                    
+                    <div class="next-event-teaser">
+                        <p><strong>Next:</strong> Zürich Private Banking Summit • March 2026</p>
+                    </div>
                 </div>
+
                 <div class="trust-reality-check">
                     <h3>Let's be honest:</h3>
                     <ul>
@@ -1464,9 +1469,33 @@
     <script src="assets/js/notifications.js" defer></script>
     <script src="assets/js/main.js" defer></script>
     <script src="assets/js/faq.js" defer></script>
-    <script src="assets/js/testimonials.js" defer></script>
     <script src="assets/js/stripe-payment.js" defer></script>
     <script src="assets/js/payment-methods-new.js" defer></script>
-    <script src="assets/js/benefits.js" defer></script>
+    
+    <!-- DEMO: Legal Footer -->
+    <footer class="demo-legal-footer">
+        <div class="legal-container">
+            <div class="legal-entity">
+                <h4>BILLIONAIRS AG</h4>
+                <p>Bahnhofstrasse 100, 8001 Zürich, Switzerland</p>
+                <p>CHE-123.456.789 (UID)</p>
+            </div>
+            <div class="legal-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms & Conditions</a>
+                <a href="#impressum">Impressum</a>
+            </div>
+            <div class="legal-contact">
+                <p>Concierge: <a href="mailto:concierge@billionairs.luxury">concierge@billionairs.luxury</a></p>
+                <p>Legal: <a href="mailto:legal@billionairs.luxury">legal@billionairs.luxury</a></p>
+            </div>
+            <div class="legal-note">
+                <p style="font-size: 0.8em; opacity: 0.6; margin-top: 20px;">
+                    🎭 <strong>DEMO VERSION</strong> - This is an example with fictional company data.<br>
+                    All company information, events, and testimonials are for demonstration purposes only.
+                </p>
+            </div>
+        </div>
+    </footer>
     
 </body>

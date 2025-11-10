@@ -250,19 +250,19 @@
     bottom: 20px;
     left: 20px;
     background: rgba(26, 26, 46, 0.9);
-    color: #d4af37;
+    color: var(--rose-gold-secondary);
     padding: 10px 15px;
     border-radius: 8px;
     text-decoration: none;
     font-size: 0.9rem;
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    border: 1px solid rgba(232, 180, 160, 0.3);
     transition: all 0.3s ease;
     z-index: 99999;
 }
 
 .cookie-settings-link:hover {
     background: rgba(26, 26, 46, 1);
-    border-color: #d4af37;
+    border-color: var(--rose-gold-secondary);
     transform: translateY(-2px);
 }
 
@@ -372,12 +372,12 @@
 /* Accessibility */
 .cookie-btn:focus,
 .cookie-switch input:focus + .cookie-slider {
-    outline: 3px solid rgba(212, 175, 55, 0.5);
+    outline: 3px solid rgba(232, 180, 160, 0.5);
     outline-offset: 2px;
 }
 
 .cookie-links a:focus {
-    outline: 2px solid #d4af37;
+    outline: 2px solid var(--rose-gold-secondary);
     outline-offset: 2px;
 }
 

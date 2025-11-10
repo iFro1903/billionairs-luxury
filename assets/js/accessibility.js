@@ -262,7 +262,7 @@ class AccessibilityManager {
 
             /* Enhanced Focus Indicators */
             body:not(.using-mouse) *:focus {
-                outline: 3px solid #d4af37 !important;
+                outline: 3px solid #E8B4A0 !important;
                 outline-offset: 2px !important;
             }
 
@@ -272,9 +272,9 @@ class AccessibilityManager {
             input:focus-visible,
             select:focus-visible,
             textarea:focus-visible {
-                outline: 3px solid #d4af37;
+                outline: 3px solid #E8B4A0;
                 outline-offset: 2px;
-                box-shadow: 0 0 0 5px rgba(212, 175, 55, 0.2);
+                box-shadow: 0 0 0 5px rgba(232, 180, 160, 0.2);
             }
 
             /* High contrast mode support */

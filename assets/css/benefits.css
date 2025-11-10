@@ -1,0 +1,81 @@
+/* Benefit card hover + modal styles */
+
+.benefit-card {
+    cursor: pointer;
+}
+
+.benefit-card h4 {
+    font-weight: 600;
+}
+
+.benefit-card p {
+    color: rgba(255,255,255,0.7);
+}
+
+/* Benefit modal styles are intentionally subtle and match testimonials */
+.benefit-modal {
+    display: none;
+    position: fixed;
+    z-index: 100000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.95);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.benefit-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
+.benefit-modal-content {
+    background: linear-gradient(135deg, rgba(20,20,30,0.98), rgba(15,15,25,0.98));
+    border: 1px solid rgba(232,180,160,0.2);
+    border-radius: 10px;
+    padding: 30px 40px;
+    max-width: 680px;
+    width: 90%;
+    color: rgba(255,255,255,0.95);
+    transform-origin: center;
+    will-change: transform, opacity;
+    animation: modalPopIn 220ms cubic-bezier(.2,.9,.3,1);
+}
+
+.benefit-close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    font-size: 1.8rem;
+    color: rgba(232,180,160,0.8);
+    cursor: pointer;
+}
+
+.benefit-head h3 {
+    color: var(--rose-gold-primary);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.benefit-divider {
+    width: 90px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--rose-gold-primary), transparent);
+    margin: 20px 0;
+}
+
+.benefit-text {
+    font-style: normal;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.9);
+}
+
+@media (max-width: 768px) {
+    .benefit-modal-content { padding: 20px; }
+}

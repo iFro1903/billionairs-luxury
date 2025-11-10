@@ -413,12 +413,12 @@ const templates = {
     <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%); padding: 40px 20px;">
         <tr>
             <td align="center">
-                <table width="600" cellpadding="0" cellspacing="0" style="background: rgba(26, 26, 46, 0.95); border-radius: 20px; border: 2px solid rgba(212, 175, 55, 0.3); overflow: hidden;">
+                <table width="600" cellpadding="0" cellspacing="0" style="background: rgba(26, 26, 46, 0.95); border-radius: 20px; border: 2px solid rgba(232, 180, 160, 0.3); overflow: hidden;">
                     <!-- Header -->
                     <tr>
-                        <td style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.1)); padding: 40px 30px; text-align: center; border-bottom: 1px solid rgba(212, 175, 55, 0.3);">
+                        <td style="background: linear-gradient(135deg, rgba(232, 180, 160, 0.3), rgba(232, 180, 160, 0.1)); padding: 40px 30px; text-align: center; border-bottom: 1px solid rgba(232, 180, 160, 0.3);">
                             <div style="font-size: 60px; margin-bottom: 15px;">🎁</div>
-                            <h1 style="margin: 0; font-size: 32px; color: #d4af37; font-weight: 900; letter-spacing: 2px;">
+                            <h1 style="margin: 0; font-size: 32px; color: #D4A574; font-weight: 900; letter-spacing: 2px;">
                                 ACHIEVEMENT UNLOCKED
                             </h1>
                         </td>
@@ -427,14 +427,14 @@ const templates = {
                     <!-- Body -->
                     <tr>
                         <td style="padding: 40px 30px; color: #ffffff;">
-                            <h2 style="margin: 0 0 20px 0; font-size: 24px; color: #d4af37;">Congratulations, ${userName || 'Member'}!</h2>
+                            <h2 style="margin: 0 0 20px 0; font-size: 24px; color: #D4A574;">Congratulations, ${userName || 'Member'}!</h2>
                             
                             <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.9);">
                                 You've discovered something extraordinary. Only a select few will ever unlock this achievement.
                             </p>
                             
-                            <div style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.05)); border: 2px solid rgba(212, 175, 55, 0.5); padding: 30px; margin: 30px 0; border-radius: 15px; text-align: center; box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);">
-                                <h3 style="margin: 0 0 15px 0; font-size: 26px; color: #d4af37; text-transform: uppercase; letter-spacing: 2px;">
+                            <div style="background: linear-gradient(135deg, rgba(232, 180, 160, 0.2), rgba(232, 180, 160, 0.05)); border: 2px solid rgba(232, 180, 160, 0.5); padding: 30px; margin: 30px 0; border-radius: 15px; text-align: center; box-shadow: 0 10px 40px rgba(232, 180, 160, 0.2);">
+                                <h3 style="margin: 0 0 15px 0; font-size: 26px; color: #D4A574; text-transform: uppercase; letter-spacing: 2px;">
                                     ${eggName}
                                 </h3>
                                 <p style="margin: 0; font-size: 16px; color: rgba(255, 255, 255, 0.9); line-height: 1.6;">
@@ -442,7 +442,7 @@ const templates = {
                                 </p>
                             </div>
                             
-                            <div style="background: rgba(0, 0, 0, 0.3); border-left: 4px solid #d4af37; padding: 20px; margin: 30px 0; border-radius: 8px;">
+                            <div style="background: rgba(0, 0, 0, 0.3); border-left: 4px solid #D4A574; padding: 20px; margin: 30px 0; border-radius: 8px;">
                                 <p style="margin: 0; font-size: 15px; color: rgba(255, 255, 255, 0.8); font-style: italic;">
                                     "In a world of billions, you are among the few who look beyond the surface."
                                 </p>
@@ -455,7 +455,7 @@ const templates = {
                             <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
                                 <tr>
                                     <td align="center">
-                                        <a href="https://billionairs-luxury.vercel.app/dashboard" style="display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #d4af37, #f4e4a8); color: #1a1a2e; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);">
+                                        <a href="https://billionairs-luxury.vercel.app/dashboard" style="display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #D4A574, #F4C2A1); color: #1a1a2e; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(232, 180, 160, 0.4);">
                                             CONTINUE EXPLORING
                                         </a>
                                     </td>
@@ -498,28 +498,28 @@ const templates = {
     <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%); padding: 40px 20px;">
         <tr>
             <td align="center">
-                <table width="600" cellpadding="0" cellspacing="0" style="background: rgba(26, 26, 46, 0.95); border-radius: 20px; border: 2px solid rgba(212, 175, 55, 0.3); overflow: hidden;">
+                <table width="600" cellpadding="0" cellspacing="0" style="background: rgba(26, 26, 46, 0.95); border-radius: 20px; border: 2px solid rgba(232, 180, 160, 0.3); overflow: hidden;">
                     <tr>
-                        <td style="background: linear-gradient(135deg, rgba(0, 200, 0, 0.2), rgba(0, 150, 0, 0.1)); padding: 40px 30px; text-align: center; border-bottom: 1px solid rgba(212, 175, 55, 0.3);">
+                        <td style="background: linear-gradient(135deg, rgba(0, 200, 0, 0.2), rgba(0, 150, 0, 0.1)); padding: 40px 30px; text-align: center; border-bottom: 1px solid rgba(232, 180, 160, 0.3);">
                             <div style="font-size: 60px; margin-bottom: 15px;">✅</div>
-                            <h1 style="margin: 0; font-size: 32px; color: #d4af37; font-weight: 900;">PAYMENT CONFIRMED</h1>
+                            <h1 style="margin: 0; font-size: 32px; color: #D4A574; font-weight: 900;">PAYMENT CONFIRMED</h1>
                         </td>
                     </tr>
                     <tr>
                         <td style="padding: 40px 30px; color: #ffffff;">
-                            <h2 style="margin: 0 0 20px 0; font-size: 24px; color: #d4af37;">Thank you, ${userName || 'Member'}!</h2>
+                            <h2 style="margin: 0 0 20px 0; font-size: 24px; color: #D4A574;">Thank you, ${userName || 'Member'}!</h2>
                             <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.9);">
                                 Your payment has been successfully processed. Access has been granted.
                             </p>
-                            <div style="background: rgba(212, 175, 55, 0.1); border: 2px solid rgba(212, 175, 55, 0.3); padding: 25px; margin: 30px 0; border-radius: 12px;">
+                            <div style="background: rgba(232, 180, 160, 0.1); border: 2px solid rgba(232, 180, 160, 0.3); padding: 25px; margin: 30px 0; border-radius: 12px;">
                                 <table width="100%" cellpadding="8" cellspacing="0">
                                     <tr>
                                         <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Product:</td>
-                                        <td style="color: #d4af37; font-weight: 600; text-align: right; font-size: 14px;">${productName}</td>
+                                        <td style="color: #D4A574; font-weight: 600; text-align: right; font-size: 14px;">${productName}</td>
                                     </tr>
                                     <tr>
                                         <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Amount:</td>
-                                        <td style="color: #d4af37; font-weight: 600; text-align: right; font-size: 16px;">${amount} ${currency}</td>
+                                        <td style="color: #D4A574; font-weight: 600; text-align: right; font-size: 16px;">${amount} ${currency}</td>
                                     </tr>
                                     <tr>
                                         <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Status:</td>
@@ -530,7 +530,7 @@ const templates = {
                             <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
                                 <tr>
                                     <td align="center">
-                                        <a href="https://billionairs-luxury.vercel.app/dashboard" style="display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #d4af37, #f4e4a8); color: #1a1a2e; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; letter-spacing: 1px;">
+                                        <a href="https://billionairs-luxury.vercel.app/dashboard" style="display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #D4A574, #F4C2A1); color: #1a1a2e; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; letter-spacing: 1px;">
                                             ACCESS YOUR ACCOUNT
                                         </a>
                                     </td>
@@ -542,7 +542,7 @@ const templates = {
                         <td style="background: rgba(0, 0, 0, 0.3); padding: 30px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1);">
                             <p style="margin: 0; font-size: 12px; color: rgba(255, 255, 255, 0.5);">
                                 Receipt ID: ${Date.now()}<br>
-                                Questions? <a href="mailto:support@billionairs.luxury" style="color: #d4af37; text-decoration: none;">support@billionairs.luxury</a>
+                                Questions? <a href="mailto:support@billionairs.luxury" style="color: #D4A574; text-decoration: none;">support@billionairs.luxury</a>
                             </p>
                         </td>
                     </tr>
@@ -568,24 +568,24 @@ const templates = {
     <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%); padding: 40px 20px;">
         <tr>
             <td align="center">
-                <table width="600" cellpadding="0" cellspacing="0" style="background: rgba(26, 26, 46, 0.95); border-radius: 20px; border: 2px solid rgba(212, 175, 55, 0.3); overflow: hidden;">
+                <table width="600" cellpadding="0" cellspacing="0" style="background: rgba(26, 26, 46, 0.95); border-radius: 20px; border: 2px solid rgba(232, 180, 160, 0.3); overflow: hidden;">
                     <tr>
-                        <td style="background: linear-gradient(135deg, rgba(255, 165, 0, 0.2), rgba(255, 140, 0, 0.1)); padding: 40px 30px; text-align: center; border-bottom: 1px solid rgba(212, 175, 55, 0.3);">
+                        <td style="background: linear-gradient(135deg, rgba(255, 165, 0, 0.2), rgba(255, 140, 0, 0.1)); padding: 40px 30px; text-align: center; border-bottom: 1px solid rgba(232, 180, 160, 0.3);">
                             <div style="font-size: 60px; margin-bottom: 15px;">💸</div>
-                            <h1 style="margin: 0; font-size: 32px; color: #d4af37; font-weight: 900;">REFUND PROCESSED</h1>
+                            <h1 style="margin: 0; font-size: 32px; color: #D4A574; font-weight: 900;">REFUND PROCESSED</h1>
                         </td>
                     </tr>
                     <tr>
                         <td style="padding: 40px 30px; color: #ffffff;">
-                            <h2 style="margin: 0 0 20px 0; font-size: 24px; color: #d4af37;">Dear ${userName || 'Member'},</h2>
+                            <h2 style="margin: 0 0 20px 0; font-size: 24px; color: #D4A574;">Dear ${userName || 'Member'},</h2>
                             <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.9);">
                                 Your refund has been successfully processed. The funds will be returned to your original payment method within 5-10 business days.
                             </p>
-                            <div style="background: rgba(212, 175, 55, 0.1); border: 2px solid rgba(212, 175, 55, 0.3); padding: 25px; margin: 30px 0; border-radius: 12px;">
+                            <div style="background: rgba(232, 180, 160, 0.1); border: 2px solid rgba(232, 180, 160, 0.3); padding: 25px; margin: 30px 0; border-radius: 12px;">
                                 <table width="100%" cellpadding="8" cellspacing="0">
                                     <tr>
                                         <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Refund Amount:</td>
-                                        <td style="color: #d4af37; font-weight: 600; text-align: right; font-size: 18px;">${amount} ${currency}</td>
+                                        <td style="color: #D4A574; font-weight: 600; text-align: right; font-size: 18px;">${amount} ${currency}</td>
                                     </tr>
                                     <tr>
                                         <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Refund ID:</td>
@@ -615,7 +615,7 @@ const templates = {
                         <td style="background: rgba(0, 0, 0, 0.3); padding: 30px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1);">
                             <p style="margin: 0; font-size: 12px; color: rgba(255, 255, 255, 0.5);">
                                 BILLIONAIRS LUXURY<br>
-                                Questions? <a href="mailto:support@billionairs.luxury" style="color: #d4af37; text-decoration: none;">support@billionairs.luxury</a>
+                                Questions? <a href="mailto:support@billionairs.luxury" style="color: #D4A574; text-decoration: none;">support@billionairs.luxury</a>
                             </p>
                         </td>
                     </tr>

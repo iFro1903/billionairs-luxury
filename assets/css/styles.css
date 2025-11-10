@@ -42,9 +42,23 @@
     --text-champagne: #F5D4C1;
     
     /* Luxury Accents */
-    --luxury-gold: #FFD700;
+    /* Map legacy 'gold' token to the rose-gold family for full visual consistency */
+    --luxury-gold: var(--rose-gold-primary);
+    /* Backward-compatible alias used by demo & testimonials */
+    --gold: var(--luxury-gold);
     --platinum: #E5E4E2;
     --diamond-white: #FAFAFA;
+}
+
+/* Global anchor color tuned to theme (prevents default browser-blue links) */
+a, a:link, a:visited {
+    color: var(--luxury-gold);
+    text-decoration: none;
+}
+/* Hover/focus states should be more subtle */
+a:hover, a:focus {
+    color: var(--champagne-light);
+    text-decoration: underline;
 }
 
 /* Reset & Ultra-Premium Base */
@@ -2846,4 +2860,75 @@ input:-webkit-autofill::first-line {
     .nav-contact {
         display: none !important;
     }
+}
+
+/* Global Modal/Overlay Styles
+   Diese Regeln sorgen dafür, dass Modals auf allen Seiten (live & demo)
+   zentriert angezeigt werden. Wird in .modal/.testimonial-modal/.benefit-modal
+   verwendet; .active schaltet das Overlay sichtbar. */
+.modal,
+.testimonial-modal,
+.benefit-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 100000;
+    background: rgba(0,0,0,0.6);
+    transition: opacity 0.22s ease, visibility 0.22s ease;
+    -webkit-overflow-scrolling: touch;
+}
+
+.modal.active,
+.testimonial-modal.active,
+.benefit-modal.active {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+    overflow: auto;
+}
+
+.modal-content,
+.testimonial-modal-content,
+.benefit-modal-content {
+    width: 100%;
+    max-width: 920px;
+    max-height: calc(100vh - 48px);
+    overflow: auto;
+    border-radius: 12px;
+    background-clip: padding-box;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 6px 18px rgba(232,180,160,0.06);
+    -webkit-backface-visibility: hidden;
+}
+
+@media (max-width: 480px) {
+    .modal,
+    .testimonial-modal,
+    .benefit-modal {
+        padding: 12px;
+    }
+
+    .modal-content,
+    .testimonial-modal-content,
+    .benefit-modal-content {
+        max-width: 100%;
+        max-height: calc(100vh - 24px);
+        border-radius: 10px;
+    }
+}
+
+/* Shared modal open animation (subtiler Pop-In) */
+@keyframes modalPopIn {
+    0% { opacity: 0; transform: translateY(10px) scale(0.997); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal.active .modal-content,
+.testimonial-modal.active .testimonial-modal-content,
+.benefit-modal.active .benefit-modal-content {
+    transform-origin: center;
+    will-change: transform, opacity;
+    animation: modalPopIn 220ms cubic-bezier(.2,.9,.3,1);
 }

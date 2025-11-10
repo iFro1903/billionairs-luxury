@@ -737,7 +737,7 @@
 }
 
 .file-link:hover {
-    color: #d4af37;
+    color: var(--rose-gold-secondary);
     text-decoration: underline;
 }
 

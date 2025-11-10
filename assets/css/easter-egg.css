@@ -41,10 +41,10 @@
     width: 140px;
     height: 140px;
     background: 
-        linear-gradient(0deg, transparent 48%, rgba(212, 175, 55, 0.25) 50%, transparent 52%),
-        linear-gradient(45deg, transparent 48%, rgba(212, 175, 55, 0.15) 50%, transparent 52%),
-        linear-gradient(90deg, transparent 48%, rgba(212, 175, 55, 0.25) 50%, transparent 52%),
-        linear-gradient(135deg, transparent 48%, rgba(212, 175, 55, 0.15) 50%, transparent 52%);
+    linear-gradient(0deg, transparent 48%, rgba(232, 180, 160, 0.25) 50%, transparent 52%),
+    linear-gradient(45deg, transparent 48%, rgba(232, 180, 160, 0.15) 50%, transparent 52%),
+    linear-gradient(90deg, transparent 48%, rgba(232, 180, 160, 0.25) 50%, transparent 52%),
+    linear-gradient(135deg, transparent 48%, rgba(232, 180, 160, 0.15) 50%, transparent 52%);
     animation: raysRotate 12s linear infinite;
     pointer-events: none;
     z-index: 1;
@@ -95,11 +95,11 @@
 @keyframes eyeGlowPyramid {
     0%, 100% { 
         filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6))
-                drop-shadow(0 0 20px rgba(212, 175, 55, 0.8));
+                drop-shadow(0 0 20px rgba(232, 180, 160, 0.8));
     }
     50% { 
         filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1))
-                drop-shadow(0 0 40px rgba(212, 175, 55, 1));
+                drop-shadow(0 0 40px rgba(232, 180, 160, 1));
     }
 }
 
@@ -129,7 +129,7 @@
 
     }
     50% { 
-        filter: drop-shadow(0 0 35px rgba(212, 175, 55, 1))
+    filter: drop-shadow(0 0 35px rgba(232, 180, 160, 1))
                 drop-shadow(0 0 55px rgba(255, 215, 0, 1))
                 drop-shadow(0 0 75px rgba(255, 255, 255, 0.4));
     }
@@ -243,7 +243,7 @@
 
 .riddle-close:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5);
+    box-shadow: 0 10px 30px rgba(232, 180, 160, 0.5);
 }
 
 .login-streak-badge {
@@ -309,7 +309,7 @@
 .chat-preview {
     margin-top: 2rem;
     padding: 2rem;
-    background: rgba(212, 175, 55, 0.05);
+    background: rgba(232, 180, 160, 0.05);
     border: 1px solid rgba(212, 175, 55, 0.2);
     border-radius: 12px;
 }
