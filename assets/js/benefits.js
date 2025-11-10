@@ -77,6 +77,17 @@ function showBenefit(key) {
     benefitSubtitle.textContent = b.subtitle;
     benefitText.textContent = b.text;
 
+    // Ensure modal is attached to document.body so fixed positioning centers
+    // relative to the viewport (avoids issues when modal is inside a transformed
+    // or scrollable container).
+    if (benefitModal && benefitModal.parentNode !== document.body) {
+        try {
+            document.body.appendChild(benefitModal);
+        } catch (e) {
+            // ignore - fallback to existing behavior
+        }
+    }
+
     benefitModal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }

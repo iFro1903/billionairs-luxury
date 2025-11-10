@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
     testimonialText = document.getElementById('testimonialText');
     testimonialDate = document.getElementById('testimonialDate');
     
-    // Add click & hover handlers to all member testimonials
+    // Add click handlers to all member testimonials
     const memberElements = document.querySelectorAll('.member-testimonial');
     memberElements.forEach(element => {
         element.addEventListener('click', function() {
@@ -101,21 +101,15 @@ document.addEventListener('DOMContentLoaded', function() {
             showTestimonial(memberId);
         });
 
-        // Hover/focus shows a short inline preview in the shared preview area
-        element.addEventListener('mouseover', function() {
-            const id = this.getAttribute('data-member');
-            showInlinePreview(id);
-        });
-        element.addEventListener('focus', function() {
-            const id = this.getAttribute('data-member');
-            showInlinePreview(id);
-        });
-        element.addEventListener('mouseout', function() {
-            clearInlinePreview();
-        });
-        element.addEventListener('blur', function() {
-            clearInlinePreview();
-        });
+        // Add inline preview comment to member tile
+        const id = element.getAttribute('data-member');
+        if (memberTestimonials[id]) {
+            const short = memberTestimonials[id].text.split('\n')[0];
+            const preview = document.createElement('div');
+            preview.className = 'member-comment';
+            preview.textContent = short;
+            element.parentNode.insertBefore(preview, element.nextSibling);
+        }
     });
     
     // Close modal handlers
@@ -152,6 +146,13 @@ function showTestimonial(memberId) {
     testimonialDate.textContent = testimonial.date;
     
     // Show modal with animation
+    // Ensure modal is a child of document.body so fixed positioning truly
+    // centers it relative to the viewport (prevents mis-centering when the
+    // modal is declared inside scrollable or transformed containers).
+    if (testimonialModal && testimonialModal.parentNode !== document.body) {
+        try { document.body.appendChild(testimonialModal); } catch (e) { /* ignore */ }
+    }
+
     testimonialModal.classList.add('active');
     document.body.style.overflow = 'hidden'; // Prevent background scroll
     
@@ -168,33 +169,4 @@ function showTestimonial(memberId) {
 function closeTestimonialModal() {
     testimonialModal.classList.remove('active');
     document.body.style.overflow = ''; // Restore scroll
-}
-
-// Inline preview helpers
-const previewElement = () => document.getElementById('memberComment');
-function showInlinePreview(memberId) {
-    const preview = previewElement();
-    if (!preview) return;
-    const t = memberTestimonials[memberId];
-    if (!t) return;
-    // Use first two lines as preview
-    const lines = t.text.split('\n').filter(Boolean);
-    const short = lines.slice(0, 2).join(' ');
-    preview.textContent = short + ' '; // trailing space before read more
-    // Add "Read more" call to action that opens modal
-    const readMore = document.createElement('a');
-    readMore.href = '#';
-    readMore.className = 'member-comment-readmore';
-    readMore.textContent = 'Read more';
-    readMore.addEventListener('click', function(e) {
-        e.preventDefault();
-        showTestimonial(memberId);
-    });
-    preview.appendChild(readMore);
-}
-
-function clearInlinePreview() {
-    const preview = previewElement();
-    if (!preview) return;
-    preview.textContent = '';
 }
