@@ -466,6 +466,10 @@
             if (user.paymentStatus === 'paid') {
                 statusContainer.innerHTML = '<span class="status-badge status-paid">Access Granted</span>';
                 document.getElementById('revealSection').style.display = 'block';
+                // Ensure dynamic content inside the reveal section is translated to the current language
+                if (window.i18n && typeof window.i18n.translateElement === 'function') {
+                    window.i18n.translateElement(document.getElementById('revealSection'));
+                }
                 
                 // Initialize Easter Egg System for paid users
                 if (typeof EasterEggSystem !== 'undefined') {
@@ -474,6 +478,10 @@
             } else {
                 statusContainer.innerHTML = '<span class="status-badge status-pending">Pending Payment</span>';
                 document.getElementById('pendingSection').style.display = 'block';
+                // Translate pending section texts for current language (if i18n is loaded)
+                if (window.i18n && typeof window.i18n.translateElement === 'function') {
+                    window.i18n.translateElement(document.getElementById('pendingSection'));
+                }
                 
                 // Show different message if user just paid
                 if (justPaid) {

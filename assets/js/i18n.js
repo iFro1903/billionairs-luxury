@@ -179,6 +179,73 @@ class I18nManager {
     }
 
     /**
+     * Apply translations only within a given root element.
+     * Useful for dynamic content that is inserted or shown after initial load.
+     * @param {Element} rootEl
+     */
+    translateElement(rootEl) {
+        if (!rootEl) return;
+
+        // Translate elements with data-i18n attribute inside root
+        rootEl.querySelectorAll('[data-i18n]').forEach(element => {
+            const key = element.getAttribute('data-i18n');
+            const translation = this.t(key);
+            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                element.placeholder = translation;
+            } else {
+                element.textContent = translation;
+            }
+        });
+
+        // data-i18n-placeholder
+        rootEl.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+            const key = element.getAttribute('data-i18n-placeholder');
+            element.placeholder = this.t(key);
+        });
+
+        // data-i18n-title
+        rootEl.querySelectorAll('[data-i18n-title]').forEach(element => {
+            const key = element.getAttribute('data-i18n-title');
+            element.title = this.t(key);
+        });
+
+        // data-i18n-aria-label
+        rootEl.querySelectorAll('[data-i18n-aria-label]').forEach(element => {
+            const key = element.getAttribute('data-i18n-aria-label');
+            element.setAttribute('aria-label', this.t(key));
+        });
+
+        // For free text nodes inside the root, use the original texts map and text map
+        const textMap = this.getTextMapForLanguage(this.currentLang);
+        this.applyTextTranslations(rootEl, textMap);
+
+        // Fallback: for any new text nodes that weren't captured in originalTexts,
+        // try a best-effort replacement using the English→target textMap.
+        try {
+            const entries = Object.entries(textMap);
+            if (entries.length > 0) {
+                rootEl.querySelectorAll('*').forEach(el => {
+                    el.childNodes.forEach(node => {
+                        if (node.nodeType === Node.TEXT_NODE) {
+                            let txt = node.textContent;
+                            if (!txt || !txt.trim()) return;
+                            entries.forEach(([eng, target]) => {
+                                if (txt.includes(eng)) {
+                                    txt = txt.split(eng).join(target);
+                                }
+                            });
+                            node.textContent = txt;
+                        }
+                    });
+                });
+            }
+        } catch (e) {
+            // Non-critical - continue
+            console.warn('i18n.translateElement fallback error:', e);
+        }
+    }
+
+    /**
      * Auto-translate common UI elements
      */
     autoTranslateCommonElements() {
