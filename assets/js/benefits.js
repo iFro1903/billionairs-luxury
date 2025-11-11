@@ -40,13 +40,13 @@ document.addEventListener('DOMContentLoaded', function() {
     cards.forEach(card => {
         card.addEventListener('click', function() {
             const key = this.getAttribute('data-benefit');
-            showBenefit(key);
+            showBenefit(key, this);
         });
         card.addEventListener('keypress', function(e) {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 const key = this.getAttribute('data-benefit');
-                showBenefit(key);
+                showBenefit(key, this);
             }
         })
     });
@@ -70,10 +70,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function showBenefit(key) {
+function showBenefit(key, sourceCard) {
     const b = benefits[key];
     if (!b) return;
-    // If i18n is available, prefer mapped translations for these strings
+    // If the click originated from a card and that card has a paragraph,
+    // prefer using the already-rendered paragraph (it will have been translated by i18n)
+    if (sourceCard) {
+        try {
+            const p = sourceCard.querySelector('p');
+            if (p && p.innerHTML && p.innerHTML.trim()) {
+                benefitText.innerHTML = p.innerHTML;
+            } else {
+                benefitText.textContent = b.text;
+            }
+        } catch (e) {
+            benefitText.textContent = b.text;
+        }
+    }
+
+    // If i18n is available, prefer mapped translations for titles/subtitles
     if (window.i18n) {
         try {
             const map = window.i18n.getTextMapForLanguage(window.i18n.currentLang || 'en');
@@ -95,17 +110,20 @@ function showBenefit(key) {
                     // Ignore any replace errors for complex strings
                 }
             });
-            benefitText.textContent = translatedBody;
+            // Only set body text if we didn't already set innerHTML from the card
+            if (!sourceCard) {
+                benefitText.textContent = translatedBody;
+            }
         } catch (e) {
             // Fallback to raw English if anything fails
             benefitTitle.textContent = b.title;
             benefitSubtitle.textContent = b.subtitle;
-            benefitText.textContent = b.text;
+            if (!sourceCard) benefitText.textContent = b.text;
         }
     } else {
         benefitTitle.textContent = b.title;
         benefitSubtitle.textContent = b.subtitle;
-        benefitText.textContent = b.text;
+        if (!sourceCard) benefitText.textContent = b.text;
     }
 
     // Ensure modal is attached to document.body so fixed positioning centers
