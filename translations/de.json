@@ -243,5 +243,27 @@
       "date": "Juni 2025",
       "text": "Ich leite einen $3Mrd. Fonds. Ich bin jeden Tag von Wohlstand umgeben.\n\nAber BILLIONAIRS hat mir gezeigt, dass es einen Unterschied gibt zwischen Menschen, die Geld haben, und Menschen, die verstehen, was man damit macht.\n\nDie Gespräche hier sind auf einem Level, den ich nirgendwo anders gefunden habe. Kein oberflächliches Gerede, kein bescheidenes Prahlen, nur echte Einblicke von echten Playern.\n\nWenn du dich fragst, ob es CHF 500k wert ist — hör auf zu fragen. Wenn du fragen musst, bist du nicht bereit."
     }
+  },
+  "benefits": {
+    "global": {
+      "title": "Globaler Zugang",
+      "subtitle": "Exklusive, nur auf Einladung",
+      "text": "Vierteljährliche intime Treffen an ausgewählten internationalen Veranstaltungsorten. Events sind nur auf Einladung und auf eine kleine Gruppe geprüfter Mitglieder beschränkt. Diese Zusammenkünfte konzentrieren sich auf kuratierte Gespräche, Kulturprogramme und diskretes Networking. Sie sind darauf ausgelegt, außergewöhnliche Möglichkeiten ohne öffentliche Werbung zu präsentieren."
+    },
+    "circle": {
+      "title": "Privater Kreis",
+      "subtitle": "Sorgfältige Auswahl & verifizierte Mitgliedschaft",
+      "text": "Der Kreis ist in der Größe begrenzt und umfasst Gründer, Family Offices, Immobilieninvestoren und Private-Equity-Profis. Die Mitgliedschaft folgt einem Prüfverfahren, um Übereinstimmung und langfristige Eignung sicherzustellen. Mitglieder werden nur mit minimalen, anonymen Kennungen aufgeführt, um die Privatsphäre zu schützen."
+    },
+    "premarket": {
+      "title": "Vormarkt",
+      "subtitle": "Kuratiert, nicht garantierte Möglichkeiten",
+      "text": "Mitglieder erhalten gelegentlich Informationen über kuratierte Vormarkt-Investitionsmöglichkeiten. Diese Möglichkeiten werden sorgfältig ausgewählt; die Teilnahme hängt vom Interesse der Mitglieder und der Due Diligence ab. Die Anzeige dieser Möglichkeiten ist weder eine Empfehlung noch ein Versprechen von Ergebnissen."
+    },
+    "discretion": {
+      "title": "Diskretion",
+      "subtitle": "Strenge Datenschutzprotokolle",
+      "text": "Diskretion wird bei Zusammenkünften und Kommunikation durchgesetzt. Mitglieder können gebeten werden, NDAs für ausgewählte Sitzungen zu unterzeichnen. Keine Fotos werden ohne ausdrückliche Zustimmung öffentlich geteilt. Persönliche Informationen werden als Teil der Mitgliedschaftsvereinbarung geschützt."
+    }
   }
 }

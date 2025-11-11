@@ -126,5 +126,27 @@
       "date": "Junio 2025",
       "text": "Dirijo un fondo de $3 mil millones. Estoy rodeado de riqueza todos los días.\n\nPero BILLIONAIRS me mostró que hay una diferencia entre las personas que tienen dinero y las personas que entienden qué hacer con él.\n\nLas conversaciones aquí están a un nivel que no he encontrado en ningún otro lugar. Sin charlas superficiales, sin alardes humildes, solo perspectivas reales de jugadores reales.\n\nSi te preguntas si vale CHF 500k, deja de preguntarte. Si tienes que preguntar, no estás listo."
     }
+  },
+  "benefits": {
+    "global": {
+      "title": "Acceso Global",
+      "subtitle": "Encuentros selectos, solo por invitación",
+      "text": "Encuentros íntimos trimestrales organizados en lugares internacionales seleccionados. Los eventos son solo por invitación y están limitados a un pequeño grupo de miembros verificados. Estos encuentros se centran en conversaciones curadas, programación cultural y networking discreto. Están diseñados para mostrar oportunidades excepcionales sin promoción pública."
+    },
+    "circle": {
+      "title": "Círculo Privado",
+      "subtitle": "Selección cuidadosa & membresía verificada",
+      "text": "El círculo es limitado en tamaño e incluye fundadores, family offices, inversores inmobiliarios y profesionales de private equity. La membresía sigue un proceso de verificación para garantizar la alineación y la idoneidad a largo plazo. Los miembros se enumeran solo con identificadores mínimos y anónimos para proteger la privacidad."
+    },
+    "premarket": {
+      "title": "Pre-Mercado",
+      "subtitle": "Oportunidades curadas, no garantizadas",
+      "text": "Los miembros ocasionalmente reciben información sobre oportunidades de inversión pre-mercado curadas. Estas oportunidades se seleccionan cuidadosamente; la participación depende del interés del miembro y la debida diligencia. Mostrar estas oportunidades no es un respaldo ni una promesa de resultados."
+    },
+    "discretion": {
+      "title": "Discreción",
+      "subtitle": "Protocolos de privacidad estrictos",
+      "text": "La discreción se aplica en los encuentros y comunicaciones. Se puede pedir a los miembros que firmen NDA para sesiones seleccionadas. No se comparten fotos públicamente sin consentimiento explícito. La información personal está protegida como parte del acuerdo de membresía."
+    }
   }
 }

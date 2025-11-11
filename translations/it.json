@@ -126,5 +126,27 @@
       "date": "Giugno 2025",
       "text": "Gestisco un fondo da $3 miliardi. Sono circondato dalla ricchezza ogni giorno.\n\nMa BILLIONAIRS mi ha mostrato che c'è una differenza tra le persone che hanno soldi e le persone che sanno come usarli.\n\nLe conversazioni qui sono a un livello che non ho trovato altrove. Nessun chiacchiericcio superficiale, nessuna pavoneggiatura timida, solo reali intuizioni da veri protagonisti.\n\nSe ti stai chiedendo se vale 500k CHF, smettila di chiedertelo. Se devi chiedere, non sei pronto."
     }
+  },
+  "benefits": {
+    "global": {
+      "title": "Accesso Globale",
+      "subtitle": "Incontri selezionati, solo su invito",
+      "text": "Incontri intimi trimestrali ospitati in location internazionali selezionate. Gli eventi sono solo su invito e limitati a un piccolo gruppo di membri verificati. Questi incontri si concentrano su conversazioni curate, programmazione culturale e networking discreto. Sono progettati per mostrare opportunità eccezionali senza promozione pubblica."
+    },
+    "circle": {
+      "title": "Cerchia Privata",
+      "subtitle": "Selezione attenta & iscrizione verificata",
+      "text": "La cerchia è limitata nelle dimensioni e include fondatori, family office, investitori immobiliari e professionisti di private equity. L'iscrizione segue un processo di verifica per garantire allineamento e idoneità a lungo termine. I membri sono elencati solo con identificatori minimi e anonimi per proteggere la privacy."
+    },
+    "premarket": {
+      "title": "Pre-Mercato",
+      "subtitle": "Opportunità curate, non garantite",
+      "text": "I membri ricevono occasionalmente informazioni su opportunità di investimento pre-mercato curate. Queste opportunità sono selezionate con cura; la partecipazione dipende dall'interesse dei membri e dalla due diligence. Mostrare queste opportunità non è né un'approvazione né una promessa di risultati."
+    },
+    "discretion": {
+      "title": "Discrezione",
+      "subtitle": "Protocolli di privacy rigorosi",
+      "text": "La discrezione è applicata durante gli incontri e le comunicazioni. Ai membri può essere chiesto di firmare NDA per sessioni selezionate. Nessuna foto viene condivisa pubblicamente senza consenso esplicito. Le informazioni personali sono protette come parte dell'accordo di iscrizione."
+    }
   }
 }

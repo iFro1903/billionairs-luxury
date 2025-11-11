@@ -243,5 +243,27 @@
       "date": "June 2025",
       "text": "I run a $3B fund. I'm surrounded by wealth every day.\n\nBut BILLIONAIRS showed me there's a difference between people who have money and people who understand what to do with it.\n\nThe conversations here are at a level I haven't found anywhere else. No surface talk, no humble-bragging, just real insights from real players.\n\nIf you're wondering if it's worth CHF 500k—stop wondering. If you have to ask, you're not ready."
     }
+  },
+  "benefits": {
+    "global": {
+      "title": "Global Access",
+      "subtitle": "Select, invitation-only gatherings",
+      "text": "Quarterly intimate gatherings hosted in selected international venues. Events are invitation-only and limited to a small group of vetted members. These gatherings focus on curated conversations, cultural programming, and discreet networking. They are designed to showcase exceptional opportunities without public promotion."
+    },
+    "circle": {
+      "title": "Private Circle",
+      "subtitle": "Careful selection & verified membership",
+      "text": "The circle is limited in size and includes founders, family offices, real estate investors and private equity professionals. Membership follows a vetting process to ensure alignment and long-term fit. Members are listed only by minimal, anonymous identifiers to protect privacy."
+    },
+    "premarket": {
+      "title": "Pre-Market",
+      "subtitle": "Curated, non-guaranteed opportunities",
+      "text": "Members occasionally receive information about curated pre-market investment opportunities. These opportunities are carefully selected; participation depends on member interest and due diligence. Displaying these opportunities is not an endorsement nor a promise of outcomes."
+    },
+    "discretion": {
+      "title": "Discretion",
+      "subtitle": "Strict privacy protocols",
+      "text": "Discretion is enforced across gatherings and communications. Members may be asked to sign NDAs for select sessions. No photos are shared publicly without explicit consent. Personal information is protected as part of the membership agreement."
+    }
   }
 }

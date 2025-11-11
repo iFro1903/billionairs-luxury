@@ -126,5 +126,27 @@
       "date": "Juin 2025",
       "text": "Je dirige un fonds de 3 milliards de dollars. Je suis entouré de richesse tous les jours.\n\nMais BILLIONAIRS m'a montré qu'il y a une différence entre les gens qui ont de l'argent et les gens qui comprennent quoi en faire.\n\nLes conversations ici sont à un niveau que je n'ai trouvé nulle part ailleurs. Pas de bavardage superficiel, pas de vantardise humble, juste de vraies perspectives de vrais joueurs.\n\nSi vous vous demandez si cela vaut 500k CHF — arrêtez de vous demander. Si vous devez demander, vous n'êtes pas prêt."
     }
+  },
+  "benefits": {
+    "global": {
+      "title": "Accès Global",
+      "subtitle": "Rassemblements sélectionnés, sur invitation uniquement",
+      "text": "Rassemblements intimes trimestriels organisés dans des lieux internationaux sélectionnés. Les événements sont sur invitation uniquement et limités à un petit groupe de membres vérifiés. Ces rassemblements se concentrent sur des conversations organisées, une programmation culturelle et un réseautage discret. Ils sont conçus pour présenter des opportunités exceptionnelles sans promotion publique."
+    },
+    "circle": {
+      "title": "Cercle Privé",
+      "subtitle": "Sélection minutieuse & adhésion vérifiée",
+      "text": "Le cercle est limité en taille et comprend des fondateurs, des family offices, des investisseurs immobiliers et des professionnels du private equity. L'adhésion suit un processus de vérification pour assurer l'alignement et l'adéquation à long terme. Les membres ne sont répertoriés que par des identifiants minimaux et anonymes pour protéger la vie privée."
+    },
+    "premarket": {
+      "title": "Pré-Marché",
+      "subtitle": "Opportunités organisées, non garanties",
+      "text": "Les membres reçoivent occasionnellement des informations sur des opportunités d'investissement pré-marché organisées. Ces opportunités sont soigneusement sélectionnées; la participation dépend de l'intérêt des membres et de la diligence raisonnable. L'affichage de ces opportunités n'est ni une approbation ni une promesse de résultats."
+    },
+    "discretion": {
+      "title": "Discrétion",
+      "subtitle": "Protocoles de confidentialité stricts",
+      "text": "La discrétion est appliquée lors des rassemblements et des communications. Les membres peuvent être invités à signer des NDA pour certaines sessions. Aucune photo n'est partagée publiquement sans consentement explicite. Les informations personnelles sont protégées dans le cadre de l'accord d'adhésion."
+    }
   }
 }

@@ -73,57 +73,31 @@ document.addEventListener('DOMContentLoaded', function() {
 function showBenefit(key, sourceCard) {
     const b = benefits[key];
     if (!b) return;
-    // If the click originated from a card and that card has a paragraph,
-    // prefer using the already-rendered paragraph (it will have been translated by i18n)
-    if (sourceCard) {
-        try {
-            const p = sourceCard.querySelector('p');
-            if (p && p.innerHTML && p.innerHTML.trim()) {
-                benefitText.innerHTML = p.innerHTML;
-            } else {
-                benefitText.textContent = b.text;
-            }
-        } catch (e) {
-            benefitText.textContent = b.text;
-        }
-    }
-
-    // If i18n is available, prefer mapped translations for titles/subtitles
-    if (window.i18n) {
-        try {
-            const map = window.i18n.getTextMapForLanguage(window.i18n.currentLang || 'en');
-
-            // Title
-            benefitTitle.textContent = map[b.title] || b.title;
-
-            // Subtitle
-            benefitSubtitle.textContent = map[b.subtitle] || b.subtitle;
-
-            // For long body text, perform best-effort replacements of known phrases
-            let translatedBody = b.text;
-            Object.entries(map).forEach(([eng, trg]) => {
-                if (!eng || !trg) return;
-                try {
-                    // Replace all occurrences of the English fragment with the translation
-                    translatedBody = translatedBody.split(eng).join(trg);
-                } catch (e) {
-                    // Ignore any replace errors for complex strings
-                }
-            });
-            // Only set body text if we didn't already set innerHTML from the card
-            if (!sourceCard) {
-                benefitText.textContent = translatedBody;
-            }
-        } catch (e) {
-            // Fallback to raw English if anything fails
+    
+    // Check if i18n is available and get translations
+    if (window.i18n && window.i18n.translations && window.i18n.currentLang) {
+        const lang = window.i18n.currentLang;
+        const t = window.i18n.translations[lang];
+        
+        // Try to get translated benefit from translations
+        if (t && t.benefits && t.benefits[key]) {
+            const translatedBenefit = t.benefits[key];
+            
+            // Use translated content
+            benefitTitle.textContent = translatedBenefit.title || b.title;
+            benefitSubtitle.textContent = translatedBenefit.subtitle || b.subtitle;
+            benefitText.textContent = translatedBenefit.text || b.text;
+        } else {
+            // Fallback to English
             benefitTitle.textContent = b.title;
             benefitSubtitle.textContent = b.subtitle;
-            if (!sourceCard) benefitText.textContent = b.text;
+            benefitText.textContent = b.text;
         }
     } else {
+        // i18n not available, use English
         benefitTitle.textContent = b.title;
         benefitSubtitle.textContent = b.subtitle;
-        if (!sourceCard) benefitText.textContent = b.text;
+        benefitText.textContent = b.text;
     }
 
     // Ensure modal is attached to document.body so fixed positioning centers
@@ -139,15 +113,6 @@ function showBenefit(key, sourceCard) {
 
     benefitModal.classList.add('active');
     document.body.style.overflow = 'hidden';
-
-    // Translate modal content into current language if i18n is available
-    if (window.i18n && typeof window.i18n.translateElement === 'function') {
-        try {
-            window.i18n.translateElement(benefitModal);
-        } catch (e) {
-            console.warn('Failed to translate benefit modal:', e);
-        }
-    }
 }
 
 function closeBenefitModal() {
