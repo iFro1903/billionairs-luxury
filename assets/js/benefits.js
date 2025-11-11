@@ -73,9 +73,40 @@ document.addEventListener('DOMContentLoaded', function() {
 function showBenefit(key) {
     const b = benefits[key];
     if (!b) return;
-    benefitTitle.textContent = b.title;
-    benefitSubtitle.textContent = b.subtitle;
-    benefitText.textContent = b.text;
+    // If i18n is available, prefer mapped translations for these strings
+    if (window.i18n) {
+        try {
+            const map = window.i18n.getTextMapForLanguage(window.i18n.currentLang || 'en');
+
+            // Title
+            benefitTitle.textContent = map[b.title] || b.title;
+
+            // Subtitle
+            benefitSubtitle.textContent = map[b.subtitle] || b.subtitle;
+
+            // For long body text, perform best-effort replacements of known phrases
+            let translatedBody = b.text;
+            Object.entries(map).forEach(([eng, trg]) => {
+                if (!eng || !trg) return;
+                try {
+                    // Replace all occurrences of the English fragment with the translation
+                    translatedBody = translatedBody.split(eng).join(trg);
+                } catch (e) {
+                    // Ignore any replace errors for complex strings
+                }
+            });
+            benefitText.textContent = translatedBody;
+        } catch (e) {
+            // Fallback to raw English if anything fails
+            benefitTitle.textContent = b.title;
+            benefitSubtitle.textContent = b.subtitle;
+            benefitText.textContent = b.text;
+        }
+    } else {
+        benefitTitle.textContent = b.title;
+        benefitSubtitle.textContent = b.subtitle;
+        benefitText.textContent = b.text;
+    }
 
     // Ensure modal is attached to document.body so fixed positioning centers
     // relative to the viewport (avoids issues when modal is inside a transformed
