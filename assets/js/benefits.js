@@ -90,6 +90,15 @@ function showBenefit(key) {
 
     benefitModal.classList.add('active');
     document.body.style.overflow = 'hidden';
+
+    // Translate modal content into current language if i18n is available
+    if (window.i18n && typeof window.i18n.translateElement === 'function') {
+        try {
+            window.i18n.translateElement(benefitModal);
+        } catch (e) {
+            console.warn('Failed to translate benefit modal:', e);
+        }
+    }
 }
 
 function closeBenefitModal() {
