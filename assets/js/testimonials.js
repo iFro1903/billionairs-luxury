@@ -133,11 +133,37 @@ function showTestimonial(memberId) {
     
     if (!testimonial) return;
     
-    // Update modal content
-    testimonialMemberName.textContent = testimonial.name;
-    testimonialMemberRole.textContent = testimonial.role;
-    testimonialText.textContent = testimonial.text;
-    testimonialDate.textContent = testimonial.date;
+    // Check if i18n is available and get translations
+    if (window.i18n && window.i18n.translations && window.i18n.currentLang) {
+        const lang = window.i18n.currentLang;
+        const t = window.i18n.translations[lang];
+        
+        // Try to get translated testimonial from translations
+        if (t && t.testimonials && t.testimonials[memberId]) {
+            const translatedTestimonial = t.testimonials[memberId];
+            
+            // Use translated content
+            testimonialMemberName.textContent = translatedTestimonial.name || testimonial.name;
+            testimonialMemberRole.textContent = translatedTestimonial.role || testimonial.role;
+            testimonialDate.textContent = translatedTestimonial.date || testimonial.date;
+            
+            // For text, preserve line breaks by converting \n to <br>
+            const translatedText = translatedTestimonial.text || testimonial.text;
+            testimonialText.innerHTML = translatedText.replace(/\n/g, '<br>');
+        } else {
+            // Fallback to English
+            testimonialMemberName.textContent = testimonial.name;
+            testimonialMemberRole.textContent = testimonial.role;
+            testimonialDate.textContent = testimonial.date;
+            testimonialText.innerHTML = testimonial.text.replace(/\n/g, '<br>');
+        }
+    } else {
+        // i18n not available, use English
+        testimonialMemberName.textContent = testimonial.name;
+        testimonialMemberRole.textContent = testimonial.role;
+        testimonialDate.textContent = testimonial.date;
+        testimonialText.innerHTML = testimonial.text.replace(/\n/g, '<br>');
+    }
     
     // Show modal with animation
     // Ensure modal is a child of document.body so fixed positioning truly

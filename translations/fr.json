@@ -94,5 +94,37 @@
     "accept_all": "TOUT ACCEPTER",
     "save_selection": "ENREGISTRER LA SÉLECTION",
     "necessary_only": "NÉCESSAIRE UNIQUEMENT"
+  },
+  "testimonials": {
+    "fk": {
+      "name": "F.K.",
+      "role": "Tech Exit • San Francisco",
+      "date": "Septembre 2025",
+      "text": "Après ma troisième sortie, je pensais avoir tout vu. Clubs privés, événements exclusifs, les cercles habituels. Mais BILLIONAIRS est différent.\n\nCe n'est pas une question d'étaler la richesse — c'est être entouré de personnes qui comprennent que l'argent n'est que le billet d'entrée, pas la destination.\n\nLe rassemblement de Monaco a changé ma façon de penser à mon prochain chapitre. Pas de pitchs, pas d'agendas, juste de vraies conversations avec des personnes qui ont vraiment construit quelque chose.\n\nÇa vaut chaque franc."
+    },
+    "am": {
+      "name": "A.M.",
+      "role": "Family Office • Zürich",
+      "date": "Août 2025",
+      "text": "Je gère un family office de 2 milliards d'euros. J'ai assisté à d'innombrables événements \"exclusifs\" qui se sont révélés être des cirques de réseautage déguisés.\n\nBILLIONAIRS est le contraire. Vraie discrétion. Vraie valeur.\n\nLes opportunités pré-marché à elles seules ont payé l'adhésion 10 fois. Mais plus important encore, j'ai trouvé un cercle de pairs en qui je peux vraiment avoir confiance.\n\nDans notre monde, cela n'a pas de prix."
+    },
+    "anon": {
+      "name": "Anon",
+      "role": "Crypto OG • Dubaï",
+      "date": "Octobre 2025",
+      "text": "J'ai fait mon premier million en 2013. Mes cent premiers millions en 2017.\n\nChaque groupe \"élite\" auquel je me suis joint était rempli de gens essayant de me vendre quelque chose ou de découvrir mes avoirs.\n\nIci ? Personne ne se soucie de votre valeur nette. Ils se soucient de qui vous êtes quand l'argent n'a pas d'importance.\n\nC'est rare. C'est réel.\n\nRester anonyme, mais rester connecté."
+    },
+    "mr": {
+      "name": "M.R.",
+      "role": "Immobilier • Londres",
+      "date": "Juillet 2025",
+      "text": "J'ai construit mon portefeuille d'un appartement à Kensington à un empire de plus de 400 millions de livres.\n\nLe réseau que j'ai construit grâce à BILLIONAIRS a ouvert des portes dont je ne connaissais même pas l'existence. Le projet de Dubaï dont j'ai entendu parler lors de la dernière réunion ? Déjà conclu. ROI : 847%.\n\nMais au-delà des affaires, c'est le calibre des personnes. Pas d'imposteurs. Pas de touristes. Juste de la richesse sérieuse, gérée sérieusement.\n\nC'est ce que \"exclusif\" devrait vraiment signifier."
+    },
+    "sl": {
+      "name": "S.L.",
+      "role": "Private Equity • New York",
+      "date": "Juin 2025",
+      "text": "Je dirige un fonds de 3 milliards de dollars. Je suis entouré de richesse tous les jours.\n\nMais BILLIONAIRS m'a montré qu'il y a une différence entre les gens qui ont de l'argent et les gens qui comprennent quoi en faire.\n\nLes conversations ici sont à un niveau que je n'ai trouvé nulle part ailleurs. Pas de bavardage superficiel, pas de vantardise humble, juste de vraies perspectives de vrais joueurs.\n\nSi vous vous demandez si cela vaut 500k CHF — arrêtez de vous demander. Si vous devez demander, vous n'êtes pas prêt."
+    }
   }
 }

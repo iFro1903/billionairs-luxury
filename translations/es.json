@@ -94,5 +94,37 @@
     "accept_all": "ACEPTAR TODO",
     "save_selection": "GUARDAR SELECCIÓN",
     "necessary_only": "SOLO NECESARIAS"
+  },
+  "testimonials": {
+    "fk": {
+      "name": "F.K.",
+      "role": "Tech Exit • San Francisco",
+      "date": "Septiembre 2025",
+      "text": "Después de mi tercera salida, pensé que lo había visto todo. Clubes privados, eventos exclusivos, los círculos habituales. Pero BILLIONAIRS es diferente.\n\nNo se trata de presumir riqueza, se trata de estar rodeado de personas que entienden que el dinero es solo el boleto de entrada, no el destino.\n\nLa reunión de Mónaco cambió mi forma de pensar sobre mi próximo capítulo. Sin presentaciones, sin agendas, solo conversaciones reales con personas que realmente han construido algo.\n\nVale cada franco."
+    },
+    "am": {
+      "name": "A.M.",
+      "role": "Family Office • Zürich",
+      "date": "Agosto 2025",
+      "text": "Gestiono una family office de €2 mil millones. He estado en innumerables eventos \"exclusivos\" que resultaron ser circos de networking disfrazados.\n\nBILLIONAIRS es lo opuesto. Discreción real. Valor real.\n\nSolo las oportunidades pre-mercado han pagado la membresía 10 veces. Pero más importante, he encontrado un círculo de pares en los que realmente puedo confiar.\n\nEn nuestro mundo, eso no tiene precio."
+    },
+    "anon": {
+      "name": "Anon",
+      "role": "Crypto OG • Dubái",
+      "date": "Octubre 2025",
+      "text": "Hice mi primer millón en 2013. Mis primeros cien millones para 2017.\n\nCada grupo \"élite\" al que me uní estaba lleno de personas tratando de venderme algo o descubrir mis tenencias.\n\n¿Aquí? A nadie le importa tu patrimonio neto. Les importa quién eres cuando el dinero no importa.\n\nEso es raro. Eso es real.\n\nPermaneciendo anónimo, pero permaneciendo conectado."
+    },
+    "mr": {
+      "name": "M.R.",
+      "role": "Bienes Raíces • Londres",
+      "date": "Julio 2025",
+      "text": "Construí mi portafolio desde un apartamento en Kensington hasta un imperio de más de £400M.\n\nLa red que he construido a través de BILLIONAIRS ha abierto puertas que ni siquiera sabía que existían. ¿El proyecto de Dubái del que escuché en la última reunión? Ya cerrado. ROI: 847%.\n\nPero más allá de los negocios, es el calibre de las personas. Sin impostores. Sin turistas. Solo riqueza seria, gestionada seriamente.\n\nEsto es lo que \"exclusivo\" realmente debería significar."
+    },
+    "sl": {
+      "name": "S.L.",
+      "role": "Private Equity • Nueva York",
+      "date": "Junio 2025",
+      "text": "Dirijo un fondo de $3 mil millones. Estoy rodeado de riqueza todos los días.\n\nPero BILLIONAIRS me mostró que hay una diferencia entre las personas que tienen dinero y las personas que entienden qué hacer con él.\n\nLas conversaciones aquí están a un nivel que no he encontrado en ningún otro lugar. Sin charlas superficiales, sin alardes humildes, solo perspectivas reales de jugadores reales.\n\nSi te preguntas si vale CHF 500k, deja de preguntarte. Si tienes que preguntar, no estás listo."
+    }
   }
 }
