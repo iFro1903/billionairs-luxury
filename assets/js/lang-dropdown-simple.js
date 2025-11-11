@@ -22,17 +22,17 @@ window.addEventListener('i18nReady', () => {
     // Create dropdown
     const dropdown = document.createElement('div');
     dropdown.id = 'langDropdownSimple';
-    dropdown.className = 'language-dropdown';
+    dropdown.className = 'lang-dropdown';
     dropdown.innerHTML = `
-        <a href="#" data-lang="en"> English</a>
-        <a href="#" data-lang="de"> Deutsch</a>
-        <a href="#" data-lang="fr"> Français</a>
-        <a href="#" data-lang="es"> Español</a>
-        <a href="#" data-lang="zh"> 中文</a>
-        <a href="#" data-lang="ar"> العربية</a>
-        <a href="#" data-lang="it"> Italiano</a>
-        <a href="#" data-lang="ru"> Русский</a>
-        <a href="#" data-lang="ja"> 日本語</a>
+        <a href="#" class="lang-option" data-lang="en">🇬🇧 English</a>
+        <a href="#" class="lang-option" data-lang="de">🇩🇪 Deutsch</a>
+        <a href="#" class="lang-option" data-lang="fr">🇫🇷 Français</a>
+        <a href="#" class="lang-option" data-lang="es">🇪🇸 Español</a>
+        <a href="#" class="lang-option" data-lang="zh">🇨🇳 中文</a>
+        <a href="#" class="lang-option" data-lang="ar">🇸🇦 العربية</a>
+        <a href="#" class="lang-option" data-lang="it">🇮🇹 Italiano</a>
+        <a href="#" class="lang-option" data-lang="ru">🇷🇺 Русский</a>
+        <a href="#" class="lang-option" data-lang="ja">🇯🇵 日本語</a>
     `;
     
     // Add to page
