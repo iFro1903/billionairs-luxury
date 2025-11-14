@@ -194,10 +194,12 @@
     <link rel="stylesheet" href="assets/css/benefits.css">
     <link rel="stylesheet" href="assets/css/payment-methods.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/language-dropdown.css" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="assets/css/mobile-language-dropdown.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/faq-footer.css" media="print" onload="this.media='all'; this.onload=null;">
     <noscript>
         <link rel="stylesheet" href="assets/css/payment-methods.css">
         <link rel="stylesheet" href="assets/css/language-dropdown.css">
+        <link rel="stylesheet" href="assets/css/mobile-language-dropdown.css">
         <link rel="stylesheet" href="assets/css/faq-footer.css">
     </noscript>
     
@@ -308,6 +310,20 @@
     <div class="mobile-overlay" id="mobileOverlay">
         <button class="mobile-btn" id="mobileInnerCircle">INNER CIRCLE</button>
         <button class="mobile-btn" id="mobileLanguage">LANGUAGE</button>
+        
+        <!-- Mobile Language Dropdown (hidden by default) -->
+        <div class="mobile-lang-dropdown" id="mobileLangDropdown" style="display: none;">
+            <a href="#" class="lang-option" data-lang="en">🇬🇧 English</a>
+            <a href="#" class="lang-option" data-lang="de">🇩🇪 Deutsch</a>
+            <a href="#" class="lang-option" data-lang="fr">🇫🇷 Français</a>
+            <a href="#" class="lang-option" data-lang="es">🇪🇸 Español</a>
+            <a href="#" class="lang-option" data-lang="zh">🇨🇳 中文</a>
+            <a href="#" class="lang-option" data-lang="ar">🇸🇦 العربية</a>
+            <a href="#" class="lang-option" data-lang="it">🇮🇹 Italiano</a>
+            <a href="#" class="lang-option" data-lang="ru">🇷🇺 Русский</a>
+            <a href="#" class="lang-option" data-lang="ja">🇯🇵 日本語</a>
+        </div>
+        
         <button class="mobile-btn" id="mobileContact">CONTACT</button>
     </div>
 
@@ -1393,21 +1409,59 @@
                 window.location.href = '/login.html';
             });
 
-            // Language button - trigger desktop language button
-            languageBtn.addEventListener('click', function() {
-                // Close mobile menu first
-                hamburger.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
+            // Language button - show mobile language dropdown
+            let mobileLangExpanded = false;
+            languageBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = document.getElementById('mobileLangDropdown');
                 
-                // Wait for menu to close, then trigger language dropdown
-                setTimeout(function() {
-                    const desktopLangBtn = document.getElementById('langBtn');
-                    if (desktopLangBtn) {
-                        desktopLangBtn.click();
-                    }
-                }, 300);
+                if (!mobileLangExpanded) {
+                    // Show dropdown
+                    dropdown.style.display = 'flex';
+                    dropdown.style.animation = 'slideDown 0.3s ease forwards';
+                    mobileLangExpanded = true;
+                    languageBtn.textContent = '← BACK';
+                } else {
+                    // Hide dropdown
+                    dropdown.style.animation = 'slideUp 0.3s ease forwards';
+                    setTimeout(() => {
+                        dropdown.style.display = 'none';
+                    }, 300);
+                    mobileLangExpanded = false;
+                    languageBtn.textContent = 'LANGUAGE';
+                }
             });
+            
+            // Mobile language option click handlers
+            window.addEventListener('i18nReady', function() {
+                const mobileLangOptions = document.querySelectorAll('#mobileLangDropdown .lang-option');
+                mobileLangOptions.forEach(option => {
+                    option.addEventListener('click', async function(e) {
+                        e.preventDefault();
+                        const lang = this.getAttribute('data-lang');
+                        
+                        if (window.i18n) {
+                            await window.i18n.switchLanguage(lang);
+                            
+                            // Update desktop button text
+                            const desktopBtn = document.getElementById('langBtn');
+                            if (desktopBtn) {
+                                desktopBtn.textContent = lang.toUpperCase();
+                            }
+                            
+                            // Close mobile dropdown and menu
+                            const dropdown = document.getElementById('mobileLangDropdown');
+                            dropdown.style.display = 'none';
+                            mobileLangExpanded = false;
+                            languageBtn.textContent = 'LANGUAGE';
+                            
+                            hamburger.classList.remove('active');
+                            overlay.classList.remove('active');
+                            document.body.style.overflow = '';
+                        }
+                    });
+                });
+            }, { once: true });
 
             // Contact button - trigger desktop contact button
             contactBtn.addEventListener('click', function() {
