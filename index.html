@@ -1416,11 +1416,14 @@
                 const dropdown = document.getElementById('mobileLangDropdown');
                 
                 if (!mobileLangExpanded) {
-                    // Show dropdown
+                    // Show dropdown - keep body scroll locked (already locked by burger menu)
                     dropdown.style.display = 'flex';
                     dropdown.style.animation = 'slideDown 0.3s ease forwards';
                     mobileLangExpanded = true;
                     languageBtn.textContent = '← BACK';
+                    
+                    // Scroll dropdown container to top
+                    dropdown.scrollTop = 0;
                 } else {
                     // Hide dropdown
                     dropdown.style.animation = 'slideUp 0.3s ease forwards';

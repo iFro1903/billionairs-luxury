@@ -13,9 +13,12 @@
     );
     border: 1px solid rgba(212, 175, 55, 0.2);
     border-radius: 15px;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: 0 10px 40px rgba(212, 175, 55, 0.15);
     backdrop-filter: blur(10px);
+    max-height: 70vh;
+    -webkit-overflow-scrolling: touch;
 }
 
 .mobile-lang-dropdown .lang-option {
