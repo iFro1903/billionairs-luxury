@@ -33,22 +33,26 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
     background: linear-gradient(135deg, 
-        rgba(15, 10, 12, 0.98) 0%, 
-        rgba(30, 20, 24, 0.97) 30%,
-        rgba(25, 15, 18, 0.97) 60%,
-        rgba(20, 12, 15, 0.98) 100%);
+        rgba(15, 10, 12, 1) 0%, 
+        rgba(30, 20, 24, 1) 30%,
+        rgba(25, 15, 18, 1) 60%,
+        rgba(20, 12, 15, 1) 100%);
     backdrop-filter: blur(30px) saturate(120%);
-    z-index: 10000;
+    z-index: 99999;
     display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 3rem;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
     pointer-events: none;
+    padding: 2rem 1rem;
 }
 
 /* Visible shine effect on overlay */
