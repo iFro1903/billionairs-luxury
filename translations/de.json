@@ -210,7 +210,10 @@
     "privacy": "Datenschutz",
     "terms": "AGB",
     "imprint": "Impressum",
-    "follow_us": "Folgen Sie uns"
+    "follow_us": "Folgen Sie uns",
+    "faq": "FAQ",
+    "legal_notice": "Rechtliche Hinweise",
+    "privacy_policy": "Datenschutzerklärung"
   },
   "testimonials": {
     "fk": {

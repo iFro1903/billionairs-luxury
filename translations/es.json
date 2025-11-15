@@ -76,7 +76,11 @@
   "footer": {
     "secured_by": "ASEGURADO POR ESTÁNDARES BANCARIOS SUIZOS",
     "encrypted": "INFRAESTRUCTURA ENCRIPTADA",
-    "copyright": "© 2025 La Colección Final"
+    "copyright": "© 2025 La Colección Final",
+    "faq": "Preguntas frecuentes",
+    "legal_notice": "Aviso legal",
+    "privacy_policy": "Política de privacidad",
+    "terms": "Términos y condiciones"
   },
   "cookie": {
     "title": "Respetamos su privacidad",

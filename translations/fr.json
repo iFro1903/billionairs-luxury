@@ -76,7 +76,11 @@
   "footer": {
     "secured_by": "SÉCURISÉ PAR LES NORMES BANCAIRES SUISSES",
     "encrypted": "INFRASTRUCTURE CRYPTÉE",
-    "copyright": "© 2025 La Collection Finale"
+    "copyright": "© 2025 La Collection Finale",
+    "faq": "FAQ",
+    "legal_notice": "Mentions légales",
+    "privacy_policy": "Politique de confidentialité",
+    "terms": "Conditions générales"
   },
   "cookie": {
     "title": "Nous respectons votre vie privée",

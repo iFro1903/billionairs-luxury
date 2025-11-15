@@ -59,7 +59,11 @@
   "footer": {
     "secured_by": "瑞士银行标准保障",
     "encrypted": "加密基础设施",
-    "copyright": "© 2025 最终收藏"
+    "copyright": "© 2025 最终收藏",
+    "faq": "常见问题",
+    "legal_notice": "法律声明",
+    "privacy_policy": "隐私政策",
+    "terms": "条款与条件"
   },
   "cookie": {
     "title": "我们尊重您的隐私",
