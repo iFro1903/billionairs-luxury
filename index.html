@@ -1436,14 +1436,19 @@
             });
             
             // Mobile language option click handlers
-            window.addEventListener('i18nReady', function() {
+            function setupMobileLangOptions() {
                 const mobileLangOptions = document.querySelectorAll('#mobileLangDropdown .lang-option');
+                console.log('Setting up mobile language options:', mobileLangOptions.length);
+                
                 mobileLangOptions.forEach(option => {
                     option.addEventListener('click', async function(e) {
                         e.preventDefault();
+                        e.stopPropagation();
                         const lang = this.getAttribute('data-lang');
+                        console.log('Mobile language clicked:', lang);
                         
                         if (window.i18n) {
+                            console.log('Switching language to:', lang);
                             await window.i18n.switchLanguage(lang);
                             
                             // Update desktop button text
@@ -1461,10 +1466,19 @@
                             hamburger.classList.remove('active');
                             overlay.classList.remove('active');
                             document.body.style.overflow = '';
+                        } else {
+                            console.error('i18n not available');
                         }
                     });
                 });
-            }, { once: true });
+            }
+            
+            // Setup immediately if i18n is ready, otherwise wait for event
+            if (window.i18n) {
+                setupMobileLangOptions();
+            } else {
+                window.addEventListener('i18nReady', setupMobileLangOptions, { once: true });
+            }
 
             // Contact button - trigger desktop contact button
             contactBtn.addEventListener('click', function() {
