@@ -51,6 +51,12 @@ class I18nManager {
         // Load translation files
         await this.loadTranslations();
 
+        // Save original English texts for translation
+        console.log('💾 Saving original texts...');
+        this.saveOriginalTexts(document.body);
+        this.hasInitialized = true;
+        console.log('✅ Original texts saved:', this.originalTexts.size, 'nodes');
+
         // Apply translations to current page (will skip if English)
         this.applyTranslations();
 
@@ -309,14 +315,22 @@ class I18nManager {
                 } else {
                     // Translate from original English to target language
                     let translated = originalText;
+                    let found = false;
                     for (const [english, targetText] of Object.entries(textMap)) {
                         if (originalText === english) {
                             translated = targetText;
+                            found = true;
+                            console.log(`🔄 Exact match: "${english}" → "${targetText}"`);
                             break;
                         } else if (originalText.includes(english)) {
                             translated = originalText.replace(english, targetText);
+                            found = true;
+                            console.log(`🔄 Partial match: "${english}" → "${targetText}"`);
                             break;
                         }
+                    }
+                    if (!found && originalText.length > 2) {
+                        console.log(`⚠️ No translation for: "${originalText}"`);
                     }
                     node.textContent = translated;
                 }
