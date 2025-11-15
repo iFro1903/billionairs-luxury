@@ -68,13 +68,28 @@ a:hover, a:focus {
     box-sizing: border-box;
 }
 
+/* CJK Language Support */
+:lang(zh), :lang(ja), :lang(ko) {
+    font-family: 'Noto Sans SC', 'Noto Sans JP', 'Microsoft YaHei', 'SimHei', 'MS Gothic', sans-serif !important;
+    letter-spacing: 0 !important;
+}
+
+:lang(ar) {
+    font-family: 'Noto Sans Arabic', 'Arial', sans-serif !important;
+    direction: rtl;
+}
+
+:lang(ru) {
+    font-family: 'Montserrat', 'Noto Sans', 'Arial', sans-serif !important;
+}
+
 html {
     overflow-x: hidden;
     max-width: 100vw;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', 'Noto Sans SC', 'Microsoft YaHei', 'SimHei', sans-serif;
     background-color: #000;
     background-image: radial-gradient(ellipse at top, rgba(15, 15, 15, 1), rgba(0, 0, 0, 1)), 
                       linear-gradient(135deg, rgba(232, 180, 160, 0.03) 0%, transparent 50%);
