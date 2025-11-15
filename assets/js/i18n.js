@@ -251,10 +251,14 @@ class I18nManager {
     autoTranslateCommonElements() {
         // Get current translations
         const t = this.translations[this.currentLang];
-        if (!t) return;
+        if (!t) {
+            console.warn(`⚠️ No translations found for ${this.currentLang}`);
+            return;
+        }
 
         // Text mapping: English → All Languages
         const textMap = this.getTextMapForLanguage(this.currentLang);
+        console.log(`📖 Text map for ${this.currentLang}:`, Object.keys(textMap).length, 'entries');
 
         // Apply translations
         this.applyTextTranslations(document.body, textMap);
@@ -962,6 +966,8 @@ class I18nManager {
             return;
         }
 
+        console.log(`🔄 Switching language to: ${lang}`);
+
         this.currentLang = lang;
         this.setCookie(this.cookieName, lang, this.cookieExpiry);
         document.documentElement.lang = lang;
@@ -975,10 +981,14 @@ class I18nManager {
 
         // Reload translations if not loaded
         if (!this.translations[lang]) {
+            console.log(`📥 Loading translations for ${lang}...`);
             await this.loadTranslations();
+        } else {
+            console.log(`✅ Translations already loaded for ${lang}`);
         }
 
         // Apply new translations
+        console.log(`🎨 Applying translations for ${lang}...`);
         this.applyTranslations();
 
         // Update language switcher button
@@ -989,7 +999,11 @@ class I18nManager {
             detail: { language: lang } 
         }));
 
-        console.log(`✅ Language switched to: ${lang}`);
+        console.log(`✅ Language switched to: ${lang}`, {
+            currentLang: this.currentLang,
+            translationsLoaded: Object.keys(this.translations),
+            htmlLang: document.documentElement.lang
+        });
     }
 
     /**
