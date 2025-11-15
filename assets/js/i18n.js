@@ -39,14 +39,12 @@ class I18nManager {
         // Check for saved language preference first
         const savedLang = this.getCookie(this.cookieName);
         
-        if (savedLang && this.languages[savedLang]) {
-            // Use saved language if valid
-            this.currentLang = savedLang;
-        } else {
-            // Default to English for first-time visitors
-            this.currentLang = 'en';
-            this.setCookie(this.cookieName, 'en', 365);
-        }
+        // IMPORTANT: Always save originals when page is in English
+        // If user has a saved language, we'll apply it AFTER saving originals
+        const targetLang = savedLang && this.languages[savedLang] ? savedLang : 'en';
+        
+        // Start with English to save originals
+        this.currentLang = 'en';
 
         // Load translation files
         await this.loadTranslations();
@@ -57,7 +55,16 @@ class I18nManager {
         this.hasInitialized = true;
         console.log('✅ Original texts saved:', this.originalTexts.size, 'nodes');
 
-        // Apply translations to current page (will skip if English)
+        // Now switch to target language if needed
+        if (targetLang !== 'en') {
+            console.log(`🔄 Switching to saved language: ${targetLang}`);
+            await this.switchLanguage(targetLang);
+        } else {
+            // Just set cookie for English
+            this.setCookie(this.cookieName, 'en', 365);
+        }
+
+        // Apply translations to current page
         this.applyTranslations();
 
         // Setup language switcher (DISABLED - using lang-dropdown-simple.js instead)
