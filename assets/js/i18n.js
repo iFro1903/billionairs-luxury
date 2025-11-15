@@ -281,6 +281,7 @@ class I18nManager {
     
     /**
      * Save original text content of all text nodes
+     * CRITICAL: Only save if not already saved
      */
     saveOriginalTexts(node) {
         if (node.nodeType === Node.ELEMENT_NODE) {
@@ -292,7 +293,8 @@ class I18nManager {
 
         if (node.nodeType === Node.TEXT_NODE) {
             const text = node.textContent.trim();
-            if (text && text.length > 1) {
+            // Only save if not already in map (preserve first English version)
+            if (text && text.length > 1 && !this.originalTexts.has(node)) {
                 this.originalTexts.set(node, text);
             }
         }
@@ -304,6 +306,7 @@ class I18nManager {
     
     /**
      * Apply translations to text nodes
+     * IMPORTANT: Always translates from ORIGINAL English text, never from current translation
      */
     applyTextTranslations(node, textMap) {
         if (node.nodeType === Node.ELEMENT_NODE) {
@@ -316,28 +319,23 @@ class I18nManager {
         if (node.nodeType === Node.TEXT_NODE) {
             const originalText = this.originalTexts.get(node);
             if (originalText) {
-                // If translating to English, restore original
+                // ALWAYS restore original first, then translate
+                // If translating to English, just use original
                 if (this.currentLang === 'en') {
                     node.textContent = originalText;
                 } else {
-                    // Translate from original English to target language
+                    // Translate from ORIGINAL English to target language
                     let translated = originalText;
-                    let found = false;
                     for (const [english, targetText] of Object.entries(textMap)) {
+                        // Try exact match first
                         if (originalText === english) {
                             translated = targetText;
-                            found = true;
-                            console.log(`🔄 Exact match: "${english}" → "${targetText}"`);
-                            break;
-                        } else if (originalText.includes(english)) {
-                            translated = originalText.replace(english, targetText);
-                            found = true;
-                            console.log(`🔄 Partial match: "${english}" → "${targetText}"`);
                             break;
                         }
-                    }
-                    if (!found && originalText.length > 2) {
-                        console.log(`⚠️ No translation for: "${originalText}"`);
+                        // Then try partial match
+                        if (originalText.includes(english) && english.length > 3) {
+                            translated = originalText.replace(new RegExp(english, 'g'), targetText);
+                        }
                     }
                     node.textContent = translated;
                 }
@@ -992,6 +990,8 @@ class I18nManager {
         this.currentLang = lang;
         this.setCookie(this.cookieName, lang, this.cookieExpiry);
         document.documentElement.lang = lang;
+
+        console.log(`📊 Original texts in map: ${this.originalTexts.size} nodes`);
 
         // Set text direction for RTL languages
         if (this.rtlLangs.includes(lang)) {
