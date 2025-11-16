@@ -19,9 +19,47 @@ const modalTranslations = {
             'How do I know this is real?': 'Woher weiß ich, dass das echt ist?',
             'LEGAL NOTICE': 'RECHTLICHE HINWEISE',
             'PRIVACY POLICY': 'DATENSCHUTZ',
-            'TERMS & CONDITIONS': 'AGB'
+            'TERMS & CONDITIONS': 'AGB',
+            'Entity': 'Unternehmen',
+            'Contact': 'Kontakt',
+            'Legal Notice': 'Rechtliche Hinweise',
+            'Information We Collect': 'Welche Informationen wir sammeln',
+            'How We Use Your Data': 'Wie wir Ihre Daten verwenden',
+            'Data Protection': 'Datenschutz',
+            'Your Rights': 'Ihre Rechte',
+            'Agreement': 'Vereinbarung',
+            'Transaction Terms': 'Transaktionsbedingungen',
+            'Access & Eligibility': 'Zugang & Berechtigung',
+            'Intellectual Property': 'Geistiges Eigentum',
+            'Limitation of Liability': 'Haftungsbeschränkung',
+            'Inquiries': 'Anfragen'
         },
         content: {
+            // Legal Notice
+            'legal_entity_title': 'BILLIONAIRS',
+            'legal_entity_subtitle': 'Premium Digital Experience Platform',
+            'legal_entity_location': 'Registriert in Zürich, Schweiz',
+            'legal_contact_intro': 'Nur exklusive Anfragen:',
+            'legal_contact_email': 'elite@billionairs.luxury',
+            'legal_contact_response': 'Antwortzeit: 24-48 Stunden',
+            'legal_notice_text': 'Alle geistigen Eigentumsrechte, Designs und Inhalte sind durch internationales Urheberrecht geschützt. Unbefugte Vervielfältigung oder Verbreitung ist strengstens untersagt.<br><br>BILLIONAIRS behält sich das Recht vor, Angebote, Bedingungen und Verfügbarkeit ohne Vorankündigung zu ändern. Alle Verkäufe sind endgültig.',
+            
+            // Privacy Policy
+            'privacy_collect_text': 'Nur wesentliche Daten, die für die Transaktionsabwicklung und Zugriffserfüllung erforderlich sind. Alle Informationen werden mit Verschlüsselungsprotokollen nach Schweizer Bankenstandard verschlüsselt.',
+            'privacy_use_transaction': 'Transaktionsabwicklung: Sichere Verifizierung und Abschluss',
+            'privacy_use_access': 'Zugangserfüllung: Aktivierung Ihrer exklusiven Erfahrung',
+            'privacy_use_communication': 'Kommunikation: Verschlüsselte Korrespondenz bezüglich Ihrer Erfahrung',
+            'privacy_use_legal': 'Rechtliche Compliance: Nur regulatorische Anforderungen',
+            'privacy_protection_text': 'Ende-zu-Ende-Verschlüsselung. Schweizer Bankenstandards. Blockchain-Verifizierung. Null Zugriff Dritter. Ihre Informationen verlassen niemals unsere sichere Infrastruktur.',
+            'privacy_rights_text': 'Zugang, Korrektur oder Löschung persönlicher Daten auf Anfrage verfügbar. Kontakt: elite@billionairs.luxury',
+            
+            // Terms of Service
+            'terms_agreement_text': 'Durch den Zugriff auf BILLIONAIRS bestätigen Sie Ihr volles Verständnis und Ihre freiwillige Annahme dieser Bedingungen. Dies stellt eine verbindliche Vereinbarung nach Schweizer Recht dar. Die fortgesetzte Nutzung zeigt eine informierte Zustimmung an.',
+            'terms_transaction_text': 'Alle Engagements sind endgültig und bindend. Indem Sie fortfahren, bestätigen Sie volles Verständnis und Akzeptanz. Diese Erfahrung operiert jenseits konventioneller Rahmenwerke—das Engagement ist absolut und unwiderruflich. Keine Umkehrungen, Änderungen oder Neuüberlegungen sind möglich, sobald initiiert.',
+            'terms_access_text': 'Beschränkt auf qualifizierte Personen. BILLIONAIRS behält sich absolute Diskretion bei der Gewährung oder Verweigerung des Zugangs ohne Erklärung oder Rückgriff vor. Kriterien bleiben vertraulich. Teilnahme ist ein Privileg, kein Recht.',
+            'terms_ip_text': 'Alle Designs, Konzepte und Inhalte sind geschützte Vermögenswerte unter internationalem Urheberrecht und Markenrecht. Unbefugte Vervielfältigung, Verbreitung oder Verwendung ist strengstens untersagt und unterliegt rechtlichen Schritten.',
+            'terms_liability_text': 'BILLIONAIRS, seine Betreiber und verbundenen Unternehmen übernehmen keine Haftung für direkte, indirekte, zufällige, Folge- oder Strafschäden, die sich aus Ihrer Teilnahme ergeben. Sie übernehmen die volle Verantwortung für Ihre Entscheidungen. Dieser Service wird "wie besehen" ohne Garantien jeglicher Art bereitgestellt.',
+            'terms_inquiries_email': 'elite@billionairs.luxury',
             'faq_what_is': 'Ein Zugang zu Erlebnissen, die jenseits der öffentlichen Reichweite existieren. Kein Marktplatz. Kein Service. Eine Schwelle zu Momenten und Zugang, die nicht repliziert, beworben oder denjenigen erklärt werden können, die sie nicht überschritten haben.<br><br>Denken Sie daran als die finale Kollektion—nicht von Objekten, sondern von Perspektive. Von Transformation. Von Zugang zu Bereichen, wo Währung keine Bedeutung hat, weil das Angebotene mit keinen anderen Mitteln gekauft werden kann.<br><br>Was dahinter liegt, ist Ihres zu entdecken—aber nur, wenn Sie bereit sind.',
             'faq_why_investment': 'Wahre Exklusivität erfordert Engagement. Was Sie hier zugreifen, wird nicht verkauft—es wird gewährt. Die Schwelle existiert, um sicherzustellen, dass nur diejenigen, die Wert jenseits des Preises verstehen, sie jemals überschreiten.<br><br>Sammler seltener Erfahrungen wissen: Die Barriere selbst ist Teil der Kuration. Sie ist nicht dafür designed zu extrahieren—sie ist designed zu schützen. Um die Integrität dessen zu bewahren, was dahinter liegt, vor denen, die Wert in konventionellen Begriffen messen.<br><br>Wenn das Engagement steil erscheint, sind Sie genau dort, wo Sie sein sollten: fragend. Dieses Zögern ist der Filter. Eine Schwelle, die Ihre Wahrnehmung dessen, was Zugang wirklich bedeutet, neu formt.',
             'faq_who_for': 'Diejenigen, die konventionellen Erfolg transzendiert haben. Personen, für die Geld keine Frage mehr ist, aber Bedeutung schon. Menschen, die alles öffentlich Verfügbare erworben haben und jetzt suchen, was nicht ist.<br><br>Suchende dessen, was zwischen Gedanken und Realität existiert. Diejenigen, die verstehen, dass die seltensten Erfahrungen nicht in Katalogen erscheinen, nicht online bewertet werden und keine Spur hinterlassen außer in der Transformation derer, die ihnen begegnen.<br><br>Wenn Sie immer noch Ihren Wert an Ihrem Portfolio messen, ist dies noch nicht Ihr Moment.',
@@ -278,6 +316,111 @@ function translateModals() {
             console.log(`✅ FAQ content ${index + 1} translated to ${currentLang}`);
         }
     });
+    
+    // 3. Translate Legal Notice modal content
+    const legalModal = document.getElementById('impressumModal');
+    if (legalModal && trans.content) {
+        const paragraphs = legalModal.querySelectorAll('.legal-section p');
+        if (paragraphs.length > 0) {
+            // Entity section (3 paragraphs)
+            if (trans.content.legal_entity_title && paragraphs[0]) {
+                paragraphs[0].innerHTML = `<strong>${trans.content.legal_entity_title}</strong>`;
+            }
+            if (trans.content.legal_entity_subtitle && paragraphs[1]) {
+                paragraphs[1].textContent = trans.content.legal_entity_subtitle;
+            }
+            if (trans.content.legal_entity_location && paragraphs[2]) {
+                paragraphs[2].textContent = trans.content.legal_entity_location;
+            }
+            // Contact section (3 paragraphs)
+            if (trans.content.legal_contact_intro && paragraphs[3]) {
+                paragraphs[3].textContent = trans.content.legal_contact_intro;
+            }
+            if (trans.content.legal_contact_email && paragraphs[4]) {
+                paragraphs[4].innerHTML = `<strong>${trans.content.legal_contact_email}</strong>`;
+            }
+            if (trans.content.legal_contact_response && paragraphs[5]) {
+                paragraphs[5].textContent = trans.content.legal_contact_response;
+            }
+            // Legal Notice section (2 paragraphs)
+            if (trans.content.legal_notice_text && paragraphs[6]) {
+                const texts = trans.content.legal_notice_text.split('<br><br>');
+                paragraphs[6].textContent = texts[0];
+                if (paragraphs[7] && texts[1]) {
+                    paragraphs[7].textContent = texts[1];
+                }
+            }
+        }
+    }
+    
+    // 4. Translate Privacy Policy modal content
+    const privacyModal = document.getElementById('privacyModal');
+    if (privacyModal && trans.content) {
+        const sections = privacyModal.querySelectorAll('.legal-section');
+        if (sections.length > 0) {
+            // Information We Collect
+            if (trans.content.privacy_collect_text && sections[0]) {
+                const p = sections[0].querySelector('p');
+                if (p) p.textContent = trans.content.privacy_collect_text;
+            }
+            // How We Use Your Data (4 paragraphs)
+            if (sections[1]) {
+                const ps = sections[1].querySelectorAll('p');
+                if (trans.content.privacy_use_transaction && ps[0]) ps[0].innerHTML = `<strong>${trans.content.privacy_use_transaction.split(':')[0]}:</strong> ${trans.content.privacy_use_transaction.split(':')[1]}`;
+                if (trans.content.privacy_use_access && ps[1]) ps[1].innerHTML = `<strong>${trans.content.privacy_use_access.split(':')[0]}:</strong> ${trans.content.privacy_use_access.split(':')[1]}`;
+                if (trans.content.privacy_use_communication && ps[2]) ps[2].innerHTML = `<strong>${trans.content.privacy_use_communication.split(':')[0]}:</strong> ${trans.content.privacy_use_communication.split(':')[1]}`;
+                if (trans.content.privacy_use_legal && ps[3]) ps[3].innerHTML = `<strong>${trans.content.privacy_use_legal.split(':')[0]}:</strong> ${trans.content.privacy_use_legal.split(':')[1]}`;
+            }
+            // Data Protection
+            if (trans.content.privacy_protection_text && sections[2]) {
+                const p = sections[2].querySelector('p');
+                if (p) p.textContent = trans.content.privacy_protection_text;
+            }
+            // Your Rights
+            if (trans.content.privacy_rights_text && sections[3]) {
+                const p = sections[3].querySelector('p');
+                if (p) p.innerHTML = trans.content.privacy_rights_text;
+            }
+        }
+    }
+    
+    // 5. Translate Terms of Service modal content
+    const termsModal = document.getElementById('termsModal');
+    if (termsModal && trans.content) {
+        const sections = termsModal.querySelectorAll('.legal-section');
+        if (sections.length > 0) {
+            // Agreement
+            if (trans.content.terms_agreement_text && sections[0]) {
+                const p = sections[0].querySelector('p');
+                if (p) p.textContent = trans.content.terms_agreement_text;
+            }
+            // Transaction Terms
+            if (trans.content.terms_transaction_text && sections[1]) {
+                const p = sections[1].querySelector('p');
+                if (p) p.innerHTML = trans.content.terms_transaction_text;
+            }
+            // Access & Eligibility
+            if (trans.content.terms_access_text && sections[2]) {
+                const p = sections[2].querySelector('p');
+                if (p) p.textContent = trans.content.terms_access_text;
+            }
+            // Intellectual Property
+            if (trans.content.terms_ip_text && sections[3]) {
+                const p = sections[3].querySelector('p');
+                if (p) p.textContent = trans.content.terms_ip_text;
+            }
+            // Limitation of Liability
+            if (trans.content.terms_liability_text && sections[4]) {
+                const p = sections[4].querySelector('p');
+                if (p) p.textContent = trans.content.terms_liability_text;
+            }
+            // Inquiries
+            if (trans.content.terms_inquiries_email && sections[5]) {
+                const p = sections[5].querySelector('p');
+                if (p) p.innerHTML = `<strong>${trans.content.terms_inquiries_email}</strong>`;
+            }
+        }
+    }
 }
 
 // Translate when language changes
