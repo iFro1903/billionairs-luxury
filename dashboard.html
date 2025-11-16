@@ -452,14 +452,18 @@
                         localStorage.setItem('user_data', JSON.stringify(result.user));
                         console.log('✅ Auto-login successful!');
                         
-                        // Clean URL and reload
-                        window.history.replaceState({}, '', '/dashboard.html');
+                        // Get language from URL
+                        const lang = urlParams.get('lang') || localStorage.getItem('billionairs_lang') || 'en';
+                        
+                        // Clean URL and reload with language parameter
+                        window.history.replaceState({}, '', '/dashboard.html?lang=' + lang);
                         window.location.reload();
                         return;
                     } else {
                         console.error('❌ Auto-login failed:', result);
+                        const lang = urlParams.get('lang') || 'en';
                         alert('Auto-login failed. Please login manually.');
-                        window.location.href = '/login.html?email=' + encodeURIComponent(autoLoginEmail);
+                        window.location.href = '/login.html?email=' + encodeURIComponent(autoLoginEmail) + '&lang=' + lang;
                         return;
                     }
                 } catch (error) {
