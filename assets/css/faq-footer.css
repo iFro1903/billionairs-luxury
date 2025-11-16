@@ -721,7 +721,7 @@
     
     .minimal-footer {
         position: fixed;
-        bottom: -30px; /* Balanced position between links and copyright */
+        bottom: -60px; /* Move footer down to fully reveal security text */
         left: 0;
         right: 0;
         padding: 1rem 1rem 3.5rem 1rem; /* Extra bottom padding for copyright visibility */
