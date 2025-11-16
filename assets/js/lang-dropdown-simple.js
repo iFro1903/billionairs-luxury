@@ -5,6 +5,37 @@
 
 console.log('🌐 lang-dropdown-simple.js LOADED');
 
+// Global function to translate footer links
+window.translateFooterLinks = function(lang) {
+    console.log('🔄 Translating footer links to:', lang);
+    
+    const footerTranslations = {
+        'de': { faq: 'FAQ', legal: 'RECHTLICHE HINWEISE', privacy: 'DATENSCHUTZ', terms: 'AGB' },
+        'fr': { faq: 'FAQ', legal: 'MENTION LÉGALE', privacy: 'POLITIQUE DE CONFIDENTIALITÉ', terms: 'CONDITIONS GÉNÉRALES' },
+        'es': { faq: 'Preguntas frecuentes', legal: 'AVISO LEGAL', privacy: 'POLÍTICA DE PRIVACIDAD', terms: 'TÉRMINOS Y CONDICIONES' },
+        'zh': { faq: '常见问题', legal: '法律声明', privacy: '隐私政策', terms: '条款与条件' },
+        'ar': { faq: 'الأسئلة الشائعة', legal: 'إشعار قانوني', privacy: 'سياسة الخصوصية', terms: 'الشروط والأحكام' },
+        'it': { faq: 'Domande frequenti', legal: 'AVVISO LEGALE', privacy: 'INFORMATIVA SULLA PRIVACY', terms: 'TERMINI E CONDIZIONI' },
+        'ru': { faq: 'Часто задаваемые вопросы', legal: 'ПРАВОВОЕ УВЕДОМЛЕНИЕ', privacy: 'ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ', terms: 'УСЛОВИЯ И ПОЛОЖЕНИЯ' },
+        'ja': { faq: 'よくある質問', legal: '法的通知', privacy: 'プライバシーポリシー', terms: '利用規約' },
+        'en': { faq: 'FAQ', legal: 'LEGAL NOTICE', privacy: 'PRIVACY POLICY', terms: 'TERMS & CONDITIONS' }
+    };
+    
+    const trans = footerTranslations[lang] || footerTranslations['en'];
+    
+    const faqLink = document.getElementById('faqLink');
+    const legalLink = document.getElementById('legalLink');
+    const privacyLink = document.getElementById('privacyLink');
+    const termsLink = document.getElementById('termsLink');
+    
+    if (faqLink) faqLink.textContent = trans.faq;
+    if (legalLink) legalLink.textContent = trans.legal;
+    if (privacyLink) privacyLink.textContent = trans.privacy;
+    if (termsLink) termsLink.textContent = trans.terms;
+    
+    console.log(`✅ Footer links translated to ${lang}`);
+};
+
 // Function to initialize dropdown
 function initLanguageDropdown() {
     console.log('🔧 Initializing language dropdown...');
@@ -207,33 +238,22 @@ function initLanguageDropdown() {
                     console.log('✅ Language switched to:', lang);
                     langBtn.textContent = lang.toUpperCase();
                     
-                    // Translate footer links with direct mapping
-                    console.log('🔄 Translating footer links...');
-                    const footerTranslations = {
-                        'de': { faq: 'FAQ', legal: 'RECHTLICHE HINWEISE', privacy: 'DATENSCHUTZ', terms: 'AGB' },
-                        'fr': { faq: 'FAQ', legal: 'MENTION LÉGALE', privacy: 'POLITIQUE DE CONFIDENTIALITÉ', terms: 'CONDITIONS GÉNÉRALES' },
-                        'es': { faq: 'Preguntas frecuentes', legal: 'AVISO LEGAL', privacy: 'POLÍTICA DE PRIVACIDAD', terms: 'TÉRMINOS Y CONDICIONES' },
-                        'zh': { faq: '常见问题', legal: '法律声明', privacy: '隐私政策', terms: '条款与条件' },
-                        'ar': { faq: 'الأسئلة الشائعة', legal: 'إشعار قانوني', privacy: 'سياسة الخصوصية', terms: 'الشروط والأحكام' },
-                        'it': { faq: 'Domande frequenti', legal: 'AVVISO LEGALE', privacy: 'INFORMATIVA SULLA PRIVACY', terms: 'TERMINI E CONDIZIONI' },
-                        'ru': { faq: 'Часто задаваемые вопросы', legal: 'ПРАВОВОЕ УВЕДОМЛЕНИЕ', privacy: 'ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ', terms: 'УСЛОВИЯ И ПОЛОЖЕНИЯ' },
-                        'ja': { faq: 'よくある質問', legal: '法的通知', privacy: 'プライバシーポリシー', terms: '利用規約' },
-                        'en': { faq: 'FAQ', legal: 'LEGAL NOTICE', privacy: 'PRIVACY POLICY', terms: 'TERMS & CONDITIONS' }
-                    };
+                    // Translate footer links (for main page)
+                    if (typeof window.translateFooterLinks === 'function') {
+                        window.translateFooterLinks(lang);
+                    }
                     
-                    const trans = footerTranslations[lang] || footerTranslations['en'];
+                    // Translate page elements (testimonials, etc.)
+                    if (typeof window.translatePageElements === 'function') {
+                        console.log('🔄 Translating page elements...');
+                        setTimeout(() => window.translatePageElements(), 100);
+                    }
                     
-                    const faqLink = document.getElementById('faqLink');
-                    const legalLink = document.getElementById('legalLink');
-                    const privacyLink = document.getElementById('privacyLink');
-                    const termsLink = document.getElementById('termsLink');
-                    
-                    if (faqLink) faqLink.textContent = trans.faq;
-                    if (legalLink) legalLink.textContent = trans.legal;
-                    if (privacyLink) privacyLink.textContent = trans.privacy;
-                    if (termsLink) termsLink.textContent = trans.terms;
-                    
-                    console.log(`✅ Footer links translated to ${lang}`);
+                    // Translate login page (if on login page)
+                    if (typeof window.translateLoginPage === 'function') {
+                        console.log('🔄 Translating login page...');
+                        setTimeout(() => window.translateLoginPage(), 100);
+                    }
                     
                     // Force modal translation after language switch
                     if (typeof translateModals === 'function') {

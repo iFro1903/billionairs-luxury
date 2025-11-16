@@ -450,16 +450,16 @@
                 </div>
 
                 <div class="trust-social-proof">
-                    <h3>Trusted by members across 12 countries</h3>
+                    <h3 data-i18n-key="trust.members_title">Trusted by members across 12 countries</h3>
                     <div class="trust-member-grid">
                         <span class="member-testimonial" data-member="fk">F.K. • Tech Exit • SF</span>
                         <span class="member-testimonial" data-member="am">A.M. • Family Office • ZH</span>
                         <span class="member-testimonial" data-member="anon">Anon • Crypto OG • Dubai</span>
                         <span class="member-testimonial" data-member="mr">M.R. • Real Estate • London</span>
                         <span class="member-testimonial" data-member="sl">S.L. • Private Equity • NYC</span>
-                        <span class="member-info">+ 42 others</span>
+                        <span class="member-info" data-i18n-key="trust.others">+ 42 others</span>
                     </div>
-                    <p class="testimonial-hint">Click on members to read their experience</p>
+                    <p class="testimonial-hint" data-i18n-key="trust.click_hint">Click on members to read their experience</p>
                 </div>
 
                 <!-- Member Testimonial Modal -->
@@ -1351,6 +1351,7 @@
     <script src="assets/js/i18n.js" defer></script>
     <script src="assets/js/lang-dropdown-simple.js" defer></script>
     <script src="assets/js/modal-i18n.js" defer></script>
+    <script src="assets/js/page-i18n.js" defer></script>
 
     <!-- Accessibility (WCAG 2.1 AA) -->
     <script src="assets/js/accessibility.js"></script>
@@ -1451,6 +1452,16 @@
                         if (window.i18n) {
                             console.log('Switching language to:', lang);
                             await window.i18n.switchLanguage(lang);
+                            
+                            // Translate footer links
+                            if (typeof window.translateFooterLinks === 'function') {
+                                window.translateFooterLinks(lang);
+                            }
+                            
+                            // Trigger modal translation
+                            if (typeof translateModals === 'function') {
+                                setTimeout(translateModals, 300);
+                            }
                             
                             // Update desktop button text
                             const desktopBtn = document.getElementById('langBtn');
