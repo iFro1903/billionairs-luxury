@@ -207,31 +207,33 @@ function initLanguageDropdown() {
                     console.log('✅ Language switched to:', lang);
                     langBtn.textContent = lang.toUpperCase();
                     
-                    // Force translate footer links using the text map
+                    // Translate footer links with direct mapping
                     console.log('🔄 Translating footer links...');
-                    const textMap = window.i18n.getTextMapForLanguage(lang);
+                    const footerTranslations = {
+                        'de': { faq: 'FAQ', legal: 'RECHTLICHE HINWEISE', privacy: 'DATENSCHUTZ', terms: 'AGB' },
+                        'fr': { faq: 'FAQ', legal: 'MENTION LÉGALE', privacy: 'POLITIQUE DE CONFIDENTIALITÉ', terms: 'CONDITIONS GÉNÉRALES' },
+                        'es': { faq: 'Preguntas frecuentes', legal: 'AVISO LEGAL', privacy: 'POLÍTICA DE PRIVACIDAD', terms: 'TÉRMINOS Y CONDICIONES' },
+                        'zh': { faq: '常见问题', legal: '法律声明', privacy: '隐私政策', terms: '条款与条件' },
+                        'ar': { faq: 'الأسئلة الشائعة', legal: 'إشعار قانوني', privacy: 'سياسة الخصوصية', terms: 'الشروط والأحكام' },
+                        'it': { faq: 'Domande frequenti', legal: 'AVVISO LEGALE', privacy: 'INFORMATIVA SULLA PRIVACY', terms: 'TERMINI E CONDIZIONI' },
+                        'ru': { faq: 'Часто задаваемые вопросы', legal: 'ПРАВОВОЕ УВЕДОМЛЕНИЕ', privacy: 'ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ', terms: 'УСЛОВИЯ И ПОЛОЖЕНИЯ' },
+                        'ja': { faq: 'よくある質問', legal: '法的通知', privacy: 'プライバシーポリシー', terms: '利用規約' },
+                        'en': { faq: 'FAQ', legal: 'LEGAL NOTICE', privacy: 'PRIVACY POLICY', terms: 'TERMS & CONDITIONS' }
+                    };
+                    
+                    const trans = footerTranslations[lang] || footerTranslations['en'];
                     
                     const faqLink = document.getElementById('faqLink');
                     const legalLink = document.getElementById('legalLink');
                     const privacyLink = document.getElementById('privacyLink');
                     const termsLink = document.getElementById('termsLink');
                     
-                    if (faqLink && textMap['FAQ']) {
-                        faqLink.textContent = textMap['FAQ'];
-                        console.log(`✅ FAQ → ${textMap['FAQ']}`);
-                    }
-                    if (legalLink && textMap['LEGAL NOTICE']) {
-                        legalLink.textContent = textMap['LEGAL NOTICE'];
-                        console.log(`✅ LEGAL NOTICE → ${textMap['LEGAL NOTICE']}`);
-                    }
-                    if (privacyLink && textMap['PRIVACY POLICY']) {
-                        privacyLink.textContent = textMap['PRIVACY POLICY'];
-                        console.log(`✅ PRIVACY POLICY → ${textMap['PRIVACY POLICY']}`);
-                    }
-                    if (termsLink && textMap['TERMS & CONDITIONS']) {
-                        termsLink.textContent = textMap['TERMS & CONDITIONS'];
-                        console.log(`✅ TERMS & CONDITIONS → ${textMap['TERMS & CONDITIONS']}`);
-                    }
+                    if (faqLink) faqLink.textContent = trans.faq;
+                    if (legalLink) legalLink.textContent = trans.legal;
+                    if (privacyLink) privacyLink.textContent = trans.privacy;
+                    if (termsLink) termsLink.textContent = trans.terms;
+                    
+                    console.log(`✅ Footer links translated to ${lang}`);
                     
                     // Force modal translation after language switch
                     if (typeof translateModals === 'function') {
