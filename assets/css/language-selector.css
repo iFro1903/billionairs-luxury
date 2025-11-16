@@ -16,8 +16,10 @@
         rgba(212, 175, 155, 0.5)) 1;
     border-radius: 20px;
     min-width: 280px;
+    max-width: 280px;
     max-height: 500px;
     overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: 
         0 20px 60px rgba(0, 0, 0, 0.8),
         0 0 40px rgba(232, 180, 184, 0.15),
