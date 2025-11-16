@@ -303,27 +303,39 @@ class I18nManager {
         if (node.nodeType === Node.TEXT_NODE) {
             const originalText = this.originalTexts.get(node);
             if (originalText) {
-                // ALWAYS restore original first, then translate
-                // If translating to English, just use original
+                const trimmedOriginal = originalText.trim();
+                
+                // If translating to English, just restore original
                 if (this.currentLang === 'en') {
                     node.textContent = originalText;
-                } else {
-                    // Translate from ORIGINAL English to target language
-                    let translated = originalText;
-                    const trimmed = originalText.trim();
-                    
-                    for (const [english, targetText] of Object.entries(textMap)) {
-                        // Try exact match first (including trimmed version)
-                        if (originalText === english || trimmed === english) {
-                            translated = targetText;
-                            break;
-                        }
-                        // Then try partial match (only for longer strings to avoid false positives)
-                        if (english.length > 5 && originalText.includes(english)) {
-                            translated = originalText.replace(new RegExp(english, 'g'), targetText);
-                        }
+                    return;
+                }
+                
+                // Translate from ORIGINAL English to target language
+                let translated = originalText;
+                let wasTranslated = false;
+                
+                for (const [english, targetText] of Object.entries(textMap)) {
+                    // Try exact match first (including trimmed version)
+                    if (originalText === english || trimmedOriginal === english) {
+                        translated = targetText;
+                        wasTranslated = true;
+                        console.log(`✅ Exact match: "${trimmedOriginal}" → "${targetText}"`);
+                        break;
                     }
+                    // Then try partial match (only for longer strings to avoid false positives)
+                    if (english.length > 5 && originalText.includes(english)) {
+                        translated = originalText.replace(new RegExp(english, 'g'), targetText);
+                        wasTranslated = true;
+                        console.log(`✅ Partial match: "${english}" → "${targetText}"`);
+                    }
+                }
+                
+                if (wasTranslated) {
                     node.textContent = translated;
+                } else if (trimmedOriginal.length > 2) {
+                    // Log untranslated text for debugging (only meaningful text)
+                    console.log(`⚠️ No translation for: "${trimmedOriginal}"`);
                 }
             }
         }
