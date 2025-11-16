@@ -38,7 +38,7 @@ function initLanguageDropdown() {
         border-radius: 20px;
         width: 280px;
         max-width: 280px;
-        overflow: hidden;
+        overflow: hidden !important;
         box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(232,180,184,0.15);
         z-index: 99999;
         opacity: 0;
@@ -48,6 +48,29 @@ function initLanguageDropdown() {
         backdrop-filter: blur(20px) saturate(180%);
         -webkit-backdrop-filter: blur(20px) saturate(180%);
     `;
+    
+    // Force remove all scrolling capabilities
+    const style = document.createElement('style');
+    style.textContent = `
+        #langDropdownSimple {
+            overflow: hidden !important;
+            overflow-x: hidden !important;
+            overflow-y: hidden !important;
+            max-height: none !important;
+            -webkit-overflow-scrolling: auto !important;
+        }
+        #langDropdownSimple::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
+        .language-dropdown {
+            overflow: hidden !important;
+            overflow-x: hidden !important;
+            overflow-y: hidden !important;
+        }
+    `;
+    document.head.appendChild(style);
     
     dropdown.innerHTML = `
         <a href="#" class="lang-option" data-lang="en" style="display:flex; align-items:center; padding:16px 24px; color:rgba(255,255,255,0.9); text-decoration:none; font-family:'Montserrat','Playfair Display',serif; font-size:15px; letter-spacing:1.2px; border-bottom:1px solid rgba(232,180,184,0.08); transition:all 0.35s; cursor:pointer;">
