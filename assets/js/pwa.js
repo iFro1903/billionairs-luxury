@@ -1,5 +1,5 @@
-// PWA Registration and Install Prompt
-// Handles Service Worker registration and "Add to Home Screen" prompt
+// PWA Registration and Install Prompt - DISABLED
+// Install button removed per user request
 
 let deferredPrompt;
 let isInstalled = false;
@@ -28,6 +28,10 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+// DISABLED: Install prompt and button functionality
+// User requested removal of "Install App" button
+
+/*
 // Listen for install prompt
 window.addEventListener('beforeinstallprompt', (event) => {
     console.log('📱 Install prompt available');
@@ -57,97 +61,16 @@ function showInstallButton() {
 
 // Create floating install button
 function createFloatingInstallButton() {
-    // Check if button already exists
-    if (document.getElementById('pwa-floating-install')) return;
-    
-    const button = document.createElement('button');
-    button.id = 'pwa-floating-install';
-    button.innerHTML = `
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" fill="currentColor"/>
-        </svg>
-        <span>Install App</span>
-    `;
-    button.style.cssText = `
-        position: fixed;
-        bottom: 80px;
-        right: 20px;
-    background: linear-gradient(135deg, #E8B4A0, #f4e4a8);
-        color: #1a1a2e;
-        border: none;
-        border-radius: 50px;
-        padding: 12px 24px;
-        font-size: 14px;
-        font-weight: 700;
-        cursor: pointer;
-    box-shadow: 0 4px 20px rgba(232, 180, 160, 0.4);
-        z-index: 999998;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: all 0.3s ease;
-        animation: slideInRight 0.5s ease;
-    `;
-    
-    button.addEventListener('click', installApp);
-    button.addEventListener('mouseenter', () => {
-        button.style.transform = 'translateY(-2px)';
-    button.style.boxShadow = '0 6px 25px rgba(232, 180, 160, 0.6)';
-    });
-    button.addEventListener('mouseleave', () => {
-        button.style.transform = 'translateY(0)';
-    button.style.boxShadow = '0 4px 20px rgba(232, 180, 160, 0.4)';
-    });
-    
-    document.body.appendChild(button);
-    
-    // Add animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-    `;
-    document.head.appendChild(style);
+    // DISABLED - User requested removal
+    return;
 }
 
 // Install app function
 async function installApp() {
-    if (!deferredPrompt) {
-        console.log('No install prompt available');
-        return;
-    }
-    
-    // Show install prompt
-    deferredPrompt.prompt();
-    
-    // Wait for user choice
-    const { outcome } = await deferredPrompt.userChoice;
-    console.log(`User choice: ${outcome}`);
-    
-    if (outcome === 'accepted') {
-        console.log('✅ PWA installed successfully');
-        
-        // Track installation in analytics
-        if (typeof BillionairsAnalytics !== 'undefined') {
-            BillionairsAnalytics.trackPWAInstall();
-        }
-        
-        // Remove install button
-        const installBtn = document.getElementById('pwa-floating-install');
-        if (installBtn) {
-            installBtn.style.animation = 'slideOutRight 0.5s ease';
-            setTimeout(() => installBtn.remove(), 500);
-        }
-    } else {
-        console.log('❌ PWA installation declined');
+    // DISABLED - User requested removal
+    return;
+}
+*/
     }
     
     // Clear deferred prompt
