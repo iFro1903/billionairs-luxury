@@ -207,22 +207,30 @@ function initLanguageDropdown() {
                     console.log('✅ Language switched to:', lang);
                     langBtn.textContent = lang.toUpperCase();
                     
-                    // Force translate footer links
+                    // Force translate footer links using the text map
                     console.log('🔄 Translating footer links...');
-                    const footerLinks = {
-                        faqLink: 'FAQ',
-                        legalLink: 'LEGAL NOTICE',
-                        privacyLink: 'PRIVACY POLICY',
-                        termsLink: 'TERMS & CONDITIONS'
-                    };
+                    const textMap = window.i18n.getTextMapForLanguage(lang);
                     
-                    for (const [id, key] of Object.entries(footerLinks)) {
-                        const link = document.getElementById(id);
-                        if (link && window.i18n.t) {
-                            const translated = window.i18n.t(key);
-                            link.textContent = translated;
-                            console.log(`✅ ${key} → ${translated}`);
-                        }
+                    const faqLink = document.getElementById('faqLink');
+                    const legalLink = document.getElementById('legalLink');
+                    const privacyLink = document.getElementById('privacyLink');
+                    const termsLink = document.getElementById('termsLink');
+                    
+                    if (faqLink && textMap['FAQ']) {
+                        faqLink.textContent = textMap['FAQ'];
+                        console.log(`✅ FAQ → ${textMap['FAQ']}`);
+                    }
+                    if (legalLink && textMap['LEGAL NOTICE']) {
+                        legalLink.textContent = textMap['LEGAL NOTICE'];
+                        console.log(`✅ LEGAL NOTICE → ${textMap['LEGAL NOTICE']}`);
+                    }
+                    if (privacyLink && textMap['PRIVACY POLICY']) {
+                        privacyLink.textContent = textMap['PRIVACY POLICY'];
+                        console.log(`✅ PRIVACY POLICY → ${textMap['PRIVACY POLICY']}`);
+                    }
+                    if (termsLink && textMap['TERMS & CONDITIONS']) {
+                        termsLink.textContent = textMap['TERMS & CONDITIONS'];
+                        console.log(`✅ TERMS & CONDITIONS → ${textMap['TERMS & CONDITIONS']}`);
                     }
                     
                     // Force modal translation after language switch
