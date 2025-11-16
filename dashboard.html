@@ -502,7 +502,6 @@
             }
             
             // Check if user just completed a payment (came from payment page or stripe)
-            const urlParams = new URLSearchParams(window.location.search);
             const sessionId = urlParams.get('session_id');
             const justPaid = urlParams.get('payment') === 'success' || 
                             sessionId || 
