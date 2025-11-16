@@ -721,7 +721,7 @@
     
     .minimal-footer {
         position: fixed;
-        bottom: -50px; /* Show copyright ©FRO */
+        bottom: -30px; /* Balanced position between links and copyright */
         left: 0;
         right: 0;
         padding: 1rem 1rem 3.5rem 1rem; /* Extra bottom padding for copyright visibility */
@@ -741,7 +741,6 @@
         justify-content: center;
         gap: 0.5rem 1rem;
         text-align: center;
-        margin-top: 1.5rem; /* Push footer links down to reveal Infrastructure • Zürich */
     }
     
     .footer-link {
