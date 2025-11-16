@@ -721,7 +721,7 @@
     
     .minimal-footer {
         position: fixed;
-        bottom: -40px; /* Balanced position - shows copyright and all links */
+        bottom: -50px; /* Show copyright ©FRO */
         left: 0;
         right: 0;
         padding: 1rem;
