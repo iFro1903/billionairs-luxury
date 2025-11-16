@@ -296,7 +296,8 @@ class StripePaymentProcessor {
 
                 <button onclick="
                     sessionStorage.setItem('paymentInitiated', 'true');
-                    window.location.href = '/login.html?message=Payment initiated! Your account has been created. Please login.';
+                    const currentLang = localStorage.getItem('billionairs_lang') || 'en';
+                    window.location.href = '/login.html?message=Payment initiated! Your account has been created. Please login.&lang=' + currentLang;
                 " style="
                     width: 100%;
                     padding: 1rem;
@@ -643,7 +644,8 @@ class StripePaymentProcessor {
                         console.log('✅ Reset isProcessing flag');
                     }
                     // Redirect to login page
-                    window.location.href = '/login.html?message=Payment initiated! Your account has been created. Please login.';
+                    const currentLang = localStorage.getItem('billionairs_lang') || 'en';
+                    window.location.href = '/login.html?message=Payment initiated! Your account has been created. Please login.&lang=' + currentLang;
                 " style="
                     width: 100%;
                     padding: 1rem 2rem;
@@ -692,7 +694,8 @@ class StripePaymentProcessor {
         
         // Redirect to login page (account already created during payment)
         setTimeout(() => {
-            window.location.href = '/login.html?message=Account created! Please login with your credentials.';
+            const currentLang = localStorage.getItem('billionairs_lang') || 'en';
+            window.location.href = '/login.html?message=Account created! Please login with your credentials.&lang=' + currentLang;
         }, 3000);
     }
 }

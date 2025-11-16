@@ -293,7 +293,7 @@
             <img src="assets/images/logo.png" alt="BILLIONAIRS luxury brand logo" class="nav-logo-img" loading="eager" fetchpriority="high">
         </div>
         <div class="nav-actions">
-            <button class="nav-member" id="memberBtn" onclick="window.location.href='/login.html'" aria-label="Access Inner Circle member login">INNER CIRCLE</button>
+            <button class="nav-member" id="memberBtn" onclick="const lang = localStorage.getItem('billionairs_lang') || 'en'; window.location.href='/login.html?lang=' + lang;" aria-label="Access Inner Circle member login">INNER CIRCLE</button>
             <button class="lang-switcher" id="langBtn" aria-label="Switch language between English and German">EN</button>
             <button class="nav-contact" id="contactBtn" aria-label="Open contact information">CONTACT</button>
             
@@ -1413,7 +1413,8 @@
 
             // Inner Circle button
             innerCircleBtn.addEventListener('click', function() {
-                window.location.href = '/login.html';
+                const lang = localStorage.getItem('billionairs_lang') || 'en';
+                window.location.href = '/login.html?lang=' + lang;
             });
 
             // Language button - show mobile language dropdown

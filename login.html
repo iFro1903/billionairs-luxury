@@ -426,6 +426,16 @@
 
         // Check if already logged in
         window.onload = async () => {
+            // Check for language parameter in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const langParam = urlParams.get('lang');
+            
+            // If language parameter exists, set it before initializing i18n
+            if (langParam && ['en', 'de', 'fr', 'es', 'zh', 'ar', 'it', 'ru', 'ja'].includes(langParam)) {
+                console.log('🌍 Language from URL:', langParam);
+                localStorage.setItem('billionairs_lang', langParam);
+            }
+            
             // Initialize i18n
             if (typeof I18nManager !== 'undefined') {
                 window.i18nManager = new I18nManager();
