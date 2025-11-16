@@ -1,193 +1,237 @@
 /**
- * Payment Section i18n Translations
- * Complete translations for EXCLUSIVE ACCESS payment page
- * All 9 languages - Functionality preserved
+ * Payment Section i18n - Essential Translations
+ * Covers main titles, labels, buttons - All 9 languages
  */
 
 const paymentTranslations = {
     'de': {
-        // Header
-        title_luxury: 'EXKLUSIVER',
-        title_emphasis: 'ZUGANG',
-        subtitle: 'Nur auf Einladung',
-        
-        // Payment Method Selection
+        title_luxury: 'EXKLUSIVER', title_emphasis: 'ZUGANG', subtitle: 'Nur auf Einladung',
         method_title: 'Wählen Sie Ihre Zahlungsmethode',
         method_subtitle: 'Wählen Sie Ihre bevorzugte Zahlungsmethode für sichere Abwicklung',
-        
-        // Payment Methods
-        card_title: 'Kredit- / Debitkarte',
-        card_instant: '✓ Sofortige Abwicklung',
-        card_providers: 'Visa, Mastercard, Amex',
-        
-        wire_title: 'Banküberweisung',
-        wire_unlimited: '✓ Unbegrenzter Betrag',
-        wire_details: 'Manuelle Überweisungsdetails bereitgestellt',
-        
-        crypto_title: 'Kryptowährung',
-        crypto_fast: '✓ Unbegrenzt - Schnell',
-        crypto_coins: 'Bitcoin, Ethereum, USDT',
-        
-        // Customer Information Form
-        first_name: 'Vorname',
-        last_name: 'Nachname',
-        email: 'E-Mail-Adresse',
-        password: 'Passwort',
-        password_confirm: 'Passwort bestätigen',
-        phone: 'Telefonnummer',
-        company: 'Firma (Optional)',
-        
-        // Placeholders
-        ph_first_name: 'Ihr Vorname',
-        ph_last_name: 'Ihr Nachname',
-        ph_email: 'ihre.email@beispiel.com',
-        ph_password: 'Erstellen Sie ein sicheres Passwort (mind. 8 Zeichen)',
-        ph_password_confirm: 'Passwort erneut eingeben',
-        ph_phone: '+41 XX XXX XX XX',
-        ph_company: 'Ihr Firmenname',
-        
-        // Help texts
+        card_title: 'Kredit- / Debitkarte', card_instant: '✓ Sofortige Abwicklung', card_providers: 'Visa, Mastercard, Amex',
+        wire_title: 'Banküberweisung', wire_unlimited: '✓ Unbegrenzter Betrag', wire_details: 'Manuelle Überweisungsdetails bereitgestellt',
+        crypto_title: 'Kryptowährung', crypto_fast: '✓ Unbegrenzt - Schnell', crypto_coins: 'Bitcoin, Ethereum, USDT',
+        first_name: 'Vorname', last_name: 'Nachname', email: 'E-Mail-Adresse', password: 'Passwort',
+        password_confirm: 'Passwort bestätigen', phone: 'Telefonnummer', company: 'Firma (Optional)',
+        ph_first_name: 'Ihr Vorname', ph_last_name: 'Ihr Nachname', ph_email: 'ihre.email@beispiel.com',
+        ph_password: 'Erstellen Sie ein sicheres Passwort (mind. 8 Zeichen)', ph_password_confirm: 'Passwort erneut eingeben',
+        ph_phone: '+41 XX XXX XX XX', ph_company: 'Ihr Firmenname',
         password_help: 'Dies wird für den Zugang zu Ihrem INNER CIRCLE Konto verwendet',
-        
-        // Card Payment
-        card_redirect: 'Sie werden zu unserem sicheren Zahlungsanbieter weitergeleitet, um Ihre Transaktion abzuschließen.',
-        
-        // Wire Transfer
-        wire_header: 'Banküberweisung - Unbegrenzter Betrag',
-        wire_desc: 'Manuelle Banküberweisung ist die sicherste und zuverlässigste Methode. Sie erhalten unsere Bankdaten nach Bestätigung.',
-        wire_how_title: 'So funktioniert es:',
-        wire_step1: 'Füllen Sie Ihre Kontaktdaten oben aus',
-        wire_step2: 'Klicken Sie unten auf "BANKDATEN ANFORDERN"',
-        wire_step3: 'Erhalten Sie unsere Bankverbindung per E-Mail',
-        wire_step4: 'Leiten Sie die Überweisung von Ihrer Bank ein',
-        wire_step5: 'Zugang innerhalb von 24h nach Geldeingang gewährt',
-        
-        // Crypto Payment
-        crypto_header: 'Kryptowährungszahlung - Die Zukunft großer Transaktionen',
-        crypto_desc: 'Krypto-Zahlungen werden zur bevorzugten Methode für technikaffine Millionäre. Keine Limits, schnelle Abwicklung (10-60 Minuten) und vollständige Privatsphäre.',
-        crypto_why_title: '✓ Warum Krypto?',
-        crypto_why_unlimited: 'Unbegrenzter Betrag: Keine Transaktionslimits',
-        crypto_why_fast: 'Schnell: 10-60 Minuten Bestätigung',
-        crypto_why_fees: 'Niedrige Gebühren: ~0,5-1% für große Beträge',
-        crypto_why_global: 'Global: Funktioniert überall',
-        crypto_why_private: 'Privat: Maximale Diskretion',
-        crypto_how: '💡 <strong>So funktioniert es:</strong> Füllen Sie Ihre Daten oben aus, klicken Sie auf "ZUR ZAHLUNG", und wählen Sie Ihre bevorzugte Kryptowährung (Bitcoin, Ethereum oder USDT).',
-        
-        // Buttons
-        btn_secure_payment: 'SICHERE ZAHLUNG',
-        btn_request_bank: 'BANKDATEN ANFORDERN',
-        btn_proceed_payment: 'ZUR ZAHLUNG'
+        btn_secure_payment: 'SICHERE ZAHLUNG'
     },
-    
     'fr': {
-        title_luxury: 'ACCÈS',
-        title_emphasis: 'EXCLUSIF',
-        subtitle: 'Sur Invitation Uniquement',
+        title_luxury: 'ACCÈS', title_emphasis: 'EXCLUSIF', subtitle: 'Sur Invitation Uniquement',
         method_title: 'Choisissez votre méthode de paiement',
         method_subtitle: 'Sélectionnez votre méthode de paiement préférée pour un traitement sécurisé',
-        card_title: 'Carte de Crédit / Débit',
-        card_instant: '✓ Traitement Instantané',
-        card_providers: 'Visa, Mastercard, Amex',
-        wire_title: 'Virement Bancaire',
-        wire_unlimited: '✓ Montant Illimité',
-        wire_details: 'Détails du virement manuel fournis',
-        crypto_title: 'Cryptomonnaie',
-        crypto_fast: '✓ Illimité - Rapide',
-        crypto_coins: 'Bitcoin, Ethereum, USDT',
-        first_name: 'Prénom',
-        last_name: 'Nom',
-        email: 'Adresse E-mail',
-        password: 'Mot de Passe',
-        password_confirm: 'Confirmer le Mot de Passe',
-        phone: 'Numéro de Téléphone',
-        company: 'Entreprise (Optionnel)',
-        ph_first_name: 'Votre Prénom',
-        ph_last_name: 'Votre Nom',
-        ph_email: 'votre.email@exemple.com',
-        ph_password: 'Créez un mot de passe sécurisé (min. 8 caractères)',
-        ph_password_confirm: 'Ressaisissez votre mot de passe',
-        ph_phone: '+41 XX XXX XX XX',
-        ph_company: 'Nom de votre entreprise',
+        card_title: 'Carte de Crédit / Débit', card_instant: '✓ Traitement Instantané', card_providers: 'Visa, Mastercard, Amex',
+        wire_title: 'Virement Bancaire', wire_unlimited: '✓ Montant Illimité', wire_details: 'Détails du virement manuel fournis',
+        crypto_title: 'Cryptomonnaie', crypto_fast: '✓ Illimité - Rapide', crypto_coins: 'Bitcoin, Ethereum, USDT',
+        first_name: 'Prénom', last_name: 'Nom', email: 'Adresse E-mail', password: 'Mot de Passe',
+        password_confirm: 'Confirmer le Mot de Passe', phone: 'Numéro de Téléphone', company: 'Entreprise (Optionnel)',
+        ph_first_name: 'Votre Prénom', ph_last_name: 'Votre Nom', ph_email: 'votre.email@exemple.com',
+        ph_password: 'Créez un mot de passe sécurisé (min. 8 caractères)', ph_password_confirm: 'Ressaisissez votre mot de passe',
+        ph_phone: '+41 XX XXX XX XX', ph_company: 'Nom de votre entreprise',
         password_help: 'Utilisé pour accéder à votre compte INNER CIRCLE',
-        card_redirect: 'Vous serez redirigé vers notre processeur de paiement sécurisé pour finaliser votre transaction.',
-        wire_header: 'Virement Bancaire - Montant Illimité',
-        wire_desc: 'Le virement bancaire manuel est la méthode la plus sûre et fiable. Vous recevrez nos coordonnées bancaires après confirmation.',
-        wire_how_title: 'Comment ça marche:',
-        wire_step1: 'Remplissez vos coordonnées ci-dessus',
-        wire_step2: 'Cliquez sur "DEMANDER LES COORDONNÉES BANCAIRES" ci-dessous',
-        wire_step3: 'Recevez nos coordonnées bancaires par e-mail',
-        wire_step4: 'Initiez le virement depuis votre banque',
-        wire_step5: 'Accès accordé sous 24h après réception des fonds',
-        crypto_header: 'Paiement en Cryptomonnaie - L\'Avenir des Grandes Transactions',
-        crypto_desc: 'Les paiements crypto deviennent la méthode préférée des millionnaires avertis. Aucune limite, traitement rapide (10-60 minutes) et confidentialité totale.',
-        crypto_why_title: '✓ Pourquoi la Crypto?',
-        crypto_why_unlimited: 'Montant Illimité: Aucune limite de transaction',
-        crypto_why_fast: 'Rapide: Confirmation en 10-60 minutes',
-        crypto_why_fees: 'Frais Bas: ~0,5-1% pour les gros montants',
-        crypto_why_global: 'Mondial: Fonctionne partout',
-        crypto_why_private: 'Privé: Discrétion maximale',
-        crypto_how: '💡 <strong>Comment ça marche:</strong> Remplissez vos informations ci-dessus, cliquez sur "PROCÉDER AU PAIEMENT", et sélectionnez votre cryptomonnaie préférée (Bitcoin, Ethereum ou USDT).',
-        btn_secure_payment: 'PAIEMENT SÉCURISÉ',
-        btn_request_bank: 'DEMANDER LES COORDONNÉES BANCAIRES',
-        btn_proceed_payment: 'PROCÉDER AU PAIEMENT'
+        btn_secure_payment: 'PAIEMENT SÉCURISÉ'
     },
-    
     'es': {
-        title_luxury: 'ACCESO',
-        title_emphasis: 'EXCLUSIVO',
-        subtitle: 'Solo por Invitación',
+        title_luxury: 'ACCESO', title_emphasis: 'EXCLUSIVO', subtitle: 'Solo por Invitación',
         method_title: 'Elija su método de pago',
         method_subtitle: 'Seleccione su método de pago preferido para procesamiento seguro',
-        card_title: 'Tarjeta de Crédito / Débito',
-        card_instant: '✓ Procesamiento Instantáneo',
-        card_providers: 'Visa, Mastercard, Amex',
-        wire_title: 'Transferencia Bancaria',
-        wire_unlimited: '✓ Cantidad Ilimitada',
-        wire_details: 'Detalles de transferencia manual proporcionados',
-        crypto_title: 'Criptomoneda',
-        crypto_fast: '✓ Ilimitado - Rápido',
-        crypto_coins: 'Bitcoin, Ethereum, USDT',
-        first_name: 'Nombre',
-        last_name: 'Apellido',
-        email: 'Dirección de Correo',
-        password: 'Contraseña',
-        password_confirm: 'Confirmar Contraseña',
-        phone: 'Número de Teléfono',
-        company: 'Empresa (Opcional)',
-        ph_first_name: 'Su Nombre',
-        ph_last_name: 'Su Apellido',
-        ph_email: 'su.email@ejemplo.com',
-        ph_password: 'Cree una contraseña segura (mín. 8 caracteres)',
-        ph_password_confirm: 'Vuelva a ingresar su contraseña',
-        ph_phone: '+34 XXX XX XX XX',
-        ph_company: 'Nombre de su empresa',
+        card_title: 'Tarjeta de Crédito / Débito', card_instant: '✓ Procesamiento Instantáneo', card_providers: 'Visa, Mastercard, Amex',
+        wire_title: 'Transferencia Bancaria', wire_unlimited: '✓ Cantidad Ilimitada', wire_details: 'Detalles de transferencia manual proporcionados',
+        crypto_title: 'Criptomoneda', crypto_fast: '✓ Ilimitado - Rápido', crypto_coins: 'Bitcoin, Ethereum, USDT',
+        first_name: 'Nombre', last_name: 'Apellido', email: 'Dirección de Correo', password: 'Contraseña',
+        password_confirm: 'Confirmar Contraseña', phone: 'Número de Teléfono', company: 'Empresa (Opcional)',
+        ph_first_name: 'Su Nombre', ph_last_name: 'Su Apellido', ph_email: 'su.email@ejemplo.com',
+        ph_password: 'Cree una contraseña segura (mín. 8 caracteres)', ph_password_confirm: 'Vuelva a ingresar su contraseña',
+        ph_phone: '+34 XXX XX XX XX', ph_company: 'Nombre de su empresa',
         password_help: 'Se usará para acceder a su cuenta INNER CIRCLE',
-        card_redirect: 'Será redirigido a nuestro procesador de pagos seguro para completar su transacción.',
-        wire_header: 'Transferencia Bancaria - Cantidad Ilimitada',
-        wire_desc: 'La transferencia bancaria manual es el método más seguro y confiable. Recibirá nuestros datos bancarios después de la confirmación.',
-        wire_how_title: 'Cómo funciona:',
-        wire_step1: 'Complete su información de contacto arriba',
-        wire_step2: 'Haga clic en "SOLICITAR DATOS BANCARIOS" abajo',
-        wire_step3: 'Reciba nuestros datos bancarios por correo electrónico',
-        wire_step4: 'Inicie la transferencia desde su banco',
-        wire_step5: 'Acceso otorgado dentro de 24h después de recibir los fondos',
-        crypto_header: 'Pago en Criptomoneda - El Futuro de las Grandes Transacciones',
-        crypto_desc: 'Los pagos en cripto se están convirtiendo en el método preferido para millonarios conocedores de tecnología. Sin límites, procesamiento rápido (10-60 minutos) y privacidad completa.',
-        crypto_why_title: '✓ ¿Por qué Cripto?',
-        crypto_why_unlimited: 'Cantidad Ilimitada: Sin límites de transacción',
-        crypto_why_fast: 'Rápido: Confirmación en 10-60 minutos',
-        crypto_why_fees: 'Tarifas Bajas: ~0,5-1% para grandes cantidades',
-        crypto_why_global: 'Global: Funciona desde cualquier lugar',
-        crypto_why_private: 'Privado: Máxima discreción',
-        crypto_how: '💡 <strong>Cómo funciona:</strong> Complete sus datos arriba, haga clic en "PROCEDER AL PAGO", y seleccione su criptomoneda preferida (Bitcoin, Ethereum o USDT).',
-        btn_secure_payment: 'PAGO SEGURO',
-        btn_request_bank: 'SOLICITAR DATOS BANCARIOS',
-        btn_proceed_payment: 'PROCEDER AL PAGO'
+        btn_secure_payment: 'PAGO SEGURO'
     },
-    
-    // Chinese, Arabic, Italian, Russian, Japanese, English translations follow same pattern...
-    // (Continuing in next file due to length)
+    'zh': {
+        title_luxury: '独家', title_emphasis: '访问', subtitle: '仅限邀请',
+        method_title: '选择您的支付方式',
+        method_subtitle: '选择您喜欢的支付方式进行安全处理',
+        card_title: '信用卡 / 借记卡', card_instant: '✓ 即时处理', card_providers: 'Visa, Mastercard, Amex',
+        wire_title: '银行转账', wire_unlimited: '✓ 无限金额', wire_details: '提供手动转账详细信息',
+        crypto_title: '加密货币', crypto_fast: '✓ 无限 - 快速', crypto_coins: 'Bitcoin, Ethereum, USDT',
+        first_name: '名字', last_name: '姓氏', email: '电子邮件地址', password: '密码',
+        password_confirm: '确认密码', phone: '电话号码', company: '公司（可选）',
+        ph_first_name: '您的名字', ph_last_name: '您的姓氏', ph_email: 'your.email@example.com',
+        ph_password: '创建安全密码（至少8个字符）', ph_password_confirm: '重新输入密码',
+        ph_phone: '+86 XXX XXXX XXXX', ph_company: '您的公司名称',
+        password_help: '用于访问您的 INNER CIRCLE 账户',
+        btn_secure_payment: '安全支付'
+    },
+    'ar': {
+        title_luxury: 'الوصول', title_emphasis: 'الحصري', subtitle: 'بالدعوة فقط',
+        method_title: 'اختر طريقة الدفع',
+        method_subtitle: 'حدد طريقة الدفع المفضلة لديك للمعالجة الآمنة',
+        card_title: 'بطاقة ائتمان / خصم', card_instant: '✓ معالجة فورية', card_providers: 'Visa, Mastercard, Amex',
+        wire_title: 'تحويل بنكي', wire_unlimited: '✓ مبلغ غير محدود', wire_details: 'تفاصيل التحويل اليدوي المقدمة',
+        crypto_title: 'عملة مشفرة', crypto_fast: '✓ غير محدود - سريع', crypto_coins: 'Bitcoin, Ethereum, USDT',
+        first_name: 'الاسم الأول', last_name: 'اسم العائلة', email: 'عنوان البريد الإلكتروني', password: 'كلمة المرور',
+        password_confirm: 'تأكيد كلمة المرور', phone: 'رقم الهاتف', company: 'الشركة (اختياري)',
+        ph_first_name: 'اسمك الأول', ph_last_name: 'اسم عائلتك', ph_email: 'your.email@example.com',
+        ph_password: 'إنشاء كلمة مرور آمنة (8 أحرف على الأقل)', ph_password_confirm: 'أعد إدخال كلمة المرور',
+        ph_phone: '+971 XX XXX XXXX', ph_company: 'اسم شركتك',
+        password_help: 'سيتم استخدامه للوصول إلى حساب INNER CIRCLE الخاص بك',
+        btn_secure_payment: 'دفع آمن'
+    },
+    'it': {
+        title_luxury: 'ACCESSO', title_emphasis: 'ESCLUSIVO', subtitle: 'Solo su Invito',
+        method_title: 'Scegli il tuo metodo di pagamento',
+        method_subtitle: 'Seleziona il tuo metodo di pagamento preferito per elaborazione sicura',
+        card_title: 'Carta di Credito / Debito', card_instant: '✓ Elaborazione Istantanea', card_providers: 'Visa, Mastercard, Amex',
+        wire_title: 'Bonifico Bancario', wire_unlimited: '✓ Importo Illimitato', wire_details: 'Dettagli bonifico manuale forniti',
+        crypto_title: 'Criptovaluta', crypto_fast: '✓ Illimitato - Veloce', crypto_coins: 'Bitcoin, Ethereum, USDT',
+        first_name: 'Nome', last_name: 'Cognome', email: 'Indirizzo Email', password: 'Password',
+        password_confirm: 'Conferma Password', phone: 'Numero di Telefono', company: 'Azienda (Opzionale)',
+        ph_first_name: 'Il tuo Nome', ph_last_name: 'Il tuo Cognome', ph_email: 'tua.email@esempio.com',
+        ph_password: 'Crea una password sicura (min. 8 caratteri)', ph_password_confirm: 'Reinserisci la password',
+        ph_phone: '+39 XXX XXX XXXX', ph_company: 'Nome della tua azienda',
+        password_help: 'Verrà utilizzato per accedere al tuo account INNER CIRCLE',
+        btn_secure_payment: 'PAGAMENTO SICURO'
+    },
+    'ru': {
+        title_luxury: 'ЭКСКЛЮЗИВНЫЙ', title_emphasis: 'ДОСТУП', subtitle: 'Только по Приглашению',
+        method_title: 'Выберите способ оплаты',
+        method_subtitle: 'Выберите предпочтительный способ оплаты для безопасной обработки',
+        card_title: 'Кредитная / Дебетовая Карта', card_instant: '✓ Мгновенная Обработка', card_providers: 'Visa, Mastercard, Amex',
+        wire_title: 'Банковский Перевод', wire_unlimited: '✓ Неограниченная Сумма', wire_details: 'Предоставлены реквизиты ручного перевода',
+        crypto_title: 'Криптовалюта', crypto_fast: '✓ Неограниченно - Быстро', crypto_coins: 'Bitcoin, Ethereum, USDT',
+        first_name: 'Имя', last_name: 'Фамилия', email: 'Адрес Электронной Почты', password: 'Пароль',
+        password_confirm: 'Подтвердить Пароль', phone: 'Номер Телефона', company: 'Компания (Необязательно)',
+        ph_first_name: 'Ваше Имя', ph_last_name: 'Ваша Фамилия', ph_email: 'ваш.email@пример.com',
+        ph_password: 'Создайте надежный пароль (мин. 8 символов)', ph_password_confirm: 'Введите пароль повторно',
+        ph_phone: '+7 XXX XXX XX XX', ph_company: 'Название вашей компании',
+        password_help: 'Будет использоваться для доступа к вашему аккаунту INNER CIRCLE',
+        btn_secure_payment: 'БЕЗОПАСНЫЙ ПЛАТЕЖ'
+    },
+    'ja': {
+        title_luxury: '限定', title_emphasis: 'アクセス', subtitle: '招待制のみ',
+        method_title: 'お支払い方法を選択',
+        method_subtitle: '安全な処理のためにお好みの支払い方法を選択してください',
+        card_title: 'クレジット / デビットカード', card_instant: '✓ 即時処理', card_providers: 'Visa, Mastercard, Amex',
+        wire_title: '銀行送金', wire_unlimited: '✓ 無制限の金額', wire_details: '手動送金の詳細が提供されます',
+        crypto_title: '暗号通貨', crypto_fast: '✓ 無制限 - 高速', crypto_coins: 'Bitcoin, Ethereum, USDT',
+        first_name: '名', last_name: '姓', email: 'メールアドレス', password: 'パスワード',
+        password_confirm: 'パスワードの確認', phone: '電話番号', company: '会社（任意）',
+        ph_first_name: 'あなたの名前', ph_last_name: 'あなたの姓', ph_email: 'your.email@example.com',
+        ph_password: '安全なパスワードを作成（8文字以上）', ph_password_confirm: 'パスワードを再入力',
+        ph_phone: '+81 XX XXXX XXXX', ph_company: 'あなたの会社名',
+        password_help: 'INNER CIRCLE アカウントへのアクセスに使用されます',
+        btn_secure_payment: '安全な支払い'
+    },
+    'en': {
+        title_luxury: 'EXCLUSIVE', title_emphasis: 'ACCESS', subtitle: 'By Invitation Only',
+        method_title: 'Choose Your Payment Method',
+        method_subtitle: 'Select your preferred payment method for secure processing',
+        card_title: 'Credit / Debit Card', card_instant: '✓ Instant Processing', card_providers: 'Visa, Mastercard, Amex',
+        wire_title: 'Bank Wire Transfer', wire_unlimited: '✓ Unlimited amount', wire_details: 'Manual transfer details provided',
+        crypto_title: 'Cryptocurrency', crypto_fast: '✓ Unlimited - Fast', crypto_coins: 'Bitcoin, Ethereum, USDT',
+        first_name: 'First Name', last_name: 'Last Name', email: 'Email Address', password: 'Password',
+        password_confirm: 'Confirm Password', phone: 'Phone Number', company: 'Company (Optional)',
+        ph_first_name: 'Your First Name', ph_last_name: 'Your Last Name', ph_email: 'your.email@example.com',
+        ph_password: 'Create a secure password (min. 8 characters)', ph_password_confirm: 'Re-enter your password',
+        ph_phone: '+41 XX XXX XX XX', ph_company: 'Your Company Name',
+        password_help: 'This will be used to access your INNER CIRCLE account',
+        btn_secure_payment: 'SECURE PAYMENT'
+    }
 };
 
-// Export for use in main translation system
-window.paymentTranslations = paymentTranslations;
+function translatePaymentSection() {
+    const lang = window.i18n?.currentLang || 'en';
+    const t = paymentTranslations[lang] || paymentTranslations['en'];
+    
+    console.log('🔄 [PAYMENT-I18N] Translating payment section to:', lang);
+    
+    // Header
+    const titleLuxury = document.querySelector('.title-luxury');
+    const titleEmphasis = document.querySelector('.title-emphasis');
+    const subtitle = document.querySelector('.payment-section .subtitle');
+    if (titleLuxury) titleLuxury.textContent = t.title_luxury;
+    if (titleEmphasis) titleEmphasis.textContent = t.title_emphasis;
+    if (subtitle) subtitle.textContent = t.subtitle;
+    
+    // Payment method section
+    const methodTitle = document.querySelector('.payment-method-title');
+    if (methodTitle) methodTitle.textContent = t.method_title;
+    
+    // Payment methods
+    const methods = document.querySelectorAll('.payment-method');
+    if (methods[0]) {
+        methods[0].querySelector('h4').textContent = t.card_title;
+        methods[0].querySelector('p').textContent = t.card_instant;
+        methods[0].querySelector('small').textContent = t.card_providers;
+    }
+    if (methods[1]) {
+        methods[1].querySelector('h4').textContent = t.wire_title;
+        methods[1].querySelector('p').textContent = t.wire_unlimited;
+        methods[1].querySelector('small').textContent = t.wire_details;
+    }
+    if (methods[2]) {
+        methods[2].querySelector('h4').textContent = t.crypto_title;
+        methods[2].querySelector('p').textContent = t.crypto_fast;
+        methods[2].querySelector('small').textContent = t.crypto_coins;
+    }
+    
+    // Form labels
+    const labels = {
+        'customerFirstName': t.first_name,
+        'customerLastName': t.last_name,
+        'customerEmail': t.email,
+        'customerPassword': t.password,
+        'customerPasswordConfirm': t.password_confirm,
+        'customerPhone': t.phone,
+        'customerCompany': t.company
+    };
+    
+    Object.keys(labels).forEach(id => {
+        const label = document.querySelector(`label[for="${id}"]`);
+        if (label) label.textContent = labels[id];
+    });
+    
+    // Placeholders
+    const inputs = {
+        'customerFirstName': t.ph_first_name,
+        'customerLastName': t.ph_last_name,
+        'customerEmail': t.ph_email,
+        'customerPassword': t.ph_password,
+        'customerPasswordConfirm': t.ph_password_confirm,
+        'customerPhone': t.ph_phone,
+        'customerCompany': t.ph_company
+    };
+    
+    Object.keys(inputs).forEach(id => {
+        const input = document.getElementById(id);
+        if (input) input.placeholder = inputs[id];
+    });
+    
+    // Button
+    const btn = document.querySelector('.payment-button .button-text');
+    if (btn) btn.textContent = t.btn_secure_payment;
+    
+    console.log('✅ [PAYMENT-I18N] Payment section translated');
+}
+
+window.translatePaymentSection = translatePaymentSection;
+
+// Listen for language changes
+window.addEventListener('languageChanged', () => {
+    setTimeout(translatePaymentSection, 50);
+});
+
+window.addEventListener('i18nReady', () => {
+    setTimeout(translatePaymentSection, 100);
+});
+
+// Initial translation
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(translatePaymentSection, 150);
+    });
+} else {
+    setTimeout(translatePaymentSection, 150);
+}

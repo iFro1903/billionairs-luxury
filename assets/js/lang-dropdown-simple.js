@@ -244,12 +244,18 @@ function initLanguageDropdown() {
                         window.translateFooterLinks(lang);
                     }
                     
-                    // Translate page elements (testimonials, etc.) - IMMEDIATE
+                    // Translate page elements (testimonials, rejection, etc.)
                     if (typeof window.translatePageElements === 'function') {
                         console.log('🔄 Calling translatePageElements IMMEDIATELY...');
                         window.translatePageElements();
                     } else {
                         console.error('❌ window.translatePageElements NOT FOUND!');
+                    }
+                    
+                    // Translate payment section
+                    if (typeof window.translatePaymentSection === 'function') {
+                        console.log('🔄 Calling translatePaymentSection...');
+                        window.translatePaymentSection();
                     }
                     
                     // Translate login page (if on login page)
