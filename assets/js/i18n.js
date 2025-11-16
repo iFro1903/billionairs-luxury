@@ -348,6 +348,22 @@ class I18nManager {
     }
 
     /**
+     * Translate ALL text nodes in the entire document
+     * Uses the original texts stored in the Map to ensure accurate translation
+     */
+    translateAllTextNodes() {
+        const textMap = this.getTextMapForLanguage(this.currentLang);
+        console.log(`🔤 Translating all text nodes to ${this.currentLang}...`);
+        console.log(`📚 Text map entries: ${Object.keys(textMap).length}`);
+        console.log(`💾 Original texts stored: ${this.originalTexts.size}`);
+        
+        // Apply translations to entire document body
+        this.applyTextTranslations(document.body, textMap);
+        
+        console.log(`✅ All text nodes translated to ${this.currentLang}`);
+    }
+
+    /**
      * Get text translation map for specific language
      */
     getTextMapForLanguage(lang) {
@@ -1008,9 +1024,19 @@ class I18nManager {
             console.log(`✅ Translations already loaded for ${lang}`);
         }
 
-        // Apply new translations
+        // CRITICAL: Apply ALL translations - both data-i18n AND free text
         console.log(`🎨 Applying translations for ${lang}...`);
+        
+        // 1. Translate elements with data-i18n attributes
         this.applyTranslations();
+        
+        // 2. FORCE re-translate ALL text nodes from original English
+        console.log('🔄 Force translating ALL text nodes...');
+        this.translateAllTextNodes();
+        
+        // 3. Re-apply auto translation for common elements
+        console.log('🔄 Auto-translating common elements...');
+        this.autoTranslateCommonElements();
 
         // Update language switcher button
         this.updateLanguageSwitcher();
@@ -1023,7 +1049,8 @@ class I18nManager {
         console.log(`✅ Language switched to: ${lang}`, {
             currentLang: this.currentLang,
             translationsLoaded: Object.keys(this.translations),
-            htmlLang: document.documentElement.lang
+            htmlLang: document.documentElement.lang,
+            originalTextsCount: this.originalTexts.size
         });
     }
 
