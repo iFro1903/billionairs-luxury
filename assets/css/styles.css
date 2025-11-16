@@ -2084,7 +2084,7 @@ input:-webkit-autofill::first-line {
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero-content {
-        padding: 0 0 240px 0; /* Even more space for footer */
+        padding: 0 0 300px 0; /* Maximum space for footer clearance */
     }
     
     .title-main {
