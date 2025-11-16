@@ -6,11 +6,11 @@
 const loginTranslations = {
     'de': {
         // Page title
-        page_title: 'BILLIONAIRS - Zugangsportal',
+        page_title: 'BILLIONAIRS - Zugang',
         
-        // Main headings
-        access_portal: 'Zugangsportal',
-        enter_exclusive: 'Betreten Sie die exklusive Welt',
+        // Main headings - SHORTER for better fit
+        access_portal: 'Zugang',
+        enter_exclusive: 'Exklusiver Zugang',
         
         // Login form
         email_label: 'E-Mail-Adresse',
@@ -33,9 +33,9 @@ const loginTranslations = {
     },
     
     'fr': {
-        page_title: 'BILLIONAIRS - Portail d\'Accès',
-        access_portal: 'Portail d\'Accès',
-        enter_exclusive: 'Entrez dans le royaume exclusif',
+        page_title: 'BILLIONAIRS - Accès',
+        access_portal: 'Accès',
+        enter_exclusive: 'Accès Exclusif',
         email_label: 'Adresse E-mail',
         password_label: 'Mot de Passe',
         forgot_password: 'Mot de passe oublié?',
@@ -50,9 +50,9 @@ const loginTranslations = {
     },
     
     'es': {
-        page_title: 'BILLIONAIRS - Portal de Acceso',
-        access_portal: 'Portal de Acceso',
-        enter_exclusive: 'Entre al reino exclusivo',
+        page_title: 'BILLIONAIRS - Acceso',
+        access_portal: 'Acceso',
+        enter_exclusive: 'Acceso Exclusivo',
         email_label: 'Dirección de Correo',
         password_label: 'Contraseña',
         forgot_password: '¿Olvidó su Contraseña?',
@@ -67,9 +67,9 @@ const loginTranslations = {
     },
     
     'zh': {
-        page_title: 'BILLIONAIRS - 访问门户',
-        access_portal: '访问门户',
-        enter_exclusive: '进入专属领域',
+        page_title: 'BILLIONAIRS - 访问',
+        access_portal: '访问',
+        enter_exclusive: '专属访问',
         email_label: '电子邮件地址',
         password_label: '密码',
         forgot_password: '忘记密码？',
@@ -84,9 +84,9 @@ const loginTranslations = {
     },
     
     'ar': {
-        page_title: 'BILLIONAIRS - بوابة الدخول',
-        access_portal: 'بوابة الدخول',
-        enter_exclusive: 'ادخل إلى العالم الحصري',
+        page_title: 'BILLIONAIRS - الدخول',
+        access_portal: 'الدخول',
+        enter_exclusive: 'دخول حصري',
         email_label: 'عنوان البريد الإلكتروني',
         password_label: 'كلمة المرور',
         forgot_password: 'هل نسيت كلمة المرور؟',
@@ -101,9 +101,9 @@ const loginTranslations = {
     },
     
     'it': {
-        page_title: 'BILLIONAIRS - Portale di Accesso',
-        access_portal: 'Portale di Accesso',
-        enter_exclusive: 'Entra nel regno esclusivo',
+        page_title: 'BILLIONAIRS - Accesso',
+        access_portal: 'Accesso',
+        enter_exclusive: 'Accesso Esclusivo',
         email_label: 'Indirizzo Email',
         password_label: 'Password',
         forgot_password: 'Password Dimenticata?',
@@ -118,9 +118,9 @@ const loginTranslations = {
     },
     
     'ru': {
-        page_title: 'BILLIONAIRS - Портал Доступа',
-        access_portal: 'Портал Доступа',
-        enter_exclusive: 'Войдите в эксклюзивную сферу',
+        page_title: 'BILLIONAIRS - Доступ',
+        access_portal: 'Доступ',
+        enter_exclusive: 'Эксклюзивный Доступ',
         email_label: 'Адрес Электронной Почты',
         password_label: 'Пароль',
         forgot_password: 'Забыли Пароль?',
@@ -135,9 +135,9 @@ const loginTranslations = {
     },
     
     'ja': {
-        page_title: 'BILLIONAIRS - アクセスポータル',
-        access_portal: 'アクセスポータル',
-        enter_exclusive: '限定された領域に入る',
+        page_title: 'BILLIONAIRS - アクセス',
+        access_portal: 'アクセス',
+        enter_exclusive: '限定アクセス',
         email_label: 'メールアドレス',
         password_label: 'パスワード',
         forgot_password: 'パスワードをお忘れですか？',
@@ -154,7 +154,7 @@ const loginTranslations = {
     'en': {
         page_title: 'BILLIONAIRS - Access Portal',
         access_portal: 'Access Portal',
-        enter_exclusive: 'Enter the exclusive realm',
+        enter_exclusive: 'Exclusive Access',
         email_label: 'Email Address',
         password_label: 'Password',
         forgot_password: 'Forgot Password?',
