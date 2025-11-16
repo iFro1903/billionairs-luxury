@@ -721,7 +721,7 @@
     
     .minimal-footer {
         position: fixed;
-        bottom: -20px; /* Move footer down */
+        bottom: -80px; /* Move footer further down to reveal copyright */
         left: 0;
         right: 0;
         padding: 1rem;
