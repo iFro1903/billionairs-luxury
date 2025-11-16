@@ -2084,7 +2084,7 @@ input:-webkit-autofill::first-line {
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero-content {
-        padding: 0;
+        padding: 0 0 120px 0; /* Extra padding bottom for footer */
     }
     
     .title-main {
@@ -2102,6 +2102,19 @@ input:-webkit-autofill::first-line {
     
     .hook-line-1, .hook-line-2, .hook-line-3 {
         font-size: 1.2rem;
+    }
+    
+    .swiss-security-badge {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        padding: 1rem;
+    }
+    
+    .security-text {
+        font-size: 0.65rem;
+        letter-spacing: 0.5px;
+        text-align: center;
+        line-height: 1.4;
     }
     
     .value-pulse {

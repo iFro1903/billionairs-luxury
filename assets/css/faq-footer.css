@@ -720,6 +720,41 @@
     }
     
     .minimal-footer {
-        padding: 1rem 1.5rem;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        background: linear-gradient(180deg, 
+            transparent 0%, 
+            rgba(10, 10, 15, 0.85) 30%,
+            rgba(15, 10, 20, 0.95) 100%);
+        backdrop-filter: blur(15px);
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem 1rem;
+        text-align: center;
+    }
+    
+    .footer-link {
+        font-size: 0.6rem;
+        letter-spacing: 1.5px;
+        padding: 0.3rem 0;
+    }
+    
+    .footer-separator {
+        font-size: 0.6rem;
+    }
+    
+    .footer-copyright {
+        font-size: 0.6rem;
+        text-align: center;
     }
 }
