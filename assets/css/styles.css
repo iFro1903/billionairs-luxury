@@ -2900,7 +2900,8 @@ input:-webkit-autofill::first-line {
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .trust-value-section {
-        padding: 80px 20px;
+        padding: 80px 20px 120px 20px; /* Extra Padding am unteren Rand */
+        min-height: auto; /* Erlaubt flexiblere Höhe */
     }
 
     .trust-tagline {
@@ -2922,11 +2923,29 @@ input:-webkit-autofill::first-line {
 
     .trust-reality-check {
         padding: 2rem 1.5rem;
+        margin-bottom: 3rem; /* Extra Abstand nach unten */
+    }
+    
+    .trust-reality-check li {
+        font-size: 1rem; /* Etwas kleinere Schrift auf Mobile */
+        padding: 0.9rem 0;
     }
 
     .trust-proceed-button {
         padding: 1.2rem 2.5rem;
         font-size: 1rem;
+    }
+    
+    .trust-cta-container {
+        margin-top: 3rem;
+        margin-bottom: 4rem; /* Extra Abstand für besseres Scrollen */
+        padding-bottom: 2rem;
+    }
+    
+    .trust-rejection-bait {
+        margin-top: 2rem;
+        margin-bottom: 2rem; /* Verhindert Abschneiden */
+        padding-bottom: 1rem;
     }
 }
 
