@@ -741,6 +741,7 @@
         justify-content: center;
         gap: 0.5rem 1rem;
         text-align: center;
+        margin-top: 1.5rem; /* Push footer links down to reveal Infrastructure • Zürich */
     }
     
     .footer-link {
