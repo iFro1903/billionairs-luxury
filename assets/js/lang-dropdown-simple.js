@@ -30,7 +30,7 @@ function initLanguageDropdown() {
     dropdown.id = 'langDropdownSimple';
     dropdown.className = 'language-dropdown';
     
-    // Apply critical inline styles
+    // Apply critical inline styles - NO SCROLLING, show all languages
     dropdown.style.cssText = `
         position: fixed;
         background: linear-gradient(145deg, rgba(15,15,20,0.98) 0%, rgba(25,20,30,0.98) 50%, rgba(20,15,25,0.98) 100%);
@@ -38,9 +38,7 @@ function initLanguageDropdown() {
         border-radius: 20px;
         width: 280px;
         max-width: 280px;
-        max-height: 500px;
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: hidden;
         box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(232,180,184,0.15);
         z-index: 99999;
         opacity: 0;
@@ -49,18 +47,7 @@ function initLanguageDropdown() {
         transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         backdrop-filter: blur(20px) saturate(180%);
         -webkit-backdrop-filter: blur(20px) saturate(180%);
-        scrollbar-width: none;
-        -ms-overflow-style: none;
     `;
-    
-    // Hide webkit scrollbar
-    const style = document.createElement('style');
-    style.textContent = `
-        #langDropdownSimple::-webkit-scrollbar {
-            display: none;
-        }
-    `;
-    document.head.appendChild(style);
     
     dropdown.innerHTML = `
         <a href="#" class="lang-option" data-lang="en" style="display:flex; align-items:center; padding:16px 24px; color:rgba(255,255,255,0.9); text-decoration:none; font-family:'Montserrat','Playfair Display',serif; font-size:15px; letter-spacing:1.2px; border-bottom:1px solid rgba(232,180,184,0.08); transition:all 0.35s; cursor:pointer;">
@@ -185,13 +172,17 @@ function initLanguageDropdown() {
             const lang = link.getAttribute('data-lang');
             console.log('🌍 Language clicked:', lang);
             
+            // Close dropdown immediately
+            dropdown.style.opacity = '0';
+            dropdown.style.visibility = 'hidden';
+            dropdown.style.transform = 'translateY(-20px) scale(0.9)';
+            
             if (window.i18n && typeof window.i18n.switchLanguage === 'function') {
                 console.log('🔄 Switching language...');
                 try {
                     await window.i18n.switchLanguage(lang);
                     console.log('✅ Language switched to:', lang);
                     langBtn.textContent = lang.toUpperCase();
-                    dropdown.classList.remove('show');
                 } catch (error) {
                     console.error('❌ Error switching language:', error);
                 }
