@@ -721,7 +721,7 @@
     
     .minimal-footer {
         position: fixed;
-        bottom: -80px; /* Move footer further down to reveal copyright */
+        bottom: -40px; /* Balanced position - shows copyright and all links */
         left: 0;
         right: 0;
         padding: 1rem;
