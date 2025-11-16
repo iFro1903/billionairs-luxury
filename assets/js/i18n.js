@@ -22,63 +22,47 @@ class I18nManager {
      * Initialize i18n system
      */
     async init() {
+        console.log('🌍 Initializing i18n system...');
+        
         // CRITICAL: Wait for next render frame to ensure ALL DOM elements are ready
-        // This prevents timing issues where text nodes aren't fully loaded yet
         await new Promise(resolve => {
             requestAnimationFrame(() => {
                 requestAnimationFrame(resolve);
             });
         });
         
-        // CRITICAL: Save original English texts BEFORE loading any language
-        // This ensures we always have the English source texts for translation
-        this.saveOriginalTexts(document.body);
-        this.hasInitialized = true;
-        console.log('📝 Original English texts saved:', this.originalTexts.size, 'nodes');
-        
-        // Check for saved language preference first
-        const savedLang = this.getCookie(this.cookieName);
-        
-        // IMPORTANT: Always save originals when page is in English
-        // If user has a saved language, we'll apply it AFTER saving originals
-        const targetLang = savedLang && this.languages[savedLang] ? savedLang : 'en';
-        
-        // Start with English to save originals
+        // Start with English to capture original texts
         this.currentLang = 'en';
 
         // Load translation files
         await this.loadTranslations();
+        console.log('✅ Translations loaded:', Object.keys(this.translations));
 
-        // Save original English texts for translation
-        console.log('💾 Saving original texts...');
+        // CRITICAL: Save original English texts BEFORE any translation
+        console.log('💾 Saving original English texts...');
         this.saveOriginalTexts(document.body);
         this.hasInitialized = true;
         console.log('✅ Original texts saved:', this.originalTexts.size, 'nodes');
+        
+        // Check for saved language preference
+        const savedLang = this.getCookie(this.cookieName);
+        const targetLang = savedLang && this.supportedLangs.includes(savedLang) ? savedLang : 'en';
+        
+        console.log(`🎯 Target language: ${targetLang}`);
 
-        // Now switch to target language if needed
+        // Switch to target language if not English
         if (targetLang !== 'en') {
-            console.log(`🔄 Switching to saved language: ${targetLang}`);
+            console.log(`🔄 Switching to: ${targetLang}`);
             await this.switchLanguage(targetLang);
         } else {
-            // Just set cookie for English
+            // Stay in English
             this.setCookie(this.cookieName, 'en', 365);
+            document.documentElement.lang = 'en';
+            document.documentElement.dir = 'ltr';
         }
-
-        // Apply translations to current page
-        this.applyTranslations();
 
         // Setup language switcher (DISABLED - using lang-dropdown-simple.js instead)
         // this.setupLanguageSwitcher();
-
-        // Add HTML lang attribute
-        document.documentElement.lang = this.currentLang;
-
-        // Set text direction for RTL languages
-        if (this.rtlLangs.includes(this.currentLang)) {
-            document.documentElement.dir = 'rtl';
-        } else {
-            document.documentElement.dir = 'ltr';
-        }
 
         console.log(`✅ i18n initialized: ${this.currentLang}`);
         
