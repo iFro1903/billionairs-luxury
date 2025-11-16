@@ -326,14 +326,16 @@ class I18nManager {
                 } else {
                     // Translate from ORIGINAL English to target language
                     let translated = originalText;
+                    const trimmed = originalText.trim();
+                    
                     for (const [english, targetText] of Object.entries(textMap)) {
-                        // Try exact match first
-                        if (originalText === english) {
+                        // Try exact match first (including trimmed version)
+                        if (originalText === english || trimmed === english) {
                             translated = targetText;
                             break;
                         }
-                        // Then try partial match
-                        if (originalText.includes(english) && english.length > 3) {
+                        // Then try partial match (only for longer strings to avoid false positives)
+                        if (english.length > 5 && originalText.includes(english)) {
                             translated = originalText.replace(new RegExp(english, 'g'), targetText);
                         }
                     }
