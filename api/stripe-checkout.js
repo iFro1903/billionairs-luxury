@@ -156,11 +156,12 @@ module.exports = async (req, res) => {
       }],
       metadata: {
         ...metadata,
-        customer_email: customerData?.email || ''
+        customer_email: customerData?.email || '',
+        auto_login_email: customerData?.email || '' // For auto-login after payment
       },
       customer_email: customerData?.email || undefined,
-      success_url: `https://billionairs-luxury.vercel.app/dashboard.html?session_id={CHECKOUT_SESSION_ID}&payment=success`,
-      cancel_url: `https://billionairs-luxury.vercel.app/dashboard.html?message=Payment cancelled`
+      success_url: `https://billionairs-luxury.vercel.app/dashboard.html?session_id={CHECKOUT_SESSION_ID}&payment=success&email=${encodeURIComponent(customerData?.email || '')}`,
+      cancel_url: `https://billionairs-luxury.vercel.app/?message=Payment cancelled`
     });
 
     res.status(200).json({ url: session.url });

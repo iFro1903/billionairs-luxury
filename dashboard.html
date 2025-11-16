@@ -394,6 +394,45 @@
     <script>
         // Check authentication on page load
         async function initDashboard() {
+            // Check for auto-login after payment
+            const urlParams = new URLSearchParams(window.location.search);
+            const autoLoginEmail = urlParams.get('email');
+            const sessionId = urlParams.get('session_id');
+            const paymentSuccess = urlParams.get('payment') === 'success';
+            
+            // If user just completed payment, auto-login them
+            if (autoLoginEmail && sessionId && paymentSuccess) {
+                console.log('🔐 Auto-login detected for:', autoLoginEmail);
+                
+                try {
+                    // Verify payment and create session
+                    const response = await fetch('/api/auto-login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            email: autoLoginEmail,
+                            sessionId: sessionId
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success && result.token) {
+                        // Set the auth token
+                        localStorage.setItem('auth_token', result.token);
+                        localStorage.setItem('user_data', JSON.stringify(result.user));
+                        console.log('✅ Auto-login successful!');
+                        
+                        // Clean URL and reload
+                        window.history.replaceState({}, '', '/dashboard.html');
+                        window.location.reload();
+                        return;
+                    }
+                } catch (error) {
+                    console.error('❌ Auto-login error:', error);
+                }
+            }
+            
             const isValid = await window.authManager.verifySession();
             
             if (!isValid) {
