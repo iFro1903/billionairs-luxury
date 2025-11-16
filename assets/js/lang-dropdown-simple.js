@@ -28,7 +28,7 @@ function initLanguageDropdown() {
     // Create dropdown
     const dropdown = document.createElement('div');
     dropdown.id = 'langDropdownSimple';
-    dropdown.className = 'lang-dropdown';
+    dropdown.className = 'language-dropdown'; // Fixed: was 'lang-dropdown'
     dropdown.innerHTML = `
         <a href="#" class="lang-option" data-lang="en">🇬🇧 English</a>
         <a href="#" class="lang-option" data-lang="de">🇩🇪 Deutsch</a>
