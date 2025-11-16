@@ -103,6 +103,31 @@ const modalTranslations = {
             'Inquiries': 'Demandes'
         },
         content: {
+            // Legal Notice
+            'legal_entity_title': 'BILLIONAIRS',
+            'legal_entity_subtitle': 'Plateforme d\'Expérience Numérique Premium',
+            'legal_entity_location': 'Enregistré à Zürich, Suisse',
+            'legal_contact_intro': 'Demandes exclusives uniquement:',
+            'legal_contact_email': 'elite@billionairs.luxury',
+            'legal_contact_response': 'Temps de réponse: 24-48 heures',
+            'legal_notice_text': 'Toute propriété intellectuelle, designs et contenus sont protégés par le droit d\'auteur international. La reproduction ou distribution non autorisée est strictement interdite.<br><br>BILLIONAIRS se réserve le droit de modifier les offres, conditions et disponibilité sans préavis. Toutes les ventes sont définitives.',
+            
+            // Privacy Policy
+            'privacy_collect_text': 'Uniquement les données essentielles requises pour le traitement des transactions et l\'accomplissement de l\'accès. Toutes les informations sont cryptées en utilisant des protocoles de sécurité de niveau bancaire suisse.',
+            'privacy_use_transaction': 'Traitement des transactions: Vérification et achèvement sécurisés',
+            'privacy_use_access': 'Accomplissement de l\'accès: Activation de votre expérience exclusive',
+            'privacy_use_communication': 'Communication: Correspondance cryptée concernant votre expérience',
+            'privacy_use_legal': 'Conformité légale: Exigences réglementaires uniquement',
+            'privacy_protection_text': 'Cryptage de bout en bout. Normes bancaires suisses. Vérification blockchain. Zéro accès tiers. Vos informations ne quittent jamais notre infrastructure sécurisée.',
+            'privacy_rights_text': 'Accès, correction ou suppression des données personnelles disponibles sur demande. Contact: <strong>elite@billionairs.luxury</strong>',
+            
+            // Terms of Service
+            'terms_agreement_text': 'En accédant à BILLIONAIRS, vous reconnaissez une compréhension complète et une acceptation volontaire de ces conditions. Cela constitue un accord contraignant en vertu du droit suisse. L\'utilisation continue indique un consentement éclairé.',
+            'terms_transaction_text': '<strong>Tous les engagements sont définitifs et contraignants.</strong> En procédant, vous reconnaissez une compréhension et une acceptation complètes. Cette expérience opère au-delà des cadres conventionnels—l\'engagement est absolu et irréversible. Aucun retour, modification ou reconsidération n\'est possible une fois initié.',
+            'terms_access_text': 'Limité aux individus qualifiés uniquement. BILLIONAIRS se réserve une discrétion absolue pour accorder ou refuser l\'accès sans explication ni recours. Les critères restent confidentiels. La participation est un privilège, pas un droit.',
+            'terms_ip_text': 'Tous les designs, concepts et contenus sont des actifs propriétaires protégés par le droit d\'auteur international et le droit des marques. La reproduction, distribution ou utilisation non autorisée est strictement interdite et soumise à des poursuites judiciaires.',
+            'terms_liability_text': 'BILLIONAIRS, ses opérateurs et affiliés n\'assument aucune responsabilité pour tout résultat direct, indirect, accessoire, consécutif ou punitif découlant de votre participation. Vous acceptez l\'entière responsabilité de vos décisions. Ce service est fourni "tel quel" sans garanties d\'aucune sorte.',
+            'terms_inquiries_email': 'elite@billionairs.luxury',
             'faq_what_is': 'Une passerelle vers des expériences qui existent au-delà de la portée publique. Pas un marché. Pas un service. Un seuil vers des moments et un accès qui ne peuvent être reproduits, annoncés ou expliqués à ceux qui ne l\'ont pas franchi.<br><br>Pensez-y comme la collection finale—non d\'objets, mais de perspective. De transformation. D\'accès à des royaumes où la monnaie n\'a aucun sens parce que ce qui est offert ne peut être acheté par aucun autre moyen.<br><br>Ce qui se trouve au-delà est à vous de découvrir—mais seulement si vous êtes prêt.',
             'faq_why_investment': 'La véritable exclusivité exige de l\'engagement. Ce à quoi vous accédez ici n\'est pas vendu—c\'est accordé. Le seuil existe pour garantir que seuls ceux qui comprennent la valeur au-delà du prix ne le franchissent jamais.<br><br>Les collectionneurs d\'expériences rares savent: la barrière elle-même fait partie de la curation. Elle n\'est pas conçue pour extraire—elle est conçue pour protéger. Pour préserver l\'intégrité de ce qui se trouve au-delà de ceux qui mesurent la valeur en termes conventionnels.<br><br>Si l\'engagement semble raide, vous êtes exactement là où vous devriez être: en questionnement. Cette hésitation est le filtre. Un seuil qui remodèle votre perception de ce que l\'accès signifie vraiment.'
         }
@@ -138,6 +163,31 @@ const modalTranslations = {
             'Inquiries': 'Consultas'
         },
         content: {
+            // Legal Notice
+            'legal_entity_title': 'BILLIONAIRS',
+            'legal_entity_subtitle': 'Plataforma de Experiencia Digital Premium',
+            'legal_entity_location': 'Registrado en Zürich, Suiza',
+            'legal_contact_intro': 'Solo consultas exclusivas:',
+            'legal_contact_email': 'elite@billionairs.luxury',
+            'legal_contact_response': 'Tiempo de respuesta: 24-48 horas',
+            'legal_notice_text': 'Toda la propiedad intelectual, diseños y contenido están protegidos por la ley de derechos de autor internacional. La reproducción o distribución no autorizada está estrictamente prohibida.<br><br>BILLIONAIRS se reserva el derecho de modificar ofertas, términos y disponibilidad sin previo aviso. Todas las ventas son finales.',
+            
+            // Privacy Policy
+            'privacy_collect_text': 'Solo datos esenciales requeridos para el procesamiento de transacciones y el cumplimiento del acceso. Toda la información está encriptada utilizando protocolos de seguridad de nivel bancario suizo.',
+            'privacy_use_transaction': 'Procesamiento de transacciones: Verificación y finalización seguras',
+            'privacy_use_access': 'Cumplimiento de acceso: Activación de su experiencia exclusiva',
+            'privacy_use_communication': 'Comunicación: Correspondencia encriptada sobre su experiencia',
+            'privacy_use_legal': 'Cumplimiento legal: Solo requisitos regulatorios',
+            'privacy_protection_text': 'Encriptación de extremo a extremo. Estándares bancarios suizos. Verificación blockchain. Cero acceso de terceros. Su información nunca sale de nuestra infraestructura segura.',
+            'privacy_rights_text': 'Acceso, corrección o eliminación de datos personales disponible bajo petición. Contacto: <strong>elite@billionairs.luxury</strong>',
+            
+            // Terms of Service
+            'terms_agreement_text': 'Al acceder a BILLIONAIRS, usted reconoce la comprensión completa y la aceptación voluntaria de estos términos. Esto constituye un acuerdo vinculante bajo la ley suiza. El uso continuado indica consentimiento informado.',
+            'terms_transaction_text': '<strong>Todos los compromisos son finales y vinculantes.</strong> Al proceder, usted reconoce la comprensión y aceptación completas. Esta experiencia opera más allá de los marcos convencionales—el compromiso es absoluto e irreversible. No son posibles reversiones, modificaciones o reconsideraciones una vez iniciado.',
+            'terms_access_text': 'Limitado solo a individuos calificados. BILLIONAIRS se reserva la discreción absoluta para otorgar o denegar el acceso sin explicación o recurso. Los criterios permanecen confidenciales. La participación es un privilegio, no un derecho.',
+            'terms_ip_text': 'Todos los diseños, conceptos y contenido son activos propietarios protegidos bajo la ley internacional de derechos de autor y marcas comerciales. La reproducción, distribución o uso no autorizados están estrictamente prohibidos y sujetos a acciones legales.',
+            'terms_liability_text': 'BILLIONAIRS, sus operadores y afiliados no asumen responsabilidad alguna por resultados directos, indirectos, incidentales, consecuentes o punitivos que surjan de su participación. Usted acepta la responsabilidad completa por sus decisiones. Este servicio se proporciona "tal cual" sin garantías de ningún tipo.',
+            'terms_inquiries_email': 'elite@billionairs.luxury',
             'faq_what_is': 'Una puerta de entrada a experiencias que existen más allá del alcance público. No es un mercado. No es un servicio. Un umbral hacia momentos y acceso que no pueden ser replicados, anunciados o explicados a quienes no lo han cruzado.<br><br>Piénselo como la colección final—no de objetos, sino de perspectiva. De transformación. De acceso a reinos donde la moneda no tiene significado porque lo que se ofrece no puede comprarse por ningún otro medio.<br><br>Lo que yace más allá es suyo por descubrir—pero solo si está listo.',
             'faq_why_investment': 'La verdadera exclusividad exige compromiso. A lo que accede aquí no se vende—se otorga. El umbral existe para garantizar que solo aquellos que entienden el valor más allá del precio lo crucen.<br><br>Los coleccionistas de experiencias raras saben: la barrera misma es parte de la curación. No está diseñada para extraer—está diseñada para proteger. Para preservar la integridad de lo que yace más allá de aquellos que miden el valor en términos convencionales.<br><br>Si el compromiso parece empinado, está exactamente donde debería estar: cuestionando. Esa vacilación es el filtro. Un umbral que remodela su percepción de lo que realmente significa el acceso.',
             'faq_who_for': 'Aquellos que han trascendido el éxito convencional. Individuos para quienes el dinero ya no es una pregunta, pero el significado sí lo es. Personas que han adquirido todo lo disponible públicamente y ahora buscan lo que no está.<br><br>Buscadores de lo que existe entre el pensamiento y la realidad. Aquellos que entienden que las experiencias más raras no aparecen en catálogos, no se revisan en línea y no dejan rastro excepto en la transformación de quienes las encuentran.<br><br>Si todavía mide su valor por su cartera, este no es su momento aún.'
@@ -174,6 +224,31 @@ const modalTranslations = {
             'Inquiries': '查询'
         },
         content: {
+            // Legal Notice
+            'legal_entity_title': 'BILLIONAIRS',
+            'legal_entity_subtitle': '高端数字体验平台',
+            'legal_entity_location': '注册于瑞士苏黎世',
+            'legal_contact_intro': '仅限独家咨询:',
+            'legal_contact_email': 'elite@billionairs.luxury',
+            'legal_contact_response': '响应时间: 24-48小时',
+            'legal_notice_text': '所有知识产权、设计和内容均受国际版权法保护。严禁未经授权的复制或分发。<br><br>BILLIONAIRS保留在不事先通知的情况下修改产品、条款和可用性的权利。所有销售均为最终销售。',
+            
+            // Privacy Policy
+            'privacy_collect_text': '仅收集交易处理和访问履行所需的基本数据。所有信息均使用瑞士银行级安全协议加密。',
+            'privacy_use_transaction': '交易处理: 安全验证和完成',
+            'privacy_use_access': '访问履行: 激活您的专属体验',
+            'privacy_use_communication': '通信: 关于您体验的加密通信',
+            'privacy_use_legal': '法律合规: 仅限监管要求',
+            'privacy_protection_text': '端到端加密。瑞士银行标准。区块链验证。零第三方访问。您的信息永远不会离开我们的安全基础设施。',
+            'privacy_rights_text': '应要求提供访问、更正或删除个人数据。联系: <strong>elite@billionairs.luxury</strong>',
+            
+            // Terms of Service
+            'terms_agreement_text': '通过访问BILLIONAIRS，您确认完全理解并自愿接受这些条款。这构成瑞士法律下的约束性协议。继续使用表示知情同意。',
+            'terms_transaction_text': '<strong>所有承诺均为最终且具有约束力。</strong>通过继续，您确认完全理解和接受。此体验在传统框架之外运作——承诺是绝对且不可逆转的。一旦启动，不可能进行任何逆转、修改或重新考虑。',
+            'terms_access_text': '仅限于合格个人。BILLIONAIRS保留在不作解释或追索的情况下授予或拒绝访问的绝对裁量权。标准保持机密。参与是一种特权，而非权利。',
+            'terms_ip_text': '所有设计、概念和内容均为受国际版权和商标法保护的专有资产。未经授权的复制、分发或使用均严格禁止并将受到法律诉讼。',
+            'terms_liability_text': 'BILLIONAIRS、其运营商和关联公司对因您参与而产生的任何直接、间接、附带、后果性或惩罚性结果不承担任何责任。您接受对自己决定的完全责任。本服务按"原样"提供，不提供任何形式的保证。',
+            'terms_inquiries_email': 'elite@billionairs.luxury',
             'faq_what_is': '通往超越公共范围之外体验的门户。不是市场。不是服务。通向那些无法复制、宣传或向未跨越它的人解释的时刻和访问的门槛。<br><br>将其视为最终收藏——不是对象，而是视角。转变。访问货币无意义的领域，因为所提供的东西无法通过任何其他方式购买。<br><br>超越之处等待您去发现——但前提是您已准备好。',
             'faq_why_investment': '真正的独特性需要承诺。您在这里访问的不是出售的——而是授予的。门槛的存在是为了确保只有那些理解超越价格价值的人才能跨越。<br><br>稀有体验的收藏家知道：障碍本身就是策展的一部分。它不是为了提取而设计的——它是为了保护而设计的。保护超越之处的完整性，免受那些用传统术语衡量价值的人的影响。<br><br>如果承诺看起来很陡峭，您恰好在应该在的地方：质疑。这种犹豫就是过滤器。重塑您对访问真正意义的感知的门槛。'
         }
@@ -209,6 +284,31 @@ const modalTranslations = {
             'Inquiries': 'استفسارات'
         },
         content: {
+            // Legal Notice
+            'legal_entity_title': 'BILLIONAIRS',
+            'legal_entity_subtitle': 'منصة تجربة رقمية فاخرة',
+            'legal_entity_location': 'مسجلة في زيورخ، سويسرا',
+            'legal_contact_intro': 'الاستفسارات الحصرية فقط:',
+            'legal_contact_email': 'elite@billionairs.luxury',
+            'legal_contact_response': 'وقت الاستجابة: 24-48 ساعة',
+            'legal_notice_text': 'جميع الملكية الفكرية والتصاميم والمحتوى محمية بموجب قانون حقوق النشر الدولي. الاستنساخ أو التوزيع غير المصرح به محظور بشكل صارم.<br><br>تحتفظ BILLIONAIRS بالحق في تعديل العروض والشروط والتوفر دون إشعار مسبق. جميع المبيعات نهائية.',
+            
+            // Privacy Policy
+            'privacy_collect_text': 'البيانات الأساسية فقط المطلوبة لمعالجة المعاملات وتنفيذ الوصول. يتم تشفير جميع المعلومات باستخدام بروتوكولات أمان على مستوى البنوك السويسرية.',
+            'privacy_use_transaction': 'معالجة المعاملات: التحقق والإكمال الآمن',
+            'privacy_use_access': 'تنفيذ الوصول: تفعيل تجربتك الحصرية',
+            'privacy_use_communication': 'الاتصال: مراسلات مشفرة بخصوص تجربتك',
+            'privacy_use_legal': 'الامتثال القانوني: المتطلبات التنظيمية فقط',
+            'privacy_protection_text': 'تشفير من طرف إلى طرف. معايير البنوك السويسرية. التحقق من blockchain. صفر وصول لطرف ثالث. لن تغادر معلوماتك بنيتنا التحتية الآمنة أبدًا.',
+            'privacy_rights_text': 'الوصول أو التصحيح أو حذف البيانات الشخصية متاح عند الطلب. الاتصال: <strong>elite@billionairs.luxury</strong>',
+            
+            // Terms of Service
+            'terms_agreement_text': 'من خلال الوصول إلى BILLIONAIRS، فإنك تقر بالفهم الكامل والقبول الطوعي لهذه الشروط. يشكل هذا اتفاقية ملزمة بموجب القانون السويسري. يشير الاستخدام المستمر إلى الموافقة المستنيرة.',
+            'terms_transaction_text': '<strong>جميع الالتزامات نهائية وملزمة.</strong> من خلال المتابعة، فإنك تقر بالفهم والقبول الكاملين. تعمل هذه التجربة خارج الأطر التقليدية—الالتزام مطلق ولا رجعة فيه. لا توجد عمليات عكس أو تعديلات أو إعادة نظر ممكنة بمجرد البدء.',
+            'terms_access_text': 'محدود للأفراد المؤهلين فقط. تحتفظ BILLIONAIRS بالسلطة التقديرية المطلقة في منح أو رفض الوصول دون تفسير أو لجوء. تظل المعايير سرية. المشاركة امتياز وليست حقًا.',
+            'terms_ip_text': 'جميع التصاميم والمفاهيم والمحتوى هي أصول ملكية محمية بموجب قانون حقوق النشر والعلامات التجارية الدولي. الاستنساخ أو التوزيع أو الاستخدام غير المصرح به محظور بشكل صارم ويخضع لإجراءات قانونية.',
+            'terms_liability_text': 'لا تتحمل BILLIONAIRS ومشغلوها والشركات التابعة لها أي مسؤولية عن أي نتائج مباشرة أو غير مباشرة أو عرضية أو تبعية أو عقابية ناشئة عن مشاركتك. أنت تقبل المسؤولية الكاملة عن قراراتك. يتم تقديم هذه الخدمة "كما هي" دون ضمانات من أي نوع.',
+            'terms_inquiries_email': 'elite@billionairs.luxury',
             'faq_what_is': 'بوابة إلى تجارب موجودة خارج نطاق الوصول العام. ليس سوقًا. ليس خدمة. عتبة نحو لحظات ووصول لا يمكن تكرارها أو الإعلان عنها أو شرحها لأولئك الذين لم يعبروها.<br><br>فكر فيها كمجموعة نهائية - ليست أشياء، بل منظور. تحول. وصول إلى عوالم حيث لا معنى للعملة لأن ما يُعرض لا يمكن شراؤه بأي وسيلة أخرى.<br><br>ما يكمن وراءه هو لك لتكتشفه - ولكن فقط إذا كنت مستعدًا.',
             'faq_why_investment': 'التفرد الحقيقي يتطلب التزامًا. ما تصل إليه هنا لا يُباع - بل يُمنح. توجد العتبة لضمان أن أولئك الذين يفهمون القيمة بعيدًا عن السعر فقط هم من يعبرونها.<br><br>جامعو التجارب النادرة يعرفون: الحاجز نفسه جزء من التنسيق. لم يتم تصميمه للاستخراج - بل للحماية. للحفاظ على سلامة ما وراءه من أولئك الذين يقيسون القيمة بمصطلحات تقليدية.<br><br>إذا بدا الالتزام حادًا، فأنت بالضبط حيث يجب أن تكون: تتساءل. هذا التردد هو المرشح. عتبة تعيد تشكيل إدراكك لما يعنيه الوصول حقًا.',
             'faq_who_for': 'أولئك الذين تجاوزوا النجاح التقليدي. أفراد لم يعد المال بالنسبة لهم سؤالاً، لكن المعنى هو كذلك. أشخاص اكتسبوا كل ما هو متاح للجمهور ويبحثون الآن عما ليس كذلك.<br><br>الباحثون عما يوجد بين الفكر والواقع. أولئك الذين يفهمون أن أندر التجارب لا تظهر في الكتالوجات، ولا تتم مراجعتها عبر الإنترنت، ولا تترك أثرًا إلا في تحول أولئك الذين يواجهونها.<br><br>إذا كنت لا تزال تقيس قيمتك بمحفظتك، فهذه ليست لحظتك بعد.',
@@ -252,6 +352,31 @@ const modalTranslations = {
             'Inquiries': 'Richieste'
         },
         content: {
+            // Legal Notice
+            'legal_entity_title': 'BILLIONAIRS',
+            'legal_entity_subtitle': 'Piattaforma di Esperienza Digitale Premium',
+            'legal_entity_location': 'Registrato a Zurigo, Svizzera',
+            'legal_contact_intro': 'Solo richieste esclusive:',
+            'legal_contact_email': 'elite@billionairs.luxury',
+            'legal_contact_response': 'Tempo di risposta: 24-48 ore',
+            'legal_notice_text': 'Tutta la proprietà intellettuale, i design e i contenuti sono protetti dalla legge internazionale sul copyright. La riproduzione o distribuzione non autorizzata è severamente vietata.<br><br>BILLIONAIRS si riserva il diritto di modificare offerte, termini e disponibilità senza preavviso. Tutte le vendite sono definitive.',
+            
+            // Privacy Policy
+            'privacy_collect_text': 'Solo dati essenziali richiesti per l\'elaborazione delle transazioni e il completamento dell\'accesso. Tutte le informazioni sono crittografate utilizzando protocolli di sicurezza di livello bancario svizzero.',
+            'privacy_use_transaction': 'Elaborazione transazioni: Verifica e completamento sicuri',
+            'privacy_use_access': 'Completamento accesso: Attivazione della tua esperienza esclusiva',
+            'privacy_use_communication': 'Comunicazione: Corrispondenza crittografata riguardante la tua esperienza',
+            'privacy_use_legal': 'Conformità legale: Solo requisiti normativi',
+            'privacy_protection_text': 'Crittografia end-to-end. Standard bancari svizzeri. Verifica blockchain. Zero accesso di terze parti. Le tue informazioni non lasciano mai la nostra infrastruttura sicura.',
+            'privacy_rights_text': 'Accesso, correzione o cancellazione dei dati personali disponibile su richiesta. Contatto: <strong>elite@billionairs.luxury</strong>',
+            
+            // Terms of Service
+            'terms_agreement_text': 'Accedendo a BILLIONAIRS, riconosci la piena comprensione e l\'accettazione volontaria di questi termini. Ciò costituisce un accordo vincolante ai sensi della legge svizzera. L\'uso continuato indica consenso informato.',
+            'terms_transaction_text': '<strong>Tutti gli impegni sono definitivi e vincolanti.</strong> Procedendo, riconosci la piena comprensione e accettazione. Questa esperienza opera oltre i quadri convenzionali—l\'impegno è assoluto e irreversibile. Nessuna inversione, modifica o riconsiderazione è possibile una volta avviato.',
+            'terms_access_text': 'Limitato solo a individui qualificati. BILLIONAIRS si riserva la discrezione assoluta nel concedere o negare l\'accesso senza spiegazioni o ricorso. I criteri rimangono confidenziali. La partecipazione è un privilegio, non un diritto.',
+            'terms_ip_text': 'Tutti i design, concetti e contenuti sono asset proprietari protetti dalla legge internazionale sul copyright e sui marchi. La riproduzione, distribuzione o uso non autorizzati sono severamente vietati e soggetti ad azioni legali.',
+            'terms_liability_text': 'BILLIONAIRS, i suoi operatori e affiliati non si assumono alcuna responsabilità per risultati diretti, indiretti, incidentali, consequenziali o punitivi derivanti dalla tua partecipazione. Accetti la piena responsabilità per le tue decisioni. Questo servizio è fornito "così com\'è" senza garanzie di alcun tipo.',
+            'terms_inquiries_email': 'elite@billionairs.luxury',
             'faq_what_is': 'Una porta d\'accesso a esperienze che esistono oltre la portata pubblica. Non un mercato. Non un servizio. Una soglia verso momenti e accesso che non possono essere replicati, pubblicizzati o spiegati a coloro che non l\'hanno attraversata.<br><br>Pensala come la collezione finale—non di oggetti, ma di prospettiva. Di trasformazione. Di accesso a regni dove la valuta non ha significato perché ciò che viene offerto non può essere acquistato con nessun altro mezzo.<br><br>Ciò che si trova oltre è tuo da scoprire—ma solo se sei pronto.',
             'faq_why_investment': 'La vera esclusività richiede impegno. Ciò a cui accedi qui non viene venduto—viene concesso. La soglia esiste per garantire che solo coloro che comprendono il valore oltre il prezzo la attraversino mai.<br><br>I collezionisti di esperienze rare sanno: la barriera stessa fa parte della curatela. Non è progettata per estrarre—è progettata per proteggere. Per preservare l\'integrità di ciò che si trova oltre da coloro che misurano il valore in termini convenzionali.<br><br>Se l\'impegno sembra ripido, sei esattamente dove dovresti essere: in dubbio. Quella esitazione è il filtro. Una soglia che rimodella la tua percezione di cosa significhi veramente l\'accesso.',
             'faq_who_for': 'Coloro che hanno trasceso il successo convenzionale. Individui per i quali il denaro non è più una domanda, ma il significato lo è. Persone che hanno acquisito tutto ciò che è disponibile pubblicamente e ora cercano ciò che non lo è.<br><br>Cercatori di ciò che esiste tra pensiero e realtà. Coloro che capiscono che le esperienze più rare non appaiono nei cataloghi, non vengono recensite online e non lasciano traccia tranne nella trasformazione di coloro che le incontrano.<br><br>Se misuri ancora il tuo valore dal tuo portafoglio, questo non è ancora il tuo momento.',
@@ -295,6 +420,31 @@ const modalTranslations = {
             'Inquiries': 'Запросы'
         },
         content: {
+            // Legal Notice
+            'legal_entity_title': 'BILLIONAIRS',
+            'legal_entity_subtitle': 'Премиальная платформа цифрового опыта',
+            'legal_entity_location': 'Зарегистрирована в Цюрихе, Швейцария',
+            'legal_contact_intro': 'Только эксклюзивные запросы:',
+            'legal_contact_email': 'elite@billionairs.luxury',
+            'legal_contact_response': 'Время ответа: 24-48 часов',
+            'legal_notice_text': 'Вся интеллектуальная собственность, дизайны и контент защищены международным авторским правом. Несанкционированное воспроизведение или распространение строго запрещено.<br><br>BILLIONAIRS оставляет за собой право изменять предложения, условия и доступность без предварительного уведомления. Все продажи окончательны.',
+            
+            // Privacy Policy
+            'privacy_collect_text': 'Только основные данные, необходимые для обработки транзакций и выполнения доступа. Вся информация шифруется с использованием протоколов безопасности швейцарского банковского уровня.',
+            'privacy_use_transaction': 'Обработка транзакций: Безопасная проверка и завершение',
+            'privacy_use_access': 'Выполнение доступа: Активация вашего эксклюзивного опыта',
+            'privacy_use_communication': 'Связь: Зашифрованная переписка относительно вашего опыта',
+            'privacy_use_legal': 'Юридическое соответствие: Только нормативные требования',
+            'privacy_protection_text': 'Сквозное шифрование. Швейцарские банковские стандарты. Блокчейн-верификация. Нулевой доступ третьих лиц. Ваша информация никогда не покидает нашу защищенную инфраструктуру.',
+            'privacy_rights_text': 'Доступ, исправление или удаление персональных данных доступны по запросу. Контакт: <strong>elite@billionairs.luxury</strong>',
+            
+            // Terms of Service
+            'terms_agreement_text': 'Получая доступ к BILLIONAIRS, вы подтверждаете полное понимание и добровольное принятие этих условий. Это представляет собой обязывающее соглашение в соответствии со швейцарским законодательством. Продолжение использования указывает на осознанное согласие.',
+            'terms_transaction_text': '<strong>Все обязательства окончательны и обязывающи.</strong> Продолжая, вы подтверждаете полное понимание и принятие. Этот опыт работает за пределами обычных рамок—обязательство абсолютно и необратимо. Никакие отмены, модификации или пересмотры невозможны после инициирования.',
+            'terms_access_text': 'Ограничено только для квалифицированных лиц. BILLIONAIRS оставляет за собой абсолютное право предоставлять или отказывать в доступе без объяснений или обжалования. Критерии остаются конфиденциальными. Участие является привилегией, а не правом.',
+            'terms_ip_text': 'Все дизайны, концепции и контент являются собственными активами, защищенными международным авторским правом и законом о товарных знаках. Несанкционированное воспроизведение, распространение или использование строго запрещено и подлежит судебному преследованию.',
+            'terms_liability_text': 'BILLIONAIRS, его операторы и аффилированные лица не несут ответственности за любые прямые, косвенные, случайные, последующие или штрафные результаты, возникающие в результате вашего участия. Вы принимаете полную ответственность за свои решения. Этот сервис предоставляется "как есть" без каких-либо гарантий.',
+            'terms_inquiries_email': 'elite@billionairs.luxury',
             'faq_what_is': 'Врата к опыту, существующему за пределами общественного доступа. Не рынок. Не услуга. Порог к моментам и доступу, которые не могут быть воспроизведены, рекламированы или объяснены тем, кто его не пересёк.<br><br>Думайте об этом как о финальной коллекции—не предметов, а перспективы. Трансформации. Доступа к сферам, где валюта не имеет значения, потому что то, что предлагается, не может быть куплено никаким другим способом.<br><br>То, что лежит за пределами, ваше, чтобы открыть—но только если вы готовы.',
             'faq_why_investment': 'Истинная эксклюзивность требует приверженности. То, к чему вы получаете доступ здесь, не продаётся—оно предоставляется. Порог существует, чтобы гарантировать, что только те, кто понимает ценность за пределами цены, когда-либо пересекают его.<br><br>Коллекционеры редких впечатлений знают: барьер сам по себе является частью кураторства. Он разработан не для извлечения—он разработан для защиты. Для сохранения целостности того, что лежит за пределами, от тех, кто измеряет ценность в обычных терминах.<br><br>Если обязательство кажется крутым, вы находитесь именно там, где должны быть: сомневаетесь. Это колебание и есть фильтр. Порог, который меняет ваше восприятие того, что действительно означает доступ.',
             'faq_who_for': 'Те, кто превзошёл традиционный успех. Люди, для которых деньги больше не вопрос, но смысл — да. Люди, которые приобрели всё, что доступно публично, и теперь ищут то, что недоступно.<br><br>Искатели того, что существует между мыслью и реальностью. Те, кто понимает, что самый редкий опыт не появляется в каталогах, не рецензируется онлайн и не оставляет следов, кроме трансформации тех, кто с ним сталкивается.<br><br>Если вы всё ещё измеряете свою ценность по кошельку, это ещё не ваш момент.',
@@ -338,6 +488,31 @@ const modalTranslations = {
             'Inquiries': 'お問い合わせ'
         },
         content: {
+            // Legal Notice
+            'legal_entity_title': 'BILLIONAIRS',
+            'legal_entity_subtitle': 'プレミアムデジタルエクスペリエンスプラットフォーム',
+            'legal_entity_location': 'スイス、チューリッヒに登録',
+            'legal_contact_intro': '独占的なお問い合わせのみ:',
+            'legal_contact_email': 'elite@billionairs.luxury',
+            'legal_contact_response': '応答時間: 24-48時間',
+            'legal_notice_text': 'すべての知的財産、デザイン、コンテンツは国際著作権法によって保護されています。無断複製または配布は固く禁じられています。<br><br>BILLIONAIRSは、予告なく提供内容、条件、利用可能性を変更する権利を留保します。すべての販売は最終的なものです。',
+            
+            // Privacy Policy
+            'privacy_collect_text': '取引処理とアクセス履行に必要な必須データのみ。すべての情報はスイスの銀行レベルのセキュリティプロトコルを使用して暗号化されています。',
+            'privacy_use_transaction': '取引処理: 安全な検証と完了',
+            'privacy_use_access': 'アクセス履行: 限定体験の有効化',
+            'privacy_use_communication': 'コミュニケーション: 体験に関する暗号化された通信',
+            'privacy_use_legal': '法的遵守: 規制要件のみ',
+            'privacy_protection_text': 'エンドツーエンド暗号化。スイスの銀行基準。ブロックチェーン検証。第三者アクセスゼロ。あなたの情報は当社の安全なインフラストラクチャを離れることはありません。',
+            'privacy_rights_text': '個人データへのアクセス、訂正、削除は要請に応じて利用可能です。お問い合わせ: <strong>elite@billionairs.luxury</strong>',
+            
+            // Terms of Service
+            'terms_agreement_text': 'BILLIONAIRSにアクセスすることにより、これらの条件の完全な理解と自発的な受け入れを認めます。これはスイス法に基づく拘束力のある契約を構成します。継続使用は情報に基づいた同意を示します。',
+            'terms_transaction_text': '<strong>すべてのエンゲージメントは最終的かつ拘束力があります。</strong>続行することにより、完全な理解と受け入れを認めます。この体験は従来の枠組みを超えて動作します—コミットメントは絶対的で不可逆的です。開始後の逆転、変更、再考は不可能です。',
+            'terms_access_text': '資格のある個人のみに限定されています。BILLIONAIRSは、説明や救済なしにアクセスを許可または拒否する絶対的な裁量権を留保します。基準は機密のままです。参加は権利ではなく特権です。',
+            'terms_ip_text': 'すべてのデザイン、コンセプト、コンテンツは、国際著作権法および商標法の下で保護された専有資産です。無断の複製、配布、使用は固く禁じられており、法的措置の対象となります。',
+            'terms_liability_text': 'BILLIONAIRS、その運営者、および関連会社は、あなたの参加から生じる直接的、間接的、付随的、結果的、または懲罰的な結果について一切の責任を負いません。あなたは自分の決定に対する完全な責任を受け入れます。このサービスは、いかなる種類の保証もなく「現状のまま」提供されます。',
+            'terms_inquiries_email': 'elite@billionairs.luxury',
             'faq_what_is': '一般の手の届かない体験への入り口。市場ではありません。サービスでもありません。それを越えていない人には複製、宣伝、説明できない瞬間とアクセスへの閾値。<br><br>最終コレクションとして考えてください—オブジェクトではなく、視点の。変容の。通貨が意味を持たない領域へのアクセスの。なぜなら、提供されるものは他の手段では購入できないからです。<br><br>その先にあるものはあなたが発見するものです—しかし、準備ができている場合のみ。',
             'faq_why_investment': '真の独占性はコミットメントを要求します。ここでアクセスするものは販売されていません—付与されます。閾値は、価格を超えた価値を理解する人だけがそれを越えることを保証するために存在します。<br><br>希少な体験のコレクターは知っています：障壁自体がキュレーションの一部です。抽出するために設計されていません—保護するために設計されています。従来の用語で価値を測る人々から、その先にあるものの完全性を保護するために。<br><br>コミットメントが急勾配に見える場合、あなたはまさにあるべき場所にいます：疑問を持つこと。そのためらいがフィルターです。アクセスが本当に何を意味するのかについてのあなたの認識を再形成する閾値。',
             'faq_who_for': '従来の成功を超越した人々。お金がもはや問題ではなく、意味が問題である個人。公的に入手可能なすべてを取得し、今ではそうでないものを求めている人々。<br><br>思考と現実の間に存在するものの探求者。最も希少な体験はカタログに表示されず、オンラインでレビューされず、それに遭遇した人々の変容以外に痕跡を残さないことを理解している人々。<br><br>まだあなたの財布であなたの価値を測っている場合、これはまだあなたの瞬間ではありません。',
