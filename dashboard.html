@@ -429,6 +429,7 @@
             // If user just completed payment, auto-login them
             if (autoLoginEmail && sessionId && paymentSuccess) {
                 console.log('🔐 Auto-login detected for:', autoLoginEmail);
+                console.log('Session ID:', sessionId);
                 
                 try {
                     // Verify payment and create session
@@ -441,7 +442,9 @@
                         })
                     });
                     
+                    console.log('Response status:', response.status);
                     const result = await response.json();
+                    console.log('Auto-login result:', result);
                     
                     if (result.success && result.token) {
                         // Set the auth token
@@ -453,9 +456,17 @@
                         window.history.replaceState({}, '', '/dashboard.html');
                         window.location.reload();
                         return;
+                    } else {
+                        console.error('❌ Auto-login failed:', result);
+                        alert('Auto-login failed. Please login manually.');
+                        window.location.href = '/login.html?email=' + encodeURIComponent(autoLoginEmail);
+                        return;
                     }
                 } catch (error) {
                     console.error('❌ Auto-login error:', error);
+                    alert('Auto-login error: ' + error.message);
+                    window.location.href = '/login.html?email=' + encodeURIComponent(autoLoginEmail);
+                    return;
                 }
             }
             
