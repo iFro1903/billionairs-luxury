@@ -75,10 +75,11 @@ module.exports = async (req, res) => {
             lastName = nameParts.slice(1).join(' ') || '';
           }
           
-          // Update user info (in case they changed phone, name, etc.)
+          // Update user info including password (in case they changed anything)
+          const hashedPassword = hashPassword(password);
           await pool.query(
-            'UPDATE users SET first_name = COALESCE($1, first_name), last_name = COALESCE($2, last_name), phone = COALESCE($3, phone), company = COALESCE($4, company) WHERE id = $5',
-            [firstName || null, lastName || null, phone || null, company || null, userId]
+            'UPDATE users SET password_hash = $1, first_name = COALESCE($2, first_name), last_name = COALESCE($3, last_name), phone = COALESCE($4, phone), company = COALESCE($5, company) WHERE id = $6',
+            [hashedPassword, firstName || null, lastName || null, phone || null, company || null, userId]
           );
           
           await pool.end();
