@@ -30,7 +30,8 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { customerData, metadata } = req.body;
+    const { customerData, metadata, language } = req.body;
+    const userLang = language || 'en'; // Get language from request
 
     // If customer data is provided, create account before checkout
     if (customerData && customerData.email && customerData.password) {
@@ -161,8 +162,8 @@ module.exports = async (req, res) => {
         auto_login_email: customerData?.email || '' // For auto-login after payment
       },
       customer_email: customerData?.email || undefined,
-      success_url: `https://billionairs-luxury.vercel.app/dashboard.html?session_id={CHECKOUT_SESSION_ID}&payment=success&email=${encodeURIComponent(customerData?.email || '')}`,
-      cancel_url: `https://billionairs-luxury.vercel.app/?message=Payment cancelled`
+      success_url: `https://billionairs-luxury.vercel.app/dashboard.html?session_id={CHECKOUT_SESSION_ID}&payment=success&email=${encodeURIComponent(customerData?.email || '')}&lang=${userLang}`,
+      cancel_url: `https://billionairs-luxury.vercel.app/?message=Payment cancelled&lang=${userLang}`
     });
 
     res.status(200).json({ url: session.url });

@@ -42,7 +42,8 @@ class StripePaymentProcessor {
                 payment_type: paymentType,
                 timestamp: new Date().toISOString(),
                 user_agent: navigator.userAgent,
-                referrer: document.referrer || 'direct'
+                referrer: document.referrer || 'direct',
+                language: localStorage.getItem('billionairs_lang') || 'en' // Add current language
             };
             
             // Add customer data to metadata if provided
@@ -57,6 +58,7 @@ class StripePaymentProcessor {
             }
             
             // Create checkout session with millionaire-optimized settings
+            const currentLang = localStorage.getItem('billionairs_lang') || 'en';
             const response = await fetch('/api/stripe-checkout', {
                 method: 'POST',
                 headers: {
@@ -69,7 +71,8 @@ class StripePaymentProcessor {
                     amount: amount,
                     paymentType: paymentType,
                     customerData: customerData, // Send customer data to backend
-                    metadata: metadata
+                    metadata: metadata,
+                    language: currentLang // Pass language to backend
                 })
             });
 

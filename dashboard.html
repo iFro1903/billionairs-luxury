@@ -37,6 +37,9 @@
     <!-- Particles.js -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
+    <!-- i18n Language System -->
+    <script src="assets/js/i18n.js" defer></script>
+    
     <!-- Emergency Mode Check -->
     <script>
         // Check if emergency mode is active
@@ -392,8 +395,31 @@
 
     <script src="assets/js/auth.js"></script>
     <script>
+        // Initialize i18n first to set the correct language
+        async function initI18n() {
+            // Check for language from payment flow
+            const urlParams = new URLSearchParams(window.location.search);
+            const langParam = urlParams.get('lang');
+            
+            // If language parameter exists, set it
+            if (langParam && ['en', 'de', 'fr', 'es', 'zh', 'ar', 'it', 'ru', 'ja'].includes(langParam)) {
+                console.log('🌍 Language from URL:', langParam);
+                localStorage.setItem('billionairs_lang', langParam);
+            }
+            
+            // Initialize i18n system
+            if (typeof I18nManager !== 'undefined') {
+                window.i18n = new I18nManager();
+                await window.i18n.init();
+                console.log('✅ Dashboard i18n initialized');
+            }
+        }
+        
         // Check authentication on page load
         async function initDashboard() {
+            // Initialize language first
+            await initI18n();
+            
             // Check for auto-login after payment
             const urlParams = new URLSearchParams(window.location.search);
             const autoLoginEmail = urlParams.get('email');
