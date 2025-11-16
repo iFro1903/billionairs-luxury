@@ -2313,6 +2313,7 @@ input:-webkit-autofill::first-line {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-y: auto; /* Enable scrolling if content is too tall */
 }
 
 .rejection-particles {
@@ -2322,6 +2323,7 @@ input:-webkit-autofill::first-line {
     width: 100%;
     height: 100%;
     z-index: 0;
+    pointer-events: none; /* Allow scrolling through particles */
 }
 
 .rejection-container {
@@ -2330,6 +2332,8 @@ input:-webkit-autofill::first-line {
     max-width: 700px;
     padding: 3rem;
     text-align: center;
+    margin: auto; /* Center vertically when scrolling */
+    min-height: min-content; /* Ensure full content is visible */
 }
 
 .rejection-content {
@@ -2503,12 +2507,31 @@ input:-webkit-autofill::first-line {
 }
 
 @media (max-width: 768px) {
+    .rejection-section {
+        align-items: flex-start; /* Start from top on mobile */
+        padding: 2rem 0; /* Add vertical padding */
+    }
+    
     .rejection-container {
         padding: 2rem 1.5rem;
+        margin-top: 2rem; /* Space from top on mobile */
+        margin-bottom: 2rem; /* Space from bottom */
     }
     
     .rejection-title {
         font-size: 3rem;
+    }
+    
+    .rejection-message {
+        font-size: 1rem;
+    }
+    
+    .rejection-warning {
+        font-size: 1.1rem;
+    }
+    
+    .truth-line {
+        font-size: 1rem;
     }
     
     .rejection-actions {
@@ -2519,6 +2542,11 @@ input:-webkit-autofill::first-line {
     .return-button,
     .leave-button {
         width: 100%;
+        padding: 1rem 2rem;
+    }
+    
+    .rejection-truth {
+        padding: 1.5rem;
     }
 }
 
