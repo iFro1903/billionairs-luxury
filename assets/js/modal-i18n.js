@@ -586,35 +586,36 @@ function translateModals() {
     // 3. Translate Legal Notice modal content
     const legalModal = document.getElementById('impressumModal');
     if (legalModal && trans.content) {
-        const paragraphs = legalModal.querySelectorAll('.legal-section p');
-        if (paragraphs.length > 0) {
-            // Entity section (3 paragraphs)
-            if (trans.content.legal_entity_title && paragraphs[0]) {
-                paragraphs[0].innerHTML = `<strong>${trans.content.legal_entity_title}</strong>`;
+        console.log('🔍 Translating Legal Notice modal...');
+        const sections = legalModal.querySelectorAll('.legal-section');
+        console.log(`Found ${sections.length} sections in Legal Notice`);
+        
+        if (sections.length >= 3) {
+            // Entity section
+            const entityPs = sections[0].querySelectorAll('p');
+            if (entityPs.length >= 3) {
+                if (trans.content.legal_entity_title) entityPs[0].innerHTML = `<strong>${trans.content.legal_entity_title}</strong>`;
+                if (trans.content.legal_entity_subtitle) entityPs[1].textContent = trans.content.legal_entity_subtitle;
+                if (trans.content.legal_entity_location) entityPs[2].textContent = trans.content.legal_entity_location;
+                console.log('✅ Legal Notice Entity section translated');
             }
-            if (trans.content.legal_entity_subtitle && paragraphs[1]) {
-                paragraphs[1].textContent = trans.content.legal_entity_subtitle;
+            
+            // Contact section
+            const contactPs = sections[1].querySelectorAll('p');
+            if (contactPs.length >= 3) {
+                if (trans.content.legal_contact_intro) contactPs[0].textContent = trans.content.legal_contact_intro;
+                if (trans.content.legal_contact_email) contactPs[1].innerHTML = `<strong>${trans.content.legal_contact_email}</strong>`;
+                if (trans.content.legal_contact_response) contactPs[2].textContent = trans.content.legal_contact_response;
+                console.log('✅ Legal Notice Contact section translated');
             }
-            if (trans.content.legal_entity_location && paragraphs[2]) {
-                paragraphs[2].textContent = trans.content.legal_entity_location;
-            }
-            // Contact section (3 paragraphs)
-            if (trans.content.legal_contact_intro && paragraphs[3]) {
-                paragraphs[3].textContent = trans.content.legal_contact_intro;
-            }
-            if (trans.content.legal_contact_email && paragraphs[4]) {
-                paragraphs[4].innerHTML = `<strong>${trans.content.legal_contact_email}</strong>`;
-            }
-            if (trans.content.legal_contact_response && paragraphs[5]) {
-                paragraphs[5].textContent = trans.content.legal_contact_response;
-            }
-            // Legal Notice section (2 paragraphs)
-            if (trans.content.legal_notice_text && paragraphs[6]) {
+            
+            // Legal Notice section
+            const noticePs = sections[2].querySelectorAll('p');
+            if (noticePs.length >= 2 && trans.content.legal_notice_text) {
                 const texts = trans.content.legal_notice_text.split('<br><br>');
-                paragraphs[6].textContent = texts[0];
-                if (paragraphs[7] && texts[1]) {
-                    paragraphs[7].textContent = texts[1];
-                }
+                if (texts[0]) noticePs[0].textContent = texts[0];
+                if (texts[1]) noticePs[1].textContent = texts[1];
+                console.log('✅ Legal Notice text section translated');
             }
         }
     }
@@ -622,30 +623,52 @@ function translateModals() {
     // 4. Translate Privacy Policy modal content
     const privacyModal = document.getElementById('privacyModal');
     if (privacyModal && trans.content) {
+        console.log('🔍 Translating Privacy Policy modal...');
         const sections = privacyModal.querySelectorAll('.legal-section');
-        if (sections.length > 0) {
+        console.log(`Found ${sections.length} sections in Privacy Policy`);
+        
+        if (sections.length >= 4) {
             // Information We Collect
-            if (trans.content.privacy_collect_text && sections[0]) {
-                const p = sections[0].querySelector('p');
-                if (p) p.textContent = trans.content.privacy_collect_text;
+            const collectP = sections[0].querySelector('p');
+            if (collectP && trans.content.privacy_collect_text) {
+                collectP.textContent = trans.content.privacy_collect_text;
+                console.log('✅ Privacy collect section translated');
             }
-            // How We Use Your Data (4 paragraphs)
-            if (sections[1]) {
-                const ps = sections[1].querySelectorAll('p');
-                if (trans.content.privacy_use_transaction && ps[0]) ps[0].innerHTML = `<strong>${trans.content.privacy_use_transaction.split(':')[0]}:</strong> ${trans.content.privacy_use_transaction.split(':')[1]}`;
-                if (trans.content.privacy_use_access && ps[1]) ps[1].innerHTML = `<strong>${trans.content.privacy_use_access.split(':')[0]}:</strong> ${trans.content.privacy_use_access.split(':')[1]}`;
-                if (trans.content.privacy_use_communication && ps[2]) ps[2].innerHTML = `<strong>${trans.content.privacy_use_communication.split(':')[0]}:</strong> ${trans.content.privacy_use_communication.split(':')[1]}`;
-                if (trans.content.privacy_use_legal && ps[3]) ps[3].innerHTML = `<strong>${trans.content.privacy_use_legal.split(':')[0]}:</strong> ${trans.content.privacy_use_legal.split(':')[1]}`;
+            
+            // How We Use Your Data (4 items)
+            const usePs = sections[1].querySelectorAll('p');
+            if (usePs.length >= 4) {
+                if (trans.content.privacy_use_transaction) {
+                    const parts = trans.content.privacy_use_transaction.split(':');
+                    usePs[0].innerHTML = `<strong>${parts[0]}:</strong> ${parts[1]}`;
+                }
+                if (trans.content.privacy_use_access) {
+                    const parts = trans.content.privacy_use_access.split(':');
+                    usePs[1].innerHTML = `<strong>${parts[0]}:</strong> ${parts[1]}`;
+                }
+                if (trans.content.privacy_use_communication) {
+                    const parts = trans.content.privacy_use_communication.split(':');
+                    usePs[2].innerHTML = `<strong>${parts[0]}:</strong> ${parts[1]}`;
+                }
+                if (trans.content.privacy_use_legal) {
+                    const parts = trans.content.privacy_use_legal.split(':');
+                    usePs[3].innerHTML = `<strong>${parts[0]}:</strong> ${parts[1]}`;
+                }
+                console.log('✅ Privacy use section translated');
             }
+            
             // Data Protection
-            if (trans.content.privacy_protection_text && sections[2]) {
-                const p = sections[2].querySelector('p');
-                if (p) p.textContent = trans.content.privacy_protection_text;
+            const protectionP = sections[2].querySelector('p');
+            if (protectionP && trans.content.privacy_protection_text) {
+                protectionP.textContent = trans.content.privacy_protection_text;
+                console.log('✅ Privacy protection section translated');
             }
+            
             // Your Rights
-            if (trans.content.privacy_rights_text && sections[3]) {
-                const p = sections[3].querySelector('p');
-                if (p) p.innerHTML = trans.content.privacy_rights_text;
+            const rightsP = sections[3].querySelector('p');
+            if (rightsP && trans.content.privacy_rights_text) {
+                rightsP.innerHTML = trans.content.privacy_rights_text;
+                console.log('✅ Privacy rights section translated');
             }
         }
     }
@@ -653,37 +676,51 @@ function translateModals() {
     // 5. Translate Terms of Service modal content
     const termsModal = document.getElementById('termsModal');
     if (termsModal && trans.content) {
+        console.log('🔍 Translating Terms of Service modal...');
         const sections = termsModal.querySelectorAll('.legal-section');
-        if (sections.length > 0) {
+        console.log(`Found ${sections.length} sections in Terms of Service`);
+        
+        if (sections.length >= 6) {
             // Agreement
-            if (trans.content.terms_agreement_text && sections[0]) {
-                const p = sections[0].querySelector('p');
-                if (p) p.textContent = trans.content.terms_agreement_text;
+            const agreementP = sections[0].querySelector('p');
+            if (agreementP && trans.content.terms_agreement_text) {
+                agreementP.textContent = trans.content.terms_agreement_text;
+                console.log('✅ Terms agreement section translated');
             }
+            
             // Transaction Terms
-            if (trans.content.terms_transaction_text && sections[1]) {
-                const p = sections[1].querySelector('p');
-                if (p) p.innerHTML = trans.content.terms_transaction_text;
+            const transactionP = sections[1].querySelector('p');
+            if (transactionP && trans.content.terms_transaction_text) {
+                transactionP.innerHTML = trans.content.terms_transaction_text;
+                console.log('✅ Terms transaction section translated');
             }
+            
             // Access & Eligibility
-            if (trans.content.terms_access_text && sections[2]) {
-                const p = sections[2].querySelector('p');
-                if (p) p.textContent = trans.content.terms_access_text;
+            const accessP = sections[2].querySelector('p');
+            if (accessP && trans.content.terms_access_text) {
+                accessP.textContent = trans.content.terms_access_text;
+                console.log('✅ Terms access section translated');
             }
+            
             // Intellectual Property
-            if (trans.content.terms_ip_text && sections[3]) {
-                const p = sections[3].querySelector('p');
-                if (p) p.textContent = trans.content.terms_ip_text;
+            const ipP = sections[3].querySelector('p');
+            if (ipP && trans.content.terms_ip_text) {
+                ipP.textContent = trans.content.terms_ip_text;
+                console.log('✅ Terms IP section translated');
             }
+            
             // Limitation of Liability
-            if (trans.content.terms_liability_text && sections[4]) {
-                const p = sections[4].querySelector('p');
-                if (p) p.textContent = trans.content.terms_liability_text;
+            const liabilityP = sections[4].querySelector('p');
+            if (liabilityP && trans.content.terms_liability_text) {
+                liabilityP.textContent = trans.content.terms_liability_text;
+                console.log('✅ Terms liability section translated');
             }
+            
             // Inquiries
-            if (trans.content.terms_inquiries_email && sections[5]) {
-                const p = sections[5].querySelector('p');
-                if (p) p.innerHTML = `<strong>${trans.content.terms_inquiries_email}</strong>`;
+            const inquiriesP = sections[5].querySelector('p');
+            if (inquiriesP && trans.content.terms_inquiries_email) {
+                inquiriesP.innerHTML = `<strong>${trans.content.terms_inquiries_email}</strong>`;
+                console.log('✅ Terms inquiries section translated');
             }
         }
     }
