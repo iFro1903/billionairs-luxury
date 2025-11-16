@@ -206,6 +206,12 @@ function initLanguageDropdown() {
                     await window.i18n.switchLanguage(lang);
                     console.log('✅ Language switched to:', lang);
                     langBtn.textContent = lang.toUpperCase();
+                    
+                    // Force modal translation after language switch
+                    if (typeof translateModals === 'function') {
+                        console.log('🔄 Manually triggering modal translation...');
+                        setTimeout(translateModals, 300);
+                    }
                 } catch (error) {
                     console.error('❌ Error switching language:', error);
                 }
