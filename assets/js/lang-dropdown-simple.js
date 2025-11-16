@@ -207,6 +207,24 @@ function initLanguageDropdown() {
                     console.log('✅ Language switched to:', lang);
                     langBtn.textContent = lang.toUpperCase();
                     
+                    // Force translate footer links
+                    console.log('🔄 Translating footer links...');
+                    const footerLinks = {
+                        faqLink: 'FAQ',
+                        legalLink: 'LEGAL NOTICE',
+                        privacyLink: 'PRIVACY POLICY',
+                        termsLink: 'TERMS & CONDITIONS'
+                    };
+                    
+                    for (const [id, key] of Object.entries(footerLinks)) {
+                        const link = document.getElementById(id);
+                        if (link && window.i18n.t) {
+                            const translated = window.i18n.t(key);
+                            link.textContent = translated;
+                            console.log(`✅ ${key} → ${translated}`);
+                        }
+                    }
+                    
                     // Force modal translation after language switch
                     if (typeof translateModals === 'function') {
                         console.log('🔄 Manually triggering modal translation...');
