@@ -595,7 +595,8 @@
             }
         }
 
-        async function handleLogout() {
+        // Make handleLogout globally available
+        window.handleLogout = async function() {
             try {
                 if (window.authManager && typeof window.authManager.logout === 'function') {
                     await window.authManager.logout();
@@ -614,7 +615,7 @@
                 sessionStorage.clear();
                 window.location.href = '/';
             }
-        }
+        };
 
         async function handleDownload(event) {
             event.preventDefault();
