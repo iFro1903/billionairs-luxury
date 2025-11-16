@@ -58,19 +58,36 @@ const modalTranslations = {
     }
 };
 
-// Translate modal content when language changes
-window.addEventListener('languageChanged', (event) => {
-    const lang = event.detail.language;
-    if (!modalTranslations[lang]) return;
+// Function to translate modals based on current language
+function translateModals() {
+    const currentLang = window.i18n ? window.i18n.currentLang : 'en';
+    console.log(`🔄 Translating modals to: ${currentLang}`);
     
-    const trans = modalTranslations[lang];
+    if (!modalTranslations[currentLang]) {
+        console.log(`⚠️ No modal translations for ${currentLang}`);
+        return;
+    }
+    
+    const trans = modalTranslations[currentLang];
     
     // 1. Translate titles (h2, h3)
     document.querySelectorAll('.legal-modal h2, .legal-modal h3, .faq-modal-item h3, .legal-section h3').forEach(element => {
         const originalText = element.textContent.trim();
+        
+        // Check in titles
         if (trans.titles[originalText]) {
             element.textContent = trans.titles[originalText];
             console.log(`✅ Modal title: "${originalText}" → "${trans.titles[originalText]}"`);
+        } 
+        // Also check reversed (if it's already translated, don't re-translate)
+        else {
+            // Find if current text is a translation and restore to English first
+            for (const [eng, translated] of Object.entries(trans.titles)) {
+                if (element.textContent.trim() === translated) {
+                    element.textContent = trans.titles[eng] || eng;
+                    break;
+                }
+            }
         }
     });
     
@@ -82,9 +99,21 @@ window.addEventListener('languageChanged', (event) => {
         const p = item.querySelector('p');
         if (p && trans.content && trans.content[contentKeys[index]]) {
             p.innerHTML = trans.content[contentKeys[index]];
-            console.log(`✅ FAQ content ${index + 1} translated`);
+            console.log(`✅ FAQ content ${index + 1} translated to ${currentLang}`);
         }
     });
+}
+
+// Translate when language changes
+window.addEventListener('languageChanged', (event) => {
+    console.log(`🌍 Language changed to: ${event.detail.language}`);
+    setTimeout(translateModals, 100); // Small delay to ensure DOM is ready
+});
+
+// Also translate when i18n is ready (for initial load)
+window.addEventListener('i18nReady', () => {
+    console.log('✅ i18n ready, translating modals...');
+    translateModals();
 });
 
 console.log('✅ Modal i18n system loaded');
