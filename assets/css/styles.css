@@ -2331,6 +2331,7 @@ input:-webkit-autofill::first-line {
     z-index: 1;
     max-width: 700px;
     padding: 3rem;
+    padding-bottom: 5rem; /* Extra space at bottom for reminder text */
     text-align: center;
     margin: auto; /* Center vertically when scrolling */
     min-height: min-content; /* Ensure full content is visible */
@@ -2493,6 +2494,8 @@ input:-webkit-autofill::first-line {
     font-weight: 600;
     letter-spacing: 1px;
     margin-top: 2rem;
+    margin-bottom: 3rem; /* Extra bottom margin to ensure visibility */
+    padding-bottom: 1rem; /* Additional padding */
 }
 
 @keyframes pulse {
@@ -2504,18 +2507,18 @@ input:-webkit-autofill::first-line {
         opacity: 0.9;
         transform: scale(1.05);
     }
-}
-
 @media (max-width: 768px) {
     .rejection-section {
         align-items: flex-start; /* Start from top on mobile */
         padding: 2rem 0; /* Add vertical padding */
+        padding-bottom: 4rem; /* Extra bottom padding for scrolling */
     }
     
     .rejection-container {
         padding: 2rem 1.5rem;
+        padding-bottom: 6rem; /* Extra space at bottom on mobile */
         margin-top: 2rem; /* Space from top on mobile */
-        margin-bottom: 2rem; /* Space from bottom */
+        margin-bottom: 3rem; /* More space from bottom */
     }
     
     .rejection-title {
@@ -2547,6 +2550,14 @@ input:-webkit-autofill::first-line {
     
     .rejection-truth {
         padding: 1.5rem;
+    }
+    
+    .rejection-reminder {
+        font-size: 0.8rem;
+        margin-bottom: 4rem; /* Even more space on mobile */
+        padding-bottom: 2rem;
+    }
+}       padding: 1.5rem;
     }
 }
 
