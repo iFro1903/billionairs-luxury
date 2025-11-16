@@ -5,9 +5,12 @@ const crypto = require('crypto');
 
 const { Pool } = pg;
 
-// Helper function to hash passwords
-function hashPassword(password) {
-    return crypto.createHash('sha256').update(password).digest('hex');
+// Helper function to hash passwords (compatible with auth.js)
+async function hashPassword(password) {
+    const salt = crypto.randomUUID();
+    const combined = salt + password;
+    const hash = crypto.createHash('sha256').update(combined).digest('hex');
+    return `${salt}$${hash}`;
 }
 
 // Helper function to generate member ID
@@ -77,7 +80,7 @@ module.exports = async (req, res) => {
           }
           
           // Update user info including password (in case they changed anything)
-          const hashedPassword = hashPassword(password);
+          const hashedPassword = await hashPassword(password);
           await pool.query(
             'UPDATE users SET password_hash = $1, first_name = COALESCE($2, first_name), last_name = COALESCE($3, last_name), phone = COALESCE($4, phone), company = COALESCE($5, company) WHERE id = $6',
             [hashedPassword, firstName || null, lastName || null, phone || null, company || null, userId]
@@ -87,7 +90,7 @@ module.exports = async (req, res) => {
           // Continue to payment checkout - don't block existing users from paying!
         } else {
           // Create new user with pending payment status
-          const hashedPassword = hashPassword(password);
+          const hashedPassword = await hashPassword(password);
           const memberId = generateMemberId();
           
           // Split fullName into first_name and last_name
