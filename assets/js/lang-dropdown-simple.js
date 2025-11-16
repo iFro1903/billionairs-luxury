@@ -25,20 +25,58 @@ function initLanguageDropdown() {
         existingDropdown.remove();
     }
     
-    // Create dropdown
+    // Create dropdown with inline styles for immediate effect
     const dropdown = document.createElement('div');
     dropdown.id = 'langDropdownSimple';
-    dropdown.className = 'language-dropdown'; // Fixed: was 'lang-dropdown'
+    dropdown.className = 'language-dropdown';
+    
+    // Apply critical inline styles
+    dropdown.style.cssText = `
+        position: fixed;
+        background: linear-gradient(145deg, rgba(15,15,20,0.98) 0%, rgba(25,20,30,0.98) 50%, rgba(20,15,25,0.98) 100%);
+        border: 2px solid rgba(232,180,184,0.6);
+        border-radius: 20px;
+        min-width: 280px;
+        max-height: 500px;
+        overflow-y: auto;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(232,180,184,0.15);
+        z-index: 99999;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-20px) scale(0.9);
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+    `;
+    
     dropdown.innerHTML = `
-        <a href="#" class="lang-option" data-lang="en">🇬🇧 English</a>
-        <a href="#" class="lang-option" data-lang="de">🇩🇪 Deutsch</a>
-        <a href="#" class="lang-option" data-lang="fr">🇫🇷 Français</a>
-        <a href="#" class="lang-option" data-lang="es">🇪🇸 Español</a>
-        <a href="#" class="lang-option" data-lang="zh">🇨🇳 中文</a>
-        <a href="#" class="lang-option" data-lang="ar">🇸🇦 العربية</a>
-        <a href="#" class="lang-option" data-lang="it">🇮🇹 Italiano</a>
-        <a href="#" class="lang-option" data-lang="ru">🇷🇺 Русский</a>
-        <a href="#" class="lang-option" data-lang="ja">🇯🇵 日本語</a>
+        <a href="#" class="lang-option" data-lang="en" style="display:flex; align-items:center; padding:16px 24px; color:rgba(255,255,255,0.9); text-decoration:none; font-family:'Montserrat','Playfair Display',serif; font-size:15px; letter-spacing:1.2px; border-bottom:1px solid rgba(232,180,184,0.08); transition:all 0.35s; cursor:pointer;">
+            <span style="font-size:24px; margin-right:16px;">🇬🇧</span> English
+        </a>
+        <a href="#" class="lang-option" data-lang="de" style="display:flex; align-items:center; padding:16px 24px; color:rgba(255,255,255,0.9); text-decoration:none; font-family:'Montserrat','Playfair Display',serif; font-size:15px; letter-spacing:1.2px; border-bottom:1px solid rgba(232,180,184,0.08); transition:all 0.35s; cursor:pointer;">
+            <span style="font-size:24px; margin-right:16px;">🇩🇪</span> Deutsch
+        </a>
+        <a href="#" class="lang-option" data-lang="fr" style="display:flex; align-items:center; padding:16px 24px; color:rgba(255,255,255,0.9); text-decoration:none; font-family:'Montserrat','Playfair Display',serif; font-size:15px; letter-spacing:1.2px; border-bottom:1px solid rgba(232,180,184,0.08); transition:all 0.35s; cursor:pointer;">
+            <span style="font-size:24px; margin-right:16px;">🇫🇷</span> Français
+        </a>
+        <a href="#" class="lang-option" data-lang="es" style="display:flex; align-items:center; padding:16px 24px; color:rgba(255,255,255,0.9); text-decoration:none; font-family:'Montserrat','Playfair Display',serif; font-size:15px; letter-spacing:1.2px; border-bottom:1px solid rgba(232,180,184,0.08); transition:all 0.35s; cursor:pointer;">
+            <span style="font-size:24px; margin-right:16px;">🇪🇸</span> Español
+        </a>
+        <a href="#" class="lang-option" data-lang="zh" style="display:flex; align-items:center; padding:16px 24px; color:rgba(255,255,255,0.9); text-decoration:none; font-family:'Montserrat','Playfair Display',serif; font-size:15px; letter-spacing:1.2px; border-bottom:1px solid rgba(232,180,184,0.08); transition:all 0.35s; cursor:pointer;">
+            <span style="font-size:24px; margin-right:16px;">🇨🇳</span> 中文
+        </a>
+        <a href="#" class="lang-option" data-lang="ar" style="display:flex; align-items:center; padding:16px 24px; color:rgba(255,255,255,0.9); text-decoration:none; font-family:'Montserrat','Playfair Display',serif; font-size:15px; letter-spacing:1.2px; border-bottom:1px solid rgba(232,180,184,0.08); transition:all 0.35s; cursor:pointer;">
+            <span style="font-size:24px; margin-right:16px;">🇸🇦</span> العربية
+        </a>
+        <a href="#" class="lang-option" data-lang="it" style="display:flex; align-items:center; padding:16px 24px; color:rgba(255,255,255,0.9); text-decoration:none; font-family:'Montserrat','Playfair Display',serif; font-size:15px; letter-spacing:1.2px; border-bottom:1px solid rgba(232,180,184,0.08); transition:all 0.35s; cursor:pointer;">
+            <span style="font-size:24px; margin-right:16px;">🇮🇹</span> Italiano
+        </a>
+        <a href="#" class="lang-option" data-lang="ru" style="display:flex; align-items:center; padding:16px 24px; color:rgba(255,255,255,0.9); text-decoration:none; font-family:'Montserrat','Playfair Display',serif; font-size:15px; letter-spacing:1.2px; border-bottom:1px solid rgba(232,180,184,0.08); transition:all 0.35s; cursor:pointer;">
+            <span style="font-size:24px; margin-right:16px;">🇷🇺</span> Русский
+        </a>
+        <a href="#" class="lang-option" data-lang="ja" style="display:flex; align-items:center; padding:16px 24px; color:rgba(255,255,255,0.9); text-decoration:none; font-family:'Montserrat','Playfair Display',serif; font-size:15px; letter-spacing:1.2px; border-bottom:1px solid rgba(232,180,184,0.08); transition:all 0.35s; cursor:pointer;">
+            <span style="font-size:24px; margin-right:16px;">🇯🇵</span> 日本語
+        </a>
     `;
     
     // Add to page
@@ -60,19 +98,33 @@ function initLanguageDropdown() {
         console.log('🖱️ Button clicked');
         
         positionDropdown();
-        dropdown.classList.toggle('show');
-        console.log('📋 Dropdown classes:', dropdown.className);
+        
+        const isVisible = dropdown.style.opacity === '1';
+        
+        if (isVisible) {
+            // Hide with animation
+            dropdown.style.opacity = '0';
+            dropdown.style.visibility = 'hidden';
+            dropdown.style.transform = 'translateY(-20px) scale(0.9)';
+        } else {
+            // Show with luxury animation
+            dropdown.style.opacity = '1';
+            dropdown.style.visibility = 'visible';
+            dropdown.style.transform = 'translateY(0) scale(1)';
+        }
+        
+        console.log('📋 Dropdown visible:', !isVisible);
     });
     
     // Reposition on scroll/resize
     window.addEventListener('scroll', () => {
-        if (dropdown.classList.contains('show')) {
+        if (dropdown.style.opacity === '1') {
             positionDropdown();
         }
     });
     
     window.addEventListener('resize', () => {
-        if (dropdown.classList.contains('show')) {
+        if (dropdown.style.opacity === '1') {
             positionDropdown();
         }
     });
@@ -80,12 +132,40 @@ function initLanguageDropdown() {
     // Close on outside click
     document.addEventListener('click', (e) => {
         if (!langBtn.contains(e.target) && !dropdown.contains(e.target)) {
-            dropdown.classList.remove('show');
+            dropdown.style.opacity = '0';
+            dropdown.style.visibility = 'hidden';
+            dropdown.style.transform = 'translateY(-20px) scale(0.9)';
         }
     });
     
-    // Language selection clicks
+    // Language selection clicks with hover effects
     dropdown.querySelectorAll('[data-lang]').forEach(link => {
+        // Add hover effects
+        link.addEventListener('mouseenter', () => {
+            link.style.background = 'linear-gradient(90deg, rgba(232,180,184,0.25), rgba(247,202,201,0.2))';
+            link.style.paddingLeft = '32px';
+            link.style.transform = 'translateX(4px)';
+            link.style.textShadow = '0 0 20px rgba(232,180,184,0.4)';
+            const flag = link.querySelector('span');
+            if (flag) {
+                flag.style.transform = 'scale(1.2) rotate(5deg)';
+            }
+        });
+        
+        link.addEventListener('mouseleave', () => {
+            const isActive = link.classList.contains('active');
+            if (!isActive) {
+                link.style.background = '';
+                link.style.paddingLeft = '24px';
+                link.style.transform = '';
+                link.style.textShadow = '';
+            }
+            const flag = link.querySelector('span');
+            if (flag) {
+                flag.style.transform = '';
+            }
+        });
+        
         link.addEventListener('click', async (e) => {
             e.preventDefault();
             e.stopPropagation();
