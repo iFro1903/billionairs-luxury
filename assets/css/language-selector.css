@@ -15,8 +15,7 @@
         rgba(247, 202, 201, 0.4),
         rgba(212, 175, 155, 0.5)) 1;
     border-radius: 20px;
-    min-width: 280px;
-    max-width: 280px;
+    width: 280px;
     max-height: 500px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -31,6 +30,16 @@
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Hide scrollbars but keep functionality */
+.language-dropdown::-webkit-scrollbar {
+    display: none;
+}
+
+.language-dropdown {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 .language-dropdown.show {
