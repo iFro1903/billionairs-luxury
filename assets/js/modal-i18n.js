@@ -207,20 +207,31 @@ function translateModals() {
     document.querySelectorAll('.legal-modal h2, .legal-modal h3, .faq-modal-item h3, .legal-section h3').forEach(element => {
         const originalText = element.textContent.trim();
         
-        // Check in titles
+        // First try direct match in current language
         if (trans.titles[originalText]) {
             element.textContent = trans.titles[originalText];
             console.log(`✅ Modal title: "${originalText}" → "${trans.titles[originalText]}"`);
-        } 
-        // Also check reversed (if it's already translated, don't re-translate)
-        else {
-            // Find if current text is a translation and restore to English first
-            for (const [eng, translated] of Object.entries(trans.titles)) {
-                if (element.textContent.trim() === translated) {
-                    element.textContent = trans.titles[eng] || eng;
+            return;
+        }
+        
+        // If not found, search across ALL languages to find the English key
+        let englishKey = null;
+        
+        // Check if current text matches ANY language's translation
+        for (const lang in modalTranslations) {
+            for (const [engKey, translatedValue] of Object.entries(modalTranslations[lang].titles)) {
+                if (translatedValue === originalText) {
+                    englishKey = engKey;
                     break;
                 }
             }
+            if (englishKey) break;
+        }
+        
+        // If we found the English key, translate to target language
+        if (englishKey && trans.titles[englishKey]) {
+            element.textContent = trans.titles[englishKey];
+            console.log(`✅ Modal title cross-lang: "${originalText}" → "${trans.titles[englishKey]}"`);
         }
     });
     
