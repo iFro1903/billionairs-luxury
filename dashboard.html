@@ -582,8 +582,24 @@
         }
 
         async function handleLogout() {
-            await window.authManager.logout();
-            window.location.href = '/';
+            try {
+                if (window.authManager && typeof window.authManager.logout === 'function') {
+                    await window.authManager.logout();
+                } else {
+                    // Fallback: Clear auth data manually
+                    localStorage.removeItem('auth_token');
+                    localStorage.removeItem('user_data');
+                    sessionStorage.clear();
+                }
+                window.location.href = '/';
+            } catch (error) {
+                console.error('Logout error:', error);
+                // Force logout anyway
+                localStorage.removeItem('auth_token');
+                localStorage.removeItem('user_data');
+                sessionStorage.clear();
+                window.location.href = '/';
+            }
         }
 
         async function handleDownload(event) {
