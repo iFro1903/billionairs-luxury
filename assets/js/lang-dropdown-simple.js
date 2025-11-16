@@ -240,24 +240,27 @@ function initLanguageDropdown() {
                     
                     // Translate footer links (for main page)
                     if (typeof window.translateFooterLinks === 'function') {
+                        console.log('🔄 Calling translateFooterLinks...');
                         window.translateFooterLinks(lang);
                     }
                     
-                    // Translate page elements (testimonials, etc.)
+                    // Translate page elements (testimonials, etc.) - IMMEDIATE
                     if (typeof window.translatePageElements === 'function') {
-                        console.log('🔄 Translating page elements...');
-                        setTimeout(() => window.translatePageElements(), 100);
+                        console.log('🔄 Calling translatePageElements IMMEDIATELY...');
+                        window.translatePageElements();
+                    } else {
+                        console.error('❌ window.translatePageElements NOT FOUND!');
                     }
                     
                     // Translate login page (if on login page)
                     if (typeof window.translateLoginPage === 'function') {
-                        console.log('🔄 Translating login page...');
-                        setTimeout(() => window.translateLoginPage(), 100);
+                        console.log('🔄 Calling translateLoginPage...');
+                        window.translateLoginPage();
                     }
                     
                     // Force modal translation after language switch
                     if (typeof translateModals === 'function') {
-                        console.log('🔄 Manually triggering modal translation...');
+                        console.log('🔄 Calling translateModals...');
                         setTimeout(translateModals, 300);
                     }
                 } catch (error) {

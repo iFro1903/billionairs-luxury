@@ -58,24 +58,29 @@ function translatePageElements() {
     const currentLang = window.i18n?.currentLang || 'en';
     const translations = pageTranslations[currentLang] || pageTranslations['en'];
     
-    console.log('🔄 Translating page elements to:', currentLang);
+    console.log('🔄 [PAGE-I18N] Translating page elements to:', currentLang);
+    console.log('🔄 [PAGE-I18N] Available translations:', Object.keys(translations));
     
     // Find all elements with data-i18n-key
     const elements = document.querySelectorAll('[data-i18n-key]');
+    console.log('🔄 [PAGE-I18N] Found elements with data-i18n-key:', elements.length);
     
     let translatedCount = 0;
     elements.forEach(element => {
         const key = element.getAttribute('data-i18n-key');
+        console.log('🔍 [PAGE-I18N] Processing element with key:', key);
+        
         if (translations[key]) {
+            const oldText = element.textContent;
             element.textContent = translations[key];
             translatedCount++;
-            console.log(`✓ Translated ${key}:`, translations[key]);
+            console.log(`✓ [PAGE-I18N] Translated ${key}: "${oldText}" → "${translations[key]}"`);
         } else {
-            console.warn(`⚠️ Missing translation for key: ${key}`);
+            console.warn(`⚠️ [PAGE-I18N] Missing translation for key: ${key} in language ${currentLang}`);
         }
     });
     
-    console.log(`✅ Translated ${translatedCount} page elements`);
+    console.log(`✅ [PAGE-I18N] Translated ${translatedCount} page elements to ${currentLang}`);
 }
 
 // Make function globally accessible
