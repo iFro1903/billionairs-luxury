@@ -49,6 +49,11 @@ function initLanguageDropdown() {
     
     console.log('✅ Button found:', langBtn);
     
+    // Set button to current language immediately
+    const currentLang = localStorage.getItem('billionairs_lang') || window.i18n?.currentLang || 'en';
+    langBtn.textContent = currentLang.toUpperCase();
+    console.log('🌍 Language button set to:', currentLang);
+    
     // Check if dropdown already exists
     const existingDropdown = document.getElementById('langDropdownSimple');
     if (existingDropdown) {

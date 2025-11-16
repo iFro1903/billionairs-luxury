@@ -1368,6 +1368,10 @@
             const innerCircleBtn = document.getElementById('mobileInnerCircle');
             const languageBtn = document.getElementById('mobileLanguage');
             const contactBtn = document.getElementById('mobileContact');
+            
+            // Set mobile language button to current language on load
+            const currentLang = localStorage.getItem('billionairs_lang') || 'en';
+            console.log('📱 Mobile menu - Current language:', currentLang);
 
             // Touch feedback for buttons
             function addTouchFeedback(button) {

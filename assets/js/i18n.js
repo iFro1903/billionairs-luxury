@@ -44,11 +44,14 @@ class I18nManager {
         this.hasInitialized = true;
         console.log('✅ Original texts saved:', this.originalTexts.size, 'nodes');
         
-        // Check for saved language preference
-        const savedLang = this.getCookie(this.cookieName);
+        // Check for saved language preference (localStorage first, then cookie)
+        let savedLang = localStorage.getItem('billionairs_lang');
+        if (!savedLang) {
+            savedLang = this.getCookie(this.cookieName);
+        }
         const targetLang = savedLang && this.supportedLangs.includes(savedLang) ? savedLang : 'en';
         
-        console.log(`🎯 Target language: ${targetLang}`);
+        console.log(`🎯 Target language: ${targetLang} (from ${savedLang ? 'storage' : 'default'})`);
 
         // Switch to target language if not English
         if (targetLang !== 'en') {
@@ -57,6 +60,7 @@ class I18nManager {
         } else {
             // Stay in English
             this.setCookie(this.cookieName, 'en', 365);
+            localStorage.setItem('billionairs_lang', 'en');
             document.documentElement.lang = 'en';
             document.documentElement.dir = 'ltr';
         }
@@ -1003,6 +1007,7 @@ class I18nManager {
 
         this.currentLang = lang;
         this.setCookie(this.cookieName, lang, this.cookieExpiry);
+        localStorage.setItem('billionairs_lang', lang);
         document.documentElement.lang = lang;
 
         console.log(`📊 Original texts in map: ${this.originalTexts.size} nodes`);
