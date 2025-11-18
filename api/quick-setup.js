@@ -9,9 +9,11 @@ export default async function handler(req) {
         const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
         const sql = neon(dbUrl);
 
-        // Create users table with ALL columns
+        // Drop and recreate users table with ALL columns
+        await sql`DROP TABLE IF EXISTS users CASCADE`;
+        
         await sql`
-            CREATE TABLE IF NOT EXISTS users (
+            CREATE TABLE users (
                 id SERIAL PRIMARY KEY,
                 email VARCHAR(255) UNIQUE NOT NULL,
                 name VARCHAR(255),
@@ -27,7 +29,8 @@ export default async function handler(req) {
                 last_seen TIMESTAMP,
                 full_name VARCHAR(255),
                 phone VARCHAR(50),
-                company VARCHAR(255)
+                company VARCHAR(255),
+                chat_opened_at TIMESTAMP
             )
         `;
 
