@@ -39,118 +39,188 @@ export default async function handler(req) {
         const sql = neon(dbUrl);
 
         // Conversion Rate
-        const totalUsers = await sql`SELECT COUNT(*) as count FROM users`;
-        const paidUsers = await sql`SELECT COUNT(*) as count FROM users WHERE payment_status = 'paid'`;
+        let totalUsers, paidUsers;
+        try {
+            totalUsers = await sql`SELECT COUNT(*) as count FROM users`;
+            paidUsers = await sql`SELECT COUNT(*) as count FROM users WHERE payment_status = 'paid'`;
+        } catch (e) {
+            // Table might not exist yet
+            totalUsers = [{ count: 0 }];
+            paidUsers = [{ count: 0 }];
+        }
         const conversionRate = totalUsers[0].count > 0 
             ? ((paidUsers[0].count / totalUsers[0].count) * 100).toFixed(2)
             : 0;
 
         // Revenue Statistics
-        const revenueStats = await sql`
-            SELECT 
-                COUNT(*) as total_payments,
-                SUM(amount) as total_revenue,
-                AVG(amount) as avg_payment,
-                MIN(amount) as min_payment,
-                MAX(amount) as max_payment
-            FROM payments 
-            WHERE status = 'paid'
-        `;
+        let revenueStats;
+        try {
+            revenueStats = await sql`
+                SELECT 
+                    COUNT(*) as total_payments,
+                    SUM(amount) as total_revenue,
+                    AVG(amount) as avg_payment,
+                    MIN(amount) as min_payment,
+                    MAX(amount) as max_payment
+                FROM payments 
+                WHERE status = 'paid'
+            `;
+        } catch (e) {
+            revenueStats = [{ total_payments: 0, total_revenue: 0, avg_payment: 0, min_payment: 0, max_payment: 0 }];
+        }
 
         // Payment Methods Distribution
-        const paymentMethods = await sql`
-            SELECT 
-                payment_method,
-                COUNT(*) as count,
-                SUM(amount) as total_amount
-            FROM payments 
-            WHERE status = 'paid'
-            GROUP BY payment_method
-            ORDER BY count DESC
-        `;
+        let paymentMethods = [];
+        try {
+            paymentMethods = await sql`
+                SELECT 
+                    payment_method,
+                    COUNT(*) as count,
+                    SUM(amount) as total_amount
+                FROM payments 
+                WHERE status = 'paid'
+                GROUP BY payment_method
+                ORDER BY count DESC
+            `;
+        } catch (e) {
+            console.log('Payments table might not exist');
+        }
 
         // Daily Revenue (Last 30 days)
-        const dailyRevenue = await sql`
-            SELECT 
-                DATE(created_at) as date,
-                COUNT(*) as payment_count,
-                SUM(amount) as revenue
-            FROM payments 
-            WHERE status = 'paid' 
-                AND created_at > NOW() - INTERVAL '30 days'
-            GROUP BY DATE(created_at)
-            ORDER BY date DESC
-        `;
+        let dailyRevenue = [];
+        try {
+            dailyRevenue = await sql`
+                SELECT 
+                    DATE(created_at) as date,
+                    COUNT(*) as payment_count,
+                    SUM(amount) as revenue
+                FROM payments 
+                WHERE status = 'paid' 
+                    AND created_at > NOW() - INTERVAL '30 days'
+                GROUP BY DATE(created_at)
+                ORDER BY date DESC
+            `;
+        } catch (e) {
+            console.log('Payments table might not exist');
+        }
 
         // Top Paying Customers
-        const topCustomers = await sql`
-            SELECT 
-                user_email,
-                COUNT(*) as payment_count,
-                SUM(amount) as total_spent,
-                MAX(created_at) as last_payment
-            FROM payments 
-            WHERE status = 'paid'
-            GROUP BY user_email
-            ORDER BY total_spent DESC
-            LIMIT 10
-        `;
+        let topCustomers = [];
+        try {
+            topCustomers = await sql`
+                SELECT 
+                    user_email,
+                    COUNT(*) as payment_count,
+                    SUM(amount) as total_spent,
+                    MAX(created_at) as last_payment
+                FROM payments 
+                WHERE status = 'paid'
+                GROUP BY user_email
+                ORDER BY total_spent DESC
+                LIMIT 10
+            `;
+        } catch (e) {
+            console.log('Payments table might not exist');
+        }
 
         // Refund Statistics
-        const refundStats = await sql`
-            SELECT 
-                COUNT(*) as total_refunds,
-                SUM(amount) as refunded_amount,
-                AVG(amount) as avg_refund
-            FROM refunds 
-            WHERE status = 'succeeded'
-        `;
+        let refundStats = [{ total_refunds: 0, refunded_amount: 0, avg_refund: 0 }];
+        try {
+            refundStats = await sql`
+                SELECT 
+                    COUNT(*) as total_refunds,
+                    SUM(amount) as refunded_amount,
+                    AVG(amount) as avg_refund
+                FROM refunds 
+                WHERE status = 'succeeded'
+            `;
+        } catch (e) {
+            console.log('Refunds table might not exist');
+        }
 
         // Chat Activity
-        const chatStats = await sql`
-            SELECT 
-                COUNT(*) as total_messages,
-                COUNT(DISTINCT email) as unique_users,
-                COUNT(CASE WHEN is_read = false THEN 1 END) as unread_messages
-            FROM chat_messages
-        `;
+        let chatStats = [{ total_messages: 0, unique_users: 0, unread_messages: 0 }];
+        try {
+            chatStats = await sql`
+                SELECT 
+                    COUNT(*) as total_messages,
+                    COUNT(DISTINCT email) as unique_users,
+                    COUNT(CASE WHEN is_read = false THEN 1 END) as unread_messages
+                FROM chat_messages
+            `;
+        } catch (e) {
+            console.log('Chat messages table might not exist');
+        }
 
         // Recent Registrations (Last 7 days)
-        const recentRegistrations = await sql`
-            SELECT COUNT(*) as count 
-            FROM users 
-            WHERE created_at > NOW() - INTERVAL '7 days'
-        `;
+        let recentRegistrations = [{ count: 0 }];
+        try {
+            recentRegistrations = await sql`
+                SELECT COUNT(*) as count 
+                FROM users 
+                WHERE created_at > NOW() - INTERVAL '7 days'
+            `;
+        } catch (e) {
+            console.log('Users table might not exist');
+        }
 
         // Active Users (Last 30 days - users with activity)
-        const activeUsers = await sql`
-            SELECT COUNT(DISTINCT user_email) as count 
-            FROM audit_logs 
-            WHERE timestamp > NOW() - INTERVAL '30 days'
-        `;
+        let activeUsers = [{ count: 0 }];
+        try {
+            activeUsers = await sql`
+                SELECT COUNT(DISTINCT user_email) as count 
+                FROM audit_logs 
+                WHERE timestamp > NOW() - INTERVAL '30 days'
+            `;
+        } catch (e) {
+            console.log('Audit logs table might not exist');
+        }
 
         // 2FA Adoption Rate
-        const twoFAStats = await sql`
-            SELECT 
-                COUNT(CASE WHEN enabled = true THEN 1 END) as enabled_count,
-                COUNT(*) as total_count
-            FROM two_factor_auth
-        `;
+        let twoFAStats = [{ enabled_count: 0, total_count: 0 }];
+        try {
+            twoFAStats = await sql`
+                SELECT 
+                    COUNT(CASE WHEN enabled = true THEN 1 END) as enabled_count,
+                    COUNT(*) as total_count
+                FROM two_factor_auth
+            `;
+        } catch (e) {
+            console.log('2FA table might not exist');
+        }
         const twoFARate = twoFAStats[0].total_count > 0
             ? ((twoFAStats[0].enabled_count / twoFAStats[0].total_count) * 100).toFixed(2)
             : 0;
 
         // System Health
-        const systemHealth = {
+        let systemHealth = {
             rateLimit: {
-                activeEntries: (await sql`SELECT COUNT(*) as count FROM rate_limits`)[0].count,
-                recentBlocks: (await sql`SELECT COUNT(*) as count FROM blocked_ips WHERE expires_at > NOW()`)[0].count
+                activeEntries: 0,
+                recentBlocks: 0
             },
             database: {
                 totalTables: 10,
-                totalIndexes: (await sql`SELECT COUNT(*) as count FROM pg_indexes WHERE schemaname = 'public'`)[0].count
+                totalIndexes: 0
             }
         };
+        try {
+            const rateLimits = await sql`SELECT COUNT(*) as count FROM rate_limits`;
+            const blockedIps = await sql`SELECT COUNT(*) as count FROM blocked_ips WHERE expires_at > NOW()`;
+            const indexes = await sql`SELECT COUNT(*) as count FROM pg_indexes WHERE schemaname = 'public'`;
+            
+            systemHealth = {
+                rateLimit: {
+                    activeEntries: rateLimits[0].count,
+                    recentBlocks: blockedIps[0].count
+                },
+                database: {
+                    totalTables: 10,
+                    totalIndexes: indexes[0].count
+                }
+            };
+        } catch (e) {
+            console.log('System tables might not exist');
+        }
 
         // Push Notifications Stats (if table exists)
         let pushStats = { total: 0, active: 0 };
