@@ -50,6 +50,27 @@
                     window.location.replace('/404.html');
                 }
             })
+            .catch(err => console.error('Emergency check failed:', err));
+
+        // Check if user is blocked
+        const userData = JSON.parse(localStorage.getItem('billionairsUser') || '{}');
+        if (userData.email) {
+            fetch('/api/check-blocked', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: userData.email })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.blocked) {
+                        localStorage.clear();
+                        sessionStorage.clear();
+                        window.location.replace('/404.html');
+                    }
+                })
+                .catch(err => console.error('Block check failed:', err));
+        }
+            })
             .catch(err => console.log('Emergency check:', err));
     </script>
     

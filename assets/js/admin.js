@@ -227,9 +227,14 @@ class AdminPanel {
                         ${user.pyramid_unlocked ? '🔓' : '🔒'} Pyramid
                         ${user.eye_unlocked ? '🔓' : '🔒'} Eye
                         ${user.chat_ready ? '🔓' : '🔒'} Chat
+                        ${user.is_blocked ? '🚫 Blocked' : ''}
                     </td>
                     <td>
                         <button class="action-btn" onclick="adminPanel.viewUser('${user.email}')">View</button>
+                        ${user.is_blocked 
+                            ? `<button class="action-btn success" onclick="adminPanel.unblockUser('${user.email}')">Unblock</button>`
+                            : `<button class="action-btn warning" onclick="adminPanel.blockUser('${user.email}')">Block</button>`
+                        }
                         <button class="action-btn danger" onclick="adminPanel.deleteUser('${user.email}')">Delete</button>
                     </td>
                 `;
@@ -1297,6 +1302,68 @@ Type "DELETE ALL" to confirm:`;
         } catch (error) {
             console.error('Delete users error:', error);
             alert(`❌ Deletion failed\n\n${error.message}`);
+        }
+    }
+
+    async blockUser(email) {
+        if (!confirm(`🚫 Block user ${email}?\n\nThis user will see a 404 page when trying to access the site.`)) {
+            return;
+        }
+
+        try {
+            const session = JSON.parse(sessionStorage.getItem('adminSession'));
+            const response = await fetch('/api/admin-block-user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-admin-email': session.email,
+                    'x-admin-password': session.password
+                },
+                body: JSON.stringify({ email, action: 'block' })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                alert(`✅ ${data.message}`);
+                this.loadUsersData();
+            } else {
+                throw new Error(data.error || 'Block failed');
+            }
+        } catch (error) {
+            console.error('Block user error:', error);
+            alert(`❌ Block failed\n\n${error.message}`);
+        }
+    }
+
+    async unblockUser(email) {
+        if (!confirm(`✅ Unblock user ${email}?`)) {
+            return;
+        }
+
+        try {
+            const session = JSON.parse(sessionStorage.getItem('adminSession'));
+            const response = await fetch('/api/admin-block-user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-admin-email': session.email,
+                    'x-admin-password': session.password
+                },
+                body: JSON.stringify({ email, action: 'unblock' })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                alert(`✅ ${data.message}`);
+                this.loadUsersData();
+            } else {
+                throw new Error(data.error || 'Unblock failed');
+            }
+        } catch (error) {
+            console.error('Unblock user error:', error);
+            alert(`❌ Unblock failed\n\n${error.message}`);
         }
     }
 }
