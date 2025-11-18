@@ -1163,3 +1163,54 @@ tbody tr:hover {
     font-size: 0.95rem;
 }
 
+/* ===================================
+   DANGER ZONE
+   =================================== */
+
+.danger-zone {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(153, 27, 27, 0.1) 100%);
+    border: 2px solid rgba(220, 38, 38, 0.3);
+    border-radius: 12px;
+}
+
+.danger-zone h3 {
+    color: #ef4444;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.danger-zone p {
+    color: #fca5a5;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+}
+
+.btn-danger:active {
+    transform: translateY(0);
+}

@@ -106,6 +106,14 @@ class AdminPanel {
             this.toggleEmergencyMode();
         });
 
+        // Setup delete all users button
+        const deleteAllBtn = document.getElementById('deleteAllUsersBtn');
+        if (deleteAllBtn) {
+            deleteAllBtn.addEventListener('click', () => {
+                this.deleteAllUsers();
+            });
+        }
+
         // Check emergency mode status
         this.checkEmergencyMode();
 
@@ -1232,6 +1240,63 @@ STEPS:
         } catch (error) {
             console.error('Broadcast error:', error);
             alert(`❌ Broadcast failed\n\n${error.message}`);
+        }
+    }
+
+    async deleteAllUsers() {
+        const confirmMsg = `⚠️ DANGER: DELETE ALL USERS ⚠️
+
+This will permanently delete ALL users except:
+• furkan_akaslan@hotmail.com (CEO)
+
+This action CANNOT be undone!
+
+Type "DELETE ALL" to confirm:`;
+        
+        const confirmation = prompt(confirmMsg);
+        
+        if (confirmation !== 'DELETE ALL') {
+            if (confirmation !== null) {
+                alert('❌ Deletion cancelled - incorrect confirmation text');
+            }
+            return;
+        }
+
+        // Double confirmation
+        const doubleConfirm = confirm('🚨 FINAL WARNING 🚨\n\nAre you ABSOLUTELY SURE?\n\nThis will delete ALL users permanently!');
+        
+        if (!doubleConfirm) {
+            alert('❌ Deletion cancelled');
+            return;
+        }
+
+        try {
+            const session = JSON.parse(sessionStorage.getItem('adminSession'));
+            
+            const response = await fetch('/api/admin-delete-users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    adminEmail: session.email,
+                    adminPassword: session.password
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                alert(`✅ DELETION COMPLETE\n\nDeleted: ${data.deleted_count} users\nPreserved: CEO account\n\nDeleted users:\n${data.deleted_users.slice(0, 10).join('\n')}${data.deleted_users.length > 10 ? '\n...' : ''}`);
+                
+                // Reload users table
+                this.loadUsersData();
+            } else {
+                throw new Error(data.error || 'Deletion failed');
+            }
+        } catch (error) {
+            console.error('Delete users error:', error);
+            alert(`❌ Deletion failed\n\n${error.message}`);
         }
     }
 }
