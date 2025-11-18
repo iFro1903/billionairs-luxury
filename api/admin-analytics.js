@@ -32,7 +32,11 @@ export default async function handler(req) {
     }
 
     try {
-        const sql = neon(process.env.DATABASE_URL);
+        const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
+        if (!dbUrl) {
+            throw new Error('Database URL not configured');
+        }
+        const sql = neon(dbUrl);
 
         // Conversion Rate
         const totalUsers = await sql`SELECT COUNT(*) as count FROM users`;

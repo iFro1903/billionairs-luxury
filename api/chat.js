@@ -8,7 +8,14 @@ export const config = {
 export default async function handler(req) {
     // Rate Limiting: 100 Requests/Minute
     return withRateLimit(req, async () => {
-        const sql = neon(process.env.DATABASE_URL);
+        const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
+        if (!dbUrl) {
+            return new Response(JSON.stringify({ error: 'Database not configured' }), {
+                status: 500,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }
+        const sql = neon(dbUrl);
 
         try {
             // GET: Load messages
