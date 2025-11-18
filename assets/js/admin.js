@@ -1110,9 +1110,9 @@ STEPS:
                     
                     <div class="analytics-card">
                         <h4>🏆 Top Customer</h4>
-                        <p>${analytics.customers[0]?.user_email || 'N/A'}</p>
-                        <p>Spent: CHF ${(analytics.customers[0]?.total_spent / 100 || 0).toLocaleString()}</p>
-                        <p>Payments: ${analytics.customers[0]?.payment_count || 0}</p>
+                        <p>${analytics.topCustomers?.[0]?.email || analytics.customers?.[0]?.user_email || 'N/A'}</p>
+                        <p>Spent: CHF ${((analytics.topCustomers?.[0]?.totalSpent || analytics.customers?.[0]?.total_spent || 0) / 100).toLocaleString()}</p>
+                        <p>Payments: ${analytics.topCustomers?.[0]?.payments || analytics.customers?.[0]?.payment_count || 0}</p>
                     </div>
                 </div>
             `;
