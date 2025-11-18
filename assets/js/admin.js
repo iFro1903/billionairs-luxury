@@ -114,6 +114,14 @@ class AdminPanel {
             });
         }
 
+        // Setup create test users button
+        const createTestBtn = document.getElementById('createTestUsersBtn');
+        if (createTestBtn) {
+            createTestBtn.addEventListener('click', () => {
+                this.createTestUsers();
+            });
+        }
+
         // Check emergency mode status
         this.checkEmergencyMode();
 
@@ -1364,6 +1372,35 @@ Type "DELETE ALL" to confirm:`;
         } catch (error) {
             console.error('Unblock user error:', error);
             alert(`❌ Unblock failed\n\n${error.message}`);
+        }
+    }
+
+    async createTestUsers() {
+        if (!confirm('👥 Create 2 test users?\n\nEmails:\n- test1@billionairs.luxury\n- test2@billionairs.luxury\n\nPassword: test123')) {
+            return;
+        }
+
+        try {
+            const session = JSON.parse(sessionStorage.getItem('adminSession'));
+            const response = await fetch('/api/create-test-users', {
+                method: 'GET',
+                headers: {
+                    'x-admin-email': session.email,
+                    'x-admin-password': session.password
+                }
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                alert(`✅ ${data.message}\n\n${data.users.join('\n')}\n\nPassword: test123`);
+                this.loadUsersData();
+            } else {
+                throw new Error(data.error || 'Creation failed');
+            }
+        } catch (error) {
+            console.error('Create test users error:', error);
+            alert(`❌ Creation failed\n\n${error.message}`);
         }
     }
 }
