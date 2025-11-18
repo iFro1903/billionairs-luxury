@@ -41,8 +41,7 @@ export default async function handler(req) {
                     const messages = await sql`
                         SELECT username, message, created_at, file_url, file_name, file_type, email, id
                         FROM chat_messages
-                        ORDER BY created_at DESC
-                        LIMIT 1000
+                        ORDER BY created_at ASC
                     `;
 
                     return new Response(JSON.stringify({ 
