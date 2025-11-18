@@ -19,17 +19,26 @@ export default async function handler(req) {
 
             // CEO request - no email needed
             if (isCEORequest) {
-                const messages = await sql`
-                    SELECT username, message, created_at, file_url, file_name, file_type, email, id
-                    FROM chat_messages
-                    ORDER BY created_at DESC
-                    LIMIT 1000
-                `;
+                try {
+                    const messages = await sql`
+                        SELECT username, message, created_at, file_url, file_name, file_type, email, id
+                        FROM chat_messages
+                        ORDER BY created_at DESC
+                        LIMIT 1000
+                    `;
 
-                return new Response(JSON.stringify({ messages }), {
-                    status: 200,
-                    headers: { 'Content-Type': 'application/json' }
-                });
+                    return new Response(JSON.stringify({ messages: messages || [] }), {
+                        status: 200,
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                } catch (dbError) {
+                    console.error('Chat CEO query error:', dbError);
+                    // Return empty messages if table doesn't exist yet
+                    return new Response(JSON.stringify({ messages: [] }), {
+                        status: 200,
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                }
             }
 
             if (!email) {
