@@ -10,9 +10,9 @@ export default async function handler(req) {
     return withRateLimit(req, async () => {
         const sql = neon(process.env.DATABASE_URL);
 
-    try {
-        // GET: Load messages
-        if (req.method === 'GET') {
+        try {
+            // GET: Load messages
+            if (req.method === 'GET') {
             const url = new URL(req.url);
             const email = url.searchParams.get('email');
             const isCEORequest = url.searchParams.get('ceo') === 'true';
