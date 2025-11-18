@@ -1083,29 +1083,29 @@ STEPS:
                     
                     <div class="analytics-card">
                         <h4>👥 User Engagement</h4>
-                        <p>Active Users (30d): ${analytics.users.activeUsers}</p>
-                        <p>New Registrations (7d): ${analytics.users.recentRegistrations}</p>
-                        <p>2FA Adoption: ${analytics.security.twoFactorAdoptionRate}%</p>
+                        <p>Active Users (30d): ${analytics.users?.activeUsers || 0}</p>
+                        <p>New Registrations (7d): ${analytics.users?.recentRegistrations || 0}</p>
+                        <p>2FA Adoption: ${analytics.twoFA?.adoptionRate || analytics.security?.twoFactorAdoptionRate || 0}%</p>
                     </div>
                     
                     <div class="analytics-card">
                         <h4>💬 Chat Activity</h4>
-                        <p>Total Messages: ${analytics.chat.totalMessages}</p>
-                        <p>Unique Users: ${analytics.chat.uniqueUsers}</p>
-                        <p>Unread: ${analytics.chat.unreadMessages}</p>
+                        <p>Total Messages: ${analytics.chat?.total_messages || 0}</p>
+                        <p>Unique Users: ${analytics.chat?.unique_users || 0}</p>
+                        <p>Unread: ${analytics.chat?.unread_messages || 0}</p>
                     </div>
                     
                     <div class="analytics-card">
                         <h4>🔔 Push Notifications</h4>
-                        <p>Total Subscriptions: ${analytics.pushNotifications.totalSubscriptions}</p>
-                        <p>Active: ${analytics.pushNotifications.activeSubscriptions}</p>
+                        <p>Total Subscriptions: ${analytics.pushNotifications?.total || 0}</p>
+                        <p>Active: ${analytics.pushNotifications?.active || 0}</p>
                     </div>
                     
                     <div class="analytics-card">
                         <h4>🔄 Refunds</h4>
-                        <p>Total Refunds: ${analytics.refunds.totalRefunds}</p>
-                        <p>Amount: CHF ${(analytics.refunds.totalRefundAmount / 100).toLocaleString()}</p>
-                        <p>Rate: ${analytics.refunds.refundRate}%</p>
+                        <p>Total Refunds: ${analytics.refunds?.total_refunds || 0}</p>
+                        <p>Amount: CHF ${((analytics.refunds?.refunded_amount || 0) / 100).toLocaleString()}</p>
+                        <p>Rate: ${analytics.refunds?.refundRate || 0}%</p>
                     </div>
                     
                     <div class="analytics-card">
