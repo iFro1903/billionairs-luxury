@@ -19,26 +19,21 @@ export default async function handler(req) {
         }
         const sql = neon(dbUrl);
 
-        // Get all paid users
-        let payments = [];
-        try {
-            payments = await sql`
-                SELECT 
-                    email,
-                    name,
-                    created_at,
-                    payment_method,
-                    payment_status
-                FROM users
-                WHERE has_paid = true
-                ORDER BY created_at DESC
-            `;
-        } catch (e) {
-            console.log('Users table error:', e.message);
-        }
+        // Get all paid users (our payment records)
+        const payments = await sql`
+            SELECT 
+                email,
+                name,
+                created_at,
+                payment_method,
+                payment_status
+            FROM users
+            WHERE has_paid = true
+            ORDER BY created_at DESC
+        `;
 
         // Calculate stats
-        const totalRevenue = payments.length * 499999;
+        const totalRevenue = payments.length * 499999; // CHF 499,999 per user
         const stripeCount = payments.filter(p => 
             p.payment_method === 'stripe' || p.payment_method === 'card'
         ).length;
@@ -49,7 +44,7 @@ export default async function handler(req) {
             p.payment_method === 'paypal'
         ).length;
 
-        // Format payments
+        // Format payments for display
         const formattedPayments = payments.map(p => ({
             email: p.email,
             name: p.name || 'N/A',
@@ -75,7 +70,6 @@ export default async function handler(req) {
         console.error('Admin payments error:', error);
         return new Response(JSON.stringify({ 
             error: 'Failed to load payments',
-            message: error.message,
             payments: [],
             totalRevenue: 0,
             stripeCount: 0,
@@ -83,7 +77,7 @@ export default async function handler(req) {
             paypalCount: 0,
             totalPayments: 0
         }), {
-            status: 200,
+            status: 500,
             headers: { 'Content-Type': 'application/json' }
         });
     }

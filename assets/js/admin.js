@@ -1076,9 +1076,9 @@ STEPS:
                 <div class="analytics-grid">
                     <div class="analytics-card">
                         <h4>💰 Revenue Statistics</h4>
-                        <p>Total Revenue: CHF ${analytics.revenue.totalRevenue.toLocaleString()}</p>
-                        <p>Average Payment: CHF ${analytics.revenue.avgPayment.toLocaleString()}</p>
-                        <p>Conversion Rate: ${analytics.conversion.conversionRate}%</p>
+                        <p>Total Revenue: CHF ${(analytics.revenue?.total_revenue || 0).toLocaleString()}</p>
+                        <p>Average Payment: CHF ${(analytics.revenue?.avg_payment || 0).toLocaleString()}</p>
+                        <p>Conversion Rate: ${analytics.conversion?.conversionRate || 0}%</p>
                     </div>
                     
                     <div class="analytics-card">
