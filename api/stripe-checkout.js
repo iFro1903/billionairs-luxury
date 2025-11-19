@@ -155,7 +155,7 @@ module.exports = async (req, res) => {
             name: 'BILLIONAIRS Exclusive Access',
             description: 'Lifetime access to the exclusive BILLIONAIRS platform'
           },
-          unit_amount: 50000000  // 500,000 CHF (in cents)
+          unit_amount: 10  // 0.10 CHF (10 Rappen) - TEST MODE (Display still shows 500,000 CHF)
         },
         quantity: 1
       }],
