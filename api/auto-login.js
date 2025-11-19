@@ -107,8 +107,7 @@ module.exports = async (req, res) => {
                 id: user.id,
                 email: user.email,
                 memberId: user.member_id,
-                firstName: user.first_name,
-                lastName: user.last_name,
+                fullName: user.full_name,
                 paymentStatus: user.payment_status,
                 emailVerified: user.email_verified,
                 loginStreak: user.login_streak,
@@ -127,6 +126,5 @@ module.exports = async (req, res) => {
         });
     } finally {
         if (client) client.release();
-        await pool.end();
     }
 };
