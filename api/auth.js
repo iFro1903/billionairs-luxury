@@ -126,13 +126,14 @@ export default async function handler(req, res) {
                 return res.status(400).json({ success: false, message: 'Password must be at least 8 characters' });
             }
 
-            // Create new user with first and last name
+            // Create new user with full name
             const hashedPassword = await hashPassword(password);
             const memberId = generateMemberId();
+            const fullName = `${firstName || ''} ${lastName || ''}`.trim();
             
             await pool.query(
-                'INSERT INTO users (email, password_hash, member_id, payment_status, first_name, last_name) VALUES ($1, $2, $3, $4, $5, $6)',
-                [email, hashedPassword, memberId, 'pending', firstName || '', lastName || '']
+                'INSERT INTO users (email, password_hash, member_id, payment_status, full_name) VALUES ($1, $2, $3, $4, $5)',
+                [email, hashedPassword, memberId, 'pending', fullName || null]
             );
 
             await pool.end();
@@ -173,7 +174,7 @@ export default async function handler(req, res) {
 
             // Get user from database
             const userResult = await pool.query(
-                'SELECT id, email, password_hash, member_id, payment_status, first_name, last_name FROM users WHERE email = $1',
+                'SELECT id, email, password_hash, member_id, payment_status, full_name FROM users WHERE email = $1',
                 [email]
             );
             
@@ -212,8 +213,7 @@ export default async function handler(req, res) {
                     email: user.email,
                     memberId: user.member_id,
                     paymentStatus: user.payment_status,
-                    firstName: user.first_name || '',
-                    lastName: user.last_name || ''
+                    fullName: user.full_name || ''
                 }
             });
         }
@@ -226,11 +226,11 @@ export default async function handler(req, res) {
             }
 
             // Get session from database
+            // Get session from database
             const sessionResult = await pool.query(
-                'SELECT s.expires_at, u.id, u.email, u.member_id, u.payment_status, u.first_name, u.last_name FROM sessions s JOIN users u ON s.user_id = u.id WHERE s.token = $1',
+                'SELECT s.expires_at, u.id, u.email, u.member_id, u.payment_status, u.full_name FROM sessions s JOIN users u ON s.user_id = u.id WHERE s.token = $1',
                 [token]
             );
-            
             if (sessionResult.rows.length === 0) {
                 await pool.end();
                 return res.status(401).json({ success: false, message: 'Invalid session' });
@@ -252,8 +252,7 @@ export default async function handler(req, res) {
                     email: session.email,
                     memberId: session.member_id,
                     paymentStatus: session.payment_status,
-                    firstName: session.first_name || '',
-                    lastName: session.last_name || ''
+                    fullName: session.full_name || ''
                 }
             });
         }
