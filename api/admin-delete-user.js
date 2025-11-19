@@ -24,10 +24,10 @@ module.exports = async (req, res) => {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { userId } = req.body;
+    const { email } = req.body;
 
-    if (!userId) {
-        return res.status(400).json({ error: 'User ID required' });
+    if (!email) {
+        return res.status(400).json({ error: 'Email required' });
     }
 
     const pool = getPool();
@@ -36,14 +36,14 @@ module.exports = async (req, res) => {
     try {
         client = await pool.connect();
 
-        // Get user email before deletion for logging
-        const userResult = await client.query('SELECT email FROM users WHERE id = $1', [userId]);
+        // Get user ID first
+        const userResult = await client.query('SELECT id FROM users WHERE email = $1', [email]);
         
         if (userResult.rows.length === 0) {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        const userEmail = userResult.rows[0].email;
+        const userId = userResult.rows[0].id;
 
         // Delete related data first (foreign key constraints)
         await client.query('DELETE FROM sessions WHERE user_id = $1', [userId]);
@@ -51,9 +51,9 @@ module.exports = async (req, res) => {
         await client.query('DELETE FROM chat_messages WHERE user_id = $1', [userId]);
         
         // Delete the user
-        await client.query('DELETE FROM users WHERE id = $1', [userId]);
+        await client.query('DELETE FROM users WHERE email = $1', [email]);
 
-        console.log(`✅ User deleted: ${userEmail} (ID: ${userId})`);
+        console.log(`✅ User deleted: ${email} (ID: ${userId})`);
 
         res.status(200).json({
             success: true,
