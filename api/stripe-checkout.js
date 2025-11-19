@@ -58,10 +58,13 @@ module.exports = async (req, res) => {
 
       // Create user account in database
       const pool = getPool();
+      let client;
       
       try {
+        client = await pool.connect();
+        
         // Check if user already exists
-        const existingUser = await pool.query('SELECT id, payment_status FROM users WHERE email = $1', [email]);
+        const existingUser = await client.query('SELECT id, payment_status FROM users WHERE email = $1', [email]);
         
         if (existingUser.rows.length > 0) {
           // User exists - just update their info and continue to payment
@@ -81,13 +84,12 @@ module.exports = async (req, res) => {
           
           // Update user info including password (in case they changed anything)
           const hashedPassword = await hashPassword(password);
-          await pool.query(
+          await client.query(
             'UPDATE users SET password_hash = $1, first_name = COALESCE($2, first_name), last_name = COALESCE($3, last_name), phone = COALESCE($4, phone), company = COALESCE($5, company) WHERE id = $6',
             [hashedPassword, firstName || null, lastName || null, phone || null, company || null, userId]
           );
           
-          await pool.end();
-          // Continue to payment checkout - don't block existing users from paying!
+          console.log(`✅ Updated existing user: ${email}`);
         } else {
           // Create new user with pending payment status
           const hashedPassword = await hashPassword(password);
@@ -102,13 +104,12 @@ module.exports = async (req, res) => {
             lastName = nameParts.slice(1).join(' ') || '';
           }
           
-          await pool.query(
-            'INSERT INTO users (email, password_hash, member_id, payment_status, first_name, last_name, phone, company) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+          const insertResult = await client.query(
+            'INSERT INTO users (email, password_hash, member_id, payment_status, first_name, last_name, phone, company) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
             [email, hashedPassword, memberId, 'pending', firstName, lastName, phone || null, company || null]
           );
 
-          await pool.end();
-          console.log(`✅ New user account created via Stripe Checkout: ${email} (${memberId}) - ${firstName} ${lastName}`);
+          console.log(`✅ New user account created via Stripe Checkout: ${email} (${memberId}) - ${firstName} ${lastName} - ID: ${insertResult.rows[0].id}`);
           
           // Send welcome email with credentials
           try {
@@ -139,9 +140,27 @@ module.exports = async (req, res) => {
         }
 
       } catch (dbError) {
-        console.error('Database error:', dbError);
-        await pool.end();
-        // Continue anyway - account creation failure shouldn't block payment
+        console.error('❌ Database error during user creation:', dbError);
+        if (client) {
+          try {
+            client.release();
+          } catch (releaseError) {
+            console.error('Error releasing client:', releaseError);
+          }
+        }
+        return res.status(500).json({ 
+          error: 'Database error',
+          message: 'Failed to create user account. Please try again or contact support.',
+          details: dbError.message
+        });
+      } finally {
+        if (client) {
+          try {
+            client.release();
+          } catch (releaseError) {
+            console.error('Error releasing client in finally:', releaseError);
+          }
+        }
       }
     }
 
