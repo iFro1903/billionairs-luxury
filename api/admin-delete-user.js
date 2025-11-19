@@ -70,6 +70,5 @@ module.exports = async (req, res) => {
         if (client) {
             client.release();
         }
-        await pool.end();
     }
 };
