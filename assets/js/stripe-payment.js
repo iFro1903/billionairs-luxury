@@ -1,8 +1,8 @@
 // Stripe Configuration for BILLIONAIRS - 500K CHF (Price revealed only at checkout)
 class StripePaymentProcessor {
     constructor() {
-        // Initialize Stripe with your test key
-        this.stripe = Stripe('pk_test_51SJwwa8C64nNqkP2Qk3kpiNiNt167qAvG3i1ra3RGryHjEifqgqyOJxdToYzHnMuEMEGcMxUJP9Qyi8ro6sL4xcS007RY811CQ');
+        // Initialize Stripe with LIVE key - PRODUCTION MODE
+        this.stripe = Stripe('pk_live_51SJwwF7Fzwybk1NyPjyrV9qkZvmWDkCqsdrmotHypJZnhEIUtnxBea6tV9MMOVkllj9po7RtSIcSwY8JEDQcTPGB00BqlA7hkz');
         this.priceId = 'price_1SL9Be7Fzwybk1NyQpd06DhZ'; // 500,000 CHF per year
         this.isProcessing = false;
         
