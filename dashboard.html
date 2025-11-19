@@ -416,6 +416,23 @@
 
     <script src="assets/js/auth.js"></script>
     <script>
+        // Define handleLogout globally (needed for logout button)
+        window.handleLogout = async function() {
+            try {
+                if (window.authManager && typeof window.authManager.logout === 'function') {
+                    await window.authManager.logout();
+                } else {
+                    localStorage.removeItem('billionairs_token');
+                    localStorage.removeItem('billionairs_user');
+                    sessionStorage.clear();
+                }
+                window.location.href = '/';
+            } catch (error) {
+                console.error('Logout error:', error);
+                window.location.href = '/';
+            }
+        };
+
         // Initialize i18n first to set the correct language
         async function initI18n() {
             // Check for language from payment flow
