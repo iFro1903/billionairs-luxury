@@ -73,20 +73,11 @@ module.exports = async (req, res) => {
           
           console.log(`✅ Existing user attempting payment: ${email} (current status: ${currentStatus})`);
           
-          // Split fullName into first_name and last_name
-          let firstName = '';
-          let lastName = '';
-          if (fullName) {
-            const nameParts = fullName.trim().split(' ');
-            firstName = nameParts[0] || '';
-            lastName = nameParts.slice(1).join(' ') || '';
-          }
-          
           // Update user info including password (in case they changed anything)
           const hashedPassword = await hashPassword(password);
           await client.query(
-            'UPDATE users SET password_hash = $1, first_name = COALESCE($2, first_name), last_name = COALESCE($3, last_name), phone = COALESCE($4, phone), company = COALESCE($5, company) WHERE id = $6',
-            [hashedPassword, firstName || null, lastName || null, phone || null, company || null, userId]
+            'UPDATE users SET password_hash = $1, full_name = COALESCE($2, full_name), phone = COALESCE($3, phone), company = COALESCE($4, company) WHERE id = $5',
+            [hashedPassword, fullName || null, phone || null, company || null, userId]
           );
           
           console.log(`✅ Updated existing user: ${email}`);
@@ -95,21 +86,12 @@ module.exports = async (req, res) => {
           const hashedPassword = await hashPassword(password);
           const memberId = generateMemberId();
           
-          // Split fullName into first_name and last_name
-          let firstName = '';
-          let lastName = '';
-          if (fullName) {
-            const nameParts = fullName.trim().split(' ');
-            firstName = nameParts[0] || '';
-            lastName = nameParts.slice(1).join(' ') || '';
-          }
-          
           const insertResult = await client.query(
-            'INSERT INTO users (email, password_hash, member_id, payment_status, first_name, last_name, phone, company) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id',
-            [email, hashedPassword, memberId, 'pending', firstName, lastName, phone || null, company || null]
+            'INSERT INTO users (email, password_hash, member_id, payment_status, full_name, phone, company) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id',
+            [email, hashedPassword, memberId, 'pending', fullName || null, phone || null, company || null]
           );
 
-          console.log(`✅ New user account created via Stripe Checkout: ${email} (${memberId}) - ${firstName} ${lastName} - ID: ${insertResult.rows[0].id}`);
+          console.log(`✅ New user account created via Stripe Checkout: ${email} (${memberId}) - ${fullName} - ID: ${insertResult.rows[0].id}`);
           
           // Send welcome email with credentials
           try {
