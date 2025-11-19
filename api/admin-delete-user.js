@@ -45,10 +45,24 @@ module.exports = async (req, res) => {
 
         const userId = userResult.rows[0].id;
 
-        // Delete related data first (foreign key constraints)
-        await client.query('DELETE FROM sessions WHERE user_id = $1', [userId]);
-        await client.query('DELETE FROM payments WHERE user_id = $1', [userId]);
-        await client.query('DELETE FROM chat_messages WHERE user_id = $1', [userId]);
+        // Delete related data first (check if tables exist)
+        try {
+            await client.query('DELETE FROM sessions WHERE user_id = $1', [userId]);
+        } catch (e) {
+            console.log('Sessions delete skipped:', e.message);
+        }
+        
+        try {
+            await client.query('DELETE FROM payments WHERE user_id = $1', [userId]);
+        } catch (e) {
+            console.log('Payments delete skipped:', e.message);
+        }
+        
+        try {
+            await client.query('DELETE FROM chat_messages WHERE user_id = $1', [userId]);
+        } catch (e) {
+            console.log('Chat messages delete skipped:', e.message);
+        }
         
         // Delete the user
         await client.query('DELETE FROM users WHERE email = $1', [email]);
