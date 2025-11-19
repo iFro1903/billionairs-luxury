@@ -70,8 +70,6 @@ async function installApp() {
     // DISABLED - User requested removal
     return;
 }
-*/
-    }
     
     // Clear deferred prompt
     deferredPrompt = null;

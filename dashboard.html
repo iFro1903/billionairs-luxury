@@ -70,8 +70,6 @@
                 })
                 .catch(err => console.error('Block check failed:', err));
         }
-            })
-            .catch(err => console.log('Emergency check:', err));
     </script>
     
     <style>
@@ -540,7 +538,6 @@
             }
             
             // Check if user just completed a payment (came from payment page or stripe)
-            const sessionId = urlParams.get('session_id');
             const justPaid = urlParams.get('payment') === 'success' || 
                             sessionId || 
                             sessionStorage.getItem('paymentInitiated') === 'true';
