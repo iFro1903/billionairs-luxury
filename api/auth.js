@@ -192,7 +192,7 @@ export default async function handler(req, res) {
             }
 
             // Update last login
-            await pool.query('UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = $1', [user.id]);
+            await pool.query('UPDATE users SET last_seen = CURRENT_TIMESTAMP WHERE id = $1', [user.id]);
 
             // Create session
             const sessionToken = generateToken();
