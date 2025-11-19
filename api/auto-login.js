@@ -58,7 +58,22 @@ module.exports = async (req, res) => {
 
         const user = userResult.rows[0];
 
-        // Check if user has paid (should be set by stripe webhook or checkout)
+        // If user comes from Stripe checkout (has sessionId), mark as paid
+        // Stripe only redirects to success_url if payment was successful
+        if (sessionId && user.payment_status !== 'paid') {
+            console.log(`✅ Auto-updating payment status to 'paid' for ${email} after successful Stripe checkout`);
+            
+            await client.query(
+                'UPDATE users SET payment_status = $1, has_paid = $2, payment_method = $3 WHERE id = $4',
+                ['paid', true, 'stripe', user.id]
+            );
+            
+            // Update user object for token generation
+            user.payment_status = 'paid';
+            user.has_paid = true;
+        }
+
+        // Check if user has paid
         if (user.payment_status !== 'paid') {
             return res.status(403).json({ 
                 success: false,
