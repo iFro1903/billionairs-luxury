@@ -95,7 +95,7 @@ module.exports = async (req, res) => {
 
         // Update last login
         await client.query(
-            'UPDATE users SET last_login = NOW() WHERE id = $1',
+            'UPDATE users SET last_seen = NOW() WHERE id = $1',
             [user.id]
         );
 
