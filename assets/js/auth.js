@@ -4,7 +4,8 @@
 class AuthManager {
     constructor() {
         this.token = localStorage.getItem('billionairs_token');
-        this.user = null;
+        const storedUser = localStorage.getItem('billionairs_user');
+        this.user = storedUser ? JSON.parse(storedUser) : null;
     }
 
     // Register new user
