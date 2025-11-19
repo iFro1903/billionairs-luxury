@@ -239,48 +239,96 @@ ${wallet ? '✓ Refund address saved' : '💡 Tip: Add your wallet address for f
         // For wire transfers, we collect information and send bank details
         console.log('🏛️ Processing wire transfer request...');
         
-        // Collect form data
-        const fullName = document.getElementById('wireFullName')?.value;
-        const email = document.getElementById('wireEmail')?.value;
-        const phone = document.getElementById('wirePhone')?.value;
-        const company = document.getElementById('wireCompany')?.value;
+        // Collect form data from common fields
+        const firstName = document.getElementById('customerFirstName')?.value || '';
+        const lastName = document.getElementById('customerLastName')?.value || '';
+        const fullName = `${firstName} ${lastName}`.trim();
+        const email = document.getElementById('customerEmail')?.value;
+        const phone = document.getElementById('customerPhone')?.value;
+        const company = document.getElementById('customerCompany')?.value || '';
+        const password = document.getElementById('customerPassword')?.value;
+        const passwordConfirm = document.getElementById('customerPasswordConfirm')?.value;
 
-        if (!fullName || !email || !phone) {
-            alert('Please fill in all required fields for wire transfer');
+        // Validate required fields
+        if (!fullName || !email || !phone || !password) {
+            alert('Please fill in all required fields for wire transfer (First Name, Last Name, Email, Phone, Password)');
             return;
         }
 
-        // In production, this would send data to your server
-        const wireTransferData = {
-            ...paymentData,
-            customer: {
-                fullName,
-                email,
-                phone,
-                company
-            }
-        };
+        // Validate password length
+        if (password.length < 8) {
+            alert('Password must be at least 8 characters long');
+            return;
+        }
 
-        console.log('Wire transfer request:', wireTransferData);
-        
-        // Show confirmation message
-        alert(`✓ Wire Transfer Request Received
+        // Validate password confirmation
+        if (password !== passwordConfirm) {
+            alert('Passwords do not match. Please check and try again.');
+            return;
+        }
+
+        try {
+            // Show loading indicator
+            const loadingMsg = document.createElement('div');
+            loadingMsg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.9);color:#fff;padding:2rem;border-radius:10px;z-index:10000;text-align:center;';
+            loadingMsg.innerHTML = '<div style="font-size:2rem;margin-bottom:1rem;">⏳</div><div>Processing wire transfer request...</div>';
+            document.body.appendChild(loadingMsg);
+
+            // Call wire transfer API
+            const response = await fetch('/api/wire-transfer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    fullName,
+                    email,
+                    phone,
+                    company,
+                    password
+                })
+            });
+
+            const result = await response.json();
+            
+            // Remove loading indicator
+            document.body.removeChild(loadingMsg);
+
+            if (response.ok) {
+                // Success - show bank details
+                alert(`✓ Wire Transfer Details Sent!
 
 Thank you, ${fullName}!
 
-You will receive our bank account details at:
-${email}
+📧 Check your email: ${email}
 
-Amount: 500,000 CHF
+You will receive:
+• Complete bank account details
+• Reference number for your transfer  
+• Step-by-step payment instructions
 
-Our team will contact you within 1 hour with:
-• Bank account details
-• Transfer reference number
-• Payment instructions
+Amount: CHF 500,000.00
 
-Please keep your phone ${phone} available.`);
+⏱️ Access granted within 24 hours of receiving your transfer.
 
-        return wireTransferData;
+Please keep your phone ${phone} available for verification.`);
+
+                // Redirect to success page or dashboard
+                setTimeout(() => {
+                    window.location.href = '/login.html?registered=true';
+                }, 3000);
+            } else {
+                // Error - show message
+                alert(`❌ Error: ${result.message || 'Failed to process wire transfer request'}\n\nPlease try again or contact support.`);
+            }
+
+            return result;
+
+        } catch (error) {
+            console.error('Wire transfer error:', error);
+            alert('❌ Network error. Please check your connection and try again.');
+            throw error;
+        }
     }
 }
 
