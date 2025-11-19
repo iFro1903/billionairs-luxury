@@ -334,7 +334,7 @@
     <div id="particles-js"></div>
     
     <div class="dashboard-container">
-        <button class="logout-button" onclick="handleLogout()">Logout</button>
+        <button class="logout-button" onclick="(async () => { await window.authManager.logout(); window.location.href = '/'; })()">Logout</button>
 
         <div class="dashboard-content">
             <div class="dashboard-header">
