@@ -101,14 +101,14 @@ export default async function handler(req, res) {
         // REGISTER
         if (action === 'register') {
             if (!email || !password) {
-                await pool.end();
+                
                 return res.status(400).json({ success: false, message: 'Email and password required' });
             }
 
             // Validate email format
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
-                await pool.end();
+                
                 return res.status(400).json({ success: false, message: 'Invalid email format' });
             }
 
@@ -116,13 +116,13 @@ export default async function handler(req, res) {
             const existingUser = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
             
             if (existingUser.rows.length > 0) {
-                await pool.end();
+                
                 return res.status(400).json({ success: false, message: 'User already exists' });
             }
 
             // Validate password strength
             if (password.length < 8) {
-                await pool.end();
+                
                 return res.status(400).json({ success: false, message: 'Password must be at least 8 characters' });
             }
 
@@ -136,7 +136,7 @@ export default async function handler(req, res) {
                 [email, hashedPassword, memberId, 'pending', fullName || null]
             );
 
-            await pool.end();
+            
             console.log(`✅ New user registered: ${email} (${memberId}) - ${firstName} ${lastName}`);
 
             // Send Welcome Email with credentials
@@ -168,7 +168,7 @@ export default async function handler(req, res) {
         // LOGIN
         if (action === 'login') {
             if (!email || !password) {
-                await pool.end();
+                
                 return res.status(400).json({ success: false, message: 'Email and password required' });
             }
 
@@ -179,7 +179,7 @@ export default async function handler(req, res) {
             );
             
             if (userResult.rows.length === 0) {
-                await pool.end();
+                
                 return res.status(401).json({ success: false, message: 'Invalid credentials' });
             }
 
@@ -187,7 +187,7 @@ export default async function handler(req, res) {
             const isValidPassword = await verifyPassword(password, user.password_hash);
             
             if (!isValidPassword) {
-                await pool.end();
+                
                 return res.status(401).json({ success: false, message: 'Invalid credentials' });
             }
 
@@ -203,7 +203,7 @@ export default async function handler(req, res) {
                 [sessionToken, user.id, expiresAt]
             );
 
-            await pool.end();
+            
             console.log(`✅ User logged in: ${email}`);
 
             return res.status(200).json({
@@ -221,7 +221,7 @@ export default async function handler(req, res) {
         // VERIFY SESSION
         if (action === 'verify') {
             if (!token) {
-                await pool.end();
+                
                 return res.status(401).json({ success: false, message: 'No token provided' });
             }
 
@@ -232,7 +232,7 @@ export default async function handler(req, res) {
                 [token]
             );
             if (sessionResult.rows.length === 0) {
-                await pool.end();
+                
                 return res.status(401).json({ success: false, message: 'Invalid session' });
             }
 
@@ -241,11 +241,11 @@ export default async function handler(req, res) {
             // Check if session expired
             if (new Date() > new Date(session.expires_at)) {
                 await pool.query('DELETE FROM sessions WHERE token = $1', [token]);
-                await pool.end();
+                
                 return res.status(401).json({ success: false, message: 'Session expired' });
             }
 
-            await pool.end();
+            
             return res.status(200).json({
                 success: true,
                 user: {
@@ -262,14 +262,14 @@ export default async function handler(req, res) {
             if (token) {
                 await pool.query('DELETE FROM sessions WHERE token = $1', [token]);
             }
-            await pool.end();
+            
             return res.status(200).json({ success: true, message: 'Logged out successfully' });
         }
 
         // UPDATE PAYMENT STATUS (called after successful payment)
         if (action === 'update_payment') {
             if (!token) {
-                await pool.end();
+                
                 return res.status(401).json({ success: false, message: 'Unauthorized' });
             }
 
@@ -280,7 +280,7 @@ export default async function handler(req, res) {
             );
             
             if (sessionResult.rows.length === 0) {
-                await pool.end();
+                
                 return res.status(401).json({ success: false, message: 'Invalid session' });
             }
 
@@ -292,7 +292,7 @@ export default async function handler(req, res) {
                 ['paid', user.id]
             );
 
-            await pool.end();
+            
             console.log(`💰 Payment confirmed for: ${user.email}`);
 
             return res.status(200).json({
@@ -306,13 +306,13 @@ export default async function handler(req, res) {
             });
         }
 
-        await pool.end();
+        
         return res.status(400).json({ success: false, message: 'Invalid action' });
 
     } catch (error) {
         console.error('Authentication Error:', error);
         try {
-            await pool.end();
+            
         } catch (e) {}
         return res.status(500).json({
             success: false,
