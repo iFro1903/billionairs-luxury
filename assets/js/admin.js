@@ -454,14 +454,18 @@ class AdminPanel {
                 body: JSON.stringify({ email })
             });
 
+            const data = await response.json();
+            
             if (response.ok) {
                 alert('User deleted successfully');
                 this.loadUsersData();
             } else {
-                alert('Failed to delete user');
+                console.error('Delete error:', data);
+                alert(`Failed to delete user: ${data.error}\nDetails: ${data.details || 'No details'}`);
             }
         } catch (error) {
             console.error('Error deleting user:', error);
+            alert(`Error: ${error.message}`);
         }
     }
 
