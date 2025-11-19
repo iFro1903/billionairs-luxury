@@ -1033,15 +1033,21 @@
                 return;
             }
             
-            // Prepare customer data
+            // Prepare customer data - API expects fullName
             const customerData = {
-                firstName,
-                lastName,
+                fullName: `${firstName} ${lastName}`.trim(),
                 email,
                 password,
                 phone,
                 company
             };
+            
+            console.log('💳 Stripe Checkout Data:', {
+                fullName: customerData.fullName,
+                email: customerData.email,
+                phone: customerData.phone,
+                amount: '500,000 CHF'
+            });
             
             if (window.stripeProcessor) {
                 window.stripeProcessor.createCheckoutSession('full', customerData);
@@ -1051,16 +1057,20 @@
             }
         } else if (methodType === 'wire') {
             console.log('🏦 Initiating Bank Wire Transfer...');
-            if (window.stripeProcessor) {
-                window.stripeProcessor.createWireTransferRequest();
+            if (window.paymentMethodSelector) {
+                window.paymentMethodSelector.handleWireTransfer();
             } else {
-                console.error('❌ Stripe processor not initialized');
+                console.error('❌ Payment system not initialized');
                 alert('Payment system initializing. Please try again in a moment.');
             }
         } else if (methodType === 'crypto') {
             console.log('🪙 Initiating Cryptocurrency Payment...');
-            // Show crypto currency selection modal directly
-            showCryptoSelectionModal();
+            if (window.paymentMethodSelector) {
+                window.paymentMethodSelector.handleCryptoPayment();
+            } else {
+                console.error('❌ Payment system not initialized');
+                alert('Payment system initializing. Please try again in a moment.');
+            }
         } else {
             alert(`${methodType.toUpperCase()} payment coming soon! Use Credit Card or Wire Transfer for now.`);
         }

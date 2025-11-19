@@ -185,13 +185,31 @@ class PaymentMethodSelector {
         // For crypto payments, we collect information and send wallet address
         console.log('₿ Processing crypto payment request...');
         
-        // Collect form data
-        const fullName = document.getElementById('cryptoFullName')?.value;
-        const email = document.getElementById('cryptoEmail')?.value;
-        const wallet = document.getElementById('cryptoWallet')?.value;
+        // Collect form data from common customer fields
+        const firstName = document.getElementById('customerFirstName')?.value || '';
+        const lastName = document.getElementById('customerLastName')?.value || '';
+        const fullName = `${firstName} ${lastName}`.trim();
+        const email = document.getElementById('customerEmail')?.value;
+        const phone = document.getElementById('customerPhone')?.value;
+        const company = document.getElementById('customerCompany')?.value || '';
+        const password = document.getElementById('customerPassword')?.value;
+        const passwordConfirm = document.getElementById('customerPasswordConfirm')?.value;
 
-        if (!fullName || !email) {
-            alert('Please fill in all required fields for crypto payment');
+        // Validate required fields
+        if (!fullName || !email || !phone || !password) {
+            alert('Please fill in all required fields for crypto payment (First Name, Last Name, Email, Phone, Password)');
+            return;
+        }
+
+        // Validate password length
+        if (password.length < 8) {
+            alert('Password must be at least 8 characters long');
+            return;
+        }
+
+        // Validate password confirmation
+        if (password !== passwordConfirm) {
+            alert('Passwords do not match. Please check and try again.');
             return;
         }
 
@@ -201,14 +219,20 @@ class PaymentMethodSelector {
             'usdt': 'Tether (USDT)'
         };
 
+        // Get selected crypto (default to BTC if not selected)
+        const selectedCrypto = this.selectedCrypto || 'btc';
+
         // In production, this would send data to your server
         const cryptoPaymentData = {
             ...paymentData,
             customer: {
                 fullName,
                 email,
-                wallet: wallet || 'Not provided'
-            }
+                phone,
+                company,
+                password
+            },
+            cryptocurrency: selectedCrypto
         };
 
         console.log('Crypto payment request:', cryptoPaymentData);
@@ -219,18 +243,18 @@ class PaymentMethodSelector {
 Thank you, ${fullName}!
 
 Payment Details:
-• Currency: ${cryptoNames[this.selectedCrypto]}
+• Currency: ${cryptoNames[selectedCrypto]}
 • Amount: 500,000 CHF
 
 You will receive via email at ${email}:
 • Crypto wallet address
-• Exact amount in ${cryptoNames[this.selectedCrypto]}
+• Exact amount in ${cryptoNames[selectedCrypto]}
 • Payment reference ID
 • Real-time exchange rate (valid for 30 minutes)
 
 ⚡ Fast processing: Access granted within 10-60 minutes after blockchain confirmation!
 
-${wallet ? '✓ Refund address saved' : '💡 Tip: Add your wallet address for faster refunds if needed'}`);
+💡 Note: Your account has been created. You can login at login.html after payment confirmation.`);
 
         return cryptoPaymentData;
     }
