@@ -7,6 +7,43 @@ export const config = {
     runtime: 'edge'
 };
 
+// Helper function to send payment confirmation email
+async function sendPaymentConfirmationEmail(email, userName, amount, currency, productName) {
+    try {
+        const emailApiUrl = process.env.VERCEL_URL 
+            ? `https://${process.env.VERCEL_URL}/api/email-service`
+            : 'https://billionairs-luxury.vercel.app/api/email-service';
+
+        const response = await fetch(emailApiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                to: email,
+                type: 'payment',
+                data: {
+                    userName: userName || email.split('@')[0],
+                    amount: amount,
+                    currency: currency,
+                    productName: productName || 'BILLIONAIRS Access'
+                }
+            })
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+            console.log(`✅ Payment confirmation email sent to: ${email}`);
+        } else {
+            console.error(`❌ Failed to send payment email to ${email}:`, result.error);
+        }
+        
+        return result;
+    } catch (error) {
+        console.error('Error sending payment confirmation email:', error);
+        return { success: false, error: error.message };
+    }
+}
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '');
 
 export default async function handler(req) {
@@ -67,12 +104,24 @@ export default async function handler(req) {
                                 stripe_session_id = ${session.id},
                                 payment_date = NOW()
                             WHERE email = ${email}
-                            RETURNING id, email, member_id
+                            RETURNING id, email, member_id, name
                         `;
 
                         if (result.length > 0) {
                             const user = result[0];
                             console.log(`✅ Payment updated for: ${user.email} (${user.member_id})`);
+                            
+                            // Send payment confirmation email
+                            const amount = (session.amount_total / 100).toFixed(2);
+                            const currency = session.currency?.toUpperCase() || 'EUR';
+                            
+                            await sendPaymentConfirmationEmail(
+                                user.email,
+                                user.name || user.email.split('@')[0],
+                                amount,
+                                currency,
+                                'BILLIONAIRS Exclusive Access'
+                            );
                         } else {
                             console.error(`⚠️ User not found: ${email}`);
                         }
