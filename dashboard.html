@@ -447,7 +447,24 @@
             if (typeof I18nManager !== 'undefined') {
                 window.i18n = new I18nManager();
                 await window.i18n.init();
-                console.log('✅ Dashboard i18n initialized');
+                
+                // Check for language preference from various sources
+                const urlParams = new URLSearchParams(window.location.search);
+                const urlLang = urlParams.get('lang');
+                const storedLang = localStorage.getItem('selectedLanguage');
+                const sessionLang = sessionStorage.getItem('userLanguage');
+                
+                // Priority: URL > Session > LocalStorage > Browser Default
+                const preferredLang = urlLang || sessionLang || storedLang || navigator.language.split('-')[0];
+                
+                // Switch to preferred language if it's supported
+                const supportedLanguages = ['de', 'en', 'fr', 'es', 'zh', 'ar', 'it', 'ru', 'ja'];
+                if (supportedLanguages.includes(preferredLang)) {
+                    await window.i18n.switchLanguage(preferredLang);
+                    console.log(`✅ Dashboard language set to: ${preferredLang}`);
+                } else {
+                    console.log('✅ Dashboard i18n initialized with default language');
+                }
             }
         }
         

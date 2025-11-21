@@ -413,8 +413,11 @@
 
                 await window.authManager.login(email, password);
                 
+                // Get current language
+                const currentLang = window.i18nManager?.currentLang || localStorage.getItem('selectedLanguage') || 'en';
+                
                 showSuccess('Login successful! Redirecting...');
-                setTimeout(() => window.location.href = '/dashboard.html', 1000);
+                setTimeout(() => window.location.href = '/dashboard.html?lang=' + currentLang, 1000);
             } catch (error) {
                 showError(error.message);
                 submitBtn.disabled = false;
@@ -444,7 +447,9 @@
 
             const isValid = await window.authManager.verifySession();
             if (isValid) {
-                window.location.href = '/dashboard.html';
+                // Get current language
+                const currentLang = window.i18nManager?.currentLang || localStorage.getItem('selectedLanguage') || 'en';
+                window.location.href = '/dashboard.html?lang=' + currentLang;
             }
         };
 
