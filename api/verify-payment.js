@@ -38,20 +38,31 @@ module.exports = async (req, res) => {
 
     console.log(`🔍 Verifying payment for session: ${sessionId}, email: ${email}`);
 
-    // Retrieve the session from Stripe
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    // Retrieve the session from Stripe with expanded payment_intent
+    const session = await stripe.checkout.sessions.retrieve(sessionId, {
+      expand: ['payment_intent']
+    });
 
-    console.log(`📊 Session status: ${session.payment_status}, customer_email: ${session.customer_email}`);
+    console.log(`📊 Session status: ${session.payment_status}, customer_email: ${session.customer_details?.email}`);
+    console.log(`📊 Payment intent status: ${session.payment_intent?.status}`);
 
-    // Check if payment was successful
-    if (session.payment_status === 'paid') {
+    // Check if payment was successful (check both session and payment_intent)
+    const isPaid = session.payment_status === 'paid' || 
+                   session.payment_intent?.status === 'succeeded';
+
+    if (isPaid) {
       const pool = getPool();
       
       try {
-        // Update user's payment status
+        // Update user's payment status with payment_date and stripe info
         const updateResult = await pool.query(
-          'UPDATE users SET payment_status = $1 WHERE email = $2 RETURNING id, member_id, email, payment_status',
-          ['paid', email]
+          `UPDATE users 
+           SET payment_status = $1, 
+               payment_date = CURRENT_TIMESTAMP,
+               stripe_session_id = $3
+           WHERE email = $2 
+           RETURNING id, member_id, email, payment_status`,
+          ['paid', email, sessionId]
         );
 
         if (updateResult.rows.length === 0) {

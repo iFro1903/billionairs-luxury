@@ -102,40 +102,86 @@ export default async function handler(req) {
                 console.log('✅ Checkout session completed:', session.id);
                 console.log('Customer email:', session.customer_details?.email);
                 console.log('Payment status:', session.payment_status);
+                console.log('Mode:', session.mode);
                 
-                if (session.payment_status === 'paid') {
+                // Handle payment - check multiple conditions for maximum reliability
+                const isPaid = session.payment_status === 'paid' || session.mode === 'payment';
+                
+                if (isPaid) {
                     const email = session.customer_details?.email;
                     
-                    if (email) {
-                        // Update user payment status to 'paid'
+                    if (!email) {
+                        console.error('⚠️ No email found in session:', session.id);
+                        captureMessage('Checkout session completed without email', {
+                            level: 'warning',
+                            tags: { session_id: session.id }
+                        });
+                        break;
+                    }
+                    
+                    try {
+                        // CRITICAL: Update user payment status with UPSERT logic
                         const result = await sql`
                             UPDATE users 
                             SET payment_status = 'paid',
                                 stripe_session_id = ${session.id},
-                                payment_date = NOW()
+                                payment_date = COALESCE(payment_date, NOW())
                             WHERE email = ${email}
-                            RETURNING id, email, member_id, name
+                            RETURNING id, email, member_id, name, full_name
                         `;
 
                         if (result.length > 0) {
                             const user = result[0];
-                            console.log(`✅ Payment updated for: ${user.email} (${user.member_id})`);
+                            console.log(`✅ PAYMENT CONFIRMED for: ${user.email} (${user.member_id})`);
+                            console.log(`✅ User ID: ${user.id}, Payment Date: ${new Date().toISOString()}`);
                             
                             // Send payment confirmation email
                             const amount = (session.amount_total / 100).toFixed(2);
                             const currency = session.currency?.toUpperCase() || 'EUR';
+                            const userName = user.full_name || user.name || user.email.split('@')[0];
                             
                             await sendPaymentConfirmationEmail(
                                 user.email,
-                                user.name || user.email.split('@')[0],
+                                userName,
                                 amount,
                                 currency,
                                 'BILLIONAIRS Exclusive Access'
                             );
+                            
+                            captureMessage('Payment successfully processed', {
+                                level: 'info',
+                                tags: { 
+                                    user_id: user.id,
+                                    member_id: user.member_id,
+                                    session_id: session.id
+                                }
+                            });
                         } else {
-                            console.error(`⚠️ User not found: ${email}`);
+                            console.error(`❌ CRITICAL: User not found for email: ${email}`);
+                            console.error(`Session ID: ${session.id}`);
+                            
+                            captureError(new Error('User not found after payment'), {
+                                tags: { 
+                                    category: 'payment',
+                                    email: email,
+                                    session_id: session.id
+                                }
+                            });
                         }
+                    } catch (dbError) {
+                        console.error('❌ CRITICAL: Database error updating payment:', dbError);
+                        captureError(dbError, {
+                            tags: { 
+                                category: 'database',
+                                endpoint: 'stripe-webhook',
+                                email: email,
+                                session_id: session.id
+                            }
+                        });
+                        throw dbError; // Re-throw to trigger Stripe retry
                     }
+                } else {
+                    console.log(`⚠️ Session completed but payment_status is: ${session.payment_status}`);
                 }
                 break;
             }

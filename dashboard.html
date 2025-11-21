@@ -576,33 +576,67 @@
                             sessionId || 
                             sessionStorage.getItem('paymentInitiated') === 'true';
             
-            // If there's a session_id, verify the payment immediately
+            // CRITICAL: If there's a session_id, verify payment with multiple retries
             if (sessionId && user.paymentStatus !== 'paid') {
-                console.log('🔍 Session ID detected, verifying payment...');
-                try {
-                    const response = await fetch('/api/verify-payment', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            sessionId: sessionId,
-                            email: user.email 
-                        })
-                    });
+                console.log('🔍 Session ID detected, verifying payment with retry logic...');
+                
+                let paymentVerified = false;
+                let attempts = 0;
+                const maxAttempts = 5;
+                
+                while (!paymentVerified && attempts < maxAttempts) {
+                    attempts++;
+                    console.log(`🔄 Verification attempt ${attempts}/${maxAttempts}...`);
                     
-                    const result = await response.json();
-                    console.log('✅ Payment verification result:', result);
-                    
-                    if (result.success && result.paymentStatus === 'paid') {
-                        // Update local user data
-                        user.paymentStatus = 'paid';
-                        window.authManager.updateUser({ paymentStatus: 'paid' });
+                    try {
+                        const response = await fetch('/api/verify-payment', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ 
+                                sessionId: sessionId,
+                                email: user.email 
+                            })
+                        });
                         
-                        // Reload page to show paid status
-                        window.location.href = '/dashboard.html';
-                        return;
+                        const result = await response.json();
+                        console.log(`✅ Verification attempt ${attempts} result:`, result);
+                        
+                        if (result.success && result.paymentStatus === 'paid') {
+                            paymentVerified = true;
+                            console.log('🎉 PAYMENT VERIFIED! Updating user status...');
+                            
+                            // Update local user data
+                            user.paymentStatus = 'paid';
+                            window.authManager.updateUser({ paymentStatus: 'paid' });
+                            
+                            // Clear session storage
+                            sessionStorage.removeItem('paymentInitiated');
+                            
+                            // Show success message before reload
+                            alert('✅ Payment confirmed! Access granted. Welcome to the Elite.');
+                            
+                            // Reload page to show paid status
+                            window.location.href = '/dashboard.html';
+                            return;
+                        } else if (result.paymentStatus === 'paid') {
+                            // Stripe says paid but DB update failed, retry
+                            console.log('⚠️ Stripe confirmed payment but DB update pending, retrying...');
+                            await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second
+                        } else {
+                            console.log(`⚠️ Payment status: ${result.paymentStatus}, waiting...`);
+                            await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
+                        }
+                    } catch (error) {
+                        console.error(`❌ Verification attempt ${attempts} error:`, error);
+                        if (attempts < maxAttempts) {
+                            await new Promise(resolve => setTimeout(resolve, 2000)); // Wait before retry
+                        }
                     }
-                } catch (error) {
-                    console.error('❌ Payment verification error:', error);
+                }
+                
+                if (!paymentVerified) {
+                    console.error('❌ Payment verification failed after all attempts');
+                    alert('Payment processing is taking longer than expected. Please refresh the page in a moment or contact support if the issue persists.');
                 }
             }
             
@@ -629,6 +663,40 @@
                 // Translate pending section texts for current language (if i18n is loaded)
                 if (window.i18n && typeof window.i18n.translateElement === 'function') {
                     window.i18n.translateElement(document.getElementById('pendingSection'));
+                }
+                
+                // AUTO-REFRESH: If user just paid, keep checking payment status
+                if (justPaid || sessionId) {
+                    console.log('⏱️ Payment pending, will auto-refresh to check status...');
+                    
+                    let refreshCount = parseInt(sessionStorage.getItem('dashboardRefreshCount') || '0');
+                    
+                    if (refreshCount < 3) {
+                        // Auto-refresh after 3 seconds, max 3 times
+                        sessionStorage.setItem('dashboardRefreshCount', (refreshCount + 1).toString());
+                        
+                        setTimeout(() => {
+                            console.log(`🔄 Auto-refreshing dashboard (attempt ${refreshCount + 1}/3)...`);
+                            window.location.reload();
+                        }, 3000);
+                        
+                        // Show countdown message
+                        const countdownDiv = document.createElement('div');
+                        countdownDiv.style.cssText = 'color: #E8B4A0; text-align: center; margin-top: 2rem; font-size: 1.1rem;';
+                        countdownDiv.innerHTML = `
+                            <div style="animation: pulse 1.5s ease-in-out infinite;">
+                                ⏳ Verifying your payment...<br>
+                                <small style="color: rgba(255,255,255,0.7);">Auto-refreshing in 3 seconds (${refreshCount + 1}/3)</small>
+                            </div>
+                        `;
+                        document.getElementById('pendingSection').appendChild(countdownDiv);
+                    } else {
+                        // Max attempts reached, clear counter
+                        sessionStorage.removeItem('dashboardRefreshCount');
+                    }
+                } else {
+                    // Not a fresh payment, clear refresh counter
+                    sessionStorage.removeItem('dashboardRefreshCount');
                 }
                 
                 // Show different message if user just paid
