@@ -563,12 +563,12 @@
             
             // Display personalized greeting
             const welcomeSubtitle = document.getElementById('welcomeSubtitle');
-            if (user.firstName && user.lastName) {
-                welcomeSubtitle.textContent = `Dear ${user.firstName} ${user.lastName}`;
-            } else if (user.firstName) {
-                welcomeSubtitle.textContent = `Dear ${user.firstName}`;
+            if (user.fullName && user.fullName.trim()) {
+                welcomeSubtitle.textContent = user.fullName.trim();
             } else {
-                welcomeSubtitle.textContent = 'Dear Member';
+                // Fallback: Use email username or "Member"
+                const emailName = user.email.split('@')[0].replace(/[._-]/g, ' ');
+                welcomeSubtitle.textContent = emailName.charAt(0).toUpperCase() + emailName.slice(1);
             }
             
             // Check if user just completed a payment (came from payment page or stripe)
