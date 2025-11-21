@@ -10,36 +10,46 @@ export const config = {
 // Helper function to send payment confirmation email
 async function sendPaymentConfirmationEmail(email, userName, amount, currency, productName) {
     try {
-        const emailApiUrl = process.env.VERCEL_URL 
-            ? `https://${process.env.VERCEL_URL}/api/email-service`
-            : 'https://billionairs-luxury.vercel.app/api/email-service';
+        const emailApiUrl = 'https://billionairs-luxury.vercel.app/api/email-service';
+        
+        console.log(`📧 Attempting to send payment email to: ${email}`);
+        console.log(`📧 Email API URL: ${emailApiUrl}`);
+        console.log(`📧 Payment details: ${amount} ${currency}`);
+
+        const emailPayload = {
+            to: email,
+            type: 'payment',
+            data: {
+                userName: userName || email.split('@')[0],
+                amount: amount,
+                currency: currency,
+                productName: productName || 'BILLIONAIRS Access'
+            }
+        };
+        
+        console.log(`📧 Email payload:`, JSON.stringify(emailPayload));
 
         const response = await fetch(emailApiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                to: email,
-                type: 'payment',
-                data: {
-                    userName: userName || email.split('@')[0],
-                    amount: amount,
-                    currency: currency,
-                    productName: productName || 'BILLIONAIRS Access'
-                }
-            })
+            body: JSON.stringify(emailPayload)
         });
 
+        console.log(`📧 Email API response status: ${response.status}`);
+        
         const result = await response.json();
+        console.log(`📧 Email API response:`, JSON.stringify(result));
         
         if (result.success) {
-            console.log(`✅ Payment confirmation email sent to: ${email}`);
+            console.log(`✅ Payment confirmation email sent successfully to: ${email}`);
         } else {
             console.error(`❌ Failed to send payment email to ${email}:`, result.error);
         }
         
         return result;
     } catch (error) {
-        console.error('Error sending payment confirmation email:', error);
+        console.error('❌ Error sending payment confirmation email:', error);
+        console.error('Error details:', error.message, error.stack);
         return { success: false, error: error.message };
     }
 }
