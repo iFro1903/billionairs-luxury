@@ -136,6 +136,26 @@
       "text": "在聚会和沟通中实施谨慎。可能会要求成员为选定的会议签署保密协议。未经明确同意，不会公开分享照片。个人信息作为会员协议的一部分受到保护。"
     }
   },
+  "dashboard": {
+    "welcome_title": "欢迎加入精英行列",
+    "welcome_subtitle": "欢迎加入精英",
+    "member_id": "会员ID",
+    "email": "电子邮件",
+    "status": "状态",
+    "logout": "登出",
+    "pending_title": "财富的永动机",
+    "pending_line1": "在这个门槛背后，隐藏着每个行业巨头都知道的秘密。",
+    "pending_line2": "不是黄金。不是钻石。而是更珍贵的东西。",
+    "pending_line3": "它循环运动，却从不重复。",
+    "pending_quote": "\"掌控分钟者，掌控百万。\"",
+    "pending_line4": "一个决定。一个瞬间。一切都会改变。",
+    "pending_line5": "解锁精英用来衡量生命的东西。",
+    "complete_payment": "完成支付",
+    "reveal_title": "最终真相",
+    "reveal_description": "你已跨越了少数人敢于接近的门槛。<br><br>超越之处不是黄金。不是钻石。不是物质财富。<br><br>这是将建设者与梦想家分开的理解。<br><br><strong>时间不是金钱。</strong><br>时间是描绘财富的画布。<br><br>掌控你的分钟，百万随之而来。<br><br>每个行业巨头都知道的秘密：<br>不是黄金。不是钻石。<br>而是更珍贵的东西。<br><br>它循环运动，却从不重复。<br><br>一个决定。一个瞬间。一切都会改变。<br><br><strong>你现在拥有精英用来衡量生命的东西。</strong>",
+    "download_access": "下载您的专属访问权限",
+    "hidden_door": "隐藏之门"
+  },
   "payment_success": {
     "payment_confirmed": "支付已确认",
     "payment_success_message": "您的支付已成功处理。",

@@ -266,6 +266,26 @@
       "text": "Discretion is enforced across gatherings and communications. Members may be asked to sign NDAs for select sessions. No photos are shared publicly without explicit consent. Personal information is protected as part of the membership agreement."
     }
   },
+  "dashboard": {
+    "welcome_title": "WELCOME TO THE ELITE",
+    "welcome_subtitle": "Welcome to the Elite",
+    "member_id": "Member ID",
+    "email": "Email",
+    "status": "Status",
+    "logout": "Logout",
+    "pending_title": "The Perpetual Motion of Wealth",
+    "pending_line1": "Behind this threshold lies the secret every titan of industry knows.",
+    "pending_line2": "Not gold. Not diamonds. Something far more precious.",
+    "pending_line3": "Something that moves in circles, yet never repeats.",
+    "pending_quote": "\"They who master their minutes, master their millions.\"",
+    "pending_line4": "One decision. One moment. Everything changes.",
+    "pending_line5": "Unlock what the elite measure their lives by.",
+    "complete_payment": "Complete Payment",
+    "reveal_title": "THE FINAL TRUTH",
+    "reveal_description": "You have crossed the threshold few dare to approach.<br><br>What lies beyond is not gold. Not diamonds. Not material wealth.<br><br>It is the understanding that separates the builders from the dreamers.<br><br><strong>Time is not money.</strong><br>Time is the canvas upon which wealth is painted.<br><br>Master your minutes, and millions follow.<br><br>The secret every titan of industry knows:<br>Not gold. Not diamonds.<br>Something far more precious.<br><br>Something that moves in circles, yet never repeats.<br><br>One decision. One moment. Everything changes.<br><br><strong>You now possess what the elite measure their lives by.</strong>",
+    "download_access": "DOWNLOAD YOUR EXCLUSIVE ACCESS",
+    "hidden_door": "THE HIDDEN DOOR"
+  },
   "payment_success": {
     "payment_confirmed": "Payment Confirmed",
     "payment_success_message": "Your payment has been successfully processed.",

@@ -153,6 +153,26 @@
       "text": "La discrétion est appliquée lors des rassemblements et des communications. Les membres peuvent être invités à signer des NDA pour certaines sessions. Aucune photo n'est partagée publiquement sans consentement explicite. Les informations personnelles sont protégées dans le cadre de l'accord d'adhésion."
     }
   },
+  "dashboard": {
+    "welcome_title": "BIENVENUE CHEZ L'ÉLITE",
+    "welcome_subtitle": "Bienvenue chez l'Élite",
+    "member_id": "ID Membre",
+    "email": "E-mail",
+    "status": "Statut",
+    "logout": "Déconnexion",
+    "pending_title": "Le Mouvement Perpétuel de la Richesse",
+    "pending_line1": "Derrière ce seuil se trouve le secret que connaît tout titan de l'industrie.",
+    "pending_line2": "Ni or. Ni diamants. Quelque chose de bien plus précieux.",
+    "pending_line3": "Quelque chose qui tourne en rond, mais ne se répète jamais.",
+    "pending_quote": "\"Ceux qui maîtrisent leurs minutes, maîtrisent leurs millions.\"",
+    "pending_line4": "Une décision. Un moment. Tout change.",
+    "pending_line5": "Débloquez ce par quoi l'élite mesure sa vie.",
+    "complete_payment": "Finaliser le Paiement",
+    "reveal_title": "LA VÉRITÉ FINALE",
+    "reveal_description": "Vous avez franchi le seuil que peu osent approcher.<br><br>Ce qui se trouve au-delà n'est ni or. Ni diamants. Ni richesse matérielle.<br><br>C'est la compréhension qui sépare les bâtisseurs des rêveurs.<br><br><strong>Le temps n'est pas de l'argent.</strong><br>Le temps est la toile sur laquelle la richesse est peinte.<br><br>Maîtrisez vos minutes, et les millions suivent.<br><br>Le secret que connaît tout titan de l'industrie:<br>Ni or. Ni diamants.<br>Quelque chose de bien plus précieux.<br><br>Quelque chose qui tourne en rond, mais ne se répète jamais.<br><br>Une décision. Un moment. Tout change.<br><br><strong>Vous possédez maintenant ce par quoi l'élite mesure sa vie.</strong>",
+    "download_access": "TÉLÉCHARGEZ VOTRE ACCÈS EXCLUSIF",
+    "hidden_door": "LA PORTE CACHÉE"
+  },
   "payment_success": {
     "payment_confirmed": "Paiement Confirmé",
     "payment_success_message": "Votre paiement a été traité avec succès.",

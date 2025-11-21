@@ -149,6 +149,26 @@
       "text": "La discrezione è applicata durante gli incontri e le comunicazioni. Ai membri può essere chiesto di firmare NDA per sessioni selezionate. Nessuna foto viene condivisa pubblicamente senza consenso esplicito. Le informazioni personali sono protette come parte dell'accordo di iscrizione."
     }
   },
+  "dashboard": {
+    "welcome_title": "BENVENUTO NELL'ÉLITE",
+    "welcome_subtitle": "Benvenuto nell'Élite",
+    "member_id": "ID Membro",
+    "email": "Email",
+    "status": "Stato",
+    "logout": "Disconnetti",
+    "pending_title": "Il Moto Perpetuo della Ricchezza",
+    "pending_line1": "Dietro questa soglia si nasconde il segreto che ogni titano dell'industria conosce.",
+    "pending_line2": "Non oro. Non diamanti. Qualcosa di molto più prezioso.",
+    "pending_line3": "Qualcosa che si muove in cerchio, ma non si ripete mai.",
+    "pending_quote": "\"Chi padroneggia i suoi minuti, padroneggia i suoi milioni.\"",
+    "pending_line4": "Una decisione. Un momento. Tutto cambia.",
+    "pending_line5": "Sblocca ciò con cui l'élite misura la propria vita.",
+    "complete_payment": "Completa il Pagamento",
+    "reveal_title": "LA VERITÀ FINALE",
+    "reveal_description": "Hai attraversato la soglia che pochi osano avvicinare.<br><br>Ciò che si trova oltre non è oro. Non diamanti. Non ricchezza materiale.<br><br>È la comprensione che separa i costruttori dai sognatori.<br><br><strong>Il tempo non è denaro.</strong><br>Il tempo è la tela su cui viene dipinta la ricchezza.<br><br>Padroneggia i tuoi minuti e i milioni seguono.<br><br>Il segreto che ogni titano dell'industria conosce:<br>Non oro. Non diamanti.<br>Qualcosa di molto più prezioso.<br><br>Qualcosa che si muove in cerchio, ma non si ripete mai.<br><br>Una decisione. Un momento. Tutto cambia.<br><br><strong>Ora possiedi ciò con cui l'élite misura la propria vita.</strong>",
+    "download_access": "SCARICA IL TUO ACCESSO ESCLUSIVO",
+    "hidden_door": "LA PORTA NASCOSTA"
+  },
   "payment_success": {
     "payment_confirmed": "Pagamento Confermato",
     "payment_success_message": "Il tuo pagamento è stato elaborato con successo.",

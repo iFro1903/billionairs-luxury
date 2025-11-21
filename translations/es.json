@@ -153,6 +153,26 @@
       "text": "La discreción se aplica en los encuentros y comunicaciones. Se puede pedir a los miembros que firmen NDA para sesiones seleccionadas. No se comparten fotos públicamente sin consentimiento explícito. La información personal está protegida como parte del acuerdo de membresía."
     }
   },
+  "dashboard": {
+    "welcome_title": "BIENVENIDO A LA ÉLITE",
+    "welcome_subtitle": "Bienvenido a la Élite",
+    "member_id": "ID de Miembro",
+    "email": "Correo Electrónico",
+    "status": "Estado",
+    "logout": "Cerrar Sesión",
+    "pending_title": "El Movimiento Perpetuo de la Riqueza",
+    "pending_line1": "Detrás de este umbral yace el secreto que todo titán de la industria conoce.",
+    "pending_line2": "No oro. No diamantes. Algo mucho más precioso.",
+    "pending_line3": "Algo que se mueve en círculos, pero nunca se repite.",
+    "pending_quote": "\"Quien domina sus minutos, domina sus millones.\"",
+    "pending_line4": "Una decisión. Un momento. Todo cambia.",
+    "pending_line5": "Desbloquea lo que la élite mide en sus vidas.",
+    "complete_payment": "Completar Pago",
+    "reveal_title": "LA VERDAD FINAL",
+    "reveal_description": "Has cruzado el umbral que pocos se atreven a acercarse.<br><br>Lo que yace más allá no es oro. No diamantes. No riqueza material.<br><br>Es la comprensión que separa a los constructores de los soñadores.<br><br><strong>El tiempo no es dinero.</strong><br>El tiempo es el lienzo sobre el cual se pinta la riqueza.<br><br>Domina tus minutos, y los millones siguen.<br><br>El secreto que todo titán de la industria conoce:<br>No oro. No diamantes.<br>Algo mucho más precioso.<br><br>Algo que se mueve en círculos, pero nunca se repite.<br><br>Una decisión. Un momento. Todo cambia.<br><br><strong>Ahora posees lo que la élite mide en sus vidas.</strong>",
+    "download_access": "DESCARGA TU ACCESO EXCLUSIVO",
+    "hidden_door": "LA PUERTA OCULTA"
+  },
   "payment_success": {
     "payment_confirmed": "Pago Confirmado",
     "payment_success_message": "Su pago ha sido procesado exitosamente.",
