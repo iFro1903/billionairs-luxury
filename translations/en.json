@@ -265,5 +265,21 @@
       "subtitle": "Strict privacy protocols",
       "text": "Discretion is enforced across gatherings and communications. Members may be asked to sign NDAs for select sessions. No photos are shared publicly without explicit consent. Personal information is protected as part of the membership agreement."
     }
+  },
+  "payment_success": {
+    "payment_confirmed": "Payment Confirmed",
+    "payment_success_message": "Your payment has been successfully processed.",
+    "email_sent_notice": "A confirmation email has been sent to your inbox.",
+    "amount": "Amount",
+    "date": "Date",
+    "time": "Time",
+    "status": "Status",
+    "confirmed": "Confirmed",
+    "email_sent_label": "Email Sent",
+    "sent": "✓ Sent",
+    "check_email_notice": "📧 Please check your email for login credentials.",
+    "click_button_notice": "Click the button below to access your exclusive dashboard.",
+    "enter_sanctuary": "Enter Your Sanctuary",
+    "spam_notice": "Can't find the email? Check your spam folder or contact support."
   }
 }

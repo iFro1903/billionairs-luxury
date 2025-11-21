@@ -152,5 +152,21 @@
       "subtitle": "Protocoles de confidentialité stricts",
       "text": "La discrétion est appliquée lors des rassemblements et des communications. Les membres peuvent être invités à signer des NDA pour certaines sessions. Aucune photo n'est partagée publiquement sans consentement explicite. Les informations personnelles sont protégées dans le cadre de l'accord d'adhésion."
     }
+  },
+  "payment_success": {
+    "payment_confirmed": "Paiement Confirmé",
+    "payment_success_message": "Votre paiement a été traité avec succès.",
+    "email_sent_notice": "Un e-mail de confirmation a été envoyé à votre boîte de réception.",
+    "amount": "Montant",
+    "date": "Date",
+    "time": "Heure",
+    "status": "Statut",
+    "confirmed": "Confirmé",
+    "email_sent_label": "E-mail Envoyé",
+    "sent": "✓ Envoyé",
+    "check_email_notice": "📧 Veuillez vérifier votre e-mail pour vos identifiants de connexion.",
+    "click_button_notice": "Cliquez sur le bouton ci-dessous pour accéder à votre tableau de bord exclusif.",
+    "enter_sanctuary": "Entrez dans Votre Sanctuaire",
+    "spam_notice": "Vous ne trouvez pas l'e-mail? Vérifiez votre dossier spam ou contactez le support."
   }
 }

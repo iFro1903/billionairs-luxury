@@ -268,5 +268,21 @@
       "subtitle": "Strenge Datenschutzprotokolle",
       "text": "Diskretion wird bei Zusammenkünften und Kommunikation durchgesetzt. Mitglieder können gebeten werden, NDAs für ausgewählte Sitzungen zu unterzeichnen. Keine Fotos werden ohne ausdrückliche Zustimmung öffentlich geteilt. Persönliche Informationen werden als Teil der Mitgliedschaftsvereinbarung geschützt."
     }
+  },
+  "payment_success": {
+    "payment_confirmed": "Zahlung Bestätigt",
+    "payment_success_message": "Ihre Zahlung wurde erfolgreich verarbeitet.",
+    "email_sent_notice": "Eine Bestätigungs-E-Mail wurde an Ihre Inbox gesendet.",
+    "amount": "Betrag",
+    "date": "Datum",
+    "time": "Zeit",
+    "status": "Status",
+    "confirmed": "Bestätigt",
+    "email_sent_label": "E-Mail Gesendet",
+    "sent": "✓ Gesendet",
+    "check_email_notice": "📧 Bitte überprüfen Sie Ihre E-Mail für Login-Zugangsdaten.",
+    "click_button_notice": "Klicken Sie auf den Button unten, um auf Ihr exklusives Dashboard zuzugreifen.",
+    "enter_sanctuary": "Betreten Sie Ihr Sanctuary",
+    "spam_notice": "E-Mail nicht gefunden? Überprüfen Sie Ihren Spam-Ordner oder kontaktieren Sie den Support."
   }
 }

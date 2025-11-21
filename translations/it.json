@@ -148,5 +148,21 @@
       "subtitle": "Protocolli di privacy rigorosi",
       "text": "La discrezione è applicata durante gli incontri e le comunicazioni. Ai membri può essere chiesto di firmare NDA per sessioni selezionate. Nessuna foto viene condivisa pubblicamente senza consenso esplicito. Le informazioni personali sono protette come parte dell'accordo di iscrizione."
     }
+  },
+  "payment_success": {
+    "payment_confirmed": "Pagamento Confermato",
+    "payment_success_message": "Il tuo pagamento è stato elaborato con successo.",
+    "email_sent_notice": "Un'email di conferma è stata inviata alla tua casella di posta.",
+    "amount": "Importo",
+    "date": "Data",
+    "time": "Ora",
+    "status": "Stato",
+    "confirmed": "Confermato",
+    "email_sent_label": "Email Inviata",
+    "sent": "✓ Inviata",
+    "check_email_notice": "📧 Controlla la tua email per le credenziali di accesso.",
+    "click_button_notice": "Fai clic sul pulsante qui sotto per accedere alla tua dashboard esclusiva.",
+    "enter_sanctuary": "Entra nel Tuo Santuario",
+    "spam_notice": "Non trovi l'email? Controlla la cartella spam o contatta il supporto."
   }
 }

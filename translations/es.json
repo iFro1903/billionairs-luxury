@@ -152,5 +152,21 @@
       "subtitle": "Protocolos de privacidad estrictos",
       "text": "La discreción se aplica en los encuentros y comunicaciones. Se puede pedir a los miembros que firmen NDA para sesiones seleccionadas. No se comparten fotos públicamente sin consentimiento explícito. La información personal está protegida como parte del acuerdo de membresía."
     }
+  },
+  "payment_success": {
+    "payment_confirmed": "Pago Confirmado",
+    "payment_success_message": "Su pago ha sido procesado exitosamente.",
+    "email_sent_notice": "Se ha enviado un correo de confirmación a su bandeja de entrada.",
+    "amount": "Cantidad",
+    "date": "Fecha",
+    "time": "Hora",
+    "status": "Estado",
+    "confirmed": "Confirmado",
+    "email_sent_label": "Correo Enviado",
+    "sent": "✓ Enviado",
+    "check_email_notice": "📧 Por favor revise su correo para las credenciales de acceso.",
+    "click_button_notice": "Haga clic en el botón de abajo para acceder a su panel exclusivo.",
+    "enter_sanctuary": "Entre a Su Santuario",
+    "spam_notice": "¿No encuentra el correo? Revise su carpeta de spam o contacte soporte."
   }
 }

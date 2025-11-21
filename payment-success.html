@@ -165,58 +165,66 @@
             </svg>
         </div>
         
-        <h1>Payment Confirmed</h1>
+        <h1 data-i18n="payment_confirmed">Payment Confirmed</h1>
         
         <div class="divider"></div>
         
         <div class="amount">CHF 500,000</div>
         
         <p class="message">
-            Your payment has been successfully processed.<br>
-            <strong style="color: #50C878;">A confirmation email has been sent to your inbox.</strong>
+            <span data-i18n="payment_success_message">Your payment has been successfully processed.</span><br>
+            <strong style="color: #50C878;"><span data-i18n="email_sent_notice">A confirmation email has been sent to your inbox.</span></strong>
         </p>
         
         <div class="details">
             <div class="detail-row">
-                <span class="detail-label">Amount</span>
+                <span class="detail-label" data-i18n="amount">Amount</span>
                 <span class="detail-value">CHF 500,000.00</span>
             </div>
             <div class="detail-row">
-                <span class="detail-label">Date</span>
+                <span class="detail-label" data-i18n="date">Date</span>
                 <span class="detail-value" id="paymentDate"></span>
             </div>
             <div class="detail-row">
-                <span class="detail-label">Time</span>
+                <span class="detail-label" data-i18n="time">Time</span>
                 <span class="detail-value" id="paymentTime"></span>
             </div>
             <div class="detail-row">
-                <span class="detail-label">Status</span>
-                <span class="detail-value status-confirmed">Confirmed</span>
+                <span class="detail-label" data-i18n="status">Status</span>
+                <span class="detail-value status-confirmed" data-i18n="confirmed">Confirmed</span>
             </div>
             <div class="detail-row">
-                <span class="detail-label">Email Sent</span>
-                <span class="detail-value status-confirmed">✓ Sent</span>
+                <span class="detail-label" data-i18n="email_sent_label">Email Sent</span>
+                <span class="detail-value status-confirmed" data-i18n="sent">✓ Sent</span>
             </div>
         </div>
         
         <p class="message" style="margin-top: 2rem; font-size: 0.95rem;">
-            📧 Please check your email for login credentials.<br>
-            Click the button below to access your exclusive dashboard.
+            <span data-i18n="check_email_notice">📧 Please check your email for login credentials.</span><br>
+            <span data-i18n="click_button_notice">Click the button below to access your exclusive dashboard.</span>
         </p>
         
         <button class="continue-btn" onclick="continueToSite()">
-            Enter Your Sanctuary
+            <span data-i18n="enter_sanctuary">Enter Your Sanctuary</span>
         </button>
         
         <p class="footer-note">
-            Can't find the email? Check your spam folder or contact support.
+            <span data-i18n="spam_notice">Can't find the email? Check your spam folder or contact support.</span>
         </p>
     </div>
 
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/lang-dropdown-simple.js"></script>
     <script>
-        // Get session ID from URL
+        // Get session ID and language from URL
         const urlParams = new URLSearchParams(window.location.search);
         const sessionId = urlParams.get('session_id');
+        const userLang = urlParams.get('lang') || 'en';
+
+        // Initialize i18n
+        if (window.i18n) {
+            window.i18n.switchLanguage(userLang);
+        }
 
         // Set date and time
         const now = new Date();
@@ -233,7 +241,10 @@
         // Set transaction ID
         if (sessionId) {
             const shortId = sessionId.substring(sessionId.length - 12).toUpperCase();
-            document.getElementById('transactionId').textContent = shortId;
+            const transactionIdElement = document.getElementById('transactionId');
+            if (transactionIdElement) {
+                transactionIdElement.textContent = shortId;
+            }
 
             // Notify parent window
             if (window.opener && window.opener.stripeProcessor) {
