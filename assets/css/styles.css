@@ -622,6 +622,7 @@ div:not(.clickable) {
 /* Swiss Security Badge */
 .swiss-security-badge {
     margin-top: 4rem;
+    margin-bottom: 8rem;
     padding: 1rem 2rem;
     display: flex;
     align-items: center;
