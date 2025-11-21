@@ -134,6 +134,11 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
             
+            // Translate modal content to current language
+            if (typeof translateModals === 'function') {
+                translateModals();
+            }
+            
             // Initialize particles only once per modal
             if (!particlesInitialized[modalName]) {
                 const particleIds = {
