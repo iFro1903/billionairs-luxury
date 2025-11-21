@@ -284,5 +284,24 @@
     "click_button_notice": "Klicken Sie auf den Button unten, um auf Ihr exklusives Dashboard zuzugreifen.",
     "enter_sanctuary": "Betreten Sie Ihr Sanctuary",
     "spam_notice": "E-Mail nicht gefunden? Überprüfen Sie Ihren Spam-Ordner oder kontaktieren Sie den Support."
+  },
+  "dashboard": {
+    "welcome_title": "WILLKOMMEN BEI DER ELITE",
+    "welcome_subtitle": "Willkommen bei der Elite",
+    "member_id": "Mitglieds-ID",
+    "email": "E-Mail",
+    "status": "Status",
+    "pending_title": "Die Perpetuelle Bewegung des Reichtums",
+    "pending_line1": "Hinter dieser Schwelle liegt das Geheimnis, das jeder Titan der Industrie kennt.",
+    "pending_line2": "Nicht Gold. Nicht Diamanten. Etwas viel Kostbareres.",
+    "pending_line3": "Etwas, das sich im Kreis bewegt, aber sich nie wiederholt.",
+    "pending_quote": "\"Wer seine Minuten meistert, meistert seine Millionen.\"",
+    "pending_line4": "Eine Entscheidung. Ein Moment. Alles ändert sich.",
+    "pending_line5": "Entsperren Sie, woran die Elite ihr Leben misst.",
+    "complete_payment": "Zahlung Abschließen",
+    "reveal_title": "DIE ENDGÜLTIGE WAHRHEIT",
+    "reveal_description": "Sie haben die Schwelle überschritten, die nur wenige zu betreten wagen.<br><br>Was dahinter liegt, ist nicht Gold. Nicht Diamanten. Nicht materieller Reichtum.<br><br>Es ist das Verständnis, das die Erbauer von den Träumern trennt.<br><br><strong>Zeit ist nicht Geld.</strong><br>Zeit ist die Leinwand, auf der Reichtum gemalt wird.<br><br>Meistern Sie Ihre Minuten, und Millionen folgen.<br><br>Das Geheimnis, das jeder Titan der Industrie kennt:<br>Nicht Gold. Nicht Diamanten.<br>Etwas viel Kostbareres.<br><br>Etwas, das sich im Kreis bewegt, aber sich nie wiederholt.<br><br>Eine Entscheidung. Ein Moment. Alles ändert sich.<br><br><strong>Sie besitzen jetzt, woran die Elite ihr Leben misst.</strong>",
+    "download_access": "LADEN SIE IHREN EXKLUSIVEN ZUGANG HERUNTER",
+    "hidden_door": "DIE VERBORGENE TÜR"
   }
 }

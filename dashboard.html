@@ -336,22 +336,22 @@
 
         <div class="dashboard-content">
             <div class="dashboard-header">
-                <h1 class="dashboard-title">WELCOME TO THE ELITE</h1>
-                <p class="dashboard-subtitle" id="welcomeSubtitle">Welcome to the Elite</p>
+                <h1 class="dashboard-title" data-i18n="dashboard.welcome_title">WELCOME TO THE ELITE</h1>
+                <p class="dashboard-subtitle" id="welcomeSubtitle" data-i18n="dashboard.welcome_subtitle">Welcome to the Elite</p>
             </div>
 
             <div class="member-card">
                 <div class="member-info">
                     <div class="info-item">
-                        <div class="info-label">Member ID</div>
+                        <div class="info-label" data-i18n="dashboard.member_id">Member ID</div>
                         <div class="info-value" id="memberId">—</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Email</div>
+                        <div class="info-label" data-i18n="dashboard.email">Email</div>
                         <div class="info-value" id="memberEmail">—</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Status</div>
+                        <div class="info-label" data-i18n="dashboard.status">Status</div>
                         <div id="statusContainer">—</div>
                     </div>
                 </div>
@@ -361,25 +361,25 @@
             <div id="pendingSection" style="display: none;">
                 <div class="pending-message">
                     <div class="pending-text" id="pendingText">
-                        <strong>The Perpetual Motion of Wealth</strong><br><br>
-                        Behind this threshold lies the secret every titan of industry knows.<br>
-                        Not gold. Not diamonds. Something far more precious.<br>
-                        Something that moves in circles, yet never repeats.<br><br>
-                        <span style="color: rgba(232, 180, 160, 0.9); font-style: italic;">
+                        <strong data-i18n="dashboard.pending_title">The Perpetual Motion of Wealth</strong><br><br>
+                        <span data-i18n="dashboard.pending_line1">Behind this threshold lies the secret every titan of industry knows.</span><br>
+                        <span data-i18n="dashboard.pending_line2">Not gold. Not diamonds. Something far more precious.</span><br>
+                        <span data-i18n="dashboard.pending_line3">Something that moves in circles, yet never repeats.</span><br><br>
+                        <span style="color: rgba(232, 180, 160, 0.9); font-style: italic;" data-i18n="dashboard.pending_quote">
                             "They who master their minutes, master their millions."
                         </span><br><br>
-                        One decision. One moment. Everything changes.<br>
-                        Unlock what the elite measure their lives by.
+                        <span data-i18n="dashboard.pending_line4">One decision. One moment. Everything changes.</span><br>
+                        <span data-i18n="dashboard.pending_line5">Unlock what the elite measure their lives by.</span>
                     </div>
-                    <button class="download-button" id="paymentActionButton" onclick="window.location.href='/#paymentSection'">Complete Payment</button>
+                    <button class="download-button" id="paymentActionButton" onclick="window.location.href='/#paymentSection'" data-i18n="dashboard.complete_payment">Complete Payment</button>
                 </div>
             </div>
 
             <!-- Shown when payment is confirmed -->
             <div id="revealSection" style="display: none;">
                 <div class="reveal-section">
-                    <h2 class="reveal-title">THE FINAL TRUTH</h2>
-                    <p class="reveal-description" style="line-height: 1.8; max-width: 700px; margin: 0 auto;">
+                    <h2 class="reveal-title" data-i18n="dashboard.reveal_title">THE FINAL TRUTH</h2>
+                    <p class="reveal-description" style="line-height: 1.8; max-width: 700px; margin: 0 auto;" data-i18n-html="dashboard.reveal_description">
                         You have crossed the threshold few dare to approach.<br><br>
                         
                         What lies beyond is not gold. Not diamonds. Not material wealth.<br><br>
@@ -401,10 +401,10 @@
                         
                         <strong>You now possess what the elite measure their lives by.</strong>
                     </p>
-                    <a href="#" class="download-button" onclick="handleDownload(event)" style="margin-bottom: 3rem; margin-top: 2rem;">
+                    <a href="#" class="download-button" onclick="handleDownload(event)" style="margin-bottom: 3rem; margin-top: 2rem;" data-i18n="dashboard.download_access">
                         DOWNLOAD YOUR EXCLUSIVE ACCESS
                     </a>
-                    <a href="the-hidden-door.html" class="download-button hidden-door-btn" style="margin-top: 3rem; background: linear-gradient(135deg, #E8B4A0 0%, #F4C2A1 50%, #E8B4A0 100%), linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); background-size: 100% 100%, 200% 100%; background-position: 0% 0%, -200% 0%; box-shadow: 0 12px 48px rgba(232, 180, 160, 0.6), 0 0 100px rgba(232, 180, 160, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3); border: 2px solid #E8B4A0; transform: scale(1.05); font-weight: 700; letter-spacing: 3px; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), background-position 2s ease-in-out;">
+                    <a href="the-hidden-door.html" class="download-button hidden-door-btn" style="margin-top: 3rem; background: linear-gradient(135deg, #E8B4A0 0%, #F4C2A1 50%, #E8B4A0 100%), linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); background-size: 100% 100%, 200% 100%; background-position: 0% 0%, -200% 0%; box-shadow: 0 12px 48px rgba(232, 180, 160, 0.6), 0 0 100px rgba(232, 180, 160, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3); border: 2px solid #E8B4A0; transform: scale(1.05); font-weight: 700; letter-spacing: 3px; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), background-position 2s ease-in-out;" data-i18n="dashboard.hidden_door">
                         THE HIDDEN DOOR
                     </a>
                 </div>
