@@ -21,10 +21,21 @@ export default async function handler(req) {
     const sql = neon(process.env.DATABASE_URL);
     
     // Parse request body
-    const body = await req.json();
+    let body;
+    try {
+      body = await req.json();
+    } catch (parseError) {
+      console.error('Failed to parse request body:', parseError);
+      return new Response(
+        JSON.stringify({ error: 'Invalid JSON body' }),
+        { status: 400, headers }
+      );
+    }
+    
     const { email, action } = body;
 
     if (!email || !action) {
+      console.error('Missing email or action:', { email, action });
       return new Response(
         JSON.stringify({ error: 'Email and action required' }),
         { status: 400, headers }
@@ -34,12 +45,14 @@ export default async function handler(req) {
     // Get user
     const users = await sql`SELECT * FROM users WHERE email = ${email}`;
     if (users.length === 0) {
+      console.error('User not found:', email);
       return new Response(
         JSON.stringify({ error: 'User not found' }),
         { status: 404, headers }
       );
     }
     const user = users[0];
+    console.log('User found:', email, 'Action:', action);
 
     switch (action) {
       // ===== CHECK STATUS =====
