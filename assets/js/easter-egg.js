@@ -92,11 +92,11 @@ const EasterEggSystem = {
             return; // Stop here - no duplicate logo!
         }
 
-        // PRIORITY 3: Show pyramid after 20 seconds if not unlocked yet
+        // PRIORITY 3: Show pyramid after 8 seconds if not unlocked yet
         if (this.status.showPyramid && !this.status.pyramidUnlocked) {
             setTimeout(() => {
                 this.showPyramid();
-            }, 20000); // 20 seconds
+            }, 8000); // 8 seconds
         }
 
         // PRIORITY 4: Keep showing pyramid if unlocked but eye not ready
