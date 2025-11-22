@@ -4,44 +4,40 @@ export const config = {
   runtime: 'edge',
 };
 
-// Helper function to get base URL
-function getBaseUrl(req) {
-  const protocol = req.headers['x-forwarded-proto'] || 'https';
-  const host = req.headers.host || req.headers['x-forwarded-host'];
-  return `${protocol}://${host}`;
-}
-
-export default async function handler(req, res) {
+export default async function handler(req) {
   // CORS Headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Content-Type': 'application/json',
+  };
 
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    return new Response(null, { status: 200, headers });
   }
 
   try {
     const sql = neon(process.env.DATABASE_URL);
     
-    // Parse body manually for Vercel
-    let body;
-    if (typeof req.body === 'string') {
-      body = JSON.parse(req.body);
-    } else {
-      body = req.body;
-    }
-    
+    // Parse request body
+    const body = await req.json();
     const { email, action } = body;
 
     if (!email || !action) {
-      return res.status(400).json({ error: 'Email and action required' });
+      return new Response(
+        JSON.stringify({ error: 'Email and action required' }),
+        { status: 400, headers }
+      );
     }
 
     // Get user
     const users = await sql`SELECT * FROM users WHERE email = ${email}`;
     if (users.length === 0) {
-      return res.status(404).json({ error: 'User not found' });
+      return new Response(
+        JSON.stringify({ error: 'User not found' }),
+        { status: 404, headers }
+      );
     }
     const user = users[0];
 
@@ -87,16 +83,19 @@ export default async function handler(req, res) {
           daysSinceEyeOpened = Math.min(Math.floor(hoursSinceEye / 24) + 1, 7); // 1-7 days
         }
 
-        return res.status(200).json({
-          showPyramid,
-          pyramidUnlocked: user.pyramid_unlocked || false,
-          eyeUnlocked: user.eye_unlocked || false,
-          eyeReady,
-          chatUnlocked: user.chat_unlocked || false,
-          chatReady,
-          loginStreak: user.login_streak || 0,
-          daysSinceEyeOpened
-        });
+        return new Response(
+          JSON.stringify({
+            showPyramid,
+            pyramidUnlocked: user.pyramid_unlocked || false,
+            eyeUnlocked: user.eye_unlocked || false,
+            eyeReady,
+            chatUnlocked: user.chat_unlocked || false,
+            chatReady,
+            loginStreak: user.login_streak || 0,
+            daysSinceEyeOpened
+          }),
+          { status: 200, headers }
+        );
       }
 
       // ===== FIRST ACCESS =====
@@ -108,7 +107,10 @@ export default async function handler(req, res) {
             WHERE email = ${email}
           `;
         }
-        return res.status(200).json({ success: true });
+        return new Response(
+          JSON.stringify({ success: true }),
+          { status: 200, headers }
+        );
       }
 
       // ===== OPEN PYRAMID =====
@@ -128,7 +130,9 @@ What lies beyond eternity.`;
         // Send Easter Egg Email
         try {
           const userName = user.first_name || user.last_name ? `${user.first_name || ''} ${user.last_name || ''}`.trim() : email.split('@')[0];
-          await fetch(`${getBaseUrl(req)}/api/email-service`, {
+          const url = new URL(req.url);
+          const baseUrl = `${url.protocol}//${url.host}`;
+          await fetch(`${baseUrl}/api/email-service`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -144,10 +148,10 @@ What lies beyond eternity.`;
           console.error('Failed to send pyramid email:', emailError);
         }
 
-        return res.status(200).json({ 
-          success: true,
-          riddle
-        });
+        return new Response(
+          JSON.stringify({ success: true, riddle }),
+          { status: 200, headers }
+        );
       }
 
       // ===== DAILY LOGIN =====
@@ -178,10 +182,10 @@ What lies beyond eternity.`;
           WHERE email = ${email}
         `;
 
-        return res.status(200).json({ 
-          success: true,
-          loginStreak: newStreak
-        });
+        return new Response(
+          JSON.stringify({ success: true, loginStreak: newStreak }),
+          { status: 200, headers }
+        );
       }
 
       // ===== UNLOCK EYE =====
@@ -190,11 +194,14 @@ What lies beyond eternity.`;
         const hoursSincePyramid = (now - new Date(user.pyramid_opened_at)) / (1000 * 60 * 60);
         
         if (hoursSincePyramid < 72 || user.login_streak < 3) {
-          return res.status(400).json({ 
-            error: 'Requirements not met',
-            hoursSincePyramid,
-            loginStreak: user.login_streak
-          });
+          return new Response(
+            JSON.stringify({ 
+              error: 'Requirements not met',
+              hoursSincePyramid,
+              loginStreak: user.login_streak
+            }),
+            { status: 400, headers }
+          );
         }
 
         await sql`
@@ -212,7 +219,9 @@ The final door will open.`;
         // Send Easter Egg Email
         try {
           const userName = user.first_name || user.last_name ? `${user.first_name || ''} ${user.last_name || ''}`.trim() : email.split('@')[0];
-          await fetch(`${getBaseUrl(req)}/api/email-service`, {
+          const url = new URL(req.url);
+          const baseUrl = `${url.protocol}//${url.host}`;
+          await fetch(`${baseUrl}/api/email-service`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -228,10 +237,10 @@ The final door will open.`;
           console.error('Failed to send eye email:', emailError);
         }
 
-        return res.status(200).json({ 
-          success: true,
-          riddle
-        });
+        return new Response(
+          JSON.stringify({ success: true, riddle }),
+          { status: 200, headers }
+        );
       }
 
       // ===== UNLOCK CHAT =====
@@ -240,10 +249,10 @@ The final door will open.`;
         const hoursSinceEye = (now - new Date(user.eye_opened_at)) / (1000 * 60 * 60);
         
         if (hoursSinceEye < 168) {
-          return res.status(400).json({ 
-            error: 'Must wait 168 hours',
-            hoursSinceEye
-          });
+          return new Response(
+            JSON.stringify({ error: 'Must wait 168 hours', hoursSinceEye }),
+            { status: 400, headers }
+          );
         }
 
         await sql`
@@ -257,7 +266,9 @@ The final door will open.`;
         // Send Final Easter Egg Email
         try {
           const userName = user.first_name || user.last_name ? `${user.first_name || ''} ${user.last_name || ''}`.trim() : email.split('@')[0];
-          await fetch(`${getBaseUrl(req)}/api/email-service`, {
+          const url = new URL(req.url);
+          const baseUrl = `${url.protocol}//${url.host}`;
+          await fetch(`${baseUrl}/api/email-service`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -273,10 +284,10 @@ The final door will open.`;
           console.error('Failed to send chat email:', emailError);
         }
 
-        return res.status(200).json({ 
-          success: true,
-          message: 'Chat unlocked!'
-        });
+        return new Response(
+          JSON.stringify({ success: true, message: 'Chat unlocked!' }),
+          { status: 200, headers }
+        );
       }
 
       // ===== MARK CHAT SESSION =====
@@ -288,21 +299,24 @@ The final door will open.`;
           WHERE email = ${email}
         `;
 
-        return res.status(200).json({ 
-          success: true,
-          message: 'Session marked'
-        });
+        return new Response(
+          JSON.stringify({ success: true, message: 'Session marked' }),
+          { status: 200, headers }
+        );
       }
 
       default:
-        return res.status(400).json({ error: 'Invalid action' });
+        return new Response(
+          JSON.stringify({ error: 'Invalid action' }),
+          { status: 400, headers }
+        );
     }
 
   } catch (error) {
     console.error('Easter Egg API Error:', error);
-    return res.status(500).json({ 
-      error: 'Internal server error',
-      details: error.message
-    });
+    return new Response(
+      JSON.stringify({ error: 'Internal server error', details: error.message }),
+      { status: 500, headers }
+    );
   }
 }
