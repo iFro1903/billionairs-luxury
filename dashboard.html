@@ -477,6 +477,7 @@
             const revealDesc = document.querySelector('.reveal-description');
             if (revealDesc && window.i18n.translations[lang]?.dashboard?.reveal_description) {
                 revealDesc.innerHTML = window.i18n.translations[lang].dashboard.reveal_description;
+                console.log(`✅ Dashboard reveal description translated to ${lang}`);
             }
             
             // Add Logout translation
@@ -485,6 +486,12 @@
                 logoutBtn.textContent = window.i18n.translations[lang].dashboard.logout;
             }
         }
+        
+        // Listen for language changes from i18n system
+        window.addEventListener('languageChanged', (event) => {
+            console.log('🌍 Dashboard received language change:', event.detail.language);
+            translateDashboardHTML(event.detail.language);
+        });
         
         // Check authentication on page load
         async function initDashboard() {
