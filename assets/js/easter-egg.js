@@ -328,13 +328,26 @@ const EasterEggSystem = {
     
     // Helper: Translate text using current language
     translate(text) {
-        if (window.i18n && typeof window.i18n.translate === 'function') {
-            const translated = window.i18n.translate(text);
-            console.log(`🌍 Translating: "${text}" → "${translated}" (lang: ${window.i18n.currentLang})`);
-            return translated;
+        if (!window.i18n) {
+            console.warn(`⚠️ i18n not available, using fallback for: "${text}"`);
+            return text;
         }
-        console.warn(`⚠️ i18n not available, using fallback for: "${text}"`);
-        return text; // Fallback to English
+        
+        try {
+            // Get text map for current language
+            const textMap = window.i18n.getTextMapForLanguage(window.i18n.currentLang);
+            if (textMap && textMap[text]) {
+                const translated = textMap[text];
+                console.log(`🌍 Translating: "${text}" → "${translated}" (lang: ${window.i18n.currentLang})`);
+                return translated;
+            }
+            
+            console.warn(`⚠️ No translation found for: "${text}" in language: ${window.i18n.currentLang}`);
+            return text;
+        } catch (error) {
+            console.error(`❌ Translation error for "${text}":`, error);
+            return text;
+        }
     },
 
     showChat() {
