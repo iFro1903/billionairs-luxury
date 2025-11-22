@@ -62,10 +62,10 @@ export default async function handler(req) {
         let eyeReady = false;
         let chatReady = false;
 
-        // Check if pyramid should show (20 seconds after first access)
+        // Check if pyramid should show (8 seconds after first access)
         if (user.first_dashboard_access && !user.pyramid_unlocked) {
           const timeSinceFirst = now - new Date(user.first_dashboard_access);
-          showPyramid = timeSinceFirst >= 20000; // 20 seconds
+          showPyramid = timeSinceFirst >= 8000; // 8 seconds
         }
 
         // Check if eye should be ready (72 hours + 3 logins)
