@@ -143,12 +143,16 @@ const EasterEggSystem = {
             });
 
             const data = await response.json();
-            const title = window.i18n ? window.i18n.translate('THE PYRAMID') : 'THE PYRAMID';
+            
+            // Wait for i18n to be available
+            await this.waitForI18n();
+            
+            const title = this.translate('THE PYRAMID');
             const riddleLines = [
-                window.i18n ? window.i18n.translate('The mark of power inverted lies.') : 'The mark of power inverted lies.',
-                window.i18n ? window.i18n.translate('Three dawns must break before your eyes.') : 'Three dawns must break before your eyes.',
-                window.i18n ? window.i18n.translate('Only those who persist shall see') : 'Only those who persist shall see',
-                window.i18n ? window.i18n.translate('What lies beyond eternity.') : 'What lies beyond eternity.'
+                this.translate('The mark of power inverted lies.'),
+                this.translate('Three dawns must break before your eyes.'),
+                this.translate('Only those who persist shall see'),
+                this.translate('What lies beyond eternity.')
             ];
             const riddle = riddleLines.join('\n');
             this.showRiddle('<img src="assets/images/logo.png" alt="BILLIONAIRS">', title, riddle);
@@ -276,12 +280,16 @@ const EasterEggSystem = {
                 });
 
                 const data = await response.json();
-                const title = window.i18n ? window.i18n.translate('THE ALL-SEEING EYE') : 'THE ALL-SEEING EYE';
+                
+                // Wait for i18n to be available
+                await this.waitForI18n();
+                
+                const title = this.translate('THE ALL-SEEING EYE');
                 const riddleLines = [
-                    window.i18n ? window.i18n.translate('Count the days of creation.') : 'Count the days of creation.',
-                    window.i18n ? window.i18n.translate('One for each wonder of the world.') : 'One for each wonder of the world.',
-                    window.i18n ? window.i18n.translate('When seven suns have risen and fallen,') : 'When seven suns have risen and fallen,',
-                    window.i18n ? window.i18n.translate('The final door will open.') : 'The final door will open.'
+                    this.translate('Count the days of creation.'),
+                    this.translate('One for each wonder of the world.'),
+                    this.translate('When seven suns have risen and fallen,'),
+                    this.translate('The final door will open.')
                 ];
                 const riddle = riddleLines.join('\n');
                 this.showRiddle('<img src="assets/images/eye-simple.svg" alt="All-Seeing Eye" style="width: 80px; height: 80px;">', title, riddle);
@@ -294,7 +302,7 @@ const EasterEggSystem = {
     showRiddle(icon, title, text) {
         const modal = document.createElement('div');
         modal.className = 'riddle-modal show';
-        const buttonText = window.i18n ? window.i18n.translate('I UNDERSTAND') : 'I UNDERSTAND';
+        const buttonText = this.translate('I UNDERSTAND');
         modal.innerHTML = `
             <div class="riddle-content">
                 <div class="riddle-icon">${icon}</div>
@@ -306,6 +314,23 @@ const EasterEggSystem = {
             </div>
         `;
         document.body.appendChild(modal);
+    },
+    
+    // Helper: Wait for i18n to be available
+    async waitForI18n() {
+        let attempts = 0;
+        while (!window.i18n && attempts < 50) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+            attempts++;
+        }
+    },
+    
+    // Helper: Translate text using current language
+    translate(text) {
+        if (window.i18n && typeof window.i18n.translate === 'function') {
+            return window.i18n.translate(text);
+        }
+        return text; // Fallback to English
     },
 
     showChat() {
