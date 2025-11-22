@@ -477,8 +477,15 @@
             const revealDesc = document.querySelector('.reveal-description');
             if (revealDesc && window.i18n.translations[lang]?.dashboard?.reveal_description) {
                 revealDesc.innerHTML = window.i18n.translations[lang].dashboard.reveal_description;
+                console.log(`✅ Dashboard HTML translated to ${lang}`);
             }
-            
+        }
+        
+        // Listen for language changes
+        document.addEventListener('languageChanged', (event) => {
+            console.log('🌍 Language changed event received:', event.detail.language);
+            translateDashboardHTML(event.detail.language);
+        });
             // Add Logout translation
             const logoutBtn = document.querySelector('.logout-button');
             if (logoutBtn && window.i18n.translations[lang]?.dashboard?.logout) {
