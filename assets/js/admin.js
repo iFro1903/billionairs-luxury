@@ -122,6 +122,9 @@ class AdminPanel {
             });
         }
 
+        // Setup bulk Easter Egg controls
+        this.setupBulkEasterEggControls();
+
         // Check emergency mode status
         this.checkEmergencyMode();
 
@@ -270,10 +273,104 @@ class AdminPanel {
 
         if (!selectedEmail) return;
 
-        // Setup unlock buttons
+        // Setup unlock buttons for individual user toggle
         document.querySelectorAll('.unlock-btn').forEach(btn => {
-            btn.onclick = () => this.handleUnlock(selectedEmail, btn.dataset.unlock);
+            btn.onclick = () => this.handleIndividualToggle(selectedEmail, btn.dataset.unlock);
         });
+    }
+
+    setupBulkEasterEggControls() {
+        // Setup bulk unlock buttons
+        document.querySelectorAll('.bulk-unlock-btn, .bulk-lock-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const action = btn.dataset.action; // 'unlock-all' or 'lock-all'
+                const feature = btn.dataset.feature; // 'pyramid', 'eye', 'chat', or 'all'
+                this.handleBulkAction(action, feature);
+            });
+        });
+    }
+
+    async handleBulkAction(action, feature) {
+        const featureNames = {
+            'pyramid': 'Pyramid 🔺',
+            'eye': 'Eye 👁️',
+            'chat': 'Chat 💬',
+            'all': 'All Features 🎯'
+        };
+
+        const actionText = action === 'unlock-all' ? 'UNLOCK' : 'LOCK';
+        const confirmMsg = `⚠️ ${actionText} ${featureNames[feature]} for ALL members?\n\nThis will affect all users except the CEO.\n\nConfirm?`;
+
+        if (!confirm(confirmMsg)) return;
+
+        try {
+            const adminSession = JSON.parse(sessionStorage.getItem('adminSession'));
+            
+            const response = await fetch('/api/admin-toggle-easter-eggs', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${adminSession.email}`
+                },
+                body: JSON.stringify({ 
+                    action,
+                    feature
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert(`✅ Success!\n\n${data.message}\n${data.affectedUsers} users affected.`);
+                // Reload user data to show updated status
+                this.loadUsersData();
+            } else {
+                alert(`❌ Error: ${data.error || 'Failed to perform action'}`);
+            }
+        } catch (error) {
+            console.error('Bulk action error:', error);
+            alert('❌ An error occurred. Please try again.');
+        }
+    }
+
+    async handleIndividualToggle(email, type) {
+        if (type === 'reset') {
+            if (!confirm(`Reset all Easter Eggs for ${email}?`)) return;
+            // Handle reset logic (lock all features for this user)
+            await this.handleBulkToggleForUser(email, 'lock-all', 'all');
+            return;
+        }
+
+        if (!confirm(`Toggle ${type} for ${email}?`)) return;
+
+        try {
+            const adminSession = JSON.parse(sessionStorage.getItem('adminSession'));
+            
+            const response = await fetch('/api/admin-toggle-easter-eggs', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${adminSession.email}`
+                },
+                body: JSON.stringify({ 
+                    action: 'toggle',
+                    feature: type,
+                    email
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert(`✅ ${data.message}`);
+                this.loadUsersData();
+            } else {
+                alert(`❌ Error: ${data.error || 'Failed to toggle feature'}`);
+            }
+        } catch (error) {
+            console.error('Toggle error:', error);
+            alert('❌ An error occurred. Please try again.');
+        }
     }
 
     async handleUnlock(email, type) {

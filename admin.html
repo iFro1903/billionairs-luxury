@@ -128,8 +128,55 @@
                     <h2>Easter Egg Control</h2>
                 </div>
 
+                <!-- Bulk Actions for All Members -->
+                <div class="control-section bulk-control">
+                    <h3>🌍 Bulk Actions - All Members</h3>
+                    <p style="color: #999; font-size: 14px; margin-bottom: 15px;">
+                        Apply changes to all users (except CEO)
+                    </p>
+                    <div class="bulk-buttons-grid">
+                        <div class="bulk-group">
+                            <h4>🔺 Pyramid</h4>
+                            <button class="bulk-unlock-btn" data-action="unlock-all" data-feature="pyramid">
+                                ✅ Unlock for All
+                            </button>
+                            <button class="bulk-lock-btn" data-action="lock-all" data-feature="pyramid">
+                                🔒 Lock for All
+                            </button>
+                        </div>
+                        <div class="bulk-group">
+                            <h4>👁️ Eye</h4>
+                            <button class="bulk-unlock-btn" data-action="unlock-all" data-feature="eye">
+                                ✅ Unlock for All
+                            </button>
+                            <button class="bulk-lock-btn" data-action="lock-all" data-feature="eye">
+                                🔒 Lock for All
+                            </button>
+                        </div>
+                        <div class="bulk-group">
+                            <h4>💬 Chat</h4>
+                            <button class="bulk-unlock-btn" data-action="unlock-all" data-feature="chat">
+                                ✅ Unlock for All
+                            </button>
+                            <button class="bulk-lock-btn" data-action="lock-all" data-feature="chat">
+                                🔒 Lock for All
+                            </button>
+                        </div>
+                        <div class="bulk-group">
+                            <h4>🎯 All Features</h4>
+                            <button class="bulk-unlock-btn" data-action="unlock-all" data-feature="all">
+                                ✅ Unlock Everything
+                            </button>
+                            <button class="bulk-lock-btn" data-action="lock-all" data-feature="all">
+                                🔒 Lock Everything
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Individual User Control -->
                 <div class="control-section">
-                    <h3>User Progress Override</h3>
+                    <h3>👤 Individual User Control</h3>
                     <div class="form-group">
                         <label>Select User:</label>
                         <select id="easterEggUserSelect">
@@ -137,9 +184,9 @@
                         </select>
                     </div>
                     <div class="unlock-buttons">
-                        <button class="unlock-btn" data-unlock="pyramid">Unlock Pyramid</button>
-                        <button class="unlock-btn" data-unlock="eye">Unlock Eye</button>
-                        <button class="unlock-btn" data-unlock="chat">Unlock Chat</button>
+                        <button class="unlock-btn" data-unlock="pyramid">Toggle Pyramid</button>
+                        <button class="unlock-btn" data-unlock="eye">Toggle Eye</button>
+                        <button class="unlock-btn" data-unlock="chat">Toggle Chat</button>
                         <button class="unlock-btn reset" data-unlock="reset">Reset All</button>
                     </div>
                 </div>
