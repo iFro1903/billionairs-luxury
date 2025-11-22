@@ -173,6 +173,26 @@
     "download_access": "TÉLÉCHARGEZ VOTRE ACCÈS EXCLUSIF",
     "hidden_door": "LA PORTE CACHÉE"
   },
+  "certificate": {
+    "private_circle": "Cercle Privé des Membres",
+    "tagline": "Fondé à Zurich • MMXXV",
+    "title": "Certificat d'Accès Exclusif",
+    "final_truth": "LA VÉRITÉ FINALE",
+    "intro": "Vous avez franchi le seuil<br>que peu osent approcher.",
+    "not_gold": "Ce qui se trouve au-delà n'est <em>ni or</em>.<br><em>Ni diamants</em>. Ni richesse matérielle.",
+    "builders": "C'est la compréhension qui sépare<br>les <strong>bâtisseurs</strong> des rêveurs.",
+    "quote": "Le temps n'est pas de l'argent.<br>Le temps est la toile sur laquelle la richesse est peinte.<br><br>Maîtrisez vos minutes, et les millions suivent.",
+    "secret": "Le secret que connaît tout titan de l'industrie:",
+    "something_precious": "<strong>Ni or. Ni diamants.</strong><br><strong>Quelque chose de bien plus précieux.</strong>",
+    "investment": "Investissement d'Adhésion",
+    "subscription": "Abonnement Annuel",
+    "payment_confirmed": "Paiement Confirmé",
+    "access_granted": "Accès Accordé",
+    "member_verified": "Membre Vérifié",
+    "security": "Sécurisé par les Normes Bancaires Suisses<br>Vérifié par Blockchain • Infrastructure Cryptée<br>Zurich, Suisse",
+    "cert_number": "CERTIFICAT N° BILL-EXCLUSIVE-2025-VERIFIED",
+    "establishment": "Cercle Privé des Membres Billionairs • Fondé MMXXV"
+  },
   "payment_success": {
     "payment_confirmed": "Paiement Confirmé",
     "payment_success_message": "Votre paiement a été traité avec succès.",

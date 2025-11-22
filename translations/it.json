@@ -169,6 +169,26 @@
     "download_access": "SCARICA IL TUO ACCESSO ESCLUSIVO",
     "hidden_door": "LA PORTA NASCOSTA"
   },
+  "certificate": {
+    "private_circle": "Cerchia Privata dei Membri",
+    "tagline": "Fondato Zurigo • MMXXV",
+    "title": "Certificato di Accesso Esclusivo",
+    "final_truth": "LA VERITÀ FINALE",
+    "intro": "Hai oltrepassato la soglia<br>che pochi osano avvicinare.",
+    "not_gold": "Ciò che si trova oltre <em>non è oro</em>.<br><em>Non sono diamanti</em>. Non è ricchezza materiale.",
+    "builders": "È la comprensione che separa<br>i <strong>costruttori</strong> dai sognatori.",
+    "quote": "Il tempo non è denaro.<br>Il tempo è la tela su cui la ricchezza viene dipinta.<br><br>Padroneggia i tuoi minuti, e i milioni seguiranno.",
+    "secret": "Il segreto che ogni titano dell'industria conosce:",
+    "something_precious": "<strong>Non oro. Non diamanti.</strong><br><strong>Qualcosa di molto più prezioso.</strong>",
+    "investment": "Investimento di Membership",
+    "subscription": "Abbonamento Annuale",
+    "payment_confirmed": "Pagamento Confermato",
+    "access_granted": "Accesso Concesso",
+    "member_verified": "Membro Verificato",
+    "security": "Protetto dagli Standard Bancari Svizzeri<br>Verificato Blockchain • Infrastruttura Crittografata<br>Zurigo, Svizzera",
+    "cert_number": "CERTIFICATO N. BILL-EXCLUSIVE-2025-VERIFIED",
+    "establishment": "Cerchia Privata dei Membri Billionairs • Fondato MMXXV"
+  },
   "payment_success": {
     "payment_confirmed": "Pagamento Confermato",
     "payment_success_message": "Il tuo pagamento è stato elaborato con successo.",

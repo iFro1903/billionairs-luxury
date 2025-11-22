@@ -154,7 +154,27 @@
     "reveal_title": "最终真相",
     "reveal_description": "你已跨越了少数人敢于接近的门槛。<br><br>超越之处不是黄金。不是钻石。不是物质财富。<br><br>这是将建设者与梦想家分开的理解。<br><br><strong>时间不是金钱。</strong><br>时间是描绘财富的画布。<br><br>掌控你的分钟，百万随之而来。<br><br>每个行业巨头都知道的秘密：<br>不是黄金。不是钻石。<br>而是更珍贵的东西。<br><br>它循环运动，却从不重复。<br><br>一个决定。一个瞬间。一切都会改变。<br><br><strong>你现在拥有精英用来衡量生命的东西。</strong>",
     "download_access": "下载您的专属访问权限",
-    "hidden_door": "隐藏之门"
+    "hidden_door": "隐藏的门"
+  },
+  "certificate": {
+    "private_circle": "私人会员圈",
+    "tagline": "苏黎世创立 • MMXXV",
+    "title": "专属访问证书",
+    "final_truth": "终极真相",
+    "intro": "您已跨越了门槛，<br>鲜有人敢于接近。",
+    "not_gold": "其后之物，<em>非黄金</em>。<br><em>非钻石</em>。亦非物质财富。",
+    "builders": "它是一种理解，分割了<br><strong>建造者</strong>与梦想者。",
+    "quote": "时间不是金钱。<br>时间是财富被绘制的画布。<br><br>掌握你的分钟，百万将紧随其后。",
+    "secret": "每个产业巨人所知的秘密：",
+    "something_precious": "<strong>不是黄金。不是钻石。</strong><br><strong>而是更加珍贵的东西。</strong>",
+    "investment": "会员投资",
+    "subscription": "年度订阅",
+    "payment_confirmed": "付款已确认",
+    "access_granted": "访问已授权",
+    "member_verified": "会员已验证",
+    "security": "由瑞士银行标准保障<br>区块链验证 • 加密基础设施<br>苏黎世，瑞士",
+    "cert_number": "证书编号 BILL-EXCLUSIVE-2025-VERIFIED",
+    "establishment": "Billionairs 私人会员圈 • 创立于 MMXXV"
   },
   "payment_success": {
     "payment_confirmed": "支付已确认",

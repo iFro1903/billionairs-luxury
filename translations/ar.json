@@ -152,6 +152,26 @@
     "download_access": "قم بتنزيل وصولك الحصري",
     "hidden_door": "الباب المخفي"
   },
+  "certificate": {
+    "private_circle": "دائرة الأعضاء الخاصة",
+    "tagline": "تأسست في زيوريخ • MMXXV",
+    "title": "شهادة الوصول الحصري",
+    "final_truth": "الحقيقة النهائية",
+    "intro": "لقد عبرت العتبة<br>التي لا يجرؤ سوى القليل على الاقتراب منها.",
+    "not_gold": "ما يكمن وراءها <em>ليس ذهبًا</em>.<br><em>ولا ألماسًا</em>. ولا ثروة مادية.",
+    "builders": "إنه الفهم الذي يفصل<br>بين <strong>البناة</strong> والحالمين.",
+    "quote": "الوقت ليس مالًا.<br>الوقت هو اللوحة التي تُرسم عليها الثروة.<br><br>اتقن دقائقك، وستتبعك الملايين.",
+    "secret": "السر الذي يعرفه كل عملاق الصناعة:",
+    "something_precious": "<strong>ليس ذهبًا. ولا ألماسًا.</strong><br><strong>شيء أثمن بكثير.</strong>",
+    "investment": "استثمار العضوية",
+    "subscription": "الاشتراك السنوي",
+    "payment_confirmed": "تم تأكيد الدفع",
+    "access_granted": "تم منح الوصول",
+    "member_verified": "تم التحقق من العضو",
+    "security": "مؤمن بمعايير البنوك السويسرية<br>متحقق منه بواسطة Blockchain • بنية تحتية مشفرة<br>زيوريخ، سويسرا",
+    "cert_number": "رقم الشهادة BILL-EXCLUSIVE-2025-VERIFIED",
+    "establishment": "دائرة الأعضاء الخاصة Billionairs • تأسست MMXXV"
+  },
   "payment_success": {
     "payment_confirmed": "تم تأكيد الدفع",
     "payment_success_message": "تمت معالجة دفعتك بنجاح.",

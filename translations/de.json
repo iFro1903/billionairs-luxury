@@ -304,5 +304,25 @@
     "reveal_description": "Sie haben die Schwelle überschritten, die nur wenige zu betreten wagen.<br><br>Was dahinter liegt, ist nicht Gold. Nicht Diamanten. Nicht materieller Reichtum.<br><br>Es ist das Verständnis, das die Erbauer von den Träumern trennt.<br><br><strong>Zeit ist nicht Geld.</strong><br>Zeit ist die Leinwand, auf der Reichtum gemalt wird.<br><br>Meistern Sie Ihre Minuten, und Millionen folgen.<br><br>Das Geheimnis, das jeder Titan der Industrie kennt:<br>Nicht Gold. Nicht Diamanten.<br>Etwas viel Kostbareres.<br><br>Etwas, das sich im Kreis bewegt, aber sich nie wiederholt.<br><br>Eine Entscheidung. Ein Moment. Alles ändert sich.<br><br><strong>Sie besitzen jetzt, woran die Elite ihr Leben misst.</strong>",
     "download_access": "LADEN SIE IHREN EXKLUSIVEN ZUGANG HERUNTER",
     "hidden_door": "DIE VERBORGENE TÜR"
+  },
+  "certificate": {
+    "private_circle": "Privater Mitgliederkreis",
+    "tagline": "Gegr. Zürich • MMXXV",
+    "title": "Zertifikat für Exklusiven Zugang",
+    "final_truth": "DIE ENDGÜLTIGE WAHRHEIT",
+    "intro": "Sie haben die Schwelle überschritten,<br>die nur wenige zu betreten wagen.",
+    "not_gold": "Was dahinter liegt, ist <em>nicht Gold</em>.<br><em>Nicht Diamanten</em>. Nicht materieller Reichtum.",
+    "builders": "Es ist das Verständnis, das<br>die <strong>Erbauer</strong> von den Träumern trennt.",
+    "quote": "Zeit ist nicht Geld.<br>Zeit ist die Leinwand, auf der Reichtum gemalt wird.<br><br>Meistern Sie Ihre Minuten, und Millionen folgen.",
+    "secret": "Das Geheimnis, das jeder Titan der Industrie kennt:",
+    "something_precious": "<strong>Nicht Gold. Nicht Diamanten.</strong><br><strong>Etwas viel Kostbareres.</strong>",
+    "investment": "Mitgliedschaftsinvestition",
+    "subscription": "Jahresabonnement",
+    "payment_confirmed": "Zahlung Bestätigt",
+    "access_granted": "Zugang Gewährt",
+    "member_verified": "Mitglied Verifiziert",
+    "security": "Gesichert nach Schweizer Bankenstandards<br>Blockchain-Verifiziert • Verschlüsselte Infrastruktur<br>Zürich, Schweiz",
+    "cert_number": "ZERTIFIKAT NR. BILL-EXCLUSIVE-2025-VERIFIED",
+    "establishment": "Billionairs Privater Mitgliederkreis • Gegründet MMXXV"
   }
 }

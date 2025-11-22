@@ -286,6 +286,26 @@
     "download_access": "DOWNLOAD YOUR EXCLUSIVE ACCESS",
     "hidden_door": "THE HIDDEN DOOR"
   },
+  "certificate": {
+    "private_circle": "Private Member's Circle",
+    "tagline": "Est. Zürich • MMXXV",
+    "title": "Certificate of Exclusive Access",
+    "final_truth": "THE FINAL TRUTH",
+    "intro": "You have crossed the threshold<br>few dare to approach.",
+    "not_gold": "What lies beyond is <em>not gold</em>.<br><em>Not diamonds</em>. Not material wealth.",
+    "builders": "It is the understanding that separates<br>the <strong>builders</strong> from the dreamers.",
+    "quote": "Time is not money.<br>Time is the canvas upon which wealth is painted.<br><br>Master your minutes, and millions follow.",
+    "secret": "The secret every titan of industry knows:",
+    "something_precious": "<strong>Not gold. Not diamonds.</strong><br><strong>Something far more precious.</strong>",
+    "investment": "Membership Investment",
+    "subscription": "Annual Subscription",
+    "payment_confirmed": "Payment Confirmed",
+    "access_granted": "Access Granted",
+    "member_verified": "Member Verified",
+    "security": "Secured by Swiss Banking Standards<br>Blockchain Verified • Encrypted Infrastructure<br>Zürich, Switzerland",
+    "cert_number": "CERTIFICATE NO. BILL-EXCLUSIVE-2025-VERIFIED",
+    "establishment": "Billionairs Private Member's Circle • Established MMXXV"
+  },
   "payment_success": {
     "payment_confirmed": "Payment Confirmed",
     "payment_success_message": "Your payment has been successfully processed.",

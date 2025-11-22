@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="/assets/js/i18n.js"></script>
     <style>
         @page {
             size: A4;
@@ -383,33 +384,33 @@
             <div class="crest">
                 <img src="../../assets/images/logo.png" alt="BILLIONAIRS">
             </div>
-            <div class="institution-name">Private Member's Circle</div>
+            <div class="institution-name" data-i18n="certificate.private_circle">Private Member's Circle</div>
             <div class="logo">BILLIONAIRS</div>
-            <div class="tagline">Est. Zürich • MMXXV</div>
+            <div class="tagline" data-i18n="certificate.tagline">Est. Zürich • MMXXV</div>
         </div>
         
         <div class="divider"></div>
         
         <!-- Certificate Title -->
         <div class="certificate-title">
-            <div class="certificate-label">Certificate of Exclusive Access</div>
-            <div class="certificate-name">THE FINAL TRUTH</div>
+            <div class="certificate-label" data-i18n="certificate.title">Certificate of Exclusive Access</div>
+            <div class="certificate-name" data-i18n="certificate.final_truth">THE FINAL TRUTH</div>
         </div>
         
         <!-- Content -->
         <div class="content">
-            <p>You have crossed the threshold<br>few dare to approach.</p>
+            <p data-i18n="certificate.intro">You have crossed the threshold<br>few dare to approach.</p>
             
-            <p>What lies beyond is <em>not gold</em>.<br>
+            <p data-i18n="certificate.not_gold">What lies beyond is <em>not gold</em>.<br>
             <em>Not diamonds</em>. Not material wealth.</p>
             
-            <p>It is the understanding that separates<br>
+            <p data-i18n="certificate.builders">It is the understanding that separates<br>
             the <strong>builders</strong> from the dreamers.</p>
         </div>
         
         <!-- Quote -->
         <div class="quote-block">
-            <div class="quote-text">
+            <div class="quote-text" data-i18n="certificate.quote">
                 Time is not money.<br>
                 Time is the canvas upon which wealth is painted.<br><br>
                 Master your minutes, and millions follow.
@@ -418,9 +419,9 @@
         
         <!-- Content continued -->
         <div class="content">
-            <p>The secret every titan of industry knows:</p>
+            <p data-i18n="certificate.secret">The secret every titan of industry knows:</p>
             
-            <p><strong>Not gold. Not diamonds.</strong><br>
+            <p data-i18n="certificate.something_precious"><strong>Not gold. Not diamonds.</strong><br>
             <strong>Something far more precious.</strong></p>
             
             <p><em>Something that moves in circles,<br>
@@ -435,32 +436,50 @@
         
         <!-- Amount Section -->
         <div class="amount-section">
-            <div class="amount-label">Membership Investment</div>
+            <div class="amount-label" data-i18n="certificate.investment">Membership Investment</div>
             <div class="amount-value">CHF 500,000</div>
-            <div class="amount-period">Annual Subscription</div>
+            <div class="amount-period" data-i18n="certificate.subscription">Annual Subscription</div>
             
             <div class="status-badges">
-                <div class="badge">Payment Confirmed</div>
-                <div class="badge">Access Granted</div>
-                <div class="badge">Member Verified</div>
+                <div class="badge" data-i18n="certificate.payment_confirmed">Payment Confirmed</div>
+                <div class="badge" data-i18n="certificate.access_granted">Access Granted</div>
+                <div class="badge" data-i18n="certificate.member_verified">Member Verified</div>
             </div>
         </div>
         
         <!-- Footer -->
         <div class="footer">
-            <div class="security-info">
+            <div class="security-info" data-i18n="certificate.security">
                 Secured by Swiss Banking Standards<br>
                 Blockchain Verified • Encrypted Infrastructure<br>
                 Zürich, Switzerland
             </div>
-            <div class="verification-code">
+            <div class="verification-code" data-i18n="certificate.cert_number">
                 CERTIFICATE NO. BILL-EXCLUSIVE-2025-VERIFIED
             </div>
-            <div class="establishment">
+            <div class="establishment" data-i18n="certificate.establishment">
                 Billionairs Private Member's Circle • Established MMXXV
             </div>
         </div>
     </div>
+    
+    <script>
+        // Detect language from URL or localStorage
+        const urlParams = new URLSearchParams(window.location.search);
+        const userLang = urlParams.get('lang') || 
+                        localStorage.getItem('selectedLanguage') || 
+                        sessionStorage.getItem('userLanguage') || 
+                        'en';
+        
+        // Initialize i18n when ready
+        if (window.i18n) {
+            window.i18n.init().then(() => {
+                if (window.i18n.supportedLanguages.includes(userLang)) {
+                    window.i18n.switchLanguage(userLang);
+                }
+            });
+        }
+    </script>
 </body>
 </html>
 

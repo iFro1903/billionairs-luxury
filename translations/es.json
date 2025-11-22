@@ -173,6 +173,26 @@
     "download_access": "DESCARGA TU ACCESO EXCLUSIVO",
     "hidden_door": "LA PUERTA OCULTA"
   },
+  "certificate": {
+    "private_circle": "Círculo Privado de Miembros",
+    "tagline": "Est. Zúrich • MMXXV",
+    "title": "Certificado de Acceso Exclusivo",
+    "final_truth": "LA VERDAD FINAL",
+    "intro": "Has cruzado el umbral<br>que pocos se atreven a aproximarse.",
+    "not_gold": "Lo que hay más allá <em>no es oro</em>.<br><em>No son diamantes</em>. No es riqueza material.",
+    "builders": "Es el entendimiento que separa<br>a los <strong>constructores</strong> de los soñadores.",
+    "quote": "El tiempo no es dinero.<br>El tiempo es el lienzo sobre el cual se pinta la riqueza.<br><br>Domina tus minutos, y los millones siguen.",
+    "secret": "El secreto que todo titán de la industria conoce:",
+    "something_precious": "<strong>No oro. No diamantes.</strong><br><strong>Algo mucho más precioso.</strong>",
+    "investment": "Inversión de Membersía",
+    "subscription": "Suscripción Anual",
+    "payment_confirmed": "Pago Confirmado",
+    "access_granted": "Acceso Concedido",
+    "member_verified": "Miembro Verificado",
+    "security": "Asegurado por Estándares Bancarios Suizos<br>Verificado por Blockchain • Infraestructura Encriptada<br>Zúrich, Suiza",
+    "cert_number": "CERTIFICADO Nº BILL-EXCLUSIVE-2025-VERIFIED",
+    "establishment": "Círculo Privado de Miembros Billionairs • Establecido MMXXV"
+  },
   "payment_success": {
     "payment_confirmed": "Pago Confirmado",
     "payment_success_message": "Su pago ha sido procesado exitosamente.",
