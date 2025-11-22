@@ -336,6 +336,8 @@ const EasterEggSystem = {
         try {
             // Get text map for current language
             const textMap = window.i18n.getTextMapForLanguage(window.i18n.currentLang);
+            console.log(`🔍 Debug: currentLang=${window.i18n.currentLang}, textMap exists=${!!textMap}, has key="${text}": ${!!textMap && !!textMap[text]}`);
+            
             if (textMap && textMap[text]) {
                 const translated = textMap[text];
                 console.log(`🌍 Translating: "${text}" → "${translated}" (lang: ${window.i18n.currentLang})`);
