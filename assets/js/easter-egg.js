@@ -146,6 +146,7 @@ const EasterEggSystem = {
             
             // Wait for i18n to be available
             await this.waitForI18n();
+            console.log(`🔺 Opening pyramid with language: ${window.i18n?.currentLang || 'unknown'}`);
             
             const title = this.translate('THE PYRAMID');
             const riddleLines = [
@@ -328,8 +329,11 @@ const EasterEggSystem = {
     // Helper: Translate text using current language
     translate(text) {
         if (window.i18n && typeof window.i18n.translate === 'function') {
-            return window.i18n.translate(text);
+            const translated = window.i18n.translate(text);
+            console.log(`🌍 Translating: "${text}" → "${translated}" (lang: ${window.i18n.currentLang})`);
+            return translated;
         }
+        console.warn(`⚠️ i18n not available, using fallback for: "${text}"`);
         return text; // Fallback to English
     },
 
