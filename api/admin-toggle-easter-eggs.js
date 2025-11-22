@@ -1,8 +1,8 @@
+import { neon } from '@neondatabase/serverless';
+
 export const config = {
     runtime: 'edge',
 };
-
-import postgres from 'postgres';
 
 export default async function handler(req) {
     // CORS headers
@@ -25,7 +25,7 @@ export default async function handler(req) {
     }
 
     try {
-        const sql = postgres(process.env.DATABASE_URL, { ssl: 'require' });
+        const sql = neon(process.env.DATABASE_URL);
         const { action, feature, email } = await req.json();
 
         // Verify admin authentication
@@ -92,8 +92,6 @@ export default async function handler(req) {
             }
 
             const result = await updateQuery;
-            
-            await sql.end();
 
             return new Response(JSON.stringify({
                 success: true,
@@ -140,7 +138,6 @@ export default async function handler(req) {
             }
 
             await updateQuery;
-            await sql.end();
 
             return new Response(JSON.stringify({
                 success: true,
@@ -195,7 +192,6 @@ export default async function handler(req) {
             }
 
             await updateQuery;
-            await sql.end();
 
             return new Response(JSON.stringify({
                 success: true,
