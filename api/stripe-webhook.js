@@ -120,12 +120,11 @@ export default async function handler(req) {
                     }
                     
                     try {
-                        // CRITICAL: Update user payment status with UPSERT logic
+                        // CRITICAL: Update user payment status (using actual table columns)
                         const result = await sql`
                             UPDATE users 
                             SET payment_status = 'paid',
-                                stripe_session_id = ${session.id},
-                                payment_date = COALESCE(payment_date, NOW())
+                                has_paid = true
                             WHERE email = ${email}
                             RETURNING id, email, member_id, name, full_name
                         `;
