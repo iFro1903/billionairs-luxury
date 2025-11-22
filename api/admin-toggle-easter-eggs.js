@@ -107,7 +107,54 @@ export default async function handler(req) {
             });
         }
 
-        // Handle single user toggle
+        // Handle individual user unlock/lock
+        if ((action === 'unlock' || action === 'lock') && email) {
+            const unlockValue = action === 'unlock';
+            let updateQuery;
+            
+            if (feature === 'pyramid') {
+                updateQuery = sql`
+                    UPDATE users 
+                    SET pyramid_unlocked = ${unlockValue},
+                        pyramid_opened_at = ${unlockValue ? sql`NOW()` : null}
+                    WHERE email = ${email}
+                `;
+            } else if (feature === 'eye') {
+                updateQuery = sql`
+                    UPDATE users 
+                    SET eye_unlocked = ${unlockValue},
+                        eye_opened_at = ${unlockValue ? sql`NOW()` : null}
+                    WHERE email = ${email}
+                `;
+            } else if (feature === 'chat') {
+                updateQuery = sql`
+                    UPDATE users 
+                    SET chat_unlocked = ${unlockValue}
+                    WHERE email = ${email}
+                `;
+            } else {
+                return new Response(JSON.stringify({ error: 'Invalid feature' }), { 
+                    status: 400, 
+                    headers 
+                });
+            }
+
+            await updateQuery;
+            await sql.end();
+
+            return new Response(JSON.stringify({
+                success: true,
+                action,
+                feature,
+                email,
+                message: `${feature} ${unlockValue ? 'unlocked' : 'locked'} for ${email}`
+            }), { 
+                status: 200, 
+                headers 
+            });
+        }
+
+        // Legacy toggle support
         if (action === 'toggle' && email) {
             let updateQuery;
             

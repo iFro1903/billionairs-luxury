@@ -253,17 +253,165 @@ class AdminPanel {
             });
 
             // Populate user select for easter eggs
-            const select = document.getElementById('easterEggUserSelect');
-            select.innerHTML = '<option value="">Choose user...</option>';
-            data.users.forEach(user => {
-                const option = document.createElement('option');
-                option.value = user.email;
-                option.textContent = `${user.email} (${user.name || 'No name'})`;
-                select.appendChild(option);
-            });
+            this.renderIndividualUserControls(data.users);
 
         } catch (error) {
             console.error('Error loading users:', error);
+        }
+    }
+
+    renderIndividualUserControls(users) {
+        const container = document.getElementById('individualUserControls');
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        // Filter out CEO
+        const regularUsers = users.filter(u => u.email !== this.ceoEmail);
+
+        if (regularUsers.length === 0) {
+            container.innerHTML = '<p style="color: #999; text-align: center; padding: 2rem;">No users found</p>';
+            return;
+        }
+
+        regularUsers.forEach(user => {
+            const card = document.createElement('div');
+            card.className = 'user-control-card';
+            card.dataset.userEmail = user.email.toLowerCase();
+            card.dataset.userName = (user.name || '').toLowerCase();
+            
+            card.innerHTML = `
+                <div class="user-control-header">
+                    <div class="user-control-email">${user.email}</div>
+                    <div class="user-control-name">${user.name || 'No name'}</div>
+                    <span class="user-control-status ${user.has_paid ? 'paid' : 'free'}">
+                        ${user.has_paid ? '💎 Paid' : '🆓 Free'}
+                    </span>
+                </div>
+
+                <div class="easter-egg-features">
+                    <!-- Pyramid Control -->
+                    <div class="feature-control">
+                        <div class="feature-control-header">
+                            <span class="feature-name">🔺 Pyramid</span>
+                            <div class="feature-status">
+                                <span class="status-indicator ${user.pyramid_unlocked ? 'unlocked' : 'locked'}"></span>
+                                <span class="status-text">${user.pyramid_unlocked ? 'Unlocked' : 'Locked'}</span>
+                            </div>
+                        </div>
+                        <div class="feature-buttons">
+                            <button class="feature-toggle-btn unlock" 
+                                    onclick="adminPanel.toggleFeature('${user.email}', 'pyramid', true)"
+                                    ${user.pyramid_unlocked ? 'disabled' : ''}>
+                                ✅ Unlock
+                            </button>
+                            <button class="feature-toggle-btn lock" 
+                                    onclick="adminPanel.toggleFeature('${user.email}', 'pyramid', false)"
+                                    ${!user.pyramid_unlocked ? 'disabled' : ''}>
+                                🔒 Lock
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Eye Control -->
+                    <div class="feature-control">
+                        <div class="feature-control-header">
+                            <span class="feature-name">👁️ Eye</span>
+                            <div class="feature-status">
+                                <span class="status-indicator ${user.eye_unlocked ? 'unlocked' : 'locked'}"></span>
+                                <span class="status-text">${user.eye_unlocked ? 'Unlocked' : 'Locked'}</span>
+                            </div>
+                        </div>
+                        <div class="feature-buttons">
+                            <button class="feature-toggle-btn unlock" 
+                                    onclick="adminPanel.toggleFeature('${user.email}', 'eye', true)"
+                                    ${user.eye_unlocked ? 'disabled' : ''}>
+                                ✅ Unlock
+                            </button>
+                            <button class="feature-toggle-btn lock" 
+                                    onclick="adminPanel.toggleFeature('${user.email}', 'eye', false)"
+                                    ${!user.eye_unlocked ? 'disabled' : ''}>
+                                🔒 Lock
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Chat Control -->
+                    <div class="feature-control">
+                        <div class="feature-control-header">
+                            <span class="feature-name">💬 Chat</span>
+                            <div class="feature-status">
+                                <span class="status-indicator ${user.chat_unlocked ? 'unlocked' : 'locked'}"></span>
+                                <span class="status-text">${user.chat_unlocked ? 'Unlocked' : 'Locked'}</span>
+                            </div>
+                        </div>
+                        <div class="feature-buttons">
+                            <button class="feature-toggle-btn unlock" 
+                                    onclick="adminPanel.toggleFeature('${user.email}', 'chat', true)"
+                                    ${user.chat_unlocked ? 'disabled' : ''}>
+                                ✅ Unlock
+                            </button>
+                            <button class="feature-toggle-btn lock" 
+                                    onclick="adminPanel.toggleFeature('${user.email}', 'chat', false)"
+                                    ${!user.chat_unlocked ? 'disabled' : ''}>
+                                🔒 Lock
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(card);
+        });
+
+        // Setup search functionality
+        const searchInput = document.getElementById('easterEggUserSearch');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const cards = container.querySelectorAll('.user-control-card');
+                
+                cards.forEach(card => {
+                    const email = card.dataset.userEmail;
+                    const name = card.dataset.userName;
+                    const matches = email.includes(searchTerm) || name.includes(searchTerm);
+                    card.style.display = matches ? 'block' : 'none';
+                });
+            });
+        }
+    }
+
+    async toggleFeature(email, feature, unlock) {
+        const action = unlock ? 'unlock' : 'lock';
+        const featureNames = { pyramid: 'Pyramid 🔺', eye: 'Eye 👁️', chat: 'Chat 💬' };
+
+        try {
+            const adminSession = JSON.parse(sessionStorage.getItem('adminSession'));
+            
+            const response = await fetch('/api/admin-toggle-easter-eggs', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${adminSession.email}`
+                },
+                body: JSON.stringify({ 
+                    action: unlock ? 'unlock' : 'lock',
+                    feature,
+                    email
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Refresh user list to show updated status
+                this.loadUsersData();
+            } else {
+                alert(`❌ Error: ${data.error || 'Failed to toggle feature'}`);
+            }
+        } catch (error) {
+            console.error('Toggle feature error:', error);
+            alert('❌ An error occurred. Please try again.');
         }
     }
 

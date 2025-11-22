@@ -477,6 +477,153 @@ tbody tr:hover {
     flex-wrap: wrap;
 }
 
+/* Individual User Controls Grid */
+.individual-users-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.user-control-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(232, 196, 168, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.user-control-card:hover {
+    border-color: rgba(232, 196, 168, 0.4);
+    box-shadow: 0 4px 12px rgba(232, 196, 168, 0.1);
+}
+
+.user-control-header {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(232, 196, 168, 0.1);
+}
+
+.user-control-email {
+    color: #E8C4A8;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+}
+
+.user-control-name {
+    color: #999;
+    font-size: 0.85rem;
+}
+
+.user-control-status {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+
+.user-control-status.paid {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+}
+
+.user-control-status.free {
+    background: rgba(108, 117, 125, 0.2);
+    color: #999;
+}
+
+.easter-egg-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.feature-control {
+    background: rgba(232, 196, 168, 0.05);
+    border: 1px solid rgba(232, 196, 168, 0.15);
+    border-radius: 8px;
+    padding: 0.75rem;
+}
+
+.feature-control-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.feature-name {
+    font-weight: 600;
+    color: #E8C4A8;
+    font-size: 0.9rem;
+}
+
+.feature-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.status-indicator.unlocked {
+    background: #28a745;
+    box-shadow: 0 0 8px rgba(40, 167, 69, 0.6);
+}
+
+.status-indicator.locked {
+    background: #dc3545;
+}
+
+.status-text {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.feature-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.feature-toggle-btn {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.feature-toggle-btn.unlock {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+}
+
+.feature-toggle-btn.lock {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+}
+
+.feature-toggle-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.feature-toggle-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
 /* Chat Messages */
 .chat-messages-admin {
     background: rgba(232, 196, 168, 0.03);
