@@ -274,9 +274,16 @@ export default async function handler(req) {
 
     } catch (error) {
         console.error('Admin Easter Egg Toggle Error:', error);
+        console.error('Error stack:', error.stack);
+        console.error('Error details:', {
+            message: error.message,
+            name: error.name,
+            cause: error.cause
+        });
         return new Response(JSON.stringify({ 
             error: 'Internal server error',
-            details: error.message 
+            details: error.message,
+            stack: error.stack 
         }), { 
             status: 500, 
             headers 
