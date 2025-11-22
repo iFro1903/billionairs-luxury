@@ -76,9 +76,9 @@ export default async function handler(req) {
     let event;
 
     try {
-        // Verify webhook signature
+        // Verify webhook signature (use async method for Edge Runtime)
         const body = await req.text();
-        event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+        event = await stripe.webhooks.constructEventAsync(body, signature, webhookSecret);
     } catch (err) {
         console.error('⚠️ Webhook signature verification failed:', err.message);
         captureError(err, {
