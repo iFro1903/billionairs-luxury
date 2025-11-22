@@ -455,6 +455,20 @@
             letter-spacing: 5px;
             color: rgba(232, 180, 160, 0.25);
             text-transform: uppercase;
+            text-align: center;
+        }
+
+        .watermark-fro {
+            position: fixed;
+            bottom: 0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 6px;
+            color: rgba(232, 180, 160, 0.32);
+            text-transform: uppercase;
+            font-weight: 500;
         }
 
         @media (max-width: 768px) {
@@ -495,6 +509,7 @@
     </div>
 
     <div class="watermark">BILLIONAIRS • Zürich • MMXXV</div>
+    <div class="watermark-fro">FRO</div>
 
     <script>
         const markersContainer = document.getElementById('markers');
