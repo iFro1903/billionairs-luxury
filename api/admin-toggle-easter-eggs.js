@@ -55,19 +55,37 @@ export default async function handler(req) {
             
             let updateQuery;
             if (feature === 'pyramid') {
-                updateQuery = sql`
-                    UPDATE users 
-                    SET pyramid_unlocked = ${unlockValue},
-                        pyramid_opened_at = ${unlockValue ? sql`NOW()` : null}
-                    WHERE email != ${adminUser[0].email}
-                `;
+                if (unlockValue) {
+                    updateQuery = sql`
+                        UPDATE users 
+                        SET pyramid_unlocked = TRUE,
+                            pyramid_opened_at = NOW()
+                        WHERE email != ${adminUser[0].email}
+                    `;
+                } else {
+                    updateQuery = sql`
+                        UPDATE users 
+                        SET pyramid_unlocked = FALSE,
+                            pyramid_opened_at = NULL
+                        WHERE email != ${adminUser[0].email}
+                    `;
+                }
             } else if (feature === 'eye') {
-                updateQuery = sql`
-                    UPDATE users 
-                    SET eye_unlocked = ${unlockValue},
-                        eye_opened_at = ${unlockValue ? sql`NOW()` : null}
-                    WHERE email != ${adminUser[0].email}
-                `;
+                if (unlockValue) {
+                    updateQuery = sql`
+                        UPDATE users 
+                        SET eye_unlocked = TRUE,
+                            eye_opened_at = NOW()
+                        WHERE email != ${adminUser[0].email}
+                    `;
+                } else {
+                    updateQuery = sql`
+                        UPDATE users 
+                        SET eye_unlocked = FALSE,
+                            eye_opened_at = NULL
+                        WHERE email != ${adminUser[0].email}
+                    `;
+                }
             } else if (feature === 'chat') {
                 updateQuery = sql`
                     UPDATE users 
@@ -75,15 +93,27 @@ export default async function handler(req) {
                     WHERE email != ${adminUser[0].email}
                 `;
             } else if (feature === 'all') {
-                updateQuery = sql`
-                    UPDATE users 
-                    SET pyramid_unlocked = ${unlockValue},
-                        pyramid_opened_at = ${unlockValue ? sql`NOW()` : null},
-                        eye_unlocked = ${unlockValue},
-                        eye_opened_at = ${unlockValue ? sql`NOW()` : null},
-                        chat_unlocked = ${unlockValue}
-                    WHERE email != ${adminUser[0].email}
-                `;
+                if (unlockValue) {
+                    updateQuery = sql`
+                        UPDATE users 
+                        SET pyramid_unlocked = TRUE,
+                            pyramid_opened_at = NOW(),
+                            eye_unlocked = TRUE,
+                            eye_opened_at = NOW(),
+                            chat_unlocked = TRUE
+                        WHERE email != ${adminUser[0].email}
+                    `;
+                } else {
+                    updateQuery = sql`
+                        UPDATE users 
+                        SET pyramid_unlocked = FALSE,
+                            pyramid_opened_at = NULL,
+                            eye_unlocked = FALSE,
+                            eye_opened_at = NULL,
+                            chat_unlocked = FALSE
+                        WHERE email != ${adminUser[0].email}
+                    `;
+                }
             } else {
                 return new Response(JSON.stringify({ error: 'Invalid feature' }), { 
                     status: 400, 
@@ -111,19 +141,37 @@ export default async function handler(req) {
             let updateQuery;
             
             if (feature === 'pyramid') {
-                updateQuery = sql`
-                    UPDATE users 
-                    SET pyramid_unlocked = ${unlockValue},
-                        pyramid_opened_at = ${unlockValue ? sql`NOW()` : null}
-                    WHERE email = ${email}
-                `;
+                if (unlockValue) {
+                    updateQuery = sql`
+                        UPDATE users 
+                        SET pyramid_unlocked = TRUE,
+                            pyramid_opened_at = NOW()
+                        WHERE email = ${email}
+                    `;
+                } else {
+                    updateQuery = sql`
+                        UPDATE users 
+                        SET pyramid_unlocked = FALSE,
+                            pyramid_opened_at = NULL
+                        WHERE email = ${email}
+                    `;
+                }
             } else if (feature === 'eye') {
-                updateQuery = sql`
-                    UPDATE users 
-                    SET eye_unlocked = ${unlockValue},
-                        eye_opened_at = ${unlockValue ? sql`NOW()` : null}
-                    WHERE email = ${email}
-                `;
+                if (unlockValue) {
+                    updateQuery = sql`
+                        UPDATE users 
+                        SET eye_unlocked = TRUE,
+                            eye_opened_at = NOW()
+                        WHERE email = ${email}
+                    `;
+                } else {
+                    updateQuery = sql`
+                        UPDATE users 
+                        SET eye_unlocked = FALSE,
+                            eye_opened_at = NULL
+                        WHERE email = ${email}
+                    `;
+                }
             } else if (feature === 'chat') {
                 updateQuery = sql`
                     UPDATE users 

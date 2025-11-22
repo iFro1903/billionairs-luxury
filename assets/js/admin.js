@@ -205,7 +205,7 @@ class AdminPanel {
         });
 
         // Load tab-specific data
-        if (tabName === 'easter-eggs') this.loadEasterEggData();
+        // Easter Egg tab data is loaded via renderIndividualUserControls() called from loadUsersData()
         if (tabName === 'chat') this.loadChatData();
         if (tabName === 'payments') this.loadPaymentsData();
         if (tabName === 'stats') this.loadStatsData();
@@ -415,16 +415,11 @@ class AdminPanel {
         }
     }
 
+    // Legacy function - no longer used with new individual user controls
     async loadEasterEggData() {
-        const select = document.getElementById('easterEggUserSelect');
-        const selectedEmail = select.value;
-
-        if (!selectedEmail) return;
-
-        // Setup unlock buttons for individual user toggle
-        document.querySelectorAll('.unlock-btn').forEach(btn => {
-            btn.onclick = () => this.handleIndividualToggle(selectedEmail, btn.dataset.unlock);
-        });
+        // This function is deprecated - individual user controls are now rendered 
+        // automatically in renderIndividualUserControls() called from loadUsersData()
+        console.log('ℹ️ loadEasterEggData is deprecated - using renderIndividualUserControls instead');
     }
 
     setupBulkEasterEggControls() {
