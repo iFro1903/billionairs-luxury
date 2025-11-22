@@ -524,17 +524,42 @@
         updateClock();
         setInterval(updateClock, 50);
     </script>
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/lang-dropdown-simple.js"></script>
     <script src="assets/js/chat.js"></script>
     <script src="assets/js/easter-egg.js"></script>
     <script>
-        // Initialize Easter Egg System AFTER loading the script
-        const userEmail = localStorage.getItem('userEmail');
-        if (userEmail && typeof EasterEggSystem !== 'undefined') {
-            console.log('🔺 Initializing Easter Egg for:', userEmail);
-            EasterEggSystem.init(userEmail);
-        } else {
-            console.log('⚠️ No userEmail in localStorage or EasterEggSystem not loaded');
+        // Initialize i18n system first
+        async function initHiddenDoor() {
+            // Initialize i18n
+            if (typeof I18nManager !== 'undefined') {
+                window.i18n = new I18nManager();
+                await window.i18n.init();
+                
+                // Get preferred language
+                const storedLang = localStorage.getItem('billionairs_lang') || 
+                                 localStorage.getItem('selectedLanguage') || 
+                                 sessionStorage.getItem('userLanguage') || 
+                                 navigator.language.split('-')[0];
+                
+                const supportedLanguages = ['de', 'en', 'fr', 'es', 'zh', 'ar', 'it', 'ru', 'ja'];
+                if (supportedLanguages.includes(storedLang)) {
+                    await window.i18n.switchLanguage(storedLang);
+                    console.log(`✅ Hidden Door language set to: ${storedLang}`);
+                }
+            }
+            
+            // Initialize Easter Egg System AFTER i18n is ready
+            const userEmail = localStorage.getItem('userEmail');
+            if (userEmail && typeof EasterEggSystem !== 'undefined') {
+                console.log('🔺 Initializing Easter Egg for:', userEmail);
+                EasterEggSystem.init(userEmail);
+            } else {
+                console.log('⚠️ No userEmail in localStorage or EasterEggSystem not loaded');
+            }
         }
+        
+        initHiddenDoor();
     </script>
 </body>
 </html>
