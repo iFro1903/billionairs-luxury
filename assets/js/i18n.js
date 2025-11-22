@@ -448,6 +448,23 @@ class I18nManager {
                 'Private Equity': 'Private Equity',
                 '+ 42 others': '+ 42 weitere',
                 
+                // Easter Egg System
+                'THE PYRAMID': 'DIE PYRAMIDE',
+                'The mark of power inverted lies.': 'Das Zeichen der Macht liegt umgekehrt.',
+                'Three dawns must break before your eyes.': 'Drei Sonnenaufgänge müssen vor deinen Augen brechen.',
+                'Only those who persist shall see': 'Nur jene, die ausharren, werden sehen',
+                'What lies beyond eternity.': 'Was jenseits der Ewigkeit liegt.',
+                'I UNDERSTAND': 'ICH VERSTEHE',
+                'THE ALL-SEEING EYE': 'DAS ALLSEHENDE AUGE',
+                'Count the days of creation.': 'Zähle die Tage der Schöpfung.',
+                'One for each wonder of the world.': 'Einen für jedes Weltwunder.',
+                'When seven suns have risen and fallen,': 'Wenn sieben Sonnen aufgegangen und untergegangen sind,',
+                'The final door will open.': 'Wird sich die letzte Tür öffnen.',
+                'THE GLOBAL ELITE CHAT': 'DER GLOBALE ELITE CHAT',
+                'Welcome to the inner circle.': 'Willkommen im inneren Kreis.',
+                'You have unlocked what few ever discover.': 'Sie haben freigeschaltet, was nur wenige je entdecken.',
+                'ENTER THE CHAT': 'CHAT BETRETEN',
+                
                 // Final Section
                 "Let's be honest:": 'Seien wir ehrlich:',
                 'No trial period': 'Keine Testphase',
@@ -538,6 +555,23 @@ class I18nManager {
                 'Real Estate': 'Immobilier',
                 'Private Equity': 'Capital Investissement',
                 '+ 42 others': '+ 42 autres',
+                
+                // Easter Egg System
+                'THE PYRAMID': 'LA PYRAMIDE',
+                'The mark of power inverted lies.': 'La marque du pouvoir repose inversée.',
+                'Three dawns must break before your eyes.': 'Trois aubes doivent se lever devant vos yeux.',
+                'Only those who persist shall see': 'Seuls ceux qui persistent verront',
+                'What lies beyond eternity.': 'Ce qui se trouve au-delà de l\'éternité.',
+                'I UNDERSTAND': 'JE COMPRENDS',
+                'THE ALL-SEEING EYE': 'L\'ŒIL QUI VOIT TOUT',
+                'Count the days of creation.': 'Comptez les jours de la création.',
+                'One for each wonder of the world.': 'Un pour chaque merveille du monde.',
+                'When seven suns have risen and fallen,': 'Quand sept soleils se seront levés et couchés,',
+                'The final door will open.': 'La porte finale s\'ouvrira.',
+                'THE GLOBAL ELITE CHAT': 'LE CHAT DE L\'ÉLITE MONDIALE',
+                'Welcome to the inner circle.': 'Bienvenue dans le cercle intérieur.',
+                'You have unlocked what few ever discover.': 'Vous avez débloqué ce que peu découvrent jamais.',
+                'ENTER THE CHAT': 'ENTRER DANS LE CHAT',
                 
                 // Final Section
                 "Let's be honest:": 'Soyons honnêtes:',
@@ -630,6 +664,23 @@ class I18nManager {
                 'Private Equity': 'Capital Privado',
                 '+ 42 others': '+ 42 otros',
                 
+                // Easter Egg System
+                'THE PYRAMID': 'LA PIRÁMIDE',
+                'The mark of power inverted lies.': 'La marca del poder yace invertida.',
+                'Three dawns must break before your eyes.': 'Tres amaneceres deben romper ante tus ojos.',
+                'Only those who persist shall see': 'Solo aquellos que persisten verán',
+                'What lies beyond eternity.': 'Lo que yace más allá de la eternidad.',
+                'I UNDERSTAND': 'ENTIENDO',
+                'THE ALL-SEEING EYE': 'EL OJO QUE TODO LO VE',
+                'Count the days of creation.': 'Cuenta los días de la creación.',
+                'One for each wonder of the world.': 'Uno por cada maravilla del mundo.',
+                'When seven suns have risen and fallen,': 'Cuando siete soles hayan salido y caído,',
+                'The final door will open.': 'La puerta final se abrirá.',
+                'THE GLOBAL ELITE CHAT': 'EL CHAT DE LA ÉLITE GLOBAL',
+                'Welcome to the inner circle.': 'Bienvenido al círculo interno.',
+                'You have unlocked what few ever discover.': 'Has desbloqueado lo que pocos descubren.',
+                'ENTER THE CHAT': 'ENTRAR AL CHAT',
+                
                 // Final Section
                 "Let's be honest:": 'Seamos honestos:',
                 'No trial period': 'Sin período de prueba',
@@ -720,6 +771,23 @@ class I18nManager {
                 'Real Estate': '房地产',
                 'Private Equity': '私募股权',
                 '+ 42 others': '+ 42 其他',
+                
+                // Easter Egg System
+                'THE PYRAMID': '金字塔',
+                'The mark of power inverted lies.': '权力的标志倒置。',
+                'Three dawns must break before your eyes.': '三个黎明必须在你眼前破晓。',
+                'Only those who persist shall see': '只有坚持的人才能看到',
+                'What lies beyond eternity.': '永恒之外的东西。',
+                'I UNDERSTAND': '我明白了',
+                'THE ALL-SEEING EYE': '全知之眼',
+                'Count the days of creation.': '数创造的日子。',
+                'One for each wonder of the world.': '世界每一个奇迹一个。',
+                'When seven suns have risen and fallen,': '当七个太阳升起又落下时，',
+                'The final door will open.': '最后的门将打开。',
+                'THE GLOBAL ELITE CHAT': '全球精英聊天',
+                'Welcome to the inner circle.': '欢迎来到内圈。',
+                'You have unlocked what few ever discover.': '您已解锁少数人发现的东西。',
+                'ENTER THE CHAT': '进入聊天',
                 
                 // Final Section
                 "Let's be honest:": '让我们诚实：',
@@ -812,6 +880,23 @@ class I18nManager {
                 'Private Equity': 'أسهم خاصة',
                 '+ 42 others': '+ 42 آخرون',
                 
+                // Easter Egg System
+                'THE PYRAMID': 'الهرم',
+                'The mark of power inverted lies.': 'علامة القوة تكمن مقلوبة.',
+                'Three dawns must break before your eyes.': 'يجب أن تشرق ثلاثة فجر أمام عينيك.',
+                'Only those who persist shall see': 'فقط أولئك الذين يثابرون سيرون',
+                'What lies beyond eternity.': 'ما يكمن وراء الأبدية.',
+                'I UNDERSTAND': 'أنا أفهم',
+                'THE ALL-SEEING EYE': 'العين التي ترى كل شيء',
+                'Count the days of creation.': 'عد أيام الخلق.',
+                'One for each wonder of the world.': 'واحد لكل عجيبة من عجائب العالم.',
+                'When seven suns have risen and fallen,': 'عندما تشرق سبع شموس وتغرب،',
+                'The final door will open.': 'سيفتح الباب الأخير.',
+                'THE GLOBAL ELITE CHAT': 'دردشة النخبة العالمية',
+                'Welcome to the inner circle.': 'مرحبا بك في الدائرة الداخلية.',
+                'You have unlocked what few ever discover.': 'لقد فتحت ما يكتشفه القليلون.',
+                'ENTER THE CHAT': 'ادخل الدردشة',
+                
                 // Final Section
                 "Let's be honest:": 'لنكن صادقين:',
                 'No trial period': 'لا توجد فترة تجريبية',
@@ -902,6 +987,23 @@ class I18nManager {
                 'Real Estate': 'Immobiliare',
                 'Private Equity': 'Private Equity',
                 '+ 42 others': '+ 42 altri',
+                
+                // Easter Egg System
+                'THE PYRAMID': 'LA PIRAMIDE',
+                'The mark of power inverted lies.': 'Il segno del potere giace invertito.',
+                'Three dawns must break before your eyes.': 'Tre albe devono sorgere davanti ai tuoi occhi.',
+                'Only those who persist shall see': 'Solo coloro che persistono vedranno',
+                'What lies beyond eternity.': 'Ciò che si trova oltre l\'eternità.',
+                'I UNDERSTAND': 'HO CAPITO',
+                'THE ALL-SEEING EYE': 'L\'OCCHIO CHE VEDE TUTTO',
+                'Count the days of creation.': 'Conta i giorni della creazione.',
+                'One for each wonder of the world.': 'Uno per ogni meraviglia del mondo.',
+                'When seven suns have risen and fallen,': 'Quando sette soli saranno sorti e tramontati,',
+                'The final door will open.': 'La porta finale si aprirà.',
+                'THE GLOBAL ELITE CHAT': 'LA CHAT DELL\'ÉLITE GLOBALE',
+                'Welcome to the inner circle.': 'Benvenuto nel cerchio interno.',
+                'You have unlocked what few ever discover.': 'Hai sbloccato ciò che pochi scoprono mai.',
+                'ENTER THE CHAT': 'ENTRA NELLA CHAT',
                 
                 // Final Section
                 "Let's be honest:": 'Siamo onesti:',
@@ -994,6 +1096,23 @@ class I18nManager {
                 'Private Equity': 'Частный капитал',
                 '+ 42 others': '+ 42 других',
                 
+                // Easter Egg System
+                'THE PYRAMID': 'ПИРАМИДА',
+                'The mark of power inverted lies.': 'Знак власти лежит перевернутым.',
+                'Three dawns must break before your eyes.': 'Три рассвета должны пройти перед вашими глазами.',
+                'Only those who persist shall see': 'Только те, кто настойчив, увидят',
+                'What lies beyond eternity.': 'Что лежит за пределами вечности.',
+                'I UNDERSTAND': 'Я ПОНИМАЮ',
+                'THE ALL-SEEING EYE': 'ВСЕВИДЯЩЕЕ ОКО',
+                'Count the days of creation.': 'Считайте дни творения.',
+                'One for each wonder of the world.': 'По одному на каждое чудо света.',
+                'When seven suns have risen and fallen,': 'Когда семь солнц взойдут и зайдут,',
+                'The final door will open.': 'Откроется последняя дверь.',
+                'THE GLOBAL ELITE CHAT': 'ЧАТ МИРОВОЙ ЭЛИТЫ',
+                'Welcome to the inner circle.': 'Добро пожаловать во внутренний круг.',
+                'You have unlocked what few ever discover.': 'Вы разблокировали то, что мало кто когда-либо обнаруживает.',
+                'ENTER THE CHAT': 'ВОЙТИ В ЧАТ',
+                
                 // Final Section
                 "Let's be honest:": 'Давайте будем честными:',
                 'No trial period': 'Без пробного периода',
@@ -1084,6 +1203,23 @@ class I18nManager {
                 'Real Estate': '不動産',
                 'Private Equity': 'プライベートエクイティ',
                 '+ 42 others': '+ 42 その他',
+                
+                // Easter Egg System
+                'THE PYRAMID': 'ピラミッド',
+                'The mark of power inverted lies.': '力の印は逆さまに横たわる。',
+                'Three dawns must break before your eyes.': '三つの夜明けがあなたの目の前で破らなければならない。',
+                'Only those who persist shall see': '忍耐する者だけが見るだろう',
+                'What lies beyond eternity.': '永遠の彼方にあるものを。',
+                'I UNDERSTAND': '理解しました',
+                'THE ALL-SEEING EYE': '全知の目',
+                'Count the days of creation.': '創造の日を数えなさい。',
+                'One for each wonder of the world.': '世界の各不思議に一つ。',
+                'When seven suns have risen and fallen,': '七つの太陽が昇り沈んだとき、',
+                'The final door will open.': '最後の扉が開く。',
+                'THE GLOBAL ELITE CHAT': 'グローバルエリートチャット',
+                'Welcome to the inner circle.': '内輪へようこそ。',
+                'You have unlocked what few ever discover.': 'あなたは少数の人しか発見しないものを解錠しました。',
+                'ENTER THE CHAT': 'チャットに入る',
                 
                 // Final Section
                 "Let's be honest:": '正直に言いましょう：',

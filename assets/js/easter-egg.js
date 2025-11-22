@@ -143,7 +143,15 @@ const EasterEggSystem = {
             });
 
             const data = await response.json();
-            this.showRiddle('<img src="assets/images/logo.png" alt="BILLIONAIRS">', 'The Pyramid', data.riddle);
+            const title = window.i18n ? window.i18n.translate('THE PYRAMID') : 'THE PYRAMID';
+            const riddleLines = [
+                window.i18n ? window.i18n.translate('The mark of power inverted lies.') : 'The mark of power inverted lies.',
+                window.i18n ? window.i18n.translate('Three dawns must break before your eyes.') : 'Three dawns must break before your eyes.',
+                window.i18n ? window.i18n.translate('Only those who persist shall see') : 'Only those who persist shall see',
+                window.i18n ? window.i18n.translate('What lies beyond eternity.') : 'What lies beyond eternity.'
+            ];
+            const riddle = riddleLines.join('\n');
+            this.showRiddle('<img src="assets/images/logo.png" alt="BILLIONAIRS">', title, riddle);
         } catch (error) {
             console.error('Error opening pyramid:', error);
         }
@@ -268,7 +276,15 @@ const EasterEggSystem = {
                 });
 
                 const data = await response.json();
-                this.showRiddle('<img src="assets/images/eye-simple.svg" alt="All-Seeing Eye" style="width: 80px; height: 80px;">', 'The All-Seeing Eye', data.riddle);
+                const title = window.i18n ? window.i18n.translate('THE ALL-SEEING EYE') : 'THE ALL-SEEING EYE';
+                const riddleLines = [
+                    window.i18n ? window.i18n.translate('Count the days of creation.') : 'Count the days of creation.',
+                    window.i18n ? window.i18n.translate('One for each wonder of the world.') : 'One for each wonder of the world.',
+                    window.i18n ? window.i18n.translate('When seven suns have risen and fallen,') : 'When seven suns have risen and fallen,',
+                    window.i18n ? window.i18n.translate('The final door will open.') : 'The final door will open.'
+                ];
+                const riddle = riddleLines.join('\n');
+                this.showRiddle('<img src="assets/images/eye-simple.svg" alt="All-Seeing Eye" style="width: 80px; height: 80px;">', title, riddle);
             } catch (error) {
                 console.error('Error opening eye:', error);
             }
@@ -278,13 +294,14 @@ const EasterEggSystem = {
     showRiddle(icon, title, text) {
         const modal = document.createElement('div');
         modal.className = 'riddle-modal show';
+        const buttonText = window.i18n ? window.i18n.translate('I UNDERSTAND') : 'I UNDERSTAND';
         modal.innerHTML = `
             <div class="riddle-content">
                 <div class="riddle-icon">${icon}</div>
                 <h2 class="riddle-title">${title}</h2>
                 <p class="riddle-text">${text}</p>
                 <button class="riddle-close" onclick="this.closest('.riddle-modal').remove()">
-                    I Understand
+                    ${buttonText}
                 </button>
             </div>
         `;
