@@ -382,6 +382,20 @@ class I18nManager {
                 'Blockchain Verified': 'Blockchain Verifiziert',
                 'Exclusive Access': 'Exklusiver Zugang',
                 
+                // Member Dashboard - Ultimate Truth Section
+                'You have crossed the threshold few dare to approach': 'Sie haben die Schwelle überschritten, die nur wenige wagen',
+                'What lies beyond is not gold. Not diamonds. Not material wealth.': 'Was dahinter liegt, ist nicht Gold. Nicht Diamanten. Nicht materieller Reichtum.',
+                'It is the understanding that separates the builders from the dreamers.': 'Es ist das Verständnis, das die Erbauer von den Träumern trennt.',
+                'Time is not money.': 'Zeit ist nicht Geld.',
+                'Time is the canvas upon which wealth is painted.': 'Zeit ist die Leinwand, auf der Reichtum gemalt wird.',
+                'Master your minutes, and millions follow.': 'Beherrschen Sie Ihre Minuten, und Millionen folgen.',
+                'The secret every titan of industry knows:': 'Das Geheimnis, das jeder Industrietitan kennt:',
+                'Not gold. Not diamonds.': 'Nicht Gold. Nicht Diamanten.',
+                'Something far more precious.': 'Etwas viel Kostbareres.',
+                'Something that moves in circles, yet never repeats.': 'Etwas, das sich im Kreis bewegt, sich aber nie wiederholt.',
+                'One decision. One moment. Everything changes.': 'Eine Entscheidung. Ein Moment. Alles ändert sich.',
+                'You now possess what the elite measure their lives by.': 'Sie besitzen jetzt das, womit die Elite ihr Leben misst.',
+                
                 // Trust Section
                 "Some experiences can't be explained.": 'Manche Erlebnisse lassen sich nicht erklären.',
                 "They can only be lived.": 'Sie können nur erlebt werden.',
@@ -458,6 +472,20 @@ class I18nManager {
                 'Swiss Secured': 'Sécurisé Suisse',
                 'Blockchain Verified': 'Vérifié Blockchain',
                 'Exclusive Access': 'Accès Exclusif',
+                
+                // Member Dashboard - Ultimate Truth Section
+                'You have crossed the threshold few dare to approach': 'Vous avez franchi le seuil que peu osent approcher',
+                'What lies beyond is not gold. Not diamonds. Not material wealth.': 'Ce qui se trouve au-delà n\'est pas de l\'or. Pas des diamants. Pas de richesse matérielle.',
+                'It is the understanding that separates the builders from the dreamers.': 'C\'est la compréhension qui sépare les bâtisseurs des rêveurs.',
+                'Time is not money.': 'Le temps n\'est pas de l\'argent.',
+                'Time is the canvas upon which wealth is painted.': 'Le temps est la toile sur laquelle la richesse est peinte.',
+                'Master your minutes, and millions follow.': 'Maîtrisez vos minutes, et les millions suivent.',
+                'The secret every titan of industry knows:': 'Le secret que tout titan de l\'industrie connaît:',
+                'Not gold. Not diamonds.': 'Pas d\'or. Pas de diamants.',
+                'Something far more precious.': 'Quelque chose de bien plus précieux.',
+                'Something that moves in circles, yet never repeats.': 'Quelque chose qui se déplace en cercles, mais ne se répète jamais.',
+                'One decision. One moment. Everything changes.': 'Une décision. Un moment. Tout change.',
+                'You now possess what the elite measure their lives by.': 'Vous possédez maintenant ce par quoi l\'élite mesure sa vie.',
                 
                 // Trust Section
                 "Some experiences can't be explained.": 'Certaines expériences ne peuvent être expliquées.',
@@ -536,6 +564,20 @@ class I18nManager {
                 'Blockchain Verified': 'Verificado Blockchain',
                 'Exclusive Access': 'Acceso Exclusivo',
                 
+                // Member Dashboard - Ultimate Truth Section
+                'You have crossed the threshold few dare to approach': 'Has cruzado el umbral que pocos se atreven a acercarse',
+                'What lies beyond is not gold. Not diamonds. Not material wealth.': 'Lo que hay más allá no es oro. Ni diamantes. Ni riqueza material.',
+                'It is the understanding that separates the builders from the dreamers.': 'Es la comprensión que separa a los constructores de los soñadores.',
+                'Time is not money.': 'El tiempo no es dinero.',
+                'Time is the canvas upon which wealth is painted.': 'El tiempo es el lienzo sobre el cual se pinta la riqueza.',
+                'Master your minutes, and millions follow.': 'Domina tus minutos, y los millones seguirán.',
+                'The secret every titan of industry knows:': 'El secreto que todo titán de la industria conoce:',
+                'Not gold. Not diamonds.': 'No oro. No diamantes.',
+                'Something far more precious.': 'Algo mucho más precioso.',
+                'Something that moves in circles, yet never repeats.': 'Algo que se mueve en círculos, pero nunca se repite.',
+                'One decision. One moment. Everything changes.': 'Una decisión. Un momento. Todo cambia.',
+                'You now possess what the elite measure their lives by.': 'Ahora posees con lo que la élite mide sus vidas.',
+                
                 // Trust Section
                 "Some experiences can't be explained.": 'Algunas experiencias no se pueden explicar.',
                 "They can only be lived.": 'Solo se pueden vivir.',
@@ -612,6 +654,20 @@ class I18nManager {
                 'Swiss Secured': '瑞士安全保障',
                 'Blockchain Verified': '区块链验证',
                 'Exclusive Access': '专属访问',
+                
+                // Member Dashboard - Ultimate Truth Section
+                'You have crossed the threshold few dare to approach': '您已跨越了少数人敢于接近的门槛',
+                'What lies beyond is not gold. Not diamonds. Not material wealth.': '超越之处不是黄金。不是钻石。不是物质财富。',
+                'It is the understanding that separates the builders from the dreamers.': '这是将建设者与梦想家分开的理解。',
+                'Time is not money.': '时间不是金钱。',
+                'Time is the canvas upon which wealth is painted.': '时间是财富绘制的画布。',
+                'Master your minutes, and millions follow.': '掌握你的分钟，百万随之而来。',
+                'The secret every titan of industry knows:': '每个工业巨头都知道的秘密：',
+                'Not gold. Not diamonds.': '不是黄金。不是钻石。',
+                'Something far more precious.': '更珍贵的东西。',
+                'Something that moves in circles, yet never repeats.': '循环运动，但永不重复的东西。',
+                'One decision. One moment. Everything changes.': '一个决定。一个时刻。一切都改变。',
+                'You now possess what the elite measure their lives by.': '您现在拥有精英衡量生活的东西。',
                 
                 // Trust Section
                 "Some experiences can't be explained.": '有些体验无法用言语解释。',
@@ -690,6 +746,20 @@ class I18nManager {
                 'Blockchain Verified': 'مُصادق عليه بالبلوكشين',
                 'Exclusive Access': 'وصول حصري',
                 
+                // Member Dashboard - Ultimate Truth Section
+                'You have crossed the threshold few dare to approach': 'لقد عبرت العتبة التي يجرؤ القليلون على الاقتراب منها',
+                'What lies beyond is not gold. Not diamonds. Not material wealth.': 'ما وراءها ليس ذهباً. ولا ألماساً. ولا ثروة مادية.',
+                'It is the understanding that separates the builders from the dreamers.': 'إنه الفهم الذي يفصل البناة عن الحالمين.',
+                'Time is not money.': 'الوقت ليس مالاً.',
+                'Time is the canvas upon which wealth is painted.': 'الوقت هو اللوحة التي ترسم عليها الثروة.',
+                'Master your minutes, and millions follow.': 'أتقن دقائقك، والملايين تتبع.',
+                'The secret every titan of industry knows:': 'السر الذي يعرفه كل عملاق صناعي:',
+                'Not gold. Not diamonds.': 'ليس ذهباً. ولا ألماساً.',
+                'Something far more precious.': 'شيء أكثر قيمة بكثير.',
+                'Something that moves in circles, yet never repeats.': 'شيء يتحرك في دوائر، لكنه لا يتكرر أبداً.',
+                'One decision. One moment. Everything changes.': 'قرار واحد. لحظة واحدة. كل شيء يتغير.',
+                'You now possess what the elite measure their lives by.': 'أنت الآن تمتلك ما تقيس به النخبة حياتها.',
+                
                 // Trust Section
                 "Some experiences can't be explained.": 'بعض التجارب لا يمكن شرحها.',
                 "They can only be lived.": 'يمكن فقط عيشها.',
@@ -766,6 +836,20 @@ class I18nManager {
                 'Swiss Secured': 'Sicurezza Svizzera',
                 'Blockchain Verified': 'Verificato Blockchain',
                 'Exclusive Access': 'Accesso Esclusivo',
+                
+                // Member Dashboard - Ultimate Truth Section
+                'You have crossed the threshold few dare to approach': 'Hai attraversato la soglia che pochi osano avvicinare',
+                'What lies beyond is not gold. Not diamonds. Not material wealth.': 'Ciò che si trova oltre non è oro. Non diamanti. Non ricchezza materiale.',
+                'It is the understanding that separates the builders from the dreamers.': 'È la comprensione che separa i costruttori dai sognatori.',
+                'Time is not money.': 'Il tempo non è denaro.',
+                'Time is the canvas upon which wealth is painted.': 'Il tempo è la tela su cui si dipinge la ricchezza.',
+                'Master your minutes, and millions follow.': 'Padroneggia i tuoi minuti, e milioni seguiranno.',
+                'The secret every titan of industry knows:': 'Il segreto che ogni titano dell\'industria conosce:',
+                'Not gold. Not diamonds.': 'Non oro. Non diamanti.',
+                'Something far more precious.': 'Qualcosa di molto più prezioso.',
+                'Something that moves in circles, yet never repeats.': 'Qualcosa che si muove in cerchi, ma non si ripete mai.',
+                'One decision. One moment. Everything changes.': 'Una decisione. Un momento. Tutto cambia.',
+                'You now possess what the elite measure their lives by.': 'Ora possiedi ciò con cui l\'élite misura le proprie vite.',
                 
                 // Trust Section
                 "Some experiences can't be explained.": 'Alcune esperienze non possono essere spiegate.',
@@ -844,6 +928,20 @@ class I18nManager {
                 'Blockchain Verified': 'Верифицировано Blockchain',
                 'Exclusive Access': 'Эксклюзивный доступ',
                 
+                // Member Dashboard - Ultimate Truth Section
+                'You have crossed the threshold few dare to approach': 'Вы пересекли порог, к которому немногие осмеливаются приблизиться',
+                'What lies beyond is not gold. Not diamonds. Not material wealth.': 'То, что находится за ним, — это не золото. Не бриллианты. Не материальное богатство.',
+                'It is the understanding that separates the builders from the dreamers.': 'Это понимание, которое отделяет строителей от мечтателей.',
+                'Time is not money.': 'Время — это не деньги.',
+                'Time is the canvas upon which wealth is painted.': 'Время — это холст, на котором рисуется богатство.',
+                'Master your minutes, and millions follow.': 'Овладейте своими минутами, и миллионы последуют.',
+                'The secret every titan of industry knows:': 'Секрет, который знает каждый титан индустрии:',
+                'Not gold. Not diamonds.': 'Не золото. Не бриллианты.',
+                'Something far more precious.': 'Нечто гораздо более ценное.',
+                'Something that moves in circles, yet never repeats.': 'Нечто, что движется по кругу, но никогда не повторяется.',
+                'One decision. One moment. Everything changes.': 'Одно решение. Один момент. Все меняется.',
+                'You now possess what the elite measure their lives by.': 'Теперь вы обладаете тем, чем элита измеряет свои жизни.',
+                
                 // Trust Section
                 "Some experiences can't be explained.": 'Некоторые переживания невозможно объяснить.',
                 "They can only be lived.": 'Их можно только прожить.',
@@ -920,6 +1018,20 @@ class I18nManager {
                 'Swiss Secured': 'スイス認証済み',
                 'Blockchain Verified': 'ブロックチェーン検証済み',
                 'Exclusive Access': '限定アクセス',
+                
+                // Member Dashboard - Ultimate Truth Section
+                'You have crossed the threshold few dare to approach': 'あなたは、ほとんどの人が近づこうとしない敷居を越えました',
+                'What lies beyond is not gold. Not diamonds. Not material wealth.': 'その先にあるのは金ではありません。ダイヤモンドでもありません。物質的な富でもありません。',
+                'It is the understanding that separates the builders from the dreamers.': '建設者と夢想家を分けるのは理解です。',
+                'Time is not money.': '時間はお金ではありません。',
+                'Time is the canvas upon which wealth is painted.': '時間は富が描かれるキャンバスです。',
+                'Master your minutes, and millions follow.': 'あなたの分を支配すれば、何百万もついてきます。',
+                'The secret every titan of industry knows:': 'すべての産業の巨人が知っている秘密：',
+                'Not gold. Not diamonds.': '金ではない。ダイヤモンドではない。',
+                'Something far more precious.': 'もっと貴重なもの。',
+                'Something that moves in circles, yet never repeats.': '円を描いて動くが、決して繰り返さないもの。',
+                'One decision. One moment. Everything changes.': '一つの決断。一つの瞬間。すべてが変わる。',
+                'You now possess what the elite measure their lives by.': 'あなたは今、エリートが人生を測るものを所有しています。',
                 
                 // Trust Section
                 "Some experiences can't be explained.": '説明できない体験があります。',
