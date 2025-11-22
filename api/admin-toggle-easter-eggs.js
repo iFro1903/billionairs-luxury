@@ -201,33 +201,49 @@ export default async function handler(req) {
 
         // Legacy toggle support
         if (action === 'toggle' && email) {
-            let updateQuery;
-            
             if (feature === 'pyramid') {
                 const user = await sql`SELECT pyramid_unlocked FROM users WHERE email = ${email}`;
                 const newValue = !user[0].pyramid_unlocked;
                 
-                updateQuery = sql`
-                    UPDATE users 
-                    SET pyramid_unlocked = ${newValue},
-                        pyramid_opened_at = ${newValue ? sql`NOW()` : null}
-                    WHERE email = ${email}
-                `;
+                if (newValue) {
+                    await sql`
+                        UPDATE users 
+                        SET pyramid_unlocked = TRUE,
+                            pyramid_opened_at = NOW()
+                        WHERE email = ${email}
+                    `;
+                } else {
+                    await sql`
+                        UPDATE users 
+                        SET pyramid_unlocked = FALSE,
+                            pyramid_opened_at = NULL
+                        WHERE email = ${email}
+                    `;
+                }
             } else if (feature === 'eye') {
                 const user = await sql`SELECT eye_unlocked FROM users WHERE email = ${email}`;
                 const newValue = !user[0].eye_unlocked;
                 
-                updateQuery = sql`
-                    UPDATE users 
-                    SET eye_unlocked = ${newValue},
-                        eye_opened_at = ${newValue ? sql`NOW()` : null}
-                    WHERE email = ${email}
-                `;
+                if (newValue) {
+                    await sql`
+                        UPDATE users 
+                        SET eye_unlocked = TRUE,
+                            eye_opened_at = NOW()
+                        WHERE email = ${email}
+                    `;
+                } else {
+                    await sql`
+                        UPDATE users 
+                        SET eye_unlocked = FALSE,
+                            eye_opened_at = NULL
+                        WHERE email = ${email}
+                    `;
+                }
             } else if (feature === 'chat') {
                 const user = await sql`SELECT chat_unlocked FROM users WHERE email = ${email}`;
                 const newValue = !user[0].chat_unlocked;
                 
-                updateQuery = sql`
+                await sql`
                     UPDATE users 
                     SET chat_unlocked = ${newValue}
                     WHERE email = ${email}
@@ -238,8 +254,6 @@ export default async function handler(req) {
                     headers 
                 });
             }
-
-            await updateQuery;
 
             return new Response(JSON.stringify({
                 success: true,
