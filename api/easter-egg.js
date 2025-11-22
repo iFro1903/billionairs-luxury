@@ -1,5 +1,9 @@
 import { neon } from '@neondatabase/serverless';
 
+export const config = {
+  runtime: 'edge',
+};
+
 // Helper function to get base URL
 function getBaseUrl(req) {
   const protocol = req.headers['x-forwarded-proto'] || 'https';
