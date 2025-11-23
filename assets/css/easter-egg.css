@@ -270,9 +270,14 @@
     text-shadow: 0 0 20px rgba(232, 180, 160, 0.6), 0 0 40px rgba(232, 180, 160, 0.4);
     width: 110px;
     height: 110px;
-    display: flex;
+    display: none !important; /* Hidden by default */
     align-items: center;
     justify-content: center;
+}
+
+/* Only show on the-hidden-door page */
+body.hidden-door-page .login-streak-badge {
+    display: flex !important;
 }
 
 .login-streak-number {
