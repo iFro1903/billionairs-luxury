@@ -259,7 +259,7 @@
     border: none;
     font-family: 'Cinzel', serif;
     color: #E8B4A0;
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: 600;
     z-index: 999;
     user-select: none;
@@ -267,11 +267,16 @@
     -moz-user-select: none;
     -ms-user-select: none;
     cursor: default;
-    text-shadow: 0 0 20px rgba(232, 180, 160, 0.5);
+    text-shadow: 0 0 20px rgba(232, 180, 160, 0.6), 0 0 40px rgba(232, 180, 160, 0.4);
+    width: 110px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .login-streak-number {
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: 600;
     display: block;
     text-align: center;
