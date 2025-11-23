@@ -53,11 +53,12 @@ export default async function handler(req) {
         }
 
         const token = authHeader.substring(7);
-        const adminUser = await sql`
-            SELECT email, is_admin FROM users WHERE email = ${token} AND is_admin = TRUE
-        `;
-
-        if (!adminUser || adminUser.length === 0) {
+        
+        // Check if user is admin (CEO email hardcoded check)
+        const CEO_EMAIL = 'kerem.yalcin.d@gmail.com';
+        
+        if (token !== CEO_EMAIL) {
+            console.log('Not admin user:', token);
             return new Response(JSON.stringify({ error: 'Admin access required' }), { 
                 status: 403, 
                 headers 
@@ -75,14 +76,14 @@ export default async function handler(req) {
                         UPDATE users 
                         SET pyramid_unlocked = TRUE,
                             pyramid_opened_at = NOW()
-                        WHERE email != ${adminUser[0].email}
+                        WHERE email != ${CEO_EMAIL}
                     `;
                 } else {
                     updateQuery = sql`
                         UPDATE users 
                         SET pyramid_unlocked = FALSE,
                             pyramid_opened_at = NULL
-                        WHERE email != ${adminUser[0].email}
+                        WHERE email != ${CEO_EMAIL}
                     `;
                 }
             } else if (feature === 'eye') {
@@ -91,21 +92,21 @@ export default async function handler(req) {
                         UPDATE users 
                         SET eye_unlocked = TRUE,
                             eye_opened_at = NOW()
-                        WHERE email != ${adminUser[0].email}
+                        WHERE email != ${CEO_EMAIL}
                     `;
                 } else {
                     updateQuery = sql`
                         UPDATE users 
                         SET eye_unlocked = FALSE,
                             eye_opened_at = NULL
-                        WHERE email != ${adminUser[0].email}
+                        WHERE email != ${CEO_EMAIL}
                     `;
                 }
             } else if (feature === 'chat') {
                 updateQuery = sql`
                     UPDATE users 
                     SET chat_unlocked = ${unlockValue}
-                    WHERE email != ${adminUser[0].email}
+                    WHERE email != ${CEO_EMAIL}
                 `;
             } else if (feature === 'all') {
                 if (unlockValue) {
@@ -116,7 +117,7 @@ export default async function handler(req) {
                             eye_unlocked = TRUE,
                             eye_opened_at = NOW(),
                             chat_unlocked = TRUE
-                        WHERE email != ${adminUser[0].email}
+                        WHERE email != ${CEO_EMAIL}
                     `;
                 } else {
                     updateQuery = sql`
@@ -126,7 +127,7 @@ export default async function handler(req) {
                             eye_unlocked = FALSE,
                             eye_opened_at = NULL,
                             chat_unlocked = FALSE
-                        WHERE email != ${adminUser[0].email}
+                        WHERE email != ${CEO_EMAIL}
                     `;
                 }
             } else {
