@@ -200,6 +200,19 @@
             font-size: 1.5rem;
             color: #E8B4A0;
             font-weight: 600;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            max-width: 100%;
+        }
+
+        /* Email spezifisch - damit lange Adressen umbrechen */
+        #memberEmail {
+            word-break: break-all;
+            line-height: 1.4;
+            font-size: 1.3rem; /* Etwas kleiner als Standard */
+            max-width: 100%;
+            overflow-wrap: anywhere;
         }
 
         .status-badge {
@@ -325,6 +338,86 @@
             background: rgba(232, 180, 160, 0.2);
             color: #F5D4C1;
             border-color: #E8B4A0;
+        }
+
+        /* Mobile Optimierung */
+        @media (max-width: 768px) {
+            .dashboard-title {
+                font-size: 2rem;
+                letter-spacing: 0.15em;
+            }
+
+            .dashboard-subtitle {
+                font-size: 1rem;
+            }
+
+            .member-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .member-info {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .info-value {
+                font-size: 1.1rem;
+            }
+
+            /* Email: Noch kleinere Schrift auf Mobile */
+            #memberEmail {
+                font-size: 0.9rem !important;
+                padding: 0 0.25rem;
+                line-height: 1.6;
+                letter-spacing: -0.02em; /* Engerer Buchstabenabstand */
+            }
+
+            /* Member ID auch anpassen */
+            #memberId {
+                font-size: 1rem;
+                line-height: 1.4;
+            }
+
+            .logout-button {
+                top: 1rem;
+                right: 1rem;
+                padding: 0.6rem 1.5rem;
+                font-size: 0.8rem;
+            }
+
+            .dashboard-container {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-title {
+                font-size: 1.5rem;
+            }
+
+            .member-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .info-label {
+                font-size: 0.8rem;
+            }
+
+            .info-value {
+                font-size: 1rem;
+            }
+
+            /* Email: Minimale Schrift auf sehr kleinen Screens */
+            #memberEmail {
+                font-size: 0.75rem !important;
+                line-height: 1.7;
+                letter-spacing: -0.03em;
+                padding: 0.25rem;
+            }
+
+            #memberId {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
