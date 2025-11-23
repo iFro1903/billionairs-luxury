@@ -25,12 +25,27 @@ export default async function handler(req) {
     }
 
     try {
+        // Check if DATABASE_URL is set
+        if (!process.env.DATABASE_URL) {
+            console.error('DATABASE_URL is not set');
+            return new Response(JSON.stringify({ 
+                error: 'Database configuration error',
+                details: 'DATABASE_URL environment variable is missing'
+            }), { 
+                status: 500, 
+                headers 
+            });
+        }
+
         const sql = neon(process.env.DATABASE_URL);
         const { action, feature, email } = await req.json();
+
+        console.log('Toggle request:', { action, feature, email });
 
         // Verify admin authentication
         const authHeader = req.headers.get('authorization');
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            console.log('No auth header provided');
             return new Response(JSON.stringify({ error: 'Unauthorized' }), { 
                 status: 401, 
                 headers 
