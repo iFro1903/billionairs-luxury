@@ -526,9 +526,6 @@ class LuxuryChat {
         this.pollingInterval = setInterval(() => {
             this.loadMessages();
         }, 3000);
-    }   setInterval(() => {
-            this.loadMessages();
-        }, 3000);
     }
 }
 
