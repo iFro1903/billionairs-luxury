@@ -6,6 +6,23 @@ class LuxuryChat {
         this.messages = [];
         this.isOpen = false;
         this.lastMessageCount = 0;
+        this.pollingInterval = null;
+        this.particleInterval = null;
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => this.cleanup());
+    }
+    
+    cleanup() {
+        if (this.pollingInterval) {
+            clearInterval(this.pollingInterval);
+            this.pollingInterval = null;
+        }
+        if (this.particleInterval) {
+            clearInterval(this.particleInterval);
+            this.particleInterval = null;
+        }
+        console.log('🧹 Chat: Intervals cleared');
     }
 
     init(userEmail) {
@@ -176,7 +193,7 @@ class LuxuryChat {
             easterEggContainer.style.opacity = '0';
             
             // Create particle trail during flight
-            let particleInterval = setInterval(() => {
+            this.particleInterval = setInterval(() => {
                 const particle = document.createElement('div');
                 particle.className = 'eye-particles';
                 const cloneRect = eyeClone.getBoundingClientRect();
@@ -190,7 +207,10 @@ class LuxuryChat {
             // Start flying to center after dramatic close
             setTimeout(() => {
                 eyeClone.classList.add('traveling');
-                clearInterval(particleInterval);
+                if (this.particleInterval) {
+                    clearInterval(this.particleInterval);
+                    this.particleInterval = null;
+                }
             }, 2000);
             
             // Remove clone after it reaches center
@@ -490,15 +510,20 @@ class LuxuryChat {
     escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
-        return div.innerHTML;
-    }
-
     startPolling() {
+        // Clear any existing interval
+        if (this.pollingInterval) {
+            clearInterval(this.pollingInterval);
+        }
+        
         // Initial load to set baseline
         this.loadMessages();
         
         // Poll for new messages every 3 seconds
-        setInterval(() => {
+        this.pollingInterval = setInterval(() => {
+            this.loadMessages();
+        }, 3000);
+    }   setInterval(() => {
             this.loadMessages();
         }, 3000);
     }

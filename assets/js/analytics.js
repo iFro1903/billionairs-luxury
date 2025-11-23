@@ -145,7 +145,7 @@ const BillionairsAnalytics = {
 // Export for global use
 window.BillionairsAnalytics = BillionairsAnalytics;
 
-// Auto-track page views on SPA navigation
+// Auto-track page views on SPA navigation (optimized - reduced from 500ms to 2000ms)
 let lastPath = location.pathname;
 setInterval(() => {
     if (location.pathname !== lastPath) {
@@ -154,6 +154,6 @@ setInterval(() => {
             page_path: location.pathname
         });
     }
-}, 500);
+}, 2000); // Reduced polling frequency from 500ms to 2s to reduce CPU usage
 
 console.log('📊 Google Analytics initialized - Measurement ID: G-80P17E7RZK');

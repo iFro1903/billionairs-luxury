@@ -12,8 +12,30 @@ class LuxuryTimepiece {
         this.pyramids = [];
         this.mouseX = 0;
         this.mouseY = 0;
+        this.slotCountdownInterval = null;
+        
+        // Cleanup intervals on page unload
+        window.addEventListener('beforeunload', () => this.cleanup());
         
         this.init();
+    }
+    
+    cleanup() {
+        // Clear all intervals to prevent memory leaks
+        if (this.clockInterval) {
+            clearInterval(this.clockInterval);
+            this.clockInterval = null;
+        }
+        
+        if (this.slotCountdownInterval) {
+            clearInterval(this.slotCountdownInterval);
+            this.slotCountdownInterval = null;
+        }
+        
+        this.worldClockIntervals.forEach(interval => clearInterval(interval));
+        this.worldClockIntervals = [];
+        
+        console.log('🧹 Cleanup: All intervals cleared');
     }
 
     async init() {
@@ -623,12 +645,17 @@ class LuxuryTimepiece {
         const slotsElement = document.getElementById('memberSlots');
         if (!slotsElement) return;
         
+        // Clear existing interval if any
+        if (this.slotCountdownInterval) {
+            clearInterval(this.slotCountdownInterval);
+        }
+        
         // Start with random number between 3-9
         let slots = Math.floor(Math.random() * 7) + 3;
         slotsElement.textContent = `${slots} SLOTS REMAINING`;
         
         // Decrease every 45-90 seconds
-        setInterval(() => {
+        this.slotCountdownInterval = setInterval(() => {
             if (slots > 1) {
                 slots--;
                 slotsElement.textContent = `${slots} ${slots === 1 ? 'SLOT' : 'SLOTS'} REMAINING`;
@@ -786,6 +813,11 @@ class LuxuryTimepiece {
     }
 
     startClock() {
+        // Clear existing interval to prevent duplicates
+        if (this.clockInterval) {
+            clearInterval(this.clockInterval);
+        }
+        
         this.updateClock();
         this.clockInterval = setInterval(() => {
             this.updateClock();
