@@ -381,7 +381,15 @@ const EasterEggSystem = {
         
         let badge = document.getElementById('streakBadge');
         
-        // Hide badge if chat is ready/unlocked
+        // ALWAYS remove badge if not on hidden door page
+        if (!isHiddenDoorPage) {
+            if (badge) {
+                badge.remove();
+            }
+            return;
+        }
+        
+        // Hide badge if chat is ready/unlocked (only check if on hidden door page)
         if (this.status.chatReady || this.status.chatUnlocked) {
             if (badge) {
                 badge.remove();
@@ -389,14 +397,15 @@ const EasterEggSystem = {
             return;
         }
         
-        if (!badge && this.status.loginStreak > 0 && isHiddenDoorPage) {
+        // Create badge only on hidden door page
+        if (!badge && this.status.loginStreak > 0) {
             badge = document.createElement('div');
             badge.id = 'streakBadge';
             badge.className = 'login-streak-badge';
             document.body.appendChild(badge);
         }
 
-        if (badge && this.status.loginStreak > 0 && isHiddenDoorPage) {
+        if (badge && this.status.loginStreak > 0) {
             let displayStreak = this.status.loginStreak;
             let maxStreak = 3;
             
@@ -413,9 +422,6 @@ const EasterEggSystem = {
             const romanNumerals = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
             const roman = romanNumerals[Math.min(displayStreak, maxStreak)] || displayStreak;
             badge.innerHTML = `<div class="login-streak-number">${roman}</div>`;
-        } else if (badge && !isHiddenDoorPage) {
-            // Remove badge if on dashboard
-            badge.remove();
         }
     },
 
