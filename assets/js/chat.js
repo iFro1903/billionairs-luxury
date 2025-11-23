@@ -510,6 +510,9 @@ class LuxuryChat {
     escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
+        return div.innerHTML;
+    }
+    
     startPolling() {
         // Clear any existing interval
         if (this.pollingInterval) {
