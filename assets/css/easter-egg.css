@@ -349,3 +349,16 @@
         filter: drop-shadow(0 0 60px rgba(232, 196, 168, 1));
     }
 }
+
+/* Desktop: Elemente oben positionieren */
+@media (min-width: 768px) {
+    .easter-egg-container {
+        top: 1.5rem;
+        bottom: auto;
+    }
+    
+    .login-streak-badge {
+        top: 1.5rem;
+        bottom: auto;
+    }
+}
