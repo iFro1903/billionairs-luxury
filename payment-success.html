@@ -221,35 +221,45 @@
         const sessionId = urlParams.get('session_id');
         const userLang = urlParams.get('lang') || 'en';
 
-        // Initialize i18n
-        if (window.i18n) {
-            window.i18n.switchLanguage(userLang);
+        // Initialize i18n when ready
+        async function initPage() {
+            if (window.i18n) {
+                await window.i18n.init();
+                await window.i18n.switchLanguage(userLang);
+            }
+
+            // Set date and time
+            const now = new Date();
+            document.getElementById('paymentDate').textContent = now.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            });
+            document.getElementById('paymentTime').textContent = now.toLocaleTimeString('en-GB', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            // Set transaction ID
+            if (sessionId) {
+                const shortId = sessionId.substring(sessionId.length - 12).toUpperCase();
+                const transactionIdElement = document.getElementById('transactionId');
+                if (transactionIdElement) {
+                    transactionIdElement.textContent = shortId;
+                }
+
+                // Notify parent window
+                if (window.opener && window.opener.stripeProcessor) {
+                    window.opener.stripeProcessor.handlePaymentSuccess(sessionId);
+                }
+            }
         }
 
-        // Set date and time
-        const now = new Date();
-        document.getElementById('paymentDate').textContent = now.toLocaleDateString('en-GB', {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric'
-        });
-        document.getElementById('paymentTime').textContent = now.toLocaleTimeString('en-GB', {
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-
-        // Set transaction ID
-        if (sessionId) {
-            const shortId = sessionId.substring(sessionId.length - 12).toUpperCase();
-            const transactionIdElement = document.getElementById('transactionId');
-            if (transactionIdElement) {
-                transactionIdElement.textContent = shortId;
-            }
-
-            // Notify parent window
-            if (window.opener && window.opener.stripeProcessor) {
-                window.opener.stripeProcessor.handlePaymentSuccess(sessionId);
-            }
+        // Wait for i18n to be ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPage);
+        } else {
+            initPage();
         }
 
         function continueToSite() {
