@@ -353,17 +353,25 @@ const EasterEggSystem = {
     },
 
     showChat() {
+        console.log('🎭 showChat called');
+        console.log('LuxuryChat defined:', typeof LuxuryChat !== 'undefined');
+        console.log('Current page:', window.location.pathname);
+        
         // Initialize and open luxury chat
         if (typeof LuxuryChat === 'undefined') {
             console.log('LuxuryChat not loaded, redirecting to timepiece page...');
+            // Store that we want to open chat after redirect
+            sessionStorage.setItem('openChatOnLoad', 'true');
             window.location.href = '/the-hidden-door.html';
             return;
         }
         
+        console.log('Initializing LuxuryChat...');
         if (!window.luxuryChat) {
             window.luxuryChat = new LuxuryChat();
             window.luxuryChat.init(this.userEmail);
         }
+        console.log('Opening chat with animation...');
         window.luxuryChat.open();
     },
 
