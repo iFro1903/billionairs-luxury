@@ -55,7 +55,7 @@ export default async function handler(req) {
         const token = authHeader.substring(7);
         
         // Check if user is admin (CEO email hardcoded check)
-        const CEO_EMAIL = 'kerem.yalcin.d@gmail.com';
+        const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
         
         if (token !== CEO_EMAIL) {
             console.log('Not admin user:', token);
