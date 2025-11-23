@@ -388,6 +388,8 @@ class AdminPanel {
         try {
             const adminSession = JSON.parse(sessionStorage.getItem('adminSession'));
             
+            console.log('Sending toggle request:', { action, feature, email, adminEmail: adminSession.email });
+            
             const response = await fetch('/api/admin-toggle-easter-eggs', {
                 method: 'POST',
                 headers: { 
@@ -402,12 +404,14 @@ class AdminPanel {
             });
 
             const data = await response.json();
+            console.log('Toggle response:', data);
 
             if (response.ok) {
                 // Refresh user list to show updated status
                 this.loadUsersData();
             } else {
-                alert(`❌ Error: ${data.error || 'Failed to toggle feature'}`);
+                console.error('Toggle failed:', response.status, data);
+                alert(`❌ Error: ${data.error || 'Failed to toggle feature'}\n\nDetails: ${data.details || 'Unknown error'}`);
             }
         } catch (error) {
             console.error('Toggle feature error:', error);
