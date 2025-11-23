@@ -31,49 +31,11 @@ if ('serviceWorker' in navigator) {
 // DISABLED: Install prompt and button functionality
 // User requested removal of "Install App" button
 
-/*
-// Listen for install prompt
-window.addEventListener('beforeinstallprompt', (event) => {
-    console.log('📱 Install prompt available');
-    
-    // Prevent default prompt
-    event.preventDefault();
-    
-    // Store event for later use
-    deferredPrompt = event;
-    
-    // Show custom install button
-    showInstallButton();
-});
-
-// Show install button
-function showInstallButton() {
-    if (isInstalled) return;
-    
-    const installBtn = document.getElementById('pwa-install-btn');
-    if (installBtn) {
-        installBtn.style.display = 'block';
-    } else {
-        // Create floating install button
-        createFloatingInstallButton();
-    }
-}
-
-// Create floating install button
-function createFloatingInstallButton() {
-    // DISABLED - User requested removal
-    return;
-}
-
-// Install app function
-async function installApp() {
-    // DISABLED - User requested removal
-    return;
-}
-    
-    // Clear deferred prompt
-    deferredPrompt = null;
-}
+// All install prompt code commented out below:
+// window.addEventListener('beforeinstallprompt', ...) - DISABLED
+// showInstallButton() - DISABLED  
+// createFloatingInstallButton() - DISABLED
+// installApp() - DISABLED
 
 // Listen for successful installation
 window.addEventListener('appinstalled', (event) => {
