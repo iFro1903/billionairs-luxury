@@ -896,10 +896,40 @@
             
             console.log('PDF window opened successfully');
             
-            // Show success message
+            // Show subtle notification instead of blocking alert
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+                border: 2px solid #E8B4A0;
+                border-radius: 15px;
+                padding: 20px 30px;
+                color: white;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 14px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+                z-index: 10000;
+                animation: slideInRight 0.5s ease;
+                max-width: 350px;
+            `;
+            notification.innerHTML = `
+                <div style="font-weight: 600; color: #E8B4A0; margin-bottom: 8px; font-size: 16px;">✓ FINAL TRUTH Opened</div>
+                <div style="opacity: 0.9; line-height: 1.4;">
+                    Your exclusive content has been opened in a new tab.<br>
+                    <span style="color: #E8B4A0;">Tip:</span> Press Ctrl+P (Windows) or Cmd+P (Mac) to save as PDF.
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            // Auto-remove notification after 6 seconds
             setTimeout(() => {
-                alert('Your exclusive "FINAL TRUTH" has been opened!\n\nYou can print it as PDF using Ctrl+P (Windows) or Cmd+P (Mac).');
-            }, 500);
+                notification.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => notification.remove(), 500);
+            }, 6000);
         }
 
         // Initialize dashboard
