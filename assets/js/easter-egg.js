@@ -354,6 +354,12 @@ const EasterEggSystem = {
 
     showChat() {
         // Initialize and open luxury chat
+        if (typeof LuxuryChat === 'undefined') {
+            console.log('LuxuryChat not loaded, redirecting to timepiece page...');
+            window.location.href = '/the-hidden-door.html';
+            return;
+        }
+        
         if (!window.luxuryChat) {
             window.luxuryChat = new LuxuryChat();
             window.luxuryChat.init(this.userEmail);
