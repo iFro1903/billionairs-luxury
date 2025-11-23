@@ -1,6 +1,24 @@
 // Easter Egg System JavaScript
 // Add this to dashboard.html before </body>
 
+// IMMEDIATELY remove login streak badge if not on hidden door page
+if (!window.location.pathname.includes('the-hidden-door.html')) {
+    const removeBadge = () => {
+        const badge = document.getElementById('streakBadge');
+        if (badge) {
+            badge.remove();
+        }
+    };
+    // Remove immediately and also check after DOM loads
+    removeBadge();
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', removeBadge);
+    }
+    // Also check periodically for first 2 seconds
+    const checkInterval = setInterval(removeBadge, 100);
+    setTimeout(() => clearInterval(checkInterval), 2000);
+}
+
 const EasterEggSystem = {
     userEmail: null,
     status: null,
