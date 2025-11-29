@@ -327,5 +327,11 @@
     "security": "Gesichert nach Schweizer Bankenstandards<br>Blockchain-Verifiziert • Verschlüsselte Infrastruktur<br>Zürich, Schweiz",
     "cert_number": "ZERTIFIKAT NR. BILL-EXCLUSIVE-2025-VERIFIED",
     "establishment": "Billionairs Privater Mitgliederkreis • Gegründet MMXXV"
+  },
+  "pyramid": {
+    "line1": "Das Zeichen der Macht liegt umgekehrt.",
+    "line2": "Drei Sonnenaufgänge müssen vor deinen Augen erscheinen.",
+    "line3": "Nur wer Geduld und tiefe Loyalität hat, wird sehen",
+    "line4": "Was jenseits der Ewigkeit liegt."
   }
 }

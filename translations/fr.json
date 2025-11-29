@@ -196,6 +196,12 @@
     "cert_number": "CERTIFICAT N° BILL-EXCLUSIVE-2025-VERIFIED",
     "establishment": "Cercle Privé des Membres Billionairs • Fondé MMXXV"
   },
+  "pyramid": {
+    "line1": "Le signe du pouvoir repose inversé.",
+    "line2": "Trois aubes doivent se lever devant tes yeux.",
+    "line3": "Seuls ceux avec patience et loyauté profonde verront",
+    "line4": "Ce qui se cache au-delà de l'éternité."
+  },
   "payment_success": {
     "payment_confirmed": "Paiement Confirmé",
     "payment_success_message": "Votre paiement a été traité avec succès.",

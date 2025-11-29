@@ -192,6 +192,12 @@
     "cert_number": "CERTIFICATO N. BILL-EXCLUSIVE-2025-VERIFIED",
     "establishment": "Cerchia Privata dei Membri Billionairs • Fondato MMXXV"
   },
+  "pyramid": {
+    "line1": "Il segno del potere giace capovolto.",
+    "line2": "Tre albe devono sorgere davanti ai tuoi occhi.",
+    "line3": "Solo coloro con pazienza e lealtà profonda vedranno",
+    "line4": "Ciò che giace oltre l'eternità."
+  },
   "payment_success": {
     "payment_confirmed": "Pagamento Confermato",
     "payment_success_message": "Il tuo pagamento è stato elaborato con successo.",

@@ -179,6 +179,12 @@
     "cert_number": "证书编号 BILL-EXCLUSIVE-2025-VERIFIED",
     "establishment": "Billionairs 私人会员圈 • 创立于 MMXXV"
   },
+  "pyramid": {
+    "line1": "权力的标志倒置而卧。",
+    "line2": "三个黎明必须在你眼前破晓。",
+    "line3": "只有拥有耐心和深厚忠诚者才能看见",
+    "line4": "永恒之外的存在。"
+  },
   "payment_success": {
     "payment_confirmed": "支付已确认",
     "payment_success_message": "您的支付已成功处理。",

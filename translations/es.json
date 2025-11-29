@@ -196,6 +196,12 @@
     "cert_number": "CERTIFICADO Nº BILL-EXCLUSIVE-2025-VERIFIED",
     "establishment": "Círculo Privado de Miembros Billionairs • Establecido MMXXV"
   },
+  "pyramid": {
+    "line1": "La marca del poder yace invertida.",
+    "line2": "Tres amaneceres deben romper ante tus ojos.",
+    "line3": "Solo aquellos con paciencia y lealtad profunda verán",
+    "line4": "Lo que yace más allá de la eternidad."
+  },
   "payment_success": {
     "payment_confirmed": "Pago Confirmado",
     "payment_success_message": "Su pago ha sido procesado exitosamente.",

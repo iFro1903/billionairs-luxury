@@ -175,6 +175,12 @@
     "cert_number": "証明書番号 BILL-EXCLUSIVE-2025-VERIFIED",
     "establishment": "Billionairs プライベートメンバーズサークル • 設立 MMXXV"
   },
+  "pyramid": {
+    "line1": "力の印は逆さまに横たわる。",
+    "line2": "三つの夜明けが君の目の前で訪れなければならない。",
+    "line3": "忍耐と深い忠誠を持つ者だけが見るだろう",
+    "line4": "永遠の彼方にあるものを。"
+  },
   "payment_success": {
     "payment_confirmed": "お支払い確認済み",
     "payment_success_message": "お支払いが正常に処理されました。",

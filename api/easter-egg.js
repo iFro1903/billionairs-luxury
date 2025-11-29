@@ -137,7 +137,7 @@ export default async function handler(req) {
 
         const riddle = `The mark of power inverted lies.
 Three dawns must break before your eyes.
-Only those who persist shall see
+Only those with patience and deep loyalty shall see
 What lies beyond eternity.`;
 
         // Send Easter Egg Email
@@ -172,21 +172,35 @@ What lies beyond eternity.`;
         const now = new Date();
         const lastLogin = user.last_daily_login ? new Date(user.last_daily_login) : null;
         let newStreak = 1;
+        let debugInfo = {
+          now: now.toISOString(),
+          lastLogin: lastLogin ? lastLogin.toISOString() : 'null',
+          currentStreak: user.login_streak || 0
+        };
 
         if (lastLogin) {
           const hoursSinceLastLogin = (now - lastLogin) / (1000 * 60 * 60);
+          debugInfo.hoursSinceLastLogin = hoursSinceLastLogin.toFixed(2);
           
           if (hoursSinceLastLogin < 24) {
             // Same day, keep streak
             newStreak = user.login_streak || 1;
+            debugInfo.decision = 'Same day - keep streak';
           } else if (hoursSinceLastLogin < 48) {
             // Next day, increment streak
             newStreak = (user.login_streak || 0) + 1;
+            debugInfo.decision = 'Next day - increment streak';
           } else {
             // Gap > 1 day, reset streak
             newStreak = 1;
+            debugInfo.decision = 'Gap > 48h - reset streak';
           }
+        } else {
+          debugInfo.decision = 'First login - start streak';
         }
+
+        debugInfo.newStreak = newStreak;
+        console.log('🔢 LOGIN STREAK DEBUG:', JSON.stringify(debugInfo, null, 2));
 
         await sql`
           UPDATE users 
@@ -196,7 +210,11 @@ What lies beyond eternity.`;
         `;
 
         return new Response(
-          JSON.stringify({ success: true, loginStreak: newStreak }),
+          JSON.stringify({ 
+            success: true, 
+            loginStreak: newStreak,
+            debug: debugInfo
+          }),
           { status: 200, headers }
         );
       }

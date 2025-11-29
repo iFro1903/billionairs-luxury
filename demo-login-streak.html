@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Streak Demo - Billionairs Luxury</title>
+    <link rel="stylesheet" href="assets/css/easter-egg.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #E8B4A0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .demo-container {
+            text-align: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(232, 180, 160, 0.5);
+            letter-spacing: 0.3em;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: #B8948A;
+            letter-spacing: 0.2em;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .demo-card {
+            background: rgba(26, 26, 46, 0.6);
+            border: 2px solid #E8B4A0;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(232, 180, 160, 0.3);
+        }
+
+        .demo-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            letter-spacing: 0.2em;
+        }
+
+        .demo-badge {
+            width: 110px;
+            height: 110px;
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(232, 180, 160, 0.1);
+            border-radius: 50%;
+            border: 2px solid #E8B4A0;
+        }
+
+        .demo-number {
+            font-size: 4rem;
+            color: #E8B4A0;
+            text-shadow: 
+                0 0 20px rgba(232, 180, 160, 0.6),
+                0 0 40px rgba(232, 180, 160, 0.4),
+                0 0 60px rgba(232, 180, 160, 0.2);
+            font-weight: 300;
+            font-family: 'Georgia', serif;
+        }
+
+        .demo-description {
+            margin-top: 2rem;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #B8948A;
+        }
+
+        .info-box {
+            background: rgba(232, 180, 160, 0.1);
+            border-left: 4px solid #E8B4A0;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            text-align: left;
+            border-radius: 10px;
+        }
+
+        .info-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            letter-spacing: 0.1em;
+        }
+
+        .info-box ul {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .info-box li {
+            margin-bottom: 0.8rem;
+            color: #B8948A;
+            line-height: 1.6;
+        }
+
+        .info-box li::before {
+            content: "→ ";
+            color: #E8B4A0;
+            margin-right: 0.5rem;
+        }
+
+        .progression {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .progression-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .small-badge {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(232, 180, 160, 0.1);
+            border-radius: 50%;
+            border: 1px solid #E8B4A0;
+            font-size: 2rem;
+            color: #E8B4A0;
+            text-shadow: 0 0 10px rgba(232, 180, 160, 0.4);
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: #B8948A;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>LOGIN STREAK SYSTEM</h1>
+        <p class="subtitle">RÖMISCHE ZAHLEN PROGRESSION</p>
+
+        <div class="demo-grid">
+            <div class="demo-card">
+                <h2>ERSTER LOGIN</h2>
+                <div class="demo-badge">
+                    <div class="demo-number">I</div>
+                </div>
+                <div class="demo-description">
+                    Beim ersten Login erscheint die römische Zahl <strong>I</strong> 
+                    oben links auf der Luxury Timepiece Seite. Sie leuchtet in Rose-Gold 
+                    und ist symmetrisch zum umgekehrten Dreieck-Logo auf der rechten Seite positioniert.
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <h2>ZWEITER LOGIN</h2>
+                <div class="demo-badge">
+                    <div class="demo-number">II</div>
+                </div>
+                <div class="demo-description">
+                    Beim zweiten Login erscheint die römische Zahl <strong>II</strong>. 
+                    Das Badge wächst an und zeigt deine Treue zum exklusiven Club. 
+                    Die gleiche elegante Positionierung und Rose-Gold Farbe bleibt erhalten.
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <h2>DRITTER LOGIN</h2>
+                <div class="demo-badge">
+                    <div class="demo-number">III</div>
+                </div>
+                <div class="demo-description">
+                    Beim dritten Login erscheint die römische Zahl <strong>III</strong>. 
+                    Mit jedem Login baust du deine Streak auf und schaltest immer mehr 
+                    exklusive Features und Geheimnisse frei.
+                </div>
+            </div>
+        </div>
+
+        <div class="progression">
+            <div class="progression-item">
+                <div class="small-badge">I</div>
+                <span class="arrow">→</span>
+                <div class="small-badge">II</div>
+                <span class="arrow">→</span>
+                <div class="small-badge">III</div>
+                <span class="arrow">→</span>
+                <div class="small-badge">IV</div>
+                <span class="arrow">→</span>
+                <div class="small-badge">V</div>
+                <span class="arrow">→</span>
+                <div class="small-badge">VI</div>
+                <span class="arrow">→</span>
+                <div class="small-badge">VII</div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h3>SYSTEM DETAILS</h3>
+            <ul>
+                <li><strong>Position:</strong> Oben links, 0.3rem vom Rand</li>
+                <li><strong>Größe:</strong> 110px × 110px (identisch zum Easter Egg Logo)</li>
+                <li><strong>Farbe:</strong> Rose-Gold (#E8B4A0) mit Leuchteffekt</li>
+                <li><strong>Progression:</strong> I → II → III → IV → V → VI → VII</li>
+                <li><strong>Sichtbarkeit:</strong> Nur auf der "The Hidden Door" Seite (Luxury Timepiece)</li>
+                <li><strong>Symmetrie:</strong> Links positioniert, spiegelt das umgekehrte Dreieck-Logo rechts</li>
+                <li><strong>Tracking:</strong> Automatisch durch tägliche Login-Aktivität</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

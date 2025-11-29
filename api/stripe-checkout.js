@@ -156,7 +156,7 @@ module.exports = async (req, res) => {
             name: 'BILLIONAIRS Exclusive Access',
             description: 'Lifetime access to the exclusive BILLIONAIRS platform'
           },
-          unit_amount: 50  // 0.50 CHF (50 Rappen) - TEST MODE (Display still shows 500,000 CHF) - Stripe minimum!
+          unit_amount: 50000000  // 500,000 CHF in Rappen (50,000,000 Rappen)
         },
         quantity: 1
       }],

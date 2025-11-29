@@ -175,6 +175,12 @@
     "cert_number": "رقم الشهادة BILL-EXCLUSIVE-2025-VERIFIED",
     "establishment": "دائرة الأعضاء الخاصة Billionairs • تأسست MMXXV"
   },
+  "pyramid": {
+    "line1": "علامة القوة تكمن مقلوبة.",
+    "line2": "ثلاثة فجر يجب أن تشرق أمام عينيك.",
+    "line3": "فقط أولئك الذين لديهم صبر وولاء عميق سيرون",
+    "line4": "ما يكمن وراء الخلود."
+  },
   "payment_success": {
     "payment_confirmed": "تم تأكيد الدفع",
     "payment_success_message": "تمت معالجة دفعتك بنجاح.",

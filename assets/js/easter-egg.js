@@ -66,6 +66,7 @@ const EasterEggSystem = {
 
     async trackDailyLogin() {
         try {
+            console.log('📅 Tracking daily login...');
             const response = await fetch('/api/easter-egg', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -76,6 +77,18 @@ const EasterEggSystem = {
             });
 
             const data = await response.json();
+            console.log('📅 Daily login response:', data);
+            
+            if (data.debug) {
+                console.log('🔍 LOGIN STREAK INFO:');
+                console.log('   Current Time:', data.debug.now);
+                console.log('   Last Login:', data.debug.lastLogin);
+                console.log('   Hours Since:', data.debug.hoursSinceLastLogin);
+                console.log('   Decision:', data.debug.decision);
+                console.log('   Old Streak:', data.debug.currentStreak);
+                console.log('   New Streak:', data.debug.newStreak);
+            }
+            
             this.status.loginStreak = data.loginStreak;
             this.updateStreakBadge();
         } catch (error) {
@@ -170,7 +183,7 @@ const EasterEggSystem = {
             const riddleLines = [
                 this.translate('The mark of power inverted lies.'),
                 this.translate('Three dawns must break before your eyes.'),
-                this.translate('Only those who persist shall see'),
+                this.translate('Only those with patience and deep loyalty shall see'),
                 this.translate('What lies beyond eternity.')
             ];
             const riddle = riddleLines.join('\n');
@@ -352,17 +365,37 @@ const EasterEggSystem = {
         }
         
         try {
-            // Get text map for current language
-            const textMap = window.i18n.getTextMapForLanguage(window.i18n.currentLang);
-            console.log(`🔍 Debug: currentLang=${window.i18n.currentLang}, textMap exists=${!!textMap}, has key="${text}": ${!!textMap && !!textMap[text]}`);
+            const lang = window.i18n.currentLang || 'en';
             
+            // Try to get from loaded translations first (JSON files)
+            if (window.i18n.translations && window.i18n.translations[lang]) {
+                const keys = text.split('.');
+                let value = window.i18n.translations[lang];
+                
+                for (const key of keys) {
+                    if (value && typeof value === 'object') {
+                        value = value[key];
+                    } else {
+                        value = undefined;
+                        break;
+                    }
+                }
+                
+                if (value && typeof value === 'string') {
+                    console.log(`🌍 Translating from JSON: "${text}" → "${value}" (lang: ${lang})`);
+                    return value;
+                }
+            }
+            
+            // Fallback to hardcoded textMap
+            const textMap = window.i18n.getTextMapForLanguage(lang);
             if (textMap && textMap[text]) {
                 const translated = textMap[text];
-                console.log(`🌍 Translating: "${text}" → "${translated}" (lang: ${window.i18n.currentLang})`);
+                console.log(`🌍 Translating from textMap: "${text}" → "${translated}" (lang: ${lang})`);
                 return translated;
             }
             
-            console.warn(`⚠️ No translation found for: "${text}" in language: ${window.i18n.currentLang}`);
+            console.warn(`⚠️ No translation found for: "${text}" in language: ${lang}`);
             return text;
         } catch (error) {
             console.error(`❌ Translation error for "${text}":`, error);
