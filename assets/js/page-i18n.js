@@ -6,6 +6,8 @@
 const pageTranslations = {
     'de': {
         // Trust section
+        'trust.rules_title': 'Regeln',
+        'trust.rules_subtitle': 'Respekt und Diskretion sind Pflicht',
         'trust.members_title': 'Vertraut von Mitgliedern aus 12 Ländern',
         'trust.others': '+ 5 weitere',
         'trust.click_hint': 'Klicken Sie auf Mitglieder, um ihre Erfahrungen zu lesen',
@@ -26,6 +28,8 @@ const pageTranslations = {
         'rejection.reminder': 'Die Zeit wartet auf niemanden. Nicht mal auf uns.'
     },
     'fr': {
+        'trust.rules_title': 'Règles',
+        'trust.rules_subtitle': 'Le respect et la discrétion sont obligatoires',
         'trust.members_title': 'Approuvé par des membres dans 12 pays',
         'trust.others': '+ 5 autres',
         'trust.click_hint': 'Cliquez sur les membres pour lire leur expérience',
@@ -42,6 +46,8 @@ const pageTranslations = {
         'rejection.reminder': 'Le temps n\'attend personne. Pas même nous.'
     },
     'es': {
+        'trust.rules_title': 'Reglas',
+        'trust.rules_subtitle': 'El respeto y la discreción son obligatorios',
         'trust.members_title': 'Confianza de miembros en 12 países',
         'trust.others': '+ 5 más',
         'trust.click_hint': 'Haga clic en los miembros para leer su experiencia',
@@ -58,6 +64,8 @@ const pageTranslations = {
         'rejection.reminder': 'El tiempo no espera a nadie. Ni siquiera a nosotros.'
     },
     'zh': {
+        'trust.rules_title': '规则',
+        'trust.rules_subtitle': '尊重和保密是强制性的',
         'trust.members_title': '受到12个国家会员的信赖',
         'trust.others': '+ 5 位其他人',
         'trust.click_hint': '点击会员阅读他们的体验',
@@ -74,6 +82,8 @@ const pageTranslations = {
         'rejection.reminder': '时间不等人。甚至不等我们。'
     },
     'ar': {
+        'trust.rules_title': 'القواعد',
+        'trust.rules_subtitle': 'الاحترام والسرية إلزاميان',
         'trust.members_title': 'موثوق به من قبل الأعضاء في 12 دولة',
         'trust.others': '+ 5 آخرين',
         'trust.click_hint': 'انقر على الأعضاء لقراءة تجربتهم',
@@ -90,6 +100,8 @@ const pageTranslations = {
         'rejection.reminder': 'الوقت لا ينتظر أحداً. حتى نحن.'
     },
     'it': {
+        'trust.rules_title': 'Regole',
+        'trust.rules_subtitle': 'Rispetto e discrezione sono obbligatori',
         'trust.members_title': 'Fidato da membri in 12 paesi',
         'trust.others': '+ 5 altri',
         'trust.click_hint': 'Clicca sui membri per leggere la loro esperienza',
@@ -106,6 +118,8 @@ const pageTranslations = {
         'rejection.reminder': 'Il tempo non aspetta nessuno. Nemmeno noi.'
     },
     'ru': {
+        'trust.rules_title': 'Правила',
+        'trust.rules_subtitle': 'Уважение и конфиденциальность обязательны',
         'trust.members_title': 'Доверие членов из 12 стран',
         'trust.others': '+ 5 других',
         'trust.click_hint': 'Нажмите на участников, чтобы прочитать их опыт',
@@ -122,6 +136,8 @@ const pageTranslations = {
         'rejection.reminder': 'Время не ждет никого. Даже нас.'
     },
     'ja': {
+        'trust.rules_title': 'ルール',
+        'trust.rules_subtitle': '尊重と裁量は必須です',
         'trust.members_title': '12か国の会員から信頼されています',
         'trust.others': '+ 5 名その他',
         'trust.click_hint': 'メンバーをクリックして体験を読む',
@@ -138,6 +154,8 @@ const pageTranslations = {
         'rejection.reminder': '時間は誰も待たない。私たちでさえも。'
     },
     'en': {
+        'trust.rules_title': 'Rules',
+        'trust.rules_subtitle': 'Respect and discretion are mandatory',
         'trust.members_title': 'Trusted by members across 12 countries',
         'trust.others': '+ 5 others',
         'trust.click_hint': 'Click on members to read their experience',
