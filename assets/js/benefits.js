@@ -91,18 +91,23 @@ function showBenefit(key, sourceCard) {
             // Use translated content
             benefitTitle.textContent = translatedBenefit.title || b.title;
             benefitSubtitle.textContent = translatedBenefit.subtitle || b.subtitle;
-            benefitText.textContent = translatedBenefit.text || b.text;
+            
+            // Format text with proper HTML line breaks
+            const formattedText = (translatedBenefit.text || b.text).replace(/\\n/g, '<br>');
+            benefitText.innerHTML = formattedText;
         } else {
             // Fallback to English
             benefitTitle.textContent = b.title;
             benefitSubtitle.textContent = b.subtitle;
-            benefitText.textContent = b.text;
+            const formattedText = b.text.replace(/\\n/g, '<br>');
+            benefitText.innerHTML = formattedText;
         }
     } else {
         // i18n not available, use English
         benefitTitle.textContent = b.title;
         benefitSubtitle.textContent = b.subtitle;
-        benefitText.textContent = b.text;
+        const formattedText = b.text.replace(/\\n/g, '<br>');
+        benefitText.innerHTML = formattedText;
     }
 
     // Ensure modal is attached to document.body so fixed positioning centers
