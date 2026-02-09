@@ -1,3 +1,6 @@
+// ⚙️ FEATURE FLAG: Bank Transfer (true = aktiv, false = deaktiviert)
+const ENABLE_BANK_TRANSFER = false;
+
 // Stripe Configuration for BILLIONAIRS - 500K CHF (Price revealed only at checkout)
 class StripePaymentProcessor {
     constructor() {
@@ -114,8 +117,13 @@ class StripePaymentProcessor {
     }
 
     async createWireTransferRequest() {
+        if (!ENABLE_BANK_TRANSFER) {
+            alert('Bank wire transfer is temporarily unavailable. Please use Credit Card or Cryptocurrency.');
+            return;
+        }
+        
         if (this.isProcessing) {
-            console.log('Request already in progress...');
+            console.log('Wire transfer already in progress...');
             return;
         }
 

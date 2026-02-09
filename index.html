@@ -993,6 +993,19 @@
 
     <!-- Payment Handler Scripts - loaded before other scripts -->
     <script>
+    // ⚙️ FEATURE FLAG: Bank Transfer (true = aktiv, false = deaktiviert)
+    const ENABLE_BANK_TRANSFER = false;
+    
+    // UI ausblenden wenn deaktiviert
+    document.addEventListener('DOMContentLoaded', function() {
+        if (!ENABLE_BANK_TRANSFER) {
+            const wireButton = document.querySelector('.payment-method[data-method="wire"]');
+            const wireForm = document.getElementById('wirePaymentForm');
+            if (wireButton) wireButton.style.display = 'none';
+            if (wireForm) wireForm.style.display = 'none';
+        }
+    });
+    
     window.handleStripeCheckout = function() {
         // Get selected payment method - check for both 'active' and 'selected' class
         const selectedMethod = document.querySelector('.payment-method.active, .payment-method.selected');
@@ -1057,6 +1070,10 @@
                 alert('Payment system initializing. Please try again in a moment.');
             }
         } else if (methodType === 'wire') {
+            if (!ENABLE_BANK_TRANSFER) {
+                alert('Bank wire transfer is temporarily unavailable. Please use Credit Card or Cryptocurrency.');
+                return;
+            }
             console.log('🏦 Initiating Bank Wire Transfer...');
             if (window.paymentMethodSelector) {
                 window.paymentMethodSelector.handleWireTransfer();
