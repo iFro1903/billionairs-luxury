@@ -576,7 +576,7 @@
                     <!-- Payment Method Selection -->
                     <div class="payment-method-selector">
                         <h3 class="payment-method-title">Choose Your Payment Method</h3>
-                        <p style="text-align: center; color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 2rem;">
+                        <p style="text-align: center; color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 2rem;" data-i18n="payment.select_method">
                             Select your preferred payment method for secure processing
                         </p>
                         <div class="payment-methods">
@@ -611,43 +611,43 @@
                         <!-- Common Customer Information Fields (Always Visible) -->
                         <div class="common-fields" style="margin-bottom: 2rem;">
                             <div class="form-group">
-                                <label for="customerFirstName">First Name</label>
-                                <input type="text" id="customerFirstName" name="customerFirstName" placeholder="Your First Name" required>
+                                <label for="customerFirstName" data-i18n="payment.first_name">First Name</label>
+                                <input type="text" id="customerFirstName" name="customerFirstName" data-i18n-placeholder="payment.first_name_placeholder" placeholder="Your First Name" required>
                             </div>
                             <div class="form-group">
-                                <label for="customerLastName">Last Name</label>
-                                <input type="text" id="customerLastName" name="customerLastName" placeholder="Your Last Name" required>
+                                <label for="customerLastName" data-i18n="payment.last_name">Last Name</label>
+                                <input type="text" id="customerLastName" name="customerLastName" data-i18n-placeholder="payment.last_name_placeholder" placeholder="Your Last Name" required>
                             </div>
                             <div class="form-group">
-                                <label for="customerEmail">Email Address</label>
-                                <input type="email" id="customerEmail" name="customerEmail" placeholder="your.email@example.com" required 
+                                <label for="customerEmail" data-i18n="payment.email_address">Email Address</label>
+                                <input type="email" id="customerEmail" name="customerEmail" data-i18n-placeholder="payment.email_placeholder" placeholder="your.email@example.com" required 
                                        style="background: rgba(0, 0, 0, 0.3) !important; color: white !important; -webkit-text-fill-color: white !important;">
                             </div>
                             <div class="form-group">
-                                <label for="customerPassword">Password</label>
-                                <input type="password" id="customerPassword" name="customerPassword" placeholder="Create a secure password (min. 8 characters)" required minlength="8"
+                                <label for="customerPassword" data-i18n="payment.password">Password</label>
+                                <input type="password" id="customerPassword" name="customerPassword" data-i18n-placeholder="payment.password_placeholder" placeholder="Create a secure password (min. 8 characters)" required minlength="8"
                                        style="background: rgba(0, 0, 0, 0.3) !important; color: white !important; -webkit-text-fill-color: white !important;">
-                                <small style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 0.25rem; display: block;">This will be used to access your INNER CIRCLE account</small>
+                                <small style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 0.25rem; display: block;" data-i18n="payment.password_hint">This will be used to access your INNER CIRCLE account</small>
                             </div>
                             <div class="form-group">
-                                <label for="customerPasswordConfirm">Confirm Password</label>
-                                <input type="password" id="customerPasswordConfirm" name="customerPasswordConfirm" placeholder="Re-enter your password" required minlength="8"
+                                <label for="customerPasswordConfirm" data-i18n="payment.confirm_password">Confirm Password</label>
+                                <input type="password" id="customerPasswordConfirm" name="customerPasswordConfirm" data-i18n-placeholder="payment.confirm_password_placeholder" placeholder="Re-enter your password" required minlength="8"
                                        style="background: rgba(0, 0, 0, 0.3) !important; color: white !important; -webkit-text-fill-color: white !important;">
                             </div>
                             <div class="form-group">
-                                <label for="customerPhone">Phone Number</label>
-                                <input type="tel" id="customerPhone" name="customerPhone" placeholder="+41 XX XXX XX XX" required>
+                                <label for="customerPhone" data-i18n="payment.phone_number">Phone Number</label>
+                                <input type="tel" id="customerPhone" name="customerPhone" data-i18n-placeholder="payment.phone_placeholder" placeholder="+41 XX XXX XX XX" required>
                             </div>
                             <div class="form-group">
-                                <label for="customerCompany">Company (Optional)</label>
-                                <input type="text" id="customerCompany" name="customerCompany" placeholder="Your Company Name">
+                                <label for="customerCompany" data-i18n="payment.company_optional">Company (Optional)</label>
+                                <input type="text" id="customerCompany" name="customerCompany" data-i18n-placeholder="payment.company_placeholder" placeholder="Your Company Name">
                             </div>
                         </div>
 
                         <!-- Card Payment Form (Default) -->
                         <div id="cardPaymentForm" class="payment-form-section active">
                             <div class="payment-info-text">
-                                <p style="text-align: center; color: rgba(255, 255, 255, 0.7); margin-bottom: 2rem;">
+                                <p style="text-align: center; color: rgba(255, 255, 255, 0.7); margin-bottom: 2rem;" data-i18n="payment.redirect_message">
                                     You will be redirected to our secure payment processor to complete your transaction.
                                 </p>
                             </div>
@@ -702,7 +702,7 @@
                         </div>
 
                         <button type="button" class="payment-button" id="stripeCheckoutButton" onclick="handleStripeCheckout()">
-                            <span class="button-text">SECURE PAYMENT</span>
+                            <span class="button-text" data-i18n="payment.secure_payment">SECURE PAYMENT</span>
                         </button>
                     </form>
                 </div>

@@ -109,7 +109,7 @@
     "error": "Fehler beim Aktualisieren"
   },
   "payment": {
-    "title": "Mitgliedschaft Zahlung",
+    "title": "Mitgliedschaftszahlung",
     "amount": "Betrag",
     "currency": "CHF",
     "description": "Billionairs Premium Mitgliedschaft",
@@ -120,7 +120,25 @@
     "card_number": "Kartennummer",
     "expiry_date": "Ablaufdatum",
     "cvc": "CVC",
-    "cardholder_name": "Karteninhaber"
+    "cardholder_name": "Karteninhaber",
+    "first_name": "Vorname",
+    "first_name_placeholder": "Ihr Vorname",
+    "last_name": "Nachname",
+    "last_name_placeholder": "Ihr Nachname",
+    "email_address": "E-Mail-Adresse",
+    "email_placeholder": "ihre.email@beispiel.com",
+    "password": "Passwort",
+    "password_placeholder": "Erstellen Sie ein sicheres Passwort (mind. 8 Zeichen)",
+    "password_hint": "Wird für den Zugang zu Ihrem INNER CIRCLE Konto verwendet",
+    "confirm_password": "Passwort bestätigen",
+    "confirm_password_placeholder": "Passwort erneut eingeben",
+    "phone_number": "Telefonnummer",
+    "phone_placeholder": "+41 XX XXX XX XX",
+    "company_optional": "Firma (Optional)",
+    "company_placeholder": "Ihr Firmenname",
+    "secure_payment": "SICHERE ZAHLUNG",
+    "select_method": "Wählen Sie Ihre bevorzugte Zahlungsmethode für eine sichere Abwicklung",
+    "redirect_message": "Sie werden zu unserem sicheren Zahlungsanbieter weitergeleitet, um Ihre Transaktion abzuschließen."
   },
   "chat": {
     "title": "Support Chat",
