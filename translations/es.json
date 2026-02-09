@@ -173,6 +173,11 @@
     "rules_text": "El círculo opera bajo principios estrictos: El respeto y la discreción son obligatorios. Una filtración cuesta la membresía. Sin nombres, sin rastros. Las violaciones de reglas resultan en expulsión inmediata."
   },
   "benefits": {
+    "rules": {
+      "title": "Reglas",
+      "subtitle": "El respeto y la discreci\u00f3n son obligatorios",
+      "text": "El c\u00edrculo opera bajo principios estrictos que garantizan la integridad y exclusividad de la comunidad:\\n\\n\u2717 El respeto y la discreci\u00f3n son obligatorios\\n\u2717 Una filtraci\u00f3n cuesta la membres\u00eda - permanentemente\\n\u2717 Sin nombres, sin rastros - anonimato completo\\n\u2717 Las violaciones de reglas resultan en expulsi\u00f3n inmediata\\n\\nEstas reglas no son negociables y se aplican a todos los miembros por igual."
+    },
     "global": {
       "title": "Acceso Global",
       "subtitle": "Encuentros selectos, solo por invitación",

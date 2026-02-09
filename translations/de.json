@@ -289,6 +289,11 @@
     "rules_text": "Der Kreis funktioniert nach strengen Prinzipien: Respekt und Diskretion sind Pflicht. Ein Leak kostet die Mitgliedschaft. Keine Namen, keine Spuren. Regelbruch führt zum sofortigen Platzverlust."
   },
   "benefits": {
+    "rules": {
+      "title": "Regeln",
+      "subtitle": "Respekt und Diskretion sind Pflicht",
+      "text": "Der Kreis funktioniert nach strengen Prinzipien, die die Integrit\u00e4t und Exklusivit\u00e4t der Gemeinschaft sicherstellen:\\n\\n\u2717 Respekt und Diskretion sind Pflicht\\n\u2717 Ein Leak kostet die Mitgliedschaft - dauerhaft\\n\u2717 Keine Namen, keine Spuren - vollst\u00e4ndige Anonymit\u00e4t\\n\u2717 Regelverst\u00f6\u00dfe f\u00fchren zum sofortigen Ausschluss\\n\\nDiese Regeln sind nicht verhandelbar und gelten f\u00fcr alle Mitglieder gleicherma\u00dfen."
+    },
     "global": {
       "title": "Globaler Zugang",
       "subtitle": "Exklusive, nur auf Einladung",

@@ -169,6 +169,11 @@
     "rules_text": "Il circolo opera su principi rigorosi: Rispetto e discrezione sono obbligatori. Una fuga costa l'iscrizione. Nessun nome, nessuna traccia. Le violazioni delle regole comportano l'espulsione immediata."
   },
   "benefits": {
+    "rules": {
+      "title": "Regole",
+      "subtitle": "Rispetto e discrezione sono obbligatori",
+      "text": "Il circolo opera su principi rigorosi che garantiscono l'integrit\u00e0 e l'esclusivit\u00e0 della comunit\u00e0:\\n\\n\u2717 Rispetto e discrezione sono obbligatori\\n\u2717 Una fuga costa l'iscrizione - permanentemente\\n\u2717 Nessun nome, nessuna traccia - anonimato completo\\n\u2717 Le violazioni delle regole comportano l'espulsione immediata\\n\\nQueste regole non sono negoziabili e si applicano a tutti i membri allo stesso modo."
+    },
     "global": {
       "title": "Accesso Globale",
       "subtitle": "Incontri selezionati, solo su invito",

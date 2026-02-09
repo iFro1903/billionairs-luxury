@@ -1,7 +1,7 @@
 // benefits.js - show more details for each trust benefit
 const benefits = {
     rules: {
-        title: 'Regeln',
+        title: 'Rules',
         subtitle: 'Respect and discretion are mandatory',
         text: `The circle operates on strict principles that ensure the integrity and exclusivity of the community:\n\n✗ Respect and discretion are mandatory\n✗ A leak costs membership - permanently\n✗ No names, no traces - complete anonymity\n✗ Rule violations result in immediate expulsion\n\nThese rules are non-negotiable and apply to all members equally.`,
     },

@@ -173,6 +173,9 @@
     "rules_text": "Le cercle fonctionne selon des principes stricts : Le respect et la discrétion sont obligatoires. Une fuite coûte l'adhésion. Pas de noms, pas de traces. La violation des règles entraîne l'expulsion immédiate."
   },
   "benefits": {
+    "rules_title": "Règles",
+    "rules_subtitle": "Le respect et la discrétion sont obligatoires",
+    "rules_text": "Le cercle fonctionne selon des principes stricts qui garantissent l'intégrité et l'exclusivité de la communauté:\n\n✗ Le respect et la discrétion sont obligatoires\n✗ Une fuite coûte l'adhésion - définitivement\n✗ Pas de noms, pas de traces - anonymat complet\n✗ Les violations des règles entraînent l'expulsion immédiate\n\nCes règles ne sont pas négociables et s'appliquent à tous les membres de manière égale.",
     "global": {
       "title": "Accès Global",
       "subtitle": "Rassemblements sélectionnés, sur invitation uniquement",
