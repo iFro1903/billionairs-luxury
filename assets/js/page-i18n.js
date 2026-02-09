@@ -7,7 +7,7 @@ const pageTranslations = {
     'de': {
         // Trust section
         'trust.members_title': 'Vertraut von Mitgliedern aus 12 Ländern',
-        'trust.others': '+ 42 weitere',
+        'trust.others': '+ 5 weitere',
         'trust.click_hint': 'Klicken Sie auf Mitglieder, um ihre Erfahrungen zu lesen',
         
         // Hero buttons
@@ -27,7 +27,7 @@ const pageTranslations = {
     },
     'fr': {
         'trust.members_title': 'Approuvé par des membres dans 12 pays',
-        'trust.others': '+ 42 autres',
+        'trust.others': '+ 5 autres',
         'trust.click_hint': 'Cliquez sur les membres pour lire leur expérience',
         'hero.not_ready': 'PAS ENCORE PRÊT',
         'rejection.title': 'PAS ENCORE.',
@@ -43,7 +43,7 @@ const pageTranslations = {
     },
     'es': {
         'trust.members_title': 'Confianza de miembros en 12 países',
-        'trust.others': '+ 42 más',
+        'trust.others': '+ 5 más',
         'trust.click_hint': 'Haga clic en los miembros para leer su experiencia',
         'hero.not_ready': 'AÚN NO ESTOY LISTO',
         'rejection.title': 'AÚN NO.',
@@ -59,7 +59,7 @@ const pageTranslations = {
     },
     'zh': {
         'trust.members_title': '受到12个国家会员的信赖',
-        'trust.others': '+ 42 位其他人',
+        'trust.others': '+ 5 位其他人',
         'trust.click_hint': '点击会员阅读他们的体验',
         'hero.not_ready': '我还没准备好',
         'rejection.title': '还没有。',
@@ -75,7 +75,7 @@ const pageTranslations = {
     },
     'ar': {
         'trust.members_title': 'موثوق به من قبل الأعضاء في 12 دولة',
-        'trust.others': '+ 42 آخرين',
+        'trust.others': '+ 5 آخرين',
         'trust.click_hint': 'انقر على الأعضاء لقراءة تجربتهم',
         'hero.not_ready': 'لست جاهزاً بعد',
         'rejection.title': 'ليس بعد.',
@@ -91,7 +91,7 @@ const pageTranslations = {
     },
     'it': {
         'trust.members_title': 'Fidato da membri in 12 paesi',
-        'trust.others': '+ 42 altri',
+        'trust.others': '+ 5 altri',
         'trust.click_hint': 'Clicca sui membri per leggere la loro esperienza',
         'hero.not_ready': 'NON SONO ANCORA PRONTO',
         'rejection.title': 'NON ANCORA.',
@@ -107,7 +107,7 @@ const pageTranslations = {
     },
     'ru': {
         'trust.members_title': 'Доверие членов из 12 стран',
-        'trust.others': '+ 42 других',
+        'trust.others': '+ 5 других',
         'trust.click_hint': 'Нажмите на участников, чтобы прочитать их опыт',
         'hero.not_ready': 'Я ЕЩЕ НЕ ГОТОВ',
         'rejection.title': 'ЕЩЕ НЕТ.',
@@ -123,7 +123,7 @@ const pageTranslations = {
     },
     'ja': {
         'trust.members_title': '12か国の会員から信頼されています',
-        'trust.others': '+ 42 名その他',
+        'trust.others': '+ 5 名その他',
         'trust.click_hint': 'メンバーをクリックして体験を読む',
         'hero.not_ready': 'まだ準備ができていない',
         'rejection.title': 'まだです。',
@@ -139,7 +139,7 @@ const pageTranslations = {
     },
     'en': {
         'trust.members_title': 'Trusted by members across 12 countries',
-        'trust.others': '+ 42 others',
+        'trust.others': '+ 5 others',
         'trust.click_hint': 'Click on members to read their experience',
         'hero.not_ready': 'I\'M NOT THERE YET',
         'rejection.title': 'NOT YET.',
