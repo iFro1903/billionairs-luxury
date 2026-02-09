@@ -216,6 +216,33 @@
             opacity: 1;
         }
         
+        /* Not Ready Badge for Rules Card */
+        .not-ready-card {
+            position: relative;
+            border: 2px solid rgba(220, 38, 38, 0.5) !important;
+            background: rgba(220, 38, 38, 0.05) !important;
+        }
+        
+        .not-ready-badge {
+            position: absolute;
+            top: -12px;
+            right: 15px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: #fff;
+            padding: 4px 12px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+            animation: pulse-red 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-red {
+            0%, 100% { box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4); }
+            50% { box-shadow: 0 4px 20px rgba(220, 38, 38, 0.7); }
+        }
+        
         /* Preloader */
         #pagePreloader {
             position: fixed;
@@ -429,7 +456,8 @@
                 </div>
 
                 <div class="trust-benefits">
-                    <div class="trust-benefit-card benefit-card" data-benefit="rules" role="button" tabindex="0" title="Click for more details">
+                    <div class="trust-benefit-card benefit-card not-ready-card" data-benefit="rules" role="button" tabindex="0" title="Click for more details">
+                        <div class="not-ready-badge">NICHT BEREIT</div>
                         <h4 data-i18n="trust.rules_title">Regeln</h4>
                         <p data-i18n="trust.rules_subtitle">Respekt und Diskretion sind Pflicht</p>
                     </div>
