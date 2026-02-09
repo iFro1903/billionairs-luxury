@@ -433,7 +433,7 @@ class I18nManager {
                 
                 // Trust Benefits Section
                 'Global Access': 'Globaler Zugang',
-                'Quarterly gatherings in Monaco, Dubai, Zürich': 'Vierteljährliche Treffen in Monaco, Dubai, Zürich',
+                'Monaco, Dubai, Zürich': 'Monaco, Dubai, Zürich',
                 'Private Circle': 'Privater Kreis',
                 '47 verified UHNWIs worldwide': '47 verifizierte UHNWIs weltweit',
                 'Pre-Market': 'Vormarkt',
@@ -541,7 +541,7 @@ class I18nManager {
                 
                 // Trust Benefits Section
                 'Global Access': 'Accès Mondial',
-                'Quarterly gatherings in Monaco, Dubai, Zürich': 'Rassemblements trimestriels à Monaco, Dubaï, Zürich',
+                'Monaco, Dubai, Zürich': 'Monaco, Dubaï, Zürich',
                 'Private Circle': 'Cercle Privé',
                 '47 verified UHNWIs worldwide': '47 UHNWIs vérifiés dans le monde',
                 'Pre-Market': 'Pré-Marché',
@@ -649,7 +649,7 @@ class I18nManager {
                 
                 // Trust Benefits Section
                 'Global Access': 'Acceso Global',
-                'Quarterly gatherings in Monaco, Dubai, Zürich': 'Reuniones trimestrales en Mónaco, Dubái, Zúrich',
+                'Monaco, Dubai, Zürich': 'Mónaco, Dubái, Zúrich',
                 'Private Circle': 'Círculo Privado',
                 '47 verified UHNWIs worldwide': '47 UHNWIs verificados en todo el mundo',
                 'Pre-Market': 'Pre-Mercado',
@@ -757,7 +757,7 @@ class I18nManager {
                 
                 // Trust Benefits Section
                 'Global Access': '全球访问',
-                'Quarterly gatherings in Monaco, Dubai, Zürich': '每季度在摩纳哥、迪拜、苏黎世聚会',
+                'Monaco, Dubai, Zürich': '摩纳哥、迪拜、苏黎世',
                 'Private Circle': '私人圈子',
                 '47 verified UHNWIs worldwide': '全球47位已验证的超高净值人士',
                 'Pre-Market': '预市场',
@@ -865,7 +865,7 @@ class I18nManager {
                 
                 // Trust Benefits Section
                 'Global Access': 'وصول عالمي',
-                'Quarterly gatherings in Monaco, Dubai, Zürich': 'لقاءات فصلية في موناكو ودبي وزيورخ',
+                'Monaco, Dubai, Zürich': 'موناكو، دبي، زيورخ',
                 'Private Circle': 'دائرة خاصة',
                 '47 verified UHNWIs worldwide': '47 من أصحاب الثروات الفائقة المعتمدين عالمياً',
                 'Pre-Market': 'ما قبل السوق',
@@ -973,7 +973,7 @@ class I18nManager {
                 
                 // Trust Benefits Section
                 'Global Access': 'Accesso Globale',
-                'Quarterly gatherings in Monaco, Dubai, Zürich': 'Incontri trimestrali a Monaco, Dubai, Zurigo',
+                'Monaco, Dubai, Zürich': 'Monaco, Dubai, Zurigo',
                 'Private Circle': 'Cerchia Privata',
                 '47 verified UHNWIs worldwide': '47 UHNWI verificati in tutto il mondo',
                 'Pre-Market': 'Pre-Mercato',
@@ -1081,7 +1081,7 @@ class I18nManager {
                 
                 // Trust Benefits Section
                 'Global Access': 'Глобальный доступ',
-                'Quarterly gatherings in Monaco, Dubai, Zürich': 'Ежеквартальные встречи в Монако, Дубае, Цюрихе',
+                'Monaco, Dubai, Zürich': 'Монако, Дубай, Цюрих',
                 'Private Circle': 'Частный круг',
                 '47 verified UHNWIs worldwide': '47 верифицированных сверхсостоятельных лиц по всему миру',
                 'Pre-Market': 'Предрыночный',
@@ -1189,7 +1189,7 @@ class I18nManager {
                 
                 // Trust Benefits Section
                 'Global Access': 'グローバルアクセス',
-                'Quarterly gatherings in Monaco, Dubai, Zürich': 'モナコ、ドバイ、チューリッヒでの四半期ごとの集まり',
+                'Monaco, Dubai, Zürich': 'モナコ、ドバイ、チューリッヒ',
                 'Private Circle': 'プライベートサークル',
                 '47 verified UHNWIs worldwide': '世界中で47人の検証済み超富裕層',
                 'Pre-Market': 'プレマーケット',
