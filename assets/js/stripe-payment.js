@@ -1,5 +1,5 @@
 // ⚙️ FEATURE FLAG: Bank Transfer (true = aktiv, false = deaktiviert)
-const ENABLE_BANK_TRANSFER = false;
+const ENABLE_BANK_TRANSFER = true;
 
 // Stripe Configuration for BILLIONAIRS - 500K CHF (Price revealed only at checkout)
 class StripePaymentProcessor {
