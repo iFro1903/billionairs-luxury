@@ -82,7 +82,22 @@
     "company_placeholder": "Nome della tua azienda",
     "secure_payment": "PAGAMENTO SICURO",
     "select_method": "Seleziona il tuo metodo di pagamento preferito per un'elaborazione sicura",
-    "redirect_message": "Verrai reindirizzato al nostro processore di pagamento sicuro per completare la transazione."
+    "redirect_message": "Verrai reindirizzato al nostro processore di pagamento sicuro per completare la transazione.",
+    "crypto_title": "Pagamento in Criptovaluta - Il Futuro delle Grandi Transazioni",
+    "crypto_description": "I pagamenti in crypto stanno diventando il metodo preferito dai milionari esperti di tecnologia. Nessun limite, elaborazione rapida (10-60 minuti) e completa privacy.",
+    "why_crypto": "✓ Perché Crypto?",
+    "crypto_unlimited": "Importo Illimitato:",
+    "crypto_unlimited_desc": "Nessun limite di transazione",
+    "crypto_fast": "Veloce:",
+    "crypto_fast_desc": "Conferma in 10-60 minuti",
+    "crypto_low_fees": "Commissioni Basse:",
+    "crypto_low_fees_desc": "~0,5-1% per importi elevati",
+    "crypto_global": "Globale:",
+    "crypto_global_desc": "Funziona ovunque",
+    "crypto_private": "Privato:",
+    "crypto_private_desc": "Massima discrezione",
+    "crypto_how_it_works_label": "Come funziona:",
+    "crypto_how_it_works_text": "Compila i tuoi dati sopra, clicca su \"PROCEDI AL PAGAMENTO\", e seleziona la tua criptovaluta preferita (Bitcoin, Ethereum o USDT)."
   },
   "timepiece": {
     "title": "Il Segnatempo",

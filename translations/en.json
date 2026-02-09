@@ -138,7 +138,22 @@
     "company_placeholder": "Your Company Name",
     "secure_payment": "SECURE PAYMENT",
     "select_method": "Select your preferred payment method for secure processing",
-    "redirect_message": "You will be redirected to our secure payment processor to complete your transaction."
+    "redirect_message": "You will be redirected to our secure payment processor to complete your transaction.",
+    "crypto_title": "Cryptocurrency Payment - The Future of Large Transactions",
+    "crypto_description": "Crypto payments are becoming the preferred method for tech-savvy millionaires. No limits, fast processing (10-60 minutes), and complete privacy.",
+    "why_crypto": "✓ Why Crypto?",
+    "crypto_unlimited": "Unlimited Amount:",
+    "crypto_unlimited_desc": "No transaction limits",
+    "crypto_fast": "Fast:",
+    "crypto_fast_desc": "10-60 minutes confirmation",
+    "crypto_low_fees": "Low Fees:",
+    "crypto_low_fees_desc": "~0.5-1% for large amounts",
+    "crypto_global": "Global:",
+    "crypto_global_desc": "Works from anywhere",
+    "crypto_private": "Private:",
+    "crypto_private_desc": "Maximum discretion",
+    "crypto_how_it_works_label": "How it works:",
+    "crypto_how_it_works_text": "Fill in your details above, click \"PROCEED TO PAYMENT\", and select your preferred cryptocurrency (Bitcoin, Ethereum, or USDT)."
   },
   "chat": {
     "title": "Support Chat",

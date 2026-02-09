@@ -138,7 +138,22 @@
     "company_placeholder": "Ihr Firmenname",
     "secure_payment": "SICHERE ZAHLUNG",
     "select_method": "Wählen Sie Ihre bevorzugte Zahlungsmethode für eine sichere Abwicklung",
-    "redirect_message": "Sie werden zu unserem sicheren Zahlungsanbieter weitergeleitet, um Ihre Transaktion abzuschließen."
+    "redirect_message": "Sie werden zu unserem sicheren Zahlungsanbieter weitergeleitet, um Ihre Transaktion abzuschließen.",
+    "crypto_title": "Kryptowährungszahlung - Die Zukunft großer Transaktionen",
+    "crypto_description": "Krypto-Zahlungen werden zur bevorzugten Methode für technikaffine Millionäre. Keine Limits, schnelle Verarbeitung (10-60 Minuten) und vollständige Privatsphäre.",
+    "why_crypto": "✓ Warum Krypto?",
+    "crypto_unlimited": "Unbegrenzter Betrag:",
+    "crypto_unlimited_desc": "Keine Transaktionslimits",
+    "crypto_fast": "Schnell:",
+    "crypto_fast_desc": "10-60 Minuten Bestätigung",
+    "crypto_low_fees": "Niedrige Gebühren:",
+    "crypto_low_fees_desc": "~0,5-1% für große Beträge",
+    "crypto_global": "Global:",
+    "crypto_global_desc": "Funktioniert überall",
+    "crypto_private": "Privat:",
+    "crypto_private_desc": "Maximale Diskretion",
+    "crypto_how_it_works_label": "So funktioniert es:",
+    "crypto_how_it_works_text": "Füllen Sie Ihre Angaben oben aus, klicken Sie auf \"ZUR ZAHLUNG\", und wählen Sie Ihre bevorzugte Kryptowährung (Bitcoin, Ethereum oder USDT)."
   },
   "chat": {
     "title": "Support Chat",

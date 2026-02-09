@@ -82,7 +82,22 @@
     "company_placeholder": "Nombre de su empresa",
     "secure_payment": "PAGO SEGURO",
     "select_method": "Seleccione su método de pago preferido para un procesamiento seguro",
-    "redirect_message": "Será redirigido a nuestro procesador de pago seguro para completar su transacción."
+    "redirect_message": "Será redirigido a nuestro procesador de pagos seguro para completar su transacción.",
+    "crypto_title": "Pago con Criptomoneda - El Futuro de las Grandes Transacciones",
+    "crypto_description": "Los pagos con cripto se están convirtiendo en el método preferido de los millonarios expertos en tecnología. Sin límites, procesamiento rápido (10-60 minutos) y total privacidad.",
+    "why_crypto": "✓ ¿Por qué Cripto?",
+    "crypto_unlimited": "Cantidad Ilimitada:",
+    "crypto_unlimited_desc": "Sin límites de transacción",
+    "crypto_fast": "Rápido:",
+    "crypto_fast_desc": "Confirmación en 10-60 minutos",
+    "crypto_low_fees": "Tarifas Bajas:",
+    "crypto_low_fees_desc": "~0.5-1% para grandes cantidades",
+    "crypto_global": "Global:",
+    "crypto_global_desc": "Funciona desde cualquier lugar",
+    "crypto_private": "Privado:",
+    "crypto_private_desc": "Máxima discreción",
+    "crypto_how_it_works_label": "Cómo funciona:",
+    "crypto_how_it_works_text": "Complete sus datos arriba, haga clic en \"PROCEDER AL PAGO\", y seleccione su criptomoneda preferida (Bitcoin, Ethereum o USDT)."
   },
   "timepiece": {
     "title": "La Pieza del Tiempo",

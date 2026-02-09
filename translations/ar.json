@@ -65,7 +65,22 @@
     "company_placeholder": "اسم شركتك",
     "secure_payment": "دفع آمن",
     "select_method": "اختر طريقة الدفع المفضلة لديك لمعالجة آمنة",
-    "redirect_message": "سيتم إعادة توجيهك إلى معالج الدفع الآمن لدينا لإكمال معاملتك."
+    "redirect_message": "سيتم إعادة توجيهك إلى معالج الدفع الآمن لدينا لإكمال معاملتك.",
+    "crypto_title": "دفع بالعملات المشفرة - مستقبل المعاملات الكبيرة",
+    "crypto_description": "مدفوعات العملات المشفرة تصبح الطريقة المفضلة لأصحاب الملايين المهتمين بالتكنولوجيا. بدون حدود، معالجة سريعة (10-60 دقيقة)، وخصوصية كاملة.",
+    "why_crypto": "✓ لماذا العملات المشفرة؟",
+    "crypto_unlimited": "مبلغ غير محدود:",
+    "crypto_unlimited_desc": "لا حدود للمعاملة",
+    "crypto_fast": "سريع:",
+    "crypto_fast_desc": "تأكيد في 10-60 دقيقة",
+    "crypto_low_fees": "رسوم منخفضة:",
+    "crypto_low_fees_desc": "~0.5-1% للمبالغ الكبيرة",
+    "crypto_global": "عالمي:",
+    "crypto_global_desc": "يعمل من أي مكان",
+    "crypto_private": "خاص:",
+    "crypto_private_desc": "سرية قصوى",
+    "crypto_how_it_works_label": "كيف يعمل:",
+    "crypto_how_it_works_text": "املأ بياناتك أعلاه، انقر على \"متابعة إلى الدفع\"، واختر العملة المشفرة المفضلة (Bitcoin، Ethereum، أو USDT)."
   },
   "timepiece": {
     "title": "قطعة الوقت",

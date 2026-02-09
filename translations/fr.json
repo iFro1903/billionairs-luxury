@@ -82,7 +82,22 @@
     "company_placeholder": "Nom de votre entreprise",
     "secure_payment": "PAIEMENT SÉCURISÉ",
     "select_method": "Sélectionnez votre méthode de paiement préférée pour un traitement sécurisé",
-    "redirect_message": "Vous serez redirigé vers notre processeur de paiement sécurisé pour finaliser votre transaction."
+    "redirect_message": "Vous serez redirigé vers notre processeur de paiement sécurisé pour finaliser votre transaction.",
+    "crypto_title": "Paiement en Cryptomonnaie - L'Avenir des Grandes Transactions",
+    "crypto_description": "Les paiements en crypto deviennent la méthode préférée des millionnaires férus de technologie. Pas de limites, traitement rapide (10-60 minutes) et confidentialité totale.",
+    "why_crypto": "✓ Pourquoi la Crypto?",
+    "crypto_unlimited": "Montant Illimité:",
+    "crypto_unlimited_desc": "Aucune limite de transaction",
+    "crypto_fast": "Rapide:",
+    "crypto_fast_desc": "Confirmation en 10-60 minutes",
+    "crypto_low_fees": "Frais Réduits:",
+    "crypto_low_fees_desc": "~0,5-1% pour les gros montants",
+    "crypto_global": "Mondial:",
+    "crypto_global_desc": "Fonctionne partout",
+    "crypto_private": "Privé:",
+    "crypto_private_desc": "Discrétion maximale",
+    "crypto_how_it_works_label": "Comment ça marche:",
+    "crypto_how_it_works_text": "Remplissez vos coordonnées ci-dessus, cliquez sur \"PROCÉDER AU PAIEMENT\", et sélectionnez votre cryptomonnaie préférée (Bitcoin, Ethereum ou USDT)."
   },
   "timepiece": {
     "title": "La Pièce d'Horlogerie",
