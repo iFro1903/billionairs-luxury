@@ -996,13 +996,27 @@
         
         // Force re-translate payment form after i18n loads
         window.addEventListener('i18nReady', function() {
+            setTimeout(function() {
+                if (window.i18nManager) {
+                    const paymentForm = document.querySelector('.payment-form-container');
+                    if (paymentForm) {
+                        console.log('🔄 Re-translating payment form...');
+                        window.i18nManager.translateElement(paymentForm);
+                    }
+                }
+            }, 500);
+        });
+        
+        // Also try after full page load
+        setTimeout(function() {
             if (window.i18nManager) {
                 const paymentForm = document.querySelector('.payment-form-container');
                 if (paymentForm) {
+                    console.log('🔄 Late re-translate payment form...');
                     window.i18nManager.translateElement(paymentForm);
                 }
             }
-        });
+        }, 2000);
     });
     
     window.handleStripeCheckout = function() {

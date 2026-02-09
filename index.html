@@ -576,8 +576,8 @@
                     <!-- Payment Method Selection -->
                     <div class="payment-method-selector">
                         <h3 class="payment-method-title">Choose Your Payment Method</h3>
-                        <p style="text-align: center; color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 2rem;">
-                            Wählen Sie Ihre bevorzugte Zahlungsmethode für eine sichere Abwicklung
+                        <p style="text-align: center; color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 2rem;" data-i18n="payment.select_method">
+                            Select your preferred payment method for secure processing
                         </p>
                         <div class="payment-methods">
                             <div class="payment-method active" data-method="card">
@@ -627,7 +627,7 @@
                                 <label for="customerPassword" data-i18n="payment.password">Password</label>
                                 <input type="password" id="customerPassword" name="customerPassword" data-i18n-placeholder="payment.password_placeholder" placeholder="Create a secure password (min. 8 characters)" required minlength="8"
                                        style="background: rgba(0, 0, 0, 0.3) !important; color: white !important; -webkit-text-fill-color: white !important;">
-                                <small style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 0.25rem; display: block;">Wird für den Zugang zu Ihrem INNER CIRCLE Konto verwendet</small>
+                                <small style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 0.25rem; display: block;" data-i18n="payment.password_hint">This will be used to access your INNER CIRCLE account</small>
                             </div>
                             <div class="form-group">
                                 <label for="customerPasswordConfirm" data-i18n="payment.confirm_password">Confirm Password</label>
@@ -647,8 +647,8 @@
                         <!-- Card Payment Form (Default) -->
                         <div id="cardPaymentForm" class="payment-form-section active">
                             <div class="payment-info-text">
-                                <p style="text-align: center; color: rgba(255, 255, 255, 0.7); margin-bottom: 2rem;">
-                                    Sie werden zu unserem sicheren Zahlungsanbieter weitergeleitet, um Ihre Transaktion abzuschließen.
+                                <p style="text-align: center; color: rgba(255, 255, 255, 0.7); margin-bottom: 2rem;" data-i18n="payment.redirect_message">
+                                    You will be redirected to our secure payment processor to complete your transaction.
                                 </p>
                             </div>
                         </div>
@@ -1007,13 +1007,27 @@
         
         // Force re-translate payment form after i18n loads
         window.addEventListener('i18nReady', function() {
+            setTimeout(function() {
+                if (window.i18nManager) {
+                    const paymentForm = document.querySelector('.payment-form-container');
+                    if (paymentForm) {
+                        console.log('🔄 Re-translating payment form...');
+                        window.i18nManager.translateElement(paymentForm);
+                    }
+                }
+            }, 500);
+        });
+        
+        // Also try after full page load
+        setTimeout(function() {
             if (window.i18nManager) {
                 const paymentForm = document.querySelector('.payment-form-container');
                 if (paymentForm) {
+                    console.log('🔄 Late re-translate payment form...');
                     window.i18nManager.translateElement(paymentForm);
                 }
             }
-        });
+        }, 2000);
     });
     
     window.handleStripeCheckout = function() {
