@@ -162,7 +162,7 @@ const pageTranslations = {
         'hero.not_ready': 'I\'M NOT THERE YET',
         'rejection.title': 'NOT YET.',
         'rejection.message': 'Not every door opens on the first approach.',
-        'rejection.warning': 'Yet wisdom suggests—',
+        'rejection.warning': 'Yet wisdom suggests',
         'rejection.truth1': '<strong>Some doors open only once.</strong>',
         'rejection.truth2': '<strong>Certain moments exist outside of time.</strong>',
         'rejection.truth3': '<strong>True access is never forced.</strong>',

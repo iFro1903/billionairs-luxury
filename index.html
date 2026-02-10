@@ -568,7 +568,7 @@
                     <h1 class="rejection-title" data-i18n-key="rejection.title">NOT YET.</h1>
                     <div class="rejection-divider"></div>
                     <p class="rejection-message" data-i18n-key="rejection.message">Not every door opens on the first approach.</p>
-                    <p class="rejection-warning" data-i18n-key="rejection.warning">Yet wisdom suggests—</p>
+                    <p class="rejection-warning" data-i18n-key="rejection.warning">Yet wisdom suggests</p>
                     <div class="rejection-truth">
                         <p class="truth-line" data-i18n-key="rejection.truth1"><strong>Some doors open only once.</strong></p>
                         <p class="truth-line" data-i18n-key="rejection.truth2"><strong>Certain moments exist outside of time.</strong></p>
@@ -1444,6 +1444,36 @@
             const innerCircleBtn = document.getElementById('mobileInnerCircle');
             const languageBtn = document.getElementById('mobileLanguage');
             const contactBtn = document.getElementById('mobileContact');
+            const nav = document.querySelector('.premium-nav');
+            
+            // Mobile scroll detection - hide on scroll down, show on scroll up
+            let lastScrollTop = 0;
+            let scrollTimeout;
+            
+            function handleMobileScroll() {
+                // Only apply on mobile
+                if (window.innerWidth > 768) return;
+                
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // Don't hide nav when menu is open
+                if (overlay.classList.contains('active')) return;
+                
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    // Scrolling down
+                    nav.classList.add('nav-hidden');
+                } else {
+                    // Scrolling up
+                    nav.classList.remove('nav-hidden');
+                }
+                
+                lastScrollTop = scrollTop;
+            }
+            
+            window.addEventListener('scroll', function() {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(handleMobileScroll, 10);
+            }, { passive: true });
             
             // Set mobile language button to current language on load
             const currentLang = localStorage.getItem('billionairs_lang') || 'en';

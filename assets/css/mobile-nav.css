@@ -151,6 +151,15 @@
 }
 
 @media (max-width: 768px) {
+    /* Mobile nav scroll behavior */
+    .premium-nav {
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .premium-nav.nav-hidden {
+        transform: translateY(-100%);
+    }
+    
     .mobile-hamburger {
         display: block !important;
         min-width: 44px;
