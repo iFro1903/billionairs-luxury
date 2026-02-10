@@ -98,6 +98,34 @@
     pointer-events: auto;
 }
 
+/* INNER CIRCLE button - styled like "I DESERVE THIS" */
+#mobileInnerCircle {
+    color: #50C878;
+    border-color: rgba(80, 200, 120, 0.4);
+    border-radius: 50px;
+    text-shadow: 0 0 20px rgba(80, 200, 120, 0.3);
+    background: transparent;
+    padding: 1.5rem 3rem;
+    font-weight: 300;
+    letter-spacing: 5px;
+    font-size: 0.85rem;
+    min-width: 280px;
+}
+
+#mobileInnerCircle::before {
+    background: linear-gradient(90deg, transparent, rgba(80, 200, 120, 0.2), transparent);
+}
+
+#mobileInnerCircle:hover,
+#mobileInnerCircle:active {
+    background: linear-gradient(135deg, rgba(80, 200, 120, 0.15) 0%, rgba(80, 200, 120, 0.25) 100%);
+    color: #5CFF8A;
+    border-color: #50C878;
+    box-shadow: 0 15px 40px rgba(80, 200, 120, 0.35), 0 0 60px rgba(80, 200, 120, 0.3);
+    text-shadow: 0 0 40px rgba(80, 200, 120, 0.8), 0 0 80px rgba(80, 200, 120, 0.4);
+    transform: translateY(-3px);
+}
+
 .mobile-btn {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(232, 180, 184, 0.08) 100%);
     border: 1px solid rgba(232, 180, 184, 0.4);

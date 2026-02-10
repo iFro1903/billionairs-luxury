@@ -2699,25 +2699,28 @@ input:-webkit-autofill::first-line {
 /* ===== NAVIGATION & INNER CIRCLE STYLES ===== */
 .nav-member {
     padding: 0.8rem 1.8rem;
-    background: linear-gradient(135deg, rgba(183, 110, 121, 0.2) 0%, rgba(139, 90, 107, 0.3) 100%);
-    border: 1px solid rgba(183, 110, 121, 0.4);
+    background: transparent;
+    border: 1px solid rgba(80, 200, 120, 0.4);
     border-radius: 50px;
-    color: rgba(255,255,255,0.9);
+    color: #50C878;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 300;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 4px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     margin-right: 1rem;
+    text-shadow: 0 0 20px rgba(80, 200, 120, 0.3);
 }
 
 .nav-member:hover {
-    background: linear-gradient(135deg, rgba(183, 110, 121, 0.3) 0%, rgba(139, 90, 107, 0.4) 100%);
-    border-color: rgba(183, 110, 121, 0.6);
+    background: linear-gradient(135deg, rgba(80, 200, 120, 0.15) 0%, rgba(80, 200, 120, 0.25) 100%);
+    color: #5CFF8A;
+    border-color: #50C878;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(183, 110, 121, 0.3);
+    box-shadow: 0 8px 25px rgba(80, 200, 120, 0.35), 0 0 50px rgba(80, 200, 120, 0.3);
+    text-shadow: 0 0 40px rgba(80, 200, 120, 0.8), 0 0 80px rgba(80, 200, 120, 0.4);
 }
 
 /* ==================== TRUST & VALUE SECTION (MIXED APPROACH) ==================== */
