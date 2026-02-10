@@ -6,7 +6,7 @@
 const paymentTranslations = {
     'de': {
         title_luxury: 'EXKLUSIVER', title_emphasis: 'ZUGANG', subtitle: 'Nur auf Einladung',
-        method_title: 'Wählen Sie Ihre Zahlungsmethode',
+        method_title: 'Gesichert durch Schweizer Bankstandards',
         method_subtitle: 'Wählen Sie Ihre bevorzugte Zahlungsmethode für sichere Abwicklung',
         card_title: 'Kredit- / Debitkarte', card_instant: '✓ Sofortige Abwicklung', card_providers: 'Visa, Mastercard, Amex',
         wire_title: 'Banküberweisung', wire_unlimited: '✓ Unbegrenzter Betrag', wire_details: 'Manuelle Überweisungsdetails bereitgestellt',
@@ -21,7 +21,7 @@ const paymentTranslations = {
     },
     'fr': {
         title_luxury: 'ACCÈS', title_emphasis: 'EXCLUSIF', subtitle: 'Sur Invitation Uniquement',
-        method_title: 'Choisissez votre méthode de paiement',
+        method_title: 'Sécurisé par les normes bancaires suisses',
         method_subtitle: 'Sélectionnez votre méthode de paiement préférée pour un traitement sécurisé',
         card_title: 'Carte de Crédit / Débit', card_instant: '✓ Traitement Instantané', card_providers: 'Visa, Mastercard, Amex',
         wire_title: 'Virement Bancaire', wire_unlimited: '✓ Montant Illimité', wire_details: 'Détails du virement manuel fournis',
@@ -36,7 +36,7 @@ const paymentTranslations = {
     },
     'es': {
         title_luxury: 'ACCESO', title_emphasis: 'EXCLUSIVO', subtitle: 'Solo por Invitación',
-        method_title: 'Elija su método de pago',
+        method_title: 'Protegido por estándares bancarios suizos',
         method_subtitle: 'Seleccione su método de pago preferido para procesamiento seguro',
         card_title: 'Tarjeta de Crédito / Débito', card_instant: '✓ Procesamiento Instantáneo', card_providers: 'Visa, Mastercard, Amex',
         wire_title: 'Transferencia Bancaria', wire_unlimited: '✓ Cantidad Ilimitada', wire_details: 'Detalles de transferencia manual proporcionados',
@@ -51,7 +51,7 @@ const paymentTranslations = {
     },
     'zh': {
         title_luxury: '独家', title_emphasis: '访问', subtitle: '仅限邀请',
-        method_title: '选择您的支付方式',
+        method_title: '瑞士银行标准保障安全',
         method_subtitle: '选择您喜欢的支付方式进行安全处理',
         card_title: '信用卡 / 借记卡', card_instant: '✓ 即时处理', card_providers: 'Visa, Mastercard, Amex',
         wire_title: '银行转账', wire_unlimited: '✓ 无限金额', wire_details: '提供手动转账详细信息',
@@ -66,7 +66,7 @@ const paymentTranslations = {
     },
     'ar': {
         title_luxury: 'الوصول', title_emphasis: 'الحصري', subtitle: 'بالدعوة فقط',
-        method_title: 'اختر طريقة الدفع',
+        method_title: 'مؤمّن بمعايير البنوك السويسرية',
         method_subtitle: 'حدد طريقة الدفع المفضلة لديك للمعالجة الآمنة',
         card_title: 'بطاقة ائتمان / خصم', card_instant: '✓ معالجة فورية', card_providers: 'Visa, Mastercard, Amex',
         wire_title: 'تحويل بنكي', wire_unlimited: '✓ مبلغ غير محدود', wire_details: 'تفاصيل التحويل اليدوي المقدمة',
@@ -81,7 +81,7 @@ const paymentTranslations = {
     },
     'it': {
         title_luxury: 'ACCESSO', title_emphasis: 'ESCLUSIVO', subtitle: 'Solo su Invito',
-        method_title: 'Scegli il tuo metodo di pagamento',
+        method_title: 'Protetto dagli standard bancari svizzeri',
         method_subtitle: 'Seleziona il tuo metodo di pagamento preferito per elaborazione sicura',
         card_title: 'Carta di Credito / Debito', card_instant: '✓ Elaborazione Istantanea', card_providers: 'Visa, Mastercard, Amex',
         wire_title: 'Bonifico Bancario', wire_unlimited: '✓ Importo Illimitato', wire_details: 'Dettagli bonifico manuale forniti',
@@ -96,7 +96,7 @@ const paymentTranslations = {
     },
     'ru': {
         title_luxury: 'ЭКСКЛЮЗИВНЫЙ', title_emphasis: 'ДОСТУП', subtitle: 'Только по Приглашению',
-        method_title: 'Выберите способ оплаты',
+        method_title: 'Защищено швейцарскими банковскими стандартами',
         method_subtitle: 'Выберите предпочтительный способ оплаты для безопасной обработки',
         card_title: 'Кредитная / Дебетовая Карта', card_instant: '✓ Мгновенная Обработка', card_providers: 'Visa, Mastercard, Amex',
         wire_title: 'Банковский Перевод', wire_unlimited: '✓ Неограниченная Сумма', wire_details: 'Предоставлены реквизиты ручного перевода',
@@ -111,7 +111,7 @@ const paymentTranslations = {
     },
     'ja': {
         title_luxury: '限定', title_emphasis: 'アクセス', subtitle: '招待制のみ',
-        method_title: 'お支払い方法を選択',
+        method_title: 'スイス銀行基準で保護',
         method_subtitle: '安全な処理のためにお好みの支払い方法を選択してください',
         card_title: 'クレジット / デビットカード', card_instant: '✓ 即時処理', card_providers: 'Visa, Mastercard, Amex',
         wire_title: '銀行送金', wire_unlimited: '✓ 無制限の金額', wire_details: '手動送金の詳細が提供されます',
@@ -126,7 +126,7 @@ const paymentTranslations = {
     },
     'en': {
         title_luxury: 'EXCLUSIVE', title_emphasis: 'ACCESS', subtitle: 'By Invitation Only',
-        method_title: 'Choose Your Payment Method',
+        method_title: 'Secured by Swiss Banking Standards',
         method_subtitle: 'Select your preferred payment method for secure processing',
         card_title: 'Credit / Debit Card', card_instant: '✓ Instant Processing', card_providers: 'Visa, Mastercard, Amex',
         wire_title: 'Bank Wire Transfer', wire_unlimited: '✓ Unlimited amount', wire_details: 'Manual transfer details provided',
