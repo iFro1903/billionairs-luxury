@@ -84,11 +84,10 @@ a:hover, a:focus {
 }
 
 html {
-    overflow: hidden;
+    overflow-x: hidden;
     max-width: 100vw;
     height: 100%;
     background-color: #000;
-    overscroll-behavior-y: none;
 }
 
 /* Black scrollbar */
@@ -120,7 +119,6 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     overflow-y: auto;
-    overscroll-behavior-y: none;
     -webkit-overflow-scrolling: touch;
     max-width: 100vw;
     position: relative;
