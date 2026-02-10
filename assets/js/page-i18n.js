@@ -398,8 +398,8 @@ function translatePageElements() {
             const oldText = element.innerHTML;
             const translation = translations[key];
             
-            // Check if translation contains HTML tags
-            if (translation.includes('<')) {
+            // Check if translation contains HTML tags or entities
+            if (translation.includes('<') || translation.includes('&')) {
                 element.innerHTML = translation; // Use innerHTML for HTML content
             } else {
                 element.textContent = translation; // Use textContent for plain text
