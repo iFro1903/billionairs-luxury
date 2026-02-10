@@ -187,11 +187,10 @@ body::before {
 /* Hero Section */
 .hero-section {
     min-height: 100vh;
-    padding-bottom: 5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 2rem 2rem 5rem 2rem;
     background: radial-gradient(ellipse at center, 
                     rgba(232, 180, 160, 0.03) 0%, 
                     transparent 50%,
