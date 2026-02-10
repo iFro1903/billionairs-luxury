@@ -37,7 +37,6 @@
   "devDependencies": {
     "@playwright/test": "^1.56.1",
     "@types/node": "^24.9.1",
-    "clean-css-cli": "^5.6.3",
     "live-server": "^1.2.2",
     "nodemon": "^3.1.10",
     "terser": "^5.44.0",

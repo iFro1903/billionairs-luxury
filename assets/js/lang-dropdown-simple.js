@@ -5,25 +5,6 @@
 
 console.log('🌐 lang-dropdown-simple.js LOADED');
 
-// Lazy-load CJK/Arabic fonts only when needed
-window.loadCJKFont = function(lang) {
-    const fontMap = {
-        'zh': 'Noto+Sans+SC:wght@300;400;500;700',
-        'ja': 'Noto+Sans+JP:wght@300;400;500;700',
-        'ar': 'Noto+Sans+Arabic:wght@300;400;500;700'
-    };
-    const fontFamily = fontMap[lang];
-    if (!fontFamily) return;
-    // Check if already loaded
-    if (document.querySelector('link[data-cjk-font="' + lang + '"]')) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://fonts.googleapis.com/css2?family=' + fontFamily + '&display=swap';
-    link.dataset.cjkFont = lang;
-    document.head.appendChild(link);
-    console.log('🔤 CJK font loaded for:', lang);
-};
-
 // Global function to translate footer links
 window.translateFooterLinks = function(lang) {
     console.log('🔄 Translating footer links to:', lang);
@@ -272,11 +253,6 @@ function initLanguageDropdown() {
                     await window.i18n.switchLanguage(lang);
                     console.log('✅ Language switched to:', lang);
                     langBtn.textContent = lang.toUpperCase();
-                    
-                    // Load CJK/Arabic font if needed
-                    if (typeof window.loadCJKFont === 'function') {
-                        window.loadCJKFont(lang);
-                    }
                     
                     // Translate footer links (for main page)
                     if (typeof window.translateFooterLinks === 'function') {
