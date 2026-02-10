@@ -300,8 +300,10 @@ class LuxuryTimepiece {
             heroSection.style.display = 'none';
         }
         
-        // Scroll to top before showing next section
+        // Scroll to top before showing next section (iOS/Android compatible)
         window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
         
         // Show Trust & Value Section
         if (trustValueSection) {
@@ -323,6 +325,8 @@ class LuxuryTimepiece {
         
         // Scroll to top
         window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
         
         // Show transition screen first
         this.showTransitionScreen();
@@ -352,6 +356,8 @@ class LuxuryTimepiece {
         
         // Scroll to top
         window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
         
         if (heroSection && rejectionSection) {
             // Remove active from hero, add to rejection
