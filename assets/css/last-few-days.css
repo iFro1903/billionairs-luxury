@@ -12,7 +12,7 @@
 
 .last-days-section h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 2rem;
+    font-size: 2.4rem;
     color: #E8B4A0;
     letter-spacing: 8px;
     margin-bottom: 1.5rem;
@@ -52,7 +52,7 @@
 
 .last-days-date {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     color: rgba(232, 180, 160, 0.5);
     letter-spacing: 4px;
     text-transform: uppercase;
@@ -62,7 +62,7 @@
 
 .last-days-text {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.92rem;
+    font-size: 1.05rem;
     color: rgba(255, 255, 255, 0.45);
     line-height: 1.7;
     font-weight: 300;
@@ -80,13 +80,13 @@
         margin: 0 auto 1rem auto;
     }
     .last-days-section h2 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         letter-spacing: 4px;
     }
     .last-days-item {
         padding: 1.2rem 1.5rem;
     }
     .last-days-text {
-        font-size: 0.85rem;
+        font-size: 0.95rem;
     }
 }

@@ -12,7 +12,7 @@
 
 .what-isnt-section h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 2rem;
+    font-size: 2.4rem;
     color: #E8B4A0;
     letter-spacing: 8px;
     margin-bottom: 1.5rem;
@@ -34,9 +34,9 @@
 }
 
 .isnt-item {
-    padding: 1.2rem 0;
+    padding: 1.4rem 0;
     color: rgba(255, 255, 255, 0.45);
-    font-size: 0.92rem;
+    font-size: 1.05rem;
     letter-spacing: 0.8px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     font-family: 'Montserrat', sans-serif;
@@ -64,11 +64,11 @@
         margin: 2rem auto 1rem auto;
     }
     .what-isnt-section h2 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         letter-spacing: 4px;
     }
     .isnt-item {
-        font-size: 0.85rem;
-        padding: 1rem 0;
+        font-size: 0.95rem;
+        padding: 1.1rem 0;
     }
 }
