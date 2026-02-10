@@ -720,19 +720,20 @@
     }
     
     .minimal-footer {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        right: auto;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
         width: 100%;
-        padding: 1.5rem 1rem;
+        padding: 0.8rem 1rem;
         background: #000;
         backdrop-filter: none;
+        border-top: 1px solid rgba(232, 180, 160, 0.1);
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         align-items: center;
-        gap: 0.4rem;
-        z-index: 1;
+        gap: 0.3rem;
+        z-index: 1000;
     }
     
     .footer-links {

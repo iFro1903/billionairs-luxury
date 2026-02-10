@@ -88,6 +88,7 @@ html {
     max-width: 100vw;
     height: 100%;
     background-color: #000;
+    overscroll-behavior-y: none;
 }
 
 /* Black scrollbar */
@@ -119,6 +120,8 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     overflow-y: auto;
+    overscroll-behavior-y: none;
+    -webkit-overflow-scrolling: touch;
     max-width: 100vw;
     position: relative;
     min-height: 100vh;
@@ -184,6 +187,7 @@ body::before {
 /* Hero Section */
 .hero-section {
     min-height: 100vh;
+    padding-bottom: 5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2127,7 +2131,7 @@ input:-webkit-autofill::first-line {
     
     .swiss-security-badge {
         margin-top: 1rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 0;
         padding: 0.5rem 1rem;
     }
     
