@@ -172,6 +172,15 @@
     "rules_subtitle": "El respeto y la discreción son obligatorios",
     "rules_text": "El círculo opera bajo principios estrictos: El respeto y la discreción son obligatorios. Una filtración cuesta la membresía. Sin nombres, sin rastros. Las violaciones de reglas resultan en expulsión inmediata."
   },
+  "what_isnt": {
+    "title": "LO QUE ESTO NO ES",
+    "item1": "Esto no es un club de networking. No hacemos cenas.",
+    "item2": "Esto no es una plataforma social. Sin feeds, sin likes, sin contenido.",
+    "item3": "Esto no es un fondo de inversión. No tocamos tu dinero.",
+    "item4": "Esto no es un servicio de consultoría. Sin consejos, sin coaching.",
+    "item5": "Esto no es negociable. El precio no cambia.",
+    "item6": "Esto no es para todos. Por diseño."
+  },
   "benefits": {
     "rules": {
       "title": "Reglas",

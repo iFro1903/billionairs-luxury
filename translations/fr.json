@@ -172,6 +172,15 @@
     "rules_subtitle": "Le respect et la discrétion sont obligatoires",
     "rules_text": "Le cercle fonctionne selon des principes stricts : Le respect et la discrétion sont obligatoires. Une fuite coûte l'adhésion. Pas de noms, pas de traces. La violation des règles entraîne l'expulsion immédiate."
   },
+  "what_isnt": {
+    "title": "CE QUE CE N'EST PAS",
+    "item1": "Ce n'est pas un club de networking. Nous ne faisons pas de dîners.",
+    "item2": "Ce n'est pas une plateforme sociale. Pas de flux, pas de likes, pas de contenu.",
+    "item3": "Ce n'est pas un fonds d'investissement. Nous ne touchons pas à votre argent.",
+    "item4": "Ce n'est pas un service de conseil. Pas de conseils, pas de coaching.",
+    "item5": "Ce n'est pas négociable. Le prix ne change pas.",
+    "item6": "Ce n'est pas pour tout le monde. Par conception."
+  },
   "benefits": {
     "rules": {
       "title": "Règles",

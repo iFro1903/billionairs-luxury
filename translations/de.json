@@ -288,6 +288,15 @@
     "rules_subtitle": "Respekt und Diskretion sind Pflicht",
     "rules_text": "Der Kreis funktioniert nach strengen Prinzipien: Respekt und Diskretion sind Pflicht. Ein Leak kostet die Mitgliedschaft. Keine Namen, keine Spuren. Regelbruch führt zum sofortigen Platzverlust."
   },
+  "what_isnt": {
+    "title": "WAS DAS HIER NICHT IST",
+    "item1": "Das ist kein Networking-Club. Wir machen keine Dinner.",
+    "item2": "Das ist keine Social-Media-Plattform. Keine Feeds, keine Likes, kein Content.",
+    "item3": "Das ist kein Investmentfonds. Wir fassen Ihr Geld nicht an.",
+    "item4": "Das ist keine Beratung. Keine Ratschläge, kein Coaching.",
+    "item5": "Das ist nicht verhandelbar. Der Preis ändert sich nicht.",
+    "item6": "Das ist nicht für jeden. Mit Absicht."
+  },
   "benefits": {
     "rules": {
       "title": "Regeln",

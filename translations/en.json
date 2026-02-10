@@ -285,6 +285,15 @@
     "rules_subtitle": "Respect and discretion are mandatory",
     "rules_text": "The circle operates on strict principles: Respect and discretion are mandatory. A leak costs membership. No names, no traces. Rule violations result in immediate expulsion."
   },
+  "what_isnt": {
+    "title": "WHAT THIS ISN'T",
+    "item1": "This is not a networking club. We don't do dinners.",
+    "item2": "This is not a social platform. No feeds, no likes, no content.",
+    "item3": "This is not an investment fund. We don't touch your money.",
+    "item4": "This is not a consulting service. No advice, no coaching.",
+    "item5": "This is not negotiable. The price doesn't change.",
+    "item6": "This is not for everyone. By design."
+  },
   "benefits": {
     "rules": {
       "title": "Rules",

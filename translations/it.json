@@ -168,6 +168,15 @@
     "rules_subtitle": "Rispetto e discrezione sono obbligatori",
     "rules_text": "Il circolo opera su principi rigorosi: Rispetto e discrezione sono obbligatori. Una fuga costa l'iscrizione. Nessun nome, nessuna traccia. Le violazioni delle regole comportano l'espulsione immediata."
   },
+  "what_isnt": {
+    "title": "COSA NON È QUESTO",
+    "item1": "Questo non è un club di networking. Non facciamo cene.",
+    "item2": "Questa non è una piattaforma social. Nessun feed, nessun like, nessun contenuto.",
+    "item3": "Questo non è un fondo di investimento. Non tocchiamo i tuoi soldi.",
+    "item4": "Questo non è un servizio di consulenza. Nessun consiglio, nessun coaching.",
+    "item5": "Questo non è negoziabile. Il prezzo non cambia.",
+    "item6": "Questo non è per tutti. Per scelta."
+  },
   "benefits": {
     "rules": {
       "title": "Regole",
