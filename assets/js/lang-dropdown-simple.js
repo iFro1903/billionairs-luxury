@@ -33,6 +33,17 @@ window.translateFooterLinks = function(lang) {
     if (privacyLink) privacyLink.textContent = trans.privacy;
     if (termsLink) termsLink.textContent = trans.terms;
     
+    // Also translate mobile legal links in hamburger menu
+    const mobileFaqLink = document.getElementById('mobileFaqLink');
+    const mobileLegalLink = document.getElementById('mobileLegalLink');
+    const mobilePrivacyLink = document.getElementById('mobilePrivacyLink');
+    const mobileTermsLink = document.getElementById('mobileTermsLink');
+    
+    if (mobileFaqLink) mobileFaqLink.textContent = trans.faq;
+    if (mobileLegalLink) mobileLegalLink.textContent = trans.legal;
+    if (mobilePrivacyLink) mobilePrivacyLink.textContent = trans.privacy;
+    if (mobileTermsLink) mobileTermsLink.textContent = trans.terms;
+    
     console.log(`✅ Footer links translated to ${lang}`);
 };
 
