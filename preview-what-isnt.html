@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <!-- All original head content from index.html -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BILLIONAIRS - Preview</title>
+    
+    <!-- Copy all <link> and <script> tags from the original index.html head -->
+    <link rel="stylesheet" href="assets/css/cookie-consent.css">
+    <script src="assets/js/cookie-consent.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-80P17E7RZK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-80P17E7RZK');
+    </script>
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+Arabic:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/mobile-nav.css">
+    <link rel="stylesheet" href="assets/css/testimonials.css">
+    <link rel="stylesheet" href="assets/css/member-comments.css">
+    <link rel="stylesheet" href="assets/css/benefits.css">
+    <link rel="stylesheet" href="assets/css/payment-methods.css">
+    <link rel="stylesheet" href="assets/css/language-dropdown.css">
+    <link rel="stylesheet" href="assets/css/mobile-language-dropdown.css">
+    <link rel="stylesheet" href="assets/css/faq-footer.css">
+    
+    <!-- New CSS for the section -->
+    <link rel="stylesheet" href="assets/css/what-isnt.css">
+
+    <style>
+        /* Inline styles from original for preloader, etc. */
+        body { opacity: 0; transition: opacity 0.3s ease-in; }
+        body.loaded { opacity: 1; }
+        #pagePreloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0a0708 0%, #1a1012 100%); z-index: 99999; display: flex; justify-content: center; align-items: center; transition: opacity 0.4s ease, visibility 0.4s ease; }
+        #pagePreloader.hidden { opacity: 0; visibility: hidden; }
+        .preloader-logo { width: 120px; height: auto; animation: pulse 1.5s ease-in-out infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.05); } }
+    </style>
+</head>
+<body class="loaded" style="opacity: 1;">
+
+    <!-- All original body content from index.html -->
+    <div id="particles-js"></div>
+    <nav class="premium-nav" role="navigation" aria-label="Main navigation">
+        <!-- ... nav content ... -->
+    </nav>
+    
+    <main id="mainContainer" class="main-container" role="main">
+        <section id="heroSection" class="hero-section" aria-labelledby="hero-title">
+            <!-- ... hero content ... -->
+        </section>
+
+        <!-- START: Injected "WHAT THIS ISN'T" Section -->
+        <section class="what-isnt-section">
+            <h2>WHAT THIS ISN'T</h2>
+            <div class="what-isnt-divider"></div>
+            <div class="isnt-list">
+                <div class="isnt-item">This is not a networking club. We don't do dinners.</div>
+                <div class="isnt-item">This is not a social platform. No feeds, no likes, no content.</div>
+                <div class="isnt-item">This is not an investment fund. We don't touch your money.</div>
+                <div class="isnt-item">This is not a consulting service. No advice, no coaching.</div>
+                <div class="isnt-item">This is not negotiable. The price doesn't change.</div>
+                <div class="isnt-item">This is not for everyone. By design.</div>
+            </div>
+        </section>
+        <!-- END: Injected Section -->
+
+        <section id="trustValueSection" class="trust-value-section">
+            <!-- ... trust/value content ... -->
+        </section>
+        
+        <!-- ... rest of the original body content ... -->
+    </main>
+    
+    <footer class="minimal-footer">
+        <!-- ... footer content ... -->
+    </footer>
+
+    <!-- All original scripts from the end of index.html body -->
+    <script>
+        // Mockup some functionality for the preview
+        document.getElementById('mainContainer').style.display = 'block';
+        document.getElementById('heroSection').style.display = 'block';
+        document.getElementById('trustValueSection').style.display = 'block';
+    </script>
+</body>
+</html>

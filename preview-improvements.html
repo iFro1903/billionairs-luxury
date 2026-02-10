@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BILLIONAIRS - Improvements Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0a0608 0%, #1a1215 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(232, 180, 184, 0.2);
+            border-radius: 4px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #e8b4b8;
+            letter-spacing: 4px;
+        }
+
+        .subtle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 3rem;
+        }
+
+        /* Value Proposition */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-card {
+            background: linear-gradient(135deg, rgba(232, 180, 184, 0.05), rgba(232, 180, 184, 0.1));
+            padding: 2rem;
+            border: 1px solid rgba(232, 180, 184, 0.3);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            border-color: #e8b4b8;
+            box-shadow: 0 10px 30px rgba(232, 180, 184, 0.2);
+        }
+
+        .benefit-card .icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #e8b4b8;
+        }
+
+        .benefit-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Testimonials */
+        .member-testimonial {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 3px solid #e8b4b8;
+            border-radius: 4px;
+        }
+
+        .member-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .member-info img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #e8b4b8;
+        }
+
+        .member-info h4 {
+            color: #e8b4b8;
+            font-size: 1.1rem;
+        }
+
+        .member-info p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+        }
+
+        blockquote {
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-left: 0;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(232, 180, 184, 0.1);
+            border-radius: 4px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 2rem;
+            color: #e8b4b8;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .stat span {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Rejection with Preview */
+        .rejection-with-preview {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .rejection-with-preview h1 {
+            font-size: 4rem;
+            color: #e8b4b8;
+            margin-bottom: 1rem;
+        }
+
+        .preview-box {
+            background: rgba(232, 180, 184, 0.05);
+            border: 1px solid rgba(232, 180, 184, 0.3);
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: left;
+            border-radius: 4px;
+        }
+
+        .preview-box h3 {
+            color: #e8b4b8;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .preview-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .preview-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .preview-list li:last-child {
+            border-bottom: none;
+        }
+
+        .preview-note {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        .rejection-truth {
+            margin: 2rem 0;
+        }
+
+        .rejection-truth p {
+            margin: 0.5rem 0;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Pricing Tiers */
+        .pricing-tiers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tier {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2.5rem;
+            border: 1px solid rgba(232, 180, 184, 0.2);
+            border-radius: 4px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tier:hover {
+            transform: translateY(-10px);
+            border-color: #e8b4b8;
+            box-shadow: 0 15px 40px rgba(232, 180, 184, 0.3);
+        }
+
+        .tier-platinum {
+            border: 2px solid #e8b4b8;
+            background: linear-gradient(135deg, rgba(232, 180, 184, 0.1), rgba(232, 180, 184, 0.05));
+        }
+
+        .tier h3 {
+            font-size: 1.5rem;
+            color: #e8b4b8;
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+        }
+
+        .price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 2rem;
+        }
+
+        .tier ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .tier li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* FAQ */
+        .faq-item {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid #e8b4b8;
+            border-radius: 4px;
+        }
+
+        .faq-item h4 {
+            color: #e8b4b8;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .faq-item p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+        }
+
+        /* Buttons */
+        button, .cta-ready {
+            background: linear-gradient(135deg, rgba(232, 180, 184, 0.2), rgba(232, 180, 184, 0.3));
+            border: 1px solid #e8b4b8;
+            color: #ffffff;
+            padding: 1rem 3rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            font-family: 'Montserrat', sans-serif;
+            margin-top: 1rem;
+        }
+
+        button:hover, .cta-ready:hover {
+            background: linear-gradient(135deg, rgba(232, 180, 184, 0.3), rgba(232, 180, 184, 0.4));
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(232, 180, 184, 0.4);
+        }
+
+        .page-title {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .page-title h1 {
+            font-size: 3.5rem;
+            color: #e8b4b8;
+            letter-spacing: 6px;
+        }
+
+        .page-title p {
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 1rem;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .benefits-grid,
+            .pricing-tiers {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 2rem 1.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .rejection-with-preview h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-title">
+        <h1>BILLIONAIRS</h1>
+        <p>IMPROVEMENTS PREVIEW</p>
+    </div>
+
+    <!-- 1. VALUE PROPOSITION -->
+    <section class="value-proposition">
+        <h2>BEYOND THE THRESHOLD</h2>
+        <p class="subtle">What 500,000 CHF unlocks:</p>
+        
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <span class="icon">🤝</span>
+                <h3>The Network</h3>
+                <p>Direct access to 100 verified UHNWIs across 12 countries. Private chat, deal flow, co-investment opportunities.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <span class="icon">💼</span>
+                <h3>Deal Access</h3>
+                <p>Pre-IPO allocations, private equity rounds, real estate off-market. Average member ROI: 5-8x annually.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <span class="icon">🎯</span>
+                <h3>Concierge</h3>
+                <p>24/7 personal concierge. Yachts, jets, events, impossible reservations. WhatsApp direct line.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <span class="icon">🔒</span>
+                <h3>Privacy Vault</h3>
+                <p>Encrypted storage for contracts, NDAs, sensitive documents. Swiss-grade security.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. TESTIMONIALS -->
+    <section class="testimonials-real">
+        <h2>CURRENT MEMBERS</h2>
+        
+        <div class="member-testimonial">
+            <div class="member-info">
+                <img src="https://i.pravatar.cc/150?img=12" alt="Anonymous Member">
+                <div>
+                    <h4>Tech Founder</h4>
+                    <p>$2.3B Net Worth • Silicon Valley</p>
+                </div>
+            </div>
+            <blockquote>
+                "Within 3 months I co-invested in two deals with members here. 
+                My 500k membership paid for itself in the first quarter."
+            </blockquote>
+        </div>
+        
+        <div class="member-testimonial">
+            <div class="member-info">
+                <img src="https://i.pravatar.cc/150?img=33" alt="Anonymous Member">
+                <div>
+                    <h4>Real Estate Magnate</h4>
+                    <p>$890M Portfolio • Dubai</p>
+                </div>
+            </div>
+            <blockquote>
+                "This isn't a social club. It's a business accelerator for people 
+                who've already won. Zero noise, 100% value."
+            </blockquote>
+        </div>
+        
+        <div class="stats-bar">
+            <div class="stat">
+                <strong>$4.2B</strong>
+                <span>Combined deals 2025</span>
+            </div>
+            <div class="stat">
+                <strong>100</strong>
+                <span>Total members</span>
+            </div>
+            <div class="stat">
+                <strong>12</strong>
+                <span>Countries</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. IMPROVED REJECTION SCREEN -->
+    <section>
+        <div class="rejection-with-preview">
+            <h1>NOT YET.</h1>
+            <p style="font-size: 1.2rem; margin: 1rem 0;">Not every door opens on the first approach.</p>
+            <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 2rem;">Yet wisdom suggests</p>
+            
+            <div class="preview-box">
+                <h3>A glimpse inside:</h3>
+                <ul class="preview-list">
+                    <li>✓ Last week: Member secured $40M Series B at 20% discount via network</li>
+                    <li>✓ Current: Off-market villa in Monaco, €25M (below market)</li>
+                    <li>✓ This month: 3 private jet shares available, fractional ownership</li>
+                </ul>
+                <p class="preview-note">Real opportunities from the past 30 days.</p>
+            </div>
+            
+            <div class="rejection-truth">
+                <p><strong>Some doors open only once.</strong></p>
+                <p><strong>Certain moments exist outside of time.</strong></p>
+                <p><strong>True access is never forced.</strong></p>
+            </div>
+            
+            <button class="cta-ready">I'M READY NOW</button>
+        </div>
+    </section>
+
+    <!-- 4. PRICING TIERS (OPTIONAL) -->
+    <section>
+        <h2>THREE LEVELS OF ACCESS</h2>
+        <p class="subtle">Choose your entry point</p>
+        
+        <div class="pricing-tiers">
+            <div class="tier tier-silver">
+                <h3>SILVER</h3>
+                <p class="price">50,000 CHF/year</p>
+                <ul>
+                    <li>Network access (view only)</li>
+                    <li>Monthly market reports</li>
+                    <li>Quarterly events</li>
+                    <li>Member directory</li>
+                </ul>
+                <button>APPLY</button>
+            </div>
+            
+            <div class="tier tier-gold">
+                <h3>GOLD</h3>
+                <p class="price">250,000 CHF/year</p>
+                <ul>
+                    <li>Full network access</li>
+                    <li>Deal flow notifications</li>
+                    <li>Private chat</li>
+                    <li>Concierge (business hours)</li>
+                    <li>Monthly events</li>
+                </ul>
+                <button>APPLY</button>
+            </div>
+            
+            <div class="tier tier-platinum">
+                <h3>PLATINUM</h3>
+                <p class="price">500,000 CHF</p>
+                <small style="display: block; margin-top: -1rem; margin-bottom: 2rem; color: #e8b4b8;">(one-time, lifetime)</small>
+                <ul>
+                    <li>Everything in Gold</li>
+                    <li>Co-investment opportunities</li>
+                    <li>24/7 concierge</li>
+                    <li>Lifetime access</li>
+                    <li>No annual fees ever</li>
+                    <li>Priority deal access</li>
+                </ul>
+                <button>APPLY</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. FAQ -->
+    <section class="faq-premium">
+        <h2>CLARITY</h2>
+        
+        <div class="faq-item">
+            <h4>Is this verified wealth only?</h4>
+            <p>Yes. We verify liquid net worth via bank statements or wealth manager confirmation. Privacy respected.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h4>What if I change my mind?</h4>
+            <p>30-day full refund, no questions asked. After that, lifetime access is yours.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h4>Who are the current members?</h4>
+            <p>34 tech founders, 28 real estate investors, 19 family offices, 12 hedge fund managers, 7 crypto/web3 leaders.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h4>How is this different from other networks?</h4>
+            <p>We're not a social club. Zero networking dinners. Pure business: deals, intel, access. ROI-focused.</p>
+        </div>
+        
+        <div class="faq-item">
+            <h4>How often do deal opportunities come up?</h4>
+            <p>Average 4-6 qualified opportunities per month. Members can opt-in only to what interests them.</p>
+        </div>
+    </section>
+
+</body>
+</html>

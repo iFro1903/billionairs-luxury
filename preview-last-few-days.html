@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview - LAST FEW DAYS Section</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .last-days-section {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .last-days-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #E8B4A0;
+            letter-spacing: 8px;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            font-style: italic;
+        }
+
+        .last-days-divider {
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #E8B4A0, transparent);
+            margin: 0 auto 2.5rem auto;
+        }
+
+        .last-days-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .last-days-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            padding: 1.5rem 2rem;
+            text-align: left;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .last-days-item:hover {
+            border-color: rgba(232, 180, 160, 0.15);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .last-days-date {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            color: rgba(232, 180, 160, 0.5);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .last-days-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.92rem;
+            color: rgba(255, 255, 255, 0.55);
+            line-height: 1.7;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .last-days-section h2 {
+                font-size: 1.5rem;
+                letter-spacing: 4px;
+            }
+            .last-days-item {
+                padding: 1.2rem 1.5rem;
+            }
+            .last-days-text {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Info text */
+        .preview-info {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(232, 180, 160, 0.1);
+            border: 1px solid rgba(232, 180, 160, 0.3);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #E8B4A0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-info">PREVIEW — LAST FEW DAYS SECTION</div>
+
+    <div class="last-days-section">
+        <h2>Last Few Days</h2>
+        <div class="last-days-divider"></div>
+        
+        <div class="last-days-list">
+            <div class="last-days-item">
+                <div class="last-days-date">COLLECTIBLES</div>
+                <div class="last-days-text">
+                    Singapore member sourced rare Patek Philippe 5711 through network connection. Below market by 40%.
+                </div>
+            </div>
+
+            <div class="last-days-item">
+                <div class="last-days-date">CRYPTO</div>
+                <div class="last-days-text">
+                    Member in Dubai received early token recommendation from fellow member. Entered at $0.08, exited at $2.40. 2,900% return in 11 days. No public alpha — pure network intel.
+                </div>
+            </div>
+
+            <div class="last-days-item">
+                <div class="last-days-date">REAL ESTATE</div>
+                <div class="last-days-text">
+                    Zürich member acquired penthouse in Bahnhofstrasse through member introduction. CHF 14M. Seller wanted discreet transaction — no broker, no listing, no trace.
+                </div>
+            </div>
+
+            <div class="last-days-item">
+                <div class="last-days-date">PRIVATE EQUITY</div>
+                <div class="last-days-text">
+                    Three members pooled $25M into pre-IPO fintech deal. Introduction came through private network channel. Lock-up period: 8 months. Projected 5x minimum.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

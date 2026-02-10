@@ -178,3 +178,31 @@
         font-size: 0.8rem;
     }
 }
+
+/* Mobile Legal Links in Hamburger Menu */
+.mobile-legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem 1.2rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(232, 180, 160, 0.15);
+}
+
+.mobile-legal-link {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.65rem;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    padding: 0.3rem 0;
+}
+
+.mobile-legal-link:hover,
+.mobile-legal-link:active {
+    color: #E8B4A0;
+}

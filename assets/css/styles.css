@@ -190,7 +190,7 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem 2rem 5rem 2rem;
+    padding: 2rem;
     background: radial-gradient(ellipse at center, 
                     rgba(232, 180, 160, 0.03) 0%, 
                     transparent 50%,

@@ -198,8 +198,6 @@
     <link rel="stylesheet" href="assets/css/mobile-language-dropdown.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/faq-footer.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/what-isnt.css">
-    <link rel="stylesheet" href="assets/css/last-few-days.css">
-    <link rel="stylesheet" href="assets/css/the-truth.css">
     <noscript>
         <link rel="stylesheet" href="assets/css/payment-methods.css">
         <link rel="stylesheet" href="assets/css/language-dropdown.css">
@@ -356,14 +354,6 @@
         </div>
         
         <button class="mobile-btn" id="mobileContact">CONTACT</button>
-        
-        <!-- Legal Links in Mobile Menu -->
-        <div class="mobile-legal-links">
-            <a href="#" class="mobile-legal-link" id="mobileFaqLink">FAQ</a>
-            <a href="#" class="mobile-legal-link" id="mobileLegalLink">LEGAL NOTICE</a>
-            <a href="#" class="mobile-legal-link" id="mobilePrivacyLink">PRIVACY POLICY</a>
-            <a href="#" class="mobile-legal-link" id="mobileTermsLink">TERMS & CONDITIONS</a>
-        </div>
     </div>
 
     <!-- Contact Email Popup -->
@@ -502,30 +492,6 @@
                     </div>
                 </div>
 
-                <!-- LAST FEW DAYS Section -->
-                <div class="last-days-section">
-                    <h2 data-i18n-key="last_days.title">Last Few Days</h2>
-                    <div class="last-days-divider"></div>
-                    <div class="last-days-list">
-                        <div class="last-days-item">
-                            <div class="last-days-date" data-i18n-key="last_days.cat1">COLLECTIBLES</div>
-                            <div class="last-days-text" data-i18n-key="last_days.item1">Singapore member sourced rare Patek Philippe 5711 through network connection. Below market by 40%.</div>
-                        </div>
-                        <div class="last-days-item">
-                            <div class="last-days-date" data-i18n-key="last_days.cat2">CRYPTO</div>
-                            <div class="last-days-text" data-i18n-key="last_days.item2">Member in Dubai received early token recommendation from fellow member. Entered at $0.08, exited at $2.40. 2,900% return in 11 days. No public alpha — pure network intel.</div>
-                        </div>
-                        <div class="last-days-item">
-                            <div class="last-days-date" data-i18n-key="last_days.cat3">REAL ESTATE</div>
-                            <div class="last-days-text" data-i18n-key="last_days.item3">Zürich member acquired penthouse in Bahnhofstrasse through member introduction. CHF 14M. Seller wanted discreet transaction — no broker, no listing, no trace.</div>
-                        </div>
-                        <div class="last-days-item">
-                            <div class="last-days-date" data-i18n-key="last_days.cat4">PRIVATE EQUITY</div>
-                            <div class="last-days-text" data-i18n-key="last_days.item4">Three members pooled $25M into pre-IPO fintech deal. Introduction came through private network channel. Lock-up period: 8 months. Projected 5x minimum.</div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Benefit Detail Modal -->
                 <div id="benefitModal" class="benefit-modal">
                     <div class="benefit-modal-content">
@@ -540,17 +506,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="the-truth-section">
-                    <h2 data-i18n-key="the_truth.title">T H E &nbsp; T R U T H</h2>
-                    <div class="truth-divider"></div>
-                    <div class="truth-box">
-                        <p data-i18n-key="the_truth.item1">If you need to see testimonials, you're not ready.</p>
-                        <p data-i18n-key="the_truth.item2">If you need a money-back guarantee, you're not confident.</p>
-                        <p data-i18n-key="the_truth.item3">If you need pricing options, you're not liquid enough.</p>
-                        <p data-i18n-key="the_truth.item4">This isn't arrogance. It's reality.</p>
-                        <p data-i18n-key="the_truth.item5">The people who belong here recognize the value instantly.<br>They don't deliberate, they don't negotiate, they don't wait.</p>
-                        <p class="truth-signature" data-i18n-key="the_truth.signature">— The Mechanism</p>
-                    </div>
+                <div class="trust-reality-check">
+                    <h3>Let's be honest:</h3>
+                    <ul>
+                        <li>No trial period</li>
+                        <li>No payment plans</li>
+                        <li>No refunds</li>
+                        <li>You either fit in, or you don't</li>
+                    </ul>
                 </div>
 
                 <div class="trust-cta-container">
@@ -1643,33 +1606,6 @@
                         desktopContactBtn.click();
                     }
                 }, 300);
-            });
-
-            // Mobile legal links - open modals
-            const mobileLegalLinks = {
-                'mobileFaqLink': 'faq',
-                'mobileLegalLink': 'impressum',
-                'mobilePrivacyLink': 'privacy',
-                'mobileTermsLink': 'terms'
-            };
-
-            Object.entries(mobileLegalLinks).forEach(([id, modalName]) => {
-                const link = document.getElementById(id);
-                if (link) {
-                    link.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        // Close mobile menu
-                        hamburger.classList.remove('active');
-                        overlay.classList.remove('active');
-                        document.body.style.overflow = '';
-                        // Open the modal after menu closes
-                        setTimeout(function() {
-                            if (typeof openModal === 'function') {
-                                openModal(modalName);
-                            }
-                        }, 300);
-                    });
-                }
             });
         });
     </script>
