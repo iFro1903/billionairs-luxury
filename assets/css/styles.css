@@ -2126,9 +2126,9 @@ input:-webkit-autofill::first-line {
     }
     
     .swiss-security-badge {
-        margin-top: 2rem;
+        margin-top: 1rem;
         margin-bottom: 10rem;
-        padding: 1rem;
+        padding: 0.5rem 1rem;
     }
     
     .security-text {
