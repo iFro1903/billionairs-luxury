@@ -13,7 +13,7 @@
 .what-isnt-section h2 {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
-    color: #e8b4b8;
+    color: #E8B4A0;
     letter-spacing: 8px;
     margin-bottom: 1.5rem;
     font-weight: 300;
@@ -23,7 +23,7 @@
 .what-isnt-divider {
     width: 50px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, #e8b4b8, transparent);
+    background: linear-gradient(90deg, transparent, #E8B4A0, transparent);
     margin: 0 auto 2.5rem auto;
 }
 
@@ -50,12 +50,12 @@
 
 .isnt-item:last-child {
     border-bottom: none;
-    color: rgba(232, 180, 184, 0.5);
+    color: rgba(232, 180, 160, 0.5);
     font-style: italic;
 }
 
 .isnt-item:last-child:hover {
-    color: rgba(232, 180, 184, 0.8);
+    color: rgba(232, 180, 160, 0.8);
 }
 
 @media (max-width: 768px) {
