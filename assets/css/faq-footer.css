@@ -720,16 +720,13 @@
     }
     
     .minimal-footer {
-        position: fixed;
-        bottom: -60px; /* Move footer down to fully reveal security text */
-        left: 0;
-        right: 0;
-        padding: 1rem 1rem 3.5rem 1rem; /* Extra bottom padding for copyright visibility */
-        background: linear-gradient(180deg, 
-            transparent 0%, 
-            rgba(10, 10, 15, 0.85) 30%,
-            rgba(15, 10, 20, 0.95) 100%);
-        backdrop-filter: blur(15px);
+        position: relative;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        padding: 2rem 1rem;
+        background: transparent;
+        backdrop-filter: none;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         align-items: center;
