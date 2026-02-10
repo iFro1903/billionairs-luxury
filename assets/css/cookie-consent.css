@@ -354,7 +354,7 @@
 
 @media (max-width: 480px) {
     .cookie-consent-overlay {
-        max-height: 55vh;
+        max-height: 50vh;
         padding: 5px;
     }
     
