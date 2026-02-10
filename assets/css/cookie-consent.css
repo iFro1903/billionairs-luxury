@@ -270,9 +270,22 @@
 @media (max-width: 768px) {
     .cookie-consent-overlay {
         padding: 10px;
-        max-height: 90vh;
+        max-height: 60vh;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+    }
+
+    /* Custom scrollbar for cookie banner only */
+    .cookie-consent-overlay::-webkit-scrollbar {
+        width: 4px;
+    }
+    .cookie-consent-overlay::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+    }
+    .cookie-consent-overlay::-webkit-scrollbar-thumb {
+        background: rgba(232, 180, 184, 0.4);
+        border-radius: 4px;
     }
 
     .cookie-consent-container {
@@ -280,7 +293,7 @@
     }
 
     .cookie-consent-header {
-        padding: 15px 20px;
+        padding: 12px 20px;
         position: sticky;
         top: 0;
         background: linear-gradient(135deg, rgba(232, 180, 184, 0.08), rgba(232, 180, 184, 0.03));
@@ -288,22 +301,31 @@
     }
 
     .cookie-consent-header h3 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .cookie-consent-body {
-        padding: 20px;
+        padding: 15px 20px;
         max-height: none;
+    }
+
+    .cookie-consent-body > p {
+        margin: 0 0 15px 0;
+        font-size: 0.85rem;
+    }
+
+    .cookie-category {
+        padding: 10px 14px;
     }
 
     .cookie-description {
         margin-left: 45px;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
 
     .cookie-consent-footer {
         flex-direction: column;
-        padding: 15px 20px;
+        padding: 12px 20px;
         position: sticky;
         bottom: 0;
         background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
@@ -314,6 +336,7 @@
     .cookie-btn {
         width: 100%;
         min-width: unset;
+        padding: 12px 24px;
     }
 
     .cookie-links {
@@ -331,7 +354,7 @@
 
 @media (max-width: 480px) {
     .cookie-consent-overlay {
-        max-height: 85vh;
+        max-height: 55vh;
         padding: 5px;
     }
     
