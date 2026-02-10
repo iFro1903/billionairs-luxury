@@ -1664,8 +1664,8 @@
                         document.body.style.overflow = '';
                         // Open the modal after menu closes
                         setTimeout(function() {
-                            if (typeof openModal === 'function') {
-                                openModal(modalName);
+                            if (typeof window.openModal === 'function') {
+                                window.openModal(modalName);
                             }
                         }, 300);
                     });

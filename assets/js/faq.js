@@ -156,6 +156,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    // Make openModal globally accessible for mobile menu
+    window.openModal = openModal;
+    
     // Close modal function
     function closeModal(modal) {
         if (modal) {
