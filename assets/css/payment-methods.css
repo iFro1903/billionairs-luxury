@@ -137,6 +137,47 @@
     text-align: center;
 }
 
+/* Card Brand Logos */
+.method-icon.card-brands {
+    font-size: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-brand-logos {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.card-logo {
+    width: 36px;
+    height: 24px;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease;
+}
+
+.card-logo:hover {
+    transform: scale(1.1);
+}
+
+.payment-method.active .card-logo {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .card-brand-logos {
+        gap: 4px;
+    }
+    
+    .card-logo {
+        width: 30px;
+        height: 20px;
+    }
+}
+
 .method-info h4 {
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
