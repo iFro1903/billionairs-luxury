@@ -241,9 +241,8 @@ What lies beyond eternity.`;
           WHERE email = ${email}
         `;
 
-        const riddle = `Count the days of creation.
-One for each wonder of the world.
-When seven suns have risen and fallen,
+        const riddle = `The eye now watches over you.
+When the next sun has risen and fallen,
 The final door will open.`;
 
         // Send Easter Egg Email
@@ -259,7 +258,7 @@ The final door will open.`;
               to: email,
               userName: userName,
               eggName: '👁️ The All-Seeing Eye',
-              eggDescription: 'The eye has opened. You see what others cannot. Seven suns must rise before the final door reveals itself.'
+              eggDescription: 'The eye has opened. You see what others cannot. When the next sun rises and falls, the final door reveals itself.'
             })
           });
           console.log(`📧 Eye unlock email sent to ${email}`);
@@ -306,7 +305,7 @@ The final door will open.`;
               to: email,
               userName: userName,
               eggName: '💬 The Global Elite Chat',
-              eggDescription: 'Seven days have passed. The final door opens. You are now among the elite few who have unlocked the complete experience. Welcome to the inner circle.'
+              eggDescription: 'The day has passed. The final door opens. You are now among the elite few who have unlocked the complete experience. Welcome to the inner circle.'
             })
           });
           console.log(`📧 Chat unlock email sent to ${email}`);

@@ -272,9 +272,8 @@ const EasterEggSystem = {
                 
                 const title = this.translate('THE ALL-SEEING EYE');
                 const riddleLines = [
-                    this.translate('Count the days of creation.'),
-                    this.translate('One for each wonder of the world.'),
-                    this.translate('When seven suns have risen and fallen,'),
+                    this.translate('The eye now watches over you.'),
+                    this.translate('When the next sun has risen and fallen,'),
                     this.translate('The final door will open.')
                 ];
                 const riddle = riddleLines.join('\n');
