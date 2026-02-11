@@ -136,7 +136,7 @@ export default async function handler(req) {
         `;
 
         const riddle = `The mark of power inverted lies.
-Three dawns must break before your eyes.
+A single dawn must break before your eyes.
 Only those with patience and deep loyalty shall see
 What lies beyond eternity.`;
 

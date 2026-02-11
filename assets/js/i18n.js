@@ -451,7 +451,7 @@ class I18nManager {
                 // Easter Egg System
                 'THE PYRAMID': 'DIE PYRAMIDE',
                 'The mark of power inverted lies.': 'Das Zeichen der Macht liegt umgekehrt.',
-                'Three dawns must break before your eyes.': 'Drei Sonnenaufgänge müssen vor deinen Augen brechen.',
+                'A single dawn must break before your eyes.': 'Ein einziger Sonnenaufgang muss vor deinen Augen erscheinen.',
                 'Only those with patience and deep loyalty shall see': 'Nur wer Geduld und tiefe Loyalität hat, wird sehen',
                 'What lies beyond eternity.': 'Was jenseits der Ewigkeit liegt.',
                 'I UNDERSTAND': 'ICH VERSTEHE',
@@ -559,7 +559,7 @@ class I18nManager {
                 // Easter Egg System
                 'THE PYRAMID': 'LA PYRAMIDE',
                 'The mark of power inverted lies.': 'La marque du pouvoir repose inversée.',
-                'Three dawns must break before your eyes.': 'Trois aubes doivent se lever devant vos yeux.',
+                'A single dawn must break before your eyes.': 'Une seule aube doit se lever devant tes yeux.',
                 'Only those with patience and deep loyalty shall see': 'Seuls ceux avec patience et loyauté profonde verront',
                 'What lies beyond eternity.': 'Ce qui se trouve au-delà de l\'éternité.',
                 'I UNDERSTAND': 'JE COMPRENDS',
@@ -667,7 +667,7 @@ class I18nManager {
                 // Easter Egg System
                 'THE PYRAMID': 'LA PIRÁMIDE',
                 'The mark of power inverted lies.': 'La marca del poder yace invertida.',
-                'Three dawns must break before your eyes.': 'Tres amaneceres deben romper ante tus ojos.',
+                'A single dawn must break before your eyes.': 'Un solo amanecer debe romper ante tus ojos.',
                 'Only those with patience and deep loyalty shall see': 'Solo aquellos con paciencia y lealtad profunda verán',
                 'What lies beyond eternity.': 'Lo que yace más allá de la eternidad.',
                 'I UNDERSTAND': 'ENTIENDO',
@@ -775,7 +775,7 @@ class I18nManager {
                 // Easter Egg System
                 'THE PYRAMID': '金字塔',
                 'The mark of power inverted lies.': '权力的标志倒置。',
-                'Three dawns must break before your eyes.': '三个黎明必须在你眼前破晓。',
+                'A single dawn must break before your eyes.': '一个黎明必须在你眼前破晓。',
                 'Only those with patience and deep loyalty shall see': '只有拥有耐心和深厚忠诚者才能看见',
                 'What lies beyond eternity.': '永恒之外的东西。',
                 'I UNDERSTAND': '我明白了',
@@ -883,7 +883,7 @@ class I18nManager {
                 // Easter Egg System
                 'THE PYRAMID': 'الهرم',
                 'The mark of power inverted lies.': 'علامة القوة تكمن مقلوبة.',
-                'Three dawns must break before your eyes.': 'يجب أن تشرق ثلاثة فجر أمام عينيك.',
+                'A single dawn must break before your eyes.': 'فجر واحد يجب أن يشرق أمام عينيك.',
                 'Only those with patience and deep loyalty shall see': 'فقط أولئك الذين لديهم صبر وولاء عميق سيرون',
                 'What lies beyond eternity.': 'ما يكمن وراء الأبدية.',
                 'I UNDERSTAND': 'أنا أفهم',
@@ -991,7 +991,7 @@ class I18nManager {
                 // Easter Egg System
                 'THE PYRAMID': 'LA PIRAMIDE',
                 'The mark of power inverted lies.': 'Il segno del potere giace invertito.',
-                'Three dawns must break before your eyes.': 'Tre albe devono sorgere davanti ai tuoi occhi.',
+                'A single dawn must break before your eyes.': 'Una sola alba deve sorgere davanti ai tuoi occhi.',
                 'Only those with patience and deep loyalty shall see': 'Solo coloro con pazienza e lealtà profonda vedranno',
                 'What lies beyond eternity.': 'Ciò che si trova oltre l\'eternità.',
                 'I UNDERSTAND': 'HO CAPITO',
@@ -1099,7 +1099,7 @@ class I18nManager {
                 // Easter Egg System
                 'THE PYRAMID': 'ПИРАМИДА',
                 'The mark of power inverted lies.': 'Знак власти лежит перевернутым.',
-                'Three dawns must break before your eyes.': 'Три рассвета должны пройти перед вашими глазами.',
+                'A single dawn must break before your eyes.': 'Один рассвет должен взойти перед твоими глазами.',
                 'Only those with patience and deep loyalty shall see': 'Только те, у кого есть терпение и глубокая преданность, увидят',
                 'What lies beyond eternity.': 'Что лежит за пределами вечности.',
                 'I UNDERSTAND': 'Я ПОНИМАЮ',
@@ -1207,7 +1207,7 @@ class I18nManager {
                 // Easter Egg System
                 'THE PYRAMID': 'ピラミッド',
                 'The mark of power inverted lies.': '力の印は逆さまに横たわる。',
-                'Three dawns must break before your eyes.': '三つの夜明けがあなたの目の前で破らなければならない。',
+                'A single dawn must break before your eyes.': '一つの夜明けが君の目の前で訪れなければならない。',
                 'Only those with patience and deep loyalty shall see': '忍耐と深い忠誠を持つ者だけが見るだろう',
                 'What lies beyond eternity.': '永遠の彼方にあるものを。',
                 'I UNDERSTAND': '理解しました',

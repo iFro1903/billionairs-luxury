@@ -160,7 +160,7 @@ const EasterEggSystem = {
             const title = this.translate('THE PYRAMID');
             const riddleLines = [
                 this.translate('The mark of power inverted lies.'),
-                this.translate('Three dawns must break before your eyes.'),
+                this.translate('A single dawn must break before your eyes.'),
                 this.translate('Only those with patience and deep loyalty shall see'),
                 this.translate('What lies beyond eternity.')
             ];
