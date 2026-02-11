@@ -158,7 +158,7 @@ function renderHTML(message, type, email = '') {
         ` : `
             <p>Please check the unsubscribe link in your email.</p>
         `}
-        <a href="https://billionairs-luxury.vercel.app" class="btn">Back to Home</a>
+        <a href="https://billionairs.luxury" class="btn">Back to Home</a>
     </div>
 </body>
 </html>

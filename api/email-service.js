@@ -96,7 +96,7 @@ const templates = {
                             <div style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-top: 3px solid #e8b4b8; border-right: 3px solid #e8b4b8; opacity: 0.6;"></div>
                             
                             <!-- Logo Image -->
-                            <img src="https://billionairs-luxury.vercel.app/assets/images/logo.png" alt="BILLIONAIRS" style="max-width: 180px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 30px rgba(232, 180, 184, 0.6));" />
+                            <img src="https://billionairs.luxury/assets/images/logo.png" alt="BILLIONAIRS" style="max-width: 180px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 30px rgba(232, 180, 184, 0.6));" />
                             
                             <h1 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 48px; color: #e8b4b8; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; text-shadow: 0 0 40px rgba(232, 180, 184, 0.5), 0 2px 4px rgba(0, 0, 0, 0.8);">
                                 BILLIONAIRS
@@ -258,7 +258,7 @@ const templates = {
                             </p>
                             
                             <p style="margin: 0 0 15px 0; font-size: 14px; color: rgba(255, 255, 255, 0.7);">
-                                <a href="https://billionairs-luxury.vercel.app" style="color: #e8b4b8; text-decoration: none; border-bottom: 1px solid rgba(232, 180, 184, 0.3);">billionairs-luxury.vercel.app</a>
+                                <a href="https://billionairs.luxury" style="color: #e8b4b8; text-decoration: none; border-bottom: 1px solid rgba(232, 180, 184, 0.3);">billionairs.luxury</a>
                             </p>
                             
                             <p style="margin: 15px 0 0 0; font-size: 12px; line-height: 1.6; color: rgba(255, 255, 255, 0.5);">
@@ -307,7 +307,7 @@ const templates = {
                             <div style="position: absolute; top: 20px; left: 20px; width: 50px; height: 50px; border-top: 4px solid #e8b4b8; border-left: 4px solid #e8b4b8; opacity: 0.6;"></div>
                             <div style="position: absolute; top: 20px; right: 20px; width: 50px; height: 50px; border-top: 4px solid #e8b4b8; border-right: 4px solid #e8b4b8; opacity: 0.6;"></div>
                             
-                            <img src="https://billionairs-luxury.vercel.app/assets/images/logo.png" alt="BILLIONAIRS" style="width: 80px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 4px 12px rgba(232, 180, 184, 0.4));" />
+                            <img src="https://billionairs.luxury/assets/images/logo.png" alt="BILLIONAIRS" style="width: 80px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 4px 12px rgba(232, 180, 184, 0.4));" />
                             
                             <h1 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 36px; font-weight: 900; color: #e8b4b8; letter-spacing: 4px; text-transform: uppercase; text-shadow: 0 2px 10px rgba(232, 180, 184, 0.3);">
                                 BILLIONAIRS
@@ -455,7 +455,7 @@ const templates = {
                             <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
                                 <tr>
                                     <td align="center">
-                                        <a href="https://billionairs-luxury.vercel.app/dashboard" style="display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #D4A574, #F4C2A1); color: #1a1a2e; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(232, 180, 160, 0.4);">
+                                        <a href="https://billionairs.luxury/dashboard" style="display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #D4A574, #F4C2A1); color: #1a1a2e; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(232, 180, 160, 0.4);">
                                             CONTINUE EXPLORING
                                         </a>
                                     </td>
@@ -530,7 +530,7 @@ const templates = {
                             <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
                                 <tr>
                                     <td align="center">
-                                        <a href="https://billionairs-luxury.vercel.app/dashboard" style="display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #D4A574, #F4C2A1); color: #1a1a2e; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; letter-spacing: 1px;">
+                                        <a href="https://billionairs.luxury/dashboard" style="display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #D4A574, #F4C2A1); color: #1a1a2e; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; letter-spacing: 1px;">
                                             ACCESS YOUR ACCOUNT
                                         </a>
                                     </td>

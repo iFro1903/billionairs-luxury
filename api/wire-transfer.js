@@ -546,7 +546,7 @@ export default async function handler(req, res) {
         <div class="container">
             <div class="header">
                 <div class="logo-container">
-                    <img src="https://billionairs-luxury.vercel.app/assets/images/logo.png" alt="BILLIONAIRS" class="logo-image">
+                    <img src="https://billionairs.luxury/assets/images/logo.png" alt="BILLIONAIRS" class="logo-image">
                     <h1 class="logo-text">BILLIONAIRS</h1>
                 </div>
                 <p class="header-subtitle">Exclusive Luxury Network</p>

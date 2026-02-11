@@ -10,7 +10,7 @@ export const config = {
 // Helper function to send payment confirmation email
 async function sendPaymentConfirmationEmail(email, userName, amount, currency, productName) {
     try {
-        const emailApiUrl = 'https://billionairs-luxury.vercel.app/api/email-service';
+        const emailApiUrl = 'https://billionairs.luxury/api/email-service';
         
         console.log(`📧 Attempting to send payment email to: ${email}`);
         console.log(`📧 Email API URL: ${emailApiUrl}`);

@@ -652,7 +652,7 @@ export default async function handler(req, res) {
         <!-- Header with Logo -->
         <div class="header">
             <div class="logo-container">
-                <img src="https://billionairs-luxury.vercel.app/assets/images/logo.png" alt="BILLIONAIRS" class="logo-image">
+                <img src="https://billionairs.luxury/assets/images/logo.png" alt="BILLIONAIRS" class="logo-image">
                 <div class="logo-text">BILLIONAIRS</div>
                 <div class="logo-subtitle">LUXURY REDEFINED</div>
             </div>
