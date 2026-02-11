@@ -68,8 +68,8 @@ export default async function handler(req) {
           showPyramid = timeSinceFirst >= 8000; // 8 seconds
         }
 
-        // Check if eye should be ready (24 hours + 3 logins)
-        if (user.pyramid_opened_at && !user.eye_unlocked && user.login_streak >= 3) {
+        // Check if eye should be ready (24 hours after pyramid opened)
+        if (user.pyramid_opened_at && !user.eye_unlocked) {
           const hoursSincePyramid = (now - new Date(user.pyramid_opened_at)) / (1000 * 60 * 60);
           eyeReady = hoursSincePyramid >= 24;
         }
@@ -224,12 +224,11 @@ What lies beyond eternity.`;
         const now = new Date();
         const hoursSincePyramid = (now - new Date(user.pyramid_opened_at)) / (1000 * 60 * 60);
         
-        if (hoursSincePyramid < 72 || user.login_streak < 3) {
+        if (hoursSincePyramid < 24) {
           return new Response(
             JSON.stringify({ 
-              error: 'Requirements not met',
-              hoursSincePyramid,
-              loginStreak: user.login_streak
+              error: 'Requirements not met - 24h not passed yet',
+              hoursSincePyramid
             }),
             { status: 400, headers }
           );
