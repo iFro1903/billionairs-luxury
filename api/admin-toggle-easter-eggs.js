@@ -90,8 +90,7 @@ export default async function handler(req) {
                 if (unlockValue) {
                     updateQuery = sql`
                         UPDATE users 
-                        SET eye_unlocked = TRUE,
-                            eye_opened_at = NOW()
+                        SET eye_unlocked = TRUE
                         WHERE email != ${CEO_EMAIL}
                     `;
                 } else {
@@ -176,8 +175,7 @@ export default async function handler(req) {
                 if (unlockValue) {
                     updateQuery = sql`
                         UPDATE users 
-                        SET eye_unlocked = TRUE,
-                            eye_opened_at = NOW()
+                        SET eye_unlocked = TRUE
                         WHERE email = ${email}
                     `;
                 } else {

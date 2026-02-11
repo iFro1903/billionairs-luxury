@@ -290,26 +290,17 @@ class AdminPanel {
                 </div>
 
                 <div class="easter-egg-features">
-                    <!-- Pyramid Control -->
-                    <div class="feature-control">
+                    <!-- Pyramid Status (automatic after 8s, no manual control) -->
+                    <div class="feature-control" style="opacity: 0.6;">
                         <div class="feature-control-header">
                             <span class="feature-name">🔺 Pyramid</span>
                             <div class="feature-status">
                                 <span class="status-indicator ${user.pyramid_unlocked ? 'unlocked' : 'locked'}"></span>
-                                <span class="status-text">${user.pyramid_unlocked ? 'Unlocked' : 'Locked'}</span>
+                                <span class="status-text">${user.pyramid_unlocked ? 'Unlocked' : 'Locked'} (auto)</span>
                             </div>
                         </div>
-                        <div class="feature-buttons">
-                            <button class="feature-toggle-btn unlock" 
-                                    onclick="adminPanel.toggleFeature('${user.email}', 'pyramid', true)"
-                                    ${user.pyramid_unlocked ? 'disabled' : ''}>
-                                ✅ Unlock
-                            </button>
-                            <button class="feature-toggle-btn lock" 
-                                    onclick="adminPanel.toggleFeature('${user.email}', 'pyramid', false)"
-                                    ${!user.pyramid_unlocked ? 'disabled' : ''}>
-                                🔒 Lock
-                            </button>
+                        <div class="feature-buttons" style="opacity: 0.4; pointer-events: none;">
+                            <span style="font-size: 11px; color: rgba(255,255,255,0.5); padding: 8px;">Appears automatically after 8 seconds</span>
                         </div>
                     </div>
 

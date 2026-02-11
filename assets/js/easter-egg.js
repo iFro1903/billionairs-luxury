@@ -234,15 +234,28 @@ const EasterEggSystem = {
     },
 
     async openEye() {
+        // If chat is unlocked by admin → open chat directly
         if (this.status.chatUnlocked) {
-            // Chat already unlocked — open directly
             this.showChat();
             return;
         }
 
-        // Always show the eye riddle first
+        // Otherwise ALWAYS show the eye riddle
         try {
-            // Wait for i18n to be available
+            // Mark eye as opened in DB (for tracking)
+            await fetch('/api/easter-egg', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: this.userEmail,
+                    action: 'unlock_eye'
+                })
+            });
+        } catch (error) {
+            console.error('Error recording eye open:', error);
+        }
+
+        try {
             await this.waitForI18n();
             
             const title = this.translate('THE ALL-SEEING EYE');
@@ -252,41 +265,7 @@ const EasterEggSystem = {
                 this.translate('The final door will open.')
             ];
             const riddle = riddleLines.join('\n');
-
-            if (this.status.chatReady && !this.status.chatUnlocked) {
-                // Chat is ready — show riddle first, then unlock chat after closing
-                this.showRiddle('<img src="assets/images/eye-simple.svg" alt="All-Seeing Eye" style="width: 80px; height: 80px;">', title, riddle, async () => {
-                    // After riddle is closed, unlock and show chat
-                    try {
-                        await fetch('/api/easter-egg', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                email: this.userEmail,
-                                action: 'unlock_chat'
-                            })
-                        });
-                        this.showChat();
-                    } catch (error) {
-                        console.error('Error unlocking chat:', error);
-                    }
-                });
-            } else {
-                // Eye just unlocked, chat not ready yet — show riddle only
-                try {
-                    await fetch('/api/easter-egg', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            email: this.userEmail,
-                            action: 'unlock_eye'
-                        })
-                    });
-                } catch (error) {
-                    console.error('Error unlocking eye:', error);
-                }
-                this.showRiddle('<img src="assets/images/eye-simple.svg" alt="All-Seeing Eye" style="width: 80px; height: 80px;">', title, riddle);
-            }
+            this.showRiddle('<img src="assets/images/eye-simple.svg" alt="All-Seeing Eye" style="width: 80px; height: 80px;">', title, riddle);
         } catch (error) {
             console.error('Error opening eye:', error);
         }
