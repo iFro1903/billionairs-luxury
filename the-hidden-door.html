@@ -478,9 +478,42 @@
             .watch-case { width: 400px; height: 400px; }
             .watch-face { width: 370px; height: 370px; }
         }
+
+        .logout-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            padding: 0.8rem 2rem;
+            background: rgba(232, 180, 160, 0.1);
+            color: #E8B4A0;
+            border: 1px solid rgba(232, 180, 160, 0.3);
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            letter-spacing: 1px;
+        }
+
+        .logout-button:hover {
+            background: rgba(232, 180, 160, 0.2);
+            color: #F5D4C1;
+            border-color: #E8B4A0;
+        }
+
+        @media (max-width: 768px) {
+            .logout-button {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.6rem 1.5rem;
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body class="hidden-door-page">
+    <button class="logout-button" onclick="(async () => { if (window.authManager) { await window.authManager.logout(); } localStorage.removeItem('userEmail'); sessionStorage.removeItem('userEmail'); window.location.href = '/'; })()">Logout</button>
     <div class="container">
         <div class="header">
             <h1 class="title">The Hidden Door</h1>
