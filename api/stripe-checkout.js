@@ -154,7 +154,7 @@ module.exports = async (req, res) => {
           currency: 'chf',
           product_data: {
             name: 'BILLIONAIRS Exclusive Access',
-            description: 'Lifetime access to the exclusive BILLIONAIRS platform'
+            description: 'Access to the exclusive BILLIONAIRS platform'
           },
           unit_amount: 50000000  // 500,000 CHF LIVE
         },
