@@ -69,7 +69,7 @@ class PaymentMethodSelector {
     getSelectedPaymentData() {
         const data = {
             method: this.selectedMethod,
-            amount: 50000000, // 500,000 CHF in cents
+            amount: 50, // 0.50 CHF in cents - TEST
             currency: 'chf'
         };
 
@@ -77,7 +77,7 @@ class PaymentMethodSelector {
             case 'card':
                 // Credit/Debit Card - Supports high amounts with bank authorization
                 data.paymentMethodTypes = ['card'];
-                data.description = 'Premium Card Payment - 500,000 CHF';
+                data.description = 'Test Card Payment - 0.50 CHF';
                 data.metadata = {
                     payment_tier: 'millionaire',
                     supports_amount: '500000_chf',

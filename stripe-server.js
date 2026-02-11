@@ -47,7 +47,7 @@ app.post('/create-checkout-session', async (req, res) => {
         const { priceId, mode, currency, amount, paymentType, metadata } = req.body;
 
         // Use lower amount for testing, full amount for production
-        const testAmount = isProduction ? (amount || 50000000) : 500000; // 5,000 CHF for testing
+        const testAmount = isProduction ? (amount || 50) : 50; // 0.50 CHF for testing
         
         console.log('Creating millionaire-tier checkout session:', {
             amount: testAmount,
@@ -83,7 +83,7 @@ app.post('/create-checkout-session', async (req, res) => {
                             'BILLIONAIRS - Exclusive Access',
                         description: paymentType === 'split' ?
                             '250,000 CHF - Initial payment for exclusive digital experience.' :
-                            '500,000 CHF - Complete access to exclusive digital experience beyond wealth.',
+                            '0.50 CHF - Test payment for exclusive digital experience.',
                         images: ['https://billionairs.luxury/assets/images/og-image.png'],
                         metadata: {
                             tier: 'millionaire_segment',

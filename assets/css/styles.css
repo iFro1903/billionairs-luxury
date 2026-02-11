@@ -1412,33 +1412,43 @@ div:not(.clickable) {
 .luxury-header {
     text-align: center;
     margin-bottom: 3rem;
+    padding-bottom: 0.5rem;
 }
 
 .main-title {
     font-family: 'Playfair Display', serif;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .title-luxury {
     display: block;
-    font-size: 2.2rem;
-    font-weight: 300;
+    font-size: 2.5rem;
+    font-weight: 400;
+    font-style: italic;
     color: var(--rose-gold-primary);
-    letter-spacing: 4px;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 0 10px rgba(212, 165, 116, 0.3);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.3rem;
+    text-shadow: 0 0 30px rgba(232, 180, 160, 0.25),
+                 0 0 10px rgba(212, 165, 116, 0.15);
 }
 
 .title-emphasis {
     display: block;
-    font-size: 3rem;
-    font-weight: 400;
-    background: linear-gradient(45deg, var(--rose-gold-primary), #ffffff, var(--rose-gold-accent));
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffffff 0%, var(--rose-gold-primary) 40%, #ffffff 70%, var(--rose-gold-accent) 100%);
+    background-size: 200% auto;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: 3px;
+    letter-spacing: 0.15em;
     text-shadow: none;
+    animation: shimmerTitle 4s linear infinite;
+}
+
+@keyframes shimmerTitle {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
 }
 
 .subtitle-container {
@@ -1501,37 +1511,43 @@ div:not(.clickable) {
 
 label {
     display: block;
-    font-size: 0.85rem;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
     color: var(--rose-gold-primary);
-    margin-bottom: 0.5rem;
-    font-weight: 400;
-    letter-spacing: 2px;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
 }
 
 input {
     width: 100%;
-    padding: 1rem;
+    padding: 1rem 1.2rem;
     /* Dark, transparent background to match payment/login design */
     background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(232, 180, 160, 0.25);
-    border-radius: 8px;
+    border: 1px solid rgba(232, 180, 160, 0.18);
+    border-radius: 10px;
     color: var(--text-platinum);
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-family: 'Montserrat', sans-serif;
-    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 input:focus {
     outline: none;
-    border-color: rgba(232, 180, 160, 0.6);
-    box-shadow: 0 0 18px rgba(232, 180, 160, 0.12);
-    background: rgba(0, 0, 0, 0.5);
+    border-color: rgba(232, 180, 160, 0.5);
+    box-shadow: 0 0 20px rgba(232, 180, 160, 0.08),
+                0 0 40px rgba(232, 180, 160, 0.04);
+    background: rgba(0, 0, 0, 0.45);
 }
 
 input::placeholder {
-    color: rgba(255, 255, 255, 0.35);
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.88rem;
+    font-weight: 300;
+    letter-spacing: 0.02em;
 }
 
 /* Override browser autofill completely - dark background matching all other fields */
@@ -2238,11 +2254,13 @@ input:-webkit-autofill::first-line {
     }
     
     .title-luxury {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        letter-spacing: 0.15em;
     }
     
     .title-emphasis {
         font-size: 2.5rem;
+        letter-spacing: 0.1em;
     }
     
     .form-row {
