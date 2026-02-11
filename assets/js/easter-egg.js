@@ -234,57 +234,65 @@ const EasterEggSystem = {
     },
 
     async openEye() {
-        if (this.status.chatReady && !this.status.chatUnlocked) {
-            // Unlock chat
-            try {
-                await fetch('/api/easter-egg', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        email: this.userEmail,
-                        action: 'unlock_chat'
-                    })
-                });
-                
-                this.showChat();
-            } catch (error) {
-                console.error('Error unlocking chat:', error);
-            }
-        } else if (this.status.chatUnlocked) {
-            // Open chat
+        if (this.status.chatUnlocked) {
+            // Chat already unlocked — open directly
             this.showChat();
-        } else {
-            // Show riddle
-            try {
-                const response = await fetch('/api/easter-egg', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        email: this.userEmail,
-                        action: 'unlock_eye'
-                    })
-                });
+            return;
+        }
 
-                const data = await response.json();
-                
-                // Wait for i18n to be available
-                await this.waitForI18n();
-                
-                const title = this.translate('THE ALL-SEEING EYE');
-                const riddleLines = [
-                    this.translate('The eye now watches over you.'),
-                    this.translate('When the next sun has risen and fallen,'),
-                    this.translate('The final door will open.')
-                ];
-                const riddle = riddleLines.join('\n');
+        // Always show the eye riddle first
+        try {
+            // Wait for i18n to be available
+            await this.waitForI18n();
+            
+            const title = this.translate('THE ALL-SEEING EYE');
+            const riddleLines = [
+                this.translate('The eye now watches over you.'),
+                this.translate('When the next sun has risen and fallen,'),
+                this.translate('The final door will open.')
+            ];
+            const riddle = riddleLines.join('\n');
+
+            if (this.status.chatReady && !this.status.chatUnlocked) {
+                // Chat is ready — show riddle first, then unlock chat after closing
+                this.showRiddle('<img src="assets/images/eye-simple.svg" alt="All-Seeing Eye" style="width: 80px; height: 80px;">', title, riddle, async () => {
+                    // After riddle is closed, unlock and show chat
+                    try {
+                        await fetch('/api/easter-egg', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                email: this.userEmail,
+                                action: 'unlock_chat'
+                            })
+                        });
+                        this.showChat();
+                    } catch (error) {
+                        console.error('Error unlocking chat:', error);
+                    }
+                });
+            } else {
+                // Eye just unlocked, chat not ready yet — show riddle only
+                try {
+                    await fetch('/api/easter-egg', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: this.userEmail,
+                            action: 'unlock_eye'
+                        })
+                    });
+                } catch (error) {
+                    console.error('Error unlocking eye:', error);
+                }
                 this.showRiddle('<img src="assets/images/eye-simple.svg" alt="All-Seeing Eye" style="width: 80px; height: 80px;">', title, riddle);
-            } catch (error) {
-                console.error('Error opening eye:', error);
             }
+        } catch (error) {
+            console.error('Error opening eye:', error);
         }
     },
 
-    showRiddle(icon, title, text) {
+    showRiddle(icon, title, text, onClose) {
         const modal = document.createElement('div');
         modal.className = 'riddle-modal show';
         const buttonText = this.translate('I UNDERSTAND');
@@ -293,11 +301,20 @@ const EasterEggSystem = {
                 <div class="riddle-icon">${icon}</div>
                 <h2 class="riddle-title">${title}</h2>
                 <p class="riddle-text">${text}</p>
-                <button class="riddle-close" onclick="this.closest('.riddle-modal').remove()">
+                <button class="riddle-close">
                     ${buttonText}
                 </button>
             </div>
         `;
+        
+        // Close button with optional callback
+        modal.querySelector('.riddle-close').addEventListener('click', () => {
+            modal.remove();
+            if (typeof onClose === 'function') {
+                onClose();
+            }
+        });
+        
         document.body.appendChild(modal);
     },
     
