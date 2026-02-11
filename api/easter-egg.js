@@ -74,12 +74,12 @@ export default async function handler(req) {
           eyeReady = hoursSincePyramid >= 24;
         }
 
-        // Check if chat should be ready (168 hours from eye unlock)
+        // Check if chat should be ready (24 hours from eye unlock)
         let daysSinceEyeOpened = 0;
         if (user.eye_opened_at) {
           const hoursSinceEye = (now - new Date(user.eye_opened_at)) / (1000 * 60 * 60);
           if (!user.chat_unlocked) {
-            chatReady = hoursSinceEye >= 168;
+            chatReady = hoursSinceEye >= 24;
             
             // Auto-unlock chat if ready
             if (chatReady) {
@@ -278,9 +278,9 @@ The final door will open.`;
         const now = new Date();
         const hoursSinceEye = (now - new Date(user.eye_opened_at)) / (1000 * 60 * 60);
         
-        if (hoursSinceEye < 168) {
+        if (hoursSinceEye < 24) {
           return new Response(
-            JSON.stringify({ error: 'Must wait 168 hours', hoursSinceEye }),
+            JSON.stringify({ error: 'Must wait 24 hours', hoursSinceEye }),
             { status: 400, headers }
           );
         }
