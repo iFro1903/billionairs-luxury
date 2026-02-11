@@ -2251,6 +2251,30 @@ input:-webkit-autofill::first-line {
     .payment-container {
         padding: 2rem;
         margin: 1rem;
+        padding-bottom: 6rem;
+    }
+    
+    .payment-section {
+        align-items: flex-start;
+        padding: 1rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+    
+    .payment-button {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        border-radius: 0;
+        padding: 1.2rem;
+        margin: 0;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    .payment-form-container {
+        padding-bottom: 1rem;
     }
     
     .title-luxury {
@@ -2321,6 +2345,7 @@ input:-webkit-autofill::first-line {
 
     .payment-container {
         padding: 1.5rem;
+        padding-bottom: 5rem;
     }
     
     .clock-frame {
