@@ -1,9 +1,9 @@
 // Service Worker for BILLIONAIRS PWA
 // Provides offline support and performance caching
 
-const CACHE_NAME = 'billionairs-v1.0.4';
-const RUNTIME_CACHE = 'billionairs-runtime-v1.0.4';
-const IMAGE_CACHE = 'billionairs-images-v1.0.4';
+const CACHE_NAME = 'billionairs-v1.0.5';
+const RUNTIME_CACHE = 'billionairs-runtime-v1.0.5';
+const IMAGE_CACHE = 'billionairs-images-v1.0.5';
 
 // Resources to cache immediately on install
 const PRECACHE_URLS = [
@@ -595,14 +595,24 @@ self.addEventListener('notificationclick', (event) => {
 
     // Get URL from notification data
     const urlToOpen = event.notification.data?.url || '/';
+    const isChatMessage = event.notification.tag === 'chat-message' || 
+                          event.notification.data?.type === 'chat_message';
 
     event.waitUntil(
         clients.matchAll({ type: 'window', includeUncontrolled: true })
             .then((clientList) => {
                 // Check if there's already a window open
                 for (const client of clientList) {
-                    if (client.url === urlToOpen && 'focus' in client) {
-                        return client.focus();
+                    if ('focus' in client) {
+                        // For chat messages, focus existing window and post message
+                        if (isChatMessage) {
+                            client.focus();
+                            client.postMessage({ type: 'OPEN_CHAT' });
+                            return;
+                        }
+                        if (client.url.includes(urlToOpen)) {
+                            return client.focus();
+                        }
                     }
                 }
                 

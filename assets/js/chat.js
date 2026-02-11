@@ -52,12 +52,29 @@ class LuxuryChat {
         if (!this.soundEnabled) return;
         
         try {
-            // Create AudioContext on first use (required by browsers)
-            if (!this._audioCtx) {
+            // Create AudioContext on first use, recreate if closed
+            if (!this._audioCtx || this._audioCtx.state === 'closed') {
                 this._audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             }
             
             const ctx = this._audioCtx;
+            
+            // Resume if suspended (required after user leaves & returns)
+            if (ctx.state === 'suspended') {
+                ctx.resume().then(() => this._playChime(ctx));
+                return;
+            }
+            
+            this._playChime(ctx);
+        } catch (e) {
+            console.warn('Sound playback failed:', e);
+            // Reset AudioContext for next attempt
+            this._audioCtx = null;
+        }
+    }
+    
+    _playChime(ctx) {
+        try {
             const now = ctx.currentTime;
             
             // Luxury chime: Two soft bell tones (C5 + E5)
@@ -78,13 +95,12 @@ class LuxuryChat {
                 osc.stop(now + start + duration);
             };
             
-            // Elegant two-note chime
+            // Elegant three-note chime
             playTone(523.25, 0, 0.3, 0.15);     // C5
             playTone(659.25, 0.12, 0.35, 0.12);  // E5
             playTone(783.99, 0.22, 0.4, 0.08);   // G5 (soft)
-            
         } catch (e) {
-            console.warn('Sound playback failed:', e);
+            console.warn('Chime playback failed:', e);
         }
     }
     
@@ -109,29 +125,84 @@ class LuxuryChat {
     // ═══════════════════════════════════════════════
     
     async requestPushPermission() {
-        if (!window.pushManager || !window.pushManager.isSupported()) return;
+        // Check basic support
+        if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
+            console.warn('Push notifications not supported on this device');
+            return;
+        }
         
         try {
-            // Only prompt if not yet decided
+            // Wait for service worker to be ready
+            const registration = await navigator.serviceWorker.ready;
+            
             if (Notification.permission === 'default') {
-                // Delay prompt slightly so it doesn't appear immediately
+                // Delay prompt so it doesn't appear immediately
                 setTimeout(async () => {
-                    const permission = await Notification.requestPermission();
-                    if (permission === 'granted') {
-                        await window.pushManager.subscribe();
-                        console.log('Push notifications enabled for chat');
+                    try {
+                        const permission = await Notification.requestPermission();
+                        if (permission === 'granted') {
+                            await this._subscribeToPush(registration);
+                        }
+                    } catch (e) {
+                        console.warn('Permission request failed:', e);
                     }
                 }, 3000);
             } else if (Notification.permission === 'granted') {
                 // Already granted — ensure subscription exists
-                const existing = await window.pushManager.getSubscription();
-                if (!existing) {
-                    await window.pushManager.subscribe();
-                }
+                await this._subscribeToPush(registration);
             }
         } catch (e) {
             console.warn('Push subscription failed:', e);
         }
+    }
+    
+    async _subscribeToPush(registration) {
+        try {
+            let subscription = await registration.pushManager.getSubscription();
+            
+            if (!subscription) {
+                // VAPID public key
+                const vapidKey = 'BImYUR7FiZgYywJNjKzSiIkDPdotF5OX5E1h023JBKk4Yr6nSnIzq6OD5PDNKLSl-UK1xxoFFY4uWWPyNAJaoGs';
+                const applicationServerKey = this._urlBase64ToUint8Array(vapidKey);
+                
+                subscription = await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: applicationServerKey
+                });
+                console.log('New push subscription created');
+            }
+            
+            // Send subscription to server with email
+            const userEmail = this.userEmail || sessionStorage.getItem('userEmail') || localStorage.getItem('userEmail');
+            
+            await fetch('/api/push-subscribe', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'x-user-email': userEmail || ''
+                },
+                body: JSON.stringify({
+                    subscription: subscription.toJSON(),
+                    userAgent: navigator.userAgent,
+                    email: userEmail
+                })
+            });
+            
+            console.log('Push subscription saved to server');
+        } catch (e) {
+            console.warn('Push subscribe error:', e);
+        }
+    }
+    
+    _urlBase64ToUint8Array(base64String) {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+        for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
     }
 
     // ═══════════════════════════════════════════════
@@ -141,7 +212,7 @@ class LuxuryChat {
     initScreenshotProtection() {
         this.screenshotProtectionActive = true;
         
-        // 1. Block PrintScreen key
+        // 1. Block PrintScreen key (Desktop)
         this._onKeyDown = (e) => {
             if (!this.isOpen) return;
             
@@ -184,10 +255,9 @@ class LuxuryChat {
         document.addEventListener('keydown', this._onKeyDown, true);
         document.addEventListener('keyup', (e) => {
             if (e.key === 'PrintScreen' && this.isOpen) {
-                // Clear clipboard after PrintScreen release
                 try {
                     navigator.clipboard.writeText('Screenshot blocked by BILLIONAIRS Security');
-                } catch(err) { /* clipboard API might not be available */ }
+                } catch(err) { }
             }
         }, true);
         
@@ -209,7 +279,51 @@ class LuxuryChat {
         };
         document.addEventListener('visibilitychange', this._onVisibility);
         
-        // 3. Block right-click on chat
+        // 3. MOBILE Screenshot Detection (iOS + Android)
+        // On iOS/Android, taking a screenshot causes window.blur -> window.focus
+        this._onWindowBlur = () => {
+            if (!this.isOpen) return;
+            const chatMessages = document.getElementById('chatMessages');
+            if (!chatMessages) return;
+            
+            // Immediately blur chat content
+            chatMessages.style.filter = 'blur(25px)';
+            chatMessages.style.transition = 'filter 0.05s ease';
+            this._blurredByScreenshot = true;
+        };
+        
+        this._onWindowFocus = () => {
+            if (!this.isOpen || !this._blurredByScreenshot) return;
+            const chatMessages = document.getElementById('chatMessages');
+            if (!chatMessages) return;
+            
+            // Show warning, then slowly unblur
+            this.showSecurityWarning();
+            setTimeout(() => {
+                chatMessages.style.filter = '';
+                chatMessages.style.transition = 'filter 0.5s ease';
+                this._blurredByScreenshot = false;
+            }, 1500);
+        };
+        
+        window.addEventListener('blur', this._onWindowBlur);
+        window.addEventListener('focus', this._onWindowFocus);
+        
+        // 4. iOS: Detect screenshot via resize (iOS briefly changes viewport during screenshot)
+        this._lastHeight = window.innerHeight;
+        this._onResize = () => {
+            if (!this.isOpen) return;
+            const heightDiff = Math.abs(window.innerHeight - this._lastHeight);
+            this._lastHeight = window.innerHeight;
+            
+            // iOS screenshot causes a tiny resize flash
+            if (heightDiff > 0 && heightDiff < 100) {
+                this.blurChat(2000);
+            }
+        };
+        window.addEventListener('resize', this._onResize);
+        
+        // 5. Block right-click on chat
         this._onContextMenu = (e) => {
             if (!this.isOpen) return;
             const chatOverlay = document.getElementById('chatOverlay');
@@ -220,12 +334,42 @@ class LuxuryChat {
             }
         };
         document.addEventListener('contextmenu', this._onContextMenu);
+        
+        // 6. Block long-press on mobile (prevents context menu / save image)
+        this._onTouchStart = null;
+        this._onTouchEnd = null;
+        if ('ontouchstart' in window) {
+            let touchTimer = null;
+            this._onTouchStart = (e) => {
+                if (!this.isOpen) return;
+                const chatOverlay = document.getElementById('chatOverlay');
+                if (chatOverlay && chatOverlay.contains(e.target)) {
+                    touchTimer = setTimeout(() => {
+                        e.preventDefault();
+                    }, 500);
+                }
+            };
+            this._onTouchEnd = () => {
+                if (touchTimer) clearTimeout(touchTimer);
+            };
+            document.addEventListener('touchstart', this._onTouchStart, { passive: false });
+            document.addEventListener('touchend', this._onTouchEnd);
+            document.addEventListener('touchmove', this._onTouchEnd);
+        }
     }
     
     removeScreenshotProtection() {
         if (this._onKeyDown) document.removeEventListener('keydown', this._onKeyDown, true);
         if (this._onVisibility) document.removeEventListener('visibilitychange', this._onVisibility);
         if (this._onContextMenu) document.removeEventListener('contextmenu', this._onContextMenu);
+        if (this._onWindowBlur) window.removeEventListener('blur', this._onWindowBlur);
+        if (this._onWindowFocus) window.removeEventListener('focus', this._onWindowFocus);
+        if (this._onResize) window.removeEventListener('resize', this._onResize);
+        if (this._onTouchStart) {
+            document.removeEventListener('touchstart', this._onTouchStart);
+            document.removeEventListener('touchend', this._onTouchEnd);
+            document.removeEventListener('touchmove', this._onTouchEnd);
+        }
         this.screenshotProtectionActive = false;
     }
     
@@ -629,6 +773,11 @@ class LuxuryChat {
             overlay.classList.add('show');
             this.isOpen = true;
             
+            // Resume AudioContext (needs user gesture context)
+            if (this._audioCtx && this._audioCtx.state === 'suspended') {
+                this._audioCtx.resume();
+            }
+            
             // Mark session start time in database
             this.markChatSession();
             
@@ -657,6 +806,13 @@ class LuxuryChat {
         const overlay = document.getElementById('chatOverlay');
         overlay.classList.remove('show');
         this.isOpen = false;
+        
+        // Clear any screenshot blur
+        const chatMessages = document.getElementById('chatMessages');
+        if (chatMessages) {
+            chatMessages.style.filter = '';
+        }
+        this._blurredByScreenshot = false;
         
         // Restore the eye
         const easterEggContainer = document.querySelector('.easter-egg-container');
