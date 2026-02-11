@@ -332,79 +332,64 @@
     }
 }
 
-/* Mobile Optimierung - Verstärkte Effekte */
+/* Mobile Optimierung - Elegant & Clean */
 @media (max-width: 767px) {
+    .easter-egg-container {
+        top: 1rem;
+        right: 0.5rem;
+    }
+
     .pyramid {
-        width: 140px;
-        height: 140px;
-        animation: pyramidFloatMobile 3s ease-in-out infinite;
+        width: 85px;
+        height: 85px;
+        animation: pyramidFloatMobile 4s ease-in-out infinite;
         will-change: transform;
         transform: translateZ(0);
         -webkit-transform: translateZ(0);
     }
     
     .pyramid::before {
-        width: 130px;
-        height: 130px;
-        animation: logoGlowMobile 2s ease-in-out infinite;
+        width: 75px;
+        height: 75px;
+        animation: logoGlowMobile 3s ease-in-out infinite;
         will-change: filter, opacity;
         transform: translateZ(0) rotate(180deg);
         -webkit-transform: translateZ(0) rotate(180deg);
     }
     
-    /* Aktiviere Strahlen auf Mobile mit stärkeren Effekten */
+    /* Strahlen auf Mobile deaktiviert - cleaner Look */
     .pyramid::after {
-        display: block !important;
-        width: 180px;
-        height: 180px;
-        background: 
-            linear-gradient(0deg, transparent 46%, rgba(232, 180, 160, 0.5) 50%, transparent 54%),
-            linear-gradient(45deg, transparent 46%, rgba(232, 180, 160, 0.35) 50%, transparent 54%),
-            linear-gradient(90deg, transparent 46%, rgba(232, 180, 160, 0.5) 50%, transparent 54%),
-            linear-gradient(135deg, transparent 46%, rgba(232, 180, 160, 0.35) 50%, transparent 54%);
-        animation: raysRotateMobile 12s linear infinite;
-        filter: blur(1px);
-        will-change: transform;
-        transform: translateZ(0);
-        -webkit-transform: translateZ(0);
+        display: none !important;
+    }
+
+    /* Dezenter Glow auf Mobile */
+    .pyramid .pyramid-glow {
+        width: 120px;
+        height: 120px;
+        background: radial-gradient(circle, 
+            rgba(232, 180, 160, 0.25) 0%, 
+            rgba(232, 180, 160, 0.1) 30%, 
+            transparent 60%
+        );
     }
     
     @keyframes pyramidFloatMobile {
         0%, 100% { 
-            transform: translateZ(0) translateY(0px) scale(1); 
+            transform: translateZ(0) translateY(0px); 
         }
         50% { 
-            transform: translateZ(0) translateY(-15px) scale(1.05); 
+            transform: translateZ(0) translateY(-8px); 
         }
     }
     
     @keyframes logoGlowMobile {
         0%, 100% { 
-            filter: drop-shadow(0 0 20px rgba(232, 180, 160, 0.6))
-                    drop-shadow(0 0 40px rgba(232, 180, 160, 0.4));
-            opacity: 0.95;
+            filter: drop-shadow(0 0 12px rgba(232, 180, 160, 0.4));
+            opacity: 0.9;
         }
         50% { 
-            filter: drop-shadow(0 0 35px rgba(232, 180, 160, 0.8))
-                    drop-shadow(0 0 60px rgba(232, 180, 160, 0.6));
+            filter: drop-shadow(0 0 20px rgba(232, 180, 160, 0.6));
             opacity: 1;
         }
-    }
-    
-    @keyframes raysRotateMobile {
-        from { transform: translateZ(0) rotate(0deg); }
-        to { transform: translateZ(0) rotate(360deg); }
-    }
-    
-    /* Partikel-Effekte für Mobile */
-    .pyramid {
-        position: relative;
-    }
-    
-    .pyramid::before {
-        box-shadow: 
-            0 0 30px rgba(232, 180, 160, 0.5),
-            0 0 60px rgba(232, 180, 160, 0.3),
-            0 0 90px rgba(232, 180, 160, 0.2);
     }
 }
