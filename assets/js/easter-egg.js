@@ -125,7 +125,7 @@ const EasterEggSystem = {
         const container = document.createElement('div');
         container.className = 'easter-egg-container';
         container.id = 'easterEgg';
-        container.innerHTML = '<div class="pyramid"></div>';
+        container.innerHTML = '<div class="pyramid"><div class="pyramid-glow"></div></div>';
         container.onclick = () => this.openPyramid();
         
         document.body.appendChild(container);
