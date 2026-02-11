@@ -234,7 +234,20 @@ const EasterEggSystem = {
     },
 
     async openEye() {
-        // If chat is unlocked by admin → open chat directly
+        // Fresh status check from server
+        try {
+            const freshResponse = await fetch('/api/easter-egg', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: this.userEmail, action: 'check_status' })
+            });
+            this.status = await freshResponse.json();
+            console.log('🔄 Fresh status:', JSON.stringify(this.status));
+        } catch (e) {
+            console.error('Status refresh failed:', e);
+        }
+
+        // ONLY open chat if admin explicitly unlocked it
         if (this.status.chatUnlocked) {
             this.showChat();
             return;
