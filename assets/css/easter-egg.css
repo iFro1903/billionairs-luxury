@@ -3,7 +3,7 @@
 /* Easter Egg: Pyramide & Auge */
 .easter-egg-container {
     position: fixed;
-    bottom: 1.5rem;
+    top: 1.5rem;
     right: 0.3rem;
     z-index: 1000;
     cursor: pointer;
@@ -324,7 +324,6 @@
 @media (min-width: 768px) {
     .easter-egg-container {
         top: 1.5rem;
-        bottom: auto;
     }
     
     .login-streak-badge {
