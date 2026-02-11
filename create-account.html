@@ -430,5 +430,8 @@
             retina_detect: true
         });
     </script>
+    <!-- Visitor Tracking -->
+    <script>
+    (function(){try{var s=sessionStorage,k='_bv_sid',i=s.getItem(k);if(!i){i=Math.random().toString(36).slice(2,10)+Date.now().toString(36);s.setItem(k,i)}var p='_bv_'+location.pathname;if(s.getItem(p))return;s.setItem(p,'1');var e=null;try{e=localStorage.getItem('userEmail')}catch(x){}fetch('/api/track-visit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:location.pathname,referrer:document.referrer||'',sessionId:i,email:e})}).catch(function(){})}catch(x){}})()
+    </script>
 </body>
-</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEO Chat Monitor - BILLIONAIRS</title>
+    <title>CEO Dashboard - BILLIONAIRS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -19,7 +19,11 @@
             background: #0a0a0a;
             color: #e8e8e8;
             min-height: 100vh;
-            padding: 2rem;
+            padding: 1rem;
+        }
+
+        @media (min-width: 769px) {
+            body { padding: 2rem; }
         }
 
         .container {
@@ -43,9 +47,26 @@
             margin-bottom: 0.5rem;
         }
 
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+                letter-spacing: 2px;
+            }
+            .header {
+                margin-bottom: 1.5rem;
+                padding-bottom: 1rem;
+            }
+        }
+
         .header p {
             color: #888;
             font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header p {
+                font-size: 0.7rem;
+            }
         }
 
         .encryption-status {
@@ -110,11 +131,26 @@
             margin-bottom: 2rem;
         }
 
+        @media (max-width: 768px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+                margin-bottom: 1rem;
+            }
+        }
+
         .stat-card {
             background: rgba(232, 180, 184, 0.05);
             border: 1px solid rgba(232, 180, 184, 0.2);
             border-radius: 12px;
             padding: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .stat-card {
+                padding: 0.8rem;
+                border-radius: 8px;
+            }
         }
 
         .stat-label {
@@ -125,11 +161,24 @@
             margin-bottom: 0.5rem;
         }
 
+        @media (max-width: 768px) {
+            .stat-label {
+                font-size: 0.65rem;
+                letter-spacing: 0.5px;
+            }
+        }
+
         .stat-value {
             font-family: 'Playfair Display', serif;
             font-size: 2rem;
             font-weight: 700;
             color: #e8b4b8;
+        }
+
+        @media (max-width: 768px) {
+            .stat-value {
+                font-size: 1.3rem;
+            }
         }
 
         .messages-container {
@@ -139,6 +188,14 @@
             padding: 2rem;
             max-height: 70vh;
             overflow-y: auto;
+        }
+
+        @media (max-width: 768px) {
+            .messages-container {
+                padding: 0.8rem;
+                max-height: 60vh;
+                border-radius: 8px;
+            }
         }
 
         .message {
@@ -159,6 +216,15 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 0.5rem;
+            gap: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .message-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.2rem;
+            }
         }
 
         .message-username {
@@ -173,9 +239,17 @@
             font-style: italic;
         }
 
+        @media (max-width: 768px) {
+            .message-email {
+                margin-left: 0;
+                display: block;
+            }
+        }
+
         .message-time {
             font-size: 0.75rem;
             color: #666;
+            white-space: nowrap;
         }
 
         .message-text {
@@ -195,6 +269,13 @@
             max-height: 200px;
             border-radius: 6px;
             cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .message-file img {
+                max-width: 100%;
+                max-height: 150px;
+            }
         }
 
         .message-file a {
@@ -292,6 +373,14 @@
             border-radius: 12px;
             padding: 2rem;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+            .members-container {
+                padding: 0.5rem;
+                border-radius: 8px;
+            }
         }
 
         .members-table {
@@ -487,10 +576,277 @@
                 display: none;
             }
 
-            .tab-btn {
-                padding: 0.8rem 1.2rem;
-                font-size: 0.85rem;
+            .members-table th,
+            .members-table td {
+                padding: 0.5rem 0.4rem;
+                font-size: 0.75rem;
             }
+
+            .tab-btn {
+                padding: 0.7rem 0.8rem;
+                font-size: 0.78rem;
+                letter-spacing: 0;
+            }
+
+            .tab-nav {
+                margin-bottom: 1rem;
+            }
+
+            .search-input {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .login-section {
+                margin: 2rem auto;
+            }
+
+            .delete-btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* === Statistics Tab === */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.6rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .stats-card {
+            background: rgba(232, 180, 184, 0.05);
+            border: 1px solid rgba(232, 180, 184, 0.15);
+            border-radius: 10px;
+            padding: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .stats-card {
+                padding: 0.7rem;
+            }
+        }
+
+        .stats-card .sc-label {
+            font-size: 0.7rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+
+        .stats-card .sc-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #e8b4b8;
+        }
+
+        @media (max-width: 768px) {
+            .stats-card .sc-label { font-size: 0.6rem; letter-spacing: 0.5px; }
+            .stats-card .sc-value { font-size: 1.2rem; }
+        }
+
+        .stats-card .sc-sub {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 0.2rem;
+        }
+
+        .chart-section {
+            background: rgba(232, 180, 184, 0.03);
+            border: 1px solid rgba(232, 180, 184, 0.15);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .chart-section {
+                padding: 0.8rem;
+                border-radius: 8px;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .chart-section h3 {
+            font-family: 'Playfair Display', serif;
+            color: #e8b4b8;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .chart-section h3 {
+                font-size: 0.9rem;
+                margin-bottom: 0.6rem;
+            }
+        }
+
+        /* Bar Chart */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 180px;
+            padding-bottom: 25px;
+            position: relative;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 768px) {
+            .bar-chart {
+                height: 130px;
+                gap: 2px;
+                padding-bottom: 20px;
+            }
+        }
+
+        .bar-col {
+            flex: 1;
+            min-width: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        .bar {
+            width: 100%;
+            background: linear-gradient(180deg, #e8b4b8, #f7cac9);
+            border-radius: 3px 3px 0 0;
+            min-height: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .bar:hover {
+            background: linear-gradient(180deg, #f7cac9, #e8b4b8);
+            filter: brightness(1.2);
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -20px;
+            font-size: 0.55rem;
+            color: #666;
+            white-space: nowrap;
+            transform: rotate(-45deg);
+            transform-origin: top left;
+        }
+
+        @media (max-width: 768px) {
+            .bar-label {
+                font-size: 0.45rem;
+                bottom: -16px;
+            }
+        }
+
+        .bar-tooltip {
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a1a;
+            color: #e8b4b8;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            border: 1px solid rgba(232, 180, 184, 0.3);
+        }
+
+        .bar-col:hover .bar-tooltip {
+            opacity: 1;
+        }
+
+        /* Device/Country breakdown */
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .breakdown-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(232, 180, 184, 0.08);
+        }
+
+        .breakdown-item .bi-label {
+            color: #ccc;
+            font-size: 0.85rem;
+        }
+
+        .breakdown-item .bi-value {
+            color: #e8b4b8;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: rgba(232, 180, 184, 0.1);
+            border-radius: 3px;
+            margin-top: 0.3rem;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e8b4b8, #f7cac9);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .refresh-btn {
+            padding: 0.5rem 1.2rem;
+            background: rgba(232, 180, 184, 0.1);
+            color: #e8b4b8;
+            border: 1px solid rgba(232, 180, 184, 0.3);
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            float: right;
+            margin-bottom: 1rem;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(232, 180, 184, 0.2);
+        }
+
+        .stats-loading {
+            text-align: center;
+            color: #666;
+            padding: 3rem;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -499,7 +855,7 @@
         <!-- Login Section -->
         <div id="loginSection" class="login-section">
             <div class="header">
-                <h1>CEO CHAT MONITOR</h1>
+                <h1>CEO DASHBOARD</h1>
                 <p>Executive Access Only</p>
                 <div class="encryption-status">
                     <svg class="lock-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -516,8 +872,8 @@
         <!-- Monitor Section -->
         <div id="monitorSection" class="hidden">
             <div class="header">
-                <h1>CEO CHAT MONITOR</h1>
-                <p>Complete Decrypted Message History · Real-Time · Invisible to Users</p>
+                <h1>CEO DASHBOARD</h1>
+                <p>Messages · Members · Statistics</p>
                 <div class="encryption-status">
                     <svg class="lock-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/>
@@ -543,8 +899,9 @@
 
             <!-- Tab Navigation -->
             <div class="tab-nav">
-                <button class="tab-btn active" onclick="switchTab('messages')">Messages</button>
-                <button class="tab-btn" onclick="switchTab('members')">Members</button>
+                <button class="tab-btn active" data-tab="messages" onclick="switchTab('messages')">Messages</button>
+                <button class="tab-btn" data-tab="members" onclick="switchTab('members')">Members</button>
+                <button class="tab-btn" data-tab="statistics" onclick="switchTab('statistics')">Statistics</button>
             </div>
 
             <!-- Messages Tab -->
@@ -583,6 +940,83 @@
                             <tr><td colspan="5" style="text-align:center; color:#666; padding:2rem;">Loading members...</td></tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- Statistics Tab -->
+            <div class="tab-panel" id="tab-statistics">
+                <button class="refresh-btn" onclick="loadVisitorStats()">Refresh</button>
+                <div style="clear:both;"></div>
+                
+                <div class="stats-grid" id="statsOverview">
+                    <div class="stats-card">
+                        <div class="sc-label">Today</div>
+                        <div class="sc-value" id="sv-today">--</div>
+                        <div class="sc-sub" id="sv-today-unique">-- unique</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="sc-label">This Week</div>
+                        <div class="sc-value" id="sv-week">--</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="sc-label">This Month</div>
+                        <div class="sc-value" id="sv-month">--</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="sc-label">Total</div>
+                        <div class="sc-value" id="sv-total">--</div>
+                        <div class="sc-sub" id="sv-total-unique">-- unique</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="sc-label">Registrations</div>
+                        <div class="sc-value" id="sv-reg-total">--</div>
+                        <div class="sc-sub" id="sv-reg-week">-- this week</div>
+                    </div>
+                    <div class="stats-card">
+                        <div class="sc-label">Conversion</div>
+                        <div class="sc-value" id="sv-conversion">--</div>
+                        <div class="sc-sub">Visitors to Registrations</div>
+                    </div>
+                </div>
+
+                <!-- Daily Visitor Chart -->
+                <div class="chart-section">
+                    <h3>Daily Visitors - Last 30 Days</h3>
+                    <div class="bar-chart" id="dailyChart">
+                        <div class="stats-loading">Loading chart...</div>
+                    </div>
+                </div>
+
+                <!-- Breakdowns -->
+                <div class="breakdown-grid">
+                    <div class="chart-section">
+                        <h3>Devices</h3>
+                        <div id="deviceBreakdown">
+                            <div class="stats-loading">Loading...</div>
+                        </div>
+                    </div>
+                    <div class="chart-section">
+                        <h3>Countries</h3>
+                        <div id="countryBreakdown">
+                            <div class="stats-loading">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Pages -->
+                <div class="chart-section">
+                    <h3>Top Pages</h3>
+                    <div id="topPagesBreakdown">
+                        <div class="stats-loading">Loading...</div>
+                    </div>
+                </div>
+
+                <!-- Referrers -->
+                <div class="chart-section">
+                    <h3>Referrers</h3>
+                    <div id="referrerBreakdown">
+                        <div class="stats-loading">Loading...</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -722,12 +1156,13 @@
         function switchTab(tab) {
             currentTab = tab;
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.textContent.toLowerCase() === tab);
+                btn.classList.toggle('active', btn.dataset.tab === tab);
             });
             document.querySelectorAll('.tab-panel').forEach(panel => {
                 panel.classList.toggle('active', panel.id === `tab-${tab}`);
             });
             if (tab === 'members') loadMembers();
+            if (tab === 'statistics') loadVisitorStats();
         }
 
         // === Members Management ===
@@ -838,6 +1273,104 @@
                     setTimeout(() => overlay.remove(), 1500);
                 }
             });
+        }
+
+        // === Visitor Statistics ===
+        async function loadVisitorStats() {
+            try {
+                const response = await fetch('/api/visitor-stats');
+                const data = await response.json();
+                
+                if (data.error && !data.overview) {
+                    console.error('Stats error:', data.error);
+                    return;
+                }
+
+                const o = data.overview || {};
+                document.getElementById('sv-today').textContent = o.today || 0;
+                document.getElementById('sv-today-unique').textContent = `${o.uniqueToday || 0} unique`;
+                document.getElementById('sv-week').textContent = o.thisWeek || 0;
+                document.getElementById('sv-month').textContent = o.thisMonth || 0;
+                document.getElementById('sv-total').textContent = o.total || 0;
+                document.getElementById('sv-total-unique').textContent = `${o.uniqueTotal || 0} unique`;
+
+                // Registrations
+                const reg = data.registrations || {};
+                document.getElementById('sv-reg-total').textContent = reg.total || 0;
+                document.getElementById('sv-reg-week').textContent = `${reg.thisWeek || 0} this week`;
+
+                // Conversion rate
+                const convRate = o.uniqueTotal > 0 ? ((reg.total / o.uniqueTotal) * 100).toFixed(1) : '0';
+                document.getElementById('sv-conversion').textContent = convRate + '%';
+
+                // Daily chart
+                renderDailyChart(data.dailyVisits || []);
+
+                // Device breakdown
+                renderBreakdown('deviceBreakdown', data.devices || [], 'device', 'count');
+
+                // Country breakdown
+                renderBreakdown('countryBreakdown', data.topCountries || [], 'country', 'visits');
+
+                // Top pages
+                renderBreakdown('topPagesBreakdown', data.topPages || [], 'page', 'visits');
+
+                // Referrers
+                renderBreakdown('referrerBreakdown', data.topReferrers || [], 'referrer', 'visits');
+
+            } catch (error) {
+                console.error('Error loading visitor stats:', error);
+            }
+        }
+
+        function renderDailyChart(dailyData) {
+            const container = document.getElementById('dailyChart');
+            
+            if (dailyData.length === 0) {
+                container.innerHTML = '<div class="stats-loading">No visitor data yet</div>';
+                return;
+            }
+
+            const maxVisits = Math.max(...dailyData.map(d => d.visits), 1);
+
+            container.innerHTML = dailyData.map(d => {
+                const height = Math.max((d.visits / maxVisits) * 100, 2);
+                const dateStr = new Date(d.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' });
+                return `
+                    <div class="bar-col">
+                        <div class="bar-tooltip">${d.visits} (${d.unique} unique)</div>
+                        <div class="bar" style="height: ${height}%"></div>
+                        <span class="bar-label">${dateStr}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderBreakdown(containerId, items, labelKey, valueKey) {
+            const container = document.getElementById(containerId);
+            
+            if (items.length === 0) {
+                container.innerHTML = '<div style="color:#666;font-size:0.85rem;padding:0.5rem 0;">No data yet</div>';
+                return;
+            }
+
+            const maxVal = Math.max(...items.map(i => i[valueKey]), 1);
+
+            container.innerHTML = items.map(item => {
+                const pct = (item[valueKey] / maxVal) * 100;
+                const label = item[labelKey] || 'unknown';
+                // Shorten long labels
+                const displayLabel = label.length > 40 ? label.slice(0, 37) + '...' : label;
+                return `
+                    <div class="breakdown-item">
+                        <span class="bi-label">${escapeHtml(displayLabel)}</span>
+                        <span class="bi-value">${item[valueKey]}</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: ${pct}%"></div>
+                    </div>
+                `;
+            }).join('');
         }
 
         // Cleanup on page unload
