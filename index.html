@@ -1724,34 +1724,83 @@
     <script src="assets/js/payment-methods-new.js?v=20260211" defer></script>
     <script src="assets/js/benefits.js" defer></script>
     
-    <!-- Inline Stripe Fallback - ensures initialization even with cached JS -->
+    <!-- Inline Stripe Processor - bypasses all caching issues -->
     <script>
     (function() {
-        function ensureStripe() {
+        function initStripe() {
             if (window.stripeProcessor) return;
             if (typeof Stripe === 'undefined') {
-                console.log('⏳ Waiting for Stripe library...');
-                setTimeout(ensureStripe, 500);
-                return;
-            }
-            if (typeof StripePaymentProcessor === 'undefined') {
-                console.log('⏳ Waiting for StripePaymentProcessor class...');
-                setTimeout(ensureStripe, 500);
+                setTimeout(initStripe, 300);
                 return;
             }
             try {
-                window.stripeProcessor = new StripePaymentProcessor();
-                console.log('✅ Stripe processor initialized via inline fallback');
+                var sp = {
+                    stripe: Stripe('pk_live_51SJwwF7Fzwybk1NyPjyrV9qkZvmWDkCqsdrmotHypJZnhEIUtnxBea6tV9MMOVkllj9po7RtSIcSwY8JEDQcTPGB00BqlA7hkz'),
+                    isProcessing: false,
+                    paymentTiers: { full: 50, split: 50, corporate: 50 },
+                    createCheckoutSession: async function(paymentType, customerData) {
+                        if (this.isProcessing) return;
+                        this.isProcessing = true;
+                        try {
+                            var amount = this.paymentTiers[paymentType || 'full'];
+                            var currentLang = localStorage.getItem('billionairs_lang') || 'en';
+                            var metadata = {
+                                product: 'BILLIONAIRS_EXCLUSIVE_ACCESS',
+                                tier: 'MILLIONAIRE_SEGMENT',
+                                payment_type: paymentType,
+                                timestamp: new Date().toISOString(),
+                                language: currentLang
+                            };
+                            if (customerData) {
+                                metadata.customer_name = customerData.fullName;
+                                metadata.customer_email = customerData.email;
+                                metadata.customer_password = customerData.password;
+                                metadata.customer_phone = customerData.phone;
+                                if (customerData.company) metadata.customer_company = customerData.company;
+                            }
+                            console.log('💳 Sending to Stripe API...', { amount: amount, currency: 'chf' });
+                            var response = await fetch('/api/stripe-checkout', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    mode: 'payment',
+                                    currency: 'chf',
+                                    amount: amount,
+                                    paymentType: paymentType,
+                                    customerData: customerData,
+                                    metadata: metadata,
+                                    language: currentLang
+                                })
+                            });
+                            if (!response.ok) throw new Error('Server error: ' + response.status);
+                            var session = await response.json();
+                            if (session.error) throw new Error(session.error);
+                            if (!session.url) throw new Error('No checkout URL received');
+                            console.log('🚀 Redirecting to Stripe Checkout...');
+                            sessionStorage.setItem('paymentInitiated', 'true');
+                            window.location.href = session.url;
+                        } catch (error) {
+                            console.error('Payment Error:', error);
+                            alert('Payment error: ' + error.message + '. Please try again.');
+                        } finally {
+                            this.isProcessing = false;
+                        }
+                    }
+                };
+                window.stripeProcessor = sp;
+                console.log('✅ Stripe processor initialized (inline, 0.50 CHF test mode)');
             } catch(e) {
-                console.error('❌ Inline Stripe init failed:', e);
-                setTimeout(ensureStripe, 1000);
+                console.error('❌ Stripe init error:', e);
+                setTimeout(initStripe, 1000);
             }
         }
         if (document.readyState === 'complete') {
-            ensureStripe();
+            initStripe();
         } else {
-            window.addEventListener('load', ensureStripe);
+            window.addEventListener('load', initStripe);
         }
+        // Also try immediately
+        setTimeout(initStripe, 100);
     })();
     </script>
     
