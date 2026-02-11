@@ -12,7 +12,7 @@ class StripePaymentProcessor {
         // Actual pricing - 500,000 CHF LIVE MODE
         this.paymentTiers = {
             full: 50000000,      // 500,000 CHF
-            split: 25000000,     // 250,000 CHF (1st installment)
+            split: 50000000,     // 500,000 CHF
             corporate: 50000000  // 500,000 CHF
         };
     }

@@ -1737,7 +1737,7 @@
                 var sp = {
                     stripe: Stripe('pk_live_51SJwwF7Fzwybk1NyPjyrV9qkZvmWDkCqsdrmotHypJZnhEIUtnxBea6tV9MMOVkllj9po7RtSIcSwY8JEDQcTPGB00BqlA7hkz'),
                     isProcessing: false,
-                    paymentTiers: { full: 50000000, split: 25000000, corporate: 50000000 },
+                    paymentTiers: { full: 50000000, split: 50000000, corporate: 50000000 },
                     createCheckoutSession: async function(paymentType, customerData) {
                         if (this.isProcessing) return;
                         this.isProcessing = true;
