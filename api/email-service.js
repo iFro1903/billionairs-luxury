@@ -401,62 +401,100 @@ const templates = {
     }),
 
     easterEggUnlock: (userName, eggName, eggDescription) => ({
-        subject: `🎁 Achievement Unlocked: ${eggName}`,
+        subject: `Achievement Unlocked: ${eggName}`,
         html: `
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;600;700&display=swap');
+    </style>
 </head>
-<body style="margin: 0; padding: 0; font-family: 'Montserrat', Arial, sans-serif; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);">
-    <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%); padding: 40px 20px;">
+<body style="margin: 0; padding: 0; font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #000000;">
+    <div style="display: none; max-height: 0; overflow: hidden;">
+        You have unlocked a rare achievement on BILLIONAIRS. Only the select few reach this level.
+    </div>
+    
+    <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #1a1a1a 100%); padding: 60px 20px;">
         <tr>
             <td align="center">
-                <table width="600" cellpadding="0" cellspacing="0" style="background: rgba(26, 26, 46, 0.95); border-radius: 20px; border: 2px solid rgba(232, 180, 160, 0.3); overflow: hidden;">
-                    <!-- Header -->
+                <table width="650" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, rgba(15, 15, 25, 0.98) 0%, rgba(25, 25, 40, 0.98) 100%); border-radius: 24px; border: 3px solid rgba(232, 180, 184, 0.5); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1); overflow: hidden;">
+                    
+                    <!-- Header with Logo -->
                     <tr>
-                        <td style="background: linear-gradient(135deg, rgba(232, 180, 160, 0.3), rgba(232, 180, 160, 0.1)); padding: 40px 30px; text-align: center; border-bottom: 1px solid rgba(232, 180, 160, 0.3);">
-                            <div style="font-size: 60px; margin-bottom: 15px;">🎁</div>
-                            <h1 style="margin: 0; font-size: 32px; color: #D4A574; font-weight: 900; letter-spacing: 2px;">
+                        <td style="background: linear-gradient(135deg, rgba(232, 180, 184, 0.15) 0%, rgba(247, 202, 201, 0.05) 100%); padding: 50px 40px; text-align: center; border-bottom: 2px solid rgba(232, 180, 184, 0.4); position: relative;">
+                            <div style="position: absolute; top: 20px; left: 20px; width: 40px; height: 40px; border-top: 3px solid #e8b4b8; border-left: 3px solid #e8b4b8; opacity: 0.6;"></div>
+                            <div style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-top: 3px solid #e8b4b8; border-right: 3px solid #e8b4b8; opacity: 0.6;"></div>
+                            
+                            <img src="https://billionairs.luxury/assets/images/logo.png" alt="BILLIONAIRS" style="max-width: 80px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 30px rgba(232, 180, 184, 0.6));" />
+                            
+                            <p style="margin: 0 0 10px 0; font-size: 13px; color: rgba(247, 202, 201, 0.7); letter-spacing: 4px; text-transform: uppercase; font-weight: 300;">
+                                Exclusive Discovery
+                            </p>
+                            <h1 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 36px; color: #e8b4b8; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 0 40px rgba(232, 180, 184, 0.5), 0 2px 4px rgba(0, 0, 0, 0.8);">
                                 ACHIEVEMENT UNLOCKED
                             </h1>
+                            <div style="width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #e8b4b8, transparent); margin: 20px auto 0;"></div>
                         </td>
                     </tr>
                     
                     <!-- Body -->
                     <tr>
-                        <td style="padding: 40px 30px; color: #ffffff;">
-                            <h2 style="margin: 0 0 20px 0; font-size: 24px; color: #D4A574;">Congratulations, ${userName || 'Member'}!</h2>
+                        <td style="padding: 50px 40px 30px; color: #ffffff;">
+                            <h2 style="margin: 0 0 25px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 28px; color: #ffffff; font-weight: 700; text-align: center; line-height: 1.3;">
+                                Congratulations, <span style="color: #e8b4b8;">${userName || 'Member'}</span>
+                            </h2>
                             
-                            <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.9);">
-                                You've discovered something extraordinary. Only a select few will ever unlock this achievement.
+                            <p style="margin: 0 0 30px 0; font-size: 16px; line-height: 1.9; color: rgba(255, 255, 255, 0.85); text-align: center; font-weight: 300;">
+                                You have discovered something extraordinary. Only a select few will ever unlock this achievement.
                             </p>
-                            
-                            <div style="background: linear-gradient(135deg, rgba(232, 180, 160, 0.2), rgba(232, 180, 160, 0.05)); border: 2px solid rgba(232, 180, 160, 0.5); padding: 30px; margin: 30px 0; border-radius: 15px; text-align: center; box-shadow: 0 10px 40px rgba(232, 180, 160, 0.2);">
-                                <h3 style="margin: 0 0 15px 0; font-size: 26px; color: #D4A574; text-transform: uppercase; letter-spacing: 2px;">
-                                    ${eggName}
-                                </h3>
-                                <p style="margin: 0; font-size: 16px; color: rgba(255, 255, 255, 0.9); line-height: 1.6;">
-                                    ${eggDescription}
-                                </p>
-                            </div>
-                            
-                            <div style="background: rgba(0, 0, 0, 0.3); border-left: 4px solid #D4A574; padding: 20px; margin: 30px 0; border-radius: 8px;">
-                                <p style="margin: 0; font-size: 15px; color: rgba(255, 255, 255, 0.8); font-style: italic;">
+                        </td>
+                    </tr>
+                    
+                    <!-- Achievement Card -->
+                    <tr>
+                        <td style="padding: 0 40px 40px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, rgba(232, 180, 184, 0.12) 0%, rgba(247, 202, 201, 0.05) 100%); border-radius: 16px; border: 2px solid rgba(232, 180, 184, 0.4); overflow: hidden; box-shadow: 0 10px 40px rgba(232, 180, 184, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);">
+                                <tr>
+                                    <td style="padding: 35px 30px; text-align: center;">
+                                        <h3 style="margin: 0 0 15px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 24px; color: #e8b4b8; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">
+                                            ${eggName}
+                                        </h3>
+                                        <div style="width: 40px; height: 1px; background: linear-gradient(90deg, transparent, rgba(232, 180, 184, 0.6), transparent); margin: 15px auto;"></div>
+                                        <p style="margin: 0; font-size: 16px; color: rgba(255, 255, 255, 0.9); line-height: 1.7; font-weight: 300;">
+                                            ${eggDescription}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- Quote -->
+                    <tr>
+                        <td style="padding: 0 40px 40px;">
+                            <div style="background: rgba(0, 0, 0, 0.4); border-left: 3px solid #e8b4b8; padding: 25px 30px; border-radius: 8px;">
+                                <p style="margin: 0; font-size: 15px; color: rgba(255, 255, 255, 0.75); font-style: italic; line-height: 1.7; font-weight: 300;">
                                     "In a world of billions, you are among the few who look beyond the surface."
                                 </p>
                             </div>
-                            
-                            <p style="margin: 30px 0 20px 0; font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.9);">
+                        </td>
+                    </tr>
+                    
+                    <!-- CTA -->
+                    <tr>
+                        <td style="padding: 0 40px 50px; text-align: center;">
+                            <p style="margin: 0 0 25px 0; font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.85); font-weight: 300;">
                                 Continue your journey. More secrets await those persistent enough to seek them.
                             </p>
                             
-                            <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
+                            <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td align="center">
-                                        <a href="https://billionairs.luxury/dashboard" style="display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #D4A574, #F4C2A1); color: #1a1a2e; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(232, 180, 160, 0.4);">
-                                            CONTINUE EXPLORING
+                                        <a href="https://billionairs.luxury/dashboard" style="display: inline-block; padding: 18px 50px; background: linear-gradient(135deg, #e8b4b8 0%, #f7cac9 50%, #e8b4b8 100%); color: #000000; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; box-shadow: 0 8px 25px rgba(232, 180, 184, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3); border: 2px solid rgba(232, 180, 184, 0.8);">
+                                            Continue Exploring
                                         </a>
                                     </td>
                                 </tr>
@@ -464,15 +502,29 @@ const templates = {
                         </td>
                     </tr>
                     
+                    <!-- Divider -->
+                    <tr>
+                        <td style="padding: 0 40px;">
+                            <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(232, 180, 184, 0.5), transparent);"></div>
+                        </td>
+                    </tr>
+                    
                     <!-- Footer -->
                     <tr>
-                        <td style="background: rgba(0, 0, 0, 0.3); padding: 30px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                            <p style="margin: 0 0 10px 0; font-size: 14px; color: rgba(255, 255, 255, 0.6);">
-                                BILLIONAIRS LUXURY
+                        <td style="background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.4)); padding: 40px 40px 50px; text-align: center;">
+                            <p style="margin: 0 0 8px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 16px; color: #e8b4b8; font-weight: 700; letter-spacing: 3px;">
+                                BILLIONAIRS
                             </p>
-                            <p style="margin: 15px 0 0 0; font-size: 12px; color: rgba(255, 255, 255, 0.5);">
-                                Share this achievement? Keep it exclusive.<br>
+                            <p style="margin: 0 0 15px 0; font-size: 11px; color: rgba(255, 255, 255, 0.5); letter-spacing: 2px; text-transform: uppercase;">
+                                Luxury · Exclusivity · Mystique
+                            </p>
+                            <p style="margin: 0; font-size: 11px; color: rgba(255, 255, 255, 0.4); line-height: 1.6;">
+                                Share this achievement? Keep it exclusive.<br/>
                                 True value lies in rarity.
+                            </p>
+                            <div style="width: 100px; height: 1px; background: linear-gradient(90deg, transparent, rgba(232, 180, 184, 0.4), transparent); margin: 20px auto 15px;"></div>
+                            <p style="margin: 0; font-size: 10px; color: rgba(255, 255, 255, 0.4);">
+                                © ${new Date().getFullYear()} BILLIONAIRS. All rights reserved.
                             </p>
                         </td>
                     </tr>
@@ -486,63 +538,137 @@ const templates = {
     }),
 
     paymentSuccess: (userName, amount, currency, productName) => ({
-        subject: '✅ Payment Confirmed - Welcome to Exclusivity',
+        subject: 'Payment Confirmed — Welcome to Exclusivity',
         html: `
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;600;700&display=swap');
+    </style>
 </head>
-<body style="margin: 0; padding: 0; font-family: 'Montserrat', Arial, sans-serif; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);">
-    <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%); padding: 40px 20px;">
+<body style="margin: 0; padding: 0; font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #000000;">
+    <div style="display: none; max-height: 0; overflow: hidden;">
+        Your payment has been confirmed. Welcome to the BILLIONAIRS elite circle.
+    </div>
+    
+    <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #1a1a1a 100%); padding: 60px 20px;">
         <tr>
             <td align="center">
-                <table width="600" cellpadding="0" cellspacing="0" style="background: rgba(26, 26, 46, 0.95); border-radius: 20px; border: 2px solid rgba(232, 180, 160, 0.3); overflow: hidden;">
+                <table width="650" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, rgba(15, 15, 25, 0.98) 0%, rgba(25, 25, 40, 0.98) 100%); border-radius: 24px; border: 3px solid rgba(232, 180, 184, 0.5); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1); overflow: hidden;">
+                    
+                    <!-- Header -->
                     <tr>
-                        <td style="background: linear-gradient(135deg, rgba(0, 200, 0, 0.2), rgba(0, 150, 0, 0.1)); padding: 40px 30px; text-align: center; border-bottom: 1px solid rgba(232, 180, 160, 0.3);">
-                            <div style="font-size: 60px; margin-bottom: 15px;">✅</div>
-                            <h1 style="margin: 0; font-size: 32px; color: #D4A574; font-weight: 900;">PAYMENT CONFIRMED</h1>
+                        <td style="background: linear-gradient(135deg, rgba(232, 180, 184, 0.15) 0%, rgba(247, 202, 201, 0.05) 100%); padding: 50px 40px; text-align: center; border-bottom: 2px solid rgba(232, 180, 184, 0.4); position: relative;">
+                            <div style="position: absolute; top: 20px; left: 20px; width: 40px; height: 40px; border-top: 3px solid #e8b4b8; border-left: 3px solid #e8b4b8; opacity: 0.6;"></div>
+                            <div style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-top: 3px solid #e8b4b8; border-right: 3px solid #e8b4b8; opacity: 0.6;"></div>
+                            
+                            <img src="https://billionairs.luxury/assets/images/logo.png" alt="BILLIONAIRS" style="max-width: 80px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 30px rgba(232, 180, 184, 0.6));" />
+                            
+                            <p style="margin: 0 0 10px 0; font-size: 13px; color: rgba(247, 202, 201, 0.7); letter-spacing: 4px; text-transform: uppercase; font-weight: 300;">
+                                Transaction Confirmed
+                            </p>
+                            <h1 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 36px; color: #e8b4b8; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 0 40px rgba(232, 180, 184, 0.5), 0 2px 4px rgba(0, 0, 0, 0.8);">
+                                PAYMENT CONFIRMED
+                            </h1>
+                            <div style="width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #e8b4b8, transparent); margin: 20px auto 0;"></div>
                         </td>
                     </tr>
+                    
+                    <!-- Body -->
                     <tr>
-                        <td style="padding: 40px 30px; color: #ffffff;">
-                            <h2 style="margin: 0 0 20px 0; font-size: 24px; color: #D4A574;">Thank you, ${userName || 'Member'}!</h2>
-                            <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.9);">
-                                Your payment has been successfully processed. Access has been granted.
+                        <td style="padding: 50px 40px 30px; color: #ffffff;">
+                            <h2 style="margin: 0 0 25px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 28px; color: #ffffff; font-weight: 700; text-align: center; line-height: 1.3;">
+                                Thank you, <span style="color: #e8b4b8;">${userName || 'Member'}</span>
+                            </h2>
+                            
+                            <p style="margin: 0 0 30px 0; font-size: 16px; line-height: 1.9; color: rgba(255, 255, 255, 0.85); text-align: center; font-weight: 300;">
+                                Your payment has been successfully processed. Full access has been granted to your account.
                             </p>
-                            <div style="background: rgba(232, 180, 160, 0.1); border: 2px solid rgba(232, 180, 160, 0.3); padding: 25px; margin: 30px 0; border-radius: 12px;">
-                                <table width="100%" cellpadding="8" cellspacing="0">
-                                    <tr>
-                                        <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Product:</td>
-                                        <td style="color: #D4A574; font-weight: 600; text-align: right; font-size: 14px;">${productName}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Amount:</td>
-                                        <td style="color: #D4A574; font-weight: 600; text-align: right; font-size: 16px;">${amount} ${currency}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Status:</td>
-                                        <td style="color: #00ff00; font-weight: 600; text-align: right; font-size: 14px;">CONFIRMED ✓</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
+                        </td>
+                    </tr>
+                    
+                    <!-- Payment Details Card -->
+                    <tr>
+                        <td style="padding: 0 40px 40px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, rgba(232, 180, 184, 0.12) 0%, rgba(247, 202, 201, 0.05) 100%); border-radius: 16px; border: 2px solid rgba(232, 180, 184, 0.4); overflow: hidden; box-shadow: 0 10px 40px rgba(232, 180, 184, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);">
+                                <tr>
+                                    <td style="background: linear-gradient(90deg, rgba(232, 180, 184, 0.25), rgba(247, 202, 201, 0.15)); padding: 20px 30px; border-bottom: 1px solid rgba(232, 180, 184, 0.3);">
+                                        <h3 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 18px; color: #e8b4b8; font-weight: 700; letter-spacing: 1px; text-align: center;">
+                                            Transaction Details
+                                        </h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 25px 30px;">
+                                        <table width="100%" cellpadding="10" cellspacing="0">
+                                            <tr>
+                                                <td style="color: rgba(255, 255, 255, 0.6); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Product</td>
+                                                <td style="color: #e8b4b8; font-weight: 600; text-align: right; font-size: 15px;">${productName}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding: 0;"><div style="height: 1px; background: rgba(232, 180, 184, 0.15);"></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: rgba(255, 255, 255, 0.6); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Amount</td>
+                                                <td style="color: #e8b4b8; font-weight: 700; text-align: right; font-size: 18px;">${amount} ${currency}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding: 0;"><div style="height: 1px; background: rgba(232, 180, 184, 0.15);"></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: rgba(255, 255, 255, 0.6); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Status</td>
+                                                <td style="color: #e8b4b8; font-weight: 700; text-align: right; font-size: 15px;">Confirmed</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- CTA -->
+                    <tr>
+                        <td style="padding: 0 40px 50px; text-align: center;">
+                            <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td align="center">
-                                        <a href="https://billionairs.luxury/dashboard" style="display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #D4A574, #F4C2A1); color: #1a1a2e; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; letter-spacing: 1px;">
-                                            ACCESS YOUR ACCOUNT
+                                        <a href="https://billionairs.luxury/dashboard" style="display: inline-block; padding: 18px 50px; background: linear-gradient(135deg, #e8b4b8 0%, #f7cac9 50%, #e8b4b8 100%); color: #000000; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; box-shadow: 0 8px 25px rgba(232, 180, 184, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3); border: 2px solid rgba(232, 180, 184, 0.8);">
+                                            Access Your Account
                                         </a>
                                     </td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
+                    
+                    <!-- Divider -->
                     <tr>
-                        <td style="background: rgba(0, 0, 0, 0.3); padding: 30px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                        <td style="padding: 0 40px;">
+                            <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(232, 180, 184, 0.5), transparent);"></div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.4)); padding: 40px 40px 50px; text-align: center;">
+                            <p style="margin: 0 0 8px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 16px; color: #e8b4b8; font-weight: 700; letter-spacing: 3px;">
+                                BILLIONAIRS
+                            </p>
+                            <p style="margin: 0 0 15px 0; font-size: 11px; color: rgba(255, 255, 255, 0.5); letter-spacing: 2px; text-transform: uppercase;">
+                                Luxury · Exclusivity · Mystique
+                            </p>
+                            <p style="margin: 0 0 15px 0; font-size: 12px; color: rgba(255, 255, 255, 0.5);">
+                                Receipt ID: ${Date.now()}
+                            </p>
                             <p style="margin: 0; font-size: 12px; color: rgba(255, 255, 255, 0.5);">
-                                Receipt ID: ${Date.now()}<br>
-                                Questions? <a href="mailto:support@billionairs.luxury" style="color: #D4A574; text-decoration: none;">support@billionairs.luxury</a>
+                                Questions? <a href="mailto:support@billionairs.luxury" style="color: #e8b4b8; text-decoration: none; border-bottom: 1px solid rgba(232, 180, 184, 0.3);">support@billionairs.luxury</a>
+                            </p>
+                            <div style="width: 100px; height: 1px; background: linear-gradient(90deg, transparent, rgba(232, 180, 184, 0.4), transparent); margin: 20px auto 15px;"></div>
+                            <p style="margin: 0; font-size: 10px; color: rgba(255, 255, 255, 0.4);">
+                                © ${new Date().getFullYear()} BILLIONAIRS. All rights reserved.
                             </p>
                         </td>
                     </tr>
@@ -556,66 +682,149 @@ const templates = {
     }),
 
     refund: (userName, amount, currency, refundId) => ({
-        subject: '💸 Refund Processed - BILLIONAIRS',
+        subject: 'Refund Processed — BILLIONAIRS',
         html: `
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;600;700&display=swap');
+    </style>
 </head>
-<body style="margin: 0; padding: 0; font-family: 'Montserrat', Arial, sans-serif; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);">
-    <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%); padding: 40px 20px;">
+<body style="margin: 0; padding: 0; font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #000000;">
+    <div style="display: none; max-height: 0; overflow: hidden;">
+        Your refund has been processed. The funds will be returned to your original payment method.
+    </div>
+    
+    <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #1a1a1a 100%); padding: 60px 20px;">
         <tr>
             <td align="center">
-                <table width="600" cellpadding="0" cellspacing="0" style="background: rgba(26, 26, 46, 0.95); border-radius: 20px; border: 2px solid rgba(232, 180, 160, 0.3); overflow: hidden;">
+                <table width="650" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, rgba(15, 15, 25, 0.98) 0%, rgba(25, 25, 40, 0.98) 100%); border-radius: 24px; border: 3px solid rgba(232, 180, 184, 0.5); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1); overflow: hidden;">
+                    
+                    <!-- Header -->
                     <tr>
-                        <td style="background: linear-gradient(135deg, rgba(255, 165, 0, 0.2), rgba(255, 140, 0, 0.1)); padding: 40px 30px; text-align: center; border-bottom: 1px solid rgba(232, 180, 160, 0.3);">
-                            <div style="font-size: 60px; margin-bottom: 15px;">💸</div>
-                            <h1 style="margin: 0; font-size: 32px; color: #D4A574; font-weight: 900;">REFUND PROCESSED</h1>
+                        <td style="background: linear-gradient(135deg, rgba(232, 180, 184, 0.15) 0%, rgba(247, 202, 201, 0.05) 100%); padding: 50px 40px; text-align: center; border-bottom: 2px solid rgba(232, 180, 184, 0.4); position: relative;">
+                            <div style="position: absolute; top: 20px; left: 20px; width: 40px; height: 40px; border-top: 3px solid #e8b4b8; border-left: 3px solid #e8b4b8; opacity: 0.6;"></div>
+                            <div style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-top: 3px solid #e8b4b8; border-right: 3px solid #e8b4b8; opacity: 0.6;"></div>
+                            
+                            <img src="https://billionairs.luxury/assets/images/logo.png" alt="BILLIONAIRS" style="max-width: 80px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 30px rgba(232, 180, 184, 0.6));" />
+                            
+                            <p style="margin: 0 0 10px 0; font-size: 13px; color: rgba(247, 202, 201, 0.7); letter-spacing: 4px; text-transform: uppercase; font-weight: 300;">
+                                Transaction Update
+                            </p>
+                            <h1 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 36px; color: #e8b4b8; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 0 40px rgba(232, 180, 184, 0.5), 0 2px 4px rgba(0, 0, 0, 0.8);">
+                                REFUND PROCESSED
+                            </h1>
+                            <div style="width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #e8b4b8, transparent); margin: 20px auto 0;"></div>
                         </td>
                     </tr>
+                    
+                    <!-- Body -->
                     <tr>
-                        <td style="padding: 40px 30px; color: #ffffff;">
-                            <h2 style="margin: 0 0 20px 0; font-size: 24px; color: #D4A574;">Dear ${userName || 'Member'},</h2>
-                            <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.9);">
-                                Your refund has been successfully processed. The funds will be returned to your original payment method within 5-10 business days.
+                        <td style="padding: 50px 40px 30px; color: #ffffff;">
+                            <h2 style="margin: 0 0 25px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 28px; color: #ffffff; font-weight: 700; text-align: center; line-height: 1.3;">
+                                Dear <span style="color: #e8b4b8;">${userName || 'Member'}</span>,
+                            </h2>
+                            
+                            <p style="margin: 0 0 30px 0; font-size: 16px; line-height: 1.9; color: rgba(255, 255, 255, 0.85); text-align: center; font-weight: 300;">
+                                Your refund has been successfully processed. The funds will be returned to your original payment method within 5–10 business days.
                             </p>
-                            <div style="background: rgba(232, 180, 160, 0.1); border: 2px solid rgba(232, 180, 160, 0.3); padding: 25px; margin: 30px 0; border-radius: 12px;">
-                                <table width="100%" cellpadding="8" cellspacing="0">
-                                    <tr>
-                                        <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Refund Amount:</td>
-                                        <td style="color: #D4A574; font-weight: 600; text-align: right; font-size: 18px;">${amount} ${currency}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Refund ID:</td>
-                                        <td style="color: rgba(255, 255, 255, 0.9); font-weight: 600; text-align: right; font-size: 14px;">${refundId}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Status:</td>
-                                        <td style="color: #00ff00; font-weight: 600; text-align: right; font-size: 14px;">PROCESSED ✓</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="color: rgba(255, 255, 255, 0.7); font-size: 14px;">Processing Time:</td>
-                                        <td style="color: rgba(255, 255, 255, 0.9); text-align: right; font-size: 14px;">5-10 business days</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div style="background: rgba(255, 165, 0, 0.1); border-left: 4px solid #ffa500; padding: 20px; margin: 30px 0; border-radius: 8px;">
-                                <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
-                                    <strong>⚠️ Important:</strong> The refund will appear in your account within 5-10 business days, depending on your bank or payment provider. You will receive a notification once the funds have been deposited.
+                        </td>
+                    </tr>
+                    
+                    <!-- Refund Details Card -->
+                    <tr>
+                        <td style="padding: 0 40px 40px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, rgba(232, 180, 184, 0.12) 0%, rgba(247, 202, 201, 0.05) 100%); border-radius: 16px; border: 2px solid rgba(232, 180, 184, 0.4); overflow: hidden; box-shadow: 0 10px 40px rgba(232, 180, 184, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);">
+                                <tr>
+                                    <td style="background: linear-gradient(90deg, rgba(232, 180, 184, 0.25), rgba(247, 202, 201, 0.15)); padding: 20px 30px; border-bottom: 1px solid rgba(232, 180, 184, 0.3);">
+                                        <h3 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 18px; color: #e8b4b8; font-weight: 700; letter-spacing: 1px; text-align: center;">
+                                            Refund Details
+                                        </h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 25px 30px;">
+                                        <table width="100%" cellpadding="10" cellspacing="0">
+                                            <tr>
+                                                <td style="color: rgba(255, 255, 255, 0.6); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Refund Amount</td>
+                                                <td style="color: #e8b4b8; font-weight: 700; text-align: right; font-size: 18px;">${amount} ${currency}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding: 0;"><div style="height: 1px; background: rgba(232, 180, 184, 0.15);"></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: rgba(255, 255, 255, 0.6); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Refund ID</td>
+                                                <td style="color: rgba(255, 255, 255, 0.9); font-weight: 600; text-align: right; font-size: 14px;">${refundId}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding: 0;"><div style="height: 1px; background: rgba(232, 180, 184, 0.15);"></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: rgba(255, 255, 255, 0.6); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Status</td>
+                                                <td style="color: #e8b4b8; font-weight: 700; text-align: right; font-size: 15px;">Processed</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding: 0;"><div style="height: 1px; background: rgba(232, 180, 184, 0.15);"></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: rgba(255, 255, 255, 0.6); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Processing Time</td>
+                                                <td style="color: rgba(255, 255, 255, 0.9); text-align: right; font-size: 14px;">5–10 business days</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- Notice -->
+                    <tr>
+                        <td style="padding: 0 40px 40px;">
+                            <div style="background: rgba(0, 0, 0, 0.4); border-left: 3px solid #e8b4b8; padding: 25px 30px; border-radius: 8px;">
+                                <p style="margin: 0 0 5px 0; font-size: 13px; color: #e8b4b8; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">
+                                    Please Note
+                                </p>
+                                <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.75); line-height: 1.7; font-weight: 300;">
+                                    The refund will appear in your account within 5–10 business days, depending on your bank or payment provider.
                                 </p>
                             </div>
-                            <p style="margin: 30px 0 20px 0; font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.9);">
-                                If you have any questions about this refund, please don't hesitate to contact our support team.
+                        </td>
+                    </tr>
+                    
+                    <!-- Contact -->
+                    <tr>
+                        <td style="padding: 0 40px 50px;">
+                            <p style="margin: 0; font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.85); text-align: center; font-weight: 300;">
+                                If you have any questions about this refund, please do not hesitate to contact our support team.
                             </p>
                         </td>
                     </tr>
+                    
+                    <!-- Divider -->
                     <tr>
-                        <td style="background: rgba(0, 0, 0, 0.3); padding: 30px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                        <td style="padding: 0 40px;">
+                            <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(232, 180, 184, 0.5), transparent);"></div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.4)); padding: 40px 40px 50px; text-align: center;">
+                            <p style="margin: 0 0 8px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 16px; color: #e8b4b8; font-weight: 700; letter-spacing: 3px;">
+                                BILLIONAIRS
+                            </p>
+                            <p style="margin: 0 0 15px 0; font-size: 11px; color: rgba(255, 255, 255, 0.5); letter-spacing: 2px; text-transform: uppercase;">
+                                Luxury · Exclusivity · Mystique
+                            </p>
                             <p style="margin: 0; font-size: 12px; color: rgba(255, 255, 255, 0.5);">
-                                BILLIONAIRS LUXURY<br>
-                                Questions? <a href="mailto:support@billionairs.luxury" style="color: #D4A574; text-decoration: none;">support@billionairs.luxury</a>
+                                Questions? <a href="mailto:support@billionairs.luxury" style="color: #e8b4b8; text-decoration: none; border-bottom: 1px solid rgba(232, 180, 184, 0.3);">support@billionairs.luxury</a>
+                            </p>
+                            <div style="width: 100px; height: 1px; background: linear-gradient(90deg, transparent, rgba(232, 180, 184, 0.4), transparent); margin: 20px auto 15px;"></div>
+                            <p style="margin: 0; font-size: 10px; color: rgba(255, 255, 255, 0.4);">
+                                © ${new Date().getFullYear()} BILLIONAIRS. All rights reserved.
                             </p>
                         </td>
                     </tr>
