@@ -1,24 +1,6 @@
 // Easter Egg System JavaScript
 // Add this to dashboard.html before </body>
 
-// IMMEDIATELY remove login streak badge if not on hidden door page
-if (!window.location.pathname.includes('the-hidden-door.html')) {
-    const removeBadge = () => {
-        const badge = document.getElementById('streakBadge');
-        if (badge) {
-            badge.remove();
-        }
-    };
-    // Remove immediately and also check after DOM loads
-    removeBadge();
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', removeBadge);
-    }
-    // Also check periodically for first 2 seconds
-    const checkInterval = setInterval(removeBadge, 100);
-    setTimeout(() => clearInterval(checkInterval), 2000);
-}
-
 const EasterEggSystem = {
     userEmail: null,
     status: null,
@@ -90,7 +72,6 @@ const EasterEggSystem = {
             }
             
             this.status.loginStreak = data.loginStreak;
-            this.updateStreakBadge();
         } catch (error) {
             console.error('Error tracking daily login:', error);
         }
@@ -102,7 +83,6 @@ const EasterEggSystem = {
         // PRIORITY 1: Show eye if already unlocked
         if (this.status.eyeUnlocked) {
             this.showEye();
-            this.updateStreakBadge();
             return; // Stop here - no logo!
         }
 
@@ -135,8 +115,6 @@ const EasterEggSystem = {
             this.showPyramid();
         }
 
-        // Update streak badge
-        this.updateStreakBadge();
     },
 
     showPyramid() {
@@ -207,30 +185,6 @@ const EasterEggSystem = {
                 pyramid.style.transition = 'opacity 1s ease-out, transform 1s ease-out';
                 pyramid.style.opacity = '0';
                 pyramid.style.transform = 'scale(0.8) rotate(180deg)';
-                
-                // Gleichzeitig: Römische Zahlen Reset (III → I)
-                // Temporär login_streak auf 1 setzen für Badge-Anzeige während Transformation
-                const originalStreak = this.status.loginStreak;
-                
-                setTimeout(() => {
-                    // Reset Badge während Transformation
-                    const badge = document.getElementById('streakBadge');
-                    if (badge) {
-                        badge.style.transition = 'opacity 0.5s ease-out';
-                        badge.style.opacity = '0';
-                        
-                        setTimeout(() => {
-                            // Zeige "I" statt "III" - neuer Zyklus beginnt
-                            this.status.loginStreak = 1; // Temporär für Anzeige
-                            this.updateStreakBadge();
-                            badge.style.transition = 'opacity 0.5s ease-in';
-                            badge.style.opacity = '1';
-                            
-                            // Restore original streak
-                            this.status.loginStreak = originalStreak;
-                        }, 500);
-                    }
-                }, 300); // Starte Badge-Animation kurz nach Logo-Fade
                 
                 setTimeout(() => {
                     easterEgg.innerHTML = `
@@ -424,56 +378,6 @@ const EasterEggSystem = {
         }
         console.log('Opening chat with animation...');
         window.luxuryChat.open();
-    },
-
-    updateStreakBadge() {
-        // Only show streak badge on the-hidden-door.html
-        const isHiddenDoorPage = window.location.pathname.includes('the-hidden-door.html');
-        
-        let badge = document.getElementById('streakBadge');
-        
-        // ALWAYS remove badge if not on hidden door page
-        if (!isHiddenDoorPage) {
-            if (badge) {
-                badge.remove();
-            }
-            return;
-        }
-        
-        // Hide badge if chat is ready/unlocked (only check if on hidden door page)
-        if (this.status.chatReady || this.status.chatUnlocked) {
-            if (badge) {
-                badge.remove();
-            }
-            return;
-        }
-        
-        // Create badge only on hidden door page
-        if (!badge && this.status.loginStreak > 0) {
-            badge = document.createElement('div');
-            badge.id = 'streakBadge';
-            badge.className = 'login-streak-badge';
-            document.body.appendChild(badge);
-        }
-
-        if (badge && this.status.loginStreak > 0) {
-            let displayStreak = this.status.loginStreak;
-            let maxStreak = 3;
-            
-            // Wenn Auge entsperrt ist, zeige Tage seit Eye Opening (1-7)
-            if (this.status.eyeUnlocked && this.status.daysSinceEyeOpened) {
-                displayStreak = this.status.daysSinceEyeOpened;
-                maxStreak = 7;
-            } else if (this.status.eyeReady) {
-                // Eye Phase: Zähle bis 7
-                maxStreak = 7;
-            }
-            
-            // Römische Zahlen bis 7
-            const romanNumerals = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
-            const roman = romanNumerals[Math.min(displayStreak, maxStreak)] || displayStreak;
-            badge.innerHTML = `<div class="login-streak-number">${roman}</div>`;
-        }
     },
 
     startMonitoring() {
