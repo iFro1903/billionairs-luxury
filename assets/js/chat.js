@@ -263,6 +263,19 @@ class LuxuryChat {
                 @media print {
                     .chat-overlay { display: none !important; }
                 }
+                /* Content warning animation */
+                @keyframes warningFadeIn {
+                    from { opacity: 0; transform: translateY(8px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                @keyframes inputShake {
+                    0%, 100% { transform: translateX(0); }
+                    15% { transform: translateX(-6px); }
+                    30% { transform: translateX(5px); }
+                    45% { transform: translateX(-4px); }
+                    60% { transform: translateX(3px); }
+                    75% { transform: translateX(-2px); }
+                }
             `;
             document.head.appendChild(secCSS);
         }
@@ -528,11 +541,148 @@ class LuxuryChat {
         }
     }
 
+    // ═══════════════════════════════════════════════
+    // CONTENT MODERATION — Personal Info Filter
+    // ═══════════════════════════════════════════════
+    
+    checkForPersonalInfo(text) {
+        if (!text) return null;
+        const lower = text.toLowerCase().replace(/\s+/g, ' ');
+        
+        // Email pattern: word@word.tld
+        if (/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/i.test(text)) {
+            return 'email address';
+        }
+        
+        // Phone numbers: various formats (min 7 digits with optional separators)
+        if (/(?:\+?\d{1,4}[\s\-.]?)?(?:\(?\d{2,5}\)?[\s\-.]?)?\d{3,}[\s\-.]?\d{2,}/g.test(text) && 
+            text.replace(/[^\d]/g, '').length >= 7) {
+            return 'phone number';
+        }
+        
+        // Instagram: @handle, instagram.com/..., "insta:", "ig:", "mein insta"
+        if (/(?:instagram\.com\/|@[a-zA-Z0-9._]{3,}|\b(?:insta|ig)\s*[:=]|\bmein\s*(?:insta|ig)\b|\bmy\s*(?:insta|ig)\b|\bfollow\s*(?:me|mich)\b)/i.test(text)) {
+            return 'Instagram';
+        }
+        
+        // Twitter/X: twitter.com/..., x.com/...
+        if (/(?:twitter\.com\/|x\.com\/[a-zA-Z0-9_]|\btwitter\s*[:=]|\bmein\s*twitter\b|\bmy\s*twitter\b)/i.test(text)) {
+            return 'Twitter/X';
+        }
+        
+        // Snapchat
+        if (/(?:snapchat\.com\/|\bsnapchat\s*[:=]|\bsnap\s*[:=]|\bmein\s*snap(?:chat)?\b|\bmy\s*snap(?:chat)?\b|\badd\s*(?:me|mich)\s*(?:on|auf)\s*snap)/i.test(text)) {
+            return 'Snapchat';
+        }
+        
+        // TikTok
+        if (/(?:tiktok\.com\/@|\btiktok\s*[:=]|\bmein\s*tiktok\b|\bmy\s*tiktok\b)/i.test(text)) {
+            return 'TikTok';
+        }
+        
+        // WhatsApp / Telegram / Signal
+        if (/(?:wa\.me\/|\bwhatsapp\s*[:=]|\btelegram\s*[:=]|\bsignal\s*[:=]|\bschreib\s*(?:mir|mich)\s*(?:auf|per|über)\s*(?:whatsapp|telegram|signal)|\bmessage\s*me\s*on\s*(?:whatsapp|telegram|signal))/i.test(text)) {
+            return 'WhatsApp/Telegram';
+        }
+        
+        // Discord
+        if (/(?:discord\.gg\/|\bdiscord\s*[:=]|\bmein\s*discord\b|\bmy\s*discord\b)/i.test(text)) {
+            return 'Discord';
+        }
+        
+        // Facebook / LinkedIn
+        if (/(?:facebook\.com\/|fb\.com\/|linkedin\.com\/in\/|\bfacebook\s*[:=]|\blinkedin\s*[:=])/i.test(text)) {
+            return 'Facebook/LinkedIn';
+        }
+        
+        // YouTube channel
+        if (/(?:youtube\.com\/(?:c\/|channel\/|@)|youtu\.be\/|\byoutube\s*[:=]|\bmein\s*(?:youtube|kanal)\b|\bmy\s*(?:youtube|channel)\b)/i.test(text)) {
+            return 'YouTube';
+        }
+        
+        // Generic URLs (http, https, www)
+        if (/(?:https?:\/\/|www\.)[a-zA-Z0-9\-]+\.[a-zA-Z]{2,}/i.test(text)) {
+            return 'link/URL';
+        }
+        
+        // Physical addresses (German/English patterns: Straße, Street, Str., PLZ)
+        if (/(?:\b\d{4,5}\s+[A-ZÄÖÜ][a-zäöüß]+|\b[\wäöüß]+(?:straße|strasse|str\.|gasse|weg|allee|platz|ring|damm)\s+\d|\b\d+\s+(?:street|road|avenue|drive|lane|blvd)\b)/i.test(text)) {
+            return 'address';
+        }
+        
+        return null;
+    }
+    
+    showContentWarning(type) {
+        // Show warning as a system message in chat
+        const container = document.getElementById('chatMessages');
+        if (!container) return;
+        
+        // Remove existing warning
+        const existing = container.querySelector('.chat-content-warning');
+        if (existing) existing.remove();
+        
+        const warningEl = document.createElement('div');
+        warningEl.className = 'chat-content-warning';
+        warningEl.innerHTML = `
+            <div style="
+                background: rgba(255, 70, 70, 0.08);
+                border: 1px solid rgba(255, 70, 70, 0.3);
+                border-radius: 12px;
+                padding: 1rem 1.2rem;
+                margin: 0.8rem 1rem;
+                text-align: center;
+                animation: warningFadeIn 0.3s ease;
+            ">
+                <div style="
+                    font-family: 'Playfair Display', serif;
+                    color: #ff6b6b;
+                    font-size: 0.95rem;
+                    font-weight: 600;
+                    letter-spacing: 1.5px;
+                    margin-bottom: 0.4rem;
+                ">WARNING</div>
+                <div style="
+                    color: rgba(255, 150, 150, 0.9);
+                    font-size: 0.78rem;
+                    font-family: 'Montserrat', sans-serif;
+                    line-height: 1.5;
+                ">Sharing personal information (${this.escapeHtml(type)}) is not allowed in The Inner Circle.<br>
+                This includes social media, emails, phone numbers, and addresses.<br>
+                <span style="color: #e8b4b8; font-weight: 500;">Your anonymity protects you.</span></div>
+            </div>
+        `;
+        container.appendChild(warningEl);
+        this.scrollToBottom();
+        
+        // Auto-remove after 8 seconds
+        setTimeout(() => {
+            if (warningEl.parentNode) {
+                warningEl.style.transition = 'opacity 0.5s ease';
+                warningEl.style.opacity = '0';
+                setTimeout(() => warningEl.remove(), 500);
+            }
+        }, 8000);
+    }
+
     async sendMessage(fileUrl = null, fileName = null, fileType = null) {
         const input = document.getElementById('chatInput');
         const message = input.value.trim();
 
         if (!message && !fileUrl) return;
+
+        // Content Moderation: Check for personal info
+        if (message) {
+            const violation = this.checkForPersonalInfo(message);
+            if (violation) {
+                this.showContentWarning(violation);
+                // Shake the input field
+                input.style.animation = 'none';
+                input.offsetHeight; // trigger reflow
+                input.style.animation = 'inputShake 0.5s ease';
+                return; // Block the message
+            }
+        }
 
         try {
             const payload = {
@@ -555,6 +705,12 @@ class LuxuryChat {
             });
 
             if (response.ok) {
+                const data = await response.json();
+                // Check if server-side filter caught something
+                if (data.blocked) {
+                    this.showContentWarning(data.blockedType || 'personal information');
+                    return;
+                }
                 input.value = '';
                 await this.loadMessages();
                 this.scrollToBottom();

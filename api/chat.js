@@ -79,6 +79,53 @@ async function decryptMessage(ciphertext) {
     }
 }
 
+// ═══════════════════════════════════════════════════════════
+// CONTENT MODERATION — Server-side personal info filter
+// ═══════════════════════════════════════════════════════════
+
+function checkPersonalInfo(text) {
+    if (!text) return null;
+    
+    // Email
+    if (/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/i.test(text)) return 'email address';
+    
+    // Phone (7+ digits)
+    if (/(?:\+?\d{1,4}[\s\-.]?)?(?:\(?\d{2,5}\)?[\s\-.]?)?\d{3,}[\s\-.]?\d{2,}/g.test(text) &&
+        text.replace(/[^\d]/g, '').length >= 7) return 'phone number';
+    
+    // Instagram
+    if (/(?:instagram\.com\/|@[a-zA-Z0-9._]{3,}|\b(?:insta|ig)\s*[:=]|\bmein\s*(?:insta|ig)\b|\bmy\s*(?:insta|ig)\b|\bfollow\s*(?:me|mich)\b)/i.test(text)) return 'Instagram';
+    
+    // Twitter/X
+    if (/(?:twitter\.com\/|x\.com\/[a-zA-Z0-9_]|\btwitter\s*[:=]|\bmein\s*twitter\b|\bmy\s*twitter\b)/i.test(text)) return 'Twitter/X';
+    
+    // Snapchat
+    if (/(?:snapchat\.com\/|\bsnapchat\s*[:=]|\bsnap\s*[:=]|\bmein\s*snap(?:chat)?\b|\bmy\s*snap(?:chat)?\b|\badd\s*(?:me|mich)\s*(?:on|auf)\s*snap)/i.test(text)) return 'Snapchat';
+    
+    // TikTok
+    if (/(?:tiktok\.com\/@|\btiktok\s*[:=]|\bmein\s*tiktok\b|\bmy\s*tiktok\b)/i.test(text)) return 'TikTok';
+    
+    // WhatsApp / Telegram / Signal
+    if (/(?:wa\.me\/|\bwhatsapp\s*[:=]|\btelegram\s*[:=]|\bsignal\s*[:=]|\bschreib\s*(?:mir|mich)\s*(?:auf|per|über)\s*(?:whatsapp|telegram|signal)|\bmessage\s*me\s*on\s*(?:whatsapp|telegram|signal))/i.test(text)) return 'WhatsApp/Telegram';
+    
+    // Discord
+    if (/(?:discord\.gg\/|\bdiscord\s*[:=]|\bmein\s*discord\b|\bmy\s*discord\b)/i.test(text)) return 'Discord';
+    
+    // Facebook / LinkedIn
+    if (/(?:facebook\.com\/|fb\.com\/|linkedin\.com\/in\/|\bfacebook\s*[:=]|\blinkedin\s*[:=])/i.test(text)) return 'Facebook/LinkedIn';
+    
+    // YouTube
+    if (/(?:youtube\.com\/(?:c\/|channel\/|@)|youtu\.be\/|\byoutube\s*[:=]|\bmein\s*(?:youtube|kanal)\b|\bmy\s*(?:youtube|channel)\b)/i.test(text)) return 'YouTube';
+    
+    // Generic URLs
+    if (/(?:https?:\/\/|www\.)[a-zA-Z0-9\-]+\.[a-zA-Z]{2,}/i.test(text)) return 'link/URL';
+    
+    // Physical addresses (DE/EN)
+    if (/(?:\b\d{4,5}\s+[A-ZÄÖÜ][a-zäöüß]+|\b[\wäöüß]+(?:straße|strasse|str\.|gasse|weg|allee|platz|ring|damm)\s+\d|\b\d+\s+(?:street|road|avenue|drive|lane|blvd)\b)/i.test(text)) return 'address';
+    
+    return null;
+}
+
 export default async function handler(req) {
     try {
         const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
@@ -206,7 +253,7 @@ export default async function handler(req) {
             }
         }
 
-        // POST: Send message (encrypt before storing)
+        // POST: Send message (filter + encrypt before storing)
         if (req.method === 'POST') {
             const body = await req.json();
             const { email, username, message, fileUrl, fileName, fileType } = body;
@@ -216,6 +263,21 @@ export default async function handler(req) {
                     status: 400,
                     headers: { 'Content-Type': 'application/json' }
                 });
+            }
+
+            // Server-side content moderation (second layer)
+            if (message) {
+                const blockedType = checkPersonalInfo(message);
+                if (blockedType) {
+                    return new Response(JSON.stringify({ 
+                        blocked: true, 
+                        blockedType: blockedType,
+                        error: 'Personal information is not allowed in The Inner Circle' 
+                    }), {
+                        status: 200,
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                }
             }
 
             try {
