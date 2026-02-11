@@ -842,6 +842,30 @@
             background: rgba(232, 180, 184, 0.2);
         }
 
+        .clear-chat-btn {
+            padding: 0.5rem 1.2rem;
+            background: rgba(244, 67, 54, 0.08);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.25);
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            float: right;
+            margin-bottom: 1rem;
+        }
+
+        .clear-chat-btn:hover {
+            background: rgba(244, 67, 54, 0.18);
+        }
+
+        .clear-chat-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
         .stats-loading {
             text-align: center;
             color: #666;
@@ -906,10 +930,13 @@
 
             <!-- Messages Tab -->
             <div class="tab-panel active" id="tab-messages">
-                <div class="search-bar">
-                    <input type="text" class="search-input" id="searchInput" 
-                           placeholder="Search messages, usernames, or emails..." 
-                           oninput="filterMessages()">
+                <div style="display:flex;gap:0.8rem;align-items:center;margin-bottom:1rem;flex-wrap:wrap;">
+                    <div style="flex:1;min-width:200px;">
+                        <input type="text" class="search-input" id="searchInput" 
+                               placeholder="Search messages, usernames, or emails..." 
+                               oninput="filterMessages()">
+                    </div>
+                    <button class="clear-chat-btn" onclick="confirmClearChat()">Clear All Chat</button>
                 </div>
 
                 <div class="messages-container" id="messagesContainer">
@@ -1269,6 +1296,60 @@
                     }
                 } catch (error) {
                     console.error('Delete error:', error);
+                    btn.textContent = 'Error';
+                    setTimeout(() => overlay.remove(), 1500);
+                }
+            });
+        }
+
+        // === Clear All Chat ===
+        function confirmClearChat() {
+            const overlay = document.createElement('div');
+            overlay.className = 'confirm-overlay';
+            overlay.innerHTML = `
+                <div class="confirm-dialog">
+                    <h3>Clear All Chat</h3>
+                    <p>Are you sure you want to delete <span class="email-highlight">ALL chat messages</span> for every member?<br><br>This action cannot be undone.</p>
+                    <div class="confirm-actions">
+                        <button class="confirm-cancel" onclick="this.closest('.confirm-overlay').remove()">Cancel</button>
+                        <button class="confirm-delete" id="confirmClearBtn">Delete All</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) overlay.remove();
+            });
+
+            document.getElementById('confirmClearBtn').addEventListener('click', async () => {
+                const btn = document.getElementById('confirmClearBtn');
+                btn.disabled = true;
+                btn.textContent = 'Deleting...';
+
+                try {
+                    const response = await fetch('/api/clear-chat', {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ ceoEmail })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.success) {
+                        overlay.remove();
+                        allMessages = [];
+                        document.getElementById('totalMessages').textContent = '0';
+                        document.getElementById('uniqueUsers').textContent = '0';
+                        document.getElementById('messagesContainer').innerHTML = 
+                            '<div class="empty-state">Chat cleared</div>';
+                    } else {
+                        btn.textContent = 'Failed';
+                        btn.style.color = '#ff6b6b';
+                        setTimeout(() => overlay.remove(), 1500);
+                    }
+                } catch (error) {
+                    console.error('Clear chat error:', error);
                     btn.textContent = 'Error';
                     setTimeout(() => overlay.remove(), 1500);
                 }
