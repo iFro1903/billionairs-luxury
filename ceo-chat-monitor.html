@@ -245,18 +245,252 @@
             color: #555;
         }
 
+        /* Tabs */
+        .tab-nav {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(232, 180, 184, 0.2);
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            color: #666;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            color: #e8b4b8;
+        }
+
+        .tab-btn.active {
+            color: #e8b4b8;
+            border-bottom-color: #e8b4b8;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Members Table */
+        .members-container {
+            background: rgba(232, 180, 184, 0.02);
+            border: 1px solid rgba(232, 180, 184, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            overflow-x: auto;
+        }
+
+        .members-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .members-table th {
+            text-align: left;
+            padding: 1rem 0.8rem;
+            color: #e8b4b8;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(232, 180, 184, 0.2);
+        }
+
+        .members-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(232, 180, 184, 0.08);
+            color: #ccc;
+        }
+
+        .members-table tr:hover td {
+            background: rgba(232, 180, 184, 0.04);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-paid {
+            background: rgba(76, 175, 80, 0.15);
+            color: #4caf50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .badge-free {
+            background: rgba(255, 193, 7, 0.15);
+            color: #ffc107;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .badge-blocked {
+            background: rgba(244, 67, 54, 0.15);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+        }
+
+        .delete-btn {
+            padding: 0.4rem 1rem;
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: rgba(244, 67, 54, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .delete-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .members-search {
+            margin-bottom: 1.5rem;
+        }
+
+        .members-count {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+
+        .confirm-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .confirm-dialog {
+            background: #1a1a1a;
+            border: 1px solid rgba(232, 180, 184, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .confirm-dialog h3 {
+            font-family: 'Playfair Display', serif;
+            color: #e8b4b8;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .confirm-dialog p {
+            color: #999;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .confirm-dialog .email-highlight {
+            color: #f44336;
+            font-weight: 600;
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .confirm-cancel {
+            padding: 0.6rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            color: #999;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .confirm-cancel:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ccc;
+        }
+
+        .confirm-delete {
+            padding: 0.6rem 1.5rem;
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.4);
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .confirm-delete:hover {
+            background: rgba(244, 67, 54, 0.35);
+        }
+
         /* Custom scrollbar */
-        .messages-container::-webkit-scrollbar {
+        .messages-container::-webkit-scrollbar,
+        .members-container::-webkit-scrollbar {
             width: 8px;
         }
 
-        .messages-container::-webkit-scrollbar-track {
+        .messages-container::-webkit-scrollbar-track,
+        .members-container::-webkit-scrollbar-track {
             background: rgba(232, 180, 184, 0.05);
         }
 
-        .messages-container::-webkit-scrollbar-thumb {
+        .messages-container::-webkit-scrollbar-thumb,
+        .members-container::-webkit-scrollbar-thumb {
             background: #e8b4b8;
             border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .members-table th:nth-child(3),
+            .members-table td:nth-child(3) {
+                display: none;
+            }
+
+            .tab-btn {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
@@ -307,14 +541,49 @@
                 </div>
             </div>
 
-            <div class="search-bar">
-                <input type="text" class="search-input" id="searchInput" 
-                       placeholder="Search messages, usernames, or emails..." 
-                       oninput="filterMessages()">
+            <!-- Tab Navigation -->
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab('messages')">Messages</button>
+                <button class="tab-btn" onclick="switchTab('members')">Members</button>
             </div>
 
-            <div class="messages-container" id="messagesContainer">
-                <div class="empty-state">Loading messages...</div>
+            <!-- Messages Tab -->
+            <div class="tab-panel active" id="tab-messages">
+                <div class="search-bar">
+                    <input type="text" class="search-input" id="searchInput" 
+                           placeholder="Search messages, usernames, or emails..." 
+                           oninput="filterMessages()">
+                </div>
+
+                <div class="messages-container" id="messagesContainer">
+                    <div class="empty-state">Loading messages...</div>
+                </div>
+            </div>
+
+            <!-- Members Tab -->
+            <div class="tab-panel" id="tab-members">
+                <div class="members-search">
+                    <input type="text" class="search-input" id="memberSearchInput" 
+                           placeholder="Search members by email or name..." 
+                           oninput="filterMembers()">
+                </div>
+                <div class="members-count" id="membersCount"></div>
+                <div class="members-container">
+                    <table class="members-table">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th>Registered</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="membersTableBody">
+                            <tr><td colspan="5" style="text-align:center; color:#666; padding:2rem;">Loading members...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -323,6 +592,8 @@
         let ceoEmail = null;
         let pollInterval = null;
         let allMessages = [];
+        let allMembers = [];
+        let currentTab = 'messages';
 
         async function login() {
             const email = document.getElementById('ceoEmail').value.trim();
@@ -348,8 +619,9 @@
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('monitorSection').classList.remove('hidden');
 
-            // Start loading messages
+            // Start loading messages and members
             await loadMessages();
+            await loadMembers();
             
             // Poll every 3 seconds
             pollInterval = setInterval(loadMessages, 3000);
@@ -444,6 +716,128 @@
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+
+        // === Tab Switching ===
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase() === tab);
+            });
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.toggle('active', panel.id === `tab-${tab}`);
+            });
+            if (tab === 'members') loadMembers();
+        }
+
+        // === Members Management ===
+        async function loadMembers() {
+            try {
+                const response = await fetch('/api/admin-users');
+                const data = await response.json();
+                allMembers = (data.users || []).filter(u => u.email !== 'furkan_akaslan@hotmail.com');
+                document.getElementById('membersCount').textContent = `${allMembers.length} Members`;
+                renderMembers(allMembers);
+            } catch (error) {
+                console.error('Error loading members:', error);
+                document.getElementById('membersTableBody').innerHTML = 
+                    '<tr><td colspan="5" style="text-align:center;color:#f44336;padding:2rem;">Failed to load members</td></tr>';
+            }
+        }
+
+        function filterMembers() {
+            const query = document.getElementById('memberSearchInput').value.toLowerCase().trim();
+            if (!query) {
+                renderMembers(allMembers);
+                return;
+            }
+            const filtered = allMembers.filter(m => 
+                (m.email && m.email.toLowerCase().includes(query)) ||
+                (m.name && m.name.toLowerCase().includes(query))
+            );
+            renderMembers(filtered);
+        }
+
+        function renderMembers(members) {
+            const tbody = document.getElementById('membersTableBody');
+
+            if (members.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#666;padding:2rem;">No members found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = members.map(m => {
+                const date = new Date(m.created_at).toLocaleDateString('de-DE');
+                let statusBadge = m.is_blocked 
+                    ? '<span class="badge badge-blocked">Blocked</span>'
+                    : m.has_paid 
+                        ? '<span class="badge badge-paid">Paid</span>' 
+                        : '<span class="badge badge-free">Free</span>';
+
+                return `
+                    <tr>
+                        <td style="color:#e8b4b8;font-weight:500;">${escapeHtml(m.email)}</td>
+                        <td>${escapeHtml(m.name || '--')}</td>
+                        <td>${date}</td>
+                        <td>${statusBadge}</td>
+                        <td>
+                            <button class="delete-btn" onclick="confirmDeleteMember('${escapeHtml(m.email)}')">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function confirmDeleteMember(email) {
+            const overlay = document.createElement('div');
+            overlay.className = 'confirm-overlay';
+            overlay.innerHTML = `
+                <div class="confirm-dialog">
+                    <h3>Delete Member</h3>
+                    <p>Are you sure you want to permanently delete<br><span class="email-highlight">${escapeHtml(email)}</span>?<br><br>This will remove all their data including messages, payments, and sessions. This action cannot be undone.</p>
+                    <div class="confirm-actions">
+                        <button class="confirm-cancel" onclick="this.closest('.confirm-overlay').remove()">Cancel</button>
+                        <button class="confirm-delete" id="confirmDeleteBtn">Delete</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+
+            // Close on overlay click
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) overlay.remove();
+            });
+
+            document.getElementById('confirmDeleteBtn').addEventListener('click', async () => {
+                const btn = document.getElementById('confirmDeleteBtn');
+                btn.disabled = true;
+                btn.textContent = 'Deleting...';
+
+                try {
+                    const response = await fetch('/api/admin-delete-user', {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email })
+                    });
+
+                    if (response.ok) {
+                        overlay.remove();
+                        await loadMembers();
+                    } else {
+                        const data = await response.json();
+                        btn.textContent = 'Failed';
+                        btn.style.color = '#ff6b6b';
+                        setTimeout(() => overlay.remove(), 1500);
+                        console.error('Delete failed:', data);
+                    }
+                } catch (error) {
+                    console.error('Delete error:', error);
+                    btn.textContent = 'Error';
+                    setTimeout(() => overlay.remove(), 1500);
+                }
+            });
         }
 
         // Cleanup on page unload
