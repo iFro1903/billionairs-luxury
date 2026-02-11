@@ -712,20 +712,20 @@ class StripePaymentProcessor {
 }
 
 // Initialize Stripe processor
-try {
-    const stripeProcessor = new StripePaymentProcessor();
-    window.stripeProcessor = stripeProcessor;
-    console.log('✅ Stripe processor initialized successfully');
-} catch (e) {
-    console.error('❌ Stripe processor init error:', e);
-    // Retry after Stripe library loads
-    window.addEventListener('load', function() {
-        try {
-            const stripeProcessor = new StripePaymentProcessor();
-            window.stripeProcessor = stripeProcessor;
-            console.log('✅ Stripe processor initialized on window load');
-        } catch (e2) {
-            console.error('❌ Stripe processor retry failed:', e2);
-        }
-    });
+function initStripeProcessor() {
+    if (typeof Stripe === 'undefined') {
+        console.warn('⏳ Stripe library not yet loaded, retrying...');
+        setTimeout(initStripeProcessor, 500);
+        return;
+    }
+    try {
+        const stripeProcessor = new StripePaymentProcessor();
+        window.stripeProcessor = stripeProcessor;
+        console.log('✅ Stripe processor initialized successfully');
+    } catch (e) {
+        console.error('❌ Stripe processor init error:', e);
+        setTimeout(initStripeProcessor, 1000);
+    }
 }
+
+initStripeProcessor();

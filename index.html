@@ -154,8 +154,8 @@
     <!-- Mobile Performance (Light) - NUR Speed, kein Design -->
     <link rel="stylesheet" href="assets/css/mobile-performance-light.css">
     
-    <!-- Stripe Payment Processing -->
-    <script src="https://js.stripe.com/v3/" defer></script>
+    <!-- Stripe Payment Processing - NO DEFER, must load before stripe-payment.js -->
+    <script src="https://js.stripe.com/v3/"></script>
     
     <!-- Particles.js - Deferred for Performance -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
@@ -1712,7 +1712,7 @@
     <script src="assets/js/main.js?v=20260211" defer></script>
     <script src="assets/js/faq.js" defer></script>
     <script src="assets/js/testimonials.js" defer></script>
-    <script src="assets/js/stripe-payment.js?v=20260211" defer></script>
+    <script src="assets/js/stripe-payment.js?v=20260211b" defer></script>
     <script src="assets/js/payment-methods-new.js?v=20260211" defer></script>
     <script src="assets/js/benefits.js" defer></script>
     
