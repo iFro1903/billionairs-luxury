@@ -22,7 +22,8 @@ export default async function handler(req) {
     // Limitierung erfolgt durch Neon DB Connection Limits
 
     try {
-        const { subscription, userAgent } = await req.json();
+        const body = await req.json();
+        const { subscription, userAgent, email } = body;
 
         if (!subscription || !subscription.endpoint) {
             return new Response(JSON.stringify({ 
@@ -35,8 +36,8 @@ export default async function handler(req) {
 
         const sql = neon(process.env.DATABASE_URL);
 
-        // Extract user email from session if available
-        const userEmail = req.headers.get('x-user-email') || null;
+        // Extract user email from header or body
+        const userEmail = req.headers.get('x-user-email') || email || null;
 
         // Save subscription to database
         await sql`

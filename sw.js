@@ -193,50 +193,7 @@ self.addEventListener('sync', (event) => {
     }
 });
 
-// Push Notifications (future feature)
-self.addEventListener('push', (event) => {
-    console.log('[Service Worker] Push received:', event);
-    
-    const data = event.data ? event.data.json() : {};
-    const title = data.title || 'BILLIONAIRS';
-    const options = {
-        body: data.body || 'New notification',
-        icon: '/assets/images/icon-192x192.png',
-        badge: '/assets/images/icon-72x72.png',
-        vibrate: [200, 100, 200],
-        tag: 'billionairs-notification',
-        data: data,
-        actions: [
-            {
-                action: 'open',
-                title: 'Open',
-                icon: '/assets/images/icon-72x72.png'
-            },
-            {
-                action: 'close',
-                title: 'Close',
-                icon: '/assets/images/icon-72x72.png'
-            }
-        ]
-    };
-
-    event.waitUntil(
-        self.registration.showNotification(title, options)
-    );
-});
-
-// Notification click handler
-self.addEventListener('notificationclick', (event) => {
-    console.log('[Service Worker] Notification clicked:', event.action);
-    
-    event.notification.close();
-
-    if (event.action === 'open' || !event.action) {
-        event.waitUntil(
-            clients.openWindow(event.notification.data?.url || '/dashboard')
-        );
-    }
-});
+// Push Notifications — handled by unified handler below (line ~600+)
 
 /**
  * Sync pending messages from IndexedDB

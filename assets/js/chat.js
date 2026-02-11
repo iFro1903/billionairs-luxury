@@ -9,6 +9,8 @@ class LuxuryChat {
         this.pollingInterval = null;
         this.particleInterval = null;
         this.screenshotProtectionActive = false;
+        this.soundEnabled = localStorage.getItem('chat_sound') !== 'off';
+        this.notificationSound = null;
         
         // Cleanup on page unload
         window.addEventListener('beforeunload', () => this.cleanup());
@@ -30,9 +32,106 @@ class LuxuryChat {
     init(userEmail) {
         this.userEmail = userEmail;
         this.generateUsername();
+        this.initNotificationSound();
         this.createChatUI();
         this.initScreenshotProtection();
+        this.requestPushPermission();
         this.startPolling();
+    }
+
+    // ═══════════════════════════════════════════════
+    // NOTIFICATION SOUND SYSTEM
+    // ═══════════════════════════════════════════════
+    
+    initNotificationSound() {
+        // Create AudioContext-based notification sound (luxury chime)
+        this._audioCtx = null;
+    }
+    
+    playNotificationSound() {
+        if (!this.soundEnabled) return;
+        
+        try {
+            // Create AudioContext on first use (required by browsers)
+            if (!this._audioCtx) {
+                this._audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            
+            const ctx = this._audioCtx;
+            const now = ctx.currentTime;
+            
+            // Luxury chime: Two soft bell tones (C5 + E5)
+            const playTone = (freq, start, duration, volume) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now + start);
+                
+                gain.gain.setValueAtTime(0, now + start);
+                gain.gain.linearRampToValueAtTime(volume, now + start + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + start + duration);
+                
+                osc.start(now + start);
+                osc.stop(now + start + duration);
+            };
+            
+            // Elegant two-note chime
+            playTone(523.25, 0, 0.3, 0.15);     // C5
+            playTone(659.25, 0.12, 0.35, 0.12);  // E5
+            playTone(783.99, 0.22, 0.4, 0.08);   // G5 (soft)
+            
+        } catch (e) {
+            console.warn('Sound playback failed:', e);
+        }
+    }
+    
+    toggleSound() {
+        this.soundEnabled = !this.soundEnabled;
+        localStorage.setItem('chat_sound', this.soundEnabled ? 'on' : 'off');
+        
+        const btn = document.getElementById('chatSoundToggle');
+        if (btn) {
+            btn.innerHTML = this.soundEnabled ? '🔔' : '🔇';
+            btn.title = this.soundEnabled ? 'Sound deaktivieren' : 'Sound aktivieren';
+        }
+        
+        // Play a test chime when turning on
+        if (this.soundEnabled) {
+            this.playNotificationSound();
+        }
+    }
+    
+    // ═══════════════════════════════════════════════
+    // PUSH NOTIFICATIONS — Auto-Subscribe
+    // ═══════════════════════════════════════════════
+    
+    async requestPushPermission() {
+        if (!window.pushManager || !window.pushManager.isSupported()) return;
+        
+        try {
+            // Only prompt if not yet decided
+            if (Notification.permission === 'default') {
+                // Delay prompt slightly so it doesn't appear immediately
+                setTimeout(async () => {
+                    const permission = await Notification.requestPermission();
+                    if (permission === 'granted') {
+                        await window.pushManager.subscribe();
+                        console.log('Push notifications enabled for chat');
+                    }
+                }, 3000);
+            } else if (Notification.permission === 'granted') {
+                // Already granted — ensure subscription exists
+                const existing = await window.pushManager.getSubscription();
+                if (!existing) {
+                    await window.pushManager.subscribe();
+                }
+            }
+        } catch (e) {
+            console.warn('Push subscription failed:', e);
+        }
     }
 
     // ═══════════════════════════════════════════════
@@ -276,6 +375,25 @@ class LuxuryChat {
                     60% { transform: translateX(3px); }
                     75% { transform: translateX(-2px); }
                 }
+                /* Sound toggle button */
+                .chat-sound-toggle {
+                    background: none;
+                    border: 1px solid rgba(232, 180, 184, 0.2);
+                    border-radius: 50%;
+                    width: 32px;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    font-size: 0.85rem;
+                    transition: all 0.3s ease;
+                    padding: 0;
+                }
+                .chat-sound-toggle:hover {
+                    background: rgba(232, 180, 184, 0.1);
+                    border-color: rgba(232, 180, 184, 0.4);
+                }
             `;
             document.head.appendChild(secCSS);
         }
@@ -292,11 +410,14 @@ class LuxuryChat {
                             <div class="chat-title">THE INNER CIRCLE</div>
                             <div class="chat-subtitle">TITANS ONLY</div>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
                             <div class="chat-online-count">
                                 <div class="chat-online-dot"></div>
                                 <span id="onlineCount">1</span> Online
                             </div>
+                            <button class="chat-sound-toggle" id="chatSoundToggle" title="${this.soundEnabled ? 'Sound deaktivieren' : 'Sound aktivieren'}">
+                                ${this.soundEnabled ? '🔔' : '🔇'}
+                            </button>
                             <button class="chat-close" id="chatCloseBtn">×</button>
                         </div>
                     </div>
@@ -347,6 +468,10 @@ class LuxuryChat {
         // Event listeners
         document.getElementById('chatCloseBtn').addEventListener('click', () => {
             this.close();
+        });
+
+        document.getElementById('chatSoundToggle').addEventListener('click', () => {
+            this.toggleSound();
         });
 
         document.getElementById('chatAttachBtn').addEventListener('click', () => {
@@ -779,8 +904,9 @@ class LuxuryChat {
                 // Check if new messages arrived while chat is closed
                 if (!this.isOpen && this.lastMessageCount > 0 && newMessageCount > this.lastMessageCount) {
                     this.triggerEyeBlink();
+                    this.playNotificationSound();
                     
-                    // Send push notification
+                    // Send browser notification
                     if (window.notificationManager && data.messages.length > 0) {
                         const latestMessage = data.messages[data.messages.length - 1];
                         window.notificationManager.notifyNewChatMessage(latestMessage.username);
@@ -789,6 +915,14 @@ class LuxuryChat {
                 
                 // Check if new messages arrived while chat is open
                 const hasNewMessages = newMessageCount > this.lastMessageCount;
+                
+                // Play sound for new messages while chat is open (from others)
+                if (this.isOpen && hasNewMessages && this.lastMessageCount > 0) {
+                    const latestMsg = data.messages[data.messages.length - 1];
+                    if (latestMsg && latestMsg.username !== this.username) {
+                        this.playNotificationSound();
+                    }
+                }
                 
                 this.lastMessageCount = newMessageCount;
                 this.messages = data.messages;

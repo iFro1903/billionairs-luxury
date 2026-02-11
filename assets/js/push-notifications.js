@@ -124,14 +124,24 @@ class PushNotificationManager {
      */
     async sendSubscriptionToServer(subscription) {
         try {
+            // Get user email from session/localStorage
+            const userEmail = sessionStorage.getItem('userEmail') || 
+                              localStorage.getItem('userEmail') || null;
+            
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+            if (userEmail) {
+                headers['x-user-email'] = userEmail;
+            }
+            
             const response = await fetch('/api/push-subscribe', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: headers,
                 body: JSON.stringify({
                     subscription: subscription.toJSON(),
-                    userAgent: navigator.userAgent
+                    userAgent: navigator.userAgent,
+                    email: userEmail
                 })
             });
 

@@ -289,6 +289,11 @@ export default async function handler(req) {
                     VALUES (${username}, ${encryptedMessage}, ${email}, ${fileUrl || null}, ${fileName || null}, ${fileType || null}, NOW())
                 `;
 
+                // Send push notifications to all other subscribed users (non-blocking)
+                triggerChatPushNotifications(req.url, username, message, email).catch(err => {
+                    console.error('Push notification error (non-blocking):', err);
+                });
+
                 return new Response(JSON.stringify({ success: true, encrypted: true }), {
                     status: 200,
                     headers: { 'Content-Type': 'application/json' }
@@ -320,5 +325,34 @@ export default async function handler(req) {
             status: 500,
             headers: { 'Content-Type': 'application/json' }
         });
+    }
+}
+
+// ═══════════════════════════════════════════════════════════
+// PUSH NOTIFICATIONS — Trigger Node.js endpoint for VAPID push
+// ═══════════════════════════════════════════════════════════
+
+async function triggerChatPushNotifications(requestUrl, senderUsername, messageText, senderEmail) {
+    try {
+        // Derive base URL from the current request
+        const url = new URL(requestUrl);
+        const baseUrl = `${url.protocol}//${url.host}`;
+        
+        const response = await fetch(`${baseUrl}/api/send-chat-push`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                senderUsername,
+                messageText,
+                senderEmail
+            })
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            console.log(`Chat push: ${data.sent || 0} notifications sent`);
+        }
+    } catch (err) {
+        console.error('triggerChatPushNotifications error:', err);
     }
 }
