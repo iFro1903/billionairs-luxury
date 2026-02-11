@@ -6,7 +6,7 @@
     <title>CEO Chat Monitor - BILLIONAIRS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -31,13 +31,14 @@
             text-align: center;
             margin-bottom: 3rem;
             padding-bottom: 2rem;
-            border-bottom: 2px solid #E8C4A8;
+            border-bottom: 2px solid #e8b4b8;
         }
 
         .header h1 {
+            font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             font-weight: 700;
-            color: #E8C4A8;
+            color: #e8b4b8;
             letter-spacing: 4px;
             margin-bottom: 0.5rem;
         }
@@ -45,6 +46,24 @@
         .header p {
             color: #888;
             font-size: 0.9rem;
+        }
+
+        .encryption-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 0.8rem;
+            color: rgba(232, 180, 184, 0.7);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .encryption-status .lock-icon {
+            width: 14px;
+            height: 14px;
+            fill: rgba(232, 180, 184, 0.7);
         }
 
         .login-section {
@@ -56,8 +75,8 @@
         .login-input {
             width: 100%;
             padding: 1rem;
-            background: rgba(232, 196, 168, 0.05);
-            border: 1px solid #E8C4A8;
+            background: rgba(232, 180, 184, 0.05);
+            border: 1px solid #e8b4b8;
             border-radius: 8px;
             color: #e8e8e8;
             font-family: 'Montserrat', sans-serif;
@@ -68,7 +87,7 @@
         .login-btn {
             width: 100%;
             padding: 1rem;
-            background: #E8C4A8;
+            background: linear-gradient(135deg, #e8b4b8, #f7cac9);
             color: #0a0a0a;
             border: none;
             border-radius: 8px;
@@ -80,8 +99,8 @@
         }
 
         .login-btn:hover {
-            background: #E8B4A0;
             transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(232, 180, 184, 0.3);
         }
 
         .stats {
@@ -92,8 +111,8 @@
         }
 
         .stat-card {
-            background: rgba(232, 196, 168, 0.05);
-            border: 1px solid #E8C4A8;
+            background: rgba(232, 180, 184, 0.05);
+            border: 1px solid rgba(232, 180, 184, 0.2);
             border-radius: 12px;
             padding: 1.5rem;
         }
@@ -107,14 +126,15 @@
         }
 
         .stat-value {
+            font-family: 'Playfair Display', serif;
             font-size: 2rem;
             font-weight: 700;
-            color: #E8C4A8;
+            color: #e8b4b8;
         }
 
         .messages-container {
-            background: rgba(232, 196, 168, 0.02);
-            border: 1px solid #E8C4A8;
+            background: rgba(232, 180, 184, 0.02);
+            border: 1px solid rgba(232, 180, 184, 0.2);
             border-radius: 12px;
             padding: 2rem;
             max-height: 70vh;
@@ -122,11 +142,16 @@
         }
 
         .message {
-            padding: 1rem;
+            padding: 1rem 1.2rem;
             margin-bottom: 1rem;
-            background: rgba(232, 196, 168, 0.05);
-            border-left: 3px solid #E8C4A8;
+            background: rgba(232, 180, 184, 0.04);
+            border-left: 3px solid #e8b4b8;
             border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .message:hover {
+            background: rgba(232, 180, 184, 0.08);
         }
 
         .message-header {
@@ -138,7 +163,14 @@
 
         .message-username {
             font-weight: 600;
-            color: #E8C4A8;
+            color: #e8b4b8;
+        }
+
+        .message-email {
+            font-size: 0.7rem;
+            color: #666;
+            margin-left: 8px;
+            font-style: italic;
         }
 
         .message-time {
@@ -149,6 +181,30 @@
         .message-text {
             color: #ccc;
             line-height: 1.5;
+        }
+
+        .message-file {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(232, 180, 184, 0.06);
+            border-radius: 8px;
+        }
+
+        .message-file img {
+            max-width: 300px;
+            max-height: 200px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .message-file a {
+            color: #e8b4b8;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        .message-file a:hover {
+            text-decoration: underline;
         }
 
         .empty-state {
@@ -170,17 +226,36 @@
             margin-bottom: 1rem;
         }
 
+        .search-bar {
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            background: rgba(232, 180, 184, 0.05);
+            border: 1px solid rgba(232, 180, 184, 0.2);
+            border-radius: 8px;
+            color: #e8e8e8;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .search-input::placeholder {
+            color: #555;
+        }
+
         /* Custom scrollbar */
         .messages-container::-webkit-scrollbar {
             width: 8px;
         }
 
         .messages-container::-webkit-scrollbar-track {
-            background: rgba(232, 196, 168, 0.05);
+            background: rgba(232, 180, 184, 0.05);
         }
 
         .messages-container::-webkit-scrollbar-thumb {
-            background: #E8C4A8;
+            background: #e8b4b8;
             border-radius: 4px;
         }
     </style>
@@ -192,6 +267,12 @@
             <div class="header">
                 <h1>CEO CHAT MONITOR</h1>
                 <p>Executive Access Only</p>
+                <div class="encryption-status">
+                    <svg class="lock-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/>
+                    </svg>
+                    AES-256 Encrypted · Master Access
+                </div>
             </div>
             <input type="email" id="ceoEmail" class="login-input" placeholder="CEO Email Address">
             <button onclick="login()" class="login-btn">Access Monitor</button>
@@ -202,7 +283,13 @@
         <div id="monitorSection" class="hidden">
             <div class="header">
                 <h1>CEO CHAT MONITOR</h1>
-                <p>Complete Message History • Real-Time Updates</p>
+                <p>Complete Decrypted Message History · Real-Time · Invisible to Users</p>
+                <div class="encryption-status">
+                    <svg class="lock-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/>
+                    </svg>
+                    AES-256 Decrypted View · Users cannot see this
+                </div>
             </div>
 
             <div class="stats">
@@ -211,13 +298,19 @@
                     <div class="stat-value" id="totalMessages">0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Online Users</div>
-                    <div class="stat-value" id="onlineUsers">0</div>
+                    <div class="stat-label">Unique Users</div>
+                    <div class="stat-value" id="uniqueUsers">0</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Last Update</div>
                     <div class="stat-value" id="lastUpdate" style="font-size: 1.2rem;">--:--</div>
                 </div>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" class="search-input" id="searchInput" 
+                       placeholder="Search messages, usernames, or emails..." 
+                       oninput="filterMessages()">
             </div>
 
             <div class="messages-container" id="messagesContainer">
@@ -229,6 +322,7 @@
     <script>
         let ceoEmail = null;
         let pollInterval = null;
+        let allMessages = [];
 
         async function login() {
             const email = document.getElementById('ceoEmail').value.trim();
@@ -263,44 +357,90 @@
 
         async function loadMessages() {
             try {
-                const response = await fetch(`/api/chat?email=${ceoEmail}`);
+                // Use CEO endpoint — gets all messages decrypted with emails visible
+                const response = await fetch('/api/chat?ceo=true');
                 const data = await response.json();
 
                 if (data.success) {
-                    document.getElementById('totalMessages').textContent = data.messages.length;
-                    document.getElementById('onlineUsers').textContent = data.onlineCount;
+                    allMessages = data.messages || [];
+                    
+                    document.getElementById('totalMessages').textContent = allMessages.length;
                     document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
 
-                    renderMessages(data.messages);
+                    // Count unique users by email
+                    const uniqueEmails = new Set(allMessages.map(m => m.email).filter(Boolean));
+                    document.getElementById('uniqueUsers').textContent = uniqueEmails.size;
+
+                    renderMessages(allMessages);
                 }
             } catch (error) {
                 console.error('Error loading messages:', error);
             }
         }
 
+        function filterMessages() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (!query) {
+                renderMessages(allMessages);
+                return;
+            }
+            const filtered = allMessages.filter(msg => 
+                (msg.message && msg.message.toLowerCase().includes(query)) ||
+                (msg.username && msg.username.toLowerCase().includes(query)) ||
+                (msg.email && msg.email.toLowerCase().includes(query))
+            );
+            renderMessages(filtered);
+        }
+
         function renderMessages(messages) {
             const container = document.getElementById('messagesContainer');
 
             if (messages.length === 0) {
-                container.innerHTML = '<div class="empty-state">No messages yet</div>';
+                container.innerHTML = '<div class="empty-state">No messages found</div>';
                 return;
             }
 
-            container.innerHTML = messages.reverse().map(msg => `
-                <div class="message">
-                    <div class="message-header">
-                        <span class="message-username">${escapeHtml(msg.username)}</span>
-                        <span class="message-time">${new Date(msg.created_at).toLocaleString()}</span>
-                    </div>
-                    <div class="message-text">${escapeHtml(msg.message)}</div>
-                </div>
-            `).join('');
+            // Show newest first
+            const reversed = [...messages].reverse();
 
-            // Auto-scroll to bottom
-            container.scrollTop = container.scrollHeight;
+            container.innerHTML = reversed.map(msg => {
+                let fileHTML = '';
+                if (msg.file_url) {
+                    if (msg.file_type === 'image') {
+                        fileHTML = `
+                            <div class="message-file">
+                                <img src="${msg.file_url}" alt="${escapeHtml(msg.file_name || 'Image')}" 
+                                     onclick="window.open('${msg.file_url}', '_blank')">
+                                <div style="font-size: 0.75rem; color: #888; margin-top: 4px;">${escapeHtml(msg.file_name || '')}</div>
+                            </div>
+                        `;
+                    } else {
+                        fileHTML = `
+                            <div class="message-file">
+                                <a href="${msg.file_url}" target="_blank">📄 ${escapeHtml(msg.file_name || 'File')}</a>
+                            </div>
+                        `;
+                    }
+                }
+
+                return `
+                    <div class="message">
+                        <div class="message-header">
+                            <div>
+                                <span class="message-username">${escapeHtml(msg.username)}</span>
+                                <span class="message-email">${escapeHtml(msg.email || 'unknown')}</span>
+                            </div>
+                            <span class="message-time">${new Date(msg.created_at).toLocaleString()}</span>
+                        </div>
+                        ${msg.message ? `<div class="message-text">${escapeHtml(msg.message)}</div>` : ''}
+                        ${fileHTML}
+                    </div>
+                `;
+            }).join('');
         }
 
         function escapeHtml(text) {
+            if (!text) return '';
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
@@ -311,6 +451,13 @@
             if (pollInterval) {
                 clearInterval(pollInterval);
             }
+        });
+
+        // Enter key on email input
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('ceoEmail').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') login();
+            });
         });
     </script>
 </body>

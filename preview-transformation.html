@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview: Pyramide → Auge Transformation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: #0a0a0a;
+            color: #e8e8e8;
+            font-family: 'EB Garamond', serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .page-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(232, 180, 160, 0.03) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .title {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: rgba(232, 196, 168, 0.5);
+            letter-spacing: 0.2em;
+            margin-bottom: 3rem;
+        }
+
+        .stage {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Pyramid (umgedrehtes Logo) */
+        .pyramid-element {
+            width: 120px;
+            height: 120px;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 4s ease-in-out infinite;
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+        }
+
+        .pyramid-element img {
+            width: 110px;
+            height: 110px;
+            transform: rotate(180deg);
+            filter: drop-shadow(0 0 15px rgba(232, 180, 160, 0.4));
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        /* Eye */
+        .eye-element {
+            width: 120px;
+            height: 120px;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: float 4s ease-in-out infinite;
+            transition: opacity 1.2s ease-in, transform 1.2s ease-in;
+        }
+
+        .eye-element svg {
+            width: 110px;
+            height: 55px;
+            filter: drop-shadow(0 0 20px rgba(232, 180, 160, 0.6)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.4));
+            animation: eyeGlow 3s ease-in-out infinite;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(232, 180, 160, 0.4)); opacity: 0.9; }
+            50% { filter: drop-shadow(0 0 25px rgba(232, 180, 160, 0.6)); opacity: 1; }
+        }
+
+        @keyframes eyeGlow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 20px rgba(232, 180, 160, 0.6)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.4)); 
+            }
+            50% { 
+                filter: drop-shadow(0 0 35px rgba(232, 180, 160, 1)) drop-shadow(0 0 55px rgba(255, 215, 0, 1)); 
+            }
+        }
+
+        /* Transformation states */
+        .pyramid-element.fade-out {
+            opacity: 0;
+            transform: scale(0.8) rotate(180deg);
+        }
+
+        .eye-element.fade-in {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Status */
+        .status {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            color: #E8C4A8;
+            letter-spacing: 0.1em;
+            min-height: 1.5rem;
+            transition: opacity 0.5s;
+        }
+
+        .timer {
+            font-family: 'EB Garamond', serif;
+            font-size: 0.8rem;
+            color: rgba(232, 232, 232, 0.4);
+            margin-top: 0.5rem;
+            min-height: 1.2rem;
+        }
+
+        /* Button */
+        .replay-btn {
+            margin-top: 2.5rem;
+            padding: 0.7rem 2rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            background: linear-gradient(135deg, rgba(232, 196, 168, 0.15), rgba(232, 196, 168, 0.08));
+            border: 1px solid rgba(232, 196, 168, 0.3);
+            color: #E8C4A8;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .replay-btn:hover {
+            background: linear-gradient(135deg, rgba(232, 196, 168, 0.25), rgba(232, 196, 168, 0.15));
+            box-shadow: 0 0 20px rgba(232, 196, 168, 0.2);
+        }
+
+        /* Particle effects */
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #E8C4A8;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFade 1.5s ease-out forwards;
+        }
+
+        @keyframes particleFade {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0) translateY(-30px); }
+        }
+
+        /* Flash effect */
+        .flash {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(232, 196, 168, 0.1);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10;
+            transition: opacity 0.3s;
+        }
+
+        .flash.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-bg"></div>
+    <div class="flash" id="flash"></div>
+
+    <div class="content">
+        <div class="title">EASTER EGG TRANSFORMATION</div>
+
+        <div class="stage" id="stage">
+            <!-- Pyramid (umgedrehtes Billionairs Logo) -->
+            <div class="pyramid-element" id="pyramid">
+                <img src="assets/images/billionairs-triangle-logo.png" alt="Pyramid">
+            </div>
+
+            <!-- Eye (All-Seeing Eye) -->
+            <div class="eye-element" id="eye">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" width="200" height="100">
+                    <defs>
+                        <radialGradient id="irisGradient" cx="50%" cy="50%">
+                            <stop offset="0%" style="stop-color:#f0d8c4;stop-opacity:1" />
+                            <stop offset="60%" style="stop-color:#E8C4A8;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#c09070;stop-opacity:1" />
+                        </radialGradient>
+                        <radialGradient id="pupilGradient" cx="35%" cy="35%">
+                            <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+                        </radialGradient>
+                    </defs>
+                    <path d="M 10 50 C 10 50, 50 10, 100 10 C 150 10, 190 50, 190 50 C 190 50, 150 90, 100 90 C 50 90, 10 50, 10 50 Z" 
+                          fill="none" stroke="#E8C4A8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="100" cy="50" r="22" fill="url(#irisGradient)" stroke="#c09070" stroke-width="2"/>
+                    <circle cx="100" cy="50" r="10" fill="url(#pupilGradient)"/>
+                    <ellipse cx="96" cy="47" rx="3.5" ry="4.5" fill="#ffffff" opacity="0.85"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="status" id="status">THE PYRAMID</div>
+        <div class="timer" id="timer">Klicke auf die Pyramide um die Transformation zu starten</div>
+
+        <button class="replay-btn" id="replayBtn" style="display: none;">↻ NOCHMAL ABSPIELEN</button>
+    </div>
+
+    <script>
+        const pyramid = document.getElementById('pyramid');
+        const eye = document.getElementById('eye');
+        const status = document.getElementById('status');
+        const timer = document.getElementById('timer');
+        const flash = document.getElementById('flash');
+        const stage = document.getElementById('stage');
+        const replayBtn = document.getElementById('replayBtn');
+        let isTransforming = false;
+
+        function createParticles() {
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const angle = (Math.PI * 2 * i) / 12;
+                const distance = 40 + Math.random() * 30;
+                particle.style.left = (100 + Math.cos(angle) * distance) + 'px';
+                particle.style.top = (100 + Math.sin(angle) * distance) + 'px';
+                particle.style.animationDelay = (Math.random() * 0.5) + 's';
+                particle.style.width = (2 + Math.random() * 3) + 'px';
+                particle.style.height = particle.style.width;
+                stage.appendChild(particle);
+                setTimeout(() => particle.remove(), 1500);
+            }
+        }
+
+        function startTransformation() {
+            if (isTransforming) return;
+            isTransforming = true;
+
+            status.textContent = '24 STUNDEN VERGANGEN...';
+            timer.textContent = 'Transformation beginnt...';
+
+            // Step 1: Flash + Pyramid fade out
+            setTimeout(() => {
+                flash.classList.add('active');
+                setTimeout(() => flash.classList.remove('active'), 400);
+                
+                createParticles();
+                pyramid.classList.add('fade-out');
+                status.textContent = 'TRANSFORMING...';
+                timer.textContent = 'Das Logo dreht sich und verschwindet...';
+            }, 1000);
+
+            // Step 2: Eye appears
+            setTimeout(() => {
+                createParticles();
+                eye.classList.add('fade-in');
+                
+                flash.classList.add('active');
+                setTimeout(() => flash.classList.remove('active'), 300);
+                
+                status.textContent = 'THE ALL-SEEING EYE';
+                timer.textContent = 'Das Auge hat sich geöffnet.';
+            }, 2500);
+
+            // Step 3: Show replay button
+            setTimeout(() => {
+                timer.textContent = '"The eye now watches over you..."';
+                replayBtn.style.display = 'inline-block';
+                isTransforming = false;
+            }, 4000);
+        }
+
+        function reset() {
+            pyramid.classList.remove('fade-out');
+            eye.classList.remove('fade-in');
+            status.textContent = 'THE PYRAMID';
+            timer.textContent = 'Klicke auf die Pyramide um die Transformation zu starten';
+            replayBtn.style.display = 'none';
+            isTransforming = false;
+        }
+
+        // Click handlers
+        stage.addEventListener('click', startTransformation);
+        replayBtn.addEventListener('click', () => {
+            reset();
+            setTimeout(startTransformation, 500);
+        });
+    </script>
+
+</body>
+</html>

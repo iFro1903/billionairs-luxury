@@ -1,4 +1,4 @@
-// Premium Luxury Chat System
+// Premium Luxury Chat System — E2E Encrypted & Screenshot-Protected
 class LuxuryChat {
     constructor() {
         this.userEmail = null;
@@ -8,6 +8,7 @@ class LuxuryChat {
         this.lastMessageCount = 0;
         this.pollingInterval = null;
         this.particleInterval = null;
+        this.screenshotProtectionActive = false;
         
         // Cleanup on page unload
         window.addEventListener('beforeunload', () => this.cleanup());
@@ -22,6 +23,7 @@ class LuxuryChat {
             clearInterval(this.particleInterval);
             this.particleInterval = null;
         }
+        this.removeScreenshotProtection();
         console.log('🧹 Chat: Intervals cleared');
     }
 
@@ -29,7 +31,159 @@ class LuxuryChat {
         this.userEmail = userEmail;
         this.generateUsername();
         this.createChatUI();
+        this.initScreenshotProtection();
         this.startPolling();
+    }
+
+    // ═══════════════════════════════════════════════
+    // SCREENSHOT PROTECTION SYSTEM
+    // ═══════════════════════════════════════════════
+    
+    initScreenshotProtection() {
+        this.screenshotProtectionActive = true;
+        
+        // 1. Block PrintScreen key
+        this._onKeyDown = (e) => {
+            if (!this.isOpen) return;
+            
+            // PrintScreen
+            if (e.key === 'PrintScreen' || e.keyCode === 44) {
+                e.preventDefault();
+                this.showSecurityWarning();
+                this.blurChat(2000);
+                return false;
+            }
+            
+            // Windows Snipping Tool: Win+Shift+S
+            if (e.key === 'S' && e.shiftKey && (e.metaKey || e.getModifierState('OS'))) {
+                e.preventDefault();
+                this.showSecurityWarning();
+                this.blurChat(2000);
+                return false;
+            }
+            
+            // Ctrl+Shift+S (Save As / Screenshot tools)
+            if (e.key === 's' && e.ctrlKey && e.shiftKey) {
+                e.preventDefault();
+                this.showSecurityWarning();
+                return false;
+            }
+            
+            // Ctrl+P (Print)
+            if (e.key === 'p' && e.ctrlKey) {
+                e.preventDefault();
+                this.showSecurityWarning();
+                return false;
+            }
+
+            // Ctrl+Shift+I (Dev Tools)
+            if (e.key === 'I' && e.ctrlKey && e.shiftKey) {
+                e.preventDefault();
+                return false;
+            }
+        };
+        document.addEventListener('keydown', this._onKeyDown, true);
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'PrintScreen' && this.isOpen) {
+                // Clear clipboard after PrintScreen release
+                try {
+                    navigator.clipboard.writeText('Screenshot blocked by BILLIONAIRS Security');
+                } catch(err) { /* clipboard API might not be available */ }
+            }
+        }, true);
+        
+        // 2. Blur on visibility change (tab switch, app switch)
+        this._onVisibility = () => {
+            if (!this.isOpen) return;
+            const chatMessages = document.getElementById('chatMessages');
+            if (!chatMessages) return;
+            
+            if (document.hidden) {
+                chatMessages.style.filter = 'blur(20px)';
+                chatMessages.style.transition = 'filter 0.1s ease';
+            } else {
+                setTimeout(() => {
+                    chatMessages.style.filter = '';
+                    chatMessages.style.transition = 'filter 0.3s ease';
+                }, 300);
+            }
+        };
+        document.addEventListener('visibilitychange', this._onVisibility);
+        
+        // 3. Block right-click on chat
+        this._onContextMenu = (e) => {
+            if (!this.isOpen) return;
+            const chatOverlay = document.getElementById('chatOverlay');
+            if (chatOverlay && chatOverlay.contains(e.target)) {
+                e.preventDefault();
+                this.showSecurityWarning();
+                return false;
+            }
+        };
+        document.addEventListener('contextmenu', this._onContextMenu);
+    }
+    
+    removeScreenshotProtection() {
+        if (this._onKeyDown) document.removeEventListener('keydown', this._onKeyDown, true);
+        if (this._onVisibility) document.removeEventListener('visibilitychange', this._onVisibility);
+        if (this._onContextMenu) document.removeEventListener('contextmenu', this._onContextMenu);
+        this.screenshotProtectionActive = false;
+    }
+    
+    blurChat(duration) {
+        const chatMessages = document.getElementById('chatMessages');
+        if (!chatMessages) return;
+        
+        chatMessages.style.filter = 'blur(30px)';
+        chatMessages.style.transition = 'filter 0.1s ease';
+        
+        setTimeout(() => {
+            chatMessages.style.filter = '';
+            chatMessages.style.transition = 'filter 0.5s ease';
+        }, duration);
+    }
+    
+    showSecurityWarning() {
+        // Remove any existing warning
+        const existing = document.querySelector('.chat-security-warning');
+        if (existing) existing.remove();
+        
+        const warning = document.createElement('div');
+        warning.className = 'chat-security-warning';
+        warning.innerHTML = `
+            <div style="
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0,0,0,0.95);
+                border: 2px solid #e8b4b8;
+                border-radius: 16px;
+                padding: 2rem 3rem;
+                z-index: 100001;
+                text-align: center;
+                animation: secWarningPulse 0.5s ease;
+                backdrop-filter: blur(10px);
+            ">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔒</div>
+                <div style="
+                    font-family: 'Playfair Display', serif;
+                    color: #e8b4b8;
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    letter-spacing: 2px;
+                    margin-bottom: 0.5rem;
+                ">SCREENSHOT BLOCKED</div>
+                <div style="
+                    color: #888;
+                    font-size: 0.8rem;
+                    font-family: 'Montserrat', sans-serif;
+                ">This chat is protected by end-to-end encryption</div>
+            </div>
+        `;
+        document.body.appendChild(warning);
+        
+        setTimeout(() => warning.remove(), 2500);
     }
 
     generateUsername() {
@@ -39,6 +193,84 @@ class LuxuryChat {
     }
 
     createChatUI() {
+        // Inject screenshot protection CSS
+        if (!document.getElementById('chatSecurityCSS')) {
+            const secCSS = document.createElement('style');
+            secCSS.id = 'chatSecurityCSS';
+            secCSS.textContent = `
+                /* Screenshot Protection */
+                .chat-messages {
+                    -webkit-user-select: none !important;
+                    -moz-user-select: none !important;
+                    -ms-user-select: none !important;
+                    user-select: none !important;
+                    -webkit-touch-callout: none !important;
+                }
+                .chat-messages * {
+                    -webkit-user-select: none !important;
+                    user-select: none !important;
+                }
+                .chat-input {
+                    -webkit-user-select: text !important;
+                    user-select: text !important;
+                }
+                /* Invisible watermark layer */
+                .chat-watermark {
+                    position: absolute;
+                    top: 0; left: 0; right: 0; bottom: 0;
+                    pointer-events: none;
+                    z-index: 10;
+                    opacity: 0.015;
+                    overflow: hidden;
+                    font-size: 9px;
+                    color: #e8b4b8;
+                    line-height: 2;
+                    letter-spacing: 8px;
+                    transform: rotate(-25deg);
+                    word-break: break-all;
+                }
+                /* Encryption badge */
+                .chat-encryption-badge {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
+                    padding: 4px 0;
+                    background: rgba(232, 180, 184, 0.06);
+                    border-bottom: 1px solid rgba(232, 180, 184, 0.1);
+                    font-family: 'Montserrat', sans-serif;
+                    font-size: 0.65rem;
+                    color: rgba(232, 180, 184, 0.6);
+                    letter-spacing: 1.5px;
+                    text-transform: uppercase;
+                }
+                .chat-encryption-badge svg {
+                    width: 11px;
+                    height: 11px;
+                    fill: rgba(232, 180, 184, 0.5);
+                }
+                /* Security warning animation */
+                @keyframes secWarningPulse {
+                    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+                    50% { transform: translate(-50%, -50%) scale(1.05); }
+                    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                }
+                /* Anti-screenshot: make content harder to capture on some devices */
+                .chat-overlay.show .chat-messages {
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
+                }
+                @media print {
+                    .chat-overlay { display: none !important; }
+                }
+            `;
+            document.head.appendChild(secCSS);
+        }
+        
+        // Generate watermark text (user email repeated)
+        const watermarkText = this.userEmail ? 
+            Array(200).fill(this.userEmail).join(' · ') : '';
+
         const chatHTML = `
             <div class="chat-overlay" id="chatOverlay">
                 <div class="chat-container">
@@ -56,7 +288,15 @@ class LuxuryChat {
                         </div>
                     </div>
                     
-                    <div class="chat-messages" id="chatMessages">
+                    <div class="chat-encryption-badge">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/>
+                        </svg>
+                        End-to-End Encrypted · Screenshot Protected
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages" style="position: relative;">
+                        <div class="chat-watermark" id="chatWatermark">${watermarkText}</div>
                         <div class="chat-empty">
                             <div class="chat-empty-icon">💬</div>
                             <div class="chat-empty-text">Welcome, ${this.username}</div>

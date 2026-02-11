@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview: Eye Easter Egg (Vorher → Nachher)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: #0a0a0a;
+            color: #e8e8e8;
+            font-family: 'EB Garamond', serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: #E8C4A8;
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: 0.05em;
+        }
+
+        .comparison {
+            display: flex;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1000px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(20, 18, 16, 0.95) 0%, rgba(10, 8, 6, 0.98) 100%);
+            border: 1px solid rgba(232, 196, 168, 0.2);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            width: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(232, 196, 168, 0.08);
+        }
+
+        .card.old {
+            opacity: 0.5;
+            border-color: rgba(255, 80, 80, 0.3);
+        }
+
+        .card.new {
+            border-color: rgba(232, 196, 168, 0.4);
+            box-shadow: 0 0 60px rgba(232, 196, 168, 0.15);
+        }
+
+        .label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            padding: 0.3rem 1rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .label.old-label {
+            background: rgba(255, 80, 80, 0.15);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 80, 80, 0.3);
+        }
+
+        .label.new-label {
+            background: rgba(100, 255, 100, 0.1);
+            color: #4ADE80;
+            border: 1px solid rgba(100, 255, 100, 0.3);
+        }
+
+        .eye-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        /* CSS Eye */
+        .eye-shape {
+            width: 80px;
+            height: 40px;
+            background: transparent;
+            border: 2px solid #E8C4A8;
+            border-radius: 50%;
+            position: relative;
+            top: 20px;
+        }
+
+        .eye-pupil {
+            width: 20px;
+            height: 20px;
+            background: #E8C4A8;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px rgba(232, 196, 168, 0.6);
+        }
+
+        .riddle-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            color: #E8C4A8;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.08em;
+            text-shadow: 0 0 20px rgba(232, 196, 168, 0.4);
+        }
+
+        .riddle-line {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: rgba(232, 232, 232, 0.75);
+            line-height: 1.8;
+            margin-bottom: 0.3rem;
+        }
+
+        .riddle-line.highlight {
+            color: #E8C4A8;
+            font-weight: 500;
+        }
+
+        .riddle-line.strikethrough {
+            text-decoration: line-through;
+            color: rgba(255, 80, 80, 0.5);
+        }
+
+        .btn {
+            margin-top: 2rem;
+            padding: 0.8rem 2.5rem;
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        .btn-old {
+            background: rgba(232, 196, 168, 0.15);
+            color: rgba(232, 196, 168, 0.5);
+        }
+
+        .btn-new {
+            background: linear-gradient(135deg, #E8C4A8, #D4A574);
+            color: #1a1a1a;
+            box-shadow: 0 0 30px rgba(232, 196, 168, 0.3);
+        }
+
+        .timeline-info {
+            margin-top: 2rem;
+            background: rgba(232, 196, 168, 0.05);
+            border: 1px solid rgba(232, 196, 168, 0.15);
+            border-radius: 10px;
+            padding: 1.2rem 1.5rem;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .timeline-info p {
+            color: rgba(232, 232, 232, 0.6);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .timeline-info .highlight {
+            color: #E8C4A8;
+            font-weight: 600;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: rgba(232, 196, 168, 0.4);
+            align-self: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>👁 THE ALL-SEEING EYE — Riddle Update</h1>
+
+    <div class="comparison">
+        <!-- OLD VERSION -->
+        <div class="card old">
+            <div class="label old-label">ALT (7 TAGE)</div>
+            
+            <div class="eye-icon">
+                <div class="eye-shape">
+                    <div class="eye-pupil"></div>
+                </div>
+            </div>
+
+            <div class="riddle-title">THE ALL-SEEING EYE</div>
+            
+            <div class="riddle-line strikethrough">Count the days of creation.</div>
+            <div class="riddle-line strikethrough">One for each wonder of the world.</div>
+            <div class="riddle-line strikethrough">When seven suns have risen and fallen,</div>
+            <div class="riddle-line">The final door will open.</div>
+            
+            <button class="btn btn-old">I UNDERSTAND</button>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <!-- NEW VERSION -->
+        <div class="card new">
+            <div class="label new-label">NEU (24 STUNDEN)</div>
+            
+            <div class="eye-icon">
+                <div class="eye-shape">
+                    <div class="eye-pupil"></div>
+                </div>
+            </div>
+
+            <div class="riddle-title">THE ALL-SEEING EYE</div>
+            
+            <div class="riddle-line highlight">The eye now watches over you.</div>
+            <div class="riddle-line highlight">When the next sun has risen and fallen,</div>
+            <div class="riddle-line">The final door will open.</div>
+            
+            <button class="btn btn-new">I UNDERSTAND</button>
+        </div>
+    </div>
+
+    <div class="timeline-info">
+        <p><span class="highlight">Easter Egg Timeline (aktualisiert):</span></p>
+        <p>🔺 Pyramide → nach <span class="highlight">8 Sekunden</span></p>
+        <p>👁 Auge → nach <span class="highlight">24 Stunden</span> (Text: "A single dawn...")</p>
+        <p>💬 CEO Chat → nach weiteren <span class="highlight">24 Stunden</span> (Text: "When the next sun...")</p>
+    </div>
+
+</body>
+</html>
