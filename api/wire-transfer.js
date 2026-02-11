@@ -168,7 +168,7 @@ export default async function handler(req, res) {
             amount: 'CHF 500\'000.00',
             bankName: 'UBS Switzerland AG',
             accountHolder: 'Furkan Akaslan',
-            iban: 'CH73 0021 5215 2825 9240 G',
+            iban: 'CH13 0022 7227 1418 9140 B',
             swift: 'UBSWCHZH80A',
             reference: `BILLIONAIRS-${Date.now()}`,
             address: 'UBS Switzerland AG, Zürich, Switzerland',

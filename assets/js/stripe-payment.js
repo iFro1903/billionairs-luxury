@@ -9,11 +9,11 @@ class StripePaymentProcessor {
         this.priceId = 'price_1SL9Be7Fzwybk1NyQpd06DhZ'; // 500,000 CHF per year
         this.isProcessing = false;
         
-        // Actual pricing - 0.50 CHF TEST MODE
+        // Actual pricing - 500,000 CHF LIVE MODE
         this.paymentTiers = {
-            full: 50,            // 0.50 CHF - TEST
-            split: 50,           // 0.50 CHF - TEST
-            corporate: 50        // 0.50 CHF - TEST
+            full: 50000000,      // 500,000 CHF
+            split: 25000000,     // 250,000 CHF (1st installment)
+            corporate: 50000000  // 500,000 CHF
         };
     }
 

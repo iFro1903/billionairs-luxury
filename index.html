@@ -1737,7 +1737,7 @@
                 var sp = {
                     stripe: Stripe('pk_live_51SJwwF7Fzwybk1NyPjyrV9qkZvmWDkCqsdrmotHypJZnhEIUtnxBea6tV9MMOVkllj9po7RtSIcSwY8JEDQcTPGB00BqlA7hkz'),
                     isProcessing: false,
-                    paymentTiers: { full: 50, split: 50, corporate: 50 },
+                    paymentTiers: { full: 50000000, split: 25000000, corporate: 50000000 },
                     createCheckoutSession: async function(paymentType, customerData) {
                         if (this.isProcessing) return;
                         this.isProcessing = true;
@@ -1788,7 +1788,7 @@
                     }
                 };
                 window.stripeProcessor = sp;
-                console.log('✅ Stripe processor initialized (inline, 0.50 CHF test mode)');
+                console.log('✅ Stripe processor initialized (inline, 500,000 CHF live mode)');
             } catch(e) {
                 console.error('❌ Stripe init error:', e);
                 setTimeout(initStripe, 1000);
