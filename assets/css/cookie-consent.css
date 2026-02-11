@@ -5,14 +5,11 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(20px);
     z-index: 100;
-    animation: slideUp 0.3s ease-out;
+    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     padding: 30px 20px;
-    will-change: transform, opacity;
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
 }
 
 @keyframes slideUp {
@@ -31,10 +28,9 @@
     margin: 0 auto;
     background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
     border-radius: 16px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
     overflow: hidden;
     border: 1px solid rgba(232, 180, 184, 0.2);
-    transform: translateZ(0);
 }
 
 .cookie-consent-header {
@@ -82,6 +78,7 @@
 .cookie-category:hover {
     background: rgba(255, 255, 255, 0.05);
     border-color: rgba(232, 180, 184, 0.25);
+    transform: translateX(2px);
 }
 
 .cookie-category-header {
@@ -306,33 +303,6 @@
         max-height: 60vh;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        animation: slideUp 0.25s ease-out;
-    }
-
-    /* Disable hover effects on mobile for performance */
-    .cookie-category {
-        transition: none;
-    }
-    .cookie-category:hover {
-        background: rgba(255, 255, 255, 0.03);
-        border-color: rgba(232, 180, 184, 0.12);
-    }
-
-    /* Faster touch response */
-    .cookie-btn,
-    .cookie-switch,
-    .cookie-links a {
-        touch-action: manipulation;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    .cookie-btn {
-        transition: background 0.15s ease;
-    }
-
-    .cookie-btn-accept:active {
-        background: linear-gradient(135deg, #f7cac9, #e8b4b8);
-        transform: none;
     }
 
     /* Custom scrollbar for cookie banner only */
@@ -466,6 +436,5 @@
 
 /* Animation for banner hide */
 #cookieConsentBanner {
-    transition: opacity 0.25s ease;
-    will-change: opacity;
+    transition: opacity 0.3s ease;
 }

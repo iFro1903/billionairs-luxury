@@ -166,29 +166,25 @@ class CookieConsent {
         const acceptSelectedBtn = document.getElementById('acceptSelectedCookies');
         const rejectAllBtn = document.getElementById('rejectAllCookies');
 
-        // Use direct onclick for instant mobile response (no 300ms delay)
         if (acceptAllBtn) {
-            acceptAllBtn.onclick = (e) => {
-                e.preventDefault();
+            acceptAllBtn.addEventListener('click', () => {
                 console.log('✅ Accept All clicked');
                 this.acceptAll();
-            };
+            });
         }
 
         if (acceptSelectedBtn) {
-            acceptSelectedBtn.onclick = (e) => {
-                e.preventDefault();
+            acceptSelectedBtn.addEventListener('click', () => {
                 console.log('✅ Accept Selected clicked');
                 this.acceptSelected();
-            };
+            });
         }
 
         if (rejectAllBtn) {
-            rejectAllBtn.onclick = (e) => {
-                e.preventDefault();
+            rejectAllBtn.addEventListener('click', () => {
                 console.log('✅ Reject All clicked');
                 this.rejectAll();
-            };
+            });
         }
     }
 
@@ -272,7 +268,7 @@ class CookieConsent {
             setTimeout(() => {
                 banner.remove();
                 console.log('Banner removed');
-            }, 250);
+            }, 300);
         }
     }
 
