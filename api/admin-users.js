@@ -28,6 +28,7 @@ export default async function handler(req) {
                     has_paid,
                     pyramid_unlocked,
                     eye_unlocked,
+                    chat_unlocked,
                     chat_ready,
                     is_blocked
                 FROM users
