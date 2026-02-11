@@ -2122,7 +2122,7 @@ input:-webkit-autofill::first-line {
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero-content {
-        padding: 0 0 450px 0; /* Maximum space for footer clearance */
+        padding: 0 0 350px 0; /* Maximum space for footer clearance */
     }
     
     .title-main {
@@ -2317,7 +2317,7 @@ input:-webkit-autofill::first-line {
 
 @media (max-width: 480px) {
     .hero-content {
-        padding: 0 0 200px 0;
+        padding: 0 0 150px 0;
     }
     
     .hero-line-1 {
