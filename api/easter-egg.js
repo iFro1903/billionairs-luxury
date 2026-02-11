@@ -68,10 +68,10 @@ export default async function handler(req) {
           showPyramid = timeSinceFirst >= 8000; // 8 seconds
         }
 
-        // Check if eye should be ready (72 hours + 3 logins)
+        // Check if eye should be ready (24 hours + 3 logins)
         if (user.pyramid_opened_at && !user.eye_unlocked && user.login_streak >= 3) {
           const hoursSincePyramid = (now - new Date(user.pyramid_opened_at)) / (1000 * 60 * 60);
-          eyeReady = hoursSincePyramid >= 72;
+          eyeReady = hoursSincePyramid >= 24;
         }
 
         // Check if chat should be ready (168 hours from eye unlock)
