@@ -7,9 +7,11 @@
     right: 0;
     background: rgba(0, 0, 0, 0.92);
     backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     z-index: 100;
     animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     padding: 30px 20px;
+    transform: translateZ(0);
 }
 
 @keyframes slideUp {
@@ -303,6 +305,14 @@
         max-height: 60vh;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        will-change: transform;
+    }
+
+    .cookie-consent-overlay * {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
     }
 
     /* Custom scrollbar for cookie banner only */
