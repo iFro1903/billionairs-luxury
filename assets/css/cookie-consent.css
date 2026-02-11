@@ -95,6 +95,26 @@
     letter-spacing: 0.5px;
 }
 
+/* Isolate cookie banner from global page styles */
+.cookie-consent-overlay label {
+    display: inline-block !important;
+    font-size: inherit !important;
+    color: inherit !important;
+    margin-bottom: 0 !important;
+    font-weight: normal !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+}
+
+.cookie-consent-overlay input[type="checkbox"] {
+    width: auto !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
 .cookie-description {
     margin: 0 0 0 66px;
     font-size: 0.85rem;
@@ -106,16 +126,26 @@
 /* Custom Toggle Switch - Rose Gold */
 .cookie-switch {
     position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 26px;
+    display: inline-block !important;
+    width: 50px !important;
+    height: 26px !important;
     flex-shrink: 0;
+    margin-bottom: 0 !important;
+    font-size: inherit !important;
+    color: inherit !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    font-weight: normal !important;
 }
 
 .cookie-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    position: absolute !important;
 }
 
 .cookie-slider {
