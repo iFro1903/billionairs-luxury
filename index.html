@@ -1141,8 +1141,16 @@
             if (window.stripeProcessor) {
                 window.stripeProcessor.createCheckoutSession('full', customerData);
             } else {
-                console.error('❌ Stripe processor not initialized');
-                alert('Payment system initializing. Please try again in a moment.');
+                console.warn('⏳ Stripe processor not ready, initializing now...');
+                // Try to initialize on the spot
+                if (typeof Stripe !== 'undefined' && typeof StripePaymentProcessor !== 'undefined') {
+                    window.stripeProcessor = new StripePaymentProcessor();
+                    console.log('✅ Stripe processor initialized on demand');
+                    window.stripeProcessor.createCheckoutSession('full', customerData);
+                } else {
+                    console.error('❌ Stripe library not loaded');
+                    alert('Payment system is loading. Please wait a moment and try again.');
+                }
             }
         } else if (methodType === 'wire') {
             if (!ENABLE_BANK_TRANSFER) {
@@ -1712,8 +1720,39 @@
     <script src="assets/js/main.js?v=20260211" defer></script>
     <script src="assets/js/faq.js" defer></script>
     <script src="assets/js/testimonials.js" defer></script>
-    <script src="assets/js/stripe-payment.js?v=20260211b" defer></script>
+    <script src="assets/js/stripe-payment.js?v=20260211c" defer></script>
     <script src="assets/js/payment-methods-new.js?v=20260211" defer></script>
     <script src="assets/js/benefits.js" defer></script>
+    
+    <!-- Inline Stripe Fallback - ensures initialization even with cached JS -->
+    <script>
+    (function() {
+        function ensureStripe() {
+            if (window.stripeProcessor) return;
+            if (typeof Stripe === 'undefined') {
+                console.log('⏳ Waiting for Stripe library...');
+                setTimeout(ensureStripe, 500);
+                return;
+            }
+            if (typeof StripePaymentProcessor === 'undefined') {
+                console.log('⏳ Waiting for StripePaymentProcessor class...');
+                setTimeout(ensureStripe, 500);
+                return;
+            }
+            try {
+                window.stripeProcessor = new StripePaymentProcessor();
+                console.log('✅ Stripe processor initialized via inline fallback');
+            } catch(e) {
+                console.error('❌ Inline Stripe init failed:', e);
+                setTimeout(ensureStripe, 1000);
+            }
+        }
+        if (document.readyState === 'complete') {
+            ensureStripe();
+        } else {
+            window.addEventListener('load', ensureStripe);
+        }
+    })();
+    </script>
     
 </body>
