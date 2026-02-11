@@ -420,6 +420,9 @@
 
                 await window.authManager.login(email, password);
                 
+                // Store email for Easter Egg system
+                localStorage.setItem('userEmail', email);
+                
                 // Get current language
                 const currentLang = window.i18nManager?.currentLang || localStorage.getItem('selectedLanguage') || 'en';
                 

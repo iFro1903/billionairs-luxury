@@ -566,12 +566,40 @@
             }
             
             // Initialize Easter Egg System AFTER i18n is ready
-            const userEmail = localStorage.getItem('userEmail');
+            // Try multiple sources for user email
+            let userEmail = localStorage.getItem('userEmail');
+            if (!userEmail) {
+                try {
+                    const userData = JSON.parse(localStorage.getItem('billionairs_user') || '{}');
+                    userEmail = userData.email || null;
+                } catch(e) {}
+            }
+            if (!userEmail) {
+                // Try to get from auth session
+                try {
+                    const token = localStorage.getItem('billionairs_token');
+                    if (token) {
+                        const resp = await fetch('/api/auth', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ action: 'verify', token })
+                        });
+                        const data = await resp.json();
+                        if (data.success && data.user) {
+                            userEmail = data.user.email;
+                            localStorage.setItem('userEmail', userEmail);
+                        }
+                    }
+                } catch(e) {}
+            }
             if (userEmail && typeof EasterEggSystem !== 'undefined') {
+                localStorage.setItem('userEmail', userEmail);
                 console.log('🔺 Initializing Easter Egg for:', userEmail);
                 EasterEggSystem.init(userEmail);
             } else {
-                console.log('⚠️ No userEmail in localStorage or EasterEggSystem not loaded');
+                console.log('⚠️ No userEmail found or EasterEggSystem not loaded');
+                console.log('  localStorage userEmail:', localStorage.getItem('userEmail'));
+                console.log('  billionairs_user:', localStorage.getItem('billionairs_user'));
             }
         }
         
