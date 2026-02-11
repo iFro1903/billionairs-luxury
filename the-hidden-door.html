@@ -59,19 +59,17 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             padding: 2rem 2rem 4rem;
         }
 
         .header {
-            position: fixed;
-            top: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
+            position: relative;
             text-align: center;
             z-index: 900;
             animation: fadeInHeader 2s ease-out;
-            padding: 0 150px;
+            padding: 2rem 150px 0;
+            flex-shrink: 0;
         }
 
         @keyframes fadeInHeader {
@@ -119,7 +117,8 @@
             height: 700px;
             max-width: 90vw;
             max-height: 90vw;
-            margin: 3rem 0 0 0;
+            margin: 1rem 0 0 0;
+            flex-shrink: 0;
             animation: fadeInScale 3s ease-out 0.5s both;
             filter: drop-shadow(0 40px 100px rgba(0, 0, 0, 0.8));
         }
@@ -473,7 +472,8 @@
         }
 
         @media (max-width: 768px) {
-            .watch-container { width: 500px; height: 500px; }
+            .header { padding: 1rem 20px 0; }
+            .watch-container { width: 500px; height: 500px; margin-top: 0.5rem; }
             .watch-bezel { width: 430px; height: 430px; }
             .watch-case { width: 400px; height: 400px; }
             .watch-face { width: 370px; height: 370px; }
