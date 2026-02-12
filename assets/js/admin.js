@@ -6,6 +6,17 @@ class AdminPanel {
         this.init();
     }
 
+    // Prevent XSS: escape user-supplied data before inserting into HTML
+    escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
     init() {
         // Check if already logged in
         const adminSession = sessionStorage.getItem('adminSession');
@@ -228,10 +239,12 @@ class AdminPanel {
             tbody.innerHTML = '';
 
             data.users.forEach(user => {
+                const safeEmail = this.escapeHtml(user.email);
+                const safeName = this.escapeHtml(user.name || 'N/A');
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${user.email}</td>
-                    <td>${user.name || 'N/A'}</td>
+                    <td>${safeEmail}</td>
+                    <td>${safeName}</td>
                     <td>${new Date(user.created_at).toLocaleDateString()}</td>
                     <td><span class="status-badge ${user.has_paid ? 'paid' : 'unpaid'}">${user.has_paid ? 'Paid' : 'Free'}</span></td>
                     <td>
@@ -241,12 +254,12 @@ class AdminPanel {
                         ${user.is_blocked ? '🚫 Blocked' : ''}
                     </td>
                     <td>
-                        <button class="action-btn" onclick="adminPanel.viewUser('${user.email}')">View</button>
+                        <button class="action-btn" onclick="adminPanel.viewUser('${safeEmail}')">View</button>
                         ${user.is_blocked 
-                            ? `<button class="action-btn success" onclick="adminPanel.unblockUser('${user.email}')">Unblock</button>`
-                            : `<button class="action-btn warning" onclick="adminPanel.blockUser('${user.email}')">Block</button>`
+                            ? `<button class="action-btn success" onclick="adminPanel.unblockUser('${safeEmail}')">Unblock</button>`
+                            : `<button class="action-btn warning" onclick="adminPanel.blockUser('${safeEmail}')">Block</button>`
                         }
-                        <button class="action-btn danger" onclick="adminPanel.deleteUser('${user.email}')">Delete</button>
+                        <button class="action-btn danger" onclick="adminPanel.deleteUser('${safeEmail}')">Delete</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -275,6 +288,8 @@ class AdminPanel {
         }
 
         regularUsers.forEach(user => {
+            const safeEmail = this.escapeHtml(user.email);
+            const safeName = this.escapeHtml(user.name || 'No name');
             const card = document.createElement('div');
             card.className = 'user-control-card';
             card.dataset.userEmail = user.email.toLowerCase();
@@ -282,8 +297,8 @@ class AdminPanel {
             
             card.innerHTML = `
                 <div class="user-control-header">
-                    <div class="user-control-email">${user.email}</div>
-                    <div class="user-control-name">${user.name || 'No name'}</div>
+                    <div class="user-control-email">${safeEmail}</div>
+                    <div class="user-control-name">${safeName}</div>
                     <span class="user-control-status ${user.has_paid ? 'paid' : 'free'}">
                         ${user.has_paid ? '💎 Paid' : '🆓 Free'}
                     </span>
@@ -315,12 +330,12 @@ class AdminPanel {
                         </div>
                         <div class="feature-buttons">
                             <button class="feature-toggle-btn unlock" 
-                                    onclick="adminPanel.toggleFeature('${user.email}', 'eye', true)"
+                                    onclick="adminPanel.toggleFeature('${safeEmail}', 'eye', true)"
                                     ${user.eye_unlocked ? 'disabled' : ''}>
                                 ✅ Unlock
                             </button>
                             <button class="feature-toggle-btn lock" 
-                                    onclick="adminPanel.toggleFeature('${user.email}', 'eye', false)"
+                                    onclick="adminPanel.toggleFeature('${safeEmail}', 'eye', false)"
                                     ${!user.eye_unlocked ? 'disabled' : ''}>
                                 🔒 Lock
                             </button>
@@ -338,12 +353,12 @@ class AdminPanel {
                         </div>
                         <div class="feature-buttons">
                             <button class="feature-toggle-btn unlock" 
-                                    onclick="adminPanel.toggleFeature('${user.email}', 'chat', true)"
+                                    onclick="adminPanel.toggleFeature('${safeEmail}', 'chat', true)"
                                     ${user.chat_unlocked ? 'disabled' : ''}>
                                 ✅ Unlock
                             </button>
                             <button class="feature-toggle-btn lock" 
-                                    onclick="adminPanel.toggleFeature('${user.email}', 'chat', false)"
+                                    onclick="adminPanel.toggleFeature('${safeEmail}', 'chat', false)"
                                     ${!user.chat_unlocked ? 'disabled' : ''}>
                                 🔒 Lock
                             </button>
