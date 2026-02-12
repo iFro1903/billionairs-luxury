@@ -1252,18 +1252,29 @@ document.addEventListener('DOMContentLoaded', () => {
         if (mobileLangBtn) {
             mobileLangBtn.addEventListener('click', (e) => {
                 e.preventDefault();
+                e.stopPropagation();
                 // Close mobile menu
                 hamburgerBtn.classList.remove('active');
                 mobileMenu.classList.remove('active');
                 document.body.style.overflow = '';
                 
-                // Trigger language dropdown
+                // Wait for menu close animation & finger lift, then open dropdown
+                // Block touch events on dropdown briefly to prevent accidental selection
                 setTimeout(() => {
                     const langBtn = document.getElementById('langBtn');
                     if (langBtn) {
                         langBtn.click();
+                        
+                        // Block clicks on language options for 400ms to prevent ghost tap
+                        const dropdown = document.getElementById('langDropdownSimple');
+                        if (dropdown) {
+                            dropdown.style.pointerEvents = 'none';
+                            setTimeout(() => {
+                                dropdown.style.pointerEvents = 'auto';
+                            }, 400);
+                        }
                     }
-                }, 100);
+                }, 350);
             });
         }
         
