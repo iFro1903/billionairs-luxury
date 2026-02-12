@@ -12,6 +12,70 @@
     <priority>1.0</priority>
   </url>
 
+  <!-- Homepage - German -->
+  <url>
+    <loc>https://billionairs.luxury/?lang=de</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Homepage - French -->
+  <url>
+    <loc>https://billionairs.luxury/?lang=fr</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Homepage - Spanish -->
+  <url>
+    <loc>https://billionairs.luxury/?lang=es</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Homepage - Italian -->
+  <url>
+    <loc>https://billionairs.luxury/?lang=it</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Homepage - Russian -->
+  <url>
+    <loc>https://billionairs.luxury/?lang=ru</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Homepage - Chinese -->
+  <url>
+    <loc>https://billionairs.luxury/?lang=zh</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Homepage - Japanese -->
+  <url>
+    <loc>https://billionairs.luxury/?lang=ja</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Homepage - Arabic -->
+  <url>
+    <loc>https://billionairs.luxury/?lang=ar</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <!-- Login Page -->
   <url>
     <loc>https://billionairs.luxury/login.html</loc>
