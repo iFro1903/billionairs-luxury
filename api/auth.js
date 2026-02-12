@@ -3,7 +3,7 @@
 // NOW WITH REAL DATABASE INTEGRATION
 
 import pg from 'pg';
-import { createHash } from 'crypto';
+import { createHash, randomBytes } from 'crypto';
 import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
 
 const { Pool } = pg;
@@ -78,9 +78,9 @@ function needsHashUpgrade(storedHash) {
     return storedHash && !storedHash.startsWith('pbkdf2$');
 }
 
-// Helper function to generate session token
+// Helper function to generate session token (cryptographically secure)
 function generateToken() {
-    return createHash('sha256').update(Date.now() + Math.random().toString()).digest('hex');
+    return randomBytes(32).toString('hex');
 }
 
 // Helper function to generate member ID
