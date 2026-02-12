@@ -151,8 +151,11 @@ class I18nManager {
             if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                 // For input elements, translate placeholder
                 element.placeholder = translation;
+            } else if (/<[a-z][\s\S]*>/i.test(translation)) {
+                // If translation contains HTML tags, use innerHTML
+                element.innerHTML = translation;
             } else {
-                // For other elements, translate text content
+                // For plain text, use textContent
                 element.textContent = translation;
             }
         });
@@ -193,6 +196,8 @@ class I18nManager {
             const translation = this.t(key);
             if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                 element.placeholder = translation;
+            } else if (/<[a-z][\s\S]*>/i.test(translation)) {
+                element.innerHTML = translation;
             } else {
                 element.textContent = translation;
             }
