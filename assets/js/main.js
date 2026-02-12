@@ -1212,6 +1212,20 @@ window.addEventListener('load', function() {
     } else {
         console.error('❌ Particles.js library not loaded');
     }
+
+    // Footer: show on scroll, hide on hero (Option D)
+    var minimalFooter = document.querySelector('.minimal-footer');
+    if (minimalFooter) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                minimalFooter.style.opacity = '1';
+                minimalFooter.style.pointerEvents = 'all';
+            } else {
+                minimalFooter.style.opacity = '0';
+                minimalFooter.style.pointerEvents = 'none';
+            }
+        });
+    }
 });
 
 // ===== HAMBURGER MENU (MOBILE ONLY) =====
