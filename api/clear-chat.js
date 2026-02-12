@@ -4,6 +4,13 @@ export const config = {
     runtime: 'edge'
 };
 
+// CORS: Only allow requests from our domain
+function getCorsOrigin(req) {
+    const origin = req.headers?.get?.('origin') || '';
+    const allowed = ['https://billionairs.luxury', 'https://www.billionairs.luxury'];
+    return allowed.includes(origin) ? origin : allowed[0];
+}
+
 const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
 
 export default async function handler(req) {
@@ -12,7 +19,7 @@ export default async function handler(req) {
         return new Response(null, {
             status: 204,
             headers: {
-                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Origin': getCorsOrigin(req),
                 'Access-Control-Allow-Methods': 'DELETE, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type'
             }
@@ -56,7 +63,7 @@ export default async function handler(req) {
             status: 200,
             headers: { 
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': getCorsOrigin(req)
             }
         });
 
@@ -69,7 +76,7 @@ export default async function handler(req) {
             status: 500,
             headers: { 
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': getCorsOrigin(req)
             }
         });
     }

@@ -12,9 +12,16 @@ function getPool() {
     });
 }
 
+// CORS: Only allow requests from our domain
+function getCorsOrigin(req) {
+    const origin = req.headers.origin || req.headers['origin'];
+    const allowed = ['https://billionairs.luxury', 'https://www.billionairs.luxury'];
+    return allowed.includes(origin) ? origin : allowed[0];
+}
+
 module.exports = async (req, res) => {
   // Allow CORS
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', getCorsOrigin(req));
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 

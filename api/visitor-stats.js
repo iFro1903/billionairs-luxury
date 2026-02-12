@@ -4,6 +4,13 @@ export const config = {
     runtime: 'edge'
 };
 
+// CORS: Only allow requests from our domain
+function getCorsOrigin(req) {
+    const origin = req.headers?.get?.('origin') || '';
+    const allowed = ['https://billionairs.luxury', 'https://www.billionairs.luxury'];
+    return allowed.includes(origin) ? origin : allowed[0];
+}
+
 export default async function handler(req) {
     if (req.method !== 'GET') {
         return new Response(JSON.stringify({ error: 'Method not allowed' }), {
@@ -195,7 +202,7 @@ export default async function handler(req) {
             status: 200,
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': getCorsOrigin(req)
             }
         });
 
@@ -215,7 +222,7 @@ export default async function handler(req) {
             status: 200,
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': getCorsOrigin(req)
             }
         });
     }

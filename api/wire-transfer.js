@@ -68,10 +68,17 @@ async function sendEmail(to, subject, html) {
     }
 }
 
+// CORS: Only allow requests from our domain
+function getCorsOrigin(req) {
+    const origin = req.headers.origin || req.headers['origin'];
+    const allowed = ['https://billionairs.luxury', 'https://www.billionairs.luxury'];
+    return allowed.includes(origin) ? origin : allowed[0];
+}
+
 export default async function handler(req, res) {
     // Set CORS headers
     res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', getCorsOrigin(req));
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
     res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
