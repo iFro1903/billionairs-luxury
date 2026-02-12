@@ -472,38 +472,22 @@
                 </div>
             </div>
 
-            <!-- Shown when payment is confirmed -->
+            <!-- Shown when payment is confirmed - content loaded from server -->
             <div id="revealSection" style="display: none;">
                 <div class="reveal-section">
-                    <h2 class="reveal-title" data-i18n="dashboard.reveal_title">THE FINAL TRUTH</h2>
-                    <p class="reveal-description" style="line-height: 1.8; max-width: 700px; margin: 0 auto;" data-i18n-html="dashboard.reveal_description">
-                        You have crossed the threshold few dare to approach.<br><br>
-                        
-                        What lies beyond is not gold. Not diamonds. Not material wealth.<br><br>
-                        
-                        It is the understanding that separates the builders from the dreamers.<br><br>
-                        
-                        <strong>Time is not money.</strong><br>
-                        Time is the canvas upon which wealth is painted.<br><br>
-                        
-                        Master your minutes, and millions follow.<br><br>
-                        
-                        The secret every titan of industry knows:<br>
-                        Not gold. Not diamonds.<br>
-                        Something far more precious.<br><br>
-                        
-                        Something that moves in circles, yet never repeats.<br><br>
-                        
-                        One decision. One moment. Everything changes.<br><br>
-                        
-                        <strong>You now possess what the elite measure their lives by.</strong>
-                    </p>
-                    <a href="#" class="download-button" onclick="handleDownload(event)" style="margin-bottom: 3rem; margin-top: 2rem; color: #ffffff !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5);" data-i18n="dashboard.download_access">
-                        DOWNLOAD YOUR EXCLUSIVE ACCESS
-                    </a>
-                    <a href="the-hidden-door.html" class="download-button hidden-door-btn" style="margin-top: 3rem; color: #ffffff !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5); background: linear-gradient(135deg, #E8B4A0 0%, #F4C2A1 50%, #E8B4A0 100%), linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); background-size: 100% 100%, 200% 100%; background-position: 0% 0%, -200% 0%; box-shadow: 0 12px 48px rgba(232, 180, 160, 0.6), 0 0 100px rgba(232, 180, 160, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3); border: 2px solid #E8B4A0; transform: scale(1.05); font-weight: 700; letter-spacing: 3px; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), background-position 2s ease-in-out;" data-i18n="dashboard.hidden_door">
-                        THE HIDDEN DOOR
-                    </a>
+                    <div id="revealLoading" style="text-align: center; padding: 2rem;">
+                        <p style="color: #C4A55A; font-size: 1.2rem;">Loading your exclusive content...</p>
+                    </div>
+                    <div id="revealContent" style="display: none;">
+                        <h2 class="reveal-title" id="revealTitle"></h2>
+                        <p class="reveal-description" id="revealDescription" style="line-height: 1.8; max-width: 700px; margin: 0 auto;"></p>
+                        <a href="#" class="download-button" onclick="handleDownload(event)" style="margin-bottom: 3rem; margin-top: 2rem; color: #ffffff !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5);" data-i18n="dashboard.download_access">
+                            DOWNLOAD YOUR EXCLUSIVE ACCESS
+                        </a>
+                        <a href="the-hidden-door.html" class="download-button hidden-door-btn" style="margin-top: 3rem; color: #ffffff !important; text-shadow: 0 2px 4px rgba(0,0,0,0.5); background: linear-gradient(135deg, #E8B4A0 0%, #F4C2A1 50%, #E8B4A0 100%), linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); background-size: 100% 100%, 200% 100%; background-position: 0% 0%, -200% 0%; box-shadow: 0 12px 48px rgba(232, 180, 160, 0.6), 0 0 100px rgba(232, 180, 160, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3); border: 2px solid #E8B4A0; transform: scale(1.05); font-weight: 700; letter-spacing: 3px; transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), background-position 2s ease-in-out;" data-i18n="dashboard.hidden_door">
+                            THE HIDDEN DOOR
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -570,10 +554,13 @@
         
         // Manually translate HTML content
         function translateDashboardHTML(lang) {
-            const revealDesc = document.querySelector('.reveal-description');
-            if (revealDesc && window.i18n.translations[lang]?.dashboard?.reveal_description) {
-                revealDesc.innerHTML = window.i18n.translations[lang].dashboard.reveal_description;
-                console.log(`✅ Dashboard reveal description translated to ${lang}`);
+            // Reveal content is now loaded from server - reload if language changes
+            const revealContent = document.getElementById('revealContent');
+            if (revealContent && revealContent.style.display !== 'none') {
+                const authToken = localStorage.getItem('billionairs_token') || localStorage.getItem('auth_token');
+                if (authToken) {
+                    loadRevealContent(authToken);
+                }
             }
             
             // Add Logout translation
@@ -752,7 +739,12 @@
             if (user.paymentStatus === 'paid') {
                 statusContainer.innerHTML = '<span class="status-badge status-paid">Access Granted</span>';
                 document.getElementById('revealSection').style.display = 'block';
-                // Ensure dynamic content inside the reveal section is translated to the current language
+                
+                // Load reveal content from server (not in HTML source)
+                const authToken = localStorage.getItem('billionairs_token') || localStorage.getItem('auth_token');
+                loadRevealContent(authToken);
+                
+                // Translate buttons inside reveal section
                 if (window.i18n && typeof window.i18n.translateElement === 'function') {
                     window.i18n.translateElement(document.getElementById('revealSection'));
                 }
@@ -857,6 +849,39 @@
                 window.location.href = '/';
             }
         };
+
+        // Load reveal content securely from server
+        async function loadRevealContent(sessionToken) {
+            try {
+                const lang = (window.i18n && window.i18n.currentLanguage) || 
+                             document.documentElement.lang || 
+                             localStorage.getItem('preferredLanguage') || 'en';
+                
+                const response = await fetch('/api/reveal-content', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token: sessionToken, lang: lang })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to load content');
+                }
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('revealTitle').textContent = data.title;
+                    document.getElementById('revealDescription').innerHTML = data.description;
+                    document.getElementById('revealLoading').style.display = 'none';
+                    document.getElementById('revealContent').style.display = 'block';
+                    console.log('🔓 Reveal content loaded successfully');
+                }
+            } catch (error) {
+                console.error('❌ Failed to load reveal content:', error);
+                document.getElementById('revealLoading').innerHTML = 
+                    '<p style="color: #C4A55A;">Unable to load content. Please refresh the page.</p>';
+            }
+        }
 
         async function handleDownload(event) {
             event.preventDefault();
