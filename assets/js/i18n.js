@@ -230,7 +230,7 @@ class I18nManager {
         try {
             const entries = Object.entries(textMap);
             if (entries.length > 0) {
-                rootEl.querySelectorAll('*').forEach(el => {
+                rootEl.querySelectorAll('*:not([data-i18n])').forEach(el => {
                     el.childNodes.forEach(node => {
                         if (node.nodeType === Node.TEXT_NODE) {
                             let txt = node.textContent;
@@ -305,6 +305,10 @@ class I18nManager {
         if (node.nodeType === Node.ELEMENT_NODE) {
             const tagName = node.tagName.toLowerCase();
             if (tagName === 'script' || tagName === 'style' || tagName === 'svg') {
+                return;
+            }
+            // Skip elements with data-i18n — already handled by applyTranslations() with innerHTML
+            if (node.hasAttribute && node.hasAttribute('data-i18n')) {
                 return;
             }
         }
