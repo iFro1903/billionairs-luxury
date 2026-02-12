@@ -353,15 +353,18 @@
 .minimal-footer {
     position: fixed;
     bottom: 0;
+    left: 0;
     right: 0;
-    padding: 2rem 3rem;
+    padding: 1rem 2rem;
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 1rem;
-    background: none;
-    backdrop-filter: none;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(to top, 
+        rgba(5, 5, 10, 0.95) 0%,
+        rgba(5, 5, 10, 0.7) 60%,
+        transparent 100%);
 }
 
 .footer-links {
