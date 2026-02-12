@@ -579,6 +579,37 @@ div:not(.clickable) {
     font-style: italic;
 }
 
+.hero-description {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.55);
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fadeInUp 0.8s ease-out 0.55s both;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.hero-origin {
+    margin-top: 2rem;
+    margin-bottom: 0;
+    animation: fadeInUp 0.8s ease-out 1.3s both;
+}
+
+.origin-text {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 300;
+    letter-spacing: 0.8px;
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto;
+    font-style: italic;
+}
+
 .hero-divider {
     width: 80px;
     height: 2px;
