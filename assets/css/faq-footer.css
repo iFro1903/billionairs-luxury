@@ -351,19 +351,7 @@
 
 /* ==================== MINIMAL FOOTER ==================== */
 .minimal-footer {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    padding: 2rem 3rem;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.5rem;
-    background: none;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease;
+    display: none;
 }
 
 .footer-links {

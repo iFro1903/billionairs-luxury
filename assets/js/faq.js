@@ -53,6 +53,14 @@ document.addEventListener('DOMContentLoaded', () => {
         privacy: document.getElementById('privacyLink'),
         terms: document.getElementById('termsLink')
     };
+
+    // Hero footer link elements (under Swiss Badge)
+    const heroLinks = {
+        faq: document.getElementById('faqLinkHero'),
+        impressum: document.getElementById('legalLinkHero'),
+        privacy: document.getElementById('privacyLinkHero'),
+        terms: document.getElementById('termsLinkHero')
+    };
     
     // Initialize particles for each modal
     let particlesInitialized = {
@@ -170,6 +178,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Attach click events to links
     Object.keys(links).forEach(key => {
         const link = links[key];
+        if (link) {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal(key);
+            });
+        }
+    });
+
+    // Attach click events to hero footer links
+    Object.keys(heroLinks).forEach(key => {
+        const link = heroLinks[key];
         if (link) {
             link.addEventListener('click', (e) => {
                 e.preventDefault();

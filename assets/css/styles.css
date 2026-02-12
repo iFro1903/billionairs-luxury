@@ -692,6 +692,49 @@ div:not(.clickable) {
     margin: 0;
 }
 
+/* Hero Footer Links (under Swiss Badge) */
+.hero-footer-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease-out 1.5s both;
+}
+
+.hero-footer-link {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.65rem;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.hero-footer-link:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-footer-sep {
+    color: rgba(255, 255, 255, 0.15);
+    font-size: 0.7rem;
+}
+
+.hero-footer-copy {
+    font-size: 0.6rem;
+    font-family: 'Playfair Display', serif;
+    color: rgba(255, 255, 255, 0.2);
+    letter-spacing: 1.5px;
+    margin: 0.8rem 0 0 0;
+    font-style: italic;
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out 1.6s both;
+}
+
 /* Hero Hook */
 .hero-hook {
     margin-bottom: 3rem;
