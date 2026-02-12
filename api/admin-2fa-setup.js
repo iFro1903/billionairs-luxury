@@ -1,6 +1,6 @@
 // Two-Factor Auth Setup für CEO
 import { neon } from '@neondatabase/serverless';
-import { verifyPassword } from '../lib/password-hash.js';
+import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
 
 export const config = {
   runtime: 'edge'

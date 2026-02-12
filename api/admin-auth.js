@@ -6,7 +6,7 @@
 
 import { neon } from '@neondatabase/serverless';
 import { rateLimiter } from './rate-limiter.js';
-import { verifyPassword } from '../lib/password-hash.js';
+import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
 import { captureError, captureMessage } from '../lib/sentry.js';
 
 export const config = {

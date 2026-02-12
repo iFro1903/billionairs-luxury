@@ -7,12 +7,13 @@
  *   node scripts/generate-admin-password-hash.js
  *   node scripts/generate-admin-password-hash.js "YourPassword123"
  * 
- * The hash uses SHA-256 with UUID salt for Edge Runtime compatibility
- * (bcrypt doesn't work in Vercel Edge Runtime)
+ * Uses PBKDF2 with 100,000 iterations (Edge Runtime compatible)
  */
 
 const crypto = require('crypto');
 const readline = require('readline');
+
+const PBKDF2_ITERATIONS = 100000;
 
 // Get password from command line or prompt
 const password = process.argv[2];
@@ -32,7 +33,7 @@ if (password) {
     });
 }
 
-function generateHash(password) {
+async function generateHash(password) {
     if (!password || password.trim().length === 0) {
         console.error('❌ Error: Password cannot be empty');
         process.exit(1);
@@ -43,17 +44,18 @@ function generateHash(password) {
         process.exit(1);
     }
 
-    // Generate UUID salt
-    const uuid = crypto.randomUUID();
+    // Generate 16-byte random salt
+    const saltBuffer = crypto.randomBytes(16);
+    const saltHex = saltBuffer.toString('hex');
     
-    // Create hash with SHA-256
-    const hash = crypto.createHash('sha256')
-        .update(password + uuid)
-        .digest('hex');
+    // Derive key with PBKDF2 (100k iterations)
+    const derivedKey = crypto.pbkdf2Sync(password, saltBuffer, PBKDF2_ITERATIONS, 32, 'sha256');
+    const hashHex = derivedKey.toString('hex');
     
-    const fullHash = `${uuid}$${hash}`;
+    const fullHash = `pbkdf2$${PBKDF2_ITERATIONS}$${saltHex}$${hashHex}`;
     
     console.log('\n✅ Admin Password Hash Generated Successfully!\n');
+    console.log('🔐 Algorithm: PBKDF2 with 100,000 iterations\n');
     console.log('Add this to your .env file:\n');
     console.log(`ADMIN_PASSWORD_HASH=${fullHash}`);
     console.log('\n📋 Copy the line above to your .env file');

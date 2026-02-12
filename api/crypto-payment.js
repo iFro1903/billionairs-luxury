@@ -3,13 +3,24 @@
 // Sends ultra-luxury email with wallet addresses and QR codes
 
 import pg from 'pg';
-import { createHash } from 'crypto';
 
 const { Pool } = pg;
 
-// Helper function to hash passwords
-function hashPassword(password) {
-    return createHash('sha256').update(password).digest('hex');
+const PBKDF2_ITERATIONS = 100000;
+// Helper function to hash passwords with PBKDF2 (100k iterations)
+async function hashPassword(password) {
+    const saltBuffer = crypto.getRandomValues(new Uint8Array(16));
+    const saltHex = Array.from(saltBuffer).map(b => b.toString(16).padStart(2, '0')).join('');
+    const encoder = new TextEncoder();
+    const keyMaterial = await crypto.subtle.importKey(
+        'raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits']
+    );
+    const derivedBits = await crypto.subtle.deriveBits(
+        { name: 'PBKDF2', salt: saltBuffer, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
+        keyMaterial, 256
+    );
+    const hashHex = Array.from(new Uint8Array(derivedBits)).map(b => b.toString(16).padStart(2, '0')).join('');
+    return `pbkdf2$${PBKDF2_ITERATIONS}$${saltHex}$${hashHex}`;
 }
 
 // Helper function to generate member ID

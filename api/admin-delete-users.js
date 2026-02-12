@@ -24,7 +24,7 @@ export default async function handler(req) {
         const sql = neon(process.env.DATABASE_URL);
         
         // Import password verification
-        const { verifyPassword } = await import('../lib/password-hash.js');
+        const { verifyPasswordSimple: verifyPassword } = await import('../lib/password-hash.js');
         const passwordHash = process.env.ADMIN_PASSWORD_HASH;
         
         const isValidPassword = await verifyPassword(adminPassword, passwordHash);

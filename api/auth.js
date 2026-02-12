@@ -8,6 +8,10 @@ import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js
 
 const { Pool } = pg;
 
+const PBKDF2_ITERATIONS = 100000;
+const HASH_ALGORITHM = 'SHA-256';
+const KEY_LENGTH = 256; // bits
+
 // Helper function to get base URL
 function getBaseUrl(req) {
     const protocol = req.headers['x-forwarded-proto'] || 'https';
@@ -15,31 +19,63 @@ function getBaseUrl(req) {
     return `${protocol}://${host}`;
 }
 
-// Helper function to hash passwords with salt (compatible with reset-password)
+// Helper function to hash passwords with PBKDF2 (100k iterations)
 async function hashPassword(password) {
-    const salt = crypto.randomUUID();
-    const combined = salt + password;
+    const saltBuffer = crypto.getRandomValues(new Uint8Array(16));
+    const saltHex = Array.from(saltBuffer).map(b => b.toString(16).padStart(2, '0')).join('');
+    
     const encoder = new TextEncoder();
-    const data = encoder.encode(combined);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    return `${salt}$${hashHex}`;
+    const keyMaterial = await crypto.subtle.importKey(
+        'raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits']
+    );
+    
+    const derivedBits = await crypto.subtle.deriveBits(
+        { name: 'PBKDF2', salt: saltBuffer, iterations: PBKDF2_ITERATIONS, hash: HASH_ALGORITHM },
+        keyMaterial, KEY_LENGTH
+    );
+    
+    const hashHex = Array.from(new Uint8Array(derivedBits)).map(b => b.toString(16).padStart(2, '0')).join('');
+    return `pbkdf2$${PBKDF2_ITERATIONS}$${saltHex}$${hashHex}`;
 }
 
-// Helper function to verify password against stored hash
+// Helper function to verify password (supports PBKDF2 + legacy SHA-256)
 async function verifyPassword(password, storedHash) {
+    if (!storedHash) return false;
+    
+    if (storedHash.startsWith('pbkdf2$')) {
+        // New PBKDF2 format
+        const parts = storedHash.split('$');
+        if (parts.length !== 4) return false;
+        const [, iterStr, saltHex, expectedHash] = parts;
+        const iterations = parseInt(iterStr, 10);
+        const saltBytes = new Uint8Array(saltHex.match(/.{2}/g).map(b => parseInt(b, 16)));
+        
+        const encoder = new TextEncoder();
+        const keyMaterial = await crypto.subtle.importKey(
+            'raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits']
+        );
+        const derivedBits = await crypto.subtle.deriveBits(
+            { name: 'PBKDF2', salt: saltBytes, iterations, hash: HASH_ALGORITHM },
+            keyMaterial, KEY_LENGTH
+        );
+        const hashHex = Array.from(new Uint8Array(derivedBits)).map(b => b.toString(16).padStart(2, '0')).join('');
+        return hashHex === expectedHash;
+    }
+    
+    // Legacy SHA-256 format: salt$hash
     const [salt, hash] = storedHash.split('$');
     if (!salt || !hash) return false;
-    
     const combined = salt + password;
     const encoder = new TextEncoder();
     const data = encoder.encode(combined);
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    
+    const hashHex = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
     return hashHex === hash;
+}
+
+// Check if hash needs upgrade from SHA-256 to PBKDF2
+function needsHashUpgrade(storedHash) {
+    return storedHash && !storedHash.startsWith('pbkdf2$');
 }
 
 // Helper function to generate session token
@@ -189,6 +225,17 @@ export default async function handler(req, res) {
             if (!isValidPassword) {
                 
                 return res.status(401).json({ success: false, message: 'Invalid credentials' });
+            }
+
+            // Auto-upgrade legacy SHA-256 hash to PBKDF2 on successful login
+            if (needsHashUpgrade(user.password_hash)) {
+                try {
+                    const upgradedHash = await hashPassword(password);
+                    await pool.query('UPDATE users SET password_hash = $1 WHERE id = $2', [upgradedHash, user.id]);
+                    console.log(`🔒 Password hash upgraded to PBKDF2 for user ${user.id}`);
+                } catch (upgradeErr) {
+                    console.warn('⚠️ Hash upgrade failed (non-critical):', upgradeErr.message);
+                }
             }
 
             // Update last login
