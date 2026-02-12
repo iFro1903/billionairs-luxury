@@ -4,6 +4,7 @@
  */
 
 import { neon } from '@neondatabase/serverless';
+import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
 
 export const config = {
     runtime: 'edge'
@@ -22,9 +23,16 @@ export default async function handler(req) {
     const adminPassword = req.headers.get('x-admin-password');
 
     const ADMIN_EMAIL = 'furkan_akaslan@hotmail.com';
-    const ADMIN_PASSWORD = 'Masallah1,';
 
-    if (adminEmail !== ADMIN_EMAIL || adminPassword !== ADMIN_PASSWORD) {
+    if (adminEmail !== ADMIN_EMAIL) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
+    const passwordHash = process.env.ADMIN_PASSWORD_HASH;
+    if (!passwordHash || !(await verifyPassword(adminPassword, passwordHash))) {
         return new Response(JSON.stringify({ error: 'Unauthorized' }), {
             status: 401,
             headers: { 'Content-Type': 'application/json' }

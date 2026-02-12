@@ -230,18 +230,19 @@ Body: {
 ## 🔐 Security
 
 ### Authentication
-All three APIs require admin authentication:
+All admin APIs require authentication:
 ```javascript
 headers: {
-  'x-admin-email': 'billionairsofficial@gmail.com',
-  'x-admin-password': 'Masallah1,'
+  'x-admin-email': 'furkan_akaslan@hotmail.com',
+  'x-admin-password': '<your-password>'
 }
 ```
+Passwords are verified server-side against PBKDF2 hash stored in `ADMIN_PASSWORD_HASH` environment variable.
 
 ### Authorization
-- Only CEO email (`furkan_akaslan@hotmail.com` or `billionairsofficial@gmail.com`) has access
+- Only CEO email (`furkan_akaslan@hotmail.com`) has access
 - Session stored in `sessionStorage` (cleared on tab close)
-- Password included in session for API calls
+- Password verified via PBKDF2 hash comparison
 
 ### Audit Logging
 All actions are logged to `audit_logs`:

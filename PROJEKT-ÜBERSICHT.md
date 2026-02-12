@@ -58,7 +58,7 @@
 
 **Zugangsdaten:**
 - Email: furkan_akaslan@hotmail.com
-- Passwort: Masallah1,
+- Passwort: (gespeichert als PBKDF2-Hash in Vercel Environment Variables)
 
 ### 4. PWA (Progressive Web App)
 - ✅ Installierbar auf iOS & Android
@@ -513,7 +513,7 @@ Environment Variables:
 ### Admin Zugang
 - URL: https://billionair.luxury/admin.html
 - Email: furkan_akaslan@hotmail.com
-- Passwort: Masallah1,
+- Passwort: (gespeichert als PBKDF2-Hash in Vercel Environment Variables)
 
 ### Technischer Support
 - GitHub: https://github.com/iFro1903/billionairs-luxury

@@ -67,5 +67,5 @@ node generate-hash.js
 - ✅ Bei Verdacht auf Kompromittierung sofort ändern
 - ✅ Web Crypto API - Edge Runtime kompatibel
 
-**Aktuelles Passwort:** `Masallah1,` (nur du kennst es)
-**Hash-Algorithmus:** SHA-256 mit UUID Salt (Edge-kompatibel)
+**Passwort:** Nur als PBKDF2-Hash in Vercel Environment Variables gespeichert.
+**Hash-Algorithmus:** PBKDF2 mit 100.000 Iterationen (Edge-kompatibel)
