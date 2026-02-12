@@ -3128,3 +3128,71 @@ input:-webkit-autofill::first-line {
     will-change: transform, opacity;
     animation: modalPopIn 220ms cubic-bezier(.2,.9,.3,1);
 }
+
+/* ==================== SAFARI iOS FIX ==================== */
+/* Forces GPU layer retention on Safari to prevent elements
+   disappearing when scrolling up/down on iOS Safari.
+   Uses -webkit-touch-callout detection (Safari-only property). */
+@supports (-webkit-touch-callout: none) {
+    /* Fix 1: Force GPU layers on critical elements */
+    #particles-js,
+    #particles-js canvas {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+
+    .brand-logo,
+    .logo-image,
+    .hero-title-new,
+    .hero-tagline,
+    .hero-description,
+    .hero-message-minimal,
+    .hero-actions-new,
+    .hero-content,
+    .hero-origin {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+
+    /* Fix 2: Simplify logo drop-shadow for Safari */
+    .logo-image {
+        filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.25));
+        -webkit-filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.25));
+    }
+
+    .logo-image:hover {
+        filter: drop-shadow(0 0 60px rgba(255, 255, 255, 0.4));
+        -webkit-filter: drop-shadow(0 0 60px rgba(255, 255, 255, 0.4));
+    }
+
+    @keyframes logoMajestic {
+        0%, 100% {
+            transform: translateZ(0) translateY(0) scale(1);
+            filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.25));
+        }
+        50% {
+            transform: translateZ(0) translateY(-15px) scale(1.02);
+            filter: drop-shadow(0 0 50px rgba(255, 255, 255, 0.35));
+        }
+    }
+
+    /* Fix 3: Reduce backdrop-filter complexity */
+    .hero-badge-new {
+        -webkit-backdrop-filter: blur(3px);
+        backdrop-filter: blur(3px);
+    }
+
+    .hero-content::before {
+        filter: blur(2px);
+    }
+
+    .psychological-hook {
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+    }
+}
+/* ==================== END SAFARI iOS FIX ==================== */

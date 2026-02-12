@@ -1118,11 +1118,17 @@ document.addEventListener('mouseleave', () => {
 
 // Initialize Particles.js after page load
 window.addEventListener('load', function() {
+    // Detect Safari iOS for reduced particles
+    var isSafariIOS = /iP(ad|hone|od)/.test(navigator.userAgent) && /WebKit/.test(navigator.userAgent) && !/(CriOS|FxiOS|OPiOS|mercury)/.test(navigator.userAgent);
+    var particleCount = isSafariIOS ? 40 : 120;
+    var particleSpeed = isSafariIOS ? 1 : 2;
+    var lineOpacity = isSafariIOS ? 0.25 : 0.4;
+
     if (typeof particlesJS !== 'undefined') {
         particlesJS("particles-js", {
             particles: {
                 number: {
-                    value: 120,
+                    value: particleCount,
                     density: {
                         enable: true,
                         value_area: 800
@@ -1158,12 +1164,12 @@ window.addEventListener('load', function() {
                     enable: true,
                     distance: 150,
                     color: '#D4A574',
-                    opacity: 0.4,
-                    width: 1.5
+                    opacity: lineOpacity,
+                    width: isSafariIOS ? 1 : 1.5
                 },
                 move: {
                     enable: true,
-                    speed: 2,
+                    speed: particleSpeed,
                     direction: 'none',
                     random: true,
                     straight: false,
@@ -1191,7 +1197,7 @@ window.addEventListener('load', function() {
                 },
                 modes: {
                     repulse: {
-                        distance: 150,
+                        distance: isSafariIOS ? 80 : 150,
                         duration: 0.4
                     },
                     push: {
