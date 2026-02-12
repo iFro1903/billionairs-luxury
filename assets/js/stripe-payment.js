@@ -53,7 +53,6 @@ class StripePaymentProcessor {
             if (customerData) {
                 metadata.customer_name = customerData.fullName;
                 metadata.customer_email = customerData.email;
-                metadata.customer_password = customerData.password; // Backend will use this to create account
                 metadata.customer_phone = customerData.phone;
                 if (customerData.company) {
                     metadata.customer_company = customerData.company;
