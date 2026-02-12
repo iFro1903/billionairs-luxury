@@ -15,7 +15,7 @@ export default async function handler(req) {
 
   // Apply rate limiting
   const clientIp = getClientIp(req);
-  const rateLimit = checkRateLimit(clientIp, RATE_LIMITS.PASSWORD_RESET.maxRequests, RATE_LIMITS.PASSWORD_RESET.windowMs);
+  const rateLimit = await checkRateLimit(clientIp, RATE_LIMITS.PASSWORD_RESET.maxRequests, RATE_LIMITS.PASSWORD_RESET.windowMs);
   
   const rateLimitHeaders = {
     'Content-Type': 'application/json',

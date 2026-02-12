@@ -121,7 +121,7 @@ export default async function handler(req, res) {
     // Apply rate limiting for auth actions
     if (action === 'register' || action === 'login') {
         const clientIp = getClientIp(req);
-        const rateLimit = checkRateLimit(clientIp, RATE_LIMITS.AUTH.maxRequests, RATE_LIMITS.AUTH.windowMs);
+        const rateLimit = await checkRateLimit(clientIp, RATE_LIMITS.AUTH.maxRequests, RATE_LIMITS.AUTH.windowMs);
         
         // Add rate limit headers
         res.setHeader('X-RateLimit-Limit', RATE_LIMITS.AUTH.maxRequests);
