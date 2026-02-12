@@ -4,6 +4,19 @@
   "outputDirectory": ".",
   "installCommand": "npm install --production",
   "framework": null,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.billionairs.luxury"
+        }
+      ],
+      "destination": "https://billionairs.luxury/:path*",
+      "permanent": true
+    }
+  ],
   "crons": [
     {
       "path": "/api/cron/backup-database",

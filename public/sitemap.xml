@@ -7,7 +7,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://billionairs.luxury/</loc>
-    <lastmod>2025-11-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,7 +15,7 @@
   <!-- Login Page -->
   <url>
     <loc>https://billionairs.luxury/login.html</loc>
-    <lastmod>2025-11-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -23,7 +23,7 @@
   <!-- Privacy Policy -->
   <url>
     <loc>https://billionairs.luxury/privacy-policy.html</loc>
-    <lastmod>2025-11-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -31,7 +31,7 @@
   <!-- Cookie Policy -->
   <url>
     <loc>https://billionairs.luxury/cookie-policy.html</loc>
-    <lastmod>2025-11-02</lastmod>
+    <lastmod>2026-02-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
