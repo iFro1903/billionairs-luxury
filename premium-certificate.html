@@ -466,18 +466,25 @@
         // Detect language from URL or localStorage
         const urlParams = new URLSearchParams(window.location.search);
         const userLang = urlParams.get('lang') || 
+                        localStorage.getItem('billionairs_lang') ||
                         localStorage.getItem('selectedLanguage') || 
                         sessionStorage.getItem('userLanguage') || 
                         'en';
         
         // Initialize i18n when ready
-        if (window.i18n) {
-            window.i18n.init().then(() => {
-                if (window.i18n.supportedLanguages.includes(userLang)) {
-                    window.i18n.switchLanguage(userLang);
-                }
-            });
+        function initCertificateI18n() {
+            if (window.i18n && window.i18n.supportedLangs) {
+                window.i18n.init().then(() => {
+                    if (window.i18n.supportedLangs.includes(userLang)) {
+                        window.i18n.switchLanguage(userLang);
+                    }
+                }).catch(err => console.error('i18n init failed:', err));
+            } else {
+                // Retry after short delay if i18n not yet loaded
+                setTimeout(initCertificateI18n, 200);
+            }
         }
+        initCertificateI18n();
     </script>
 </body>
 </html>

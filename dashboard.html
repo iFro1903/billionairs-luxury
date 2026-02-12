@@ -890,7 +890,8 @@
             // Open the Final Truth PDF in a new window (with cache buster)
             console.log('Opening PDF window...');
             const timestamp = new Date().getTime();
-            const pdfWindow = window.open(`/premium-certificate.html?v=${timestamp}`, '_blank');
+            const userLang = localStorage.getItem('billionairs_lang') || localStorage.getItem('selectedLanguage') || 'en';
+            const pdfWindow = window.open(`/premium-certificate.html?v=${timestamp}&lang=${userLang}`, '_blank');
             
             if (!pdfWindow) {
                 alert('Please allow popups to download your exclusive content.');
