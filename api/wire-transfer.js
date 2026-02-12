@@ -745,7 +745,7 @@ export default async function handler(req, res) {
         console.error('Wire Transfer Error:', error);
         return res.status(500).json({ 
             error: 'Wire transfer initialization failed',
-            message: error.message 
+            message: 'Internal server error' 
         });
     }
 }

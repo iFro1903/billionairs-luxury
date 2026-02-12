@@ -42,7 +42,7 @@ export default async function handler(req) {
                 total: 0,
                 paid: 0,
                 active: 0,
-                error: dbError.message
+                error: 'Database query failed'
             }), {
                 status: 200,
                 headers: { 'Content-Type': 'application/json' }
@@ -68,7 +68,7 @@ export default async function handler(req) {
         console.error('Admin users error:', error);
         return new Response(JSON.stringify({ 
             error: 'Failed to load users',
-            message: error.message,
+            message: 'Internal server error',
             users: [],
             total: 0,
             paid: 0,

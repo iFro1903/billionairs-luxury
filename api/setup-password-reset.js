@@ -44,8 +44,7 @@ export default async function handler(request) {
   } catch (error) {
     console.error('Table creation error:', error);
     return new Response(JSON.stringify({ 
-      error: 'Table creation failed',
-      details: error.message
+      error: 'Table creation failed'
     }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }

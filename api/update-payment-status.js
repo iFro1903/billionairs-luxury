@@ -72,7 +72,7 @@ export default async function handler(req) {
         console.error('❌ Error updating payment status:', error);
         return new Response(JSON.stringify({ 
             success: false, 
-            message: error.message 
+            message: 'Internal server error' 
         }), { 
             status: 500,
             headers: { 'Content-Type': 'application/json' }

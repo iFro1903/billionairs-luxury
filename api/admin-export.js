@@ -122,7 +122,7 @@ export default async function handler(req) {
         console.error('Export error:', error);
         return new Response(JSON.stringify({ 
             error: 'Export failed',
-            message: error.message 
+            message: 'Internal server error' 
         }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }

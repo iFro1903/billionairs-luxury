@@ -141,8 +141,7 @@ module.exports = async (req, res) => {
         }
         return res.status(500).json({ 
           error: 'Database error',
-          message: 'Failed to create user account. Please try again or contact support.',
-          details: dbError.message
+          message: 'Failed to create user account. Please try again or contact support.'
         });
       } finally {
         if (client) {
@@ -182,6 +181,6 @@ module.exports = async (req, res) => {
     res.status(200).json({ url: session.url });
   } catch (error) {
     console.error('Stripe error:', error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };

@@ -120,7 +120,7 @@ module.exports = async (req, res) => {
         await pool.end();
         return res.status(500).json({
             success: false,
-            error: error.message
+            error: 'Internal server error'
         });
     }
 };

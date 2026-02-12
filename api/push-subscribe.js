@@ -104,7 +104,7 @@ export default async function handler(req) {
 
         return new Response(JSON.stringify({ 
             error: 'Failed to save subscription',
-            message: error.message
+            message: 'Internal server error'
         }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }

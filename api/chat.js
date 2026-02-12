@@ -186,7 +186,7 @@ export default async function handler(req) {
                     return new Response(JSON.stringify({ 
                         messages: [], 
                         success: true,
-                        error: dbError.message 
+                        error: 'Database query failed' 
                     }), {
                         status: 200,
                         headers: { 'Content-Type': 'application/json' }
@@ -245,7 +245,7 @@ export default async function handler(req) {
                 return new Response(JSON.stringify({ 
                     messages: [], 
                     success: true,
-                    error: dbError.message 
+                    error: 'Database query failed' 
                 }), {
                     status: 200,
                     headers: { 'Content-Type': 'application/json' }
@@ -301,8 +301,7 @@ export default async function handler(req) {
             } catch (dbError) {
                 console.error('Chat insert error:', dbError);
                 return new Response(JSON.stringify({ 
-                    error: 'Failed to send message',
-                    details: dbError.message 
+                    error: 'Failed to send message'
                 }), {
                     status: 500,
                     headers: { 'Content-Type': 'application/json' }
@@ -318,9 +317,7 @@ export default async function handler(req) {
     } catch (error) {
         console.error('Chat API error:', error);
         return new Response(JSON.stringify({ 
-            error: 'Internal server error',
-            message: error.message,
-            stack: error.stack
+            error: 'Internal server error'
         }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }

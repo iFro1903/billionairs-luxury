@@ -283,8 +283,7 @@ export default async function handler(req) {
             }
         });
         return new Response(JSON.stringify({ 
-            error: 'Webhook handler failed', 
-            details: error.message 
+            error: 'Webhook handler failed'
         }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }

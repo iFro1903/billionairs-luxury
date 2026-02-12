@@ -198,7 +198,7 @@ export default async function handler(req) {
         console.error('Broadcast notification error:', error);
         return new Response(JSON.stringify({ 
             error: 'Failed to send broadcast notification',
-            message: error.message 
+            message: 'Internal server error' 
         }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }

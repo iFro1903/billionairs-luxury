@@ -850,7 +850,7 @@ export default async function handler(req, res) {
         console.error('Crypto payment error:', error);
         return res.status(500).json({ 
             error: 'Failed to process crypto payment request',
-            message: error.message 
+            message: 'Internal server error' 
         });
     }
 }

@@ -120,8 +120,7 @@ export default async function handler(req) {
   } catch (error) {
     console.error('Password reset request error:', error);
     return new Response(JSON.stringify({ 
-      error: 'An error occurred. Please try again later.',
-      details: error.message
+      error: 'An error occurred. Please try again later.'
     }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }

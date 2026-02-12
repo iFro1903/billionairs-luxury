@@ -75,7 +75,7 @@ export default async function handler(req) {
         console.error('Admin payments error:', error);
         return new Response(JSON.stringify({ 
             error: 'Failed to load payments',
-            message: error.message,
+            message: 'Internal server error',
             payments: [],
             totalRevenue: 0,
             stripeCount: 0,

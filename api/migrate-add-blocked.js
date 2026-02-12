@@ -42,7 +42,7 @@ export default async function handler(req) {
     } catch (error) {
         console.error('Migration error:', error);
         return new Response(JSON.stringify({ 
-            error: error.message
+            error: 'Internal server error'
         }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }

@@ -50,8 +50,7 @@ export default async function handler(req) {
     console.error('Setup Easter Egg Error:', error);
     return new Response(
       JSON.stringify({ 
-        error: 'Failed to setup easter egg columns',
-        details: error.message 
+        error: 'Failed to setup easter egg columns'
       }),
       { status: 500, headers }
     );

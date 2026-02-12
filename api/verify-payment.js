@@ -108,7 +108,7 @@ module.exports = async (req, res) => {
         await pool.end();
         return res.status(500).json({ 
           error: 'Database error',
-          message: dbError.message
+          message: 'Internal server error'
         });
       }
 
@@ -126,7 +126,7 @@ module.exports = async (req, res) => {
     console.error('❌ Error verifying payment:', error);
     return res.status(500).json({ 
       error: 'Verification failed',
-      message: error.message
+      message: 'Internal server error'
     });
   }
 };

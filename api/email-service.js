@@ -894,7 +894,7 @@ export default async function handler(req) {
         console.error('Email service error:', error);
         return new Response(JSON.stringify({ 
             success: false, 
-            error: error.message 
+            error: 'Internal server error' 
         }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }

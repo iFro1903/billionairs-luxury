@@ -73,7 +73,7 @@ module.exports = async (req, res) => {
         
         return res.status(500).json({
             success: false,
-            error: error.message,
+            error: 'Internal server error',
             hint: 'Check Vercel logs for details'
         });
     }

@@ -304,9 +304,7 @@ export default async function handler(req) {
             cause: error.cause
         });
         return new Response(JSON.stringify({ 
-            error: 'Internal server error',
-            details: error.message,
-            stack: error.stack 
+            error: 'Internal server error'
         }), { 
             status: 500, 
             headers 

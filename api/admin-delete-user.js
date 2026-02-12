@@ -84,8 +84,7 @@ module.exports = async (req, res) => {
     } catch (error) {
         console.error('❌ Delete user error:', error);
         res.status(500).json({
-            error: 'Failed to delete user',
-            details: error.message
+            error: 'Failed to delete user'
         });
     } finally {
         if (client) {

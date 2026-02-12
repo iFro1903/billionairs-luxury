@@ -55,8 +55,7 @@ module.exports = async (req, res) => {
         console.error('❌ Migration error:', error);
         res.status(500).json({
             success: false,
-            error: error.message,
-            details: error.stack
+            error: 'Internal server error'
         });
     } finally {
         if (client) {

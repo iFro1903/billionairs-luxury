@@ -296,7 +296,7 @@ export default async function handler(req) {
         console.error('Analytics error:', error);
         return new Response(JSON.stringify({ 
             error: 'Failed to fetch analytics',
-            message: error.message 
+            message: 'Internal server error' 
         }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }

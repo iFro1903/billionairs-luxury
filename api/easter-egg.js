@@ -351,7 +351,7 @@ The final door will open.`;
   } catch (error) {
     console.error('Easter Egg API Error:', error);
     return new Response(
-      JSON.stringify({ error: 'Internal server error', details: error.message }),
+      JSON.stringify({ error: 'Internal server error' }),
       { status: 500, headers }
     );
   }

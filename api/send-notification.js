@@ -192,7 +192,7 @@ export default async function handler(req) {
 
         return new Response(JSON.stringify({ 
             error: 'Failed to send notifications',
-            message: error.message
+            message: 'Internal server error'
         }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }

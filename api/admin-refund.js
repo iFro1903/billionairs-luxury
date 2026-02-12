@@ -135,7 +135,7 @@ export default async function handler(req) {
 
                 return new Response(JSON.stringify({ 
                     error: 'Refund failed',
-                    message: error.message 
+                    message: 'Internal server error' 
                 }), {
                     status: 500,
                     headers: { 'Content-Type': 'application/json' }
@@ -268,7 +268,7 @@ export default async function handler(req) {
         console.error('Refund processing error:', error);
         return new Response(JSON.stringify({ 
             error: 'Refund processing failed',
-            message: error.message 
+            message: 'Internal server error' 
         }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }

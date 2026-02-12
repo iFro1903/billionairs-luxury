@@ -74,8 +74,7 @@ export default async function handler(req) {
     } catch (error) {
         console.error('Setup error:', error);
         return new Response(JSON.stringify({ 
-            error: error.message,
-            stack: error.stack
+            error: 'Internal server error'
         }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }
