@@ -863,6 +863,40 @@
                         <button type="button" class="payment-button" id="stripeCheckoutButton" onclick="handleStripeCheckout()">
                             <span class="button-text" data-i18n="payment.secure_payment">SECURE PAYMENT</span>
                         </button>
+
+                        <!-- SSL Security Seal -->
+                        <div class="ssl-seal" role="img" aria-label="SSL Secured Payment - 256-bit encryption">
+                            <div class="ssl-seal-inner">
+                                <div class="ssl-icon">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="rgba(232,180,160,0.3)" stroke="#E8B4A0" stroke-width="1.5"/>
+                                        <path d="M9.5 12l2 2 4-4" stroke="#E8B4A0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="ssl-text">
+                                    <span class="ssl-label">SSL SECURED</span>
+                                    <span class="ssl-detail">256-BIT ENCRYPTION</span>
+                                </div>
+                                <div class="ssl-separator">|</div>
+                                <div class="ssl-stripe-badge">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="2" y="5" width="20" height="14" rx="3" stroke="#E8B4A0" stroke-width="1.2" fill="none"/>
+                                        <path d="M2 10h20" stroke="#E8B4A0" stroke-width="1.2"/>
+                                        <rect x="5" y="13" width="5" height="2" rx="0.5" fill="rgba(232,180,160,0.4)"/>
+                                    </svg>
+                                    <span class="ssl-label">PCI DSS</span>
+                                </div>
+                                <div class="ssl-separator">|</div>
+                                <div class="ssl-lock-badge">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="5" y="11" width="14" height="10" rx="2" stroke="#E8B4A0" stroke-width="1.3" fill="rgba(232,180,160,0.15)"/>
+                                        <path d="M8 11V7a4 4 0 1 1 8 0v4" stroke="#E8B4A0" stroke-width="1.3" stroke-linecap="round"/>
+                                        <circle cx="12" cy="16" r="1.5" fill="#E8B4A0"/>
+                                    </svg>
+                                    <span class="ssl-label">HTTPS</span>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

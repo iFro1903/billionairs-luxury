@@ -1729,6 +1729,88 @@ input:-webkit-autofill::first-line {
     margin-bottom: 0.2rem;
 }
 
+/* ==================== SSL SECURITY SEAL ==================== */
+.ssl-seal {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.ssl-seal-inner {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgba(232, 180, 160, 0.15);
+    border-radius: 8px;
+    background: rgba(232, 180, 160, 0.03);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.ssl-icon,
+.ssl-stripe-badge,
+.ssl-lock-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.ssl-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+}
+
+.ssl-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+    color: rgba(232, 180, 160, 0.7);
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.ssl-detail {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.5rem;
+    font-weight: 400;
+    letter-spacing: 1.2px;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.ssl-separator {
+    color: rgba(232, 180, 160, 0.15);
+    font-size: 0.9rem;
+    font-weight: 200;
+    user-select: none;
+}
+
+@media (max-width: 480px) {
+    .ssl-seal-inner {
+        gap: 0.5rem;
+        padding: 0.6rem 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .ssl-separator {
+        display: none;
+    }
+    
+    .ssl-label {
+        font-size: 0.55rem;
+    }
+    
+    .ssl-detail {
+        font-size: 0.45rem;
+    }
+}
+
 .button-amount {
     display: block;
     font-size: 0.9rem;
