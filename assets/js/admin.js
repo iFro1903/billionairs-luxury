@@ -136,6 +136,15 @@ class AdminPanel {
         // Setup bulk Easter Egg controls
         this.setupBulkEasterEggControls();
 
+        // Setup create member form
+        const createMemberForm = document.getElementById('createMemberForm');
+        if (createMemberForm) {
+            createMemberForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.createMember();
+            });
+        }
+
         // Check emergency mode status
         this.checkEmergencyMode();
 
@@ -434,6 +443,57 @@ class AdminPanel {
         if (hours < 24) return `${hours}h ago`;
         if (days < 7) return `${days}d ago`;
         return date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
+
+    async createMember() {
+        const email = document.getElementById('newMemberEmail').value.trim().toLowerCase();
+        const password = document.getElementById('newMemberPassword').value;
+        const fullName = document.getElementById('newMemberName').value.trim();
+        const markAsPaid = document.getElementById('newMemberPaid').checked;
+        const resultDiv = document.getElementById('createMemberResult');
+
+        if (!email || !password) {
+            resultDiv.innerHTML = '<span style="color: #e74c3c;">❌ Email and password required</span>';
+            return;
+        }
+
+        if (password.length < 8) {
+            resultDiv.innerHTML = '<span style="color: #e74c3c;">❌ Password must be at least 8 characters</span>';
+            return;
+        }
+
+        resultDiv.innerHTML = '<span style="color: #E8B4A0;">⏳ Creating member...</span>';
+
+        try {
+            const adminSession = JSON.parse(sessionStorage.getItem('adminSession'));
+
+            const response = await fetch('/api/admin-create-member', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Admin-Email': adminSession.email,
+                    'X-Admin-Password': adminSession.password
+                },
+                body: JSON.stringify({ email, password, fullName, markAsPaid })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                resultDiv.innerHTML = `<span style="color: #2ecc71;">✅ ${this.escapeHtml(data.message)} (${data.member.memberId})</span>`;
+                // Clear form
+                document.getElementById('newMemberEmail').value = '';
+                document.getElementById('newMemberPassword').value = '';
+                document.getElementById('newMemberName').value = '';
+                // Refresh user list
+                this.loadUsersData();
+            } else {
+                resultDiv.innerHTML = `<span style="color: #e74c3c;">❌ ${this.escapeHtml(data.error || 'Failed to create member')}</span>`;
+            }
+        } catch (error) {
+            console.error('Create member error:', error);
+            resultDiv.innerHTML = '<span style="color: #e74c3c;">❌ Connection error. Please try again.</span>';
+        }
     }
 
     async toggleFeature(email, feature, unlock) {
