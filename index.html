@@ -404,7 +404,7 @@
     </nav>
     
     <!-- Quick Language Dropdown (mobile only) -->
-    <div class="quick-lang-dropdown" id="quickLangDropdown">
+    <div class="quick-lang-dropdown" id="quickLangDropdown" style="display:none;">
         <a href="#" class="quick-lang-option" data-lang="en">EN</a>
         <a href="#" class="quick-lang-option" data-lang="de">DE</a>
         <a href="#" class="quick-lang-option" data-lang="fr">FR</a>
@@ -1732,8 +1732,14 @@
             flagBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                flagBtn.classList.toggle('active');
-                quickDropdown.classList.toggle('active');
+                const isOpen = flagBtn.classList.toggle('active');
+                if (isOpen) {
+                    quickDropdown.style.display = 'flex';
+                    quickDropdown.classList.add('active');
+                } else {
+                    quickDropdown.style.display = 'none';
+                    quickDropdown.classList.remove('active');
+                }
                 
                 // Mark current language as active
                 const curLang = localStorage.getItem('billionairs_lang') || 'en';
@@ -1747,6 +1753,7 @@
                 if (!flagBtn.contains(e.target) && !quickDropdown.contains(e.target)) {
                     flagBtn.classList.remove('active');
                     quickDropdown.classList.remove('active');
+                    quickDropdown.style.display = 'none';
                 }
             });
             
@@ -1789,6 +1796,7 @@
                             // Close dropdown
                             flagBtn.classList.remove('active');
                             quickDropdown.classList.remove('active');
+                            quickDropdown.style.display = 'none';
                         } else {
                             console.error('i18n not available');
                         }
