@@ -282,43 +282,70 @@ class AdminPanel {
         // Filter out CEO
         const regularUsers = users.filter(u => u.email !== this.ceoEmail);
 
+        // Update member count
+        const countEl = document.getElementById('memberCount');
+        if (countEl) countEl.textContent = `${regularUsers.length} Members`;
+
         if (regularUsers.length === 0) {
-            container.innerHTML = '<p style="color: #999; text-align: center; padding: 2rem;">No users found</p>';
+            container.innerHTML = '<p style="color: #999; text-align: center; padding: 2rem;">No members found</p>';
             return;
         }
 
+        const now = Date.now();
+        const fiveMinMs = 5 * 60 * 1000;
+
         regularUsers.forEach(user => {
             const safeEmail = this.escapeHtml(user.email);
-            const safeName = this.escapeHtml(user.name || 'No name');
+            const safeName = this.escapeHtml(user.full_name || user.name || '');
+            const displayName = safeName || safeEmail.split('@')[0];
+            
+            // Online status (active in last 5 min)
+            const lastSeen = user.last_seen ? new Date(user.last_seen) : null;
+            const isOnline = lastSeen && (now - lastSeen.getTime()) < fiveMinMs;
+            const lastSeenText = lastSeen ? this.formatTimeAgo(lastSeen) : 'Never';
+            
+            // Payment info
+            const paidAt = user.paid_at ? new Date(user.paid_at) : null;
+            const paidAtText = paidAt ? paidAt.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + paidAt.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) : '—';
+            const registeredAt = user.created_at ? new Date(user.created_at).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '—';
+
             const card = document.createElement('div');
             card.className = 'user-control-card';
             card.dataset.userEmail = user.email.toLowerCase();
-            card.dataset.userName = (user.name || '').toLowerCase();
+            card.dataset.userName = (user.full_name || user.name || '').toLowerCase();
             
             card.innerHTML = `
-                <div class="user-control-header">
-                    <div class="user-control-email">${safeEmail}</div>
-                    <div class="user-control-name">${safeName}</div>
-                    <span class="user-control-status ${user.has_paid ? 'paid' : 'free'}">
+                <div class="user-control-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                            <span style="width: 10px; height: 10px; border-radius: 50%; background: ${isOnline ? '#2ecc71' : '#555'}; display: inline-block; flex-shrink: 0; box-shadow: ${isOnline ? '0 0 8px rgba(46,204,113,0.6)' : 'none'};"></span>
+                            <span style="font-weight: 600; font-size: 15px; color: #E8B4A0;">${displayName}</span>
+                            ${isOnline ? '<span style="font-size: 10px; color: #2ecc71; text-transform: uppercase; letter-spacing: 1px;">ONLINE</span>' : ''}
+                        </div>
+                        <div class="user-control-email" style="font-size: 12px; color: #888; margin-left: 18px;">${safeEmail}</div>
+                    </div>
+                    <span class="user-control-status ${user.has_paid ? 'paid' : 'free'}" style="flex-shrink: 0;">
                         ${user.has_paid ? '💎 Paid' : '🆓 Free'}
                     </span>
                 </div>
 
-                <div class="easter-egg-features">
-                    <!-- Pyramid Status (automatic after 8s, no manual control) -->
-                    <div class="feature-control" style="opacity: 0.6;">
-                        <div class="feature-control-header">
-                            <span class="feature-name">🔺 Pyramid</span>
-                            <div class="feature-status">
-                                <span class="status-indicator ${user.pyramid_unlocked ? 'unlocked' : 'locked'}"></span>
-                                <span class="status-text">${user.pyramid_unlocked ? 'Unlocked' : 'Locked'} (auto)</span>
-                            </div>
-                        </div>
-                        <div class="feature-buttons" style="opacity: 0.4; pointer-events: none;">
-                            <span style="font-size: 11px; color: rgba(255,255,255,0.5); padding: 8px;">Appears automatically after 8 seconds</span>
-                        </div>
+                <!-- Member Info Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin: 12px 0; padding: 10px; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px solid rgba(232,180,160,0.08);">
+                    <div style="text-align: center;">
+                        <div style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px;">Registered</div>
+                        <div style="font-size: 13px; color: #ccc;">${registeredAt}</div>
                     </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px;">Last Login</div>
+                        <div style="font-size: 13px; color: ${isOnline ? '#2ecc71' : '#ccc'};">${lastSeenText}</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px;">Payment</div>
+                        <div style="font-size: 13px; color: ${paidAt ? '#2ecc71' : '#e74c3c'};">${paidAtText}</div>
+                    </div>
+                </div>
 
+                <div class="easter-egg-features">
                     <!-- Eye Control -->
                     <div class="feature-control">
                         <div class="feature-control-header">
@@ -347,19 +374,19 @@ class AdminPanel {
                         <div class="feature-control-header">
                             <span class="feature-name">💬 Chat</span>
                             <div class="feature-status">
-                                <span class="status-indicator ${user.chat_unlocked ? 'unlocked' : 'locked'}"></span>
-                                <span class="status-text">${user.chat_unlocked ? 'Unlocked' : 'Locked'}</span>
+                                <span class="status-indicator ${user.chat_ready || user.chat_unlocked ? 'unlocked' : 'locked'}"></span>
+                                <span class="status-text">${user.chat_ready || user.chat_unlocked ? 'Unlocked' : 'Locked'}</span>
                             </div>
                         </div>
                         <div class="feature-buttons">
                             <button class="feature-toggle-btn unlock" 
                                     onclick="adminPanel.toggleFeature('${safeEmail}', 'chat', true)"
-                                    ${user.chat_unlocked ? 'disabled' : ''}>
+                                    ${user.chat_ready || user.chat_unlocked ? 'disabled' : ''}>
                                 ✅ Unlock
                             </button>
                             <button class="feature-toggle-btn lock" 
                                     onclick="adminPanel.toggleFeature('${safeEmail}', 'chat', false)"
-                                    ${!user.chat_unlocked ? 'disabled' : ''}>
+                                    ${!(user.chat_ready || user.chat_unlocked) ? 'disabled' : ''}>
                                 🔒 Lock
                             </button>
                         </div>
@@ -373,18 +400,40 @@ class AdminPanel {
         // Setup search functionality
         const searchInput = document.getElementById('easterEggUserSearch');
         if (searchInput) {
-            searchInput.addEventListener('input', (e) => {
+            // Remove old listener by cloning
+            const newInput = searchInput.cloneNode(true);
+            searchInput.parentNode.replaceChild(newInput, searchInput);
+            
+            newInput.addEventListener('input', (e) => {
                 const searchTerm = e.target.value.toLowerCase();
                 const cards = container.querySelectorAll('.user-control-card');
+                let visible = 0;
                 
                 cards.forEach(card => {
                     const email = card.dataset.userEmail;
                     const name = card.dataset.userName;
                     const matches = email.includes(searchTerm) || name.includes(searchTerm);
                     card.style.display = matches ? 'block' : 'none';
+                    if (matches) visible++;
                 });
+
+                if (countEl) countEl.textContent = searchTerm ? `${visible} / ${regularUsers.length} Members` : `${regularUsers.length} Members`;
             });
         }
+    }
+
+    formatTimeAgo(date) {
+        const now = Date.now();
+        const diff = now - date.getTime();
+        const mins = Math.floor(diff / 60000);
+        const hours = Math.floor(diff / 3600000);
+        const days = Math.floor(diff / 86400000);
+
+        if (mins < 1) return 'Just now';
+        if (mins < 60) return `${mins}m ago`;
+        if (hours < 24) return `${hours}h ago`;
+        if (days < 7) return `${days}d ago`;
+        return date.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
     }
 
     async toggleFeature(email, feature, unlock) {

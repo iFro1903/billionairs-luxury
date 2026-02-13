@@ -174,20 +174,21 @@
                     </div>
                 </div>
 
-                <!-- Individual User Control -->
+                <!-- All Members Overview -->
                 <div class="control-section">
-                    <h3>👥 Individual User Controls</h3>
+                    <h3>👥 All Members</h3>
                     <p style="color: #999; font-size: 14px; margin-bottom: 20px;">
-                        Control Easter Egg features for each user individually
+                        All members with status, controls and activity
                     </p>
                     
-                    <div class="users-search-bar" style="margin-bottom: 20px;">
-                        <input type="text" id="easterEggUserSearch" placeholder="🔍 Search users by email or name..." 
-                               style="width: 100%; padding: 0.75rem; background: rgba(232, 196, 168, 0.05); border: 1px solid rgba(232, 196, 168, 0.2); border-radius: 8px; color: #e8e8e8;">
+                    <div class="users-search-bar" style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center;">
+                        <input type="text" id="easterEggUserSearch" placeholder="🔍 Search by email or name..." 
+                               style="flex: 1; padding: 0.75rem; background: rgba(232, 196, 168, 0.05); border: 1px solid rgba(232, 196, 168, 0.2); border-radius: 8px; color: #e8e8e8;">
+                        <span id="memberCount" style="color: #E8B4A0; font-size: 13px; white-space: nowrap;"></span>
                     </div>
 
                     <div id="individualUserControls" class="individual-users-grid">
-                        <!-- Dynamic user cards will be inserted here -->
+                        <!-- Dynamic member cards -->
                     </div>
                 </div>
             </div>

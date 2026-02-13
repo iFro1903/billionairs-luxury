@@ -44,8 +44,12 @@ export default async function handler(req) {
                 SELECT 
                     email,
                     name,
+                    full_name,
                     created_at,
                     has_paid,
+                    payment_status,
+                    paid_at,
+                    last_seen,
                     pyramid_unlocked,
                     eye_unlocked,
                     chat_unlocked,
@@ -72,7 +76,8 @@ export default async function handler(req) {
         // Calculate stats
         const total = users.length;
         const paid = users.filter(u => u.has_paid).length;
-        const active = 0; // Simplified for now
+        const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000);
+        const active = users.filter(u => u.last_seen && new Date(u.last_seen) > fiveMinAgo).length;
 
         return new Response(JSON.stringify({
             users: users || [],
