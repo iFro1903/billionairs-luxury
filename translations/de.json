@@ -201,7 +201,9 @@
     "not_found": "Nicht gefunden",
     "server_error": "Serverfehler. Bitte versuchen Sie es später erneut.",
     "validation_error": "Validierungsfehler",
-    "unknown_error": "Ein unbekannter Fehler ist aufgetreten"
+    "unknown_error": "Ein unbekannter Fehler ist aufgetreten",
+    "connection_error": "Verbindungsfehler. Bitte versuchen Sie es erneut.",
+    "generic_error": "Ein Fehler ist aufgetreten."
   },
   "common": {
     "loading": "Lädt...",
@@ -409,7 +411,10 @@
     "password_requirements": "Mindestens 8 Zeichen",
     "confirm_password": "Passwort best\u00e4tigen",
     "submit": "Inner Circle betreten",
-    "back_home": "\u2190 Zur\u00fcck zur Startseite"
+    "back_home": "\u2190 Zur\u00fcck zur Startseite",
+    "error_name_required": "Bitte geben Sie Ihren Vor- und Nachnamen ein",
+    "error_password_mismatch": "Passw\u00f6rter stimmen nicht \u00fcberein",
+    "error_password_short": "Passwort muss mindestens 8 Zeichen lang sein"
   },
   "faq": {
     "title": "FAQ",
@@ -508,7 +513,8 @@
     "s5_text": "Sie k\u00f6nnen Ihre Cookie-Einstellungen jederzeit \u00e4ndern, indem Sie auf den Link \"Cookie-Einstellungen\" am Ende jeder Seite klicken oder Ihre gespeicherten Pr\u00e4ferenzen im Browser l\u00f6schen.",
     "s6_title": "6. Kontakt",
     "s6_text": "Bei Fragen zu unserer Cookie-Richtlinie kontaktieren Sie uns bitte unter:",
-    "back": "\u2190 Zur\u00fcck zur Startseite"
+    "back": "\u2190 Zur\u00fcck zur Startseite",
+    "table_caption": "\u00dcbersicht der auf dieser Website verwendeten Cookies"
   },
   "privacy_page": {
     "title": "Datenschutzerkl\u00e4rung",
@@ -572,5 +578,20 @@
     "s12_title": "12. \u00c4nderungen dieser Erkl\u00e4rung",
     "s12_text": "Wir behalten uns das Recht vor, diese Datenschutzerkl\u00e4rung zu aktualisieren, um \u00c4nderungen unserer Dienste oder rechtliche Anforderungen widerzuspiegeln. Die aktuelle Version ist stets auf unserer Website verf\u00fcgbar.",
     "back": "\u2190 Zur\u00fcck zur Startseite"
+  },
+  "error_404": {
+    "title": "Die falsche T\u00fcr",
+    "message": "In einem Haus mit unendlich vielen R\u00e4umen haben Sie einen gew\u00e4hlt, der nicht existiert.",
+    "subtle_1": "Die meisten verbringen ihr Leben damit, nach T\u00fcren zu suchen, die nie verschlossen waren.",
+    "subtle_2": "Andere wissen, welche Hallen zur Macht f\u00fchren.",
+    "subtle_3": "Der Unterschied ist nicht Intelligenz. Es ist Zugang.",
+    "quote_text": "\"Ich kaufe keine Erlebnisse. Ich kaufe Zeit. Und Zeit kann man, anders als Geld, niemals zur\u00fcckbekommen.\"",
+    "quote_author": "\u2014 UNGENANNT, NETTOVERM\u00d6GEN: $4,7 Mrd.",
+    "reality_1": "Diese Seite kostet nichts, weil sie nichts bietet.",
+    "reality_2": "Die echten T\u00fcren? Die haben ihren Preis.",
+    "reality_3": "Und wer ihn zahlt, verlangt nie eine R\u00fcckerstattung.",
+    "return_home": "ZUR\u00dcCK ZUR STARTSEITE",
+    "contact_us": "KONTAKT",
+    "footer": "BILLIONAIRS \u00a9 2026"
   }
 }

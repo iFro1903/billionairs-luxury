@@ -291,7 +291,10 @@
     "password_requirements": "Mínimo 8 caracteres",
     "confirm_password": "Confirmar contraseña",
     "submit": "Entrar al Inner Circle",
-    "back_home": "← Volver al inicio"
+    "back_home": "← Volver al inicio",
+    "error_name_required": "Por favor, introduzca su nombre y apellido",
+    "error_password_mismatch": "Las contrase\u00f1as no coinciden",
+    "error_password_short": "La contrase\u00f1a debe tener al menos 8 caracteres"
   },
   "faq": {
     "title": "FAQ",
@@ -390,7 +393,8 @@
     "s5_text": "Puede cambiar su configuraci\u00f3n de cookies en cualquier momento haciendo clic en el enlace \"Configuraci\u00f3n de cookies\" en la parte inferior de cada p\u00e1gina o eliminando sus preferencias guardadas en el navegador.",
     "s6_title": "6. Contacto",
     "s6_text": "Para consultas sobre nuestra pol\u00edtica de cookies, cont\u00e1ctenos en:",
-    "back": "\u2190 Volver al inicio"
+    "back": "\u2190 Volver al inicio",
+    "table_caption": "Resumen de las cookies utilizadas en este sitio web"
   },
   "privacy_page": {
     "title": "Pol\u00edtica de Privacidad",
@@ -454,5 +458,24 @@
     "s12_title": "12. Cambios en esta pol\u00edtica",
     "s12_text": "Nos reservamos el derecho de actualizar esta pol\u00edtica de privacidad para reflejar cambios en nuestros servicios o requisitos legales. La versi\u00f3n actual siempre est\u00e1 disponible en nuestro sitio web.",
     "back": "\u2190 Volver al inicio"
+  },
+  "errors": {
+    "connection_error": "Error de conexi\u00f3n. Por favor, int\u00e9ntelo de nuevo.",
+    "generic_error": "Se ha producido un error."
+  },
+  "error_404": {
+    "title": "La puerta equivocada",
+    "message": "En una casa con habitaciones infinitas, elegiste una que no existe.",
+    "subtle_1": "La mayor\u00eda pasa toda su vida buscando puertas que nunca estuvieron cerradas.",
+    "subtle_2": "Otros saben qu\u00e9 pasillos conducen al poder.",
+    "subtle_3": "La diferencia no es la inteligencia. Es el acceso.",
+    "quote_text": "\"No compro experiencias. Compro tiempo. Y el tiempo, a diferencia del dinero, nunca se recupera.\"",
+    "quote_author": "\u2014 NO REVELADO, PATRIMONIO NETO: $4.700M",
+    "reality_1": "Esta p\u00e1gina no cuesta nada porque no ofrece nada.",
+    "reality_2": "\u00bfLas puertas reales? Esas tienen un precio.",
+    "reality_3": "Y quienes lo pagan nunca piden reembolso.",
+    "return_home": "VOLVER AL INICIO",
+    "contact_us": "CONT\u00c1CTENOS",
+    "footer": "BILLIONAIRS \u00a9 2026"
   }
 }

@@ -253,8 +253,8 @@
                 Create your account to access the INNER CIRCLE.
             </p>
 
-            <div id="errorMessage" class="error-message"></div>
-            <div id="successMessage" class="success-message"></div>
+            <div id="errorMessage" class="error-message" role="alert" aria-live="assertive"></div>
+            <div id="successMessage" class="success-message" role="status" aria-live="polite"></div>
 
             <!-- Create Account Form -->
             <form id="createAccountForm">
@@ -361,19 +361,22 @@
 
             // Validate names
             if (!firstName || !lastName) {
-                showError('Please enter your first and last name');
+                const nameMsg = (window.i18nManager && window.i18nManager.t('create_account.error_name_required')) || 'Please enter your first and last name';
+                showError(nameMsg);
                 return;
             }
 
             // Validate passwords match
             if (password !== passwordConfirm) {
-                showError('Passwords do not match');
+                const matchMsg = (window.i18nManager && window.i18nManager.t('create_account.error_password_mismatch')) || 'Passwords do not match';
+                showError(matchMsg);
                 return;
             }
 
             // Validate password length
             if (password.length < 8) {
-                showError('Password must be at least 8 characters');
+                const lenMsg = (window.i18nManager && window.i18nManager.t('create_account.error_password_short')) || 'Password must be at least 8 characters';
+                showError(lenMsg);
                 return;
             }
 

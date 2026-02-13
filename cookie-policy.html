@@ -13,6 +13,17 @@
     <script src="/assets/js/i18n.js" defer></script>
     <script src="/assets/js/lang-dropdown-simple.js" defer></script>
     <style>
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
         body {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
             color: #fff;
@@ -39,6 +50,10 @@
         p {
             line-height: 1.8;
             margin-bottom: 15px;
+        }
+        .cookie-table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
         .cookie-table {
             width: 100%;
@@ -82,12 +97,14 @@
 
         <h2 data-i18n="cookie_policy.s2_title">2. What Cookies Do We Use?</h2>
         
+        <div class="cookie-table-wrapper">
         <table class="cookie-table">
+            <caption class="sr-only" data-i18n="cookie_policy.table_caption">Overview of cookies used on this website</caption>
             <thead>
                 <tr>
-                    <th data-i18n="cookie_policy.th_category">Cookie Category</th>
-                    <th data-i18n="cookie_policy.th_purpose">Purpose</th>
-                    <th data-i18n="cookie_policy.th_duration">Duration</th>
+                    <th scope="col" data-i18n="cookie_policy.th_category">Cookie Category</th>
+                    <th scope="col" data-i18n="cookie_policy.th_purpose">Purpose</th>
+                    <th scope="col" data-i18n="cookie_policy.th_duration">Duration</th>
                 </tr>
             </thead>
             <tbody>
@@ -113,6 +130,7 @@
                 </tr>
             </tbody>
         </table>
+        </div>
 
         <h2 data-i18n="cookie_policy.s3_title">3. Google Analytics</h2>
         <p data-i18n="cookie_policy.s3_text1">We use Google Analytics 4 to understand how visitors use our website. This data is used exclusively in aggregate form and contains no personally identifiable information.</p>

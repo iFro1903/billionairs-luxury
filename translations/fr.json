@@ -291,7 +291,10 @@
     "password_requirements": "Minimum 8 caractères",
     "confirm_password": "Confirmer le mot de passe",
     "submit": "Entrer dans le Inner Circle",
-    "back_home": "← Retour à l'accueil"
+    "back_home": "← Retour à l'accueil",
+    "error_name_required": "Veuillez entrer votre prénom et nom",
+    "error_password_mismatch": "Les mots de passe ne correspondent pas",
+    "error_password_short": "Le mot de passe doit contenir au moins 8 caractères"
   },
   "faq": {
     "title": "FAQ",
@@ -390,7 +393,8 @@
     "s5_text": "Vous pouvez modifier vos param\u00e8tres de cookies \u00e0 tout moment en cliquant sur le lien \"Param\u00e8tres des cookies\" en bas de chaque page ou en supprimant vos pr\u00e9f\u00e9rences enregistr\u00e9es dans le navigateur.",
     "s6_title": "6. Contact",
     "s6_text": "Pour toute question concernant notre politique de cookies, veuillez nous contacter \u00e0 :",
-    "back": "\u2190 Retour \u00e0 l'accueil"
+    "back": "\u2190 Retour \u00e0 l'accueil",
+    "table_caption": "Aper\u00e7u des cookies utilis\u00e9s sur ce site"
   },
   "privacy_page": {
     "title": "Politique de confidentialit\u00e9",
@@ -454,5 +458,24 @@
     "s12_title": "12. Modifications de cette politique",
     "s12_text": "Nous nous r\u00e9servons le droit de mettre \u00e0 jour cette politique de confidentialit\u00e9 pour refl\u00e9ter les changements apport\u00e9s \u00e0 nos services ou aux exigences l\u00e9gales. La version actuelle est toujours disponible sur notre site.",
     "back": "\u2190 Retour \u00e0 l'accueil"
+  },
+  "errors": {
+    "connection_error": "Erreur de connexion. Veuillez r\u00e9essayer.",
+    "generic_error": "Une erreur s'est produite."
+  },
+  "error_404": {
+    "title": "La mauvaise porte",
+    "message": "Dans une maison aux pi\u00e8ces infinies, vous avez choisi celle qui n'existe pas.",
+    "subtle_1": "La plupart passent leur vie \u00e0 chercher des portes qui n'ont jamais \u00e9t\u00e9 verrouill\u00e9es.",
+    "subtle_2": "D'autres savent quels couloirs m\u00e8nent au pouvoir.",
+    "subtle_3": "La diff\u00e9rence n'est pas l'intelligence. C'est l'acc\u00e8s.",
+    "quote_text": "\"Je n'ach\u00e8te pas des exp\u00e9riences. J'ach\u00e8te du temps. Et le temps, contrairement \u00e0 l'argent, ne se r\u00e9cup\u00e8re jamais.\"",
+    "quote_author": "\u2014 NON DIVULGU\u00c9, FORTUNE NETTE : 4,7 Mrd $",
+    "reality_1": "Cette page ne co\u00fbte rien parce qu'elle n'offre rien.",
+    "reality_2": "Les vraies portes ? Elles ont un prix.",
+    "reality_3": "Et ceux qui le paient ne demandent jamais de remboursement.",
+    "return_home": "RETOUR \u00c0 L'ACCUEIL",
+    "contact_us": "NOUS CONTACTER",
+    "footer": "BILLIONAIRS \u00a9 2026"
   }
 }

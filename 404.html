@@ -6,6 +6,10 @@
     <title>404 - BILLIONAIRS</title>
     <meta name="robots" content="noindex, nofollow">
     
+    <!-- GDPR Cookie Consent -->
+    <link rel="stylesheet" href="assets/css/cookie-consent.css?v=20260211">
+    <script src="assets/js/cookie-consent.js?v=20260211"></script>
+    
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
@@ -18,7 +22,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Particles.js -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    
+    <!-- i18n -->
+    <script src="/assets/js/i18n.js" defer></script>
+    <script src="/assets/js/lang-dropdown-simple.js" defer></script>
     
     <style>
         * {
@@ -378,38 +386,53 @@
 
         <div class="error-code">404</div>
         
-        <h1 class="error-title">The Wrong Door</h1>
+        <h1 class="error-title" data-i18n="error_404.title">The Wrong Door</h1>
         
         <div class="error-divider"></div>
         
-        <p class="error-message">
+        <p class="error-message" data-i18n="error_404.message">
             In a house with infinite rooms, you chose one that doesn't exist.
         </p>
         
         <p class="error-subtle">
-            Most spend lifetimes searching for doors that were never locked.<br>
-            Others know which halls lead to power.<br>
-            The difference isn't intelligence. It's access.
+            <span data-i18n="error_404.subtle_1">Most spend lifetimes searching for doors that were never locked.</span><br>
+            <span data-i18n="error_404.subtle_2">Others know which halls lead to power.</span><br>
+            <span data-i18n="error_404.subtle_3">The difference isn't intelligence. It's access.</span>
         </p>
         
         <div class="error-quote">
-            <p class="quote-text">"I don't buy experiences. I buy time. And time, unlike money, you can never get back."</p>
-            <p class="quote-author">— UNDISCLOSED, NET WORTH: $4.7B</p>
+            <p class="quote-text" data-i18n="error_404.quote_text">"I don't buy experiences. I buy time. And time, unlike money, you can never get back."</p>
+            <p class="quote-author" data-i18n="error_404.quote_author">— UNDISCLOSED, NET WORTH: $4.7B</p>
         </div>
         
         <div class="error-reality">
-            <p class="reality-line">This page costs nothing because it offers nothing.</p>
-            <p class="reality-line">The real doors? Those have a price.</p>
-            <p class="reality-line">And those who pay it never ask for refunds.</p>
+            <p class="reality-line" data-i18n="error_404.reality_1">This page costs nothing because it offers nothing.</p>
+            <p class="reality-line" data-i18n="error_404.reality_2">The real doors? Those have a price.</p>
+            <p class="reality-line" data-i18n="error_404.reality_3">And those who pay it never ask for refunds.</p>
         </div>
 
         <div class="error-actions">
-            <a href="index.html" class="home-button">RETURN HOME</a>
-            <a href="mailto:elite@billionairs.luxury" class="contact-button">CONTACT US</a>
+            <a href="index.html" class="home-button" data-i18n="error_404.return_home">RETURN HOME</a>
+            <a href="mailto:elite@billionairs.luxury" class="contact-button" data-i18n="error_404.contact_us">CONTACT US</a>
         </div>
 
-        <p class="error-footer">BILLIONAIRS © 2025</p>
+        <p class="error-footer" data-i18n="error_404.footer">BILLIONAIRS © 2026</p>
     </div>
+
+    <!-- i18n Initialization -->
+    <script>
+        async function init404() {
+            if (typeof I18nManager !== 'undefined') {
+                window.i18nManager = new I18nManager();
+                await window.i18nManager.init();
+            }
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init404);
+        } else {
+            init404();
+        }
+    </script>
 
     <!-- Particles.js Configuration -->
     <script>

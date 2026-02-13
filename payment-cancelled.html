@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="payment_cancelled.page_title">Payment Cancelled - BILLIONAIRS</title>
+    <!-- GDPR Cookie Consent -->
+    <link rel="stylesheet" href="assets/css/cookie-consent.css?v=20260211">
+    <script src="assets/js/cookie-consent.js?v=20260211"></script>
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/assets/images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/lang-dropdown-simple.js"></script>
     <style>
         * {
             margin: 0;
@@ -121,7 +125,7 @@
     <div class="cancel-container">
         <a href="/" style="display: inline-block; margin-bottom: 1rem;"><img src="assets/images/logo.png" alt="BILLIONAIRS" style="height: 50px; opacity: 0.9;"></a>
         <div class="cancel-icon">
-            <svg viewBox="0 0 52 52">
+            <svg viewBox="0 0 52 52" role="img" aria-label="Payment cancelled">
                 <circle cx="26" cy="26" r="25" fill="none" stroke="#ff6b6b" stroke-width="2"/>
                 <path fill="none" stroke="#ff6b6b" stroke-width="3" stroke-linecap="round" d="M18 18 L34 34 M34 18 L18 34"/>
             </svg>
@@ -151,8 +155,22 @@
         const lang = urlParams.get('lang') 
                   || localStorage.getItem('billionairs_lang') 
                   || 'en';
-        if (window.i18n && typeof window.i18n.setLanguage === 'function') {
-            window.i18n.setLanguage(lang);
+
+        // Initialize i18n properly
+        async function initCancelledPage() {
+            if (typeof I18nManager !== 'undefined') {
+                window.i18nManager = new I18nManager();
+                await window.i18nManager.init();
+                await window.i18nManager.switchLanguage(lang);
+            } else if (window.i18n) {
+                await window.i18n.init();
+                await window.i18n.switchLanguage(lang);
+            }
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCancelledPage);
+        } else {
+            initCancelledPage();
         }
 
         function retryPayment() {

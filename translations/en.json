@@ -201,7 +201,9 @@
     "not_found": "Not found",
     "server_error": "Server error. Please try again later.",
     "validation_error": "Validation error",
-    "unknown_error": "An unknown error occurred"
+    "unknown_error": "An unknown error occurred",
+    "connection_error": "Connection error. Please try again.",
+    "generic_error": "An error occurred."
   },
   "common": {
     "loading": "Loading...",
@@ -406,7 +408,10 @@
     "password_requirements": "Minimum 8 characters",
     "confirm_password": "Confirm Password",
     "submit": "Enter the Inner Circle",
-    "back_home": "\u2190 Back to Home"
+    "back_home": "\u2190 Back to Home",
+    "error_name_required": "Please enter your first and last name",
+    "error_password_mismatch": "Passwords do not match",
+    "error_password_short": "Password must be at least 8 characters"
   },
   "faq": {
     "title": "FAQ",
@@ -505,7 +510,8 @@
     "s5_text": "You can change your cookie settings at any time by clicking the \"Cookie Settings\" link at the bottom of each page or by deleting your saved preferences in the browser.",
     "s6_title": "6. Contact",
     "s6_text": "For questions about our cookie policy, please contact us at:",
-    "back": "\u2190 Back to Home"
+    "back": "\u2190 Back to Home",
+    "table_caption": "Overview of cookies used on this website"
   },
   "privacy_page": {
     "title": "Privacy Policy",
@@ -569,5 +575,20 @@
     "s12_title": "12. Changes to this Policy",
     "s12_text": "We reserve the right to update this privacy policy to reflect changes in our services or legal requirements. The current version is always available on our website.",
     "back": "\u2190 Back to Home"
+  },
+  "error_404": {
+    "title": "The Wrong Door",
+    "message": "In a house with infinite rooms, you chose one that doesn't exist.",
+    "subtle_1": "Most spend lifetimes searching for doors that were never locked.",
+    "subtle_2": "Others know which halls lead to power.",
+    "subtle_3": "The difference isn't intelligence. It's access.",
+    "quote_text": "\"I don't buy experiences. I buy time. And time, unlike money, you can never get back.\"",
+    "quote_author": "— UNDISCLOSED, NET WORTH: $4.7B",
+    "reality_1": "This page costs nothing because it offers nothing.",
+    "reality_2": "The real doors? Those have a price.",
+    "reality_3": "And those who pay it never ask for refunds.",
+    "return_home": "RETURN HOME",
+    "contact_us": "CONTACT US",
+    "footer": "BILLIONAIRS © 2026"
   }
 }

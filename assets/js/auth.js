@@ -5,7 +5,15 @@ class AuthManager {
     constructor() {
         this.token = localStorage.getItem('billionairs_token');
         const storedUser = localStorage.getItem('billionairs_user');
-        this.user = storedUser ? JSON.parse(storedUser) : null;
+        try {
+            this.user = storedUser ? JSON.parse(storedUser) : null;
+        } catch (e) {
+            console.warn('Corrupt user data in localStorage, resetting.');
+            localStorage.removeItem('billionairs_user');
+            localStorage.removeItem('billionairs_token');
+            this.user = null;
+            this.token = null;
+        }
     }
 
     // Register new user

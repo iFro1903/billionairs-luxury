@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Skip Navigation -->
+
 <head>
     <!-- GDPR Cookie Consent (MUST load BEFORE gtag) -->
     <link rel="stylesheet" href="assets/css/cookie-consent.css?v=20260211">
@@ -332,8 +334,8 @@
 
             <!-- Login only (registration handled via payment flow) -->
 
-            <div id="errorMessage" class="error-message"></div>
-            <div id="successMessage" class="success-message"></div>
+            <div id="errorMessage" class="error-message" role="alert" aria-live="assertive"></div>
+            <div id="successMessage" class="success-message" role="status" aria-live="polite"></div>
 
             <!-- Login Form -->
             <form id="loginForm" style="display: block;">
@@ -511,11 +513,13 @@
                     showSuccess(data.message);
                     document.getElementById('forgotEmail').value = '';
                 } else {
-                    showError(data.error || 'Ein Fehler ist aufgetreten.');
+                    const genericErr = (window.i18nManager && window.i18nManager.t('errors.generic_error')) || 'An error occurred.';
+                    showError(data.error || genericErr);
                 }
             } catch (error) {
                 console.error('Forgot password error:', error);
-                showError('Verbindungsfehler. Bitte versuchen Sie es erneut.');
+                const connMsg = (window.i18nManager && window.i18nManager.t('errors.connection_error')) || 'Connection error. Please try again.';
+                showError(connMsg);
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;

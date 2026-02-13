@@ -289,7 +289,10 @@
     "password_requirements": "Minimo 8 caratteri",
     "confirm_password": "Conferma password",
     "submit": "Entra nell'Inner Circle",
-    "back_home": "\u2190 Torna alla home"
+    "back_home": "\u2190 Torna alla home",
+    "error_name_required": "Inserisci il tuo nome e cognome",
+    "error_password_mismatch": "Le password non corrispondono",
+    "error_password_short": "La password deve contenere almeno 8 caratteri"
   },
   "faq": {
     "title": "FAQ",
@@ -388,7 +391,8 @@
     "s5_text": "Puoi modificare le impostazioni dei cookie in qualsiasi momento cliccando sul link \"Impostazioni cookie\" in fondo a ogni pagina o eliminando le preferenze salvate nel browser.",
     "s6_title": "6. Contatto",
     "s6_text": "Per domande sulla nostra politica dei cookie, contattaci a:",
-    "back": "\u2190 Torna alla home"
+    "back": "\u2190 Torna alla home",
+    "table_caption": "Panoramica dei cookie utilizzati su questo sito web"
   },
   "privacy_page": {
     "title": "Informativa sulla Privacy",
@@ -452,5 +456,24 @@
     "s12_title": "12. Modifiche a questa informativa",
     "s12_text": "Ci riserviamo il diritto di aggiornare questa informativa sulla privacy per riflettere i cambiamenti nei nostri servizi o requisiti legali. La versione attuale \u00e8 sempre disponibile sul nostro sito web.",
     "back": "\u2190 Torna alla home"
+  },
+  "errors": {
+    "connection_error": "Errore di connessione. Si prega di riprovare.",
+    "generic_error": "Si \u00e8 verificato un errore."
+  },
+  "error_404": {
+    "title": "La porta sbagliata",
+    "message": "In una casa con stanze infinite, hai scelto una che non esiste.",
+    "subtle_1": "La maggior parte trascorre la vita cercando porte che non sono mai state chiuse.",
+    "subtle_2": "Altri sanno quali corridoi portano al potere.",
+    "subtle_3": "La differenza non \u00e8 l'intelligenza. \u00c8 l'accesso.",
+    "quote_text": "\"Non compro esperienze. Compro tempo. E il tempo, a differenza del denaro, non si recupera mai.\"",
+    "quote_author": "\u2014 NON DIVULGATO, PATRIMONIO NETTO: $4,7 Mrd",
+    "reality_1": "Questa pagina non costa nulla perch\u00e9 non offre nulla.",
+    "reality_2": "Le vere porte? Quelle hanno un prezzo.",
+    "reality_3": "E chi lo paga non chiede mai un rimborso.",
+    "return_home": "TORNA ALLA HOME",
+    "contact_us": "CONTATTACI",
+    "footer": "BILLIONAIRS \u00a9 2026"
   }
 }
