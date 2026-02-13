@@ -36,7 +36,6 @@ class PushNotificationManager {
         }
 
         if (Notification.permission === 'granted') {
-            console.log('✅ Notification permission already granted');
             return true;
         }
 
@@ -47,7 +46,6 @@ class PushNotificationManager {
 
         try {
             const permission = await Notification.requestPermission();
-            console.log('📱 Notification permission:', permission);
             return permission === 'granted';
         } catch (err) {
             console.error('Error requesting notification permission:', err);
@@ -90,21 +88,16 @@ class PushNotificationManager {
 
             // Get service worker registration
             const registration = await navigator.serviceWorker.ready;
-            console.log('📡 Service Worker ready');
 
             // Check if already subscribed
             let subscription = await registration.pushManager.getSubscription();
             
             if (!subscription) {
                 // Create new subscription
-                console.log('🔔 Creating new push subscription...');
                 subscription = await registration.pushManager.subscribe({
                     userVisibleOnly: true,
                     applicationServerKey: this.urlBase64ToUint8Array(this.vapidPublicKey)
                 });
-                console.log('✅ Push subscription created');
-            } else {
-                console.log('✅ Already subscribed to push notifications');
             }
 
             this.subscription = subscription;
@@ -150,7 +143,6 @@ class PushNotificationManager {
             }
 
             const data = await response.json();
-            console.log('✅ Subscription sent to server:', data);
             return data;
         } catch (err) {
             console.error('❌ Failed to send subscription to server:', err);
@@ -170,7 +162,6 @@ class PushNotificationManager {
 
             if (this.subscription) {
                 await this.subscription.unsubscribe();
-                console.log('✅ Unsubscribed from push notifications');
                 this.subscription = null;
                 return true;
             }
@@ -246,5 +237,3 @@ window.pushManager = new PushNotificationManager();
 //         }
 //     });
 // }
-
-console.log('📱 Push Notification Manager loaded');

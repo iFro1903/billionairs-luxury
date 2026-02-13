@@ -168,21 +168,18 @@ class CookieConsent {
 
         if (acceptAllBtn) {
             acceptAllBtn.addEventListener('click', () => {
-                console.log('✅ Accept All clicked');
                 this.acceptAll();
             });
         }
 
         if (acceptSelectedBtn) {
             acceptSelectedBtn.addEventListener('click', () => {
-                console.log('✅ Accept Selected clicked');
                 this.acceptSelected();
             });
         }
 
         if (rejectAllBtn) {
             rejectAllBtn.addEventListener('click', () => {
-                console.log('✅ Reject All clicked');
                 this.rejectAll();
             });
         }
@@ -261,13 +258,11 @@ class CookieConsent {
 
     hideConsentBanner() {
         const banner = document.getElementById('cookieConsentBanner');
-        console.log('Hiding banner...', banner);
         if (banner) {
             banner.style.opacity = '0';
             banner.style.pointerEvents = 'none';
             setTimeout(() => {
                 banner.remove();
-                console.log('Banner removed');
             }, 300);
         }
     }
@@ -295,5 +290,3 @@ const cookieConsent = new CookieConsent();
 
 // Make it globally accessible
 window.cookieConsent = cookieConsent;
-
-console.log('🍪 GDPR Cookie Consent initialized with Google Consent Mode v2');
