@@ -46,8 +46,11 @@
     <meta property="og:title" content="BILLIONAIRS - The World's Most Exclusive Private Membership">
     <meta property="og:description" content="Beyond wealth. Beyond status. The most exclusive private membership in the world. Ultra-luxury experiences, elite networking & billionaire lifestyle. By invitation only.">
     <meta property="og:image" content="https://billionairs.luxury/assets/images/og-image.jpg">
+    <meta property="og:image:secure_url" content="https://billionairs.luxury/assets/images/og-image.jpg">
+    <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="BILLIONAIRS - Exclusive Digital Experience">
     <meta property="og:site_name" content="BILLIONAIRS">
     <meta property="og:locale" content="en_US">
     <meta property="og:locale:alternate" content="de_DE">
@@ -65,6 +68,7 @@
     <meta name="twitter:title" content="BILLIONAIRS - The World's Most Exclusive Private Membership">
     <meta name="twitter:description" content="Beyond wealth. Beyond status. The most exclusive private membership in the world. Apply now.">
     <meta name="twitter:image" content="https://billionairs.luxury/assets/images/og-image.jpg">
+    <meta name="twitter:image:alt" content="BILLIONAIRS Logo">
     <meta name="twitter:creator" content="@billionairs">
     
     <!-- Additional SEO Tags -->
@@ -186,33 +190,9 @@
     <!-- Privacy & Security Tags -->
     <meta name="referrer" content="no-referrer">
     <meta http-equiv="X-DNS-Prefetch-Control" content="off">
-    <!-- Allow Google to index homepage only (controlled by robots.txt) -->
-    <meta name="robots" content="index, follow">
-    
-    <!-- Open Graph / Social Media (WhatsApp, Facebook, Instagram, TikTok, Snapchat) -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="BILLIONAIRS - Exclusive Access">
-    <meta property="og:description" content="Beyond wealth. Beyond status. A moment that exists outside of time.">
-    <meta property="og:image" content="https://www.billionairs.luxury/assets/images/og-image.jpg">
-    <meta property="og:image:secure_url" content="https://www.billionairs.luxury/assets/images/og-image.jpg">
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="BILLIONAIRS - Exclusive Digital Experience">
-    <meta property="og:url" content="https://www.billionairs.luxury">
-    <meta property="og:site_name" content="BILLIONAIRS">
-    <meta property="og:locale" content="en_US">
-    
-    <!-- Twitter/X Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="BILLIONAIRS - Exclusive Access">
-    <meta name="twitter:description" content="Beyond wealth. Beyond status. A moment that exists outside of time.">
-    <meta name="twitter:image" content="https://www.billionairs.luxury/assets/images/og-image.jpg">
-    <meta name="twitter:image:alt" content="BILLIONAIRS Logo">
     
     <!-- Security & Privacy -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/images/logo.png">
@@ -269,6 +249,7 @@
     </script>
     
     <!-- Stylesheets - Optimized Loading Order (Critical First) -->
+    <link rel="preload" href="assets/css/styles.css?v=20260211" as="style">
     <link rel="stylesheet" href="assets/css/styles.css?v=20260211">
     <link rel="stylesheet" href="assets/css/mobile-nav.css">
     <link rel="stylesheet" href="assets/css/testimonials.css">
@@ -278,14 +259,17 @@
     <link rel="stylesheet" href="assets/css/language-dropdown.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/mobile-language-dropdown.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/faq-footer.css" media="print" onload="this.media='all'; this.onload=null;">
-    <link rel="stylesheet" href="assets/css/what-isnt.css">
-    <link rel="stylesheet" href="assets/css/last-few-days.css">
-    <link rel="stylesheet" href="assets/css/the-truth.css">
+    <link rel="stylesheet" href="assets/css/what-isnt.css" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="assets/css/last-few-days.css" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="assets/css/the-truth.css" media="print" onload="this.media='all'; this.onload=null;">
     <noscript>
         <link rel="stylesheet" href="assets/css/payment-methods.css">
         <link rel="stylesheet" href="assets/css/language-dropdown.css">
         <link rel="stylesheet" href="assets/css/mobile-language-dropdown.css">
         <link rel="stylesheet" href="assets/css/faq-footer.css">
+        <link rel="stylesheet" href="assets/css/what-isnt.css">
+        <link rel="stylesheet" href="assets/css/last-few-days.css">
+        <link rel="stylesheet" href="assets/css/the-truth.css">
     </noscript>
     
     <!-- CRITICAL: Force dark background on autofill - inline to override everything -->
@@ -796,7 +780,17 @@
                             <div class="form-group">
                                 <label for="customerPassword" data-i18n="payment.password">Password</label>
                                 <input type="password" id="customerPassword" name="customerPassword" data-i18n-placeholder="payment.password_placeholder" placeholder="Create a secure password (min. 8 characters)" required minlength="8"
-                                       style="background: rgba(0, 0, 0, 0.3) !important; color: white !important; -webkit-text-fill-color: white !important;">
+                                       style="background: rgba(0, 0, 0, 0.3) !important; color: white !important; -webkit-text-fill-color: white !important;"
+                                       oninput="updatePasswordStrength(this.value)">
+                                <div id="passwordStrengthBar" style="display:none;margin-top:6px;">
+                                    <div style="display:flex;gap:4px;margin-bottom:4px;">
+                                        <div id="str1" style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.1);transition:background .3s"></div>
+                                        <div id="str2" style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.1);transition:background .3s"></div>
+                                        <div id="str3" style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.1);transition:background .3s"></div>
+                                        <div id="str4" style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.1);transition:background .3s"></div>
+                                    </div>
+                                    <span id="strLabel" style="font-size:0.7rem;letter-spacing:1px;color:rgba(255,255,255,0.4)"></span>
+                                </div>
                                 <small style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 0.25rem; display: block;" data-i18n="payment.password_hint">This will be used to access your INNER CIRCLE account</small>
                             </div>
                             <div class="form-group">
@@ -1838,10 +1832,43 @@
     <script src="assets/js/main.js?v=20260211" defer></script>
     <script src="assets/js/faq.js" defer></script>
     <script src="assets/js/testimonials.js" defer></script>
-    <script src="assets/js/stripe-init.js" defer></script>
+    <script src="assets/js/stripe-payment.js" defer></script>
     <script src="assets/js/payment-methods-new.js?v=20260211" defer></script>
     <script src="assets/js/benefits.js" defer></script>
     
+    <!-- Password Strength Indicator -->
+    <script>
+    function updatePasswordStrength(pw) {
+        var bar = document.getElementById('passwordStrengthBar');
+        if (!bar) return;
+        bar.style.display = pw.length > 0 ? 'block' : 'none';
+        var score = 0;
+        if (pw.length >= 8) score++;
+        if (/[a-z]/.test(pw) && /[A-Z]/.test(pw)) score++;
+        if (/\d/.test(pw)) score++;
+        if (/[^a-zA-Z0-9]/.test(pw)) score++;
+        var colors = ['#c0392b', '#e67e22', '#C9A96E', '#50C878'];
+        var langLabels = {
+            en: ['WEAK', 'FAIR', 'STRONG', 'VERY STRONG'],
+            de: ['SCHWACH', 'MITTEL', 'STARK', 'SEHR STARK'],
+            fr: ['FAIBLE', 'MOYEN', 'FORT', 'TRES FORT'],
+            es: ['D\u00c9BIL', 'MEDIO', 'FUERTE', 'MUY FUERTE'],
+            it: ['DEBOLE', 'MEDIO', 'FORTE', 'MOLTO FORTE'],
+            ru: ['\u0421\u041b\u0410\u0411\u042b\u0419', '\u0421\u0420\u0415\u0414\u041d\u0418\u0419', '\u041d\u0410\u0414\u0401\u0416\u041d\u042b\u0419', '\u041e\u0427\u0415\u041d\u042c \u041d\u0410\u0414\u0401\u0416\u041d\u042b\u0419'],
+            zh: ['\u5f31', '\u4e2d\u7b49', '\u5f3a', '\u975e\u5e38\u5f3a'],
+            ja: ['\u5f31\u3044', '\u666e\u901a', '\u5f37\u3044', '\u975e\u5e38\u306b\u5f37\u3044'],
+            ar: ['\u0636\u0639\u064a\u0641', '\u0645\u062a\u0648\u0633\u0637', '\u0642\u0648\u064a', '\u0642\u0648\u064a \u062c\u062f\u0627']
+        };
+        var lang = localStorage.getItem('billionairs_lang') || 'en';
+        var labels = langLabels[lang] || langLabels.en;
+        for (var i = 1; i <= 4; i++) {
+            document.getElementById('str' + i).style.background = i <= score ? colors[score - 1] : 'rgba(255,255,255,0.1)';
+        }
+        document.getElementById('strLabel').textContent = score > 0 ? labels[score - 1] : '';
+        document.getElementById('strLabel').style.color = score > 0 ? colors[score - 1] : 'rgba(255,255,255,0.4)';
+    }
+    </script>
+
     <!-- Inline Stripe Processor - bypasses all caching issues -->
     <script>
     (function() {
@@ -1897,8 +1924,12 @@
                             sessionStorage.setItem('paymentInitiated', 'true');
                             window.location.href = session.url;
                         } catch (error) {
-                            console.error('Payment Error:', error);
-                            alert('Payment error: ' + error.message + '. Please try again.');
+                            console.error('Payment error:', error.message);
+                            var errDiv = document.createElement('div');
+                            errDiv.style.cssText = 'position:fixed;top:24px;right:24px;z-index:100000;display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#2a1a1a,#1f0d0d);border:1.5px solid #c0392b;border-radius:12px;padding:16px 24px;color:#fff;font-family:Montserrat,sans-serif;font-size:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:420px;animation:toastIn .4s ease';
+                            errDiv.textContent = 'Payment error. Please try again.';
+                            document.body.appendChild(errDiv);
+                            setTimeout(function(){ errDiv.remove(); }, 5000);
                         } finally {
                             this.isProcessing = false;
                         }

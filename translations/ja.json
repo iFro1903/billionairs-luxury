@@ -251,5 +251,13 @@
     "click_button_notice": "以下のボタンをクリックして、専用ダッシュボードにアクセスしてください。",
     "enter_sanctuary": "あなたのサンクチュアリに入る",
     "spam_notice": "メールが見つかりませんか？迷惑メールフォルダを確認するか、サポートにお問い合わせください。"
+  },
+  "payment_cancelled": {
+    "page_title": "お支払いがキャンセルされました - BILLIONAIRS",
+    "title": "お支払いキャンセル",
+    "no_charge": "お支払いはキャンセルされ、料金は発生していません。",
+    "still_available": "ご希望であれば、BILLIONAIRS限定体験は引き続きご利用いただけます。",
+    "try_again": "再試行",
+    "return_to_site": "サイトに戻る"
   }
 }

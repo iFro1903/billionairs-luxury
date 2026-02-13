@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/auth.js"></script>
     <style>
         @page {
             size: A4;
@@ -463,28 +464,86 @@
     </div>
     
     <script>
-        // Detect language from URL or localStorage
-        const urlParams = new URLSearchParams(window.location.search);
-        const userLang = urlParams.get('lang') || 
-                        localStorage.getItem('billionairs_lang') ||
-                        localStorage.getItem('selectedLanguage') || 
-                        sessionStorage.getItem('userLanguage') || 
-                        'en';
-        
-        // Initialize i18n when ready
-        function initCertificateI18n() {
-            if (window.i18n && window.i18n.supportedLangs) {
-                window.i18n.init().then(() => {
-                    if (window.i18n.supportedLangs.includes(userLang)) {
-                        window.i18n.switchLanguage(userLang);
-                    }
-                }).catch(err => console.error('i18n init failed:', err));
-            } else {
-                // Retry after short delay if i18n not yet loaded
-                setTimeout(initCertificateI18n, 200);
+        // Auth check - only paid members can view certificate
+        async function verifyCertificateAccess() {
+            try {
+                if (!window.authManager) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+                if (!window.authManager) {
+                    window.location.href = '/login.html';
+                    return null;
+                }
+
+                const isValid = await window.authManager.verifySession();
+                if (!isValid) {
+                    window.location.href = '/login.html';
+                    return null;
+                }
+
+                const user = window.authManager.getUser();
+                const hasPaid = window.authManager.hasPaid();
+                if (!hasPaid) {
+                    window.location.href = '/dashboard.html';
+                    return null;
+                }
+
+                return user;
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                window.location.href = '/login.html';
+                return null;
             }
         }
-        initCertificateI18n();
+
+        // Generate unique certificate number from user email
+        async function generateCertNumber(email) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(email.toLowerCase() + 'BILLIONAIRS2025');
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return 'BILL-2025-' + hashHex.substring(0, 8).toUpperCase();
+        }
+
+        // Initialize certificate
+        async function initCertificate() {
+            const user = await verifyCertificateAccess();
+            if (!user) return;
+
+            // Set dynamic certificate number
+            const certNumber = await generateCertNumber(user.email || 'member');
+            const certEl = document.querySelector('.verification-code');
+            if (certEl) {
+                certEl.textContent = 'CERTIFICATE NO. ' + certNumber;
+                certEl.setAttribute('data-cert-number', certNumber);
+            }
+
+            // Detect language
+            const urlParams = new URLSearchParams(window.location.search);
+            const userLang = urlParams.get('lang') || 
+                            localStorage.getItem('billionairs_lang') ||
+                            localStorage.getItem('selectedLanguage') || 
+                            'en';
+
+            // Initialize i18n
+            if (window.i18n && window.i18n.supportedLangs) {
+                try {
+                    await window.i18n.init();
+                    if (window.i18n.supportedLangs.includes(userLang)) {
+                        await window.i18n.switchLanguage(userLang);
+                    }
+                    // Restore cert number after i18n (it may overwrite)
+                    if (certEl) certEl.textContent = 'CERTIFICATE NO. ' + certNumber;
+                } catch (err) {
+                    console.error('i18n init failed:', err);
+                }
+            } else {
+                setTimeout(() => initCertificate(), 300);
+            }
+        }
+
+        initCertificate();
     </script>
 </body>
 </html>

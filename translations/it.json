@@ -268,5 +268,13 @@
     "click_button_notice": "Fai clic sul pulsante qui sotto per accedere alla tua dashboard esclusiva.",
     "enter_sanctuary": "Entra nel Tuo Santuario",
     "spam_notice": "Non trovi l'email? Controlla la cartella spam o contatta il supporto."
+  },
+  "payment_cancelled": {
+    "page_title": "Pagamento annullato - BILLIONAIRS",
+    "title": "PAGAMENTO ANNULLATO",
+    "no_charge": "Il pagamento \u00e8 stato annullato e non sono stati effettuati addebiti.",
+    "still_available": "L'esperienza esclusiva BILLIONAIRS \u00e8 ancora disponibile se desideri procedere.",
+    "try_again": "RIPROVA",
+    "return_to_site": "TORNA AL SITO"
   }
 }

@@ -271,6 +271,12 @@
     "check_email_notice": "📧 Por favor revise su correo para las credenciales de acceso.",
     "click_button_notice": "Haga clic en el botón de abajo para acceder a su panel exclusivo.",
     "enter_sanctuary": "Entre a Su Santuario",
-    "spam_notice": "¿No encuentra el correo? Revise su carpeta de spam o contacte soporte."
-  }
+    "spam_notice": "¿No encuentra el correo? Revise su carpeta de spam o contacte soporte."  },
+  "payment_cancelled": {
+    "page_title": "Pago cancelado - BILLIONAIRS",
+    "title": "PAGO CANCELADO",
+    "no_charge": "Su pago fue cancelado y no se realizaron cargos.",
+    "still_available": "La experiencia exclusiva BILLIONAIRS sigue disponible si desea continuar.",
+    "try_again": "INTENTAR DE NUEVO",
+    "return_to_site": "VOLVER AL SITIO"  }
 }

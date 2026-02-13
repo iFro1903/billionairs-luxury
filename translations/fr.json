@@ -271,6 +271,12 @@
     "check_email_notice": "📧 Veuillez vérifier votre e-mail pour vos identifiants de connexion.",
     "click_button_notice": "Cliquez sur le bouton ci-dessous pour accéder à votre tableau de bord exclusif.",
     "enter_sanctuary": "Entrez dans Votre Sanctuaire",
-    "spam_notice": "Vous ne trouvez pas l'e-mail? Vérifiez votre dossier spam ou contactez le support."
-  }
+    "spam_notice": "Vous ne trouvez pas l'e-mail? Vérifiez votre dossier spam ou contactez le support."  },
+  "payment_cancelled": {
+    "page_title": "Paiement annul\u00e9 - BILLIONAIRS",
+    "title": "PAIEMENT ANNUL\u00c9",
+    "no_charge": "Votre paiement a \u00e9t\u00e9 annul\u00e9 et aucun frais n'a \u00e9t\u00e9 factur\u00e9.",
+    "still_available": "L'exp\u00e9rience exclusive BILLIONAIRS est toujours disponible si vous souhaitez continuer.",
+    "try_again": "R\u00c9ESSAYER",
+    "return_to_site": "RETOUR AU SITE"  }
 }

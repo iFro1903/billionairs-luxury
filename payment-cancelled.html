@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Cancelled - BILLIONAIRS</title>
+    <title data-i18n="payment_cancelled.page_title">Payment Cancelled - BILLIONAIRS</title>
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/assets/images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="/assets/js/i18n.js"></script>
     <style>
         * {
             margin: 0;
@@ -36,9 +38,14 @@
         }
 
         .cancel-icon {
-            font-size: 4rem;
-            margin-bottom: 2rem;
-            color: #ff6b6b;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+        }
+
+        .cancel-icon svg {
+            width: 80px;
+            height: 80px;
         }
 
         .cancel-title {
@@ -113,27 +120,41 @@
 <body>
     <div class="cancel-container">
         <a href="/" style="display: inline-block; margin-bottom: 1rem;"><img src="assets/images/logo.png" alt="BILLIONAIRS" style="height: 50px; opacity: 0.9;"></a>
-        <div class="cancel-icon">⚠️</div>
-        <h1 class="cancel-title">PAYMENT CANCELLED</h1>
+        <div class="cancel-icon">
+            <svg viewBox="0 0 52 52">
+                <circle cx="26" cy="26" r="25" fill="none" stroke="#ff6b6b" stroke-width="2"/>
+                <path fill="none" stroke="#ff6b6b" stroke-width="3" stroke-linecap="round" d="M18 18 L34 34 M34 18 L18 34"/>
+            </svg>
+        </div>
+        <h1 class="cancel-title" data-i18n="payment_cancelled.title">PAYMENT CANCELLED</h1>
         <div class="divider"></div>
-        <p class="cancel-message">
+        <p class="cancel-message" data-i18n="payment_cancelled.no_charge">
             Your payment was cancelled and no charges were made.
         </p>
-        <p class="cancel-message">
+        <p class="cancel-message" data-i18n="payment_cancelled.still_available">
             The exclusive BILLIONAIRS experience is still available if you'd like to proceed.
         </p>
         
         <div class="action-buttons">
-            <button class="retry-btn" onclick="retryPayment()">
+            <button class="retry-btn" onclick="retryPayment()" data-i18n="payment_cancelled.try_again">
                 TRY AGAIN
             </button>
-            <button class="back-btn" onclick="returnToSite()">
+            <button class="back-btn" onclick="returnToSite()" data-i18n="payment_cancelled.return_to_site">
                 RETURN TO SITE
             </button>
         </div>
     </div>
 
     <script>
+        // Detect and set language
+        const urlParams = new URLSearchParams(window.location.search);
+        const lang = urlParams.get('lang') 
+                  || localStorage.getItem('billionairs_lang') 
+                  || 'en';
+        if (window.i18n && typeof window.i18n.setLanguage === 'function') {
+            window.i18n.setLanguage(lang);
+        }
+
         function retryPayment() {
             // Redirect back to payment section
             window.location.href = '/index.html#payment';

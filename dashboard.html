@@ -495,6 +495,55 @@
 
     <script src="assets/js/auth.js"></script>
     <script>
+        // Premium Toast Notification System
+        function showToast(message, type = 'info', duration = 4000) {
+            // Remove existing toast
+            const existing = document.getElementById('premium-toast');
+            if (existing) existing.remove();
+
+            const colors = {
+                success: { border: '#C9A96E', bg: 'linear-gradient(135deg, #1a2a1a 0%, #0d1f0d 100%)', icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
+                error:   { border: '#c0392b', bg: 'linear-gradient(135deg, #2a1a1a 0%, #1f0d0d 100%)', icon: 'M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z' },
+                info:    { border: '#E8B4A0', bg: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)', icon: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+                warning: { border: '#d4a017', bg: 'linear-gradient(135deg, #2a2a1a 0%, #1f1f0d 100%)', icon: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z' }
+            };
+            const c = colors[type] || colors.info;
+
+            const toast = document.createElement('div');
+            toast.id = 'premium-toast';
+            toast.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${c.border}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="${c.icon}"/></svg>
+                <span style="flex:1">${message}</span>
+                <span onclick="this.parentElement.remove()" style="cursor:pointer;opacity:0.6;font-size:18px;line-height:1">&times;</span>
+            `;
+            toast.style.cssText = `
+                position:fixed;top:24px;right:24px;z-index:100000;
+                display:flex;align-items:center;gap:12px;
+                background:${c.bg};border:1.5px solid ${c.border};
+                border-radius:12px;padding:16px 24px;
+                color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;
+                box-shadow:0 8px 32px rgba(0,0,0,0.5);
+                max-width:420px;animation:toastIn .4s ease;
+                backdrop-filter:blur(10px);
+            `;
+
+            if (!document.getElementById('toast-keyframes')) {
+                const style = document.createElement('style');
+                style.id = 'toast-keyframes';
+                style.textContent = `
+                    @keyframes toastIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+                    @keyframes toastOut{from{transform:translateX(0);opacity:1}to{transform:translateX(100%);opacity:0}}
+                `;
+                document.head.appendChild(style);
+            }
+
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'toastOut .3s ease forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+
         // Define handleLogout globally (needed for logout button)
         window.handleLogout = async function() {
             try {
@@ -503,11 +552,18 @@
                 } else {
                     localStorage.removeItem('billionairs_token');
                     localStorage.removeItem('billionairs_user');
+                    localStorage.removeItem('auth_token');
+                    localStorage.removeItem('user_data');
                     sessionStorage.clear();
                 }
                 window.location.href = '/';
             } catch (error) {
                 console.error('Logout error:', error);
+                localStorage.removeItem('billionairs_token');
+                localStorage.removeItem('billionairs_user');
+                localStorage.removeItem('auth_token');
+                localStorage.removeItem('user_data');
+                sessionStorage.clear();
                 window.location.href = '/';
             }
         };
@@ -621,15 +677,15 @@
                         window.location.reload();
                         return;
                     } else {
-                        console.error('❌ Auto-login failed:', result);
+                        console.error('Auto-login failed:', result);
                         const lang = urlParams.get('lang') || 'en';
-                        alert('Auto-login failed. Please login manually.');
+                        showToast('Auto-login failed. Please login manually.', 'error');
                         window.location.href = '/login.html?email=' + encodeURIComponent(autoLoginEmail) + '&lang=' + lang;
                         return;
                     }
                 } catch (error) {
-                    console.error('❌ Auto-login error:', error);
-                    alert('Auto-login error: ' + error.message);
+                    console.error('Auto-login error:', error);
+                    showToast('Auto-login error. Please try again.', 'error');
                     window.location.href = '/login.html?email=' + encodeURIComponent(autoLoginEmail);
                     return;
                 }
@@ -638,8 +694,8 @@
             const isValid = await window.authManager.verifySession();
             
             if (!isValid) {
-                alert('Please login first');
-                window.location.href = '/login.html';
+                showToast('Please login first', 'warning');
+                setTimeout(() => { window.location.href = '/login.html'; }, 1500);
                 return;
             }
 
@@ -704,7 +760,7 @@
                             sessionStorage.removeItem('paymentInitiated');
                             
                             // Show success message before reload
-                            alert('✅ Payment confirmed! Access granted. Welcome to the Elite.');
+                            showToast('Payment confirmed. Access granted. Welcome to the Elite.', 'success', 5000);
                             
                             // Reload page to show paid status
                             window.location.href = '/dashboard.html';
@@ -727,7 +783,7 @@
                 
                 if (!paymentVerified) {
                     console.error('❌ Payment verification failed after all attempts');
-                    alert('Payment processing is taking longer than expected. Please refresh the page in a moment or contact support if the issue persists.');
+                    showToast('Payment processing is taking longer than expected. Please refresh the page or contact support.', 'warning', 6000);
                 }
             }
             
@@ -828,28 +884,6 @@
             }
         }
 
-        // Make handleLogout globally available
-        window.handleLogout = async function() {
-            try {
-                if (window.authManager && typeof window.authManager.logout === 'function') {
-                    await window.authManager.logout();
-                } else {
-                    // Fallback: Clear auth data manually
-                    localStorage.removeItem('auth_token');
-                    localStorage.removeItem('user_data');
-                    sessionStorage.clear();
-                }
-                window.location.href = '/';
-            } catch (error) {
-                console.error('Logout error:', error);
-                // Force logout anyway
-                localStorage.removeItem('auth_token');
-                localStorage.removeItem('user_data');
-                sessionStorage.clear();
-                window.location.href = '/';
-            }
-        };
-
         // Load reveal content securely from server
         async function loadRevealContent(sessionToken) {
             try {
@@ -893,7 +927,7 @@
             console.log('User has paid:', hasPaid);
             
             if (!hasPaid) {
-                alert('Payment required to download');
+                showToast('Payment required to download', 'warning');
                 return;
             }
 
@@ -919,7 +953,7 @@
             const pdfWindow = window.open(`/premium-certificate.html?v=${timestamp}&lang=${userLang}`, '_blank');
             
             if (!pdfWindow) {
-                alert('Please allow popups to download your exclusive content.');
+                showToast('Please allow popups to download your exclusive content.', 'info');
                 return;
             }
             

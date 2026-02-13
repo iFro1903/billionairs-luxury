@@ -388,5 +388,13 @@
     "line2": "Ein einziger Sonnenaufgang muss vor deinen Augen erscheinen.",
     "line3": "Nur wer Geduld und tiefe Loyalität hat, wird sehen",
     "line4": "Was jenseits der Ewigkeit liegt."
+  },
+  "payment_cancelled": {
+    "page_title": "Zahlung abgebrochen - BILLIONAIRS",
+    "title": "ZAHLUNG ABGEBROCHEN",
+    "no_charge": "Ihre Zahlung wurde abgebrochen. Es wurden keine Kosten erhoben.",
+    "still_available": "Das exklusive BILLIONAIRS-Erlebnis steht Ihnen weiterhin zur Verf\u00fcgung.",
+    "try_again": "ERNEUT VERSUCHEN",
+    "return_to_site": "ZUR\u00dcCK ZUR SEITE"
   }
 }
