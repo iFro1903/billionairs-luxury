@@ -593,10 +593,8 @@ const modalTranslations = {
 // Function to translate modals based on current language
 function translateModals() {
     const currentLang = window.i18n ? window.i18n.currentLang : 'en';
-    console.log(`🔄 Translating modals to: ${currentLang}`);
     
     if (!modalTranslations[currentLang]) {
-        console.log(`⚠️ No modal translations for ${currentLang}`);
         return;
     }
     
@@ -609,7 +607,6 @@ function translateModals() {
         // First try direct match in current language
         if (trans.titles[originalText]) {
             element.textContent = trans.titles[originalText];
-            console.log(`✅ Modal title: "${originalText}" → "${trans.titles[originalText]}"`);
             return;
         }
         
@@ -630,7 +627,6 @@ function translateModals() {
         // If we found the English key, translate to target language
         if (englishKey && trans.titles[englishKey]) {
             element.textContent = trans.titles[englishKey];
-            console.log(`✅ Modal title cross-lang: "${originalText}" → "${trans.titles[englishKey]}"`);
         }
     });
     
@@ -642,16 +638,13 @@ function translateModals() {
         const p = item.querySelector('p');
         if (p && trans.content && trans.content[contentKeys[index]]) {
             p.innerHTML = trans.content[contentKeys[index]];
-            console.log(`✅ FAQ content ${index + 1} translated to ${currentLang}`);
         }
     });
     
     // 3. Translate Legal Notice modal content
     const legalModal = document.getElementById('impressumModal');
     if (legalModal && trans.content) {
-        console.log('🔍 Translating Legal Notice modal...');
         const sections = legalModal.querySelectorAll('.legal-section');
-        console.log(`Found ${sections.length} sections in Legal Notice`);
         
         if (sections.length >= 3) {
             // Entity section
@@ -660,7 +653,6 @@ function translateModals() {
                 if (trans.content.legal_entity_title) entityPs[0].innerHTML = `<strong>${trans.content.legal_entity_title}</strong>`;
                 if (trans.content.legal_entity_subtitle) entityPs[1].textContent = trans.content.legal_entity_subtitle;
                 if (trans.content.legal_entity_location) entityPs[2].textContent = trans.content.legal_entity_location;
-                console.log('✅ Legal Notice Entity section translated');
             }
             
             // Contact section
@@ -669,7 +661,6 @@ function translateModals() {
                 if (trans.content.legal_contact_intro) contactPs[0].textContent = trans.content.legal_contact_intro;
                 if (trans.content.legal_contact_email) contactPs[1].innerHTML = `<strong>${trans.content.legal_contact_email}</strong>`;
                 if (trans.content.legal_contact_response) contactPs[2].textContent = trans.content.legal_contact_response;
-                console.log('✅ Legal Notice Contact section translated');
             }
             
             // Legal Notice section
@@ -678,7 +669,6 @@ function translateModals() {
                 const texts = trans.content.legal_notice_text.split('<br><br>');
                 if (texts[0]) noticePs[0].textContent = texts[0];
                 if (texts[1]) noticePs[1].textContent = texts[1];
-                console.log('✅ Legal Notice text section translated');
             }
         }
     }
@@ -686,16 +676,13 @@ function translateModals() {
     // 4. Translate Privacy Policy modal content
     const privacyModal = document.getElementById('privacyModal');
     if (privacyModal && trans.content) {
-        console.log('🔍 Translating Privacy Policy modal...');
         const sections = privacyModal.querySelectorAll('.legal-section');
-        console.log(`Found ${sections.length} sections in Privacy Policy`);
         
         if (sections.length >= 4) {
             // Information We Collect
             const collectP = sections[0].querySelector('p');
             if (collectP && trans.content.privacy_collect_text) {
                 collectP.textContent = trans.content.privacy_collect_text;
-                console.log('✅ Privacy collect section translated');
             }
             
             // How We Use Your Data (4 items)
@@ -717,21 +704,18 @@ function translateModals() {
                     const parts = trans.content.privacy_use_legal.split(':');
                     usePs[3].innerHTML = `<strong>${parts[0]}:</strong> ${parts[1]}`;
                 }
-                console.log('✅ Privacy use section translated');
             }
             
             // Data Protection
             const protectionP = sections[2].querySelector('p');
             if (protectionP && trans.content.privacy_protection_text) {
                 protectionP.textContent = trans.content.privacy_protection_text;
-                console.log('✅ Privacy protection section translated');
             }
             
             // Your Rights
             const rightsP = sections[3].querySelector('p');
             if (rightsP && trans.content.privacy_rights_text) {
                 rightsP.innerHTML = trans.content.privacy_rights_text;
-                console.log('✅ Privacy rights section translated');
             }
         }
     }
@@ -739,51 +723,43 @@ function translateModals() {
     // 5. Translate Terms of Service modal content
     const termsModal = document.getElementById('termsModal');
     if (termsModal && trans.content) {
-        console.log('🔍 Translating Terms of Service modal...');
         const sections = termsModal.querySelectorAll('.legal-section');
-        console.log(`Found ${sections.length} sections in Terms of Service`);
         
         if (sections.length >= 6) {
             // Agreement
             const agreementP = sections[0].querySelector('p');
             if (agreementP && trans.content.terms_agreement_text) {
                 agreementP.textContent = trans.content.terms_agreement_text;
-                console.log('✅ Terms agreement section translated');
             }
             
             // Transaction Terms
             const transactionP = sections[1].querySelector('p');
             if (transactionP && trans.content.terms_transaction_text) {
                 transactionP.innerHTML = trans.content.terms_transaction_text;
-                console.log('✅ Terms transaction section translated');
             }
             
             // Access & Eligibility
             const accessP = sections[2].querySelector('p');
             if (accessP && trans.content.terms_access_text) {
                 accessP.textContent = trans.content.terms_access_text;
-                console.log('✅ Terms access section translated');
             }
             
             // Intellectual Property
             const ipP = sections[3].querySelector('p');
             if (ipP && trans.content.terms_ip_text) {
                 ipP.textContent = trans.content.terms_ip_text;
-                console.log('✅ Terms IP section translated');
             }
             
             // Limitation of Liability
             const liabilityP = sections[4].querySelector('p');
             if (liabilityP && trans.content.terms_liability_text) {
                 liabilityP.textContent = trans.content.terms_liability_text;
-                console.log('✅ Terms liability section translated');
             }
             
             // Inquiries
             const inquiriesP = sections[5].querySelector('p');
             if (inquiriesP && trans.content.terms_inquiries_email) {
                 inquiriesP.innerHTML = `<strong>${trans.content.terms_inquiries_email}</strong>`;
-                console.log('✅ Terms inquiries section translated');
             }
         }
     }
@@ -791,14 +767,11 @@ function translateModals() {
 
 // Translate when language changes
 window.addEventListener('languageChanged', (event) => {
-    console.log(`🌍 Language changed to: ${event.detail.language}`);
     setTimeout(translateModals, 100); // Small delay to ensure DOM is ready
 });
 
 // Also translate when i18n is ready (for initial load)
 window.addEventListener('i18nReady', () => {
-    console.log('✅ i18n ready, translating modals...');
     translateModals();
 });
 
-console.log('✅ Modal i18n system loaded');

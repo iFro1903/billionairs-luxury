@@ -99,5 +99,4 @@
     }
 
     init();
-    console.log('🚀 Mobile Performance: ACTIVE (Light Mode)');
 })();

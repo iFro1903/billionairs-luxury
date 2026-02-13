@@ -145,7 +145,6 @@ function translatePaymentSection() {
     const lang = window.i18n?.currentLang || 'en';
     const t = paymentTranslations[lang] || paymentTranslations['en'];
     
-    console.log('🔄 [PAYMENT-I18N] Translating payment section to:', lang);
     
     // Header
     const titleLuxury = document.querySelector('.title-luxury');
@@ -162,19 +161,28 @@ function translatePaymentSection() {
     // Payment methods
     const methods = document.querySelectorAll('.payment-method');
     if (methods[0]) {
-        methods[0].querySelector('h4').textContent = t.card_title;
-        methods[0].querySelector('p').textContent = t.card_instant;
-        methods[0].querySelector('small').textContent = t.card_providers;
+        const h4 = methods[0].querySelector('h4');
+        const p = methods[0].querySelector('p');
+        const small = methods[0].querySelector('small');
+        if (h4) h4.textContent = t.card_title;
+        if (p) p.textContent = t.card_instant;
+        if (small) small.textContent = t.card_providers;
     }
     if (methods[1]) {
-        methods[1].querySelector('h4').textContent = t.wire_title;
-        methods[1].querySelector('p').textContent = t.wire_unlimited;
-        methods[1].querySelector('small').textContent = t.wire_details;
+        const h4 = methods[1].querySelector('h4');
+        const p = methods[1].querySelector('p');
+        const small = methods[1].querySelector('small');
+        if (h4) h4.textContent = t.wire_title;
+        if (p) p.textContent = t.wire_unlimited;
+        if (small) small.textContent = t.wire_details;
     }
     if (methods[2]) {
-        methods[2].querySelector('h4').textContent = t.crypto_title;
-        methods[2].querySelector('p').textContent = t.crypto_fast;
-        methods[2].querySelector('small').textContent = t.crypto_coins;
+        const h4 = methods[2].querySelector('h4');
+        const p = methods[2].querySelector('p');
+        const small = methods[2].querySelector('small');
+        if (h4) h4.textContent = t.crypto_title;
+        if (p) p.textContent = t.crypto_fast;
+        if (small) small.textContent = t.crypto_coins;
     }
     
     // Form labels
@@ -213,7 +221,6 @@ function translatePaymentSection() {
     const btn = document.querySelector('.payment-button .button-text');
     if (btn) btn.textContent = t.btn_secure_payment;
     
-    console.log('✅ [PAYMENT-I18N] Payment section translated');
 }
 
 window.translatePaymentSection = translatePaymentSection;

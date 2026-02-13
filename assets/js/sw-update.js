@@ -11,23 +11,19 @@
         navigator.serviceWorker.addEventListener('controllerchange', () => {
             if (refreshing) return;
             refreshing = true;
-            console.log('[SW Update] New version active - reloading page');
             window.location.reload();
         });
 
         // Check for updates on page load
         navigator.serviceWorker.register('/sw.js').then(registration => {
-            console.log('[SW Update] Service Worker registered');
 
             // Check for updates
             registration.addEventListener('updatefound', () => {
                 const newWorker = registration.installing;
-                console.log('[SW Update] New version found - installing...');
 
                 newWorker.addEventListener('statechange', () => {
                     if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                         // New version available - skip waiting
-                        console.log('[SW Update] Activating new version immediately');
                         newWorker.postMessage({ type: 'SKIP_WAITING' });
                     }
                 });

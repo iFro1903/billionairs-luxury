@@ -8,7 +8,6 @@ class NotificationManager {
     async init() {
         // Check if notifications are supported
         if (!('Notification' in window)) {
-            console.log('This browser does not support notifications');
             return;
         }
 
@@ -17,7 +16,6 @@ class NotificationManager {
 
         // If already granted, we're good
         if (this.permission === 'granted') {
-            console.log('Notifications already enabled');
             return;
         }
 
@@ -55,7 +53,6 @@ class NotificationManager {
             this.permission = permission;
             
             if (permission === 'granted') {
-                console.log('Notification permission granted');
                 this.showWelcomeNotification();
             }
         } catch (error) {
@@ -73,7 +70,6 @@ class NotificationManager {
 
     show(options) {
         if (this.permission !== 'granted') {
-            console.log('Notification permission not granted');
             return;
         }
 

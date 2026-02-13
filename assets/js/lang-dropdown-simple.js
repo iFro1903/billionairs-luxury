@@ -1,13 +1,11 @@
-﻿/**
+/**
  * Simple Language Dropdown
  * Waits for i18n to be ready before initializing
  */
 
-console.log('🌐 lang-dropdown-simple.js LOADED');
 
 // Global function to translate footer links
 window.translateFooterLinks = function(lang) {
-    console.log('🔄 Translating footer links to:', lang);
     
     const footerTranslations = {
         'de': { faq: 'FAQ', legal: 'RECHTLICHE HINWEISE', privacy: 'DATENSCHUTZ', terms: 'AGB' },
@@ -44,12 +42,10 @@ window.translateFooterLinks = function(lang) {
     if (mobilePrivacyLink) mobilePrivacyLink.textContent = trans.privacy;
     if (mobileTermsLink) mobileTermsLink.textContent = trans.terms;
     
-    console.log(`✅ Footer links translated to ${lang}`);
 };
 
 // Function to initialize dropdown
 function initLanguageDropdown() {
-    console.log('🔧 Initializing language dropdown...');
     
     const langBtn = document.getElementById('langBtn');
     
@@ -58,17 +54,14 @@ function initLanguageDropdown() {
         return;
     }
     
-    console.log('✅ Button found:', langBtn);
     
     // Set button to current language immediately
     const currentLang = localStorage.getItem('billionairs_lang') || window.i18n?.currentLang || 'en';
     langBtn.textContent = currentLang.toUpperCase();
-    console.log('🌍 Language button set to:', currentLang);
     
     // Check if dropdown already exists
     const existingDropdown = document.getElementById('langDropdownSimple');
     if (existingDropdown) {
-        console.log('⚠️ Dropdown already exists, removing...');
         existingDropdown.remove();
     }
     
@@ -151,7 +144,6 @@ function initLanguageDropdown() {
     
     // Add to page
     document.body.appendChild(dropdown);
-    console.log('✅ Dropdown added to body');
     
     // Position dropdown relative to button
     function positionDropdown() {
@@ -165,7 +157,6 @@ function initLanguageDropdown() {
     langBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log('🖱️ Button clicked');
         
         positionDropdown();
         
@@ -183,7 +174,6 @@ function initLanguageDropdown() {
             dropdown.style.transform = 'translateY(0) scale(1)';
         }
         
-        console.log('📋 Dropdown visible:', !isVisible);
     });
     
     // Reposition on scroll/resize
@@ -240,7 +230,6 @@ function initLanguageDropdown() {
             e.preventDefault();
             e.stopPropagation();
             const lang = link.getAttribute('data-lang');
-            console.log('🌍 Language clicked:', lang);
             
             // Close dropdown immediately
             dropdown.style.opacity = '0';
@@ -248,21 +237,17 @@ function initLanguageDropdown() {
             dropdown.style.transform = 'translateY(-20px) scale(0.9)';
             
             if (window.i18n && typeof window.i18n.switchLanguage === 'function') {
-                console.log('🔄 Switching language...');
                 try {
                     await window.i18n.switchLanguage(lang);
-                    console.log('✅ Language switched to:', lang);
                     langBtn.textContent = lang.toUpperCase();
                     
                     // Translate footer links (for main page)
                     if (typeof window.translateFooterLinks === 'function') {
-                        console.log('🔄 Calling translateFooterLinks...');
                         window.translateFooterLinks(lang);
                     }
                     
                     // Translate page elements (testimonials, rejection, etc.)
                     if (typeof window.translatePageElements === 'function') {
-                        console.log('🔄 Calling translatePageElements IMMEDIATELY...');
                         window.translatePageElements();
                     } else {
                         console.error('❌ window.translatePageElements NOT FOUND!');
@@ -270,19 +255,16 @@ function initLanguageDropdown() {
                     
                     // Translate payment section
                     if (typeof window.translatePaymentSection === 'function') {
-                        console.log('🔄 Calling translatePaymentSection...');
                         window.translatePaymentSection();
                     }
                     
                     // Translate login page (if on login page)
                     if (typeof window.translateLoginPage === 'function') {
-                        console.log('🔄 Calling translateLoginPage...');
                         window.translateLoginPage();
                     }
                     
                     // Force modal translation after language switch
                     if (typeof translateModals === 'function') {
-                        console.log('🔄 Calling translateModals...');
                         setTimeout(translateModals, 300);
                     }
                 } catch (error) {
@@ -294,26 +276,20 @@ function initLanguageDropdown() {
         });
     });
     
-    console.log('✅ Language dropdown ready!');
 }
 
 // Wait for i18n to be ready
 if (window.i18n) {
-    console.log('✅ i18n already loaded, initializing immediately');
     initLanguageDropdown();
 } else {
-    console.log('⏳ Waiting for i18nReady event...');
     window.addEventListener('i18nReady', () => {
-        console.log('✅ i18nReady event received!');
         initLanguageDropdown();
     });
 }
 
 // Also try after DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('✅ DOM ready');
     if (window.i18n && !document.getElementById('langDropdownSimple')) {
-        console.log('🔧 Initializing via DOMContentLoaded');
         setTimeout(initLanguageDropdown, 100);
     }
 });

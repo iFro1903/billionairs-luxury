@@ -32,7 +32,6 @@ class PaymentMethodSelector {
             selectedElement.classList.add('active');
         }
         this.selectedCrypto = crypto;
-        console.log('✓ Selected cryptocurrency:', crypto);
     }
 
     selectPaymentMethod(method) {
@@ -63,7 +62,6 @@ class PaymentMethodSelector {
         }
 
         this.selectedMethod = method;
-        console.log('✓ Selected payment method for 500K CHF:', method);
     }
 
     getSelectedPaymentData() {
@@ -156,11 +154,6 @@ class PaymentMethodSelector {
         const paymentData = this.getSelectedPaymentData();
         const methodInfo = this.getPaymentMethodInfo();
 
-        console.log('💰 Initiating payment:', {
-            method: this.selectedMethod,
-            amount: '500,000 CHF',
-            ...methodInfo
-        });
 
         if (this.selectedMethod === 'wire') {
             // Handle wire transfer separately (manual processing)
@@ -183,7 +176,6 @@ class PaymentMethodSelector {
 
     async handleCryptoPayment(paymentData) {
         // For crypto payments, we collect information and send wallet address
-        console.log('₿ Processing crypto payment request...');
         
         // Collect form data from common customer fields
         const firstName = document.getElementById('customerFirstName')?.value || '';
@@ -235,7 +227,6 @@ class PaymentMethodSelector {
             cryptocurrency: selectedCrypto
         };
 
-        console.log('Crypto payment request:', cryptoPaymentData);
         
         // Show confirmation message
         alert(`✓ Crypto Payment Request Received
@@ -261,7 +252,6 @@ You will receive via email at ${email}:
 
     async handleWireTransfer(paymentData) {
         // For wire transfers, we collect information and send bank details
-        console.log('🏛️ Processing wire transfer request...');
         
         // Collect form data from common fields
         const firstName = document.getElementById('customerFirstName')?.value || '';
@@ -359,7 +349,6 @@ Please keep your phone ${phone} available for verification.`);
 // Initialize payment method selector
 document.addEventListener('DOMContentLoaded', () => {
     window.paymentMethodSelector = new PaymentMethodSelector();
-    console.log('✓ Payment Method Selector initialized for 500K CHF transactions');
 });
 
 // Export for global access
