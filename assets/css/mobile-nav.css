@@ -55,13 +55,30 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1.8rem;
+    gap: 2.2rem;
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     pointer-events: none;
-    padding: 4rem 1rem 2rem;
+    padding: 4rem 1rem 3rem;
     overscroll-behavior: contain;
+}
+
+/* Logo in overlay */
+.mobile-overlay-logo {
+    width: 120px;
+    height: auto;
+    opacity: 0.9;
+    filter: brightness(1.1);
+    margin-bottom: 0.5rem;
+}
+
+/* Decorative divider */
+.mobile-overlay-divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232, 180, 184, 0.5), transparent);
+    margin-bottom: 0.5rem;
 }
 
 /* Visible shine effect on overlay */
@@ -315,9 +332,9 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.8rem 1.2rem;
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(232, 180, 160, 0.15);
+    margin-top: 2.5rem;
+    padding-top: 1.8rem;
+    border-top: 1px solid rgba(232, 180, 160, 0.12);
 }
 
 .mobile-legal-link {
