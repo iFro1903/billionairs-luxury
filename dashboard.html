@@ -840,7 +840,7 @@
                         countdownDiv.style.cssText = 'color: #E8B4A0; text-align: center; margin-top: 2rem; font-size: 1.1rem;';
                         countdownDiv.innerHTML = `
                             <div style="animation: pulse 1.5s ease-in-out infinite;">
-                                ⏳ ${t('dashboard.verifying_payment', 'Verifying your payment...')}<br>
+                                ${t('dashboard.verifying_payment', 'Verifying your payment...')}<br>
                                 <small style="color: rgba(255,255,255,0.7);">${t('dashboard.auto_refresh', 'Auto-refreshing in 3 seconds')} (${refreshCount + 1}/3)</small>
                             </div>
                         `;
@@ -954,7 +954,7 @@
                 max-width: 350px;
             `;
             notification.innerHTML = `
-                <div style="font-weight: 600; color: #E8B4A0; margin-bottom: 8px; font-size: 16px;">⏳ ${t('dashboard.pdf_generating_title', 'Generating Certificate...')}</div>
+                <div style="font-weight: 600; color: #E8B4A0; margin-bottom: 8px; font-size: 16px;">${t('dashboard.pdf_generating_title', 'Generating Certificate...')}</div>
                 <div style="opacity: 0.9; line-height: 1.4;">
                     ${t('dashboard.pdf_generating_desc', 'Your exclusive PDF certificate is being prepared. This may take a few seconds.')}
                 </div>
@@ -994,7 +994,7 @@
 
                 // Update notification to success
                 notification.innerHTML = `
-                    <div style="font-weight: 600; color: #E8B4A0; margin-bottom: 8px; font-size: 16px;">✓ ${t('dashboard.pdf_opened_title', 'Certificate Downloaded')}</div>
+                    <div style="font-weight: 600; color: #E8B4A0; margin-bottom: 8px; font-size: 16px;">${t('dashboard.pdf_opened_title', 'Certificate Downloaded')}</div>
                     <div style="opacity: 0.9; line-height: 1.4;">
                         ${t('dashboard.pdf_download_complete', 'Your exclusive PDF certificate has been downloaded successfully.')}
                     </div>
@@ -1011,7 +1011,7 @@
             } catch (err) {
                 console.error('PDF download error:', err);
                 notification.innerHTML = `
-                    <div style="font-weight: 600; color: #e74c3c; margin-bottom: 8px; font-size: 16px;">✗ ${t('dashboard.pdf_error_title', 'Download Failed')}</div>
+                    <div style="font-weight: 600; color: #e74c3c; margin-bottom: 8px; font-size: 16px;">${t('dashboard.pdf_error_title', 'Download Failed')}</div>
                     <div style="opacity: 0.9; line-height: 1.4;">
                         ${t('dashboard.pdf_error_desc', 'Could not generate your certificate. Please try again or contact support.')}
                     </div>
