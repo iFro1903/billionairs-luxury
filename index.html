@@ -389,6 +389,11 @@
             <button class="lang-switcher" id="langBtn" aria-label="Switch language between English and German">EN</button>
             <button class="nav-contact" id="contactBtn" aria-label="Open contact information">CONTACT</button>
             
+            <!-- Mobile Flag Button (only visible on mobile) -->
+            <button class="mobile-flag-btn" id="mobileFlagBtn" aria-label="Switch language">
+                <span class="flag-emoji">🇬🇧</span><span class="flag-arrow">▼</span>
+            </button>
+            
             <!-- Mobile Hamburger (only visible on mobile) -->
             <button class="mobile-hamburger" id="mobileHamburger">
                 <span></span>
@@ -397,25 +402,23 @@
             </button>
         </div>
     </nav>
+    
+    <!-- Quick Language Dropdown (mobile only) -->
+    <div class="quick-lang-dropdown" id="quickLangDropdown">
+        <a href="#" class="quick-lang-option" data-lang="en">🇬🇧 English</a>
+        <a href="#" class="quick-lang-option" data-lang="de">🇩🇪 Deutsch</a>
+        <a href="#" class="quick-lang-option" data-lang="fr">🇫🇷 Français</a>
+        <a href="#" class="quick-lang-option" data-lang="es">🇪🇸 Español</a>
+        <a href="#" class="quick-lang-option" data-lang="it">🇮🇹 Italiano</a>
+        <a href="#" class="quick-lang-option" data-lang="zh">🇨🇳 中文</a>
+        <a href="#" class="quick-lang-option" data-lang="ar">🇸🇦 العربية</a>
+        <a href="#" class="quick-lang-option" data-lang="ru">🇷🇺 Русский</a>
+        <a href="#" class="quick-lang-option" data-lang="ja">🇯🇵 日本語</a>
+    </div>
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-overlay" id="mobileOverlay">
         <button class="mobile-btn" id="mobileInnerCircle">INNER CIRCLE</button>
-        <button class="mobile-btn" id="mobileLanguage">LANGUAGE</button>
-        
-        <!-- Mobile Language Dropdown (hidden by default) -->
-        <div class="mobile-lang-dropdown" id="mobileLangDropdown" style="display: none;">
-            <a href="#" class="lang-option" data-lang="en">🇬🇧 English</a>
-            <a href="#" class="lang-option" data-lang="de">🇩🇪 Deutsch</a>
-            <a href="#" class="lang-option" data-lang="fr">🇫🇷 Français</a>
-            <a href="#" class="lang-option" data-lang="es">🇪🇸 Español</a>
-            <a href="#" class="lang-option" data-lang="zh">🇨🇳 中文</a>
-            <a href="#" class="lang-option" data-lang="ar">🇸🇦 العربية</a>
-            <a href="#" class="lang-option" data-lang="it">🇮🇹 Italiano</a>
-            <a href="#" class="lang-option" data-lang="ru">🇷🇺 Русский</a>
-            <a href="#" class="lang-option" data-lang="ja">🇯🇵 日本語</a>
-        </div>
-        
         <button class="mobile-btn" id="mobileContact">CONTACT</button>
         
         <!-- Legal Links in Mobile Menu -->
@@ -1638,9 +1641,13 @@
             const hamburger = document.getElementById('mobileHamburger');
             const overlay = document.getElementById('mobileOverlay');
             const innerCircleBtn = document.getElementById('mobileInnerCircle');
-            const languageBtn = document.getElementById('mobileLanguage');
             const contactBtn = document.getElementById('mobileContact');
+            const flagBtn = document.getElementById('mobileFlagBtn');
+            const quickDropdown = document.getElementById('quickLangDropdown');
             const nav = document.querySelector('.premium-nav');
+            
+            // Flag mapping for languages
+            const langFlags = {en:'🇬🇧', de:'🇩🇪', fr:'🇫🇷', es:'🇪🇸', it:'🇮🇹', ru:'🇷🇺', zh:'🇨🇳', ja:'🇯🇵', ar:'🇸🇦'};
             
             // Mobile scroll detection - hide on scroll down, show on scroll up
             let lastScrollTop = 0;
@@ -1671,8 +1678,11 @@
                 scrollTimeout = setTimeout(handleMobileScroll, 10);
             }, { passive: true });
             
-            // Set mobile language button to current language on load
+            // Set mobile flag button to current language on load
             const currentLang = localStorage.getItem('billionairs_lang') || 'en';
+            if (flagBtn && langFlags[currentLang]) {
+                flagBtn.querySelector('.flag-emoji').textContent = langFlags[currentLang];
+            }
 
             // Touch feedback for buttons
             function addTouchFeedback(button) {
@@ -1688,7 +1698,7 @@
             }
 
             // Add touch feedback to all mobile buttons
-            [innerCircleBtn, languageBtn, contactBtn].forEach(btn => addTouchFeedback(btn));
+            [innerCircleBtn, contactBtn].forEach(btn => addTouchFeedback(btn));
 
             // Toggle menu
             hamburger.addEventListener('click', function() {
@@ -1718,36 +1728,31 @@
                 window.location.href = '/login.html?lang=' + lang;
             });
 
-            // Language button - show mobile language dropdown
-            let mobileLangExpanded = false;
-            languageBtn.addEventListener('click', function(e) {
+            // Flag button - toggle quick language dropdown
+            flagBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                const dropdown = document.getElementById('mobileLangDropdown');
+                e.stopPropagation();
+                flagBtn.classList.toggle('active');
+                quickDropdown.classList.toggle('active');
                 
-                if (!mobileLangExpanded) {
-                    // Show dropdown - keep body scroll locked (already locked by burger menu)
-                    dropdown.style.display = 'flex';
-                    dropdown.style.animation = 'slideDown 0.3s ease forwards';
-                    mobileLangExpanded = true;
-                    languageBtn.textContent = '← BACK';
-                    
-                    // Scroll dropdown container to top
-                    dropdown.scrollTop = 0;
-                } else {
-                    // Hide dropdown
-                    dropdown.style.animation = 'slideUp 0.3s ease forwards';
-                    setTimeout(() => {
-                        dropdown.style.display = 'none';
-                    }, 300);
-                    mobileLangExpanded = false;
-                    languageBtn.textContent = 'LANGUAGE';
+                // Mark current language as active
+                const curLang = localStorage.getItem('billionairs_lang') || 'en';
+                quickDropdown.querySelectorAll('.quick-lang-option').forEach(opt => {
+                    opt.classList.toggle('active-lang', opt.getAttribute('data-lang') === curLang);
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!flagBtn.contains(e.target) && !quickDropdown.contains(e.target)) {
+                    flagBtn.classList.remove('active');
+                    quickDropdown.classList.remove('active');
                 }
             });
             
-            // Mobile language option click handlers
-            function setupMobileLangOptions() {
-                const mobileLangOptions = document.querySelectorAll('#mobileLangDropdown .lang-option');
-                mobileLangOptions.forEach(option => {
+            // Quick language option click handlers
+            function setupQuickLangOptions() {
+                quickDropdown.querySelectorAll('.quick-lang-option').forEach(option => {
                     option.addEventListener('click', async function(e) {
                         e.preventDefault();
                         e.stopPropagation();
@@ -1771,15 +1776,19 @@
                                 desktopBtn.textContent = lang.toUpperCase();
                             }
                             
-                            // Close mobile dropdown and menu
-                            const dropdown = document.getElementById('mobileLangDropdown');
-                            dropdown.style.display = 'none';
-                            mobileLangExpanded = false;
-                            languageBtn.textContent = 'LANGUAGE';
+                            // Update flag button emoji
+                            if (langFlags[lang]) {
+                                flagBtn.querySelector('.flag-emoji').textContent = langFlags[lang];
+                            }
                             
-                            hamburger.classList.remove('active');
-                            overlay.classList.remove('active');
-                            document.body.style.overflow = '';
+                            // Mark active language
+                            quickDropdown.querySelectorAll('.quick-lang-option').forEach(opt => {
+                                opt.classList.toggle('active-lang', opt.getAttribute('data-lang') === lang);
+                            });
+                            
+                            // Close dropdown
+                            flagBtn.classList.remove('active');
+                            quickDropdown.classList.remove('active');
                         } else {
                             console.error('i18n not available');
                         }
@@ -1789,9 +1798,9 @@
             
             // Setup immediately if i18n is ready, otherwise wait for event
             if (window.i18n) {
-                setupMobileLangOptions();
+                setupQuickLangOptions();
             } else {
-                window.addEventListener('i18nReady', setupMobileLangOptions, { once: true });
+                window.addEventListener('i18nReady', setupQuickLangOptions, { once: true });
             }
 
             // Contact button - trigger desktop contact button
