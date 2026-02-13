@@ -400,7 +400,7 @@ function buildCertificateHTML(t, certNumber) {
             border: 1px solid rgba(46, 204, 113, 0.3);
             background: rgba(46, 204, 113, 0.05);
         }
-        .badge::before { content: '✓ '; font-size: 10px; }
+        .badge::before { content: none; }
 
         .footer {
             margin-top: 50px;
