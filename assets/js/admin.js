@@ -235,7 +235,13 @@ class AdminPanel {
 
     async loadUsersData() {
         try {
-            const response = await fetch('/api/admin-users');
+            const adminSession = JSON.parse(sessionStorage.getItem('adminSession'));
+            const response = await fetch('/api/admin-users', {
+                headers: {
+                    'X-Admin-Email': adminSession.email,
+                    'X-Admin-Password': adminSession.password
+                }
+            });
             const data = await response.json();
 
             // Update stats
@@ -733,7 +739,13 @@ class AdminPanel {
 
     async loadPaymentsData() {
         try {
-            const response = await fetch('/api/admin-payments');
+            const adminSession = JSON.parse(sessionStorage.getItem('adminSession'));
+            const response = await fetch('/api/admin-payments', {
+                headers: {
+                    'X-Admin-Email': adminSession.email,
+                    'X-Admin-Password': adminSession.password
+                }
+            });
             const data = await response.json();
 
             // Format revenue with thousand separators
@@ -785,7 +797,13 @@ class AdminPanel {
 
     async loadStatsData() {
         try {
-            const response = await fetch('/api/admin-stats');
+            const adminSession = JSON.parse(sessionStorage.getItem('adminSession'));
+            const response = await fetch('/api/admin-stats', {
+                headers: {
+                    'X-Admin-Email': adminSession.email,
+                    'X-Admin-Password': adminSession.password
+                }
+            });
             const data = await response.json();
 
             document.getElementById('statsRegistered').textContent = data.registered || 0;
