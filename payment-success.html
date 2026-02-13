@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/assets/images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="/assets/js/auth.js"></script>
     <style>
         * {
             margin: 0;
@@ -226,6 +227,24 @@
 
         // Initialize i18n when ready
         async function initPage() {
+            // Auth-Check: Session + Payment verifizieren
+            if (window.authManager) {
+                try {
+                    var result = await window.authManager.verifySession();
+                    if (!result || !result.valid) {
+                        window.location.href = '/login.html';
+                        return;
+                    }
+                    if (!result.user || result.user.payment_status !== 'paid') {
+                        window.location.href = '/dashboard.html';
+                        return;
+                    }
+                } catch(e) {
+                    window.location.href = '/login.html';
+                    return;
+                }
+            }
+
             if (window.i18n) {
                 await window.i18n.init();
                 await window.i18n.switchLanguage(userLang);

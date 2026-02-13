@@ -9,6 +9,9 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/assets/images/logo.png">
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="/assets/js/i18n.js" defer></script>
+    <script src="/assets/js/lang-dropdown-simple.js" defer></script>
     <style>
         body {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
@@ -70,68 +73,69 @@
 </head>
 <body>
     <div class="policy-container">
-        <h1>🍪 Cookie-Richtlinie</h1>
-        <p><strong>Letzte Aktualisierung:</strong> <?php echo date('d.m.Y'); ?></p>
+        <h1 data-i18n="cookie_policy.title">Cookie Policy</h1>
+        <p><strong data-i18n="cookie_policy.last_update">Last Update:</strong> <span id="lastUpdate"></span></p>
+        <script>document.getElementById('lastUpdate').textContent=new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});</script>
 
-        <h2>1. Was sind Cookies?</h2>
-        <p>Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden, wenn Sie eine Website besuchen. Sie ermöglichen es der Website, Ihre Präferenzen zu speichern und Ihre Nutzung zu analysieren.</p>
+        <h2 data-i18n="cookie_policy.s1_title">1. What are Cookies?</h2>
+        <p data-i18n="cookie_policy.s1_text">Cookies are small text files stored on your device when you visit a website. They allow the website to save your preferences and analyze your usage.</p>
 
-        <h2>2. Welche Cookies verwenden wir?</h2>
+        <h2 data-i18n="cookie_policy.s2_title">2. What Cookies Do We Use?</h2>
         
         <table class="cookie-table">
             <thead>
                 <tr>
-                    <th>Cookie-Kategorie</th>
-                    <th>Zweck</th>
-                    <th>Dauer</th>
+                    <th data-i18n="cookie_policy.th_category">Cookie Category</th>
+                    <th data-i18n="cookie_policy.th_purpose">Purpose</th>
+                    <th data-i18n="cookie_policy.th_duration">Duration</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Notwendige Cookies</strong></td>
-                    <td>Erforderlich für grundlegende Funktionen wie Login, Sicherheit und Zugangsverwaltung</td>
-                    <td>Session / 365 Tage</td>
+                    <td><strong data-i18n="cookie_policy.cat_necessary">Necessary Cookies</strong></td>
+                    <td data-i18n="cookie_policy.cat_necessary_desc">Required for basic functions such as login, security and access management</td>
+                    <td data-i18n="cookie_policy.cat_necessary_dur">Session / 365 days</td>
                 </tr>
                 <tr>
-                    <td><strong>Analyse Cookies</strong></td>
-                    <td>Google Analytics zur Analyse der Nutzung unserer Website (anonymisiert)</td>
-                    <td>2 Jahre</td>
+                    <td><strong data-i18n="cookie_policy.cat_analytics">Analytics Cookies</strong></td>
+                    <td data-i18n="cookie_policy.cat_analytics_desc">Google Analytics for analyzing website usage (anonymized)</td>
+                    <td data-i18n="cookie_policy.cat_analytics_dur">2 years</td>
                 </tr>
                 <tr>
-                    <td><strong>Marketing Cookies</strong></td>
-                    <td>Personalisierte Werbung und Marketing-Kommunikation</td>
-                    <td>1 Jahr</td>
+                    <td><strong data-i18n="cookie_policy.cat_marketing">Marketing Cookies</strong></td>
+                    <td data-i18n="cookie_policy.cat_marketing_desc">Personalized advertising and marketing communication</td>
+                    <td data-i18n="cookie_policy.cat_marketing_dur">1 year</td>
                 </tr>
                 <tr>
-                    <td><strong>Funktionale Cookies</strong></td>
-                    <td>Speichern Ihrer Präferenzen (Sprache, Theme, etc.)</td>
-                    <td>1 Jahr</td>
+                    <td><strong data-i18n="cookie_policy.cat_functional">Functional Cookies</strong></td>
+                    <td data-i18n="cookie_policy.cat_functional_desc">Store your preferences (language, theme, etc.)</td>
+                    <td data-i18n="cookie_policy.cat_functional_dur">1 year</td>
                 </tr>
             </tbody>
         </table>
 
-        <h2>3. Google Analytics</h2>
-        <p>Wir verwenden Google Analytics 4, um zu verstehen, wie Besucher unsere Website nutzen. Diese Daten werden ausschließlich in aggregierter Form verwendet und enthalten keine persönlich identifizierbaren Informationen.</p>
+        <h2 data-i18n="cookie_policy.s3_title">3. Google Analytics</h2>
+        <p data-i18n="cookie_policy.s3_text1">We use Google Analytics 4 to understand how visitors use our website. This data is used exclusively in aggregate form and contains no personally identifiable information.</p>
         <p><strong>Measurement ID:</strong> G-80P17E7RZK</p>
-        <p>Wir haben Google Consent Mode v2 implementiert, um sicherzustellen, dass keine Tracking-Cookies gesetzt werden, bevor Sie Ihre Einwilligung erteilt haben.</p>
+        <p data-i18n="cookie_policy.s3_text2">We have implemented Google Consent Mode v2 to ensure that no tracking cookies are set before you give your consent.</p>
 
-        <h2>4. Ihre Rechte</h2>
-        <p>Sie haben folgende Rechte bezüglich Cookies:</p>
+        <h2 data-i18n="cookie_policy.s4_title">4. Your Rights</h2>
+        <p data-i18n="cookie_policy.s4_text">You have the following rights regarding cookies:</p>
         <ul>
-            <li>Cookies jederzeit akzeptieren oder ablehnen</li>
-            <li>Ihre Cookie-Einstellungen jederzeit ändern</li>
-            <li>Cookies in Ihrem Browser löschen</li>
-            <li>Cookies in Ihren Browser-Einstellungen blockieren</li>
+            <li data-i18n="cookie_policy.s4_r1">Accept or reject cookies at any time</li>
+            <li data-i18n="cookie_policy.s4_r2">Change your cookie settings at any time</li>
+            <li data-i18n="cookie_policy.s4_r3">Delete cookies in your browser</li>
+            <li data-i18n="cookie_policy.s4_r4">Block cookies in your browser settings</li>
         </ul>
 
-        <h2>5. Cookie-Einstellungen ändern</h2>
-        <p>Sie können Ihre Cookie-Einstellungen jederzeit ändern, indem Sie auf den "Cookie-Einstellungen" Link am unteren Rand jeder Seite klicken oder durch Löschen Ihrer gespeicherten Präferenzen im Browser.</p>
+        <h2 data-i18n="cookie_policy.s5_title">5. Change Cookie Settings</h2>
+        <p data-i18n="cookie_policy.s5_text">You can change your cookie settings at any time by clicking the "Cookie Settings" link at the bottom of each page or by deleting your saved preferences in the browser.</p>
 
-        <h2>6. Kontakt</h2>
-        <p>Bei Fragen zu unserer Cookie-Richtlinie kontaktieren Sie uns bitte unter:</p>
+        <h2 data-i18n="cookie_policy.s6_title">6. Contact</h2>
+        <p data-i18n="cookie_policy.s6_text">For questions about our cookie policy, please contact us at:</p>
         <p><strong>E-Mail:</strong> privacy@billionairs.luxury</p>
 
-        <a href="/" class="back-link">← Zurück zur Startseite</a>
+        <a href="/" class="back-link" data-i18n="cookie_policy.back">&larr; Back to Home</a>
     </div>
 
     <script>

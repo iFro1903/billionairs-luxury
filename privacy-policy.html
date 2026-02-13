@@ -9,6 +9,9 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/assets/images/logo.png">
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="/assets/js/i18n.js" defer></script>
+    <script src="/assets/js/lang-dropdown-simple.js" defer></script>
     <style>
         body {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
@@ -62,112 +65,97 @@
 </head>
 <body>
     <div class="policy-container">
-        <h1>🔒 Datenschutzerklärung</h1>
-        <p><strong>Letzte Aktualisierung:</strong> <?php echo date('d.m.Y'); ?></p>
+        <h1 data-i18n="privacy_page.title">Privacy Policy</h1>
+        <p><strong data-i18n="privacy_page.last_update">Last Update:</strong> <span id="lastUpdate"></span></p>
+        <script>document.getElementById('lastUpdate').textContent=new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});</script>
 
-        <h2>1. Verantwortlicher</h2>
-        <p><strong>BILLIONAIRS</strong><br>
-        E-Mail: privacy@billionairs.luxury<br>
-        Website: billionairs.luxury</p>
+        <h2 data-i18n="privacy_page.s1_title">1. Data Controller</h2>
+        <p data-i18n="privacy_page.s1_text">The responsible party within the meaning of data protection laws is:</p>
+        <p><strong>Billionairs Club</strong><br>E-Mail: privacy@billionairs.luxury</p>
 
-        <h2>2. Erhebung und Verarbeitung personenbezogener Daten</h2>
-        <p>Wir erheben und verarbeiten folgende personenbezogene Daten:</p>
+        <h2 data-i18n="privacy_page.s2_title">2. Data Collection</h2>
+        <p data-i18n="privacy_page.s2_text">We collect the following data:</p>
         <ul>
-            <li><strong>Account-Daten:</strong> E-Mail-Adresse, Name (optional)</li>
-            <li><strong>Zahlungsdaten:</strong> Über sichere Drittanbieter (Stripe, PayPal, Coinbase) - wir speichern keine vollständigen Kreditkartendaten</li>
-            <li><strong>Nutzungsdaten:</strong> IP-Adresse, Browser-Typ, Zugriffszeiten, besuchte Seiten</li>
-            <li><strong>Chat-Daten:</strong> Nachrichten im Global Chat</li>
-            <li><strong>Profil-Uploads:</strong> Profilbilder (gespeichert bei Cloudinary)</li>
+            <li data-i18n="privacy_page.s2_l1">Email address (for registration)</li>
+            <li data-i18n="privacy_page.s2_l2">Full name (for membership card)</li>
+            <li data-i18n="privacy_page.s2_l3">Password (encrypted with PBKDF2)</li>
+            <li data-i18n="privacy_page.s2_l4">Payment information (processed via Stripe)</li>
+            <li data-i18n="privacy_page.s2_l5">Member ID (automatically generated)</li>
+            <li data-i18n="privacy_page.s2_l6">Usage data (anonymized via Google Analytics)</li>
         </ul>
 
-        <h2>3. Zweck der Datenverarbeitung</h2>
-        <p>Wir verarbeiten Ihre Daten für folgende Zwecke:</p>
+        <h2 data-i18n="privacy_page.s3_title">3. Purpose of Data Processing</h2>
+        <p data-i18n="privacy_page.s3_text">Your data is processed for the following purposes:</p>
         <ul>
-            <li>Bereitstellung und Betrieb unserer Dienste</li>
-            <li>Abwicklung von Zahlungen und Transaktionen</li>
-            <li>Kommunikation mit Nutzern</li>
-            <li>Sicherheit und Betrugsprävention</li>
-            <li>Verbesserung unserer Dienste (Analytics)</li>
-            <li>Einhaltung gesetzlicher Verpflichtungen</li>
+            <li data-i18n="privacy_page.s3_l1">Providing the membership platform</li>
+            <li data-i18n="privacy_page.s3_l2">Processing payments</li>
+            <li data-i18n="privacy_page.s3_l3">Verifying membership</li>
+            <li data-i18n="privacy_page.s3_l4">Improving our services</li>
+            <li data-i18n="privacy_page.s3_l5">Sending important notifications</li>
         </ul>
 
-        <h2>4. Rechtsgrundlagen (GDPR)</h2>
+        <h2 data-i18n="privacy_page.s4_title">4. Legal Basis</h2>
+        <p data-i18n="privacy_page.s4_text">Data processing is based on:</p>
         <ul>
-            <li><strong>Art. 6 Abs. 1 lit. a DSGVO:</strong> Einwilligung (z.B. für Marketing-Cookies)</li>
-            <li><strong>Art. 6 Abs. 1 lit. b DSGVO:</strong> Vertragserfüllung (Account-Services)</li>
-            <li><strong>Art. 6 Abs. 1 lit. c DSGVO:</strong> Rechtliche Verpflichtungen</li>
-            <li><strong>Art. 6 Abs. 1 lit. f DSGVO:</strong> Berechtigte Interessen (Sicherheit, Analytics)</li>
+            <li data-i18n="privacy_page.s4_l1">Contract fulfillment (Art. 6 para. 1 lit. b GDPR)</li>
+            <li data-i18n="privacy_page.s4_l2">Consent (Art. 6 para. 1 lit. a GDPR)</li>
+            <li data-i18n="privacy_page.s4_l3">Legitimate interests (Art. 6 para. 1 lit. f GDPR)</li>
         </ul>
 
-        <h2>5. Drittanbieter und Tools</h2>
-        <p>Wir nutzen folgende Drittanbieter:</p>
+        <h2 data-i18n="privacy_page.s5_title">5. Third-Party Services</h2>
+        <p data-i18n="privacy_page.s5_text">We use the following third-party services:</p>
         <ul>
-            <li><strong>Neon (PostgreSQL):</strong> Datenbank-Hosting (USA - EU-US Data Privacy Framework)</li>
-            <li><strong>Cloudinary:</strong> Medien-Hosting (USA/EU - GDPR-konform)</li>
-            <li><strong>Google Analytics 4:</strong> Website-Analytics (Consent Mode v2 aktiviert)</li>
-            <li><strong>Stripe:</strong> Zahlungsabwicklung (GDPR-konform)</li>
-            <li><strong>PayPal:</strong> Zahlungsabwicklung (GDPR-konform)</li>
-            <li><strong>Coinbase Commerce:</strong> Krypto-Zahlungen (GDPR-konform)</li>
+            <li data-i18n="privacy_page.s5_l1"><strong>Stripe:</strong> Payment processing (PCI-DSS certified)</li>
+            <li data-i18n="privacy_page.s5_l2"><strong>Neon/PostgreSQL:</strong> Database hosting</li>
+            <li data-i18n="privacy_page.s5_l3"><strong>Vercel:</strong> Website hosting</li>
+            <li data-i18n="privacy_page.s5_l4"><strong>Google Analytics:</strong> Website analytics (anonymized)</li>
         </ul>
 
-        <h2>6. Google Analytics & Consent Mode v2</h2>
-        <p>Wir verwenden Google Analytics 4 mit aktiviertem <strong>Consent Mode v2</strong>. Das bedeutet:</p>
+        <h2 data-i18n="privacy_page.s6_title">6. Google Analytics</h2>
+        <p data-i18n="privacy_page.s6_text1">We use Google Analytics 4 (Measurement ID: G-80P17E7RZK) with the following privacy measures:</p>
         <ul>
-            <li>Keine Analytics-Cookies werden gesetzt, bevor Sie zustimmen</li>
-            <li>Bei Ablehnung werden nur aggregierte, anonyme Pings gesendet</li>
-            <li>IP-Adressen werden anonymisiert</li>
-            <li>Measurement ID: G-80P17E7RZK</li>
+            <li data-i18n="privacy_page.s6_l1">IP anonymization enabled</li>
+            <li data-i18n="privacy_page.s6_l2">Google Consent Mode v2 integrated</li>
+            <li data-i18n="privacy_page.s6_l3">No personal data is transmitted</li>
+            <li data-i18n="privacy_page.s6_l4">Opt-out option available</li>
         </ul>
 
-        <h2>7. Ihre Rechte (GDPR)</h2>
-        <p>Sie haben folgende Rechte:</p>
+        <h2 data-i18n="privacy_page.s7_title">7. Your Rights</h2>
+        <p data-i18n="privacy_page.s7_text">Under the GDPR, you have the following rights:</p>
         <ul>
-            <li><strong>Auskunftsrecht (Art. 15 DSGVO):</strong> Informationen über Ihre gespeicherten Daten</li>
-            <li><strong>Berichtigungsrecht (Art. 16 DSGVO):</strong> Korrektur falscher Daten</li>
-            <li><strong>Löschungsrecht (Art. 17 DSGVO):</strong> "Recht auf Vergessenwerden"</li>
-            <li><strong>Einschränkung (Art. 18 DSGVO):</strong> Einschränkung der Verarbeitung</li>
-            <li><strong>Datenübertragbarkeit (Art. 20 DSGVO):</strong> Export Ihrer Daten</li>
-            <li><strong>Widerspruchsrecht (Art. 21 DSGVO):</strong> Widerspruch gegen Verarbeitung</li>
-            <li><strong>Widerruf (Art. 7 DSGVO):</strong> Widerruf erteilter Einwilligungen</li>
+            <li data-i18n="privacy_page.s7_l1">Right of access (Art. 15 GDPR)</li>
+            <li data-i18n="privacy_page.s7_l2">Right to rectification (Art. 16 GDPR)</li>
+            <li data-i18n="privacy_page.s7_l3">Right to erasure (Art. 17 GDPR)</li>
+            <li data-i18n="privacy_page.s7_l4">Right to restriction of processing (Art. 18 GDPR)</li>
+            <li data-i18n="privacy_page.s7_l5">Right to data portability (Art. 20 GDPR)</li>
+            <li data-i18n="privacy_page.s7_l6">Right to object (Art. 21 GDPR)</li>
         </ul>
 
-        <h2>8. Speicherdauer</h2>
+        <h2 data-i18n="privacy_page.s8_title">8. Data Retention</h2>
+        <p data-i18n="privacy_page.s8_text">Your data is stored only as long as necessary for the purpose of processing or as required by legal retention obligations. After termination of the membership, data is deleted within 30 days unless statutory retention periods apply.</p>
+
+        <h2 data-i18n="privacy_page.s9_title">9. Data Security</h2>
+        <p data-i18n="privacy_page.s9_text">We implement extensive security measures:</p>
         <ul>
-            <li><strong>Account-Daten:</strong> Bis zur Löschung des Accounts</li>
-            <li><strong>Chat-Nachrichten:</strong> Bis zur manuellen Löschung</li>
-            <li><strong>Zahlungsdaten:</strong> 10 Jahre (gesetzliche Aufbewahrungspflicht)</li>
-            <li><strong>Analytics-Daten:</strong> 26 Monate (Google Analytics Standard)</li>
-            <li><strong>Cookies:</strong> Siehe Cookie-Richtlinie</li>
+            <li data-i18n="privacy_page.s9_l1">SSL/TLS encryption for all data transfers</li>
+            <li data-i18n="privacy_page.s9_l2">PBKDF2 password hashing with individual salt</li>
+            <li data-i18n="privacy_page.s9_l3">Crypto-based session tokens</li>
+            <li data-i18n="privacy_page.s9_l4">Regular security audits</li>
+            <li data-i18n="privacy_page.s9_l5">Principle of data minimization</li>
         </ul>
 
-        <h2>9. Sicherheit</h2>
-        <p>Wir implementieren umfassende Sicherheitsmaßnahmen:</p>
-        <ul>
-            <li>Rate Limiting (Schutz vor Brute-Force-Angriffen)</li>
-            <li>IP-Blocking bei verdächtigen Aktivitäten</li>
-            <li>Two-Factor Authentication (2FA) für CEO-Account</li>
-            <li>Audit Logs für alle kritischen Aktionen</li>
-            <li>HTTPS-Verschlüsselung</li>
-            <li>Sichere Passwort-Hashes (bcrypt)</li>
-        </ul>
+        <h2 data-i18n="privacy_page.s10_title">10. International Data Transfers</h2>
+        <p data-i18n="privacy_page.s10_text">Some of our service providers are based outside the EU. In such cases, we ensure that appropriate safeguards under Art. 46 GDPR are in place, such as Standard Contractual Clauses or adequacy decisions.</p>
 
-        <h2>10. Datenübermittlung außerhalb der EU</h2>
-        <p>Einige unserer Dienstleister haben Server außerhalb der EU. Wir stellen sicher, dass:</p>
-        <ul>
-            <li>Anbieter GDPR-konform sind oder Standardvertragsklauseln verwenden</li>
-            <li>Anbieter dem EU-US Data Privacy Framework unterliegen</li>
-            <li>Angemessene Sicherheitsmaßnahmen getroffen werden</li>
-        </ul>
-
-        <h2>11. Kontakt & Beschwerden</h2>
-        <p>Für Datenschutzanfragen kontaktieren Sie uns:</p>
+        <h2 data-i18n="privacy_page.s11_title">11. Contact</h2>
+        <p data-i18n="privacy_page.s11_text">For questions about data protection, please contact us at:</p>
         <p><strong>E-Mail:</strong> privacy@billionairs.luxury</p>
-        <p>Sie haben auch das Recht, Beschwerde bei einer Aufsichtsbehörde einzureichen.</p>
+        <p data-i18n="privacy_page.s11_authority">You also have the right to file a complaint with a supervisory authority.</p>
 
-        <h2>12. Änderungen</h2>
-        <p>Wir behalten uns vor, diese Datenschutzerklärung anzupassen. Die aktuelle Version ist stets auf unserer Website verfügbar.</p>
+        <h2 data-i18n="privacy_page.s12_title">12. Changes to this Policy</h2>
+        <p data-i18n="privacy_page.s12_text">We reserve the right to update this privacy policy to reflect changes in our services or legal requirements. The current version is always available on our website.</p>
 
-        <a href="/" class="back-link">← Zurück zur Startseite</a>
+        <a href="/" class="back-link" data-i18n="privacy_page.back">&larr; Back to Home</a>
     </div>
 
     <script>

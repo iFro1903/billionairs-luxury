@@ -27,7 +27,10 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     
     <!-- Particles.js -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    <!-- i18n -->
+    <script src="/assets/js/i18n.js" defer></script>
+    <script src="/assets/js/lang-dropdown-simple.js" defer></script>
     
     <style>
         #particles-js {
@@ -241,11 +244,11 @@
             </div>
             
             <div style="text-align: center;">
-                <span class="welcome-badge">✓ Payment Confirmed</span>
+                <span class="welcome-badge" data-i18n="create_account.payment_confirmed">✓ Payment Confirmed</span>
             </div>
             
-            <h1 class="page-title">Welcome</h1>
-            <p class="page-subtitle">
+            <h1 class="page-title" data-i18n="create_account.title">Welcome</h1>
+            <p class="page-subtitle" data-i18n-html="create_account.subtitle">
                 Your payment has been confirmed.<br>
                 Create your account to access the INNER CIRCLE.
             </p>
@@ -256,19 +259,19 @@
             <!-- Create Account Form -->
             <form id="createAccountForm">
                 <div class="form-group">
-                    <label class="form-label" for="firstName">First Name</label>
+                    <label class="form-label" for="firstName" data-i18n="create_account.first_name">First Name</label>
                     <input type="text" id="firstName" class="form-input" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="lastName">Last Name</label>
+                    <label class="form-label" for="lastName" data-i18n="create_account.last_name">Last Name</label>
                     <input type="text" id="lastName" class="form-input" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="email">Email Address</label>
+                    <label class="form-label" for="email" data-i18n="create_account.email">Email Address</label>
                     <input type="email" id="email" class="form-input" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="password">Password</label>
+                    <label class="form-label" for="password" data-i18n="create_account.password">Password</label>
                     <input type="password" id="password" class="form-input" required oninput="updatePasswordStrength(this.value)">
                     <div id="passwordStrengthBar" style="display:none;margin-top:6px;">
                         <div style="display:flex;gap:4px;margin-bottom:4px;">
@@ -279,16 +282,16 @@
                         </div>
                         <span id="strLabel" style="font-size:0.7rem;letter-spacing:1px;color:rgba(255,255,255,0.4)"></span>
                     </div>
-                    <div class="password-requirements">Minimum 8 characters</div>
+                    <div class="password-requirements" data-i18n="create_account.password_requirements">Minimum 8 characters</div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="passwordConfirm">Confirm Password</label>
+                    <label class="form-label" for="passwordConfirm" data-i18n="create_account.confirm_password">Confirm Password</label>
                     <input type="password" id="passwordConfirm" class="form-input" required>
                 </div>
-                <button type="submit" class="submit-button">Enter the Inner Circle</button>
+                <button type="submit" class="submit-button" data-i18n="create_account.submit">Enter the Inner Circle</button>
             </form>
             <div style="text-align: center; margin-top: 1.5rem;">
-                <a href="/" style="color: rgba(232, 180, 160, 0.7); text-decoration: none; font-size: 0.85rem; font-family: 'Montserrat', sans-serif; letter-spacing: 1px; transition: color 0.3s;">← Back to Home</a>
+                <a href="/" style="color: rgba(232, 180, 160, 0.7); text-decoration: none; font-size: 0.85rem; font-family: 'Montserrat', sans-serif; letter-spacing: 1px; transition: color 0.3s;" data-i18n="create_account.back_home">← Back to Home</a>
             </div>
         </div>
     </div>
