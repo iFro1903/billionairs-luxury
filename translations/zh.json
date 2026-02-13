@@ -10,6 +10,12 @@
     "logout": "退出",
     "language": "语言"
   },
+  "login": {
+    "overlay_verifying": "验证访问权限",
+    "overlay_authenticating": "正在验证您的凭据...",
+    "overlay_granted": "访问已授权",
+    "overlay_redirecting": "正在跳转到您的控制台..."
+  },
   "hero": {
     "title": "欢迎来到亿万富翁专属俱乐部",
     "subtitle": "为精选会员提供奢华、尊贵和独特体验",

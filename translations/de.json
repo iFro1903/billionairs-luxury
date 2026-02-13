@@ -59,7 +59,11 @@
     "send_reset_link": "Reset-Link senden",
     "back_to_login": "← Zurück zur Anmeldung",
     "back_home": "← Zurück zur Startseite",
-    "sending": "Wird gesendet..."
+    "sending": "Wird gesendet...",
+    "overlay_verifying": "Zugang wird überprüft",
+    "overlay_authenticating": "Ihre Anmeldedaten werden verifiziert...",
+    "overlay_granted": "Zugang gewährt",
+    "overlay_redirecting": "Weiterleitung zu Ihrem Dashboard..."
   },
   "register": {
     "title": "Registrierung",

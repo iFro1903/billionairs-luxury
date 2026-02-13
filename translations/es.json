@@ -31,7 +31,11 @@
     "email_label": "Dirección de correo electrónico",
     "send_reset_link": "Enviar enlace de restablecimiento",
     "back_to_login": "← Volver al inicio de sesión",
-    "sending": "Enviando..."
+    "sending": "Enviando...",
+    "overlay_verifying": "Verificando acceso",
+    "overlay_authenticating": "Autenticando sus credenciales...",
+    "overlay_granted": "Acceso concedido",
+    "overlay_redirecting": "Redirigiendo a su panel de control..."
   },
   "common": {
     "inner_circle": "CÍRCULO INTERIOR",

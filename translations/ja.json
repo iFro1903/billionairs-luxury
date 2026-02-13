@@ -10,6 +10,12 @@
     "logout": "ログアウト",
     "language": "言語"
   },
+  "login": {
+    "overlay_verifying": "アクセスを確認中",
+    "overlay_authenticating": "資格情報を認証しています...",
+    "overlay_granted": "アクセスが許可されました",
+    "overlay_redirecting": "ダッシュボードへリダイレクト中..."
+  },
   "hero": {
     "title": "ビリオネアーズ限定クラブへようこそ",
     "subtitle": "選ばれた会員のための贅沢、名声、そしてユニークな体験",

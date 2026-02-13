@@ -100,6 +100,7 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             position: relative;
             z-index: 1;
+            overflow: hidden;
         }
 
         .login-logo {
@@ -311,6 +312,59 @@
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Login Loading Overlay */
+        .login-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 10, 0.85);
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 10;
+            animation: overlayFadeIn 0.3s ease;
+        }
+
+        @keyframes overlayFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .login-spinner {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(232, 180, 160, 0.15);
+            border-top: 2px solid #E8B4A0;
+            border-radius: 50%;
+            animation: spinLogin 1s linear infinite;
+        }
+
+        @keyframes spinLogin {
+            to { transform: rotate(360deg); }
+        }
+
+        .login-overlay-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: rgba(232, 180, 160, 0.7);
+            text-transform: uppercase;
+        }
+
+        .login-overlay-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.55rem;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -420,24 +474,44 @@
             const password = document.getElementById('loginPassword').value;
             const submitBtn = e.target.querySelector('.submit-button');
 
+            // i18n helper for overlay
+            const currentLang = window.i18nManager?.currentLang || localStorage.getItem('billionairs_lang') || localStorage.getItem('selectedLanguage') || 'en';
+            const overlayT = (key, fallback) => {
+                try { return window.i18nManager?.translations?.login?.[key] || fallback; }
+                catch { return fallback; }
+            };
+
+            // Show elegant overlay
+            const loginBox = document.querySelector('.login-box');
+            const overlay = document.createElement('div');
+            overlay.className = 'login-overlay';
+            overlay.setAttribute('role', 'status');
+            overlay.setAttribute('aria-live', 'polite');
+            overlay.innerHTML = `
+                <div class="login-spinner"></div>
+                <span class="login-overlay-text">${overlayT('overlay_verifying', 'Verifying Access')}</span>
+                <span class="login-overlay-sub">${overlayT('overlay_authenticating', 'Authenticating your credentials...')}</span>
+            `;
+
             try {
                 submitBtn.disabled = true;
-                submitBtn.textContent = 'ENTERING...';
+                loginBox.appendChild(overlay);
 
                 await window.authManager.login(email, password);
                 
                 // Store email for Easter Egg system
                 localStorage.setItem('userEmail', email);
                 
-                // Get current language
-                const currentLang = window.i18nManager?.currentLang || localStorage.getItem('selectedLanguage') || 'en';
+                // Update overlay to success
+                overlay.querySelector('.login-overlay-text').textContent = overlayT('overlay_granted', 'Access Granted');
+                overlay.querySelector('.login-overlay-sub').textContent = overlayT('overlay_redirecting', 'Redirecting to your dashboard...');
+                overlay.querySelector('.login-spinner').style.borderTopColor = '#4CAF50';
                 
-                showSuccess('Login successful! Redirecting...');
-                setTimeout(() => window.location.href = '/dashboard.html?lang=' + currentLang, 1000);
+                setTimeout(() => window.location.href = '/dashboard.html?lang=' + currentLang, 1200);
             } catch (error) {
+                if (overlay.parentNode) overlay.remove();
                 showError(error.message);
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'ENTER';
             }
         });
 

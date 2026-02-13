@@ -31,7 +31,11 @@
     "email_label": "Indirizzo email",
     "send_reset_link": "Invia link di ripristino",
     "back_to_login": "← Torna al login",
-    "sending": "Invio in corso..."
+    "sending": "Invio in corso...",
+    "overlay_verifying": "Verifica accesso",
+    "overlay_authenticating": "Autenticazione delle credenziali...",
+    "overlay_granted": "Accesso concesso",
+    "overlay_redirecting": "Reindirizzamento alla dashboard..."
   },
   "common": {
     "inner_circle": "CERCHIA INTERNA",

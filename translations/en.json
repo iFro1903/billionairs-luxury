@@ -59,7 +59,11 @@
     "send_reset_link": "Send Reset Link",
     "back_to_login": "← Back to Login",
     "back_home": "← Back to Home",
-    "sending": "Sending..."
+    "sending": "Sending...",
+    "overlay_verifying": "Verifying Access",
+    "overlay_authenticating": "Authenticating your credentials...",
+    "overlay_granted": "Access Granted",
+    "overlay_redirecting": "Redirecting to your dashboard..."
   },
   "register": {
     "title": "Registration",

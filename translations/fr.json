@@ -31,7 +31,11 @@
     "email_label": "Adresse e-mail",
     "send_reset_link": "Envoyer le lien de réinitialisation",
     "back_to_login": "← Retour à la connexion",
-    "sending": "Envoi en cours..."
+    "sending": "Envoi en cours...",
+    "overlay_verifying": "Vérification de l'accès",
+    "overlay_authenticating": "Authentification de vos identifiants...",
+    "overlay_granted": "Accès accordé",
+    "overlay_redirecting": "Redirection vers votre tableau de bord..."
   },
   "common": {
     "inner_circle": "CERCLE INTÉRIEUR",
