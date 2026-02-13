@@ -25,6 +25,10 @@
     outline-offset: 2px;
 }
 
+#main-content:focus {
+    outline: none;
+}
+
 /* ===== ROOT VARIABLES ===== */
 
 /* Ultra-Premium Rose Gold Palette - ENHANCED */
