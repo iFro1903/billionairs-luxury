@@ -499,5 +499,18 @@
     "return_home": "VOLVER AL INICIO",
     "contact_us": "CONT\u00c1CTENOS",
     "footer": "BILLIONAIRS \u00a9 2026"
+  },
+  "toast": {
+    "selectPaymentMethod": "Por favor, seleccione un método de pago",
+    "fillRequiredFields": "Por favor, complete todos los campos obligatorios",
+    "passwordsNoMatch": "Las contraseñas no coinciden",
+    "passwordMinLength": "La contraseña debe tener al menos 8 caracteres",
+    "paymentLoading": "El sistema de pago se está cargando. Espere un momento e inténtelo de nuevo.",
+    "wireUnavailable": "La transferencia bancaria no está disponible temporalmente. Utilice tarjeta de crédito o criptomoneda.",
+    "paymentInitializing": "Sistema de pago inicializándose. Inténtelo de nuevo en un momento.",
+    "comingSoon": "¡Pago próximamente! Use tarjeta de crédito o transferencia bancaria por ahora.",
+    "formFieldsError": "Error: ¡Campos del formulario no encontrados! Actualice la página.",
+    "fillFollowingFields": "Complete los siguientes campos: {fields}. Desplácese hacia arriba y complete TODOS los campos del formulario.",
+    "invalidEmail": "Introduzca una dirección de correo electrónico válida"
   }
 }

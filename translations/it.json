@@ -497,5 +497,18 @@
     "return_home": "TORNA ALLA HOME",
     "contact_us": "CONTATTACI",
     "footer": "BILLIONAIRS \u00a9 2026"
+  },
+  "toast": {
+    "selectPaymentMethod": "Selezionare un metodo di pagamento",
+    "fillRequiredFields": "Compilare tutti i campi obbligatori",
+    "passwordsNoMatch": "Le password non corrispondono",
+    "passwordMinLength": "La password deve contenere almeno 8 caratteri",
+    "paymentLoading": "Il sistema di pagamento è in fase di caricamento. Attendere un momento e riprovare.",
+    "wireUnavailable": "Il bonifico bancario è temporaneamente non disponibile. Utilizzare carta di credito o criptovaluta.",
+    "paymentInitializing": "Sistema di pagamento in fase di inizializzazione. Riprovare tra un momento.",
+    "comingSoon": "Pagamento disponibile a breve! Utilizzare carta di credito o bonifico bancario per ora.",
+    "formFieldsError": "Errore: Campi del modulo non trovati! Aggiornare la pagina.",
+    "fillFollowingFields": "Compilare i seguenti campi: {fields}. Scorrere verso l'alto e compilare TUTTI i campi del modulo.",
+    "invalidEmail": "Inserire un indirizzo e-mail valido"
   }
 }

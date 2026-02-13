@@ -480,5 +480,18 @@
     "return_home": "\u30db\u30fc\u30e0\u306b\u623b\u308b",
     "contact_us": "\u304a\u554f\u3044\u5408\u308f\u305b",
     "footer": "BILLIONAIRS \u00a9 2026"
+  },
+  "toast": {
+    "selectPaymentMethod": "お支払い方法を選択してください",
+    "fillRequiredFields": "すべての必須項目をご入力ください",
+    "passwordsNoMatch": "パスワードが一致しません",
+    "passwordMinLength": "パスワードは8文字以上にしてください",
+    "paymentLoading": "決済システムを読み込み中です。しばらくお待ちいただき、再度お試しください。",
+    "wireUnavailable": "銀行振込は一時的にご利用いただけません。クレジットカードまたは暗号通貨をご利用ください。",
+    "paymentInitializing": "決済システムを初期化中です。しばらくしてから再度お試しください。",
+    "comingSoon": "近日公開予定！現在はクレジットカードまたは銀行振込をご利用ください。",
+    "formFieldsError": "エラー：フォームフィールドが見つかりません。ページを更新してください。",
+    "fillFollowingFields": "次のフィールドをご入力ください：{fields}。上にスクロールしてすべてのフォームフィールドにご入力ください。",
+    "invalidEmail": "有効なメールアドレスをご入力ください"
   }
 }

@@ -484,5 +484,18 @@
     "return_home": "\u8fd4\u56de\u9996\u9875",
     "contact_us": "\u8054\u7cfb\u6211\u4eec",
     "footer": "BILLIONAIRS \u00a9 2026"
+  },
+  "toast": {
+    "selectPaymentMethod": "请选择支付方式",
+    "fillRequiredFields": "请填写所有必填字段",
+    "passwordsNoMatch": "密码不匹配",
+    "passwordMinLength": "密码必须至少8个字符",
+    "paymentLoading": "支付系统正在加载，请稍候再试。",
+    "wireUnavailable": "银行转账暂时不可用。请使用信用卡或加密货币。",
+    "paymentInitializing": "支付系统正在初始化，请稍后再试。",
+    "comingSoon": "支付即将推出！目前请使用信用卡或银行转账。",
+    "formFieldsError": "错误：未找到表单字段！请刷新页面。",
+    "fillFollowingFields": "请填写以下字段：{fields}。请向上滚动并填写所有表单字段。",
+    "invalidEmail": "请输入有效的电子邮件地址"
   }
 }

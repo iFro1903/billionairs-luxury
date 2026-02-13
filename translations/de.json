@@ -619,5 +619,18 @@
     "return_home": "ZUR\u00dcCK ZUR STARTSEITE",
     "contact_us": "KONTAKT",
     "footer": "BILLIONAIRS \u00a9 2026"
+  },
+  "toast": {
+    "selectPaymentMethod": "Bitte wählen Sie eine Zahlungsmethode",
+    "fillRequiredFields": "Bitte füllen Sie alle erforderlichen Felder aus",
+    "passwordsNoMatch": "Passwörter stimmen nicht überein",
+    "passwordMinLength": "Passwort muss mindestens 8 Zeichen lang sein",
+    "paymentLoading": "Zahlungssystem wird geladen. Bitte warten Sie einen Moment und versuchen Sie es erneut.",
+    "wireUnavailable": "Banküberweisung ist vorübergehend nicht verfügbar. Bitte nutzen Sie Kreditkarte oder Kryptowährung.",
+    "paymentInitializing": "Zahlungssystem wird initialisiert. Bitte versuchen Sie es in einem Moment erneut.",
+    "comingSoon": "Zahlung kommt bald! Nutzen Sie vorerst Kreditkarte oder Banküberweisung.",
+    "formFieldsError": "Fehler: Formularfelder nicht gefunden! Bitte laden Sie die Seite neu.",
+    "fillFollowingFields": "Bitte füllen Sie folgende Felder aus: {fields}. Scrollen Sie nach oben und füllen Sie ALLE Formularfelder aus.",
+    "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
   }
 }

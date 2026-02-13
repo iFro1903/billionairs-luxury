@@ -1187,6 +1187,15 @@
         }, 2000);
     });
     
+    // ── Toast i18n helper ──
+    function toastT(key, params) {
+        if (window.i18n && typeof window.i18n.t === 'function') {
+            const translated = window.i18n.t('toast.' + key, params || {});
+            if (translated !== 'toast.' + key) return translated;
+        }
+        return null; // fallback: caller passes English string
+    }
+
     // ── Premium Toast Notification System ──
     window.showPaymentToast = function(message, type) {
         type = type || 'warning';
@@ -1238,7 +1247,7 @@
         // Get selected payment method - check for both 'active' and 'selected' class
         const selectedMethod = document.querySelector('.payment-method.active, .payment-method.selected');
         if (!selectedMethod) {
-            showPaymentToast('Please select a payment method', 'warning');
+            showPaymentToast(toastT('selectPaymentMethod') || 'Please select a payment method', 'warning');
             return;
         }
         
@@ -1257,19 +1266,19 @@
             
             // Validate required fields
             if (!firstName || !lastName || !email || !password || !passwordConfirm || !phone) {
-                showPaymentToast('Please fill in all required fields', 'warning');
+                showPaymentToast(toastT('fillRequiredFields') || 'Please fill in all required fields', 'warning');
                 return;
             }
             
             // Validate passwords match
             if (password !== passwordConfirm) {
-                showPaymentToast('Passwords do not match', 'error');
+                showPaymentToast(toastT('passwordsNoMatch') || 'Passwords do not match', 'error');
                 return;
             }
             
             // Validate password length
             if (password.length < 8) {
-                showPaymentToast('Password must be at least 8 characters', 'error');
+                showPaymentToast(toastT('passwordMinLength') || 'Password must be at least 8 characters', 'error');
                 return;
             }
             
@@ -1290,30 +1299,27 @@
                     window.stripeProcessor = new StripePaymentProcessor();
                     window.stripeProcessor.createCheckoutSession('full', customerData);
                 } else {
-                    console.error('❌ Stripe library not loaded');
-                    showPaymentToast('Payment system is loading. Please wait a moment and try again.', 'info');
+                    showPaymentToast(toastT('paymentLoading') || 'Payment system is loading. Please wait a moment and try again.', 'info');
                 }
             }
         } else if (methodType === 'wire') {
             if (!ENABLE_BANK_TRANSFER) {
-                showPaymentToast('Bank wire transfer is temporarily unavailable. Please use Credit Card or Cryptocurrency.', 'warning');
+                showPaymentToast(toastT('wireUnavailable') || 'Bank wire transfer is temporarily unavailable. Please use Credit Card or Cryptocurrency.', 'warning');
                 return;
             }
             if (window.paymentMethodSelector) {
                 window.paymentMethodSelector.handleWireTransfer();
             } else {
-                console.error('❌ Payment system not initialized');
-                showPaymentToast('Payment system initializing. Please try again in a moment.', 'info');
+                showPaymentToast(toastT('paymentInitializing') || 'Payment system initializing. Please try again in a moment.', 'info');
             }
         } else if (methodType === 'crypto') {
             if (window.paymentMethodSelector) {
                 window.paymentMethodSelector.handleCryptoPayment();
             } else {
-                console.error('❌ Payment system not initialized');
-                showPaymentToast('Payment system initializing. Please try again in a moment.', 'info');
+                showPaymentToast(toastT('paymentInitializing') || 'Payment system initializing. Please try again in a moment.', 'info');
             }
         } else {
-            showPaymentToast(`${methodType.toUpperCase()} payment coming soon! Use Credit Card or Wire Transfer for now.`, 'info');
+            showPaymentToast(toastT('comingSoon') || `${methodType.toUpperCase()} payment coming soon! Use Credit Card or Wire Transfer for now.`, 'info');
         }
     };
 
@@ -1462,7 +1468,7 @@
             const companyEl = document.getElementById('customerCompany');
             
             if (!firstNameEl || !lastNameEl || !emailEl || !passwordEl || !passwordConfirmEl || !phoneEl) {
-                showPaymentToast('Error: Form fields not found! Please refresh the page.', 'error');
+                showPaymentToast(toastT('formFieldsError') || 'Error: Form fields not found! Please refresh the page.', 'error');
                 return;
             }
             
@@ -1491,7 +1497,7 @@
         if (!phone) missingFields.push('Phone');
         
         if (missingFields.length > 0) {
-            showPaymentToast(`Please fill in the following fields: ${missingFields.join(', ')}. Make sure you scroll up and fill in ALL the form fields.`, 'warning');
+            showPaymentToast(toastT('fillFollowingFields', {fields: missingFields.join(', ')}) || `Please fill in the following fields: ${missingFields.join(', ')}. Make sure you scroll up and fill in ALL the form fields.`, 'warning');
             // Close modal
             const modals = document.querySelectorAll('body > div');
             modals.forEach(modal => {
@@ -1509,7 +1515,7 @@
 
         // Validate passwords match
         if (password !== passwordConfirm) {
-            showPaymentToast('Passwords do not match', 'error');
+            showPaymentToast(toastT('passwordsNoMatch') || 'Passwords do not match', 'error');
             // Close modal
             const modals = document.querySelectorAll('body > div');
             modals.forEach(modal => {
@@ -1522,7 +1528,7 @@
 
         // Validate password length
         if (password.length < 8) {
-            showPaymentToast('Password must be at least 8 characters', 'error');
+            showPaymentToast(toastT('passwordMinLength') || 'Password must be at least 8 characters', 'error');
             // Close modal
             const modals = document.querySelectorAll('body > div');
             modals.forEach(modal => {
@@ -1536,7 +1542,7 @@
         // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            showPaymentToast('Please enter a valid email address', 'error');
+            showPaymentToast(toastT('invalidEmail') || 'Please enter a valid email address', 'error');
             // Close modal
             const modals = document.querySelectorAll('body > div');
             modals.forEach(modal => {
@@ -1567,8 +1573,7 @@
                 company
             });
         } else {
-            console.error('❌ Stripe processor not initialized');
-            showPaymentToast('Payment system initializing. Please try again in a moment.', 'info');
+            showPaymentToast(toastT('paymentInitializing') || 'Payment system initializing. Please try again in a moment.', 'info');
         }
     };
     </script>

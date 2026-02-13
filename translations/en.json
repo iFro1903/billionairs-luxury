@@ -616,5 +616,18 @@
     "return_home": "RETURN HOME",
     "contact_us": "CONTACT US",
     "footer": "BILLIONAIRS © 2026"
+  },
+  "toast": {
+    "selectPaymentMethod": "Please select a payment method",
+    "fillRequiredFields": "Please fill in all required fields",
+    "passwordsNoMatch": "Passwords do not match",
+    "passwordMinLength": "Password must be at least 8 characters",
+    "paymentLoading": "Payment system is loading. Please wait a moment and try again.",
+    "wireUnavailable": "Bank wire transfer is temporarily unavailable. Please use Credit Card or Cryptocurrency.",
+    "paymentInitializing": "Payment system initializing. Please try again in a moment.",
+    "comingSoon": "Payment coming soon! Use Credit Card or Wire Transfer for now.",
+    "formFieldsError": "Error: Form fields not found! Please refresh the page.",
+    "fillFollowingFields": "Please fill in the following fields: {fields}. Make sure you scroll up and fill in ALL the form fields.",
+    "invalidEmail": "Please enter a valid email address"
   }
 }
