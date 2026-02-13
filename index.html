@@ -389,9 +389,9 @@
             <button class="lang-switcher" id="langBtn" aria-label="Switch language between English and German">EN</button>
             <button class="nav-contact" id="contactBtn" aria-label="Open contact information">CONTACT</button>
             
-            <!-- Mobile Flag Button (only visible on mobile) -->
+            <!-- Mobile Language Button (only visible on mobile) -->
             <button class="mobile-flag-btn" id="mobileFlagBtn" aria-label="Switch language">
-                <span class="flag-emoji">🇬🇧</span><span class="flag-arrow">▼</span>
+                <span class="flag-emoji">EN</span><span class="flag-arrow">▼</span>
             </button>
             
             <!-- Mobile Hamburger (only visible on mobile) -->
@@ -405,15 +405,15 @@
     
     <!-- Quick Language Dropdown (mobile only) -->
     <div class="quick-lang-dropdown" id="quickLangDropdown">
-        <a href="#" class="quick-lang-option" data-lang="en">🇬🇧 English</a>
-        <a href="#" class="quick-lang-option" data-lang="de">🇩🇪 Deutsch</a>
-        <a href="#" class="quick-lang-option" data-lang="fr">🇫🇷 Français</a>
-        <a href="#" class="quick-lang-option" data-lang="es">🇪🇸 Español</a>
-        <a href="#" class="quick-lang-option" data-lang="it">🇮🇹 Italiano</a>
-        <a href="#" class="quick-lang-option" data-lang="zh">🇨🇳 中文</a>
-        <a href="#" class="quick-lang-option" data-lang="ar">🇸🇦 العربية</a>
-        <a href="#" class="quick-lang-option" data-lang="ru">🇷🇺 Русский</a>
-        <a href="#" class="quick-lang-option" data-lang="ja">🇯🇵 日本語</a>
+        <a href="#" class="quick-lang-option" data-lang="en">EN</a>
+        <a href="#" class="quick-lang-option" data-lang="de">DE</a>
+        <a href="#" class="quick-lang-option" data-lang="fr">FR</a>
+        <a href="#" class="quick-lang-option" data-lang="es">ES</a>
+        <a href="#" class="quick-lang-option" data-lang="it">IT</a>
+        <a href="#" class="quick-lang-option" data-lang="zh">ZH</a>
+        <a href="#" class="quick-lang-option" data-lang="ar">AR</a>
+        <a href="#" class="quick-lang-option" data-lang="ru">RU</a>
+        <a href="#" class="quick-lang-option" data-lang="ja">JA</a>
     </div>
 
     <!-- Mobile Menu Overlay -->
@@ -1647,7 +1647,7 @@
             const nav = document.querySelector('.premium-nav');
             
             // Flag mapping for languages
-            const langFlags = {en:'🇬🇧', de:'🇩🇪', fr:'🇫🇷', es:'🇪🇸', it:'🇮🇹', ru:'🇷🇺', zh:'🇨🇳', ja:'🇯🇵', ar:'🇸🇦'};
+            const langFlags = {en:'EN', de:'DE', fr:'FR', es:'ES', it:'IT', ru:'RU', zh:'ZH', ja:'JA', ar:'AR'};
             
             // Mobile scroll detection - hide on scroll down, show on scroll up
             let lastScrollTop = 0;
