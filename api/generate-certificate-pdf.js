@@ -240,9 +240,10 @@ function buildCertificateHTML(t, certNumber) {
 
         .page {
             width: 21cm;
-            min-height: 29.7cm;
+            height: 29.7cm;
+            overflow: hidden;
             background: linear-gradient(135deg, #000000 0%, #0d0d0d 50%, #000000 100%);
-            padding: 3cm 2.5cm;
+            padding: 1.8cm 2.2cm;
             position: relative;
             box-shadow: inset 0 0 0 1px rgba(232, 180, 160, 0.3),
                         inset 0 0 0 2px rgba(0, 0, 0, 0.8),
@@ -256,62 +257,62 @@ function buildCertificateHTML(t, certNumber) {
             border-style: solid;
             border-color: rgba(232, 180, 160, 0.4);
         }
-        .corner-ornament.top-left { top: 1.5cm; left: 1.5cm; border-width: 1px 0 0 1px; }
-        .corner-ornament.top-right { top: 1.5cm; right: 1.5cm; border-width: 1px 1px 0 0; }
-        .corner-ornament.bottom-left { bottom: 1.5cm; left: 1.5cm; border-width: 0 0 1px 1px; }
-        .corner-ornament.bottom-right { bottom: 1.5cm; right: 1.5cm; border-width: 0 1px 1px 0; }
+        .corner-ornament.top-left { top: 1cm; left: 1cm; border-width: 1px 0 0 1px; }
+        .corner-ornament.top-right { top: 1cm; right: 1cm; border-width: 1px 1px 0 0; }
+        .corner-ornament.bottom-left { bottom: 1cm; left: 1cm; border-width: 0 0 1px 1px; }
+        .corner-ornament.bottom-right { bottom: 1cm; right: 1cm; border-width: 0 1px 1px 0; }
 
         .header {
             text-align: center;
-            margin-bottom: 2.5cm;
+            margin-bottom: 1.2cm;
         }
 
         .institution-name {
             font-family: 'Bodoni Moda', serif;
-            font-size: 11px;
-            letter-spacing: 6px;
+            font-size: 9px;
+            letter-spacing: 5px;
             text-transform: uppercase;
             color: rgba(232, 180, 160, 0.7);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .logo {
             font-family: 'Bodoni Moda', serif;
-            font-size: 52px;
+            font-size: 40px;
             font-weight: 700;
-            letter-spacing: 16px;
+            letter-spacing: 14px;
             color: #E8B4A0;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
 
         .tagline {
-            font-size: 10px;
-            letter-spacing: 5px;
+            font-size: 8px;
+            letter-spacing: 4px;
             color: rgba(232, 180, 160, 0.5);
             text-transform: uppercase;
         }
 
         .divider {
-            width: 60px;
+            width: 50px;
             height: 1px;
             background: linear-gradient(90deg, transparent, #E8B4A0, transparent);
-            margin: 35px auto;
+            margin: 18px auto;
         }
 
-        .certificate-title { text-align: center; margin: 40px 0 35px; }
+        .certificate-title { text-align: center; margin: 18px 0 16px; }
         .certificate-label {
-            font-size: 9px;
+            font-size: 8px;
             letter-spacing: 4px;
             color: rgba(232, 180, 160, 0.5);
             text-transform: uppercase;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
         }
         .certificate-name {
             font-family: 'Bodoni Moda', serif;
-            font-size: 36px;
+            font-size: 28px;
             font-weight: 600;
-            letter-spacing: 8px;
+            letter-spacing: 6px;
             color: #ffffff;
             text-transform: uppercase;
         }
@@ -351,36 +352,36 @@ function buildCertificateHTML(t, certNumber) {
         .quote-text {
             font-family: 'Bodoni Moda', serif;
             font-style: italic;
-            font-size: 19px;
-            line-height: 1.9;
+            font-size: 13px;
+            line-height: 1.7;
             color: #E8B4A0;
             text-align: center;
         }
 
         .amount-section {
-            margin: 60px 0;
-            padding: 35px;
+            margin: 20px 0;
+            padding: 18px 25px;
             text-align: center;
             border: 1px solid rgba(232, 180, 160, 0.25);
             background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(20,20,20,0.2) 100%);
         }
         .amount-label {
-            font-size: 9px;
+            font-size: 8px;
             letter-spacing: 3px;
             color: rgba(232, 180, 160, 0.6);
             text-transform: uppercase;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
         }
         .amount-value {
             font-family: 'Bodoni Moda', serif;
-            font-size: 42px;
+            font-size: 30px;
             font-weight: 600;
             color: #E8B4A0;
             letter-spacing: 3px;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
         }
         .amount-period {
-            font-size: 11px;
+            font-size: 9px;
             letter-spacing: 2px;
             color: rgba(255,255,255,0.5);
             text-transform: uppercase;
@@ -388,48 +389,48 @@ function buildCertificateHTML(t, certNumber) {
         .status-badges {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-top: 30px;
+            gap: 20px;
+            margin-top: 12px;
             flex-wrap: wrap;
         }
         .badge {
-            font-size: 9px;
+            font-size: 7px;
             letter-spacing: 2px;
             color: #2ecc71;
             text-transform: uppercase;
-            padding: 8px 16px;
+            padding: 5px 12px;
             border: 1px solid rgba(46, 204, 113, 0.3);
             background: rgba(46, 204, 113, 0.05);
         }
-        .badge::before { content: '✓ '; font-size: 11px; }
+        .badge::before { content: '✓ '; font-size: 9px; }
 
         .footer {
-            margin-top: 70px;
-            padding-top: 35px;
+            margin-top: 22px;
+            padding-top: 16px;
             border-top: 1px solid rgba(232, 180, 160, 0.2);
             text-align: center;
         }
         .security-info {
-            font-size: 9px;
-            letter-spacing: 3px;
+            font-size: 7px;
+            letter-spacing: 2px;
             color: rgba(232, 180, 160, 0.4);
             text-transform: uppercase;
-            line-height: 2;
-            margin-bottom: 20px;
+            line-height: 1.8;
+            margin-bottom: 8px;
         }
         .verification-code {
             font-family: 'Courier New', monospace;
-            font-size: 8px;
+            font-size: 7px;
             letter-spacing: 2px;
             color: rgba(232, 180, 160, 0.35);
-            margin-top: 15px;
+            margin-top: 6px;
         }
         .establishment {
-            font-size: 8px;
+            font-size: 7px;
             letter-spacing: 2px;
             color: rgba(255,255,255,0.25);
             text-transform: uppercase;
-            margin-top: 30px;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -467,7 +468,7 @@ function buildCertificateHTML(t, certNumber) {
             <p>${t.secret}</p>
             <p>${t.something_precious}</p>
             <p>${t.moves_in_circles}</p>
-            <p style="margin-top: 50px;">${t.one_decision}</p>
+            <p style="margin-top: 14px;">${t.one_decision}</p>
             <p>${t.you_possess}</p>
         </div>
 
