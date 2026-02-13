@@ -16,10 +16,6 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    
     <!-- SEO Meta Tags -->
     <title>BILLIONAIRS - The World's Most Exclusive Private Membership | Luxury Elite Club</title>
     <meta name="description" content="BILLIONAIRS is the world's most exclusive private membership. Access ultra-luxury experiences, elite networking, rare investments & billionaire lifestyle. Limited to select members only. Apply now at billionairs.luxury">
@@ -189,7 +185,6 @@
     
     <!-- Privacy & Security Tags -->
     <meta name="referrer" content="no-referrer">
-    <meta http-equiv="X-DNS-Prefetch-Control" content="off">
     
     <!-- Security & Privacy -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -236,7 +231,7 @@
                         window.location.replace('/404.html');
                     }
                 })
-                .catch(err => console.log('Emergency check failed:', err));
+                .catch(() => {});
         }
     </script>
     
@@ -376,6 +371,7 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
     <!-- Preloader -->
     <div id="pagePreloader">
         <img src="assets/images/logo.png" alt="BILLIONAIRS" class="preloader-logo">
@@ -449,7 +445,7 @@
     </div>
 
     <!-- Main Container -->
-    <main id="mainContainer" class="main-container" role="main" aria-label="Main content">
+    <main id="main-content" class="main-container" role="main" aria-label="Main content">
         
         <!-- Hero Section -->
         <section id="heroSection" class="hero-section" aria-labelledby="hero-title">
@@ -782,14 +778,14 @@
                                 <input type="password" id="customerPassword" name="customerPassword" data-i18n-placeholder="payment.password_placeholder" placeholder="Create a secure password (min. 8 characters)" required minlength="8"
                                        style="background: rgba(0, 0, 0, 0.3) !important; color: white !important; -webkit-text-fill-color: white !important;"
                                        oninput="updatePasswordStrength(this.value)">
-                                <div id="passwordStrengthBar" style="display:none;margin-top:6px;">
-                                    <div style="display:flex;gap:4px;margin-bottom:4px;">
+                                <div id="passwordStrengthBar" style="display:none;margin-top:6px;" role="status" aria-live="polite" aria-label="Password strength indicator">
+                                    <div style="display:flex;gap:4px;margin-bottom:4px;" aria-hidden="true">
                                         <div id="str1" style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.1);transition:background .3s"></div>
                                         <div id="str2" style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.1);transition:background .3s"></div>
                                         <div id="str3" style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.1);transition:background .3s"></div>
                                         <div id="str4" style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.1);transition:background .3s"></div>
                                     </div>
-                                    <span id="strLabel" style="font-size:0.7rem;letter-spacing:1px;color:rgba(255,255,255,0.4)"></span>
+                                    <span id="strLabel" style="font-size:0.7rem;letter-spacing:1px;color:rgba(255,255,255,0.4)" aria-live="polite"></span>
                                 </div>
                                 <small style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-top: 0.25rem; display: block;" data-i18n="payment.password_hint">This will be used to access your INNER CIRCLE account</small>
                             </div>
@@ -1174,7 +1170,6 @@
                 if (window.i18nManager) {
                     const paymentForm = document.querySelector('.payment-form-container');
                     if (paymentForm) {
-                        console.log('🔄 Re-translating payment form...');
                         window.i18nManager.translateElement(paymentForm);
                     }
                 }
@@ -1186,18 +1181,64 @@
             if (window.i18nManager) {
                 const paymentForm = document.querySelector('.payment-form-container');
                 if (paymentForm) {
-                    console.log('🔄 Late re-translate payment form...');
                     window.i18nManager.translateElement(paymentForm);
                 }
             }
         }, 2000);
     });
     
+    // ── Premium Toast Notification System ──
+    window.showPaymentToast = function(message, type) {
+        type = type || 'warning';
+        const existing = document.getElementById('billionairsToast');
+        if (existing) existing.remove();
+
+        const icons = { warning: '⚠', error: '✕', info: 'ℹ', success: '✓' };
+        const colors = {
+            warning: 'rgba(232, 180, 160, 0.15)',
+            error:   'rgba(220, 80, 80, 0.15)',
+            info:    'rgba(160, 190, 232, 0.15)',
+            success: 'rgba(160, 232, 180, 0.15)'
+        };
+        const borderColors = {
+            warning: 'rgba(232, 180, 160, 0.4)',
+            error:   'rgba(220, 80, 80, 0.4)',
+            info:    'rgba(160, 190, 232, 0.4)',
+            success: 'rgba(160, 232, 180, 0.4)'
+        };
+
+        const toast = document.createElement('div');
+        toast.id = 'billionairsToast';
+        toast.setAttribute('role', 'alert');
+        toast.setAttribute('aria-live', 'assertive');
+        toast.style.cssText = 'position:fixed;top:30px;left:50%;transform:translateX(-50%) translateY(-20px);z-index:100000;'
+            + 'background:' + colors[type] + ';backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);'
+            + 'border:1px solid ' + borderColors[type] + ';border-radius:12px;padding:16px 28px;'
+            + 'display:flex;align-items:center;gap:14px;max-width:520px;width:90%;'
+            + 'box-shadow:0 8px 32px rgba(0,0,0,0.4);opacity:0;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);'
+            + 'font-family:Montserrat,sans-serif;';
+
+        toast.innerHTML = '<span style="font-size:20px;flex-shrink:0;">' + (icons[type] || '⚠') + '</span>'
+            + '<span style="color:rgba(255,255,255,0.95);font-size:13px;line-height:1.5;letter-spacing:0.3px;">'
+            + message + '</span>';
+
+        document.body.appendChild(toast);
+        requestAnimationFrame(function() {
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateX(-50%) translateY(0)';
+        });
+        setTimeout(function() {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(-50%) translateY(-20px)';
+            setTimeout(function() { toast.remove(); }, 400);
+        }, 5000);
+    };
+
     window.handleStripeCheckout = function() {
         // Get selected payment method - check for both 'active' and 'selected' class
         const selectedMethod = document.querySelector('.payment-method.active, .payment-method.selected');
         if (!selectedMethod) {
-            alert('Please select a payment method');
+            showPaymentToast('Please select a payment method', 'warning');
             return;
         }
         
@@ -1205,8 +1246,6 @@
         
         // Handle different payment methods
         if (methodType === 'card') {
-            console.log('🎯 Initiating Credit Card Checkout...');
-            
             // Collect and validate customer data including password
             const firstName = document.getElementById('customerFirstName').value.trim();
             const lastName = document.getElementById('customerLastName').value.trim();
@@ -1218,19 +1257,19 @@
             
             // Validate required fields
             if (!firstName || !lastName || !email || !password || !passwordConfirm || !phone) {
-                alert('Please fill in all required fields');
+                showPaymentToast('Please fill in all required fields', 'warning');
                 return;
             }
             
             // Validate passwords match
             if (password !== passwordConfirm) {
-                alert('Passwords do not match');
+                showPaymentToast('Passwords do not match', 'error');
                 return;
             }
             
             // Validate password length
             if (password.length < 8) {
-                alert('Password must be at least 8 characters');
+                showPaymentToast('Password must be at least 8 characters', 'error');
                 return;
             }
             
@@ -1243,49 +1282,38 @@
                 company
             };
             
-            console.log('💳 Stripe Checkout Data:', {
-                fullName: customerData.fullName,
-                email: customerData.email,
-                phone: customerData.phone,
-                amount: '500,000 CHF'
-            });
-            
             if (window.stripeProcessor) {
                 window.stripeProcessor.createCheckoutSession('full', customerData);
             } else {
-                console.warn('⏳ Stripe processor not ready, initializing now...');
                 // Try to initialize on the spot
                 if (typeof Stripe !== 'undefined' && typeof StripePaymentProcessor !== 'undefined') {
                     window.stripeProcessor = new StripePaymentProcessor();
-                    console.log('✅ Stripe processor initialized on demand');
                     window.stripeProcessor.createCheckoutSession('full', customerData);
                 } else {
                     console.error('❌ Stripe library not loaded');
-                    alert('Payment system is loading. Please wait a moment and try again.');
+                    showPaymentToast('Payment system is loading. Please wait a moment and try again.', 'info');
                 }
             }
         } else if (methodType === 'wire') {
             if (!ENABLE_BANK_TRANSFER) {
-                alert('Bank wire transfer is temporarily unavailable. Please use Credit Card or Cryptocurrency.');
+                showPaymentToast('Bank wire transfer is temporarily unavailable. Please use Credit Card or Cryptocurrency.', 'warning');
                 return;
             }
-            console.log('🏦 Initiating Bank Wire Transfer...');
             if (window.paymentMethodSelector) {
                 window.paymentMethodSelector.handleWireTransfer();
             } else {
                 console.error('❌ Payment system not initialized');
-                alert('Payment system initializing. Please try again in a moment.');
+                showPaymentToast('Payment system initializing. Please try again in a moment.', 'info');
             }
         } else if (methodType === 'crypto') {
-            console.log('🪙 Initiating Cryptocurrency Payment...');
             if (window.paymentMethodSelector) {
                 window.paymentMethodSelector.handleCryptoPayment();
             } else {
                 console.error('❌ Payment system not initialized');
-                alert('Payment system initializing. Please try again in a moment.');
+                showPaymentToast('Payment system initializing. Please try again in a moment.', 'info');
             }
         } else {
-            alert(`${methodType.toUpperCase()} payment coming soon! Use Credit Card or Wire Transfer for now.`);
+            showPaymentToast(`${methodType.toUpperCase()} payment coming soon! Use Credit Card or Wire Transfer for now.`, 'info');
         }
     };
 
@@ -1417,8 +1445,6 @@
 
     // Handle crypto currency selection
     window.selectCrypto = function(cryptocurrency) {
-        console.log('🪙 selectCrypto called with:', cryptocurrency);
-        
         // Reset processing flag in case it's stuck
         if (window.stripeProcessor) {
             window.stripeProcessor.isProcessing = false;
@@ -1435,20 +1461,8 @@
             const phoneEl = document.getElementById('customerPhone');
             const companyEl = document.getElementById('customerCompany');
             
-            console.log('🔍 Reading form fields:', {
-                firstNameEl: firstNameEl,
-                lastNameEl: lastNameEl,
-                emailEl: emailEl,
-                passwordEl: passwordEl,
-                phoneEl: phoneEl,
-                firstNameValue: firstNameEl ? firstNameEl.value : 'ELEMENT NOT FOUND',
-                lastNameValue: lastNameEl ? lastNameEl.value : 'ELEMENT NOT FOUND',
-                emailValue: emailEl ? emailEl.value : 'ELEMENT NOT FOUND',
-                phoneValue: phoneEl ? phoneEl.value : 'ELEMENT NOT FOUND'
-            });
-            
             if (!firstNameEl || !lastNameEl || !emailEl || !passwordEl || !passwordConfirmEl || !phoneEl) {
-                alert('Error: Form fields not found! Please refresh the page.');
+                showPaymentToast('Error: Form fields not found! Please refresh the page.', 'error');
                 return;
             }
             
@@ -1460,8 +1474,6 @@
             const passwordConfirm = passwordConfirmEl.value || '';
             const phone = (phoneEl.value || '').trim();
             const company = companyEl ? (companyEl.value || '').trim() : '';
-            
-            console.log('📋 Captured values:', { firstName, lastName, email, phone, company });
             
             // Continue with validation
             window.processCryptoSelection(cryptocurrency, firstName, lastName, email, password, passwordConfirm, phone, company);
@@ -1479,7 +1491,7 @@
         if (!phone) missingFields.push('Phone');
         
         if (missingFields.length > 0) {
-            alert(`Please fill in the following fields: ${missingFields.join(', ')}\n\nMake sure you scroll up and fill in ALL the form fields at the top of the payment section.`);
+            showPaymentToast(`Please fill in the following fields: ${missingFields.join(', ')}. Make sure you scroll up and fill in ALL the form fields.`, 'warning');
             // Close modal
             const modals = document.querySelectorAll('body > div');
             modals.forEach(modal => {
@@ -1497,7 +1509,7 @@
 
         // Validate passwords match
         if (password !== passwordConfirm) {
-            alert('Passwords do not match');
+            showPaymentToast('Passwords do not match', 'error');
             // Close modal
             const modals = document.querySelectorAll('body > div');
             modals.forEach(modal => {
@@ -1510,7 +1522,7 @@
 
         // Validate password length
         if (password.length < 8) {
-            alert('Password must be at least 8 characters');
+            showPaymentToast('Password must be at least 8 characters', 'error');
             // Close modal
             const modals = document.querySelectorAll('body > div');
             modals.forEach(modal => {
@@ -1524,7 +1536,7 @@
         // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            alert('Please enter a valid email address');
+            showPaymentToast('Please enter a valid email address', 'error');
             // Close modal
             const modals = document.querySelectorAll('body > div');
             modals.forEach(modal => {
@@ -1534,8 +1546,6 @@
             });
             return;
         }
-        
-        console.log('✅ Validation passed:', { firstName, lastName, email, phone, cryptocurrency });
         
         // Close the selection modal
         const modals = document.querySelectorAll('body > div');
@@ -1558,7 +1568,7 @@
             });
         } else {
             console.error('❌ Stripe processor not initialized');
-            alert('Payment system initializing. Please try again in a moment.');
+            showPaymentToast('Payment system initializing. Please try again in a moment.', 'info');
         }
     };
     </script>
@@ -1624,7 +1634,6 @@
             
             // Set mobile language button to current language on load
             const currentLang = localStorage.getItem('billionairs_lang') || 'en';
-            console.log('📱 Mobile menu - Current language:', currentLang);
 
             // Touch feedback for buttons
             function addTouchFeedback(button) {
@@ -1699,17 +1708,12 @@
             // Mobile language option click handlers
             function setupMobileLangOptions() {
                 const mobileLangOptions = document.querySelectorAll('#mobileLangDropdown .lang-option');
-                console.log('Setting up mobile language options:', mobileLangOptions.length);
-                
                 mobileLangOptions.forEach(option => {
                     option.addEventListener('click', async function(e) {
                         e.preventDefault();
                         e.stopPropagation();
                         const lang = this.getAttribute('data-lang');
-                        console.log('Mobile language clicked:', lang);
-                        
                         if (window.i18n) {
-                            console.log('Switching language to:', lang);
                             await window.i18n.switchLanguage(lang);
                             
                             // Translate footer links
@@ -1839,16 +1843,16 @@
     <!-- Password Strength Indicator -->
     <script>
     function updatePasswordStrength(pw) {
-        var bar = document.getElementById('passwordStrengthBar');
+        const bar = document.getElementById('passwordStrengthBar');
         if (!bar) return;
         bar.style.display = pw.length > 0 ? 'block' : 'none';
-        var score = 0;
+        let score = 0;
         if (pw.length >= 8) score++;
         if (/[a-z]/.test(pw) && /[A-Z]/.test(pw)) score++;
         if (/\d/.test(pw)) score++;
         if (/[^a-zA-Z0-9]/.test(pw)) score++;
-        var colors = ['#c0392b', '#e67e22', '#C9A96E', '#50C878'];
-        var langLabels = {
+        const colors = ['#c0392b', '#e67e22', '#C9A96E', '#50C878'];
+        const langLabels = {
             en: ['WEAK', 'FAIR', 'STRONG', 'VERY STRONG'],
             de: ['SCHWACH', 'MITTEL', 'STARK', 'SEHR STARK'],
             fr: ['FAIBLE', 'MOYEN', 'FORT', 'TRES FORT'],
@@ -1859,9 +1863,9 @@
             ja: ['\u5f31\u3044', '\u666e\u901a', '\u5f37\u3044', '\u975e\u5e38\u306b\u5f37\u3044'],
             ar: ['\u0636\u0639\u064a\u0641', '\u0645\u062a\u0648\u0633\u0637', '\u0642\u0648\u064a', '\u0642\u0648\u064a \u062c\u062f\u0627']
         };
-        var lang = localStorage.getItem('billionairs_lang') || 'en';
-        var labels = langLabels[lang] || langLabels.en;
-        for (var i = 1; i <= 4; i++) {
+        const lang = localStorage.getItem('billionairs_lang') || 'en';
+        const labels = langLabels[lang] || langLabels.en;
+        for (let i = 1; i <= 4; i++) {
             document.getElementById('str' + i).style.background = i <= score ? colors[score - 1] : 'rgba(255,255,255,0.1)';
         }
         document.getElementById('strLabel').textContent = score > 0 ? labels[score - 1] : '';
@@ -1879,7 +1883,7 @@
                 return;
             }
             try {
-                var sp = {
+                const sp = {
                     stripe: Stripe('pk_live_51SJwwF7Fzwybk1NyPjyrV9qkZvmWDkCqsdrmotHypJZnhEIUtnxBea6tV9MMOVkllj9po7RtSIcSwY8JEDQcTPGB00BqlA7hkz'),
                     isProcessing: false,
                     paymentTiers: { full: 50000000, split: 50000000, corporate: 50000000 },
@@ -1887,9 +1891,9 @@
                         if (this.isProcessing) return;
                         this.isProcessing = true;
                         try {
-                            var amount = this.paymentTiers[paymentType || 'full'];
-                            var currentLang = localStorage.getItem('billionairs_lang') || 'en';
-                            var metadata = {
+                            const amount = this.paymentTiers[paymentType || 'full'];
+                            const currentLang = localStorage.getItem('billionairs_lang') || 'en';
+                            const metadata = {
                                 product: 'BILLIONAIRS_EXCLUSIVE_ACCESS',
                                 tier: 'MILLIONAIRE_SEGMENT',
                                 payment_type: paymentType,
@@ -1902,8 +1906,7 @@
                                 metadata.customer_phone = customerData.phone;
                                 if (customerData.company) metadata.customer_company = customerData.company;
                             }
-                            console.log('💳 Sending to Stripe API...', { amount: amount, currency: 'chf' });
-                            var response = await fetch('/api/stripe-checkout', {
+                            const response = await fetch('/api/stripe-checkout', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
@@ -1917,15 +1920,14 @@
                                 })
                             });
                             if (!response.ok) throw new Error('Server error: ' + response.status);
-                            var session = await response.json();
+                            const session = await response.json();
                             if (session.error) throw new Error(session.error);
                             if (!session.url) throw new Error('No checkout URL received');
-                            console.log('🚀 Redirecting to Stripe Checkout...');
                             sessionStorage.setItem('paymentInitiated', 'true');
                             window.location.href = session.url;
                         } catch (error) {
                             console.error('Payment error:', error.message);
-                            var errDiv = document.createElement('div');
+                            const errDiv = document.createElement('div');
                             errDiv.style.cssText = 'position:fixed;top:24px;right:24px;z-index:100000;display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#2a1a1a,#1f0d0d);border:1.5px solid #c0392b;border-radius:12px;padding:16px 24px;color:#fff;font-family:Montserrat,sans-serif;font-size:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);max-width:420px;animation:toastIn .4s ease';
                             errDiv.textContent = 'Payment error. Please try again.';
                             document.body.appendChild(errDiv);
@@ -1936,7 +1938,6 @@
                     }
                 };
                 window.stripeProcessor = sp;
-                console.log('✅ Stripe processor initialized (inline, 500,000 CHF live mode)');
             } catch(e) {
                 console.error('❌ Stripe init error:', e);
                 setTimeout(initStripe, 1000);
@@ -1956,17 +1957,17 @@
     <script>
     (function() {
         try {
-            var sid = sessionStorage.getItem('_bv_sid');
+            let sid = sessionStorage.getItem('_bv_sid');
             if (!sid) {
                 sid = Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
                 sessionStorage.setItem('_bv_sid', sid);
             }
             // Only track once per session per page
-            var trackKey = '_bv_' + location.pathname;
+            const trackKey = '_bv_' + location.pathname;
             if (sessionStorage.getItem(trackKey)) return;
             sessionStorage.setItem(trackKey, '1');
 
-            var email = null;
+            let email = null;
             try { email = localStorage.getItem('userEmail'); } catch(e) {}
 
             fetch('/api/track-visit', {

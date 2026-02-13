@@ -34,8 +34,6 @@ class LuxuryTimepiece {
         
         this.worldClockIntervals.forEach(interval => clearInterval(interval));
         this.worldClockIntervals = [];
-        
-        console.log('🧹 Cleanup: All intervals cleared');
     }
 
     async init() {
@@ -64,7 +62,6 @@ class LuxuryTimepiece {
     checkHashNavigation() {
         if (window.location.hash === '#paymentSection') {
             // Directly show payment section without transition
-            console.log('🎯 Direct navigation to payment section detected');
             
             // Hide hero section immediately
             const heroSection = document.getElementById('heroSection');
@@ -207,8 +204,6 @@ class LuxuryTimepiece {
                 button.style.transform = 'translate(0, 0)';
             });
         });
-        
-        console.log('🧲 Magnetic button effect initialized on', buttons.length, 'buttons');
     }
 
     initRippleEffect() {
@@ -251,8 +246,6 @@ class LuxuryTimepiece {
                 }, 600);
             });
         });
-        
-        console.log('🌊 Ripple effect initialized on', buttons.length, 'buttons');
     }
 
     handleMouseMove(e) {
@@ -576,10 +569,8 @@ class LuxuryTimepiece {
         
         // Use Payment Method Selector if available
         if (window.paymentMethodSelector) {
-            console.log('Using advanced payment method selector');
             await window.paymentMethodSelector.initiatePayment();
         } else if (window.stripeProcessor) {
-            console.log('Using basic Stripe payment for 500,000 CHF');
             await window.stripeProcessor.createCheckoutSession();
         } else {
             console.error('No payment processor available');
@@ -1207,8 +1198,6 @@ window.addEventListener('load', function() {
             },
             retina_detect: true
         });
-        console.log('✨ Particles.js initialized successfully on all pages!');
-        console.log('🎯 Particles will repulse from mouse with 150px distance');
     } else {
         console.error('❌ Particles.js library not loaded');
     }
@@ -1235,8 +1224,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 document.body.style.overflow = '';
             }
-            
-            console.log('📱 Mobile menu toggled');
         });
         
         // Close menu when clicking outside

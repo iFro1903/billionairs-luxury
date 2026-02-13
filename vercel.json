@@ -4,6 +4,12 @@
   "outputDirectory": ".",
   "installCommand": "npm install --production",
   "framework": null,
+  "functions": {
+    "api/generate-certificate-pdf.js": {
+      "maxDuration": 30,
+      "memory": 1024
+    }
+  },
   "redirects": [
     {
       "source": "/:path*",

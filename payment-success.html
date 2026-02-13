@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Confirmed - BILLIONAIRS</title>
+    <meta name="description" content="Your BILLIONAIRS payment has been confirmed. Welcome to the most exclusive private membership.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://billionairs.luxury/payment-success.html">
     <!-- GDPR Cookie Consent -->
     <link rel="stylesheet" href="assets/css/cookie-consent.css?v=20260211">
     <script src="assets/js/cookie-consent.js?v=20260211"></script>
@@ -162,6 +165,8 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
+    <main id="main-content" role="main">
     <div class="container">
         <a href="/" style="display: inline-block;"><img src="assets/images/logo.png" alt="BILLIONAIRS" class="logo" style="cursor: pointer;"></a>
         
@@ -176,7 +181,7 @@
         
         <div class="divider"></div>
         
-        <div class="amount">CHF 500,000</div>
+        <div class="amount" data-i18n="payment_success.amount_value">CHF 500,000</div>
         
         <p class="message">
             <span data-i18n="payment_success.payment_success_message">Your payment has been successfully processed.</span><br>
@@ -186,7 +191,7 @@
         <div class="details">
             <div class="detail-row">
                 <span class="detail-label" data-i18n="payment_success.amount">Amount</span>
-                <span class="detail-value">CHF 500,000.00</span>
+                <span class="detail-value" data-i18n="payment_success.amount_detail">CHF 500,000.00</span>
             </div>
             <div class="detail-row">
                 <span class="detail-label" data-i18n="payment_success.date">Date</span>
@@ -291,5 +296,6 @@
             window.location.href = '/dashboard.html';
         }
     </script>
+    </main>
 </body>
 </html>

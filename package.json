@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.3",
+    "@sparticuz/chromium": "^143.0.4",
     "@upstash/redis": "^1.35.6",
     "@vercel/postgres": "^0.10.0",
     "bcryptjs": "^2.4.3",
@@ -52,6 +53,7 @@
     "luxon": "^3.4.4",
     "moment-timezone": "^0.5.43",
     "pg": "^8.16.3",
+    "puppeteer-core": "^24.37.3",
     "stripe": "^13.11.0"
   }
 }

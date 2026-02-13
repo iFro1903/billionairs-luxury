@@ -13,8 +13,6 @@ class AccessibilityManager {
      * Initialize accessibility features
      */
     init() {
-        console.log('♿ Initializing Accessibility Manager...');
-
         this.setupKeyboardNavigation();
         this.setupFocusManagement();
         this.setupARIALabels();
@@ -22,8 +20,6 @@ class AccessibilityManager {
         // this.setupSkipLinks(); // DISABLED per user request
         this.setupFocusIndicators();
         this.setupModalAccessibility();
-        
-        console.log('✅ Accessibility Manager initialized');
     }
 
     /**
@@ -71,8 +67,6 @@ class AccessibilityManager {
                 }
             });
         });
-
-        console.log('✅ Keyboard navigation enabled');
     }
 
     /**
@@ -91,8 +85,6 @@ class AccessibilityManager {
             childList: true,
             subtree: true
         });
-
-        console.log('✅ Focus management enabled');
     }
 
     /**
@@ -164,8 +156,6 @@ class AccessibilityManager {
             passwordInput.parentNode.appendChild(helpText);
             passwordInput.setAttribute('aria-describedby', 'password-help');
         }
-
-        console.log('✅ ARIA labels configured');
     }
 
     /**
@@ -201,8 +191,6 @@ class AccessibilityManager {
             footer.setAttribute('role', 'contentinfo');
             footer.setAttribute('aria-label', 'Footer');
         }
-
-        console.log('✅ Screen reader support enabled');
     }
 
     /**
@@ -226,7 +214,6 @@ class AccessibilityManager {
      */
     setupSkipLinks() {
         // Skip link feature disabled
-        console.log('⚠️ Skip links disabled');
     }
 
     /**
@@ -299,8 +286,6 @@ class AccessibilityManager {
             }
         `;
         document.head.appendChild(style);
-
-        console.log('✅ Focus indicators configured');
     }
 
     /**
@@ -331,8 +316,6 @@ class AccessibilityManager {
                 }
             });
         });
-
-        console.log('✅ Modal accessibility configured');
     }
 
     /**
@@ -456,7 +439,6 @@ class AccessibilityManager {
             }
         };
 
-        console.log('♿ Accessibility Report:', report);
         return report;
     }
 }
@@ -472,5 +454,3 @@ if (document.readyState === 'loading') {
 
 // Export for use in other scripts
 window.AccessibilityManager = AccessibilityManager;
-
-console.log('✅ Accessibility Manager loaded');

@@ -22,7 +22,6 @@ class I18nManager {
      * Initialize i18n system
      */
     async init() {
-        console.log('🌍 Initializing i18n system...');
         
         // CRITICAL: Wait for next render frame to ensure ALL DOM elements are ready
         await new Promise(resolve => {
@@ -36,13 +35,10 @@ class I18nManager {
 
         // Load translation files
         await this.loadTranslations();
-        console.log('✅ Translations loaded:', Object.keys(this.translations));
 
         // CRITICAL: Save original English texts BEFORE any translation
-        console.log('💾 Saving original English texts...');
         this.saveOriginalTexts(document.body);
         this.hasInitialized = true;
-        console.log('✅ Original texts saved:', this.originalTexts.size, 'nodes');
         
         // Check for saved language preference (localStorage first, then cookie)
         let savedLang = localStorage.getItem('billionairs_lang');
@@ -51,11 +47,9 @@ class I18nManager {
         }
         const targetLang = savedLang && this.supportedLangs.includes(savedLang) ? savedLang : 'en';
         
-        console.log(`🎯 Target language: ${targetLang} (from ${savedLang ? 'storage' : 'default'})`);
 
         // Switch to target language if not English
         if (targetLang !== 'en') {
-            console.log(`🔄 Switching to: ${targetLang}`);
             await this.switchLanguage(targetLang);
         } else {
             // Stay in English
@@ -68,7 +62,6 @@ class I18nManager {
         // Setup language switcher (DISABLED - using lang-dropdown-simple.js instead)
         // this.setupLanguageSwitcher();
 
-        console.log(`✅ i18n initialized: ${this.currentLang}`);
         
         // Dispatch ready event for other scripts
         window.dispatchEvent(new CustomEvent('i18nReady', { 
@@ -86,15 +79,11 @@ class I18nManager {
                 const response = await fetch(`/translations/${lang}.json`);
                 if (response.ok) {
                     this.translations[lang] = await response.json();
-                    console.log(`✅ Loaded ${lang}.json`);
-                } else {
-                    console.warn(`⚠️ Could not load ${lang}.json`);
                 }
             });
 
             await Promise.all(loadPromises);
 
-            console.log('✅ Translations loaded:', Object.keys(this.translations));
         } catch (error) {
             console.error('❌ Error loading translations:', error);
         }
@@ -121,7 +110,6 @@ class I18nManager {
                     if (value && typeof value === 'object' && fk in value) {
                         value = value[fk];
                     } else {
-                        console.warn(`⚠️ Translation key not found: ${key}`);
                         return key;
                     }
                 }
@@ -247,7 +235,6 @@ class I18nManager {
             }
         } catch (e) {
             // Non-critical - continue
-            console.warn('i18n.translateElement fallback error:', e);
         }
     }
 
@@ -258,18 +245,15 @@ class I18nManager {
         // Get current translations
         const t = this.translations[this.currentLang];
         if (!t) {
-            console.warn(`⚠️ No translations found for ${this.currentLang}`);
             return;
         }
 
         // Text mapping: English → All Languages
         const textMap = this.getTextMapForLanguage(this.currentLang);
-        console.log(`📖 Text map for ${this.currentLang}:`, Object.keys(textMap).length, 'entries');
 
         // Apply translations
         this.applyTextTranslations(document.body, textMap);
         
-        console.log(`✅ Translations applied for: ${this.currentLang}`);
     }
     
     /**
@@ -333,22 +317,17 @@ class I18nManager {
                     if (originalText === english || trimmedOriginal === english) {
                         translated = targetText;
                         wasTranslated = true;
-                        console.log(`✅ Exact match: "${trimmedOriginal}" → "${targetText}"`);
                         break;
                     }
                     // Then try partial match (only for longer strings to avoid false positives)
                     if (english.length > 5 && originalText.includes(english)) {
                         translated = originalText.replace(new RegExp(english, 'g'), targetText);
                         wasTranslated = true;
-                        console.log(`✅ Partial match: "${english}" → "${targetText}"`);
                     }
                 }
                 
                 if (wasTranslated) {
                     node.textContent = translated;
-                } else if (trimmedOriginal.length > 2) {
-                    // Log untranslated text for debugging (only meaningful text)
-                    console.log(`⚠️ No translation for: "${trimmedOriginal}"`);
                 }
             }
         }
@@ -364,14 +343,10 @@ class I18nManager {
      */
     translateAllTextNodes() {
         const textMap = this.getTextMapForLanguage(this.currentLang);
-        console.log(`🔤 Translating all text nodes to ${this.currentLang}...`);
-        console.log(`📚 Text map entries: ${Object.keys(textMap).length}`);
-        console.log(`💾 Original texts stored: ${this.originalTexts.size}`);
         
         // Apply translations to entire document body
         this.applyTextTranslations(document.body, textMap);
         
-        console.log(`✅ All text nodes translated to ${this.currentLang}`);
     }
 
     /**
@@ -1252,14 +1227,10 @@ class I18nManager {
             return;
         }
 
-        console.log(`🔄 Switching language to: ${lang}`);
-
         this.currentLang = lang;
         this.setCookie(this.cookieName, lang, this.cookieExpiry);
         localStorage.setItem('billionairs_lang', lang);
         document.documentElement.lang = lang;
-
-        console.log(`📊 Original texts in map: ${this.originalTexts.size} nodes`);
 
         // Set text direction for RTL languages
         if (this.rtlLangs.includes(lang)) {
@@ -1270,24 +1241,18 @@ class I18nManager {
 
         // Reload translations if not loaded
         if (!this.translations[lang]) {
-            console.log(`📥 Loading translations for ${lang}...`);
             await this.loadTranslations();
-        } else {
-            console.log(`✅ Translations already loaded for ${lang}`);
         }
 
         // CRITICAL: Apply ALL translations - both data-i18n AND free text
-        console.log(`🎨 Applying translations for ${lang}...`);
         
         // 1. Translate elements with data-i18n attributes
         this.applyTranslations();
         
         // 2. FORCE re-translate ALL text nodes from original English
-        console.log('🔄 Force translating ALL text nodes...');
         this.translateAllTextNodes();
         
         // 3. Re-apply auto translation for common elements
-        console.log('🔄 Auto-translating common elements...');
         this.autoTranslateCommonElements();
 
         // Update language switcher button
@@ -1298,12 +1263,6 @@ class I18nManager {
             detail: { language: lang } 
         }));
 
-        console.log(`✅ Language switched to: ${lang}`, {
-            currentLang: this.currentLang,
-            translationsLoaded: Object.keys(this.translations),
-            htmlLang: document.documentElement.lang,
-            originalTextsCount: this.originalTexts.size
-        });
     }
 
     /**
@@ -1312,17 +1271,13 @@ class I18nManager {
     setupLanguageSwitcher() {
         const langBtn = document.getElementById('langBtn');
         if (!langBtn) {
-            console.warn('⚠️ Language button not found');
             return;
         }
-
-        console.log('🌍 Setting up language switcher...');
 
         try {
             // Create dropdown if it doesn't exist
             let dropdown = document.getElementById('langDropdown');
             if (!dropdown) {
-                console.log('📝 Creating language dropdown...');
                 dropdown = this.createLanguageDropdown();
                 
                 // Find parent element (nav-actions)
@@ -1332,9 +1287,6 @@ class I18nManager {
                 }
                 
                 parent.appendChild(dropdown);
-                console.log('✅ Dropdown created with', dropdown.querySelectorAll('.lang-option').length, 'languages');
-            } else {
-                console.log('♻️ Dropdown already exists');
             }
 
             // Update button text
@@ -1345,9 +1297,6 @@ class I18nManager {
                 e.preventDefault();
                 e.stopPropagation();
                 const isShown = dropdown.classList.toggle('show');
-                console.log('🔄 Dropdown toggled:', isShown ? 'SHOWN' : 'HIDDEN');
-                console.log('📍 Dropdown classes:', dropdown.className);
-                console.log('📍 Dropdown position:', dropdown.getBoundingClientRect());
             });
 
             // Close dropdown when clicking outside
@@ -1362,23 +1311,19 @@ class I18nManager {
                 option.addEventListener('click', (e) => {
                     e.preventDefault();
                     const lang = option.getAttribute('data-lang');
-                    console.log('🌐 Language selected:', lang);
                     this.switchLanguage(lang);
                     dropdown.classList.remove('show');
                 });
             });
             
-            console.log('✅ Language switcher setup complete!');
             
         } catch (error) {
             console.error('❌ Error setting up language dropdown:', error);
-            console.log('⚠️ Falling back to simple toggle between EN/DE');
             
             // Fallback: Simple toggle between EN and DE
             langBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 const newLang = this.currentLang === 'en' ? 'de' : 'en';
-                console.log('🔄 Toggling language to:', newLang);
                 this.switchLanguage(newLang);
             });
         }

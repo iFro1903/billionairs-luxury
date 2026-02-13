@@ -400,17 +400,12 @@ function translatePageElements() {
     const currentLang = window.i18n?.currentLang || 'en';
     const translations = pageTranslations[currentLang] || pageTranslations['en'];
     
-    console.log('🔄 [PAGE-I18N] Translating page elements to:', currentLang);
-    console.log('🔄 [PAGE-I18N] Available translations:', Object.keys(translations));
-    
     // Find all elements with data-i18n-key
     const elements = document.querySelectorAll('[data-i18n-key]');
-    console.log('🔄 [PAGE-I18N] Found elements with data-i18n-key:', elements.length);
     
     let translatedCount = 0;
     elements.forEach(element => {
         const key = element.getAttribute('data-i18n-key');
-        console.log('🔍 [PAGE-I18N] Processing element with key:', key);
         
         if (translations[key]) {
             const oldText = element.innerHTML;
@@ -424,13 +419,10 @@ function translatePageElements() {
             }
             
             translatedCount++;
-            console.log(`✓ [PAGE-I18N] Translated ${key}: "${oldText}" → "${translation}"`);
         } else {
-            console.warn(`⚠️ [PAGE-I18N] Missing translation for key: ${key} in language ${currentLang}`);
         }
     });
     
-    console.log(`✅ [PAGE-I18N] Translated ${translatedCount} page elements to ${currentLang}`);
 }
 
 // Make function globally accessible
@@ -438,12 +430,10 @@ window.translatePageElements = translatePageElements;
 
 // Listen for language changes
 window.addEventListener('languageChanged', (event) => {
-    console.log('🌍 Language changed - translating page elements:', event.detail.language);
     setTimeout(translatePageElements, 50);
 });
 
 window.addEventListener('i18nReady', () => {
-    console.log('🌍 i18n ready - translating page elements');
     setTimeout(translatePageElements, 100);
 });
 

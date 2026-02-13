@@ -19,7 +19,6 @@ class StripePaymentProcessor {
 
     async createCheckoutSession(paymentType = 'full', customerData = null) {
         if (this.isProcessing) {
-            console.log('Payment already in progress...');
             return;
         }
 
@@ -30,13 +29,6 @@ class StripePaymentProcessor {
             this.showPaymentLoading();
 
             const amount = this.paymentTiers[paymentType];
-            
-            console.log('💳 Starting payment process:', {
-                amount,
-                paymentType,
-                currency: 'chf',
-                hasCustomerData: !!customerData
-            });
             
             // Prepare metadata
             const metadata = {
@@ -78,8 +70,6 @@ class StripePaymentProcessor {
                 })
             });
 
-            console.log('📡 Response status:', response.status);
-
             if (!response.ok) {
                 const errorText = await response.text();
                 console.error('❌ Server error:', errorText);
@@ -87,7 +77,6 @@ class StripePaymentProcessor {
             }
 
             const session = await response.json();
-            console.log('✅ Session created:', session);
 
             if (session.error) {
                 console.error('❌ Session error:', session.error);
@@ -99,8 +88,6 @@ class StripePaymentProcessor {
                 throw new Error('No checkout URL received from server');
             }
 
-            console.log('🚀 Redirecting to Stripe Checkout...');
-            
             // Mark that payment was initiated
             sessionStorage.setItem('paymentInitiated', 'true');
             
@@ -122,7 +109,6 @@ class StripePaymentProcessor {
         }
         
         if (this.isProcessing) {
-            console.log('Wire transfer already in progress...');
             return;
         }
 
@@ -174,8 +160,6 @@ class StripePaymentProcessor {
         try {
             this.showPaymentLoading();
 
-            console.log('🏦 Starting Wire Transfer Request:', { fullName, email, phone, company });
-
             const response = await fetch('/api/wire-transfer', {
                 method: 'POST',
                 headers: {
@@ -190,8 +174,6 @@ class StripePaymentProcessor {
                 })
             });
 
-            console.log('📡 Wire Transfer Response status:', response.status);
-
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error('❌ Wire Transfer error:', errorData);
@@ -199,7 +181,6 @@ class StripePaymentProcessor {
             }
 
             const result = await response.json();
-            console.log('✅ Wire Transfer Request successful:', result);
 
             // Show bank details in a modal or alert
             this.showBankDetailsModal(result.bankDetails, result.instructions);
@@ -404,8 +385,6 @@ class StripePaymentProcessor {
 
     // Payment success handling (called from success page)
     handlePaymentSuccess(sessionId) {
-        console.log('Payment successful!', sessionId);
-        
         // Track successful payment
         if (typeof gtag !== 'undefined') {
             gtag('event', 'purchase', {
@@ -428,7 +407,6 @@ class StripePaymentProcessor {
 
     async createCryptoPaymentRequest(cryptocurrency) {
         if (this.isProcessing) {
-            console.log('Request already in progress...');
             return;
         }
 
@@ -437,15 +415,6 @@ class StripePaymentProcessor {
         const emailElement = document.getElementById('customerEmail');
         const phoneElement = document.getElementById('customerPhone');
         const companyElement = document.getElementById('customerCompany');
-
-        console.log('🔍 Field Elements:', {
-            fullName: fullNameElement,
-            email: emailElement,
-            phone: phoneElement,
-            fullNameValue: fullNameElement?.value,
-            emailValue: emailElement?.value,
-            phoneValue: phoneElement?.value
-        });
 
         const fullName = fullNameElement?.value?.trim();
         const email = emailElement?.value?.trim();
@@ -471,19 +440,14 @@ class StripePaymentProcessor {
 
     async createCryptoPaymentRequestWithData(cryptocurrency, customerData) {
         if (this.isProcessing) {
-            console.log('Request already in progress...');
             return;
         }
 
         const { fullName, email, password, phone, company } = customerData;
 
-        console.log('✅ Creating crypto payment with validated data:', { fullName, email, phone, cryptocurrency });
-
         this.isProcessing = true;
 
         try {
-            console.log('🪙 Creating crypto payment request:', { fullName, email, phone, cryptocurrency });
-
             const response = await fetch('/api/crypto-payment', {
                 method: 'POST',
                 headers: {
@@ -505,7 +469,6 @@ class StripePaymentProcessor {
             }
 
             const data = await response.json();
-            console.log('✅ Crypto payment request created:', data);
 
             // Show crypto wallet modal
             this.showCryptoWalletModal(data);
@@ -645,13 +608,11 @@ class StripePaymentProcessor {
                 </div>
 
                 <button onclick="
-                    console.log('🧹 Crypto payment noted - account created, redirecting to login');
                     // Mark payment as initiated
                     sessionStorage.setItem('paymentInitiated', 'true');
                     // Reset processing flag
                     if (window.stripeProcessor) {
                         window.stripeProcessor.isProcessing = false;
-                        console.log('✅ Reset isProcessing flag');
                     }
                     // Redirect to login page
                     const currentLang = localStorage.getItem('billionairs_lang') || 'en';
@@ -713,14 +674,12 @@ class StripePaymentProcessor {
 // Initialize Stripe processor
 function initStripeProcessor() {
     if (typeof Stripe === 'undefined') {
-        console.warn('⏳ Stripe library not yet loaded, retrying...');
         setTimeout(initStripeProcessor, 500);
         return;
     }
     try {
         const stripeProcessor = new StripePaymentProcessor();
         window.stripeProcessor = stripeProcessor;
-        console.log('✅ Stripe processor initialized successfully');
     } catch (e) {
         console.error('❌ Stripe processor init error:', e);
         setTimeout(initStripeProcessor, 1000);

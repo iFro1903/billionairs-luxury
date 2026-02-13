@@ -17,7 +17,6 @@ class BackgroundSyncManager {
     async init() {
         try {
             this.db = await this.openDB();
-            console.log('✅ Background Sync DB initialized');
         } catch (err) {
             console.error('❌ Failed to initialize Background Sync DB:', err);
         }
@@ -63,8 +62,6 @@ class BackgroundSyncManager {
                     actionStore.createIndex('timestamp', 'timestamp', { unique: false });
                     actionStore.createIndex('type', 'type', { unique: false });
                 }
-
-                console.log('✅ IndexedDB object stores created');
             };
         });
     }
@@ -90,8 +87,6 @@ class BackgroundSyncManager {
                 request.onsuccess = () => resolve(request.result);
                 request.onerror = () => reject(request.error);
             });
-
-            console.log('✅ Message saved for background sync:', id);
 
             // Register sync event
             await this.registerSync('sync-messages');
@@ -125,8 +120,6 @@ class BackgroundSyncManager {
                 request.onerror = () => reject(request.error);
             });
 
-            console.log('✅ Payment saved for background sync:', id);
-
             // Register sync event
             await this.registerSync('sync-payments');
 
@@ -159,8 +152,6 @@ class BackgroundSyncManager {
                 request.onsuccess = () => resolve(request.result);
                 request.onerror = () => reject(request.error);
             });
-
-            console.log(`✅ Action "${actionType}" saved for background sync:`, id);
 
             // Register sync event
             await this.registerSync('sync-actions');
@@ -251,7 +242,6 @@ class BackgroundSyncManager {
                 request.onerror = () => reject(request.error);
             });
 
-            console.log('✅ Pending message removed:', id);
         } catch (err) {
             console.error('❌ Failed to remove pending message:', err);
         }
@@ -273,7 +263,6 @@ class BackgroundSyncManager {
                 request.onerror = () => reject(request.error);
             });
 
-            console.log('✅ Pending payment removed:', id);
         } catch (err) {
             console.error('❌ Failed to remove pending payment:', err);
         }
@@ -295,7 +284,6 @@ class BackgroundSyncManager {
                 request.onerror = () => reject(request.error);
             });
 
-            console.log('✅ Pending action removed:', id);
         } catch (err) {
             console.error('❌ Failed to remove pending action:', err);
         }
@@ -307,14 +295,11 @@ class BackgroundSyncManager {
     async registerSync(tag) {
         try {
             if (!('serviceWorker' in navigator) || !('SyncManager' in window)) {
-                console.warn('⚠️ Background Sync not supported, will sync on next online event');
-                return false;
+                    return false;
             }
 
             const registration = await navigator.serviceWorker.ready;
             await registration.sync.register(tag);
-            
-            console.log(`✅ Background sync registered: ${tag}`);
             return true;
         } catch (err) {
             console.error('❌ Failed to register background sync:', err);
@@ -326,8 +311,6 @@ class BackgroundSyncManager {
      * Manually trigger sync (for browsers without Background Sync API)
      */
     async manualSync() {
-        console.log('🔄 Starting manual sync...');
-
         let syncedCount = 0;
 
         // Sync messages
@@ -387,7 +370,6 @@ class BackgroundSyncManager {
             }
         }
 
-        console.log(`✅ Manual sync completed: ${syncedCount} items synced`);
         return syncedCount;
     }
 
@@ -438,7 +420,6 @@ class BackgroundSyncManager {
                 })
             ]);
 
-            console.log('✅ All pending data cleared');
         } catch (err) {
             console.error('❌ Failed to clear pending data:', err);
         }
@@ -450,7 +431,6 @@ const backgroundSync = new BackgroundSyncManager();
 
 // Auto-sync when coming back online
 window.addEventListener('online', async () => {
-    console.log('🌐 Connection restored, triggering sync...');
     const syncedCount = await backgroundSync.manualSync();
     
     if (syncedCount > 0) {
@@ -466,5 +446,3 @@ window.addEventListener('online', async () => {
 
 // Export for use in other scripts
 window.backgroundSync = backgroundSync;
-
-console.log('✅ Background Sync Manager loaded');

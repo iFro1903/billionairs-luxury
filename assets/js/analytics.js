@@ -155,5 +155,3 @@ setInterval(() => {
         });
     }
 }, 2000); // Reduced polling frequency from 500ms to 2s to reduce CPU usage
-
-console.log('📊 Google Analytics initialized - Measurement ID: G-80P17E7RZK');

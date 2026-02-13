@@ -16,7 +16,10 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BILLIONAIRS - Create Your Account</title>
+    <title>BILLIONAIRS - Create Your Account | Join the Elite</title>
+    <meta name="description" content="Create your exclusive BILLIONAIRS account. Join the world's most private luxury membership for ultra-high-net-worth individuals.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="canonical" href="https://billionairs.luxury/create-account.html">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
     <link rel="shortcut icon" href="/favicon.ico">
@@ -234,9 +237,11 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-nav">Skip to main content</a>
     <!-- Particles Background -->
     <div id="particles-js"></div>
     
+    <main id="main-content" role="main">
     <div class="create-account-container">
         <div class="create-account-box">
             <div class="logo-container" onclick="window.location.href='/'" style="cursor: pointer;">
@@ -273,8 +278,8 @@
                 <div class="form-group">
                     <label class="form-label" for="password" data-i18n="create_account.password">Password</label>
                     <input type="password" id="password" class="form-input" required oninput="updatePasswordStrength(this.value)">
-                    <div id="passwordStrengthBar" style="display:none;margin-top:6px;">
-                        <div style="display:flex;gap:4px;margin-bottom:4px;">
+                    <div id="passwordStrengthBar" style="display:none;margin-top:6px;" role="status" aria-live="polite" aria-label="Password strength indicator">
+                        <div style="display:flex;gap:4px;margin-bottom:4px;" aria-hidden="true">
                             <div id="str1" style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.1);transition:background .3s"></div>
                             <div id="str2" style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.1);transition:background .3s"></div>
                             <div id="str3" style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.1);transition:background .3s"></div>
@@ -295,6 +300,7 @@
             </div>
         </div>
     </div>
+    </main>
 
     <script src="assets/js/auth.js"></script>
     <script>
