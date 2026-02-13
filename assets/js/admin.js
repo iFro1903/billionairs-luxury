@@ -225,7 +225,8 @@ class AdminPanel {
         });
 
         // Load tab-specific data
-        // Easter Egg tab data is loaded via renderIndividualUserControls() called from loadUsersData()
+        if (tabName === 'users') this.loadUsersData();
+        if (tabName === 'easter-eggs') this.loadUsersData();
         if (tabName === 'chat') this.loadChatData();
         if (tabName === 'payments') this.loadPaymentsData();
         if (tabName === 'stats') this.loadStatsData();
@@ -285,6 +286,11 @@ class AdminPanel {
 
         } catch (error) {
             console.error('Error loading users:', error);
+            // Show error in UI
+            const container = document.getElementById('individualUserControls');
+            if (container) {
+                container.innerHTML = `<p style="color: #e74c3c; text-align: center; padding: 2rem;">Error loading members: ${error.message}. Please reload the page.</p>`;
+            }
         }
     }
 
