@@ -1139,18 +1139,19 @@
             container.innerHTML = reversed.map(msg => {
                 let fileHTML = '';
                 if (msg.file_url) {
+                    const safeUrl = escapeHtml(msg.file_url);
                     if (msg.file_type === 'image') {
                         fileHTML = `
                             <div class="message-file">
-                                <img src="${msg.file_url}" alt="${escapeHtml(msg.file_name || 'Image')}" 
-                                     onclick="window.open('${msg.file_url}', '_blank')">
+                                <img src="${safeUrl}" alt="${escapeHtml(msg.file_name || 'Image')}" 
+                                     onclick="window.open('${safeUrl}', '_blank')">
                                 <div style="font-size: 0.75rem; color: #888; margin-top: 4px;">${escapeHtml(msg.file_name || '')}</div>
                             </div>
                         `;
                     } else {
                         fileHTML = `
                             <div class="message-file">
-                                <a href="${msg.file_url}" target="_blank">📄 ${escapeHtml(msg.file_name || 'File')}</a>
+                                <a href="${safeUrl}" target="_blank">📄 ${escapeHtml(msg.file_name || 'File')}</a>
                             </div>
                         `;
                     }

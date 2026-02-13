@@ -1,19 +1,23 @@
 // Authentication Client-Side Handler
 // Manages login, registration, and session management
+// Uses HttpOnly cookies for token storage (secure, XSS-proof)
 
 class AuthManager {
     constructor() {
-        this.token = localStorage.getItem('billionairs_token');
+        // Token is now stored in HttpOnly cookie (not accessible via JS)
+        // Only user display data remains in localStorage
         const storedUser = localStorage.getItem('billionairs_user');
         try {
             this.user = storedUser ? JSON.parse(storedUser) : null;
         } catch (e) {
             console.warn('Corrupt user data in localStorage, resetting.');
             localStorage.removeItem('billionairs_user');
-            localStorage.removeItem('billionairs_token');
             this.user = null;
-            this.token = null;
         }
+        // Clean up legacy token from localStorage (migration)
+        localStorage.removeItem('billionairs_token');
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('authToken');
     }
 
     // Register new user
@@ -22,6 +26,7 @@ class AuthManager {
             const response = await fetch('/api/auth', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify({
                     action: 'register',
                     email,
@@ -50,6 +55,7 @@ class AuthManager {
             const response = await fetch('/api/auth', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify({
                     action: 'login',
                     email,
@@ -63,10 +69,8 @@ class AuthManager {
                 throw new Error(data.message || 'Login failed');
             }
 
-            // Save token
-            this.token = data.token;
+            // Save user display data only (token is in HttpOnly cookie)
             this.user = data.user;
-            localStorage.setItem('billionairs_token', data.token);
             localStorage.setItem('billionairs_user', JSON.stringify(data.user));
 
             return data;
@@ -78,17 +82,13 @@ class AuthManager {
 
     // Verify current session
     async verifySession() {
-        if (!this.token) {
-            return false;
-        }
-
         try {
             const response = await fetch('/api/auth', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify({
-                    action: 'verify',
-                    token: this.token
+                    action: 'verify'
                 })
             });
 
@@ -112,39 +112,35 @@ class AuthManager {
     // Logout user
     async logout() {
         try {
-            if (this.token) {
-                await fetch('/api/auth', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        action: 'logout',
-                        token: this.token
-                    })
-                });
-            }
+            await fetch('/api/auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({
+                    action: 'logout'
+                })
+            });
         } catch (error) {
             console.error('Logout error:', error);
         } finally {
-            this.token = null;
             this.user = null;
-            localStorage.removeItem('billionairs_token');
             localStorage.removeItem('billionairs_user');
+            localStorage.removeItem('billionairs_token');
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user_data');
         }
     }
 
     // Update payment status after successful payment
     async updatePaymentStatus() {
-        if (!this.token) {
-            throw new Error('No active session');
-        }
-
         try {
             const response = await fetch('/api/auth', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify({
-                    action: 'update_payment',
-                    token: this.token
+                    action: 'update_payment'
                 })
             });
 
@@ -164,9 +160,9 @@ class AuthManager {
         }
     }
 
-    // Check if user is logged in
+    // Check if user is logged in (based on cached user data)
     isLoggedIn() {
-        return !!this.token && !!this.user;
+        return !!this.user;
     }
 
     // Check if user has paid

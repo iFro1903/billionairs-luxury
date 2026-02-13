@@ -104,6 +104,25 @@ function getCorsOrigin(req) {
     return allowed.includes(origin) ? origin : allowed[0];
 }
 
+// HttpOnly Cookie helpers
+function getTokenFromCookie(req) {
+    const cookies = req.headers.cookie || '';
+    const match = cookies.match(/billionairs_session=([^;]+)/);
+    return match ? match[1] : null;
+}
+
+function setAuthCookie(res, token, maxAge = 86400) {
+    res.setHeader('Set-Cookie',
+        `billionairs_session=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${maxAge}`
+    );
+}
+
+function clearAuthCookie(res) {
+    res.setHeader('Set-Cookie',
+        `billionairs_session=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0`
+    );
+}
+
 export default async function handler(req, res) {
     // CORS headers
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -116,7 +135,10 @@ export default async function handler(req, res) {
         return;
     }
 
-    const { action, email, password, token, firstName, lastName } = req.body;
+    const { action, email, password, token: bodyToken, firstName, lastName } = req.body;
+    
+    // Read token from HttpOnly cookie (primary) or body (fallback for migration)
+    const token = getTokenFromCookie(req) || bodyToken;
     
     // Apply rate limiting for auth actions
     if (action === 'register' || action === 'login') {
@@ -260,9 +282,11 @@ export default async function handler(req, res) {
             
             console.log(`✅ User logged in: ${email}`);
 
+            // Set HttpOnly cookie with session token
+            setAuthCookie(res, sessionToken);
+
             return res.status(200).json({
                 success: true,
-                token: sessionToken,
                 user: {
                     email: user.email,
                     memberId: user.member_id,
@@ -275,7 +299,7 @@ export default async function handler(req, res) {
         // VERIFY SESSION
         if (action === 'verify') {
             if (!token) {
-                
+                clearAuthCookie(res);
                 return res.status(401).json({ success: false, message: 'No token provided' });
             }
 
@@ -295,7 +319,7 @@ export default async function handler(req, res) {
             // Check if session expired
             if (new Date() > new Date(session.expires_at)) {
                 await pool.query('DELETE FROM sessions WHERE token = $1', [token]);
-                
+                clearAuthCookie(res);
                 return res.status(401).json({ success: false, message: 'Session expired' });
             }
 
@@ -316,7 +340,7 @@ export default async function handler(req, res) {
             if (token) {
                 await pool.query('DELETE FROM sessions WHERE token = $1', [token]);
             }
-            
+            clearAuthCookie(res);
             return res.status(200).json({ success: true, message: 'Logged out successfully' });
         }
 

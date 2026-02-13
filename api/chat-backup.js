@@ -166,6 +166,14 @@ export default async function handler(req) {
                     });
                 }
 
+                // Validate file URL (prevent XSS via malicious URLs)
+                if (fileUrl && !fileUrl.startsWith('https://')) {
+                    return new Response(JSON.stringify({ error: 'Invalid file URL. Only HTTPS URLs are allowed.' }), {
+                        status: 400,
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                }
+
                 // Verify user has chat access
                 const user = await sql`
                     SELECT chat_ready 

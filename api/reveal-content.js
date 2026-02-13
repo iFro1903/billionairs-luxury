@@ -19,6 +19,13 @@ function getCorsOrigin(req) {
     return allowed.includes(origin) ? origin : allowed[0];
 }
 
+// Read token from HttpOnly cookie
+function getTokenFromCookie(req) {
+    const cookies = req.headers.cookie || '';
+    const match = cookies.match(/billionairs_session=([^;]+)/);
+    return match ? match[1] : null;
+}
+
 // The reveal content - stored server-side, never sent to client until verified
 const REVEAL_CONTENT = {
     en: {
@@ -176,7 +183,8 @@ export default async function handler(req, res) {
     const pool = getPool();
 
     try {
-        const { token, lang } = req.body;
+        const { lang } = req.body;
+        const token = getTokenFromCookie(req) || req.body.token;
 
         if (!token) {
             return res.status(401).json({ error: 'Authentication required' });

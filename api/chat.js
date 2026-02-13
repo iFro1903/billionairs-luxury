@@ -265,6 +265,14 @@ export default async function handler(req) {
                 });
             }
 
+            // Validate file URL (prevent XSS via malicious URLs)
+            if (fileUrl && !fileUrl.startsWith('https://')) {
+                return new Response(JSON.stringify({ error: 'Invalid file URL. Only HTTPS URLs are allowed.' }), {
+                    status: 400,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            }
+
             // Server-side content moderation (second layer)
             if (message) {
                 const blockedType = checkPersonalInfo(message);

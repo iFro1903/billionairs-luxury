@@ -172,6 +172,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
+                    credentials: 'include',
                     body: JSON.stringify({
                         email: email,
                         sessionId: sessionId
@@ -181,11 +182,11 @@
                 const result = await response.json();
 
                 if (response.ok && result.success) {
-                    // Store auth token
-                    if (result.token) {
-                        localStorage.setItem('authToken', result.token);
-                        localStorage.setItem('userEmail', email);
-                        localStorage.setItem('isLoggedIn', 'true');
+                    // Token is in HttpOnly cookie - just save user display data
+                    localStorage.setItem('userEmail', email);
+                    localStorage.setItem('isLoggedIn', 'true');
+                    if (result.user) {
+                        localStorage.setItem('billionairs_user', JSON.stringify(result.user));
                     }
 
                     // Update status

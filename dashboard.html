@@ -573,18 +573,15 @@
                 if (window.authManager && typeof window.authManager.logout === 'function') {
                     await window.authManager.logout();
                 } else {
-                    localStorage.removeItem('billionairs_token');
+                    // Fallback: clear all auth data
                     localStorage.removeItem('billionairs_user');
-                    localStorage.removeItem('auth_token');
                     localStorage.removeItem('user_data');
                     sessionStorage.clear();
                 }
                 window.location.href = '/';
             } catch (error) {
                 console.error('Logout error:', error);
-                localStorage.removeItem('billionairs_token');
                 localStorage.removeItem('billionairs_user');
-                localStorage.removeItem('auth_token');
                 localStorage.removeItem('user_data');
                 sessionStorage.clear();
                 window.location.href = '/';
@@ -633,10 +630,7 @@
             // Reveal content is now loaded from server - reload if language changes
             const revealContent = document.getElementById('revealContent');
             if (revealContent && revealContent.style.display !== 'none') {
-                const authToken = localStorage.getItem('billionairs_token') || localStorage.getItem('auth_token');
-                if (authToken) {
-                    loadRevealContent(authToken);
-                }
+                loadRevealContent();
             }
             
             // Add Logout translation
@@ -669,6 +663,7 @@
                     const response = await fetch('/api/auto-login', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
                         body: JSON.stringify({ 
                             email: autoLoginEmail,
                             sessionId: sessionId
@@ -677,9 +672,9 @@
                     
                     const result = await response.json();
                     
-                    if (result.success && result.token) {
-                        // Set the auth token
-                        localStorage.setItem('auth_token', result.token);
+                    if (result.success) {
+                        // Token is in HttpOnly cookie - just save user display data
+                        localStorage.setItem('billionairs_user', JSON.stringify(result.user));
                         localStorage.setItem('user_data', JSON.stringify(result.user));
                         
                         // Get language from URL
@@ -802,9 +797,8 @@
                 statusContainer.innerHTML = `<span class="status-badge status-paid">${t('dashboard.status_paid', 'Access Granted')}</span>`;
                 document.getElementById('revealSection').style.display = 'block';
                 
-                // Load reveal content from server (not in HTML source)
-                const authToken = localStorage.getItem('billionairs_token') || localStorage.getItem('auth_token');
-                loadRevealContent(authToken);
+                // Load reveal content from server (cookie-based auth)
+                loadRevealContent();
                 
                 // Translate buttons inside reveal section
                 if (window.i18n && typeof window.i18n.translateElement === 'function') {
@@ -888,7 +882,7 @@
         }
 
         // Load reveal content securely from server
-        async function loadRevealContent(sessionToken) {
+        async function loadRevealContent() {
             try {
                 const lang = (window.i18n && window.i18n.currentLanguage) || 
                              document.documentElement.lang || 
@@ -897,7 +891,8 @@
                 const response = await fetch('/api/reveal-content', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ token: sessionToken, lang: lang })
+                    credentials: 'include',
+                    body: JSON.stringify({ lang: lang })
                 });
 
                 if (!response.ok) {

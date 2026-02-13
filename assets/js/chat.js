@@ -1152,18 +1152,19 @@ class LuxuryChat {
             
             // Add file if present
             if (msg.file_url) {
+                const safeUrl = this.escapeHtml(msg.file_url);
                 if (msg.file_type === 'image') {
                     contentHTML += `
                         <div class="message-image">
-                            <img src="${msg.file_url}" alt="${this.escapeHtml(msg.file_name)}" 
-                                 onclick="window.open('${msg.file_url}', '_blank')"
+                            <img src="${safeUrl}" alt="${this.escapeHtml(msg.file_name)}" 
+                                 onclick="window.open('${safeUrl}', '_blank')"
                                  style="max-width: 300px; max-height: 300px; border-radius: 8px; cursor: pointer;">
                         </div>
                     `;
                 } else {
                     contentHTML += `
                         <div class="message-file">
-                            <a href="${msg.file_url}" target="_blank" class="file-link">
+                            <a href="${safeUrl}" target="_blank" class="file-link">
                                 📄 ${this.escapeHtml(msg.file_name)}
                             </a>
                         </div>

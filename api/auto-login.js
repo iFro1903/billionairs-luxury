@@ -20,6 +20,13 @@ function getCorsOrigin(req) {
     return allowed.includes(origin) ? origin : allowed[0];
 }
 
+// HttpOnly Cookie helper
+function setAuthCookie(res, token, maxAge = 2592000) {
+    res.setHeader('Set-Cookie',
+        `billionairs_session=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${maxAge}`
+    );
+}
+
 module.exports = async (req, res) => {
     // Set CORS headers
     res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -106,10 +113,12 @@ module.exports = async (req, res) => {
             [user.id]
         );
 
-        // Return success with token and user data
+        // Set HttpOnly cookie with token (30 days)
+        setAuthCookie(res, token, 30 * 24 * 60 * 60);
+
+        // Return success WITHOUT token in body (token is in HttpOnly cookie)
         return res.status(200).json({
             success: true,
-            token: token,
             user: {
                 id: user.id,
                 email: user.email,
