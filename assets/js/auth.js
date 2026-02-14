@@ -23,6 +23,7 @@ class AuthManager {
     // Register new user
     async register(email, password, firstName = '', lastName = '') {
         try {
+            const language = localStorage.getItem('billionairs_lang') || navigator.language?.split('-')[0] || 'en';
             const response = await fetch('/api/auth', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -32,7 +33,8 @@ class AuthManager {
                     email,
                     password,
                     firstName,
-                    lastName
+                    lastName,
+                    language
                 })
             });
 
@@ -52,6 +54,7 @@ class AuthManager {
     // Login user
     async login(email, password) {
         try {
+            const language = localStorage.getItem('billionairs_lang') || navigator.language?.split('-')[0] || 'en';
             const response = await fetch('/api/auth', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -59,7 +62,8 @@ class AuthManager {
                 body: JSON.stringify({
                     action: 'login',
                     email,
-                    password
+                    password,
+                    language
                 })
             });
 

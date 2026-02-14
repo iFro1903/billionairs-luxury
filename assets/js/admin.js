@@ -625,6 +625,187 @@ class AdminPanel {
         const charCount = document.getElementById('emailCharCount');
         const sendBtn = document.getElementById('emailSendBtn');
 
+        // Detect member's language from loaded user data
+        const user = this.users.find(u => u.email === email);
+        const memberLang = user?.preferred_language || 'en';
+        const memberName = user?.name || user?.full_name || 'Member';
+
+        // Show detected language hint
+        const langLabels = { en:'English', de:'Deutsch', fr:'Français', es:'Español', it:'Italiano', ru:'Русский', zh:'中文', ja:'日本語', ar:'العربية' };
+        const langHint = document.getElementById('emailLangHint');
+        if (langHint) {
+            langHint.textContent = `🌐 ${langLabels[memberLang] || memberLang}`;
+            langHint.title = `Email wird in ${langLabels[memberLang] || memberLang} gesendet`;
+        }
+
+        // ── Multilingual email templates ──
+        const allTemplates = {
+            en: {
+                welcome: {
+                    subject: 'Welcome to BILLIONAIRS',
+                    body: `Dear ${memberName},\n\nWe warmly welcome you to BILLIONAIRS.\n\nYour exclusive access has been activated and is now available to you. As a member of our private network, you benefit from unique privileges and connections.\n\nShould you have any questions, we are at your disposal at any time.\n\nBest regards,\nBILLIONAIRS Management`
+                },
+                'payment-reminder': {
+                    subject: 'Payment Reminder — BILLIONAIRS Membership',
+                    body: `Dear ${memberName},\n\nWe would like to kindly remind you that your membership fee is still outstanding.\n\nPlease complete your payment through your dashboard to continue enjoying full access to all exclusive features.\n\nFor questions, contact us at support@billionairs.luxury.\n\nBest regards,\nBILLIONAIRS Management`
+                },
+                'account-issue': {
+                    subject: 'Important Information About Your Account — BILLIONAIRS',
+                    body: `Dear ${memberName},\n\nWe would like to inform you about a matter concerning your BILLIONAIRS account.\n\n[Please describe the issue here]\n\nPlease contact us promptly so we can resolve this matter.\n\nBest regards,\nBILLIONAIRS Management`
+                },
+                'membership-update': {
+                    subject: 'Update to Your BILLIONAIRS Membership',
+                    body: `Dear ${memberName},\n\nWe would like to inform you about an update to your membership.\n\n[Update details]\n\nThese changes take effect immediately.\n\nBest regards,\nBILLIONAIRS Management`
+                }
+            },
+            de: {
+                welcome: {
+                    subject: 'Willkommen bei BILLIONAIRS',
+                    body: `Sehr geehrte/r ${memberName},\n\nWir heissen Sie herzlich willkommen bei BILLIONAIRS.\n\nIhr exklusiver Zugang wurde aktiviert und steht Ihnen ab sofort zur Verfügung. Als Mitglied unseres privaten Netzwerks profitieren Sie von einzigartigen Privilegien und Verbindungen.\n\nSollten Sie Fragen haben, stehen wir Ihnen jederzeit zur Verfügung.\n\nMit besten Grüssen,\nBILLIONAIRS Management`
+                },
+                'payment-reminder': {
+                    subject: 'Zahlungserinnerung — BILLIONAIRS Mitgliedschaft',
+                    body: `Sehr geehrte/r ${memberName},\n\nWir möchten Sie höflich daran erinnern, dass Ihre Mitgliedschaftsgebühr noch aussteht.\n\nBitte vervollständigen Sie die Zahlung über Ihr Dashboard, um weiterhin vollen Zugang zu allen exklusiven Funktionen zu geniessen.\n\nBei Fragen kontaktieren Sie uns unter support@billionairs.luxury.\n\nMit besten Grüssen,\nBILLIONAIRS Management`
+                },
+                'account-issue': {
+                    subject: 'Wichtige Information zu Ihrem Account — BILLIONAIRS',
+                    body: `Sehr geehrte/r ${memberName},\n\nWir möchten Sie über ein Anliegen bezüglich Ihres BILLIONAIRS-Accounts informieren.\n\n[Bitte beschreiben Sie hier das Problem]\n\nBitte kontaktieren Sie uns zeitnah, damit wir die Angelegenheit klären können.\n\nMit besten Grüssen,\nBILLIONAIRS Management`
+                },
+                'membership-update': {
+                    subject: 'Update Ihrer BILLIONAIRS Mitgliedschaft',
+                    body: `Sehr geehrte/r ${memberName},\n\nWir möchten Sie über eine Aktualisierung Ihrer Mitgliedschaft informieren.\n\n[Details zum Update]\n\nDiese Änderungen treten ab sofort in Kraft.\n\nMit besten Grüssen,\nBILLIONAIRS Management`
+                }
+            },
+            fr: {
+                welcome: {
+                    subject: 'Bienvenue chez BILLIONAIRS',
+                    body: `Cher/Chère ${memberName},\n\nNous vous souhaitons chaleureusement la bienvenue chez BILLIONAIRS.\n\nVotre accès exclusif a été activé et est désormais disponible. En tant que membre de notre réseau privé, vous bénéficiez de privilèges et de connexions uniques.\n\nSi vous avez des questions, nous sommes à votre disposition à tout moment.\n\nCordialement,\nBILLIONAIRS Management`
+                },
+                'payment-reminder': {
+                    subject: 'Rappel de paiement — Adhésion BILLIONAIRS',
+                    body: `Cher/Chère ${memberName},\n\nNous vous rappelons aimablement que votre cotisation d'adhésion est encore en attente.\n\nVeuillez compléter le paiement via votre tableau de bord pour continuer à profiter de l'accès complet à toutes les fonctionnalités exclusives.\n\nPour toute question, contactez-nous à support@billionairs.luxury.\n\nCordialement,\nBILLIONAIRS Management`
+                },
+                'account-issue': {
+                    subject: 'Information importante concernant votre compte — BILLIONAIRS',
+                    body: `Cher/Chère ${memberName},\n\nNous souhaitons vous informer d'un sujet concernant votre compte BILLIONAIRS.\n\n[Veuillez décrire le problème ici]\n\nVeuillez nous contacter rapidement afin que nous puissions résoudre cette affaire.\n\nCordialement,\nBILLIONAIRS Management`
+                },
+                'membership-update': {
+                    subject: 'Mise à jour de votre adhésion BILLIONAIRS',
+                    body: `Cher/Chère ${memberName},\n\nNous souhaitons vous informer d'une mise à jour de votre adhésion.\n\n[Détails de la mise à jour]\n\nCes modifications prennent effet immédiatement.\n\nCordialement,\nBILLIONAIRS Management`
+                }
+            },
+            es: {
+                welcome: {
+                    subject: 'Bienvenido/a a BILLIONAIRS',
+                    body: `Estimado/a ${memberName},\n\nLe damos una cálida bienvenida a BILLIONAIRS.\n\nSu acceso exclusivo ha sido activado y ya está disponible. Como miembro de nuestra red privada, usted se beneficia de privilegios y conexiones únicos.\n\nSi tiene alguna pregunta, estamos a su disposición en todo momento.\n\nAtentamente,\nBILLIONAIRS Management`
+                },
+                'payment-reminder': {
+                    subject: 'Recordatorio de pago — Membresía BILLIONAIRS',
+                    body: `Estimado/a ${memberName},\n\nLe recordamos amablemente que su cuota de membresía aún está pendiente.\n\nPor favor, complete el pago a través de su panel de control para seguir disfrutando del acceso completo a todas las funciones exclusivas.\n\nPara preguntas, contáctenos en support@billionairs.luxury.\n\nAtentamente,\nBILLIONAIRS Management`
+                },
+                'account-issue': {
+                    subject: 'Información importante sobre su cuenta — BILLIONAIRS',
+                    body: `Estimado/a ${memberName},\n\nDeseamos informarle sobre un asunto relacionado con su cuenta BILLIONAIRS.\n\n[Por favor, describa el problema aquí]\n\nPor favor, póngase en contacto con nosotros lo antes posible para resolver este asunto.\n\nAtentamente,\nBILLIONAIRS Management`
+                },
+                'membership-update': {
+                    subject: 'Actualización de su membresía BILLIONAIRS',
+                    body: `Estimado/a ${memberName},\n\nDeseamos informarle sobre una actualización de su membresía.\n\n[Detalles de la actualización]\n\nEstos cambios entran en vigor de inmediato.\n\nAtentamente,\nBILLIONAIRS Management`
+                }
+            },
+            it: {
+                welcome: {
+                    subject: 'Benvenuto/a in BILLIONAIRS',
+                    body: `Gentile ${memberName},\n\nLe diamo il benvenuto in BILLIONAIRS.\n\nIl Suo accesso esclusivo è stato attivato ed è ora disponibile. Come membro della nostra rete privata, Lei beneficia di privilegi e connessioni unici.\n\nPer qualsiasi domanda, siamo a Sua disposizione in qualsiasi momento.\n\nCordiali saluti,\nBILLIONAIRS Management`
+                },
+                'payment-reminder': {
+                    subject: 'Promemoria di pagamento — Abbonamento BILLIONAIRS',
+                    body: `Gentile ${memberName},\n\nDesideriamo ricordarLe gentilmente che la quota di abbonamento è ancora in sospeso.\n\nLa preghiamo di completare il pagamento tramite la Sua dashboard per continuare a godere dell'accesso completo a tutte le funzionalità esclusive.\n\nPer domande, ci contatti a support@billionairs.luxury.\n\nCordiali saluti,\nBILLIONAIRS Management`
+                },
+                'account-issue': {
+                    subject: 'Informazione importante sul Suo account — BILLIONAIRS',
+                    body: `Gentile ${memberName},\n\nDesideriamo informarLa riguardo una questione relativa al Suo account BILLIONAIRS.\n\n[Descrivere il problema qui]\n\nLa preghiamo di contattarci tempestivamente per risolvere la questione.\n\nCordiali saluti,\nBILLIONAIRS Management`
+                },
+                'membership-update': {
+                    subject: 'Aggiornamento del Suo abbonamento BILLIONAIRS',
+                    body: `Gentile ${memberName},\n\nDesideriamo informarLa di un aggiornamento del Suo abbonamento.\n\n[Dettagli dell'aggiornamento]\n\nQueste modifiche hanno effetto immediato.\n\nCordiali saluti,\nBILLIONAIRS Management`
+                }
+            },
+            ru: {
+                welcome: {
+                    subject: 'Добро пожаловать в BILLIONAIRS',
+                    body: `Уважаемый/ая ${memberName},\n\nМы сердечно приветствуем Вас в BILLIONAIRS.\n\nВаш эксклюзивный доступ активирован и доступен для использования. Как участник нашей частной сети, Вы пользуетесь уникальными привилегиями и связями.\n\nЕсли у Вас есть вопросы, мы к Вашим услугам в любое время.\n\nС наилучшими пожеланиями,\nBILLIONAIRS Management`
+                },
+                'payment-reminder': {
+                    subject: 'Напоминание об оплате — Членство BILLIONAIRS',
+                    body: `Уважаемый/ая ${memberName},\n\nНапоминаем Вам, что Ваш членский взнос ещё не оплачен.\n\nПожалуйста, завершите оплату через Вашу панель управления, чтобы продолжить пользоваться полным доступом ко всем эксклюзивным функциям.\n\nПо вопросам обращайтесь по адресу support@billionairs.luxury.\n\nС наилучшими пожеланиями,\nBILLIONAIRS Management`
+                },
+                'account-issue': {
+                    subject: 'Важная информация о Вашем аккаунте — BILLIONAIRS',
+                    body: `Уважаемый/ая ${memberName},\n\nМы хотим сообщить Вам о вопросе, касающемся Вашего аккаунта BILLIONAIRS.\n\n[Описание проблемы]\n\nПожалуйста, свяжитесь с нами в ближайшее время для решения этого вопроса.\n\nС наилучшими пожеланиями,\nBILLIONAIRS Management`
+                },
+                'membership-update': {
+                    subject: 'Обновление Вашего членства BILLIONAIRS',
+                    body: `Уважаемый/ая ${memberName},\n\nМы хотим сообщить Вам об обновлении Вашего членства.\n\n[Детали обновления]\n\nЭти изменения вступают в силу немедленно.\n\nС наилучшими пожеланиями,\nBILLIONAIRS Management`
+                }
+            },
+            zh: {
+                welcome: {
+                    subject: '欢迎加入 BILLIONAIRS',
+                    body: `尊敬的 ${memberName}：\n\n我们热忱欢迎您加入 BILLIONAIRS。\n\n您的专属权限已激活，现可立即使用。作为我们私人网络的成员，您将享有独特的特权和人脉。\n\n如有任何问题，请随时联系我们。\n\n此致敬礼，\nBILLIONAIRS Management`
+                },
+                'payment-reminder': {
+                    subject: '付款提醒 — BILLIONAIRS 会员资格',
+                    body: `尊敬的 ${memberName}：\n\n我们温馨提醒您，您的会员费尚未支付。\n\n请通过您的仪表板完成支付，以继续享受所有专属功能的完整访问权限。\n\n如有疑问，请联系 support@billionairs.luxury。\n\n此致敬礼，\nBILLIONAIRS Management`
+                },
+                'account-issue': {
+                    subject: '关于您账户的重要信息 — BILLIONAIRS',
+                    body: `尊敬的 ${memberName}：\n\n我们希望就您的 BILLIONAIRS 账户相关事宜通知您。\n\n[请在此描述问题]\n\n请尽快与我们联系，以便解决此事。\n\n此致敬礼，\nBILLIONAIRS Management`
+                },
+                'membership-update': {
+                    subject: 'BILLIONAIRS 会员资格更新',
+                    body: `尊敬的 ${memberName}：\n\n我们希望通知您会员资格的更新。\n\n[更新详情]\n\n这些变更即时生效。\n\n此致敬礼，\nBILLIONAIRS Management`
+                }
+            },
+            ja: {
+                welcome: {
+                    subject: 'BILLIONAIRS へようこそ',
+                    body: `${memberName} 様\n\nBILLIONAIRS へようこそ。心より歓迎申し上げます。\n\nお客様の限定アクセスが有効になり、ただいまよりご利用いただけます。プライベートネットワークの会員として、独自の特権とコネクションをお楽しみいただけます。\n\nご質問がございましたら、いつでもお気軽にお問い合わせください。\n\n敬具\nBILLIONAIRS Management`
+                },
+                'payment-reminder': {
+                    subject: 'お支払いのご案内 — BILLIONAIRS メンバーシップ',
+                    body: `${memberName} 様\n\n会員費のお支払いがまだ完了していないことをお知らせいたします。\n\nすべての限定機能への完全なアクセスを引き続きお楽しみいただくために、ダッシュボードからお支払いをお済ませください。\n\nご不明な点がございましたら、support@billionairs.luxury までご連絡ください。\n\n敬具\nBILLIONAIRS Management`
+                },
+                'account-issue': {
+                    subject: 'アカウントに関する重要なお知らせ — BILLIONAIRS',
+                    body: `${memberName} 様\n\nBILLIONAIRS アカウントに関する件についてお知らせいたします。\n\n[ここに問題を記述してください]\n\n本件の解決のため、お早めにご連絡ください。\n\n敬具\nBILLIONAIRS Management`
+                },
+                'membership-update': {
+                    subject: 'BILLIONAIRS メンバーシップの更新',
+                    body: `${memberName} 様\n\nメンバーシップの更新についてお知らせいたします。\n\n[更新の詳細]\n\nこれらの変更は即座に有効となります。\n\n敬具\nBILLIONAIRS Management`
+                }
+            },
+            ar: {
+                welcome: {
+                    subject: 'مرحباً بك في BILLIONAIRS',
+                    body: `${memberName} العزيز/ة،\n\nنرحب بك ترحيباً حاراً في BILLIONAIRS.\n\nتم تفعيل وصولك الحصري وهو متاح لك الآن. بصفتك عضواً في شبكتنا الخاصة، تستمتع بامتيازات واتصالات فريدة.\n\nإذا كان لديك أي أسئلة، نحن في خدمتك في أي وقت.\n\nمع أطيب التحيات،\nإدارة BILLIONAIRS`
+                },
+                'payment-reminder': {
+                    subject: 'تذكير بالدفع — عضوية BILLIONAIRS',
+                    body: `${memberName} العزيز/ة،\n\nنود تذكيرك بلطف بأن رسوم عضويتك لا تزال معلقة.\n\nيرجى إتمام الدفع عبر لوحة التحكم الخاصة بك لمواصلة الاستمتاع بالوصول الكامل إلى جميع الميزات الحصرية.\n\nللاستفسارات، تواصل معنا على support@billionairs.luxury.\n\nمع أطيب التحيات،\nإدارة BILLIONAIRS`
+                },
+                'account-issue': {
+                    subject: 'معلومات مهمة حول حسابك — BILLIONAIRS',
+                    body: `${memberName} العزيز/ة،\n\nنود إبلاغك بشأن مسألة تتعلق بحسابك في BILLIONAIRS.\n\n[يرجى وصف المشكلة هنا]\n\nيرجى التواصل معنا في أقرب وقت ممكن لحل هذه المسألة.\n\nمع أطيب التحيات،\nإدارة BILLIONAIRS`
+                },
+                'membership-update': {
+                    subject: 'تحديث عضويتك في BILLIONAIRS',
+                    body: `${memberName} العزيز/ة،\n\nنود إبلاغك بتحديث على عضويتك.\n\n[تفاصيل التحديث]\n\nتسري هذه التغييرات فوراً.\n\nمع أطيب التحيات،\nإدارة BILLIONAIRS`
+                }
+            }
+        };
+
+        const templates = allTemplates[memberLang] || allTemplates.en;
+
         // Reset fields
         toField.value = email;
         subjectField.value = '';
@@ -643,28 +824,7 @@ class AdminPanel {
         // Store reference for global access
         window._adminEmailComposer = {
             applyTemplate: () => {
-                const user = this.users.find(u => u.email === email);
-                const name = user?.name || user?.full_name || 'Mitglied';
                 const tpl = templateSelect.value;
-                const templates = {
-                    'welcome': {
-                        subject: 'Willkommen bei BILLIONAIRS',
-                        body: `Sehr geehrte/r ${name},\n\nWir heissen Sie herzlich willkommen bei BILLIONAIRS.\n\nIhr exklusiver Zugang wurde aktiviert und steht Ihnen ab sofort zur Verfügung. Als Mitglied unseres privaten Netzwerks profitieren Sie von einzigartigen Privilegien und Verbindungen.\n\nSollten Sie Fragen haben, stehen wir Ihnen jederzeit zur Verfügung.\n\nMit besten Grüssen,\nBILLIONAIRS Management`
-                    },
-                    'payment-reminder': {
-                        subject: 'Zahlungserinnerung — BILLIONAIRS Mitgliedschaft',
-                        body: `Sehr geehrte/r ${name},\n\nWir möchten Sie höflich daran erinnern, dass Ihre Mitgliedschaftsgebühr noch aussteht.\n\nBitte vervollständigen Sie die Zahlung über Ihr Dashboard, um weiterhin vollen Zugang zu allen exklusiven Funktionen zu geniessen.\n\nBei Fragen kontaktieren Sie uns unter support@billionairs.luxury.\n\nMit besten Grüssen,\nBILLIONAIRS Management`
-                    },
-                    'account-issue': {
-                        subject: 'Wichtige Information zu Ihrem Account — BILLIONAIRS',
-                        body: `Sehr geehrte/r ${name},\n\nWir möchten Sie über ein Anliegen bezüglich Ihres BILLIONAIRS-Accounts informieren.\n\n[Bitte beschreiben Sie hier das Problem]\n\nBitte kontaktieren Sie uns zeitnah, damit wir die Angelegenheit klären können.\n\nMit besten Grüssen,\nBILLIONAIRS Management`
-                    },
-                    'membership-update': {
-                        subject: 'Update Ihrer BILLIONAIRS Mitgliedschaft',
-                        body: `Sehr geehrte/r ${name},\n\nWir möchten Sie über eine Aktualisierung Ihrer Mitgliedschaft informieren.\n\n[Details zum Update]\n\nDiese Änderungen treten ab sofort in Kraft.\n\nMit besten Grüssen,\nBILLIONAIRS Management`
-                    }
-                };
-
                 if (templates[tpl]) {
                     subjectField.value = templates[tpl].subject;
                     bodyField.value = templates[tpl].body;

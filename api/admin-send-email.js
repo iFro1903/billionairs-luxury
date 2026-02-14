@@ -62,6 +62,31 @@ export default async function handler(req) {
             });
         }
 
+        // ── Fetch member's preferred language ──
+        const sql = neon(process.env.DATABASE_URL);
+        let memberLang = 'en';
+        try {
+            const langRows = await sql`SELECT preferred_language FROM users WHERE LOWER(email) = LOWER(${to}) LIMIT 1`;
+            if (langRows.length && langRows[0].preferred_language) {
+                memberLang = langRows[0].preferred_language;
+            }
+        } catch (e) { console.warn('Could not fetch member language:', e.message); }
+
+        // ── Localized email wrapper strings ──
+        const emailI18n = {
+            en: { footer: 'Ultra-Luxury Membership', unsubscribe: 'You received this email as a BILLIONAIRS member.' },
+            de: { footer: 'Ultra-Luxus Mitgliedschaft', unsubscribe: 'Sie erhalten diese E-Mail als BILLIONAIRS Mitglied.' },
+            fr: { footer: 'Adhésion Ultra-Luxe', unsubscribe: 'Vous recevez cet e-mail en tant que membre BILLIONAIRS.' },
+            es: { footer: 'Membresía Ultra-Lujo', unsubscribe: 'Recibió este correo como miembro de BILLIONAIRS.' },
+            it: { footer: 'Abbonamento Ultra-Lusso', unsubscribe: 'Hai ricevuto questa email come membro BILLIONAIRS.' },
+            ru: { footer: 'Ультра-Люкс Членство', unsubscribe: 'Вы получили это письмо как участник BILLIONAIRS.' },
+            zh: { footer: '超奢华会员资格', unsubscribe: '您收到此邮件是因为您是 BILLIONAIRS 会员。' },
+            ja: { footer: 'ウルトラ・ラグジュアリー会員', unsubscribe: 'BILLIONAIRSメンバーとしてこのメールを受信しました。' },
+            ar: { footer: 'عضوية فائقة الفخامة', unsubscribe: 'لقد تلقيت هذا البريد الإلكتروني بصفتك عضوًا في BILLIONAIRS.' }
+        };
+        const i18n = emailI18n[memberLang] || emailI18n.en;
+        const dir = memberLang === 'ar' ? 'rtl' : 'ltr';
+
         // RESEND API
         const RESEND_API_KEY = process.env.RESEND_API_KEY;
         if (!RESEND_API_KEY) {
@@ -73,12 +98,12 @@ export default async function handler(req) {
         // Fixed sender — ONLY elite@billionairs.luxury allowed
         const FROM = 'BILLIONAIRS Elite <elite@billionairs.luxury>';
 
-        // Build HTML email
+        // Build HTML email (localized wrapper)
         const html = `
 <!DOCTYPE html>
-<html>
+<html dir="${dir}" lang="${memberLang}">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
-<body style="margin:0;padding:0;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#000;">
+<body style="margin:0;padding:0;font-family:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#000;direction:${dir};">
     <table width="100%" cellpadding="0" cellspacing="0" style="background:linear-gradient(180deg,#000 0%,#0a0a0a 50%,#1a1a1a 100%);padding:40px 20px;">
         <tr><td align="center">
             <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
@@ -95,8 +120,9 @@ export default async function handler(req) {
                 </td></tr>
                 <!-- Footer -->
                 <tr><td style="text-align:center;padding:25px 0 10px;">
-                    <p style="color:#555;font-size:11px;margin:0;">© ${new Date().getFullYear()} BILLIONAIRS — Ultra-Luxury Membership</p>
-                    <p style="color:#444;font-size:10px;margin:6px 0 0;">billionairs.luxury</p>
+                    <p style="color:#555;font-size:11px;margin:0;">&copy; ${new Date().getFullYear()} BILLIONAIRS &mdash; ${i18n.footer}</p>
+                    <p style="color:#444;font-size:10px;margin:6px 0 0;">${i18n.unsubscribe}</p>
+                    <p style="color:#444;font-size:10px;margin:4px 0 0;">billionairs.luxury</p>
                 </td></tr>
             </table>
         </td></tr>
@@ -130,14 +156,13 @@ export default async function handler(req) {
 
         // Audit log
         try {
-            const sql = neon(process.env.DATABASE_URL);
             await sql`INSERT INTO admin_audit_log (action, user_email, details, ip, timestamp)
-                       VALUES ('email_sent', ${to}, ${'Subject: ' + subject}, ${req.headers.get('x-forwarded-for') || 'unknown'}, NOW())`;
+                       VALUES ('email_sent', ${to}, ${'Subject: ' + subject + ' | Lang: ' + memberLang}, ${req.headers.get('x-forwarded-for') || 'unknown'}, NOW())`;
         } catch (logErr) {
             console.error('Audit log error:', logErr);
         }
 
-        return new Response(JSON.stringify({ success: true, id: data.id }), {
+        return new Response(JSON.stringify({ success: true, id: data.id, language: memberLang }), {
             status: 200, headers: { 'Content-Type': 'application/json' }
         });
 
