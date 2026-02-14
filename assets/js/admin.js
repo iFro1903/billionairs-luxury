@@ -466,7 +466,7 @@ class AdminPanel {
     }
 
     // ========== MEMBER DETAIL MODAL ==========
-    viewUser(email) {
+    async viewUser(email) {
         const user = this.users.find(u => u.email === email);
         if (!user) { this.toast('User nicht gefunden', 'error'); return; }
 
@@ -496,6 +496,15 @@ class AdminPanel {
             <div class="detail-row"><span class="detail-label">Phone</span><span class="detail-value">${this.escapeHtml(user.phone || '—')}</span></div>
             <div class="detail-row"><span class="detail-label">Company</span><span class="detail-value">${this.escapeHtml(user.company || '—')}</span></div>
 
+            <!-- NDA Signature Section -->
+            <div class="nda-section" id="ndaSection" style="margin-top:1.5rem;padding:1rem;border:1px solid rgba(201,169,110,0.3);border-radius:8px;background:rgba(201,169,110,0.05);">
+                <h4 style="color:#c9a96e;font-size:.9rem;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;">
+                    📜 NDA-Vereinbarung
+                    <span id="ndaLoadingSpinner" style="font-size:.7rem;color:rgba(255,255,255,0.4);">Laden...</span>
+                </h4>
+                <div id="ndaContent" style="color:rgba(255,255,255,0.6);font-size:.8rem;">—</div>
+            </div>
+
             <div class="notes-section">
                 <h4 style="color:#E8C4A8;font-size:.9rem;margin-bottom:.5rem;">Notizen</h4>
                 <textarea id="memberNotes" placeholder="Interne Notizen...">${this.escapeHtml(user.admin_notes || '')}</textarea>
@@ -514,6 +523,9 @@ class AdminPanel {
 
         modal.classList.remove('hidden');
 
+        // Load NDA signature asynchronously
+        this.loadNdaSignature(email);
+
         // Event delegation for modal action buttons
         body.addEventListener('click', e => {
             const btn = e.target.closest('[data-modal-action]');
@@ -526,6 +538,59 @@ class AdminPanel {
             else if (act === 'block') { this.blockUser(em); this.closeModal(); }
             else if (act === 'delete') { this.deleteUser(em); this.closeModal(); }
         });
+    }
+
+    async loadNdaSignature(email) {
+        const container = document.getElementById('ndaContent');
+        const spinner = document.getElementById('ndaLoadingSpinner');
+        if (!container) return;
+
+        try {
+            const s = this.getSession();
+            const res = await fetch(`/api/admin-nda?email=${encodeURIComponent(email)}`, {
+                headers: {
+                    'X-Admin-Email': s.email,
+                    'X-Admin-Password': s.password
+                }
+            });
+            const data = await res.json();
+            if (spinner) spinner.style.display = 'none';
+
+            if (!data.success || !data.nda) {
+                container.innerHTML = '<span style="color:rgba(255,255,255,0.3);">Keine NDA-Unterschrift vorhanden</span>';
+                return;
+            }
+
+            const nda = data.nda;
+            const signedAt = nda.agreed_at ? new Date(nda.agreed_at).toLocaleString('de-CH') : '—';
+            const sigId = nda.signature_id || '—';
+            const docRef = nda.document_ref || '—';
+            const ip = nda.ip_address || '—';
+
+            container.innerHTML = `
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem .75rem;margin-bottom:1rem;">
+                    <div><span style="color:rgba(255,255,255,0.4);font-size:.7rem;">Signatur-ID</span><br><span style="color:#c9a96e;">${this.escapeHtml(sigId)}</span></div>
+                    <div><span style="color:rgba(255,255,255,0.4);font-size:.7rem;">Dokument</span><br>${this.escapeHtml(docRef)}</div>
+                    <div><span style="color:rgba(255,255,255,0.4);font-size:.7rem;">Unterzeichnet am</span><br>${signedAt}</div>
+                    <div><span style="color:rgba(255,255,255,0.4);font-size:.7rem;">IP-Adresse</span><br>${this.escapeHtml(ip)}</div>
+                    <div><span style="color:rgba(255,255,255,0.4);font-size:.7rem;">Name</span><br>${this.escapeHtml(nda.full_name || '—')}</div>
+                    <div><span style="color:rgba(255,255,255,0.4);font-size:.7rem;">Firma</span><br>${this.escapeHtml(nda.company || '—')}</div>
+                </div>
+                <div style="margin-top:.75rem;">
+                    <span style="color:rgba(255,255,255,0.4);font-size:.7rem;">Unterschrift</span>
+                    <div style="background:#1a1a2e;border:1px solid rgba(201,169,110,0.2);border-radius:6px;padding:.75rem;margin-top:.25rem;text-align:center;">
+                        <img src="${nda.signature_data}" alt="NDA Unterschrift" style="max-width:100%;max-height:120px;filter:brightness(1.2);" />
+                    </div>
+                </div>
+                <div style="margin-top:.5rem;text-align:right;">
+                    <button class="btn-sm btn-gold" onclick="window.open('${nda.signature_data}','_blank')" style="font-size:.7rem;padding:.25rem .5rem;">🔍 Vollbild</button>
+                </div>
+            `;
+        } catch (err) {
+            if (spinner) spinner.style.display = 'none';
+            container.innerHTML = '<span style="color:#ff6b6b;">Fehler beim Laden der NDA</span>';
+            console.error('NDA load error:', err);
+        }
     }
 
     closeModal() {
