@@ -572,9 +572,11 @@
 }
 
 .modal-close {
-    position: absolute;
+    position: sticky;
     top: 1.5rem;
-    right: 1.5rem;
+    left: calc(100% - 1.5rem);
+    float: right;
+    margin-bottom: -40px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50%;
@@ -588,7 +590,7 @@
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     line-height: 1;
-    z-index: 10003;
+    z-index: 10001;
 }
 
 .modal-close:hover {
@@ -685,18 +687,19 @@
     }
 
     .modal-close {
-        position: fixed;
-        top: 4.5rem;
-        right: 1rem;
-        width: 44px;
-        height: 44px;
-        font-size: 1.6rem;
+        position: sticky;
+        top: 0.8rem;
+        left: auto;
+        float: right;
+        margin-right: -0.5rem;
+        margin-bottom: -40px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
         background: rgba(10, 10, 10, 0.9);
         border: 1px solid rgba(232, 196, 168, 0.3);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
         color: rgba(255, 255, 255, 0.8);
-        z-index: 10003;
+        z-index: 10001;
     }
 
     .legal-modal.active ~ .mobile-hamburger,
