@@ -6,7 +6,13 @@ import { describe, it, expect } from 'vitest';
  * Tests the live API endpoints for correct behavior.
  * Focus: Method validation, auth checks, CORS, rate-limit headers.
  * These tests are safe — they do NOT create data or make payments.
+ * 
+ * NOTE: These tests call the LIVE API and require network access.
+ * They are skipped in CI (set SKIP_API_TESTS=true or CI=true).
  */
+
+const isCI = process.env.CI === 'true' || process.env.SKIP_API_TESTS === 'true';
+const describeAPI = isCI ? describe.skip : describe;
 
 const BASE_URL = process.env.API_BASE_URL || 'https://www.billionairs.luxury';
 
@@ -23,7 +29,7 @@ async function apiFetch(endpoint, options = {}) {
 }
 
 // ── Stripe Checkout ──
-describe('API: /api/stripe-checkout', () => {
+describeAPI('API: /api/stripe-checkout', () => {
     it('should reject GET requests with 405', async () => {
         const { status } = await apiFetch('stripe-checkout', { method: 'GET' });
         expect(status).toBe(405);
@@ -31,7 +37,7 @@ describe('API: /api/stripe-checkout', () => {
 });
 
 // ── Chat ──
-describe('API: /api/chat', () => {
+describeAPI('API: /api/chat', () => {
     it('should reject unauthenticated GET with 401', async () => {
         const { status } = await apiFetch('chat', { method: 'GET' });
         expect(status).toBe(401);
@@ -48,7 +54,7 @@ describe('API: /api/chat', () => {
 });
 
 // ── Forgot Password ──
-describe('API: /api/forgot-password', () => {
+describeAPI('API: /api/forgot-password', () => {
     it('should reject GET requests with 405', async () => {
         const { status } = await apiFetch('forgot-password', { method: 'GET' });
         expect(status).toBe(405);
@@ -56,7 +62,7 @@ describe('API: /api/forgot-password', () => {
 });
 
 // ── CORS Security ──
-describe('API: CORS headers', () => {
+describeAPI('API: CORS headers', () => {
     it('should respond to OPTIONS on auth endpoint', async () => {
         const { status, headers } = await apiFetch('auth', {
             method: 'OPTIONS',
