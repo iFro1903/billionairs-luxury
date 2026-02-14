@@ -38,40 +38,44 @@ export default async function handler(req) {
         const sql = neon(process.env.DATABASE_URL);
 
         // Get all users with their progress
+        // Use SELECT * to avoid errors from missing columns
         let users = [];
         try {
             users = await sql`
-                SELECT 
-                    email,
-                    name,
-                    full_name,
-                    created_at,
-                    has_paid,
-                    payment_status,
-                    paid_at,
-                    last_seen,
-                    pyramid_unlocked,
-                    eye_unlocked,
-                    chat_unlocked,
-                    chat_ready,
-                    is_blocked
+                SELECT *
                 FROM users
                 ORDER BY created_at DESC
             `;
         } catch (dbError) {
             console.error('Database query error:', dbError);
-            // Return empty data if query fails
             return new Response(JSON.stringify({
                 users: [],
                 total: 0,
                 paid: 0,
                 active: 0,
-                error: 'Database query failed'
+                error: 'Database query failed: ' + dbError.message
             }), {
                 status: 200,
                 headers: { 'Content-Type': 'application/json' }
             });
         }
+
+        // Normalize user data (handle missing columns gracefully)
+        users = users.map(u => ({
+            email: u.email || '',
+            name: u.name || '',
+            full_name: u.full_name || u.name || '',
+            created_at: u.created_at || null,
+            has_paid: u.has_paid || false,
+            payment_status: u.payment_status || 'pending',
+            paid_at: u.paid_at || null,
+            last_seen: u.last_seen || null,
+            pyramid_unlocked: u.pyramid_unlocked || false,
+            eye_unlocked: u.eye_unlocked || false,
+            chat_unlocked: u.chat_unlocked || false,
+            chat_ready: u.chat_ready || false,
+            is_blocked: u.is_blocked || false
+        }));
 
         // Calculate stats
         const total = users.length;
