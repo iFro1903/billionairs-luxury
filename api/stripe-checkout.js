@@ -76,20 +76,19 @@ module.exports = async (req, res) => {
         const existingUser = await client.query('SELECT id, payment_status FROM users WHERE email = $1', [email]);
         
         if (existingUser.rows.length > 0) {
-          // User exists - just update their info and continue to payment
+          // User exists — do NOT overwrite password (prevents account takeover)
           const userId = existingUser.rows[0].id;
           const currentStatus = existingUser.rows[0].payment_status;
           
           console.log(`✅ Existing user attempting payment: ${email} (current status: ${currentStatus})`);
           
-          // Update user info including password (in case they changed anything)
-          const hashedPassword = await hashPassword(password);
+          // Only update non-sensitive profile fields, never the password
           await client.query(
-            'UPDATE users SET password_hash = $1, full_name = COALESCE($2, full_name), phone = COALESCE($3, phone), company = COALESCE($4, company) WHERE id = $5',
-            [hashedPassword, fullName || null, phone || null, company || null, userId]
+            'UPDATE users SET full_name = COALESCE($1, full_name), phone = COALESCE($2, phone), company = COALESCE($3, company) WHERE id = $4',
+            [fullName || null, phone || null, company || null, userId]
           );
           
-          console.log(`✅ Updated existing user: ${email}`);
+          console.log(`✅ Updated existing user profile (password unchanged): ${email}`);
         } else {
           // Create new user with pending payment status
           const hashedPassword = await hashPassword(password);
@@ -114,8 +113,7 @@ module.exports = async (req, res) => {
                 type: 'welcome',
                 to: email,
                 userName: userName,
-                userEmail: email,
-                userPassword: password
+                userEmail: email
               })
             });
             

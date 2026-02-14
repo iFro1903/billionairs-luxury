@@ -58,7 +58,7 @@ async function sendEmail(to, subject, html, skipFooter = false) {
 
 // Email Templates
 const templates = {
-    welcome: (userName, userEmail, userPassword) => ({
+    welcome: (userName, userEmail) => ({
         subject: 'Welcome to BILLIONAIRS - Your Exclusive Access Credentials',
         html: `
 <!DOCTYPE html>
@@ -158,19 +158,19 @@ const templates = {
                                     </td>
                                 </tr>
                                 
-                                <!-- Password Credential -->
+                                <!-- Password Info -->
                                 <tr>
                                     <td style="padding: 15px 35px 30px;">
                                         <table width="100%" cellpadding="0" cellspacing="0">
                                             <tr>
                                                 <td style="padding-bottom: 10px;">
-                                                    <span style="display: inline-block; font-size: 12px; color: rgba(255, 255, 255, 0.6); text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Initial Password</span>
+                                                    <span style="display: inline-block; font-size: 12px; color: rgba(255, 255, 255, 0.6); text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Password</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(232, 180, 184, 0.3); border-radius: 10px; padding: 18px 22px; font-family: 'Courier New', monospace; font-size: 16px; color: #ffffff; letter-spacing: 1px; box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);">
-                                                        <strong style="color: #f7cac9;">${userPassword || '••••••••••'}</strong>
+                                                    <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(232, 180, 184, 0.3); border-radius: 10px; padding: 18px 22px; font-size: 15px; color: rgba(255, 255, 255, 0.85); letter-spacing: 0.5px; box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);">
+                                                        Use the password you chose during registration.
                                                     </div>
                                                 </td>
                                             </tr>
@@ -861,7 +861,7 @@ export default async function handler(req) {
         let template;
         switch (type) {
             case 'welcome':
-                template = templates.welcome(data.userName, data.userEmail, data.userPassword);
+                template = templates.welcome(data.userName, data.userEmail);
                 break;
             case 'password-reset':
                 template = templates['password-reset'](data.userName, data.resetLink);
