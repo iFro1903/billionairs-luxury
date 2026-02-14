@@ -1,66 +1,99 @@
 // Admin API - Get NDA Signature for a specific user
-module.exports = async (req, res) => {
+import { neon } from '@neondatabase/serverless';
+import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
+
+export const config = {
+    runtime: 'edge'
+};
+
+const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
+
+export default async function handler(req) {
     if (req.method !== 'GET') {
-        return res.status(405).json({ success: false, error: 'Method not allowed' });
+        return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+            status: 405,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
+    // Admin authentication
+    const adminEmail = req.headers.get('x-admin-email');
+    const adminPassword = req.headers.get('x-admin-password');
+
+    if (adminEmail !== CEO_EMAIL) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
+    const passwordHash = process.env.ADMIN_PASSWORD_HASH;
+    if (!passwordHash || !(await verifyPassword(adminPassword, passwordHash))) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 
     try {
-        // Admin auth check
-        const adminEmail = req.headers['x-admin-email'];
-        const adminPassword = req.headers['x-admin-password'];
+        const url = new URL(req.url);
+        const email = url.searchParams.get('email');
 
-        if (!adminEmail || !adminPassword) {
-            return res.status(401).json({ success: false, error: 'Unauthorized' });
-        }
-
-        // Verify admin credentials
-        const validEmail = process.env.ADMIN_EMAIL || 'admin@billionairs.luxury';
-        const validPassword = process.env.ADMIN_PASSWORD || '';
-
-        if (adminEmail !== validEmail || adminPassword !== validPassword) {
-            return res.status(403).json({ success: false, error: 'Forbidden' });
-        }
-
-        const email = req.query.email;
         if (!email) {
-            return res.status(400).json({ success: false, error: 'Email parameter required' });
+            return new Response(JSON.stringify({ success: false, error: 'Email parameter required' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
-        const { getPool } = await import('../lib/db.js');
-        const pool = getPool();
+        const sql = neon(process.env.DATABASE_URL);
 
         // Check if nda_signatures table exists
-        const tableCheck = await pool.query(`
-            SELECT EXISTS (
-                SELECT FROM information_schema.tables 
-                WHERE table_name = 'nda_signatures'
-            )
-        `);
+        let tableExists = false;
+        try {
+            const check = await sql`
+                SELECT EXISTS (
+                    SELECT FROM information_schema.tables 
+                    WHERE table_name = 'nda_signatures'
+                )
+            `;
+            tableExists = check[0]?.exists;
+        } catch (e) {
+            tableExists = false;
+        }
 
-        if (!tableCheck.rows[0].exists) {
-            return res.json({ success: true, nda: null, message: 'No NDA signatures table' });
+        if (!tableExists) {
+            return new Response(JSON.stringify({ success: true, nda: null, message: 'No NDA signatures table' }), {
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
         // Get the latest NDA signature for this email
-        const result = await pool.query(
-            `SELECT signature_id, full_name, email, phone, company, 
+        const result = await sql`
+            SELECT signature_id, full_name, email, phone, company, 
                     signature_data, document_ref, ip_address, 
                     agreed_at, created_at
-             FROM nda_signatures 
-             WHERE LOWER(email) = LOWER($1) 
-             ORDER BY created_at DESC 
-             LIMIT 1`,
-            [email]
-        );
+            FROM nda_signatures 
+            WHERE LOWER(email) = LOWER(${email}) 
+            ORDER BY created_at DESC 
+            LIMIT 1
+        `;
 
-        if (result.rows.length === 0) {
-            return res.json({ success: true, nda: null });
+        if (result.length === 0) {
+            return new Response(JSON.stringify({ success: true, nda: null }), {
+                headers: { 'Content-Type': 'application/json' }
+            });
         }
 
-        return res.json({ success: true, nda: result.rows[0] });
+        return new Response(JSON.stringify({ success: true, nda: result[0] }), {
+            headers: { 'Content-Type': 'application/json' }
+        });
 
     } catch (error) {
         console.error('Admin NDA fetch error:', error);
-        return res.status(500).json({ success: false, error: 'Internal server error' });
+        return new Response(JSON.stringify({ success: false, error: 'Internal server error' }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
-};
+}
