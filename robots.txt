@@ -15,17 +15,11 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /assets/uploads/
 Disallow: /reset-password.html
-Disallow: /demo.html
-Disallow: /demo-*.html
-Disallow: /preview-*.html
 Disallow: /auto-login.html
 Disallow: /create-account.html
 Disallow: /payment-cancelled.html
 Disallow: /payment-success.html
-Disallow: /fix-payment-status.html
 Disallow: /ceo-chat-monitor.html
-Disallow: /mobile-tester.html
-Disallow: /email-preview.html
 
 # Sitemap location
 Sitemap: https://billionairs.luxury/sitemap.xml
