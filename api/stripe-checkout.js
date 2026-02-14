@@ -161,7 +161,7 @@ module.exports = async (req, res) => {
       },
       customer_email: customerData?.email || undefined,
       success_url: `https://billionairs.luxury/payment-success.html?session_id={CHECKOUT_SESSION_ID}&email=${encodeURIComponent(customerData?.email || '')}&lang=${userLang}`,
-      cancel_url: `https://billionairs.luxury/?message=Payment cancelled&lang=${userLang}`
+      cancel_url: `https://billionairs.luxury/payment-cancelled.html?lang=${userLang}`
     });
 
     logSuccess('stripe-checkout', 'checkout_session_created', { sessionId: session.id });
