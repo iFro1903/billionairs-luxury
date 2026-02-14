@@ -123,10 +123,22 @@ export default async function handler(req, res) {
             const validLangs = ['en','de','fr','es','it','ru','zh','ja','ar'];
             const userLang = validLangs.includes(language) ? language : 'en';
             
-            await pool.query(
-                'INSERT INTO users (email, password_hash, member_id, payment_status, full_name, preferred_language) VALUES ($1, $2, $3, $4, $5, $6)',
-                [email, hashedPassword, memberId, 'pending', fullName || null, userLang]
-            );
+            try {
+                await pool.query(
+                    'INSERT INTO users (email, password_hash, member_id, payment_status, full_name, preferred_language) VALUES ($1, $2, $3, $4, $5, $6)',
+                    [email, hashedPassword, memberId, 'pending', fullName || null, userLang]
+                );
+            } catch (insertErr) {
+                // Fallback if preferred_language column doesn't exist yet
+                if (insertErr.message && insertErr.message.includes('preferred_language')) {
+                    await pool.query(
+                        'INSERT INTO users (email, password_hash, member_id, payment_status, full_name) VALUES ($1, $2, $3, $4, $5)',
+                        [email, hashedPassword, memberId, 'pending', fullName || null]
+                    );
+                } else {
+                    throw insertErr;
+                }
+            }
 
             
             // Send Welcome Email with credentials
@@ -193,9 +205,14 @@ export default async function handler(req, res) {
             // Update last login + language
             const validLangs2 = ['en','de','fr','es','it','ru','zh','ja','ar'];
             const loginLang = validLangs2.includes(language) ? language : null;
-            if (loginLang) {
-                await pool.query('UPDATE users SET last_seen = CURRENT_TIMESTAMP, preferred_language = $1 WHERE id = $2', [loginLang, user.id]);
-            } else {
+            try {
+                if (loginLang) {
+                    await pool.query('UPDATE users SET last_seen = CURRENT_TIMESTAMP, preferred_language = $1 WHERE id = $2', [loginLang, user.id]);
+                } else {
+                    await pool.query('UPDATE users SET last_seen = CURRENT_TIMESTAMP WHERE id = $1', [user.id]);
+                }
+            } catch (langErr) {
+                // Fallback if preferred_language column doesn't exist yet
                 await pool.query('UPDATE users SET last_seen = CURRENT_TIMESTAMP WHERE id = $1', [user.id]);
             }
 
