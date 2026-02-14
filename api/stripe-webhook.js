@@ -2,6 +2,7 @@
 import Stripe from 'stripe';
 import { neon } from '@neondatabase/serverless';
 import { captureError, captureMessage } from '../lib/sentry.js';
+import { logRequest, logSuccess, logWarn, logError, logTimer } from '../lib/logger.js';
 
 export const config = {
     runtime: 'edge'
@@ -248,7 +249,7 @@ export default async function handler(req) {
         });
 
     } catch (error) {
-        console.error('❌ Webhook handler error:', error);
+        logError('stripe-webhook', error, { eventType: event?.type });
         captureError(error, {
             tags: { 
                 category: 'payment',

@@ -8,6 +8,7 @@ import { hashPassword, verifyPassword } from '../lib/password-hash.js';
 import { getPool } from '../lib/db.js';
 import { getCorsOrigin } from '../lib/cors.js';
 import { generateMemberId } from '../lib/helpers.js';
+import { logRequest, logSuccess, logWarn, logError, logTimer } from '../lib/logger.js';
 
 // Check if hash needs upgrade from SHA-256 to PBKDF2
 function needsHashUpgrade(storedHash) {
@@ -58,6 +59,8 @@ export default async function handler(req, res) {
     }
 
     const { action, email, password, token: bodyToken, firstName, lastName } = req.body;
+    const timer = logTimer('auth_handler');
+    logRequest('auth', req.method, { action, email: email ? email.replace(/(.{2}).*@/, '$1***@') : undefined });
     
     // Read token from HttpOnly cookie (primary) or body (fallback for migration)
     const token = getTokenFromCookie(req) || bodyToken;
@@ -302,16 +305,14 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false, message: 'Invalid action' });
 
     } catch (error) {
-        console.error('Authentication Error:', error);
-        try {
-            
-        } catch (e) {}
+        logError('auth', error, { action: req.body?.action });
         return res.status(500).json({
             success: false,
             message: 'Server error',
             error: 'Internal server error'
         });
     } finally {
+        timer.end({ action: req.body?.action });
         try { await pool.end(); } catch (e) {}
     }
 }

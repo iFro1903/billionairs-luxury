@@ -85,3 +85,49 @@ describe('API: CORS headers', () => {
         }
     });
 });
+
+// ── Health Check (requires deployment — enable after first push) ──
+describe.skip('API: /api/health (enable after deploy)', () => {
+    it('should return 200 and JSON', async () => {
+        const { status, json } = await apiFetch('health', { method: 'GET' });
+        expect(status).toBe(200);
+        expect(json).toBeTruthy();
+        expect(json.status).toBeDefined();
+    });
+
+    it('should include all health checks', async () => {
+        const { json } = await apiFetch('health', { method: 'GET' });
+        expect(json.checks).toBeDefined();
+        expect(json.checks.api).toBeDefined();
+        expect(json.checks.database).toBeDefined();
+        expect(json.checks.timestamp).toBeDefined();
+    });
+
+    it('should have API status ok', async () => {
+        const { json } = await apiFetch('health', { method: 'GET' });
+        expect(json.checks.api.status).toBe('ok');
+    });
+
+    it('should have database status ok', async () => {
+        const { json } = await apiFetch('health', { method: 'GET' });
+        expect(json.checks.database.status).toBe('ok');
+    });
+
+    it('should include latency measurements', async () => {
+        const { json } = await apiFetch('health', { method: 'GET' });
+        expect(typeof json.checks.api.latency).toBe('number');
+        expect(typeof json.checks.database.latency).toBe('number');
+        expect(json.checks.api.latency).toBeGreaterThanOrEqual(0);
+    });
+
+    it('should reject POST requests', async () => {
+        const { status } = await apiFetch('health', { method: 'POST' });
+        expect(status).toBe(405);
+    });
+
+    it('should set no-cache header', async () => {
+        const { headers } = await apiFetch('health', { method: 'GET' });
+        const cacheControl = headers.get('cache-control');
+        expect(cacheControl).toContain('no-cache');
+    });
+});

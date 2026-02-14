@@ -5,6 +5,9 @@ module.exports = async (req, res) => {
   const { getPool } = await import('../lib/db.js');
   const { hashPassword } = await import('../lib/password-hash.js');
   const { generateMemberId } = await import('../lib/helpers.js');
+  const { logRequest, logSuccess, logError, logTimer } = await import('../lib/logger.js');
+  const timer = logTimer('stripe_checkout');
+  logRequest('stripe-checkout', req.method, { email: req.body?.customerData?.email ? req.body.customerData.email.replace(/(.{2}).*@/, '$1***@') : undefined });
 
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, error: 'Method not allowed' });
@@ -161,9 +164,12 @@ module.exports = async (req, res) => {
       cancel_url: `https://billionairs.luxury/?message=Payment cancelled&lang=${userLang}`
     });
 
+    logSuccess('stripe-checkout', 'checkout_session_created', { sessionId: session.id });
+    timer.end();
     res.status(200).json({ success: true, url: session.url });
   } catch (error) {
-    console.error('Stripe error:', error);
+    logError('stripe-checkout', error);
+    timer.end();
     res.status(500).json({ success: false, error: 'Internal server error' });
   }
 };
