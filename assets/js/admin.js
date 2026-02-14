@@ -5,10 +5,26 @@ class AdminPanel {
         this.currentTab = 'users';
         this.users = [];
         this.autoRefreshTimer = null;
+        this._cache = {};          // { key: { data, ts } }
+        this._cacheTTL = 30000;    // 30 Sekunden
         this.init();
     }
 
     // ========== HELPERS ==========
+    debounce(fn, ms = 300) {
+        let timer;
+        return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn.apply(this, args), ms); };
+    }
+
+    _cacheSet(key, data) { this._cache[key] = { data, ts: Date.now() }; }
+    _cacheGet(key) {
+        const entry = this._cache[key];
+        if (!entry) return null;
+        if (Date.now() - entry.ts > this._cacheTTL) { delete this._cache[key]; return null; }
+        return entry.data;
+    }
+    _cacheInvalidate(key) { if (key) delete this._cache[key]; else this._cache = {}; }
+
     escapeHtml(str) {
         if (!str) return '';
         return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
@@ -221,17 +237,20 @@ class AdminPanel {
         const csvBtn = document.getElementById('csvExportBtn');
         if (csvBtn) csvBtn.addEventListener('click', () => this.exportCSV());
 
-        // Refresh button
+        // Refresh button (always force-reload)
         const refBtn = document.getElementById('refreshUsersBtn');
-        if (refBtn) refBtn.addEventListener('click', () => this.loadUsersData());
+        if (refBtn) refBtn.addEventListener('click', () => { this._cacheInvalidate(); this.loadUsersData(); });
 
         // Auto-refresh toggle
         const arToggle = document.getElementById('autoRefreshToggle');
         if (arToggle) arToggle.addEventListener('change', e => this.setAutoRefresh(e.target.checked));
 
-        // User search
+        // User search (debounced)
         const searchInput = document.getElementById('userSearch');
-        if (searchInput) searchInput.addEventListener('input', () => this.filterUsersTable());
+        if (searchInput) {
+            this._debouncedFilter = this.debounce(() => this.filterUsersTable(), 300);
+            searchInput.addEventListener('input', () => this._debouncedFilter());
+        }
 
         // Status filter
         const statusFilter = document.getElementById('userStatusFilter');
@@ -288,11 +307,17 @@ class AdminPanel {
         document.getElementById('sidebar').classList.remove('open');
         document.querySelector('.sidebar-overlay')?.classList.remove('show');
 
-        // Load data
-        if (tab === 'users') this.loadUsersData();
-        if (tab === 'easter-eggs') this.loadUsersData();
-        if (tab === 'chat') this.loadChatData();
-        if (tab === 'payments') this.loadPaymentsData();
+        // Load data (use cache if fresh)
+        if (tab === 'users' || tab === 'easter-eggs') {
+            if (this._cacheGet('users')) { this.renderUsersTable(this.users); this.renderIndividualUserControls(this.users); }
+            else this.loadUsersData();
+        }
+        if (tab === 'chat') {
+            if (!this._cacheGet('chat')) this.loadChatData();
+        }
+        if (tab === 'payments') {
+            if (!this._cacheGet('payments')) this.loadPaymentsData();
+        }
         if (tab === 'stats') { this.loadStatsData(); this.loadEnhancedAnalytics(); }
         if (tab === 'security') this.loadSecurityTab();
         if (tab === 'audit') this.loadAuditTab();
@@ -332,6 +357,7 @@ class AdminPanel {
 
             this.renderUsersTable(this.users);
             this.renderIndividualUserControls(this.users);
+            this._cacheSet('users', true);
         } catch (e) {
             console.error('Error loading users:', e);
         } finally {
@@ -821,7 +847,7 @@ class AdminPanel {
             if (refBtn) {
                 const newBtn = refBtn.cloneNode(true);
                 refBtn.parentNode.replaceChild(newBtn, refBtn);
-                newBtn.addEventListener('click', () => this.loadChatData());
+                newBtn.addEventListener('click', () => { this._cacheInvalidate('chat'); this.loadChatData(); });
             }
 
             // Event delegation for delete buttons
@@ -829,6 +855,7 @@ class AdminPanel {
                 const btn = e.target.closest('[data-action="delete-msg"]');
                 if (btn) this.deleteMessage(parseInt(btn.dataset.id));
             });
+            this._cacheSet('chat', true);
         } catch (e) { console.error('Chat error:', e); } finally { this.hideLoading(document.querySelector('main')); }
     }
 
@@ -877,6 +904,7 @@ class AdminPanel {
             } else {
                 tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#888;">Keine Zahlungen</td></tr>';
             }
+            this._cacheSet('payments', true);
         } catch (e) {
             console.error('Payments error:', e);
             document.getElementById('totalRevenue').textContent = 'CHF 0';
