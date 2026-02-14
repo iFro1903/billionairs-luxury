@@ -5,13 +5,69 @@ export const config = {
 };
 
 // ═══════════════════════════════════════════════════════════
+// SESSION AUTHENTICATION — Verify user is logged in & paid
+// ═══════════════════════════════════════════════════════════
+
+function getSessionToken(req) {
+    const cookieHeader = req.headers.get('cookie') || '';
+    const match = cookieHeader.match(/billionairs_session=([^;]+)/);
+    return match ? match[1] : null;
+}
+
+async function validateSession(sql, token) {
+    if (!token) return null;
+    try {
+        const result = await sql`
+            SELECT s.user_id, u.email, u.full_name, u.has_paid, u.payment_status
+            FROM sessions s
+            JOIN users u ON s.user_id = u.id
+            WHERE s.token = ${token} AND s.expires_at > NOW()
+            LIMIT 1
+        `;
+        return result.length > 0 ? result[0] : null;
+    } catch (e) {
+        console.error('Session validation error:', e);
+        return null;
+    }
+}
+
+async function validateAdminAccess(req, sql) {
+    // Method 1: Check admin secret header (set by admin panel JS)
+    const adminSecret = req.headers.get('x-admin-secret');
+    if (adminSecret && adminSecret === process.env.ADMIN_API_SECRET) {
+        return true;
+    }
+    
+    // Method 2: Check if the session belongs to the CEO email
+    const token = getSessionToken(req);
+    if (token) {
+        const session = await validateSession(sql, token);
+        if (session && session.email && session.email.toLowerCase() === (process.env.CEO_EMAIL || 'furkan_akaslan@hotmail.com').toLowerCase()) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+function authError(message) {
+    return new Response(JSON.stringify({ error: message }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' }
+    });
+}
+
+// ═══════════════════════════════════════════════════════════
 // AES-256-GCM ENCRYPTION — Messages encrypted at rest
 // CEO has transparent access via master key (server-side)
 // ═══════════════════════════════════════════════════════════
 
 async function getEncryptionKey() {
     const encoder = new TextEncoder();
-    const passphrase = process.env.CHAT_ENCRYPTION_KEY || 'BILLIONAIRS_LUXURY_INNER_CIRCLE_E2E_2025';
+    const passphrase = process.env.CHAT_ENCRYPTION_KEY;
+    if (!passphrase) {
+        throw new Error('CHAT_ENCRYPTION_KEY environment variable is not set. Cannot encrypt/decrypt messages.');
+    }
     
     const keyMaterial = await crypto.subtle.importKey(
         'raw',
@@ -143,22 +199,14 @@ export default async function handler(req) {
             const url = new URL(req.url);
             const isCEORequest = url.searchParams.get('ceo') === 'true';
 
-            // CEO request - return all messages (decrypted, with email)
+            // CEO request - requires admin authentication
             if (isCEORequest) {
-                try {
-                    await sql`
-                        CREATE TABLE IF NOT EXISTS chat_messages (
-                            id SERIAL PRIMARY KEY,
-                            username VARCHAR(255) NOT NULL,
-                            message TEXT,
-                            email VARCHAR(255),
-                            file_url TEXT,
-                            file_name VARCHAR(255),
-                            file_type VARCHAR(100),
-                            created_at TIMESTAMP DEFAULT NOW()
-                        )
-                    `;
+                const isAdmin = await validateAdminAccess(req, sql);
+                if (!isAdmin) {
+                    return authError('Admin authentication required for CEO access');
+                }
 
+                try {
                     const messages = await sql`
                         SELECT username, message, created_at, file_url, file_name, file_type, email, id
                         FROM chat_messages
@@ -194,32 +242,24 @@ export default async function handler(req) {
                 }
             }
 
-            // Regular user request
-            const email = url.searchParams.get('email');
-            if (!email) {
-                return new Response(JSON.stringify({ error: 'Email required' }), {
-                    status: 400,
-                    headers: { 'Content-Type': 'application/json' }
-                });
+            // Regular user request — requires valid session
+            const sessionToken = getSessionToken(req);
+            const sessionUser = await validateSession(sql, sessionToken);
+            
+            if (!sessionUser) {
+                return authError('Authentication required. Please log in.');
             }
+            
+            if (!sessionUser.has_paid && sessionUser.payment_status !== 'paid') {
+                return authError('Payment required to access The Inner Circle chat.');
+            }
+
+            const email = sessionUser.email;
 
             // Session start filter — members only see messages from their login time onwards
             const since = url.searchParams.get('since');
 
             try {
-                await sql`
-                    CREATE TABLE IF NOT EXISTS chat_messages (
-                        id SERIAL PRIMARY KEY,
-                        username VARCHAR(255) NOT NULL,
-                        message TEXT,
-                        email VARCHAR(255),
-                        file_url TEXT,
-                        file_name VARCHAR(255),
-                        file_type VARCHAR(100),
-                        created_at TIMESTAMP DEFAULT NOW()
-                    )
-                `;
-
                 let messages;
                 if (since) {
                     messages = await sql`
@@ -268,10 +308,25 @@ export default async function handler(req) {
 
         // POST: Send message (filter + encrypt before storing)
         if (req.method === 'POST') {
-            const body = await req.json();
-            const { email, username, message, fileUrl, fileName, fileType } = body;
+            // Authenticate user via session cookie
+            const postToken = getSessionToken(req);
+            const postUser = await validateSession(sql, postToken);
+            
+            if (!postUser) {
+                return authError('Authentication required. Please log in.');
+            }
+            
+            if (!postUser.has_paid && postUser.payment_status !== 'paid') {
+                return authError('Payment required to access The Inner Circle chat.');
+            }
 
-            if (!email || !username || (!message && !fileUrl)) {
+            const body = await req.json();
+            const { username, message, fileUrl, fileName, fileType } = body;
+            
+            // Use email from validated session, not from request body
+            const email = postUser.email;
+
+            if (!username || (!message && !fileUrl)) {
                 return new Response(JSON.stringify({ error: 'Missing required fields' }), {
                     status: 400,
                     headers: { 'Content-Type': 'application/json' }

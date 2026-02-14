@@ -969,7 +969,6 @@ class LuxuryChat {
 
         try {
             const payload = {
-                email: this.userEmail,
                 username: this.username,
                 message: message || ''
             };
@@ -984,6 +983,7 @@ class LuxuryChat {
             const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify(payload)
             });
 
@@ -1054,7 +1054,9 @@ class LuxuryChat {
     async loadMessages() {
         try {
             const sinceParam = this.sessionStart ? `&since=${encodeURIComponent(this.sessionStart)}` : '';
-            const response = await fetch(`/api/chat?email=${this.userEmail}${sinceParam}`);
+            const response = await fetch(`/api/chat?${sinceParam.replace(/^&/, '')}`, {
+                credentials: 'include'
+            });
             const data = await response.json();
 
             if (data.messages) {

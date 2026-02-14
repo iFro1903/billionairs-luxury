@@ -155,14 +155,49 @@ export default async function handler(req) {
             })
         });
 
+        // Create a server-side session so the CEO also has a valid billionairs_session cookie.
+        // This enables authenticated access to protected APIs (e.g., chat CEO mode).
+        let sessionCookie = '';
+        try {
+            // Find CEO user in users table
+            const userResult = await sql`
+                SELECT id FROM users WHERE LOWER(email) = ${email.toLowerCase()} LIMIT 1
+            `;
+            
+            if (userResult.length > 0) {
+                const userId = userResult[0].id;
+                const sessionToken = crypto.randomUUID() + '-' + crypto.randomUUID();
+                const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+                
+                // Insert session
+                await sql`
+                    INSERT INTO sessions (user_id, token, expires_at)
+                    VALUES (${userId}, ${sessionToken}, ${expiresAt.toISOString()})
+                `;
+                
+                // Build Set-Cookie header
+                const isProduction = req.url.includes('billionairs.luxury') || req.url.includes('vercel.app');
+                sessionCookie = `billionairs_session=${sessionToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${7 * 24 * 60 * 60}${isProduction ? '; Secure' : ''}`;
+            }
+        } catch (sessionErr) {
+            // Non-blocking — admin login still succeeds even if session creation fails
+            console.error('Admin session creation error (non-blocking):', sessionErr);
+        }
+
         // Password is correct, return success
+        const responseHeaders = { 'Content-Type': 'application/json' };
+        if (sessionCookie) {
+            responseHeaders['Set-Cookie'] = sessionCookie;
+        }
+
         return new Response(JSON.stringify({ 
+            success: true,
             email: email.toLowerCase(),
             name: 'CEO',
             twoFactorEnabled
         }), {
             status: 200,
-            headers: { 'Content-Type': 'application/json' }
+            headers: responseHeaders
         });
 
     } catch (error) {

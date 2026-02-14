@@ -889,6 +889,7 @@
                 </div>
             </div>
             <input type="email" id="ceoEmail" class="login-input" placeholder="CEO Email Address">
+            <input type="password" id="ceoPassword" class="login-input" placeholder="Admin Password" style="margin-top: 10px;">
             <button onclick="login()" class="login-btn">Access Monitor</button>
             <div id="loginError" class="error hidden"></div>
         </div>
@@ -1058,17 +1059,32 @@
 
         async function login() {
             const email = document.getElementById('ceoEmail').value.trim();
+            const password = document.getElementById('ceoPassword').value;
             const errorEl = document.getElementById('loginError');
 
-            if (!email) {
-                errorEl.textContent = 'Please enter your email';
+            if (!email || !password) {
+                errorEl.textContent = 'Please enter email and password';
                 errorEl.classList.remove('hidden');
                 return;
             }
 
-            // Verify CEO access
-            if (email !== 'furkan_akaslan@hotmail.com') {
-                errorEl.textContent = 'Unauthorized: CEO access only';
+            // Verify CEO access server-side via admin-auth API
+            try {
+                const authResponse = await fetch('/api/admin-auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const authData = await authResponse.json();
+                
+                if (!authResponse.ok || !authData.success) {
+                    errorEl.textContent = authData.error || 'Authentication failed';
+                    errorEl.classList.remove('hidden');
+                    return;
+                }
+            } catch (authErr) {
+                errorEl.textContent = 'Authentication server error. Please try again.';
                 errorEl.classList.remove('hidden');
                 return;
             }
@@ -1091,7 +1107,9 @@
         async function loadMessages() {
             try {
                 // Use CEO endpoint — gets all messages decrypted with emails visible
-                const response = await fetch('/api/chat?ceo=true');
+                const response = await fetch('/api/chat?ceo=true', {
+                    credentials: 'include'
+                });
                 const data = await response.json();
 
                 if (data.success) {
@@ -1462,9 +1480,12 @@
             }
         });
 
-        // Enter key on email input
+        // Enter key on email and password inputs
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('ceoEmail').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') login();
+            });
+            document.getElementById('ceoPassword').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') login();
             });
         });
