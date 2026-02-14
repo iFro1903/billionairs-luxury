@@ -5,7 +5,8 @@
 
 import { test, expect } from '@playwright/test';
 
-const ADMIN_URL = 'https://www.billionairs.luxury/admin.html';
+// Uses baseURL from playwright.config.js
+const ADMIN_URL = '/admin.html';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@billionairs.luxury';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'AdminPass123!';
 
@@ -425,7 +426,7 @@ test.describe('Broadcast Authentication', () => {
   
   test('should require admin authentication', async ({ page }) => {
     // Try to call API directly without auth
-    const response = await page.goto('https://www.billionairs.luxury/api/admin-broadcast');
+    const response = await page.goto('/api/admin-broadcast');
     
     // Should return 401 or 405 (Method Not Allowed for GET)
     expect(response.status()).toBeGreaterThanOrEqual(400);
@@ -433,7 +434,7 @@ test.describe('Broadcast Authentication', () => {
 
   test('should require valid admin credentials', async ({ page }) => {
     // Try with invalid credentials
-    const response = await page.request.post('https://www.billionairs.luxury/api/admin-broadcast', {
+    const response = await page.request.post('/api/admin-broadcast', {
       headers: {
         'x-admin-email': 'invalid@example.com',
         'x-admin-password': 'wrongpassword'

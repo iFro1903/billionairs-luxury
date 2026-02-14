@@ -5,7 +5,8 @@
 
 import { test, expect } from '@playwright/test';
 
-const BASE_URL = 'https://www.billionairs.luxury';
+// Uses baseURL from playwright.config.js (override with BASE_URL env var)
+const BASE_URL = '';
 
 // Helper function to accept cookie banner
 async function acceptCookies(page) {
@@ -150,7 +151,6 @@ test.describe('Multi-Language Support', () => {
       expect(btnText.toLowerCase()).toContain(lang);
     }
   });
-  });
 
   test('should work on mobile viewport', async ({ page }) => {
     // Set mobile viewport
@@ -225,36 +225,6 @@ test.describe('i18n Edge Cases', () => {
     
     // Switch language
     await selectLanguage(page, 'en');
-    
-    // Verify event was dispatched
-    const eventLanguage = await eventPromise;
-    expect(eventLanguage).toBe('en');
-  });
-});
-    }]);
-    
-    await page.goto(BASE_URL);
-    await page.waitForLoadState('networkidle');
-    
-    // Should fallback to German (default)
-    await expect(page.locator('.hero-content')).toContainText('Willkommen');
-  });
-
-  test('should dispatch languageChanged event', async ({ page }) => {
-    await page.goto(BASE_URL);
-    await page.waitForLoadState('networkidle');
-    
-    // Listen for event
-    const eventPromise = page.evaluate(() => {
-      return new Promise((resolve) => {
-        window.addEventListener('languageChanged', (e) => {
-          resolve(e.detail.language);
-        });
-      });
-    });
-    
-    // Switch language
-    await page.click('button[data-lang="en"]');
     
     // Verify event was dispatched
     const eventLanguage = await eventPromise;

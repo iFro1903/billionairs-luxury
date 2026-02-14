@@ -5,7 +5,8 @@
 
 import { test, expect } from '@playwright/test';
 
-const ADMIN_URL = 'https://www.billionairs.luxury/admin.html';
+// Uses baseURL from playwright.config.js
+const ADMIN_URL = '/admin.html';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@billionairs.luxury';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'AdminPass123!';
 

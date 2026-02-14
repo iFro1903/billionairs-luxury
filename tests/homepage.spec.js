@@ -76,12 +76,6 @@ test.describe('Homepage', () => {
       console.log('Cookie banner auto-hidden or not present');
     }
   });
-    
-    // Cookie sollte gesetzt sein (entweder vom Test oder schon vorher)
-    const cookies = await page.context().cookies();
-    const consentCookie = cookies.find(c => c.name === 'cookie_consent');
-    expect(consentCookie).toBeTruthy();
-  });
 
   test('should have proper meta tags for SEO', async ({ page }) => {
     await page.goto('/');

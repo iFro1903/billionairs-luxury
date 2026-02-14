@@ -10,7 +10,10 @@
     "start": "node stripe-server.js",
     "dev": "nodemon stripe-server.js",
     "start:production": "set NODE_ENV=production && node stripe-server.js",
-    "test": "playwright test",
+    "test": "vitest run && playwright test",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:e2e": "playwright test",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "test:ui": "playwright test --ui",
@@ -40,7 +43,8 @@
     "live-server": "^1.2.2",
     "nodemon": "^3.1.10",
     "terser": "^5.44.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.3",

@@ -6,7 +6,8 @@
 import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 
-const ADMIN_URL = 'https://www.billionairs.luxury/admin.html';
+// Uses baseURL from playwright.config.js
+const ADMIN_URL = '/admin.html';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@billionairs.luxury';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'AdminPass123!';
 
@@ -273,7 +274,7 @@ test.describe('Export Authentication', () => {
   
   test('should require admin authentication', async ({ page }) => {
     // Try to access export API directly without auth
-    const response = await page.goto('https://www.billionairs.luxury/api/admin-export?type=users&format=csv');
+    const response = await page.goto('/api/admin-export?type=users&format=csv');
     
     // Should return 401 Unauthorized
     expect(response.status()).toBe(401);
@@ -288,7 +289,7 @@ test.describe('Export Authentication', () => {
     await page.waitForLoadState('networkidle');
     
     // Try invalid export type
-    const response = await page.goto('https://www.billionairs.luxury/api/admin-export?type=invalid&format=csv');
+    const response = await page.goto('/api/admin-export?type=invalid&format=csv');
     
     // Should return 400 Bad Request
     expect(response.status()).toBe(400);
