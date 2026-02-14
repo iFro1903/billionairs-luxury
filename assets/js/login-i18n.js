@@ -176,8 +176,6 @@ function translateLoginPage() {
     const currentLang = window.i18n?.currentLang || 'en';
     const translations = loginTranslations[currentLang] || loginTranslations['en'];
     
-    console.log('🔄 Translating login page to:', currentLang);
-    
     // Page title
     document.title = translations.page_title;
     
@@ -185,42 +183,36 @@ function translateLoginPage() {
     const loginTitle = document.querySelector('.login-title');
     if (loginTitle) {
         loginTitle.textContent = translations.access_portal;
-        console.log('✓ Title translated to:', translations.access_portal);
     }
     
     // Subtitle
     const loginSubtitle = document.querySelector('.login-subtitle');
     if (loginSubtitle) {
         loginSubtitle.textContent = translations.enter_exclusive;
-        console.log('✓ Subtitle translated to:', translations.enter_exclusive);
     }
     
     // Email label
     const emailLabel = document.querySelector('label[for="loginEmail"]');
     if (emailLabel) {
         emailLabel.textContent = translations.email_label;
-        console.log('✓ Email label translated');
     }
     
     // Password label
     const passwordLabel = document.querySelector('label[for="loginPassword"]');
     if (passwordLabel) {
         passwordLabel.textContent = translations.password_label;
-        console.log('✓ Password label translated');
     }
     
     // Forgot password link
     const forgotLink = document.getElementById('forgotPasswordLink');
     if (forgotLink) {
         forgotLink.textContent = translations.forgot_password;
-        console.log('✓ Forgot password link translated');
     }
     
     // Enter button
     const enterBtn = document.querySelector('.submit-button');
     if (enterBtn && !enterBtn.id) {
         enterBtn.textContent = translations.enter_button;
-        console.log('✓ Enter button translated');
     }
     
     // Reset password modal
@@ -243,10 +235,8 @@ function translateLoginPage() {
     const backLink = document.querySelector('.back-link a');
     if (backLink) {
         backLink.textContent = translations.back_to_home;
-        console.log('✓ Back link translated');
     }
     
-    console.log('✅ Login page fully translated to', currentLang);
 }
 
 // Make function globally accessible
@@ -254,12 +244,10 @@ window.translateLoginPage = translateLoginPage;
 
 // Listen for language changes
 window.addEventListener('languageChanged', (event) => {
-    console.log('🌍 Language changed event received on login page:', event.detail.language);
     setTimeout(translateLoginPage, 50);
 });
 
 window.addEventListener('i18nReady', () => {
-    console.log('🌍 i18n ready event received on login page');
     setTimeout(translateLoginPage, 100);
 });
 

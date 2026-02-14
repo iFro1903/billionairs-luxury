@@ -52,11 +52,6 @@ export default async function handler(req) {
     const body = await req.json();
     const { token, email, newPassword } = body;
 
-    console.log('Reset password request received');
-    console.log('Email:', email);
-    console.log('Token length:', token?.length);
-    console.log('Password length:', newPassword?.length);
-
     if (!token || !email || !newPassword) {
       return new Response(JSON.stringify({ 
         error: 'Token, email and new password are required.' 
@@ -84,9 +79,6 @@ export default async function handler(req) {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const tokenHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
-    console.log('Looking for token hash:', tokenHash);
-    console.log('For email:', email.toLowerCase());
-
     const users = await sql`
       SELECT u.id, u.email, prt.token_hash, prt.expires_at, prt.used
       FROM users u
@@ -95,8 +87,6 @@ export default async function handler(req) {
       AND prt.token_hash = ${tokenHash}
       LIMIT 1
     `;
-
-    console.log('Found users:', users.length);
 
     if (users.length === 0) {
       return new Response(JSON.stringify({ 
@@ -130,16 +120,12 @@ export default async function handler(req) {
     // Hash new password with Web Crypto API
     const passwordHash = await hashPassword(newPassword);
 
-    console.log('Updating password for user:', user.id);
-
     // Update password
     await sql`
       UPDATE users 
       SET password_hash = ${passwordHash}
       WHERE id = ${user.id}
     `;
-
-    console.log('Password updated successfully');
 
     // Mark token as used
     await sql`
@@ -148,8 +134,6 @@ export default async function handler(req) {
       WHERE user_id = ${user.id} 
       AND token_hash = ${tokenHash}
     `;
-
-    console.log('Password reset successful for user:', user.id);
 
     return new Response(JSON.stringify({ 
       success: true,

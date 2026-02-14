@@ -87,8 +87,6 @@ export default async function handler(req) {
             });
         }
 
-        console.log(`✅ Admin updated payment status: ${email} → ${status}`);
-
         return new Response(JSON.stringify({ 
             success: true, 
             message: `Status updated to ${status}`,

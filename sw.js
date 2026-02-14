@@ -28,16 +28,13 @@ const PRECACHE_URLS = [
 
 // Install event - cache core resources
 self.addEventListener('install', (event) => {
-    console.log('[Service Worker] Installing...');
     
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
-                console.log('[Service Worker] Pre-caching core resources');
                 return cache.addAll(PRECACHE_URLS);
             })
             .then(() => {
-                console.log('[Service Worker] Installed successfully');
                 return self.skipWaiting(); // Activate immediately
             })
             .catch((error) => {
@@ -48,7 +45,6 @@ self.addEventListener('install', (event) => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-    console.log('[Service Worker] Activating...');
     
     const currentCaches = [CACHE_NAME, RUNTIME_CACHE, IMAGE_CACHE];
     
@@ -57,13 +53,11 @@ self.addEventListener('activate', (event) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
                     if (!currentCaches.includes(cacheName)) {
-                        console.log('[Service Worker] Deleting old cache:', cacheName);
                         return caches.delete(cacheName);
                     }
                 })
             );
         }).then(() => {
-            console.log('[Service Worker] Activated successfully');
             return self.clients.claim(); // Take control immediately
         })
     );
@@ -159,7 +153,6 @@ self.addEventListener('fetch', (event) => {
 // ============================================================================
 self.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'SKIP_WAITING') {
-        console.log('[Service Worker] Skipping waiting - activating immediately');
         self.skipWaiting();
     }
 });
@@ -173,7 +166,6 @@ self.addEventListener('message', (event) => {
  * Triggers when connection is restored or sync is registered
  */
 self.addEventListener('sync', (event) => {
-    console.log('[Service Worker] Background sync triggered:', event.tag);
     
     switch (event.tag) {
         case 'sync-messages':
@@ -189,7 +181,6 @@ self.addEventListener('sync', (event) => {
             break;
         
         default:
-            console.log('[Service Worker] Unknown sync tag:', event.tag);
     }
 });
 
@@ -200,10 +191,8 @@ self.addEventListener('sync', (event) => {
  */
 async function syncMessages() {
     try {
-        console.log('[Service Worker] Syncing messages...');
         
         const pendingMessages = await getPendingMessages();
-        console.log(`[Service Worker] Found ${pendingMessages.length} pending messages`);
         
         let syncedCount = 0;
         const errors = [];
@@ -221,7 +210,6 @@ async function syncMessages() {
                 if (response.ok) {
                     await removePendingMessage(message.id);
                     syncedCount++;
-                    console.log(`[Service Worker] Message synced: ${message.id}`);
                 } else {
                     errors.push({ id: message.id, status: response.status });
                 }
@@ -230,8 +218,6 @@ async function syncMessages() {
                 errors.push({ id: message.id, error: error.message });
             }
         }
-        
-        console.log(`[Service Worker] Messages sync complete: ${syncedCount}/${pendingMessages.length} synced`);
         
         // Show notification if there were messages synced
         if (syncedCount > 0) {
@@ -256,10 +242,8 @@ async function syncMessages() {
  */
 async function syncPayments() {
     try {
-        console.log('[Service Worker] Syncing payments...');
         
         const pendingPayments = await getPendingPayments();
-        console.log(`[Service Worker] Found ${pendingPayments.length} pending payments`);
         
         let syncedCount = 0;
         const errors = [];
@@ -277,7 +261,6 @@ async function syncPayments() {
                 if (response.ok) {
                     await removePendingPayment(payment.id);
                     syncedCount++;
-                    console.log(`[Service Worker] Payment synced: ${payment.id}`);
                 } else {
                     errors.push({ id: payment.id, status: response.status });
                 }
@@ -286,8 +269,6 @@ async function syncPayments() {
                 errors.push({ id: payment.id, error: error.message });
             }
         }
-        
-        console.log(`[Service Worker] Payments sync complete: ${syncedCount}/${pendingPayments.length} synced`);
         
         if (syncedCount > 0) {
             await self.registration.showNotification('BILLIONAIRS - Payments Synced', {
@@ -311,10 +292,8 @@ async function syncPayments() {
  */
 async function syncActions() {
     try {
-        console.log('[Service Worker] Syncing actions...');
         
         const pendingActions = await getPendingActions();
-        console.log(`[Service Worker] Found ${pendingActions.length} pending actions`);
         
         let syncedCount = 0;
         const errors = [];
@@ -332,7 +311,6 @@ async function syncActions() {
                 if (response.ok) {
                     await removePendingAction(action.id);
                     syncedCount++;
-                    console.log(`[Service Worker] Action synced: ${action.id} (${action.type})`);
                 } else {
                     errors.push({ id: action.id, type: action.type, status: response.status });
                 }
@@ -341,8 +319,6 @@ async function syncActions() {
                 errors.push({ id: action.id, type: action.type, error: error.message });
             }
         }
-        
-        console.log(`[Service Worker] Actions sync complete: ${syncedCount}/${pendingActions.length} synced`);
         
         if (syncedCount > 0) {
             await self.registration.showNotification('BILLIONAIRS - Actions Synced', {
@@ -533,7 +509,6 @@ function openIndexedDB() {
  * Handle incoming Push Notifications
  */
 self.addEventListener('push', (event) => {
-    console.log('[Service Worker] Push notification received');
     
     let notificationData = {
         title: 'BILLIONAIRS',
@@ -589,7 +564,6 @@ self.addEventListener('push', (event) => {
  * Handle notification click
  */
 self.addEventListener('notificationclick', (event) => {
-    console.log('[Service Worker] Notification clicked');
     
     event.notification.close();
 
@@ -628,7 +602,6 @@ self.addEventListener('notificationclick', (event) => {
  * Handle notification close
  */
 self.addEventListener('notificationclose', (event) => {
-    console.log('[Service Worker] Notification closed', event.notification.tag);
     
     // Optional: Send analytics event that notification was dismissed
     // event.waitUntil(
@@ -641,6 +614,4 @@ self.addEventListener('notificationclose', (event) => {
     //     })
     // );
 });
-
-console.log('[Service Worker] Loaded successfully ✓');
 

@@ -43,15 +43,10 @@ module.exports = async (req, res) => {
       });
     }
 
-    console.log(`🔍 Verifying payment for session: ${sessionId}, email: ${email}`);
-
     // Retrieve the session from Stripe with expanded payment_intent
     const session = await stripe.checkout.sessions.retrieve(sessionId, {
       expand: ['payment_intent']
     });
-
-    console.log(`📊 Session status: ${session.payment_status}, customer_email: ${session.customer_details?.email}`);
-    console.log(`📊 Payment intent status: ${session.payment_intent?.status}`);
 
     // Check if payment was successful (check both session and payment_intent)
     const isPaid = session.payment_status === 'paid' || 
@@ -90,8 +85,6 @@ module.exports = async (req, res) => {
 
         await pool.end();
 
-        console.log(`✅ Payment verified and status updated for: ${email}`);
-
         return res.status(200).json({ 
           success: true,
           paymentStatus: 'paid',
@@ -113,7 +106,6 @@ module.exports = async (req, res) => {
       }
 
     } else {
-      console.log(`⚠️ Payment not completed. Status: ${session.payment_status}`);
       
       return res.status(200).json({ 
         success: false,

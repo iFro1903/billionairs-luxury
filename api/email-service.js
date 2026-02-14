@@ -19,7 +19,6 @@ async function sendEmail(to, subject, html, skipFooter = false) {
 
     try {
         // Domain is verified - send emails to actual recipients
-        console.log(`📧 Sending email to: ${to}`);
         
         // Add unsubscribe footer unless explicitly skipped (for transactional emails)
         let finalHtml = html;
@@ -48,7 +47,6 @@ async function sendEmail(to, subject, html, skipFooter = false) {
             return { success: false, error: data.message || 'Failed to send email' };
         }
 
-        console.log('Email sent successfully to:', to, 'ID:', data.id);
         return { success: true, id: data.id };
     } catch (error) {
         console.error('Email sending error:', error);

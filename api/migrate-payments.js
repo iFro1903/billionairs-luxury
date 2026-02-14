@@ -21,7 +21,6 @@ module.exports = async (req, res) => {
     const pool = getPool();
 
     try {
-        console.log('🔄 Starting migration: Add stripe_payment_id to payments table');
 
         // Check if column already exists
         const checkColumn = await pool.query(`
@@ -46,15 +45,11 @@ module.exports = async (req, res) => {
             ADD COLUMN stripe_payment_id VARCHAR(255) UNIQUE
         `);
 
-        console.log('✅ Added stripe_payment_id column');
-
         // Create index for performance
         await pool.query(`
             CREATE INDEX IF NOT EXISTS idx_payments_stripe_id 
             ON payments(stripe_payment_id)
         `);
-
-        console.log('✅ Created index on stripe_payment_id');
 
         await pool.end();
 

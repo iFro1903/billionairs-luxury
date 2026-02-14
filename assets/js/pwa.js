@@ -7,7 +7,6 @@ let isInstalled = false;
 // Check if app is already installed
 if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
     isInstalled = true;
-    console.log('📱 PWA is already installed');
 }
 
 // Register Service Worker
@@ -15,7 +14,6 @@ if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
             .then((registration) => {
-                console.log('✅ Service Worker registered:', registration.scope);
                 
                 // Check for updates every hour
                 setInterval(() => {
@@ -39,7 +37,6 @@ if ('serviceWorker' in navigator) {
 
 // Listen for successful installation
 window.addEventListener('appinstalled', (event) => {
-    console.log('✅ PWA installed successfully', event);
     isInstalled = true;
     
     // Track in analytics
@@ -68,7 +65,6 @@ if (typeof BillionairsAnalytics !== 'undefined') {
 
 // Listen for online/offline events
 window.addEventListener('online', () => {
-    console.log('🌐 Back online');
     
     // Show notification
     if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
@@ -82,7 +78,6 @@ window.addEventListener('online', () => {
 });
 
 window.addEventListener('offline', () => {
-    console.log('📡 Offline mode');
     
     // Show notification
     showToast('⚠ You are offline. Some features may be limited.', 'warning');
@@ -143,5 +138,4 @@ function showToast(message, type = 'info') {
         document.head.appendChild(style);
     }
 }
-
-console.log('📱 PWA initialized');
+

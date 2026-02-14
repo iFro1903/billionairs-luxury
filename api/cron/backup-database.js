@@ -18,7 +18,6 @@ export default async function handler(req) {
     const sql = neon(process.env.DATABASE_URL);
 
     try {
-        console.log('🔄 Starting database backup...');
 
         // Get all critical data counts
         const usersCount = await sql`SELECT COUNT(*) as count FROM users`;
@@ -46,9 +45,6 @@ export default async function handler(req) {
                 NOW()
             )
         `;
-
-        console.log('✅ Backup record created successfully');
-        console.log(`📊 Users: ${usersCount[0].count}, Payments: ${paymentsCount[0].count}, Chats: ${chatCount[0].count}, Audits: ${auditCount[0].count}`);
 
         return new Response(JSON.stringify({
             success: true,

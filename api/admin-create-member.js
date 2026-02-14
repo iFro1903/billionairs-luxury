@@ -97,8 +97,6 @@ export default async function handler(req) {
             )
         `;
 
-        console.log(`✅ CEO created member: ${email} (${memberId}) - Paid: ${markAsPaid}`);
-
         return new Response(JSON.stringify({
             success: true,
             message: `Member ${email} created successfully`,

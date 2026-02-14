@@ -202,8 +202,6 @@ export default async function handler(req, res) {
             );
 
             
-            console.log(`✅ New user registered: ${email} (${memberId}) - ${firstName} ${lastName}`);
-
             // Send Welcome Email with credentials
             try {
                 const userName = `${firstName || ''} ${lastName || ''}`.trim() || email.split('@')[0];
@@ -218,7 +216,6 @@ export default async function handler(req, res) {
                         userPassword: password  // Send plain password for initial email
                     })
                 });
-                console.log(`📧 Premium welcome email sent to ${email} with credentials`);
             } catch (emailError) {
                 console.error('Failed to send welcome email:', emailError);
                 // Don't fail registration if email fails
@@ -261,7 +258,6 @@ export default async function handler(req, res) {
                 try {
                     const upgradedHash = await hashPassword(password);
                     await pool.query('UPDATE users SET password_hash = $1 WHERE id = $2', [upgradedHash, user.id]);
-                    console.log(`🔒 Password hash upgraded to PBKDF2 for user ${user.id}`);
                 } catch (upgradeErr) {
                     console.warn('⚠️ Hash upgrade failed (non-critical):', upgradeErr.message);
                 }
@@ -280,8 +276,6 @@ export default async function handler(req, res) {
             );
 
             
-            console.log(`✅ User logged in: ${email}`);
-
             // Set HttpOnly cookie with session token
             setAuthCookie(res, sessionToken);
 
@@ -371,8 +365,6 @@ export default async function handler(req, res) {
             );
 
             
-            console.log(`💰 Payment confirmed for: ${user.email}`);
-
             return res.status(200).json({
                 success: true,
                 message: 'Payment status updated',

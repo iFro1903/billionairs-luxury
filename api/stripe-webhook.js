@@ -12,10 +12,6 @@ async function sendPaymentConfirmationEmail(email, userName, amount, currency, p
     try {
         const emailApiUrl = 'https://billionairs.luxury/api/email-service';
         
-        console.log(`📧 Attempting to send payment email to: ${email}`);
-        console.log(`📧 Email API URL: ${emailApiUrl}`);
-        console.log(`📧 Payment details: ${amount} ${currency}`);
-
         const emailPayload = {
             to: email,
             type: 'payment',
@@ -27,21 +23,15 @@ async function sendPaymentConfirmationEmail(email, userName, amount, currency, p
             }
         };
         
-        console.log(`📧 Email payload:`, JSON.stringify(emailPayload));
-
         const response = await fetch(emailApiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(emailPayload)
         });
 
-        console.log(`📧 Email API response status: ${response.status}`);
-        
         const result = await response.json();
-        console.log(`📧 Email API response:`, JSON.stringify(result));
         
         if (result.success) {
-            console.log(`✅ Payment confirmation email sent successfully to: ${email}`);
         } else {
             console.error(`❌ Failed to send payment email to ${email}:`, result.error);
         }
@@ -99,11 +89,6 @@ export default async function handler(req) {
             case 'checkout.session.completed': {
                 const session = event.data.object;
                 
-                console.log('✅ Checkout session completed:', session.id);
-                console.log('Customer email:', session.customer_details?.email);
-                console.log('Payment status:', session.payment_status);
-                console.log('Mode:', session.mode);
-                
                 // Handle payment - check multiple conditions for maximum reliability
                 const isPaid = session.payment_status === 'paid' || session.mode === 'payment';
                 
@@ -131,8 +116,6 @@ export default async function handler(req) {
 
                         if (result.length > 0) {
                             const user = result[0];
-                            console.log(`✅ PAYMENT CONFIRMED for: ${user.email} (${user.member_id})`);
-                            console.log(`✅ User ID: ${user.id}, Payment Date: ${new Date().toISOString()}`);
                             
                             // Send payment confirmation email
                             const amount = (session.amount_total / 100).toFixed(2);
@@ -180,14 +163,12 @@ export default async function handler(req) {
                         throw dbError; // Re-throw to trigger Stripe retry
                     }
                 } else {
-                    console.log(`⚠️ Session completed but payment_status is: ${session.payment_status}`);
                 }
                 break;
             }
 
             case 'payment_intent.succeeded': {
                 const paymentIntent = event.data.object;
-                console.log('✅ PaymentIntent succeeded:', paymentIntent.id);
                 
                 const email = paymentIntent.metadata?.email;
                 if (email) {
@@ -204,7 +185,6 @@ export default async function handler(req) {
 
             case 'charge.refunded': {
                 const charge = event.data.object;
-                console.log('💸 Charge refunded:', charge.id);
                 
                 await sql`
                     UPDATE payments
@@ -217,7 +197,6 @@ export default async function handler(req) {
 
             case 'charge.dispute.created': {
                 const dispute = event.data.object;
-                console.log('⚠️ Dispute created:', dispute.id);
                 
                 await sql`
                     INSERT INTO audit_logs (action, user_email, ip, details, timestamp)
@@ -261,7 +240,6 @@ export default async function handler(req) {
             }
 
             default:
-                console.log(`Unhandled event type: ${event.type}`);
         }
 
         return new Response(JSON.stringify({ received: true }), {

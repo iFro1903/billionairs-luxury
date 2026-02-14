@@ -29,13 +29,10 @@ class LanguageSystem {
      * Initialize language system
      */
     init() {
-        console.log('🌍 Language System: Initializing...');
         
         // Load saved language or default to English
         const saved = this.getCookie(this.cookieName);
         this.currentLang = saved && this.languages[saved] ? saved : 'en';
-        
-        console.log(`✅ Language System: Current language is ${this.currentLang}`);
         
         // Wait for DOM to be ready
         if (document.readyState === 'loading') {
@@ -71,7 +68,6 @@ class LanguageSystem {
             e.preventDefault();
             e.stopPropagation();
             dropdown.classList.toggle('show');
-            console.log('🔽 Dropdown toggled');
         });
         
         // Close dropdown when clicking outside
@@ -91,7 +87,6 @@ class LanguageSystem {
             });
         });
         
-        console.log('✅ Language System: UI setup complete');
     }
     
     /**
@@ -120,8 +115,6 @@ class LanguageSystem {
             return;
         }
         
-        console.log(`🔄 Switching language to: ${lang}`);
-        
         this.currentLang = lang;
         this.setCookie(this.cookieName, lang, this.cookieExpiry);
         
@@ -142,7 +135,6 @@ class LanguageSystem {
             await window.i18n.switchLanguage(lang);
         }
         
-        console.log(`✅ Language switched to: ${lang}`);
     }
     
     /**

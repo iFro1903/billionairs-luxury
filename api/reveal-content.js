@@ -213,8 +213,6 @@ export default async function handler(req, res) {
         const language = lang && REVEAL_CONTENT[lang] ? lang : 'en';
         const content = REVEAL_CONTENT[language];
 
-        console.log(`🔓 Reveal content served to ${user.email} (${language})`);
-
         return res.status(200).json({
             success: true,
             title: content.title,

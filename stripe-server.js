@@ -13,9 +13,6 @@ const stripeKey = isProduction
 
 const stripe = require('stripe')(stripeKey);
 
-console.log(`🚀 Starting BILLIONAIRS server in ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'} mode`);
-console.log(`💳 Stripe configured with ${isProduction ? 'LIVE' : 'TEST'} keys`);
-
 // Middleware
 app.use(express.json());
 app.use(express.static('.'));
@@ -49,13 +46,6 @@ app.post('/create-checkout-session', async (req, res) => {
         // Use lower amount for testing, full amount for production
         const testAmount = isProduction ? (amount || 50000000) : 50000000; // 500,000 CHF LIVE
         
-        console.log('Creating millionaire-tier checkout session:', {
-            amount: testAmount,
-            currency: currency || 'chf',
-            paymentType: paymentType || 'full',
-            mode: isProduction ? 'PRODUCTION' : 'TEST'
-        });
-
         // Only use card for testing - it's the most reliable
         let paymentMethods = ['card'];
         
@@ -69,8 +59,6 @@ app.post('/create-checkout-session', async (req, res) => {
         // 2. Manual bank wire transfer (handled separately)
         // 3. Cryptocurrency (BTC/ETH/USDT - handled separately)
         
-        console.log('Available payment methods for 500K CHF:', paymentMethods);
-
         const session = await stripe.checkout.sessions.create({
             mode: mode || 'payment',
             payment_method_types: paymentMethods,
@@ -131,7 +119,6 @@ app.post('/create-checkout-session', async (req, res) => {
             }
         });
 
-        console.log('Millionaire checkout session created:', session.id);
         res.json({ id: session.id, url: session.url });
 
     } catch (error) {
@@ -153,7 +140,7 @@ app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
     try {
         event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
     } catch (err) {
-        console.log(`❌ Webhook signature verification failed:`, err.message);
+        console.warn(`❌ Webhook signature verification failed:`, err.message);
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
@@ -161,9 +148,6 @@ app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
     switch (event.type) {
         case 'checkout.session.completed':
             const session = event.data.object;
-            console.log('✅ Payment successful for session:', session.id);
-            console.log('📧 Customer email:', session.customer_details?.email);
-            console.log('💰 Amount:', session.amount_total / 100, session.currency.toUpperCase());
             
             // TODO: In production:
             // 1. Grant access to the user
@@ -175,14 +159,11 @@ app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
             break;
         case 'payment_intent.succeeded':
             const paymentIntent = event.data.object;
-            console.log('✅ PaymentIntent was successful:', paymentIntent.id);
             break;
         case 'payment_intent.payment_failed':
             const failedIntent = event.data.object;
-            console.log('❌ Payment failed:', failedIntent.id);
             break;
         default:
-            console.log(`ℹ️  Unhandled event type ${event.type}`);
     }
 
     res.json({received: true});
@@ -206,13 +187,4 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`\n🎩 ========================================`);
-    console.log(`   BILLIONAIRS Payment Server`);
-    console.log(`   ========================================`);
-    console.log(`   Environment: ${isProduction ? '🔴 PRODUCTION' : '🟡 DEVELOPMENT'}`);
-    console.log(`   Port: ${PORT}`);
-    console.log(`   URL: ${isProduction ? 'https://billionairs.luxury' : `http://localhost:${PORT}`}`);
-    console.log(`   Health: ${isProduction ? 'https://billionairs.luxury/health' : `http://localhost:${PORT}/health`}`);
-    console.log(`   Stripe: ${isProduction ? 'LIVE MODE ⚡' : 'TEST MODE 🧪'}`);
-    console.log(`========================================\n`);
 });

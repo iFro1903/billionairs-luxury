@@ -91,7 +91,7 @@ export default async function handler(req) {
                 ORDER BY count DESC
             `;
         } catch (e) {
-            console.log('Payments table might not exist');
+            console.warn('Payments table might not exist');
         }
 
         // Daily Revenue (Last 30 days)
@@ -109,7 +109,7 @@ export default async function handler(req) {
                 ORDER BY date DESC
             `;
         } catch (e) {
-            console.log('Payments table might not exist');
+            console.warn('Payments table might not exist');
         }
 
         // Top Paying Customers
@@ -128,7 +128,7 @@ export default async function handler(req) {
                 LIMIT 10
             `;
         } catch (e) {
-            console.log('Payments table might not exist');
+            console.warn('Payments table might not exist');
         }
 
         // Refund Statistics
@@ -143,7 +143,7 @@ export default async function handler(req) {
                 WHERE status = 'succeeded'
             `;
         } catch (e) {
-            console.log('Refunds table might not exist');
+            console.warn('Refunds table might not exist');
         }
 
         // Chat Activity
@@ -157,7 +157,7 @@ export default async function handler(req) {
                 FROM chat_messages
             `;
         } catch (e) {
-            console.log('Chat messages table might not exist');
+            console.warn('Chat messages table might not exist');
         }
 
         // Recent Registrations (Last 7 days)
@@ -169,7 +169,7 @@ export default async function handler(req) {
                 WHERE created_at > NOW() - INTERVAL '7 days'
             `;
         } catch (e) {
-            console.log('Users table might not exist');
+            console.warn('Users table might not exist');
         }
 
         // Active Users (Last 30 days - users with activity)
@@ -181,7 +181,7 @@ export default async function handler(req) {
                 WHERE timestamp > NOW() - INTERVAL '30 days'
             `;
         } catch (e) {
-            console.log('Audit logs table might not exist');
+            console.warn('Audit logs table might not exist');
         }
 
         // 2FA Adoption Rate
@@ -194,7 +194,7 @@ export default async function handler(req) {
                 FROM two_factor_auth
             `;
         } catch (e) {
-            console.log('2FA table might not exist');
+            console.warn('2FA table might not exist');
         }
         const twoFARate = twoFAStats[0].total_count > 0
             ? ((twoFAStats[0].enabled_count / twoFAStats[0].total_count) * 100).toFixed(2)
@@ -227,7 +227,7 @@ export default async function handler(req) {
                 }
             };
         } catch (e) {
-            console.log('System tables might not exist');
+            console.warn('System tables might not exist');
         }
 
         // Push Notifications Stats (if table exists)

@@ -143,8 +143,6 @@ export default async function handler(req) {
             })
         );
 
-        console.log(`Chat push: ${sent} sent, ${failed} failed out of ${subscriptions.length}`);
-
         return new Response(JSON.stringify({ 
             success: true, 
             sent, 

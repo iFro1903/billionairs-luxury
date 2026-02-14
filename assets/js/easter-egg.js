@@ -48,7 +48,6 @@ const EasterEggSystem = {
 
     async trackDailyLogin() {
         try {
-            console.log('📅 Tracking daily login...');
             const response = await fetch('/api/easter-egg', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -59,16 +58,8 @@ const EasterEggSystem = {
             });
 
             const data = await response.json();
-            console.log('📅 Daily login response:', data);
             
             if (data.debug) {
-                console.log('🔍 LOGIN STREAK INFO:');
-                console.log('   Current Time:', data.debug.now);
-                console.log('   Last Login:', data.debug.lastLogin);
-                console.log('   Hours Since:', data.debug.hoursSinceLastLogin);
-                console.log('   Decision:', data.debug.decision);
-                console.log('   Old Streak:', data.debug.currentStreak);
-                console.log('   New Streak:', data.debug.newStreak);
             }
             
             this.status.loginStreak = data.loginStreak;
@@ -155,7 +146,6 @@ const EasterEggSystem = {
             
             // Wait for i18n to be available
             await this.waitForI18n();
-            console.log(`🔺 Opening pyramid with language: ${window.i18n?.currentLang || 'unknown'}`);
             
             const title = this.translate('THE PYRAMID');
             const riddleLines = [
@@ -242,7 +232,6 @@ const EasterEggSystem = {
                 body: JSON.stringify({ email: this.userEmail, action: 'check_status' })
             });
             this.status = await freshResponse.json();
-            console.log('🔄 Fresh status:', JSON.stringify(this.status));
         } catch (e) {
             console.error('Status refresh failed:', e);
         }
@@ -344,7 +333,6 @@ const EasterEggSystem = {
                 }
                 
                 if (value && typeof value === 'string') {
-                    console.log(`🌍 Translating from JSON: "${text}" → "${value}" (lang: ${lang})`);
                     return value;
                 }
             }
@@ -353,7 +341,6 @@ const EasterEggSystem = {
             const textMap = window.i18n.getTextMapForLanguage(lang);
             if (textMap && textMap[text]) {
                 const translated = textMap[text];
-                console.log(`🌍 Translating from textMap: "${text}" → "${translated}" (lang: ${lang})`);
                 return translated;
             }
             
@@ -366,25 +353,19 @@ const EasterEggSystem = {
     },
 
     showChat() {
-        console.log('🎭 showChat called');
-        console.log('LuxuryChat defined:', typeof LuxuryChat !== 'undefined');
-        console.log('Current page:', window.location.pathname);
         
         // Initialize and open luxury chat
         if (typeof LuxuryChat === 'undefined') {
-            console.log('LuxuryChat not loaded, redirecting to timepiece page...');
             // Store that we want to open chat after redirect
             sessionStorage.setItem('openChatOnLoad', 'true');
             window.location.href = '/the-hidden-door.html';
             return;
         }
         
-        console.log('Initializing LuxuryChat...');
         if (!window.luxuryChat) {
             window.luxuryChat = new LuxuryChat();
             window.luxuryChat.init(this.userEmail);
         }
-        console.log('Opening chat with animation...');
         window.luxuryChat.open();
     },
 

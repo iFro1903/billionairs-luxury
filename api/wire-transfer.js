@@ -131,8 +131,6 @@ export default async function handler(req, res) {
                 const userId = existingUser.rows[0].id;
                 const currentStatus = existingUser.rows[0].payment_status;
                 
-                console.log(`✅ Existing user requesting wire transfer: ${email} (current status: ${currentStatus})`);
-                
                 // Split full name into first and last name
                 const nameParts = fullName.trim().split(' ');
                 const firstName = nameParts[0] || '';
@@ -162,7 +160,6 @@ export default async function handler(req, res) {
                 );
 
                 await pool.end();
-                console.log(`✅ New user account created via Wire Transfer: ${email} (${memberId})`);
             }
 
         } catch (dbError) {
@@ -172,14 +169,6 @@ export default async function handler(req, res) {
         }
 
         // Log the wire transfer request (in production, this would go to a database)
-        console.log('🏦 Wire Transfer Request:', {
-            fullName,
-            email,
-            phone,
-            company: company || 'N/A',
-            amount: 'CHF 500\'000.00',
-            timestamp: new Date().toISOString()
-        });
 
         // Bank account details - Furkan Akaslan UBS Switzerland
         const bankDetails = {

@@ -68,7 +68,6 @@ async function sendEmail(to, subject, html) {
             return false;
         }
 
-        console.log('Email sent successfully to:', to);
         return true;
     } catch (error) {
         console.error('Email sending error:', error);
@@ -144,15 +143,6 @@ export default async function handler(req, res) {
         }
 
         // Log the crypto payment request
-        console.log('Crypto Payment Request:', {
-            fullName,
-            email,
-            phone,
-            company: company || 'N/A',
-            cryptocurrency: cryptocurrency.toUpperCase(),
-            amount: 'CHF 500\'000.00',
-            timestamp: new Date().toISOString()
-        });
 
         // Create user account in database
         const pool = getPool();
@@ -165,8 +155,6 @@ export default async function handler(req, res) {
                 // User exists - just update their info and continue to send crypto wallet details
                 const userId = existingUser.rows[0].id;
                 const currentStatus = existingUser.rows[0].payment_status;
-                
-                console.log(`✅ Existing user requesting crypto payment: ${email} (current status: ${currentStatus})`);
                 
                 // Split full name into first and last name
                 const nameParts = fullName.trim().split(' ');
@@ -197,7 +185,6 @@ export default async function handler(req, res) {
                 );
 
                 await pool.end();
-                console.log(`✅ New user account created via Crypto Payment: ${email} (${memberId})`);
             }
 
         } catch (dbError) {

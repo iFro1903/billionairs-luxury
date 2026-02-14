@@ -22,8 +22,6 @@ export default async function handler(req, res) {
     try {
         const { userId, email } = req.body;
 
-        console.log('Generate PDF request:', { userId, email });
-
         if (!email) {
             return res.status(400).json({ error: 'Email is required' });
         }
@@ -51,7 +49,6 @@ export default async function handler(req, res) {
         }
 
         const user = result.rows[0];
-        console.log('User found:', { id: user.id, payment_status: user.payment_status });
 
         if (user.payment_status !== 'paid') {
             return res.status(403).json({ error: 'Payment required' });
@@ -63,7 +60,6 @@ export default async function handler(req, res) {
                 INSERT INTO downloads (user_id, downloaded_at)
                 VALUES (${user.id}, NOW())
             `;
-            console.log('Download logged successfully');
         } catch (logError) {
             console.error('Download logging failed (non-critical):', logError.message);
         }

@@ -261,7 +261,6 @@ export default async function handler(req) {
                     refundId: refundId
                 })
             });
-            console.log(`📧 Refund email sent to ${payment.email}`);
         } catch (emailError) {
             console.error('Failed to send refund email:', emailError);
         }

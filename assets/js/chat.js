@@ -26,7 +26,6 @@ class LuxuryChat {
             this.particleInterval = null;
         }
         this.removeScreenshotProtection();
-        console.log('🧹 Chat: Intervals cleared');
     }
 
     init(userEmail) {
@@ -171,7 +170,6 @@ class LuxuryChat {
                     userVisibleOnly: true,
                     applicationServerKey: applicationServerKey
                 });
-                console.log('New push subscription created');
             }
             
             // Send subscription to server with email
@@ -190,7 +188,6 @@ class LuxuryChat {
                 })
             });
             
-            console.log('Push subscription saved to server');
         } catch (e) {
             console.warn('Push subscribe error:', e);
         }
@@ -1017,15 +1014,11 @@ class LuxuryChat {
             const formData = new FormData();
             formData.append('file', file);
 
-            console.log('Uploading file via server...');
-            
             const response = await fetch('/api/upload-file', {
                 method: 'POST',
                 body: formData
             });
 
-            console.log('Upload response status:', response.status);
-            
             if (response.ok) {
                 const data = await response.json();
                 

@@ -52,8 +52,6 @@ export default async function handler(req) {
 
         const user = result[0];
 
-        console.log(`✅ Payment status updated for: ${user.email} to ${user.payment_status}`);
-
         return new Response(JSON.stringify({ 
             success: true, 
             message: 'Payment status updated',

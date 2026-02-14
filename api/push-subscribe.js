@@ -79,8 +79,6 @@ export default async function handler(req) {
                 subscribed_at = CURRENT_TIMESTAMP
         `;
 
-        console.log('✅ Push subscription saved:', subscription.endpoint.substring(0, 50) + '...');
-
         return new Response(JSON.stringify({ 
             success: true,
             message: 'Subscription saved successfully'

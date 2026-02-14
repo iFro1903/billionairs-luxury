@@ -62,25 +62,23 @@ module.exports = async (req, res) => {
         try {
             await client.query('DELETE FROM sessions WHERE user_id = $1', [userId]);
         } catch (e) {
-            console.log('Sessions delete skipped:', e.message);
+            console.warn('Sessions delete skipped:', e.message);
         }
         
         try {
             await client.query('DELETE FROM payments WHERE user_id = $1', [userId]);
         } catch (e) {
-            console.log('Payments delete skipped:', e.message);
+            console.warn('Payments delete skipped:', e.message);
         }
         
         try {
             await client.query('DELETE FROM chat_messages WHERE user_id = $1', [userId]);
         } catch (e) {
-            console.log('Chat messages delete skipped:', e.message);
+            console.warn('Chat messages delete skipped:', e.message);
         }
         
         // Delete the user
         await client.query('DELETE FROM users WHERE email = $1', [email]);
-
-        console.log(`✅ User deleted: ${email} (ID: ${userId})`);
 
         res.status(200).json({
             success: true,

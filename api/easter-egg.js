@@ -59,7 +59,6 @@ export default async function handler(req) {
       );
     }
     const user = users[0];
-    console.log('User found:', email, 'Action:', action);
 
     switch (action) {
       // ===== CHECK STATUS =====
@@ -163,7 +162,6 @@ What lies beyond eternity.`;
               eggDescription: 'You have discovered the hidden pyramid. A riddle awaits those who dare to look beyond the surface.'
             })
           });
-          console.log(`📧 Pyramid unlock email sent to ${email}`);
         } catch (emailError) {
           console.error('Failed to send pyramid email:', emailError);
         }
@@ -207,7 +205,6 @@ What lies beyond eternity.`;
         }
 
         debugInfo.newStreak = newStreak;
-        console.log('🔢 LOGIN STREAK DEBUG:', JSON.stringify(debugInfo, null, 2));
 
         await sql`
           UPDATE users 
@@ -268,7 +265,6 @@ The final door will open.`;
               eggDescription: 'The eye has opened. You see what others cannot. When the next sun rises and falls, the final door reveals itself.'
             })
           });
-          console.log(`📧 Eye unlock email sent to ${email}`);
         } catch (emailError) {
           console.error('Failed to send eye email:', emailError);
         }
@@ -315,7 +311,6 @@ The final door will open.`;
               eggDescription: 'The day has passed. The final door opens. You are now among the elite few who have unlocked the complete experience. Welcome to the inner circle.'
             })
           });
-          console.log(`📧 Chat unlock email sent to ${email}`);
         } catch (emailError) {
           console.error('Failed to send chat email:', emailError);
         }

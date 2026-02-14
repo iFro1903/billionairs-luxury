@@ -91,15 +91,12 @@ module.exports = async (req, res) => {
           const userId = existingUser.rows[0].id;
           const currentStatus = existingUser.rows[0].payment_status;
           
-          console.log(`✅ Existing user attempting payment: ${email} (current status: ${currentStatus})`);
-          
           // Only update non-sensitive profile fields, never the password
           await client.query(
             'UPDATE users SET full_name = COALESCE($1, full_name), phone = COALESCE($2, phone), company = COALESCE($3, company) WHERE id = $4',
             [fullName || null, phone || null, company || null, userId]
           );
           
-          console.log(`✅ Updated existing user profile (password unchanged): ${email}`);
         } else {
           // Create new user with pending payment status
           const hashedPassword = await hashPassword(password);
@@ -110,8 +107,6 @@ module.exports = async (req, res) => {
             [email, hashedPassword, memberId, 'pending', fullName || null, phone || null, company || null]
           );
 
-          console.log(`✅ New user account created via Stripe Checkout: ${email} (${memberId}) - ${fullName} - ID: ${insertResult.rows[0].id}`);
-          
           // Send welcome email with credentials
           try {
             const userName = fullName || email.split('@')[0];
@@ -129,7 +124,6 @@ module.exports = async (req, res) => {
             });
             
             if (emailResponse.ok) {
-              console.log(`📧 Premium welcome email sent to ${email} with credentials`);
             } else {
               console.error(`❌ Email sending failed: ${emailResponse.status}`);
             }

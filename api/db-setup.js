@@ -91,9 +91,8 @@ export default async function handler(req, res) {
             await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS full_name VARCHAR(255)`);
             await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS phone VARCHAR(50)`);
             await pool.query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS company VARCHAR(255)`);
-            console.log('✅ Added new columns to users table (if not exists)');
         } catch (migrationError) {
-            console.log('⚠️ Column migration skipped (might already exist):', migrationError.message);
+            console.warn('⚠️ Column migration skipped (might already exist):', migrationError.message);
         }
 
         // Create password_reset_tokens table
@@ -120,14 +119,11 @@ export default async function handler(req, res) {
                 ON password_reset_tokens(expires_at)
             `);
             
-            console.log('✅ Created password_reset_tokens table');
         } catch (resetError) {
-            console.log('⚠️ Password reset table skipped:', resetError.message);
+            console.warn('⚠️ Password reset table skipped:', resetError.message);
         }
 
         await pool.end();
-
-        console.log('✅ Database tables created successfully!');
 
         return res.status(200).json({
             success: true,

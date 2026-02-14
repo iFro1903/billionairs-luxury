@@ -75,7 +75,6 @@ module.exports = async (req, res) => {
         // If user comes from Stripe checkout (has sessionId), mark as paid
         // Stripe only redirects to success_url if payment was successful
         if (sessionId && user.payment_status !== 'paid') {
-            console.log(`✅ Auto-updating payment status to 'paid' for ${email} after successful Stripe checkout`);
             
             await client.query(
                 'UPDATE users SET payment_status = $1, has_paid = $2, payment_method = $3 WHERE id = $4',

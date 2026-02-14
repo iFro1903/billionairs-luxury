@@ -168,8 +168,6 @@ export default async function handler(req) {
         const successful = results.filter(r => r.status === 'fulfilled' && r.value.success).length;
         const failed = results.length - successful;
 
-        console.log(`📤 Push notifications sent: ${successful} successful, ${failed} failed`);
-
         return new Response(JSON.stringify({ 
             success: true,
             sent: successful,

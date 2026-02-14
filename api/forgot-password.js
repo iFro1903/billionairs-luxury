@@ -103,7 +103,6 @@ export default async function handler(req) {
       if (!emailResponse.ok) {
         console.error('Email service error:', await emailResponse.text());
       } else {
-        console.log('Password reset email sent successfully');
       }
     } catch (emailError) {
       console.error('Email sending failed:', emailError.message);

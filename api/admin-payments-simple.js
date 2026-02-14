@@ -56,7 +56,7 @@ export default async function handler(req) {
                 ORDER BY created_at DESC
             `;
         } catch (e) {
-            console.log('Users table error:', e.message);
+            console.warn('Users table error:', e.message);
         }
 
         // Calculate stats

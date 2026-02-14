@@ -33,8 +33,6 @@ export default async function handler(req, res) {
 
     const deletedCount = result.length;
 
-    console.log(`[Chat Cleanup] Deleted ${deletedCount} old messages`);
-
     return res.status(200).json({
       success: true,
       deletedCount,

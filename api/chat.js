@@ -450,7 +450,6 @@ async function triggerChatPushNotifications(requestUrl, senderUsername, messageT
         
         if (response.ok) {
             const data = await response.json();
-            console.log(`Chat push: ${data.sent || 0} notifications sent`);
         }
     } catch (err) {
         console.error('triggerChatPushNotifications error:', err);

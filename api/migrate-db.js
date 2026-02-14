@@ -27,15 +27,11 @@ module.exports = async (req, res) => {
             ADD COLUMN IF NOT EXISTS member_id VARCHAR(100) UNIQUE
         `);
 
-        console.log('✅ member_id column added or already exists');
-
         // Create index for better performance
         await client.query(`
             CREATE INDEX IF NOT EXISTS idx_users_member_id 
             ON users(member_id)
         `);
-
-        console.log('✅ Index created or already exists');
 
         // Verify the column exists now
         const columnsResult = await client.query(`

@@ -129,8 +129,6 @@ module.exports = async (req, res) => {
             return res.status(500).json({ error: data.message || 'Email senden fehlgeschlagen' });
         }
 
-        console.log(`📧 CEO email sent to ${to}, ID: ${data.id}`);
-
         // Audit log
         try {
             const client = await pool.connect();
