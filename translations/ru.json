@@ -86,7 +86,8 @@
     "crypto_private": "Конфиденциально:",
     "crypto_private_desc": "Максимальная конфиденциальность",
     "crypto_how_it_works_label": "Как это работает:",
-    "crypto_how_it_works_text": "Заполните свои данные выше, нажмите \"ПЕРЕЙТИ К ОПЛАТЕ\" и выберите предпочитаемую криптовалюту (Bitcoin, Ethereum или USDT)."
+    "crypto_how_it_works_text": "Заполните свои данные выше, нажмите \"ПЕРЕЙТИ К ОПЛАТЕ\" и выберите предпочитаемую криптовалюту (Bitcoin, Ethereum или USDT).",
+    "terms_consent": "Я подтверждаю, что прочитал(а) и принимаю <a href='#' class='legal-consent-link' id='termsConsentLink'>Условия предоставления услуг</a>, <a href='#' class='legal-consent-link' id='privacyConsentLink'>Политику конфиденциальности</a> и <a href='#' class='legal-consent-link' id='refundConsentLink'>Политику возврата</a>. Я понимаю, что это обязывающее обязательство на сумму CHF 500 000, и что все транзакции являются окончательными и невозвратными. Я достиг(ла) совершеннолетия и действую от своего имени и по собственной воле."
   },
   "timepiece": {
     "title": "Хронометр",

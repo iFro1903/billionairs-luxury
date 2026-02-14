@@ -141,7 +141,8 @@
     "crypto_private": "Privat:",
     "crypto_private_desc": "Maximale Diskretion",
     "crypto_how_it_works_label": "So funktioniert es:",
-    "crypto_how_it_works_text": "Füllen Sie Ihre Angaben oben aus, klicken Sie auf \"ZUR ZAHLUNG\", und wählen Sie Ihre bevorzugte Kryptowährung (Bitcoin, Ethereum oder USDT)."
+    "crypto_how_it_works_text": "Füllen Sie Ihre Angaben oben aus, klicken Sie auf \"ZUR ZAHLUNG\", und wählen Sie Ihre bevorzugte Kryptowährung (Bitcoin, Ethereum oder USDT).",
+    "terms_consent": "Ich bestätige, dass ich die <a href='#' class='legal-consent-link' id='termsConsentLink'>Allgemeinen Geschäftsbedingungen</a>, die <a href='#' class='legal-consent-link' id='privacyConsentLink'>Datenschutzerklärung</a> und die <a href='#' class='legal-consent-link' id='refundConsentLink'>Rückerstattungsrichtlinie</a> gelesen und akzeptiert habe. Ich verstehe, dass dies eine verbindliche Verpflichtung über CHF 500'000 ist und dass alle Transaktionen endgültig und nicht erstattungsfähig sind. Ich bin volljährig und handle in meinem eigenen Namen und aus freiem Willen."
   },
   "chat": {
     "title": "Support Chat",

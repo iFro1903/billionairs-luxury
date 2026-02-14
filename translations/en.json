@@ -141,7 +141,8 @@
     "crypto_private": "Private:",
     "crypto_private_desc": "Maximum discretion",
     "crypto_how_it_works_label": "How it works:",
-    "crypto_how_it_works_text": "Fill in your details above, click \"PROCEED TO PAYMENT\", and select your preferred cryptocurrency (Bitcoin, Ethereum, or USDT)."
+    "crypto_how_it_works_text": "Fill in your details above, click \"PROCEED TO PAYMENT\", and select your preferred cryptocurrency (Bitcoin, Ethereum, or USDT).",
+    "terms_consent": "I confirm that I have read and accept the <a href='#' class='legal-consent-link' id='termsConsentLink'>Terms of Service</a>, <a href='#' class='legal-consent-link' id='privacyConsentLink'>Privacy Policy</a>, and <a href='#' class='legal-consent-link' id='refundConsentLink'>Refund Policy</a>. I understand that this is a binding commitment of CHF 500,000 and that all transactions are final and non-refundable. I am of legal age and acting on my own behalf and free will."
   },
   "chat": {
     "title": "Support Chat",

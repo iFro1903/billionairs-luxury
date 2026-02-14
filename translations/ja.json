@@ -86,7 +86,8 @@
     "crypto_private": "プライベート：",
     "crypto_private_desc": "最大限の機密保持",
     "crypto_how_it_works_label": "使い方：",
-    "crypto_how_it_works_text": "上記の詳細を入力し、「支払いへ進む」をクリックし、お好みの暗号資産（Bitcoin、Ethereum、またはUSDT）を選択してください。"
+    "crypto_how_it_works_text": "上記の詳細を入力し、「支払いへ進む」をクリックし、お好みの暗号資産（Bitcoin、Ethereum、またはUSDT）を選択してください。",
+    "terms_consent": "<a href='#' class='legal-consent-link' id='termsConsentLink'>利用規約</a>、<a href='#' class='legal-consent-link' id='privacyConsentLink'>プライバシーポリシー</a>、および<a href='#' class='legal-consent-link' id='refundConsentLink'>返金ポリシー</a>を読み、同意したことを確認します。これはCHF 500,000の拘束力のある約束であり、すべての取引は最終的であり返金不可であることを理解しています。私は成人であり、自らの名義で自由意志に基づき行動しています。"
   },
   "timepiece": {
     "title": "時計",

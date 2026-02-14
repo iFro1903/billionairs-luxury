@@ -86,7 +86,8 @@
     "crypto_private": "隐私：",
     "crypto_private_desc": "最大程度的隐私性",
     "crypto_how_it_works_label": "如何操作：",
-    "crypto_how_it_works_text": "填写上方的详细信息，点击“继续支付”，并选择您首选的加密货币（比特币、以太坊或USDT）。"
+    "crypto_how_it_works_text": "填写上方的详细信息，点击“继续支付”，并选择您首选的加密货币（比特币、以太坊或USDT）。",
+    "terms_consent": "我确认已阅读并接受<a href='#' class='legal-consent-link' id='termsConsentLink'>服务条款</a>、<a href='#' class='legal-consent-link' id='privacyConsentLink'>隐私政策</a>和<a href='#' class='legal-consent-link' id='refundConsentLink'>退款政策</a>。我理解这是一项具有约束力的 CHF 500,000 承诺，所有交易均为最终交易且不可退款。我已达到法定年龄，以本人名义自愿行事。"
   },
   "timepiece": {
     "title": "时计",

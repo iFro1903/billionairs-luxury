@@ -101,7 +101,8 @@
     "crypto_private": "Privado:",
     "crypto_private_desc": "Máxima discreción",
     "crypto_how_it_works_label": "Cómo funciona:",
-    "crypto_how_it_works_text": "Complete sus datos arriba, haga clic en \"PROCEDER AL PAGO\", y seleccione su criptomoneda preferida (Bitcoin, Ethereum o USDT)."
+    "crypto_how_it_works_text": "Complete sus datos arriba, haga clic en \"PROCEDER AL PAGO\", y seleccione su criptomoneda preferida (Bitcoin, Ethereum o USDT).",
+    "terms_consent": "Confirmo que he leído y acepto los <a href='#' class='legal-consent-link' id='termsConsentLink'>Términos de Servicio</a>, la <a href='#' class='legal-consent-link' id='privacyConsentLink'>Política de Privacidad</a> y la <a href='#' class='legal-consent-link' id='refundConsentLink'>Política de Reembolso</a>. Entiendo que este es un compromiso vinculante de CHF 500.000 y que todas las transacciones son definitivas y no reembolsables. Soy mayor de edad y actúo en mi propio nombre y por voluntad propia."
   },
   "timepiece": {
     "title": "La Pieza del Tiempo",

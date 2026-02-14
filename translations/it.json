@@ -101,7 +101,8 @@
     "crypto_private": "Privato:",
     "crypto_private_desc": "Massima discrezione",
     "crypto_how_it_works_label": "Come funziona:",
-    "crypto_how_it_works_text": "Compila i tuoi dati sopra, clicca su \"PROCEDI AL PAGAMENTO\", e seleziona la tua criptovaluta preferita (Bitcoin, Ethereum o USDT)."
+    "crypto_how_it_works_text": "Compila i tuoi dati sopra, clicca su \"PROCEDI AL PAGAMENTO\", e seleziona la tua criptovaluta preferita (Bitcoin, Ethereum o USDT).",
+    "terms_consent": "Confermo di aver letto e accettato i <a href='#' class='legal-consent-link' id='termsConsentLink'>Termini di Servizio</a>, l'<a href='#' class='legal-consent-link' id='privacyConsentLink'>Informativa sulla Privacy</a> e la <a href='#' class='legal-consent-link' id='refundConsentLink'>Politica di Rimborso</a>. Comprendo che si tratta di un impegno vincolante di CHF 500.000 e che tutte le transazioni sono definitive e non rimborsabili. Sono maggiorenne e agisco a mio nome e di mia spontanea volontà."
   },
   "timepiece": {
     "title": "Il Segnatempo",

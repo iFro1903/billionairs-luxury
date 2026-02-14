@@ -86,7 +86,8 @@
     "crypto_private": "خاص:",
     "crypto_private_desc": "سرية قصوى",
     "crypto_how_it_works_label": "كيف يعمل:",
-    "crypto_how_it_works_text": "املأ بياناتك أعلاه، انقر على \"متابعة إلى الدفع\"، واختر العملة المشفرة المفضلة (Bitcoin، Ethereum، أو USDT)."
+    "crypto_how_it_works_text": "املأ بياناتك أعلاه، انقر على \"متابعة إلى الدفع\"، واختر العملة المشفرة المفضلة (Bitcoin، Ethereum، أو USDT).",
+    "terms_consent": "أؤكد أنني قرأت ووافقت على <a href='#' class='legal-consent-link' id='termsConsentLink'>شروط الخدمة</a> و<a href='#' class='legal-consent-link' id='privacyConsentLink'>سياسة الخصوصية</a> و<a href='#' class='legal-consent-link' id='refundConsentLink'>سياسة الاسترداد</a>. أفهم أن هذا التزام ملزم بمبلغ 500,000 فرنك سويسري وأن جميع المعاملات نهائية وغير قابلة للاسترداد. أنا بالغ قانونياً وأتصرف باسمي وبإرادتي الحرة."
   },
   "timepiece": {
     "title": "قطعة الوقت",

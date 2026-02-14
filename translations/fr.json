@@ -101,7 +101,8 @@
     "crypto_private": "Privé:",
     "crypto_private_desc": "Discrétion maximale",
     "crypto_how_it_works_label": "Comment ça marche:",
-    "crypto_how_it_works_text": "Remplissez vos coordonnées ci-dessus, cliquez sur \"PROCÉDER AU PAIEMENT\", et sélectionnez votre cryptomonnaie préférée (Bitcoin, Ethereum ou USDT)."
+    "crypto_how_it_works_text": "Remplissez vos coordonnées ci-dessus, cliquez sur \"PROCÉDER AU PAIEMENT\", et sélectionnez votre cryptomonnaie préférée (Bitcoin, Ethereum ou USDT).",
+    "terms_consent": "Je confirme avoir lu et accepté les <a href='#' class='legal-consent-link' id='termsConsentLink'>Conditions Générales</a>, la <a href='#' class='legal-consent-link' id='privacyConsentLink'>Politique de Confidentialité</a> et la <a href='#' class='legal-consent-link' id='refundConsentLink'>Politique de Remboursement</a>. Je comprends qu'il s'agit d'un engagement contraignant de CHF 500 000 et que toutes les transactions sont définitives et non remboursables. Je suis majeur(e) et agis en mon propre nom et de mon plein gré."
   },
   "timepiece": {
     "title": "La Pièce d'Horlogerie",

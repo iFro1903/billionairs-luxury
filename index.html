@@ -895,7 +895,23 @@
                             </div>
                         </div>
 
-                        <button type="button" class="payment-button" id="stripeCheckoutButton" onclick="handleStripeCheckout()">
+                        <!-- Legal Consent Checkbox (Required) -->
+                        <div class="legal-consent-container" id="legalConsentContainer">
+                            <label class="legal-consent-label" for="termsCheckbox">
+                                <input type="checkbox" id="termsCheckbox" class="legal-consent-checkbox" required>
+                                <span class="legal-consent-checkmark"></span>
+                                <span class="legal-consent-text" data-i18n-html="payment.terms_consent">
+                                    I confirm that I have read and accept the 
+                                    <a href="#" class="legal-consent-link" id="termsConsentLink">Terms of Service</a>, 
+                                    <a href="#" class="legal-consent-link" id="privacyConsentLink">Privacy Policy</a>, and 
+                                    <a href="#" class="legal-consent-link" id="refundConsentLink">Refund Policy</a>. 
+                                    I understand that this is a binding commitment of CHF 500,000 and that all transactions are final and non-refundable. 
+                                    I am of legal age and acting on my own behalf and free will.
+                                </span>
+                            </label>
+                        </div>
+
+                        <button type="button" class="payment-button payment-button-disabled" id="stripeCheckoutButton" onclick="handleStripeCheckout()" disabled>
                             <span class="button-text" data-i18n="payment.secure_payment">SECURE PAYMENT</span>
                         </button>
 
@@ -1256,6 +1272,52 @@
         }, 2000);
     });
     
+    // ── Terms Checkbox → Payment Button Toggle ──
+    document.addEventListener('DOMContentLoaded', function() {
+        const termsCheckbox = document.getElementById('termsCheckbox');
+        const paymentButton = document.getElementById('stripeCheckoutButton');
+        
+        if (termsCheckbox && paymentButton) {
+            termsCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    paymentButton.disabled = false;
+                    paymentButton.classList.remove('payment-button-disabled');
+                } else {
+                    paymentButton.disabled = true;
+                    paymentButton.classList.add('payment-button-disabled');
+                }
+            });
+        }
+        
+        // Wire consent links to modals
+        const termsConsentLink = document.getElementById('termsConsentLink');
+        const privacyConsentLink = document.getElementById('privacyConsentLink');
+        const refundConsentLink = document.getElementById('refundConsentLink');
+        
+        if (termsConsentLink) {
+            termsConsentLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const modal = document.getElementById('termsModal');
+                if (modal) modal.classList.add('active');
+            });
+        }
+        if (privacyConsentLink) {
+            privacyConsentLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const modal = document.getElementById('privacyModal');
+                if (modal) modal.classList.add('active');
+            });
+        }
+        if (refundConsentLink) {
+            refundConsentLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Refund info is in FAQ #8 and Terms modal — open Terms
+                const modal = document.getElementById('termsModal');
+                if (modal) modal.classList.add('active');
+            });
+        }
+    });
+    
     // ── Toast i18n helper ──
     function toastT(key, params) {
         if (window.i18n && typeof window.i18n.t === 'function') {
@@ -1313,6 +1375,18 @@
     };
 
     window.handleStripeCheckout = function() {
+        // Check Terms & Conditions consent
+        const termsCheckbox = document.getElementById('termsCheckbox');
+        if (!termsCheckbox || !termsCheckbox.checked) {
+            showPaymentToast(toastT('acceptTermsFirst') || 'Please accept the Terms of Service and Privacy Policy before proceeding.', 'warning');
+            const container = document.getElementById('legalConsentContainer');
+            if (container) {
+                container.classList.add('legal-consent-shake');
+                setTimeout(() => container.classList.remove('legal-consent-shake'), 600);
+            }
+            return;
+        }
+
         // Get selected payment method - check for both 'active' and 'selected' class
         const selectedMethod = document.querySelector('.payment-method.active, .payment-method.selected');
         if (!selectedMethod) {
