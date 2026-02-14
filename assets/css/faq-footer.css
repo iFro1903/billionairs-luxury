@@ -691,8 +691,8 @@
 
     .modal-close {
         position: fixed;
-        top: 0.8rem;
-        right: 0.8rem;
+        top: 5rem;
+        right: 1rem;
         float: none;
         left: auto;
         margin-right: 0;
