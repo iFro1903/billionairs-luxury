@@ -470,6 +470,9 @@ class AdminPanel {
         const user = this.users.find(u => u.email === email);
         if (!user) { this.toast('User nicht gefunden', 'error'); return; }
 
+        // Store current user for PDF language detection
+        this._currentUser = user;
+
         const modal = document.getElementById('memberModal');
         const title = document.getElementById('modalTitle');
         const body = document.getElementById('modalBody');
@@ -618,6 +621,25 @@ class AdminPanel {
         const ipAddr = this.escapeHtml(nda.ip_address || 'N/A');
         const sigData = nda.signature_data || '';
 
+        // Format date for EES badge (DD.MM.YYYY)
+        const eesDate = nda.agreed_at ? new Date(nda.agreed_at).toLocaleDateString('de-CH', { day: '2-digit', month: '2-digit', year: 'numeric' }) : 'N/A';
+
+        // EES signing text in member's language
+        const eesTranslations = {
+            en: 'EES - Signed via billionairs.luxury',
+            de: 'EES - Signiert \u00fcber billionairs.luxury',
+            fr: 'EES - Sign\u00e9 via billionairs.luxury',
+            es: 'EES - Firmado a trav\u00e9s de billionairs.luxury',
+            it: 'EES - Firmato tramite billionairs.luxury',
+            ru: 'EES - \u041f\u043e\u0434\u043f\u0438\u0441\u0430\u043d\u043e \u0447\u0435\u0440\u0435\u0437 billionairs.luxury',
+            zh: 'EES - \u901a\u8fc7 billionairs.luxury \u7b7e\u7f72',
+            ja: 'EES - billionairs.luxury \u3092\u901a\u3058\u3066\u7f72\u540d',
+            ar: 'EES - \u0645\u0648\u0642\u0639 \u0639\u0628\u0631 billionairs.luxury'
+        };
+        // Detect member language from current user data
+        const memberLang = (this._currentUser && this._currentUser.preferred_language) || 'en';
+        const eesText = eesTranslations[memberLang] || eesTranslations.en;
+
         const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -648,6 +670,11 @@ ol li { margin-bottom: .4rem; text-align: justify; }
 .sig-party h4 { font-size: 10pt; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #c9a96e; margin-bottom: 1rem; }
 .sig-line { border-bottom: 1px solid #1a1a1a; height: 40px; margin-bottom: .3rem; }
 .sig-label { font-size: 9pt; color: #888; margin-bottom: 1rem; }
+.ees-badge { margin-top: .5rem; padding: .6rem 1rem; border: 1px solid #e0ddd6; border-radius: 6px; background: #fafaf8; display: flex; align-items: center; gap: .75rem; }
+.ees-badge img { width: 40px; height: auto; }
+.ees-badge .ees-info { font-size: 8.5pt; color: #555; line-height: 1.4; }
+.ees-badge .ees-info strong { color: #1a1a1a; font-size: 9.5pt; display: block; margin-bottom: 2px; }
+.ees-badge .ees-info .ees-note { color: #c9a96e; font-size: 7.5pt; margin-top: 2px; }
 .sig-img { max-width: 200px; max-height: 80px; }
 .member-sig-line { border-bottom: 1px solid #1a1a1a; min-height: 60px; margin-bottom: .3rem; display: flex; align-items: flex-end; padding-bottom: 4px; }
 .footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #e8e4dc; text-align: center; font-size: 8.5pt; color: #aaa; }
@@ -858,10 +885,15 @@ ol li { margin-bottom: .4rem; text-align: justify; }
     <div class="sig-block">
         <div class="sig-party">
             <h4>The Company</h4>
-            <div class="sig-line"></div>
-            <div class="sig-label">Signature</div>
-            <p style="font-size:10pt;"><strong>BILLIONAIRS</strong><br>CEO / Authorized Representative</p>
-            <div class="sig-label">Date: ${signedAt}</div>
+            <div class="ees-badge">
+                <img src="https://billionairs.luxury/assets/images/logo.png" alt="BILLIONAIRS Logo">
+                <div class="ees-info">
+                    <strong>billionairs.luxury</strong>
+                    ${eesDate}<br>
+                    <span class="ees-note">${eesText}</span>
+                </div>
+            </div>
+            <div class="sig-label" style="margin-top:.5rem;">BILLIONAIRS &mdash; Authorized Representative</div>
         </div>
         <div class="sig-party">
             <h4>The Member</h4>
