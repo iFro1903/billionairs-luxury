@@ -1,73 +1,80 @@
-// Vercel Serverless Function — CEO sends email to a member
-// Sender is ALWAYS elite@billionairs.luxury, no other address allowed
+// Vercel Edge Function — CEO sends email to a member
+import { neon } from '@neondatabase/serverless';
+import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
 
-module.exports = async (req, res) => {
-    const { getPool } = await import('../lib/db.js');
-    const { getCorsOrigin } = await import('../lib/cors.js');
+export const config = {
+    runtime: 'edge'
+};
 
-    async function verifyAdmin(pool, email, password) {
-        const client = await pool.connect();
-        try {
-            const result = await client.query(
-                'SELECT password FROM users WHERE LOWER(email) = LOWER($1)',
-                [email]
-            );
-            if (!result.rows.length) return false;
-            return result.rows[0].password === password;
-        } finally {
-            client.release();
-        }
+const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
+
+export default async function handler(req) {
+    // CORS preflight
+    if (req.method === 'OPTIONS') {
+        return new Response(null, {
+            status: 200,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST,OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Email, X-Admin-Password'
+            }
+        });
     }
 
-    // CORS
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Origin', getCorsOrigin(req));
-    res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Admin-Email, X-Admin-Password');
-
-    if (req.method === 'OPTIONS') return res.status(200).end();
-    if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+    if (req.method !== 'POST') {
+        return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+            status: 405, headers: { 'Content-Type': 'application/json' }
+        });
+    }
 
     // Auth
-    const adminEmail = (req.headers['x-admin-email'] || '').trim();
-    const adminPassword = (req.headers['x-admin-password'] || '').trim();
+    const adminEmail = (req.headers.get('x-admin-email') || '').trim();
+    const adminPassword = (req.headers.get('x-admin-password') || '').trim();
 
-    if (adminEmail.toLowerCase() !== 'furkan_akaslan@hotmail.com') {
-        return res.status(401).json({ error: 'Unauthorized' });
+    if (adminEmail.toLowerCase() !== CEO_EMAIL) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401, headers: { 'Content-Type': 'application/json' }
+        });
     }
 
-    const pool = getPool();
+    const passwordHash = process.env.ADMIN_PASSWORD_HASH;
+    if (!passwordHash || !(await verifyPassword(adminPassword, passwordHash))) {
+        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+            status: 401, headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
     try {
-    const isValid = await verifyAdmin(pool, adminEmail, adminPassword);
-    if (!isValid) {
-        await pool.end();
-        return res.status(401).json({ error: 'Invalid credentials' });
-    }
+        const body = await req.json();
+        const { to, subject, message } = body || {};
 
-    // Body
-    const { to, subject, message } = req.body || {};
+        if (!to || !subject || !message) {
+            return new Response(JSON.stringify({ error: 'to, subject und message sind erforderlich' }), {
+                status: 400, headers: { 'Content-Type': 'application/json' }
+            });
+        }
 
-    if (!to || !subject || !message) {
-        return res.status(400).json({ error: 'to, subject und message sind erforderlich' });
-    }
+        // Validate recipient is a real email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(to)) {
+            return new Response(JSON.stringify({ error: 'Ungültige Empfänger-Adresse' }), {
+                status: 400, headers: { 'Content-Type': 'application/json' }
+            });
+        }
 
-    // Validate recipient is a real email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(to)) {
-        return res.status(400).json({ error: 'Ungültige Empfänger-Adresse' });
-    }
+        // RESEND API
+        const RESEND_API_KEY = process.env.RESEND_API_KEY;
+        if (!RESEND_API_KEY) {
+            return new Response(JSON.stringify({ error: 'Email service not configured' }), {
+                status: 500, headers: { 'Content-Type': 'application/json' }
+            });
+        }
 
-    // RESEND API
-    const RESEND_API_KEY = process.env.RESEND_API_KEY;
-    if (!RESEND_API_KEY) {
-        return res.status(500).json({ error: 'Email service not configured' });
-    }
+        // Fixed sender — ONLY elite@billionairs.luxury allowed
+        const FROM = 'BILLIONAIRS Elite <elite@billionairs.luxury>';
 
-    // Fixed sender — ONLY elite@billionairs.luxury allowed
-    const FROM = 'BILLIONAIRS Elite <elite@billionairs.luxury>';
-
-    // Build HTML email
-    const html = `
+        // Build HTML email
+        const html = `
 <!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
@@ -96,7 +103,7 @@ module.exports = async (req, res) => {
 </body>
 </html>`;
 
-    try {
+        // Send via Resend
         const response = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
@@ -115,32 +122,28 @@ module.exports = async (req, res) => {
 
         if (!response.ok) {
             console.error('Email send failed:', data);
-            return res.status(500).json({ error: data.message || 'Email senden fehlgeschlagen' });
+            return new Response(JSON.stringify({ error: data.message || 'Email senden fehlgeschlagen' }), {
+                status: 500, headers: { 'Content-Type': 'application/json' }
+            });
         }
 
         // Audit log
         try {
-            const client = await pool.connect();
-            await client.query(
-                `INSERT INTO admin_audit_log (action, user_email, details, ip, timestamp)
-                 VALUES ($1, $2, $3, $4, NOW())`,
-                ['email_sent', to, `Subject: ${subject}`, req.headers['x-forwarded-for'] || 'unknown']
-            );
-            client.release();
+            const sql = neon(process.env.DATABASE_URL);
+            await sql`INSERT INTO admin_audit_log (action, user_email, details, ip, timestamp)
+                       VALUES ('email_sent', ${to}, ${'Subject: ' + subject}, ${req.headers.get('x-forwarded-for') || 'unknown'}, NOW())`;
         } catch (logErr) {
             console.error('Audit log error:', logErr);
         }
 
-        return res.status(200).json({ success: true, id: data.id });
+        return new Response(JSON.stringify({ success: true, id: data.id }), {
+            status: 200, headers: { 'Content-Type': 'application/json' }
+        });
 
     } catch (err) {
         console.error('Email error:', err);
-        return res.status(500).json({ error: 'Interner Fehler beim Email-Versand' });
-    } finally {
-        await pool.end();
+        return new Response(JSON.stringify({ error: 'Interner Fehler beim Email-Versand' }), {
+            status: 500, headers: { 'Content-Type': 'application/json' }
+        });
     }
-    } catch (poolErr) {
-        console.error('Pool error:', poolErr);
-        return res.status(500).json({ error: 'Database connection error' });
-    }
-};
+}
