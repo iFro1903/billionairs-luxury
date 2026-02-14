@@ -25,7 +25,20 @@ class AdminPanel {
     }
 
     getSession() {
-        try { return JSON.parse(sessionStorage.getItem('adminSession')); } catch { return null; }
+        try {
+            const raw = JSON.parse(sessionStorage.getItem('adminSession'));
+            if (!raw) return null;
+            return { email: raw.email, password: raw.p ? atob(raw.p) : raw.password };
+        } catch { return null; }
+    }
+
+    setSession(email, password) {
+        sessionStorage.setItem('adminSession', JSON.stringify({ email, p: btoa(password) }));
+    }
+
+    // Escape for safe use in data-attributes
+    safeAttr(str) {
+        return String(str).replace(/&/g,'&amp;').replace(/'/g,'&#39;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
     getMembershipTimer(paidAt, hasPaid, createdAt) {
@@ -79,7 +92,7 @@ class AdminPanel {
             const data = await res.json();
             if (res.ok) {
                 if (data.requiresTwoFactor) { this.show2FAPrompt(email, password); return; }
-                sessionStorage.setItem('adminSession', JSON.stringify({ email: data.email, password }));
+                this.setSession(data.email, password);
                 this.showDashboard(data.email);
             } else {
                 err.textContent = data.error || 'Login fehlgeschlagen';
@@ -293,15 +306,27 @@ class AdminPanel {
                     ${u.is_blocked?'<span style="color:#e74c3c;"> 🚫</span>':''}
                 </td>
                 <td>
-                    <button class="tbl-btn primary" onclick="adminPanel.viewUser('${email}')">Details</button>
+                    <button class="tbl-btn primary" data-action="view" data-email="${this.safeAttr(u.email)}">Details</button>
                     ${u.is_blocked
-                        ? `<button class="tbl-btn success" onclick="adminPanel.unblockUser('${email}')">Unblock</button>`
-                        : `<button class="tbl-btn" onclick="adminPanel.blockUser('${email}')">Block</button>`
+                        ? `<button class="tbl-btn success" data-action="unblock" data-email="${this.safeAttr(u.email)}">Unblock</button>`
+                        : `<button class="tbl-btn" data-action="block" data-email="${this.safeAttr(u.email)}">Block</button>`
                     }
-                    <button class="tbl-btn danger" onclick="adminPanel.deleteUser('${email}')">Del</button>
+                    <button class="tbl-btn danger" data-action="delete" data-email="${this.safeAttr(u.email)}">Del</button>
                 </td>
             `;
             tbody.appendChild(tr);
+        });
+
+        // Event delegation for table action buttons
+        tbody.addEventListener('click', e => {
+            const btn = e.target.closest('[data-action]');
+            if (!btn) return;
+            const action = btn.dataset.action;
+            const em = btn.dataset.email;
+            if (action === 'view') this.viewUser(em);
+            else if (action === 'block') this.blockUser(em);
+            else if (action === 'unblock') this.unblockUser(em);
+            else if (action === 'delete') this.deleteUser(em);
         });
     }
 
@@ -376,20 +401,33 @@ class AdminPanel {
             <div class="notes-section">
                 <h4 style="color:#E8C4A8;font-size:.9rem;margin-bottom:.5rem;">Notizen</h4>
                 <textarea id="memberNotes" placeholder="Interne Notizen...">${this.escapeHtml(user.admin_notes || '')}</textarea>
-                <button class="btn-sm btn-gold" style="margin-top:.5rem;" onclick="adminPanel.saveNotes('${this.escapeHtml(user.email)}')">Speichern</button>
+                <button class="btn-sm btn-gold" style="margin-top:.5rem;" data-modal-action="save-notes" data-email="${this.safeAttr(user.email)}">Speichern</button>
             </div>
 
             <div class="modal-actions">
-                <button class="btn-sm btn-gold" onclick="adminPanel.sendEmailToUser('${this.escapeHtml(user.email)}')">📧 Email senden</button>
+                <button class="btn-sm btn-gold" data-modal-action="send-email" data-email="${this.safeAttr(user.email)}">📧 Email senden</button>
                 ${user.is_blocked
-                    ? `<button class="btn-sm btn-green" onclick="adminPanel.unblockUser('${this.escapeHtml(user.email)}');adminPanel.closeModal();">Unblock</button>`
-                    : `<button class="btn-sm btn-red" onclick="adminPanel.blockUser('${this.escapeHtml(user.email)}');adminPanel.closeModal();">Block</button>`
+                    ? `<button class="btn-sm btn-green" data-modal-action="unblock" data-email="${this.safeAttr(user.email)}">Unblock</button>`
+                    : `<button class="btn-sm btn-red" data-modal-action="block" data-email="${this.safeAttr(user.email)}">Block</button>`
                 }
-                <button class="btn-sm btn-red" onclick="adminPanel.deleteUser('${this.escapeHtml(user.email)}');adminPanel.closeModal();">Löschen</button>
+                <button class="btn-sm btn-red" data-modal-action="delete" data-email="${this.safeAttr(user.email)}">Löschen</button>
             </div>
         `;
 
         modal.classList.remove('hidden');
+
+        // Event delegation for modal action buttons
+        body.addEventListener('click', e => {
+            const btn = e.target.closest('[data-modal-action]');
+            if (!btn) return;
+            const act = btn.dataset.modalAction;
+            const em = btn.dataset.email;
+            if (act === 'save-notes') this.saveNotes(em);
+            else if (act === 'send-email') this.sendEmailToUser(em);
+            else if (act === 'unblock') { this.unblockUser(em); this.closeModal(); }
+            else if (act === 'block') { this.blockUser(em); this.closeModal(); }
+            else if (act === 'delete') { this.deleteUser(em); this.closeModal(); }
+        });
     }
 
     closeModal() {
@@ -470,9 +508,10 @@ class AdminPanel {
     async deleteUser(email) {
         if (!confirm(`User ${email} wirklich löschen?`)) return;
         try {
+            const s = this.getSession();
             const res = await fetch('/api/admin-delete-user', {
                 method: 'DELETE',
-                headers: { 'Content-Type':'application/json' },
+                headers: { 'Content-Type':'application/json', 'x-admin-email':s.email, 'x-admin-password':s.password },
                 body: JSON.stringify({ email })
             });
             if (res.ok) { alert('✅ User gelöscht'); this.loadUsersData(); }
@@ -599,14 +638,21 @@ class AdminPanel {
                                 </div>
                             </div>
                             <div class="feature-buttons">
-                                <button class="feature-toggle-btn unlock" onclick="adminPanel.toggleFeature('${email}','${feat}',true)" ${unlocked?'disabled':''}>On</button>
-                                <button class="feature-toggle-btn lock" onclick="adminPanel.toggleFeature('${email}','${feat}',false)" ${!unlocked?'disabled':''}>Off</button>
+                                <button class="feature-toggle-btn unlock" data-action="toggle" data-email="${this.safeAttr(u.email)}" data-feature="${feat}" data-unlock="true" ${unlocked?'disabled':''}>On</button>
+                                <button class="feature-toggle-btn lock" data-action="toggle" data-email="${this.safeAttr(u.email)}" data-feature="${feat}" data-unlock="false" ${!unlocked?'disabled':''}>Off</button>
                             </div>
                         </div>`;
                     }).join('')}
                 </div>
             `;
             container.appendChild(card);
+        });
+
+        // Event delegation for toggle buttons
+        container.addEventListener('click', e => {
+            const btn = e.target.closest('[data-action="toggle"]');
+            if (!btn || btn.disabled) return;
+            this.toggleFeature(btn.dataset.email, btn.dataset.feature, btn.dataset.unlock === 'true');
         });
 
         // Search
@@ -691,7 +737,7 @@ class AdminPanel {
                         <span>${new Date(msg.created_at).toLocaleString('de-CH')}</span>
                     </div>
                     <div class="msg-content">${this.escapeHtml(msg.message || '[File]')}</div>
-                    <button class="delete-msg-btn" onclick="adminPanel.deleteMessage(${msg.id})">Löschen</button>
+                    <button class="delete-msg-btn" data-action="delete-msg" data-id="${msg.id}">Löschen</button>
                 `;
                 container.appendChild(div);
             });
@@ -703,6 +749,12 @@ class AdminPanel {
                 refBtn.parentNode.replaceChild(newBtn, refBtn);
                 newBtn.addEventListener('click', () => this.loadChatData());
             }
+
+            // Event delegation for delete buttons
+            container.addEventListener('click', e => {
+                const btn = e.target.closest('[data-action="delete-msg"]');
+                if (btn) this.deleteMessage(parseInt(btn.dataset.id));
+            });
         } catch (e) { console.error('Chat error:', e); }
     }
 
@@ -855,7 +907,7 @@ class AdminPanel {
             });
             if (res.ok) {
                 const data = await res.json();
-                sessionStorage.setItem('adminSession', JSON.stringify({ email: data.email, password }));
+                this.setSession(data.email, password);
                 this.showDashboard(data.email);
             } else { alert('Ungültiger Code'); this.show2FAPrompt(email, password); }
         } catch (e) { console.error(e); alert('2FA Fehler'); }
@@ -975,7 +1027,8 @@ class AdminPanel {
 
     async loadBlockedIPs() {
         try {
-            const res = await fetch('/api/admin-blocked-ips', { headers: { 'Authorization':'Bearer admin' } });
+            const s = this.getSession();
+            const res = await fetch('/api/admin-blocked-ips', { headers: { 'x-admin-email':s.email, 'x-admin-password':s.password } });
             const data = await res.json();
             if (data.success) {
                 const list = document.getElementById('blockedIpsList');
@@ -988,9 +1041,15 @@ class AdminPanel {
                             <div class="blocked-ip-meta">${new Date(i.blocked_at).toLocaleString('de-CH')} | ${i.expires_at?'Bis: '+new Date(i.expires_at).toLocaleString('de-CH'):'Permanent'}</div>
                         </div>
                         <span class="ip-status-badge ${i.is_active?'active':'expired'}">${i.is_active?'AKTIV':'EXPIRED'}</span>
-                        ${i.is_active?`<button class="btn-sm btn-green" onclick="adminPanel.unblockIP('${i.ip}')">Unblock</button>`:''}
+                        ${i.is_active?`<button class="btn-sm btn-green" data-action="unblock-ip" data-ip="${this.safeAttr(i.ip)}">Unblock</button>`:''}
                     </div>
                 `).join('');
+
+                // Event delegation for unblock IP
+                list.addEventListener('click', e => {
+                    const btn = e.target.closest('[data-action="unblock-ip"]');
+                    if (btn) this.unblockIP(btn.dataset.ip);
+                });
             }
         } catch (e) { console.error(e); }
     }
@@ -1025,7 +1084,8 @@ class AdminPanel {
         const limit = document.getElementById('auditLimit')?.value || 100;
         try {
             const url = `/api/admin-audit-logs?limit=${limit}${action?'&action='+action:''}`;
-            const res = await fetch(url, { headers: { 'Authorization':'Bearer admin' } });
+            const s = this.getSession();
+            const res = await fetch(url, { headers: { 'x-admin-email':s.email, 'x-admin-password':s.password } });
             const data = await res.json();
             if (data.success) {
                 document.getElementById('auditStats').innerHTML = (data.stats||[]).map(s => `
@@ -1048,17 +1108,19 @@ class AdminPanel {
 
     // ========== EXPORT BUTTONS ==========
     setupExportButtons() {
-        // Dynamically add export buttons to tabs
         const addExport = (tabSel, type, format, label) => {
             const tab = document.querySelector(tabSel);
             if (tab && !tab.querySelector('.export-buttons')) {
                 const div = document.createElement('div');
                 div.className = 'export-buttons';
-                div.innerHTML = `<button onclick="adminPanel.exportData('${type}','${format}')" class="export-btn">${label}</button>`;
+                const btn = document.createElement('button');
+                btn.className = 'export-btn';
+                btn.textContent = label;
+                btn.addEventListener('click', () => this.exportData(type, format));
+                div.appendChild(btn);
                 tab.insertBefore(div, tab.firstChild);
             }
         };
-        // Only add to payments and audit (users has CSV button already)
         addExport('#tab-payments', 'payments', 'csv', 'CSV Export');
         addExport('#auditTab', 'audit-logs', 'json', 'JSON Export');
     }
@@ -1099,13 +1161,14 @@ class AdminPanel {
                     <div class="form-group"><label>Nachricht:</label><textarea id="broadcastMessage" maxlength="200" rows="3" required></textarea></div>
                     <div class="form-actions">
                         <button type="submit" class="btn-primary">Senden</button>
-                        <button type="button" class="btn-secondary" onclick="document.getElementById('broadcastModal').remove()">Abbrechen</button>
+                        <button type="button" class="btn-secondary" id="broadcastCancel">Abbrechen</button>
                     </div>
                 </form>
             </div>
         `;
         document.body.appendChild(modal);
         document.getElementById('broadcastForm').addEventListener('submit', e => { e.preventDefault(); this.sendBroadcast(); });
+        document.getElementById('broadcastCancel').addEventListener('click', () => modal.remove());
     }
 
     async sendBroadcast() {

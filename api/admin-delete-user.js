@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Origin', getCorsOrigin(req));
     res.setHeader('Access-Control-Allow-Methods', 'DELETE,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-admin-email, x-admin-password');
 
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
@@ -29,6 +29,12 @@ module.exports = async (req, res) => {
 
     if (req.method !== 'DELETE') {
         return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    // Admin auth check
+    const adminEmail = req.headers['x-admin-email'];
+    if (adminEmail !== 'furkan_akaslan@hotmail.com') {
+        return res.status(401).json({ error: 'Unauthorized' });
     }
 
     const { email } = req.body;
