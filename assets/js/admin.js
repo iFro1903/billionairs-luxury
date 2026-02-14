@@ -14,6 +14,74 @@ class AdminPanel {
         return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
     }
 
+    // ========== TOAST NOTIFICATIONS ==========
+    toast(message, type = 'success', duration = 3500) {
+        const container = document.getElementById('toastContainer');
+        if (!container) { console.warn('Toast container missing'); return; }
+        const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+            <span class="toast-icon">${icons[type] || icons.info}</span>
+            <span class="toast-body">${this.escapeHtml(message)}</span>
+            <button class="toast-close" aria-label="Schließen">&times;</button>
+            <span class="toast-progress" style="animation-duration:${duration}ms"></span>
+        `;
+        toast.querySelector('.toast-close').addEventListener('click', () => this._removeToast(toast));
+        container.appendChild(toast);
+        requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
+        setTimeout(() => this._removeToast(toast), duration);
+    }
+    _removeToast(el) {
+        if (!el || el._removing) return;
+        el._removing = true;
+        el.classList.remove('show');
+        el.classList.add('hide');
+        setTimeout(() => el.remove(), 400);
+    }
+
+    // ========== CONFIRM DIALOG ==========
+    confirmDialog(message, icon = '⚠️') {
+        return new Promise(resolve => {
+            const overlay = document.createElement('div');
+            overlay.className = 'confirm-overlay';
+            overlay.innerHTML = `
+                <div class="confirm-dialog">
+                    <div class="confirm-icon">${icon}</div>
+                    <div class="confirm-msg">${this.escapeHtml(message)}</div>
+                    <div class="confirm-actions">
+                        <button class="confirm-btn no">Abbrechen</button>
+                        <button class="confirm-btn yes">Bestätigen</button>
+                    </div>
+                </div>
+            `;
+            const close = (val) => { overlay.remove(); resolve(val); };
+            overlay.querySelector('.confirm-btn.yes').addEventListener('click', () => close(true));
+            overlay.querySelector('.confirm-btn.no').addEventListener('click', () => close(false));
+            overlay.addEventListener('click', e => { if (e.target === overlay) close(false); });
+            document.body.appendChild(overlay);
+            overlay.querySelector('.confirm-btn.yes').focus();
+        });
+    }
+
+    // ========== LOADING SPINNER ==========
+    showLoading(container, text = 'Laden...') {
+        if (typeof container === 'string') container = document.querySelector(container);
+        if (!container) return;
+        container.style.position = container.style.position || 'relative';
+        if (container.querySelector('.loading-overlay')) return;
+        const overlay = document.createElement('div');
+        overlay.className = 'loading-overlay';
+        overlay.innerHTML = `<div class="loading-spinner"></div><span class="loading-text">${this.escapeHtml(text)}</span>`;
+        container.appendChild(overlay);
+    }
+    hideLoading(container) {
+        if (typeof container === 'string') container = document.querySelector(container);
+        if (!container) return;
+        const overlay = container.querySelector('.loading-overlay');
+        if (overlay) overlay.remove();
+    }
+
     formatTimeAgo(date) {
         const diff = Date.now() - date.getTime();
         const m = Math.floor(diff/60000), h = Math.floor(diff/3600000), d = Math.floor(diff/86400000);
@@ -244,6 +312,8 @@ class AdminPanel {
 
     // ========== USERS ==========
     async loadUsersData() {
+        const main = document.querySelector('main');
+        this.showLoading(main, 'Lade Mitglieder...');
         try {
             const s = this.getSession();
             const res = await fetch('/api/admin-users', {
@@ -264,6 +334,8 @@ class AdminPanel {
             this.renderIndividualUserControls(this.users);
         } catch (e) {
             console.error('Error loading users:', e);
+        } finally {
+            this.hideLoading(document.querySelector('main'));
         }
     }
 
@@ -346,7 +418,7 @@ class AdminPanel {
 
     // ========== CSV EXPORT ==========
     exportCSV() {
-        if (!this.users.length) { alert('Keine User-Daten vorhanden'); return; }
+        if (!this.users.length) { this.toast('Keine User-Daten vorhanden', 'warning'); return; }
         const headers = ['Email','Name','Registriert','Status','Pyramid','Eye','Chat','Blocked'];
         const rows = this.users.map(u => [
             u.email,
@@ -370,7 +442,7 @@ class AdminPanel {
     // ========== MEMBER DETAIL MODAL ==========
     viewUser(email) {
         const user = this.users.find(u => u.email === email);
-        if (!user) { alert('User nicht gefunden'); return; }
+        if (!user) { this.toast('User nicht gefunden', 'error'); return; }
 
         const modal = document.getElementById('memberModal');
         const title = document.getElementById('modalTitle');
@@ -444,11 +516,11 @@ class AdminPanel {
                 headers: { 'Content-Type': 'application/json', 'X-Admin-Email': s.email, 'X-Admin-Password': s.password },
                 body: JSON.stringify({ email, notes })
             });
-            if (res.ok) { alert('✅ Notizen gespeichert'); }
-            else { alert('❌ Fehler beim Speichern'); }
+            if (res.ok) { this.toast('Notizen gespeichert', 'success'); }
+            else { this.toast('Fehler beim Speichern', 'error'); }
         } catch (e) {
             console.error('Save notes error:', e);
-            alert('❌ Fehler');
+            this.toast('Fehler', 'error');
         }
     }
 
@@ -471,18 +543,18 @@ class AdminPanel {
                 body: JSON.stringify({ to, subject, message })
             });
             const data = await res.json();
-            if (res.ok && data.success) { alert('✅ Email gesendet!'); }
-            else { alert(`❌ ${data.error || 'Fehler'}`); }
+            if (res.ok && data.success) { this.toast('Email gesendet!', 'success'); }
+            else { this.toast(data.error || 'Fehler', 'error'); }
         } catch (e) {
             console.error('Send email error:', e);
-            alert('❌ Fehler');
+            this.toast('Fehler', 'error');
         }
     }
 
     // ========== STATUS UPDATE ==========
     async updateMemberStatus(email, newStatus, selectEl) {
         const labels = { paid:'Paid', pending:'Pending', free:'Free' };
-        if (!confirm(`Status von ${email} auf "${labels[newStatus]}" ändern?`)) { this.loadUsersData(); return; }
+        if (!(await this.confirmDialog(`Status von ${email} auf "${labels[newStatus]}" ändern?`))) { this.loadUsersData(); return; }
 
         try {
             const s = this.getSession();
@@ -500,13 +572,13 @@ class AdminPanel {
                 }[newStatus];
                 selectEl.style.background = c.bg; selectEl.style.color = c.c; selectEl.style.borderColor = c.b;
                 this.loadUsersData();
-            } else { alert(`❌ ${data.error||'Fehler'}`); this.loadUsersData(); }
-        } catch (e) { console.error(e); alert('❌ Fehler'); this.loadUsersData(); }
+            } else { this.toast(data.error||'Fehler', 'error'); this.loadUsersData(); }
+        } catch (e) { console.error(e); this.toast('Fehler', 'error'); this.loadUsersData(); }
     }
 
     // ========== DELETE / BLOCK ==========
     async deleteUser(email) {
-        if (!confirm(`User ${email} wirklich löschen?`)) return;
+        if (!(await this.confirmDialog(`User ${email} wirklich löschen?`, '🗑️'))) return;
         try {
             const s = this.getSession();
             const res = await fetch('/api/admin-delete-user', {
@@ -514,13 +586,13 @@ class AdminPanel {
                 headers: { 'Content-Type':'application/json', 'x-admin-email':s.email, 'x-admin-password':s.password },
                 body: JSON.stringify({ email })
             });
-            if (res.ok) { alert('✅ User gelöscht'); this.loadUsersData(); }
-            else { const d = await res.json(); alert(`❌ ${d.error}`); }
-        } catch (e) { console.error(e); alert('❌ Fehler'); }
+            if (res.ok) { this.toast('User gelöscht', 'success'); this.loadUsersData(); }
+            else { const d = await res.json(); this.toast(d.error, 'error'); }
+        } catch (e) { console.error(e); this.toast('Fehler', 'error'); }
     }
 
     async blockUser(email) {
-        if (!confirm(`${email} blockieren?`)) return;
+        if (!(await this.confirmDialog(`${email} blockieren?`))) return;
         try {
             const s = this.getSession();
             const res = await fetch('/api/admin-block-user', {
@@ -529,13 +601,13 @@ class AdminPanel {
                 body: JSON.stringify({ email, action:'block' })
             });
             const d = await res.json();
-            if (res.ok && d.success) { alert(`✅ ${d.message}`); this.loadUsersData(); }
-            else { alert(`❌ ${d.error}`); }
-        } catch (e) { console.error(e); alert('❌ Fehler'); }
+            if (res.ok && d.success) { this.toast(d.message, 'success'); this.loadUsersData(); }
+            else { this.toast(d.error, 'error'); }
+        } catch (e) { console.error(e); this.toast('Fehler', 'error'); }
     }
 
     async unblockUser(email) {
-        if (!confirm(`${email} entsperren?`)) return;
+        if (!(await this.confirmDialog(`${email} entsperren?`))) return;
         try {
             const s = this.getSession();
             const res = await fetch('/api/admin-block-user', {
@@ -544,9 +616,9 @@ class AdminPanel {
                 body: JSON.stringify({ email, action:'unblock' })
             });
             const d = await res.json();
-            if (res.ok && d.success) { alert(`✅ ${d.message}`); this.loadUsersData(); }
-            else { alert(`❌ ${d.error}`); }
-        } catch (e) { console.error(e); alert('❌ Fehler'); }
+            if (res.ok && d.success) { this.toast(d.message, 'success'); this.loadUsersData(); }
+            else { this.toast(d.error, 'error'); }
+        } catch (e) { console.error(e); this.toast('Fehler', 'error'); }
     }
 
     // ========== CREATE MEMBER ==========
@@ -682,8 +754,8 @@ class AdminPanel {
                 body: JSON.stringify({ action: unlock?'unlock':'lock', feature, email })
             });
             if (res.ok) { this.loadUsersData(); }
-            else { const d = await res.json(); alert(`❌ ${d.error||'Fehler'}`); }
-        } catch (e) { console.error(e); alert('❌ Fehler'); }
+            else { const d = await res.json(); this.toast(d.error||'Fehler', 'error'); }
+        } catch (e) { console.error(e); this.toast('Fehler', 'error'); }
     }
 
     setupBulkEasterEggControls() {
@@ -694,7 +766,7 @@ class AdminPanel {
 
     async handleBulkAction(action, feature) {
         const names = { pyramid:'Pyramid', eye:'Eye', chat:'Chat', all:'Alle Features' };
-        if (!confirm(`${action==='unlock-all'?'UNLOCK':'LOCK'} ${names[feature]} für ALLE Members?`)) return;
+        if (!(await this.confirmDialog(`${action==='unlock-all'?'UNLOCK':'LOCK'} ${names[feature]} für ALLE Members?`))) return;
         try {
             const s = this.getSession();
             const res = await fetch('/api/admin-toggle-easter-eggs', {
@@ -703,13 +775,15 @@ class AdminPanel {
                 body: JSON.stringify({ action, feature })
             });
             const d = await res.json();
-            if (res.ok) { alert(`✅ ${d.message} (${d.affectedUsers} User)`); this.loadUsersData(); }
-            else { alert(`❌ ${d.error}`); }
-        } catch (e) { console.error(e); alert('❌ Fehler'); }
+            if (res.ok) { this.toast(`${d.message} (${d.affectedUsers} User)`, 'success'); this.loadUsersData(); }
+            else { this.toast(d.error, 'error'); }
+        } catch (e) { console.error(e); this.toast('Fehler', 'error'); }
     }
 
     // ========== CHAT ==========
     async loadChatData() {
+        const main = document.querySelector('main');
+        this.showLoading(main, 'Lade Chat...');
         try {
             const res = await fetch('/api/chat?ceo=true');
             if (!res.ok) return;
@@ -755,11 +829,11 @@ class AdminPanel {
                 const btn = e.target.closest('[data-action="delete-msg"]');
                 if (btn) this.deleteMessage(parseInt(btn.dataset.id));
             });
-        } catch (e) { console.error('Chat error:', e); }
+        } catch (e) { console.error('Chat error:', e); } finally { this.hideLoading(document.querySelector('main')); }
     }
 
     async deleteMessage(id) {
-        if (!confirm('Nachricht löschen?')) return;
+        if (!(await this.confirmDialog('Nachricht löschen?', '🗑️'))) return;
         try {
             const res = await fetch('/api/admin-delete-message', {
                 method: 'DELETE',
@@ -772,6 +846,8 @@ class AdminPanel {
 
     // ========== PAYMENTS ==========
     async loadPaymentsData() {
+        const main = document.querySelector('main');
+        this.showLoading(main, 'Lade Zahlungen...');
         try {
             const s = this.getSession();
             const res = await fetch('/api/admin-payments', {
@@ -804,6 +880,8 @@ class AdminPanel {
         } catch (e) {
             console.error('Payments error:', e);
             document.getElementById('totalRevenue').textContent = 'CHF 0';
+        } finally {
+            this.hideLoading(document.querySelector('main'));
         }
     }
 
@@ -878,7 +956,7 @@ class AdminPanel {
         const btn = document.getElementById('emergencyBtn');
         const isActive = btn.dataset.active === 'true';
         const msg = isActive ? 'Website ONLINE bringen?' : 'EMERGENCY SHUTDOWN aktivieren?\nAlle User sehen 404!';
-        if (!confirm(msg)) return;
+        if (!(await this.confirmDialog(msg, isActive ? '✅' : '🚨'))) return;
         try {
             const res = await fetch('/api/admin-emergency', {
                 method: 'POST',
@@ -887,7 +965,7 @@ class AdminPanel {
             });
             if (res.ok) {
                 this.updateEmergencyButton(!isActive);
-                alert(isActive ? '✅ Website ONLINE' : '🚨 Emergency Mode AKTIV');
+                this.toast(isActive ? 'Website ONLINE' : 'Emergency Mode AKTIV', isActive ? 'success' : 'warning');
             }
         } catch (e) { console.error(e); }
     }
@@ -909,8 +987,8 @@ class AdminPanel {
                 const data = await res.json();
                 this.setSession(data.email, password);
                 this.showDashboard(data.email);
-            } else { alert('Ungültiger Code'); this.show2FAPrompt(email, password); }
-        } catch (e) { console.error(e); alert('2FA Fehler'); }
+            } else { this.toast('Ungültiger Code', 'error'); this.show2FAPrompt(email, password); }
+        } catch (e) { console.error(e); this.toast('2FA Fehler', 'error'); }
     }
 
     // ========== SECURITY TAB ==========
@@ -969,12 +1047,12 @@ class AdminPanel {
                 document.getElementById('backupCodesList').innerHTML = data.backupCodes.map(c => `<div class="backup-code">${c}</div>`).join('');
                 document.getElementById('enable2FA').classList.add('hidden');
             }
-        } catch (e) { console.error(e); alert('2FA Setup fehlgeschlagen'); }
+        } catch (e) { console.error(e); this.toast('2FA Setup fehlgeschlagen', 'error'); }
     }
 
     async verify2FASetup() {
         const code = document.getElementById('verificationCode').value;
-        if (!code || code.length !== 6) { alert('6-stelliger Code erforderlich'); return; }
+        if (!code || code.length !== 6) { this.toast('6-stelliger Code erforderlich', 'warning'); return; }
         try {
             const s = this.getSession();
             const res = await fetch('/api/admin-2fa-setup', {
@@ -983,8 +1061,8 @@ class AdminPanel {
                 body: JSON.stringify({ email: this.ceoEmail, password: s?.password||'', action:'verify', code })
             });
             const data = await res.json();
-            if (data.success) { alert('✅ 2FA aktiviert!'); location.reload(); }
-            else { alert('Ungültiger Code'); }
+            if (data.success) { this.toast('2FA aktiviert!', 'success'); location.reload(); }
+            else { this.toast('Ungültiger Code', 'error'); }
         } catch (e) { console.error(e); }
     }
 
@@ -999,8 +1077,8 @@ class AdminPanel {
                 body: JSON.stringify({ email: this.ceoEmail, password: s?.password||'', action:'disable', code })
             });
             const data = await res.json();
-            if (data.success) { alert('2FA deaktiviert'); location.reload(); }
-            else { alert('Ungültiger Code'); }
+            if (data.success) { this.toast('2FA deaktiviert', 'success'); location.reload(); }
+            else { this.toast('Ungültiger Code', 'error'); }
         } catch (e) { console.error(e); }
     }
 
@@ -1013,7 +1091,7 @@ class AdminPanel {
         const ip = document.getElementById('blockIpAddress').value.trim();
         const reason = document.getElementById('blockReason').value.trim();
         const duration = document.getElementById('blockDuration').value;
-        if (!ip) { alert('IP-Adresse eingeben'); return; }
+        if (!ip) { this.toast('IP-Adresse eingeben', 'warning'); return; }
         try {
             const res = await fetch('/api/block-ip', {
                 method: 'POST',
@@ -1021,7 +1099,7 @@ class AdminPanel {
                 body: JSON.stringify({ ip, reason, duration: duration?parseInt(duration):null, adminEmail: this.ceoEmail })
             });
             const d = await res.json();
-            if (d.success) { alert('✅ IP blockiert'); document.getElementById('blockIpAddress').value = ''; document.getElementById('blockReason').value = ''; this.loadBlockedIPs(); }
+            if (d.success) { this.toast('IP blockiert', 'success'); document.getElementById('blockIpAddress').value = ''; document.getElementById('blockReason').value = ''; this.loadBlockedIPs(); }
         } catch (e) { console.error(e); }
     }
 
@@ -1055,14 +1133,14 @@ class AdminPanel {
     }
 
     async unblockIP(ip) {
-        if (!confirm(`IP ${ip} entsperren?`)) return;
+        if (!(await this.confirmDialog(`IP ${ip} entsperren?`))) return;
         try {
             const res = await fetch('/api/block-ip', {
                 method: 'POST',
                 headers: { 'Content-Type':'application/json' },
                 body: JSON.stringify({ ip, action:'unblock', adminEmail: this.ceoEmail })
             });
-            if ((await res.json()).success) { alert('✅ IP entsperrt'); this.loadBlockedIPs(); }
+            if ((await res.json()).success) { this.toast('IP entsperrt', 'success'); this.loadBlockedIPs(); }
         } catch (e) { console.error(e); }
     }
 
@@ -1127,7 +1205,7 @@ class AdminPanel {
 
     async exportData(type, format) {
         const s = this.getSession();
-        if (!s) { alert('Session abgelaufen'); location.reload(); return; }
+        if (!s) { this.toast('Session abgelaufen', 'error'); location.reload(); return; }
         try {
             const res = await fetch(`/api/admin-export?type=${type}&format=${format}`, {
                 headers: { 'x-admin-email':s.email, 'x-admin-password':s.password }
@@ -1142,7 +1220,7 @@ class AdminPanel {
             a.download = filename;
             a.click();
             URL.revokeObjectURL(a.href);
-        } catch (e) { console.error(e); alert('❌ Export fehlgeschlagen'); }
+        } catch (e) { console.error(e); this.toast('Export fehlgeschlagen', 'error'); }
     }
 
     // ========== BROADCAST ==========
@@ -1176,7 +1254,7 @@ class AdminPanel {
         const title = document.getElementById('broadcastTitle').value.trim();
         const message = document.getElementById('broadcastMessage').value.trim();
         const audience = document.getElementById('broadcastAudience').value;
-        if (!confirm(`Broadcast an "${audience}" senden?`)) return;
+        if (!(await this.confirmDialog(`Broadcast an "${audience}" senden?`))) return;
         try {
             const res = await fetch('/api/admin-broadcast', {
                 method: 'POST',
@@ -1184,16 +1262,16 @@ class AdminPanel {
                 body: JSON.stringify({ title, message, url:'/', icon:'/assets/images/icon-192x192.png', targetAudience: audience })
             });
             const d = await res.json();
-            if (res.ok && d.success) { alert(`✅ Gesendet: ${d.sent}/${d.total}`); document.getElementById('broadcastModal').remove(); }
-            else { alert(`❌ ${d.error}`); }
-        } catch (e) { console.error(e); alert('❌ Fehler'); }
+            if (res.ok && d.success) { this.toast(`Gesendet: ${d.sent}/${d.total}`, 'success'); document.getElementById('broadcastModal').remove(); }
+            else { this.toast(d.error, 'error'); }
+        } catch (e) { console.error(e); this.toast('Fehler', 'error'); }
     }
 
     // ========== DELETE ALL / TEST USERS ==========
     async deleteAllUsers() {
         const c = prompt('⚠️ ALLE User löschen (ausser CEO)?\n\nTippe "DELETE ALL":');
-        if (c !== 'DELETE ALL') { if (c !== null) alert('Abgebrochen'); return; }
-        if (!confirm('LETZTE WARNUNG!\nAlle User permanent löschen?')) return;
+        if (c !== 'DELETE ALL') { if (c !== null) this.toast('Abgebrochen', 'info'); return; }
+        if (!(await this.confirmDialog('LETZTE WARNUNG!\nAlle User permanent löschen?', '🚨'))) return;
         try {
             const s = this.getSession();
             const res = await fetch('/api/admin-delete-users', {
@@ -1202,22 +1280,22 @@ class AdminPanel {
                 body: JSON.stringify({ adminEmail:s.email, adminPassword:s.password })
             });
             const d = await res.json();
-            if (res.ok && d.success) { alert(`✅ ${d.deleted_count} User gelöscht`); this.loadUsersData(); }
-            else { alert(`❌ ${d.error}`); }
-        } catch (e) { console.error(e); alert('❌ Fehler'); }
+            if (res.ok && d.success) { this.toast(`${d.deleted_count} User gelöscht`, 'success'); this.loadUsersData(); }
+            else { this.toast(d.error, 'error'); }
+        } catch (e) { console.error(e); this.toast('Fehler', 'error'); }
     }
 
     async createTestUsers() {
-        if (!confirm('2 Test-User erstellen?')) return;
+        if (!(await this.confirmDialog('2 Test-User erstellen?'))) return;
         try {
             const s = this.getSession();
             const res = await fetch('/api/create-test-users', {
                 headers: { 'x-admin-email':s.email, 'x-admin-password':s.password }
             });
             const d = await res.json();
-            if (res.ok && d.success) { alert(`✅ ${d.message}`); this.loadUsersData(); }
-            else { alert(`❌ ${d.error}`); }
-        } catch (e) { console.error(e); alert('❌ Fehler'); }
+            if (res.ok && d.success) { this.toast(d.message, 'success'); this.loadUsersData(); }
+            else { this.toast(d.error, 'error'); }
+        } catch (e) { console.error(e); this.toast('Fehler', 'error'); }
     }
 }
 

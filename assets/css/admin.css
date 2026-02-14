@@ -1461,3 +1461,207 @@ tr:hover td { background: rgba(255,255,255,.02); }
 
 .error-message.show { display: block; }
 
+/* ========== TOAST NOTIFICATIONS ========== */
+.toast-container {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    pointer-events: none;
+}
+.toast {
+    pointer-events: auto;
+    min-width: 280px;
+    max-width: 420px;
+    padding: 1rem 1.25rem 1rem 1rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+    font-size: .9rem;
+    line-height: 1.45;
+    color: #fff;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0,0,0,.45);
+    transform: translateX(calc(100% + 2rem));
+    opacity: 0;
+    transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .4s ease;
+}
+.toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+.toast.hide {
+    transform: translateX(calc(100% + 2rem));
+    opacity: 0;
+}
+.toast-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    margin-top: .05rem;
+}
+.toast-body {
+    flex: 1;
+}
+.toast-close {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,.5);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: color .2s;
+}
+.toast-close:hover { color: #fff; }
+
+.toast.success {
+    background: linear-gradient(135deg, rgba(16,185,129,.92), rgba(5,150,105,.92));
+    border-left: 4px solid #34d399;
+}
+.toast.error {
+    background: linear-gradient(135deg, rgba(239,68,68,.92), rgba(185,28,28,.92));
+    border-left: 4px solid #f87171;
+}
+.toast.warning {
+    background: linear-gradient(135deg, rgba(245,158,11,.92), rgba(217,119,6,.92));
+    border-left: 4px solid #fbbf24;
+}
+.toast.info {
+    background: linear-gradient(135deg, rgba(59,130,246,.92), rgba(29,78,216,.92));
+    border-left: 4px solid #60a5fa;
+}
+
+/* Toast progress bar */
+.toast-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: rgba(255,255,255,.4);
+    border-radius: 0 0 0 10px;
+    animation: toastProgress linear forwards;
+}
+@keyframes toastProgress {
+    from { width: 100%; }
+    to { width: 0; }
+}
+
+/* ========== CONFIRM DIALOG ========== */
+.confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.65);
+    backdrop-filter: blur(4px);
+    z-index: 100001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn .2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.confirm-dialog {
+    background: linear-gradient(145deg, #1a1a2e, #16162a);
+    border: 1px solid rgba(232,196,168,.2);
+    border-radius: 14px;
+    padding: 2rem;
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+    animation: scaleIn .25s cubic-bezier(.22,1,.36,1);
+}
+@keyframes scaleIn { from { transform: scale(.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.confirm-dialog .confirm-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+.confirm-dialog .confirm-msg {
+    color: #ddd;
+    font-size: .95rem;
+    line-height: 1.5;
+    margin-bottom: 1.75rem;
+    white-space: pre-line;
+}
+.confirm-dialog .confirm-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+.confirm-dialog .confirm-btn {
+    padding: .65rem 1.75rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: .9rem;
+    font-weight: 600;
+    transition: all .2s;
+}
+.confirm-dialog .confirm-btn.yes {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #000;
+}
+.confirm-dialog .confirm-btn.yes:hover { filter: brightness(1.15); transform: translateY(-1px); }
+.confirm-dialog .confirm-btn.no {
+    background: rgba(255,255,255,.08);
+    color: #aaa;
+    border: 1px solid rgba(255,255,255,.12);
+}
+.confirm-dialog .confirm-btn.no:hover { background: rgba(255,255,255,.14); color: #fff; }
+
+/* ========== LOADING SPINNER ========== */
+.loading-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10,10,10,.7);
+    backdrop-filter: blur(2px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    border-radius: 10px;
+    gap: .75rem;
+}
+.loading-spinner {
+    width: 38px;
+    height: 38px;
+    border: 3px solid rgba(232,196,168,.15);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text {
+    color: var(--gold);
+    font-size: .8rem;
+    letter-spacing: .5px;
+}
+
+/* Table skeleton loading */
+.skeleton-row td {
+    position: relative;
+    overflow: hidden;
+}
+.skeleton-row td::after {
+    content: '';
+    position: absolute;
+    inset: .5rem;
+    background: linear-gradient(90deg, rgba(232,196,168,.05) 25%, rgba(232,196,168,.12) 50%, rgba(232,196,168,.05) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+@media (max-width: 480px) {
+    .toast-container { top: 1rem; right: .75rem; left: .75rem; }
+    .toast { min-width: 0; max-width: 100%; font-size: .85rem; }
+    .confirm-dialog { padding: 1.5rem; }
+}
+
