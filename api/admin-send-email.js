@@ -84,6 +84,7 @@ export default async function handler(req) {
             <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
                 <!-- Header -->
                 <tr><td style="text-align:center;padding:30px 0 20px;">
+                    <img src="https://billionairs.luxury/assets/images/logo.png" alt="BILLIONAIRS" style="max-width:120px;height:auto;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(232,196,168,0.5));" />
                     <h1 style="font-family:'Playfair Display',Georgia,serif;color:#E8C4A8;font-size:28px;margin:0;letter-spacing:3px;">BILLIONAIRS</h1>
                     <div style="width:60px;height:2px;background:linear-gradient(90deg,transparent,#E8C4A8,transparent);margin:12px auto;"></div>
                 </td></tr>
