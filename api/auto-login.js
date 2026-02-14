@@ -1,12 +1,19 @@
 // Vercel Serverless Function for Auto-Login after Payment
-const jwt = require('jsonwebtoken');
+// Uses proper DB session tokens (compatible with auth.js) + Stripe API verification
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const crypto = require('crypto');
 
 module.exports = async (req, res) => {
     const { getPool } = await import('../lib/db.js');
     const { getCorsOrigin } = await import('../lib/cors.js');
 
+    // Generate cryptographically secure session token (same method as auth.js)
+    function generateToken() {
+        return crypto.randomBytes(32).toString('hex');
+    }
+
     // HttpOnly Cookie helper
-    function setAuthCookie(res, token, maxAge = 2592000) {
+    function setAuthCookie(res, token, maxAge = 86400) {
         res.setHeader('Set-Cookie',
             `billionairs_session=${token}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=${maxAge}`
         );
@@ -39,11 +46,47 @@ module.exports = async (req, res) => {
             });
         }
 
+        // SECURITY: Verify the Stripe checkout session via Stripe API
+        let stripeSession;
+        try {
+            stripeSession = await stripe.checkout.sessions.retrieve(sessionId, {
+                expand: ['payment_intent']
+            });
+        } catch (stripeError) {
+            console.error('Stripe session verification failed:', stripeError.message);
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid Stripe session'
+            });
+        }
+
+        // Verify payment was actually successful
+        const isPaid = stripeSession.payment_status === 'paid' || 
+                       stripeSession.payment_intent?.status === 'succeeded';
+
+        if (!isPaid) {
+            return res.status(403).json({
+                success: false,
+                error: 'Payment not confirmed by Stripe'
+            });
+        }
+
+        // Verify the email matches the Stripe session
+        const stripeEmail = stripeSession.customer_details?.email || 
+                            stripeSession.metadata?.customer_email;
+        
+        if (stripeEmail && stripeEmail.toLowerCase() !== email.toLowerCase()) {
+            return res.status(403).json({
+                success: false,
+                error: 'Email does not match payment session'
+            });
+        }
+
         client = await pool.connect();
 
         // Find user by email
         const userResult = await client.query(
-            'SELECT * FROM users WHERE email = $1',
+            'SELECT id, email, member_id, full_name, payment_status, email_verified, login_streak, pyramid_unlocked, eye_unlocked, chat_ready FROM users WHERE email = $1',
             [email]
         );
 
@@ -56,38 +99,22 @@ module.exports = async (req, res) => {
 
         const user = userResult.rows[0];
 
-        // If user comes from Stripe checkout (has sessionId), mark as paid
-        // Stripe only redirects to success_url if payment was successful
-        if (sessionId && user.payment_status !== 'paid') {
-            
+        // Mark user as paid (verified through Stripe API above)
+        if (user.payment_status !== 'paid') {
             await client.query(
                 'UPDATE users SET payment_status = $1, has_paid = $2, payment_method = $3 WHERE id = $4',
                 ['paid', true, 'stripe', user.id]
             );
-            
-            // Update user object for token generation
             user.payment_status = 'paid';
-            user.has_paid = true;
         }
 
-        // Check if user has paid
-        if (user.payment_status !== 'paid') {
-            return res.status(403).json({ 
-                success: false,
-                error: 'Payment not confirmed yet. Please wait a moment.' 
-            });
-        }
+        // Create proper DB session token (compatible with auth.js verify)
+        const sessionToken = generateToken();
+        const expiresAt = new Date(Date.now() + (24 * 60 * 60 * 1000)); // 24 hours
 
-        // Generate JWT token for authentication
-        const jwtSecret = process.env.JWT_SECRET || 'billionairs-luxury-secret-key-change-in-production';
-        const token = jwt.sign(
-            { 
-                userId: user.id,
-                email: user.email,
-                memberId: user.member_id
-            },
-            jwtSecret,
-            { expiresIn: '30d' }
+        await client.query(
+            'INSERT INTO sessions (token, user_id, expires_at) VALUES ($1, $2, $3)',
+            [sessionToken, user.id, expiresAt]
         );
 
         // Update last login
@@ -96,8 +123,8 @@ module.exports = async (req, res) => {
             [user.id]
         );
 
-        // Set HttpOnly cookie with token (30 days)
-        setAuthCookie(res, token, 30 * 24 * 60 * 60);
+        // Set HttpOnly cookie with DB session token (24 hours)
+        setAuthCookie(res, sessionToken, 24 * 60 * 60);
 
         // Return success WITHOUT token in body (token is in HttpOnly cookie)
         return res.status(200).json({

@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/assets/images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <script src="/assets/js/auth.js"></script>
+    <!-- No auth.js needed - user arrives from Stripe redirect without session -->
     <style>
         * {
             margin: 0;
@@ -228,30 +228,46 @@
     <script src="assets/js/i18n.js"></script>
     <script src="assets/js/lang-dropdown-simple.js"></script>
     <script>
-        // Get session ID and language from URL
+        // Get session ID, email and language from URL
         const urlParams = new URLSearchParams(window.location.search);
         const sessionId = urlParams.get('session_id');
+        const userEmail = urlParams.get('email');
         const userLang = urlParams.get('lang') || 'en';
 
-        // Initialize i18n when ready
-        async function initPage() {
-            // Auth-Check: Session + Payment verifizieren
-            if (window.authManager) {
-                try {
-                    var result = await window.authManager.verifySession();
-                    if (!result || !result.valid) {
-                        window.location.href = '/login.html';
-                        return;
-                    }
-                    if (!result.user || result.user.payment_status !== 'paid') {
-                        window.location.href = '/dashboard.html';
-                        return;
-                    }
-                } catch(e) {
-                    window.location.href = '/login.html';
-                    return;
-                }
+        // Verify payment with Stripe API (server-side) and mark user as paid
+        async function verifyPaymentWithStripe() {
+            if (!sessionId || !userEmail) {
+                console.warn('Missing session_id or email in URL params');
+                return;
             }
+
+            try {
+                const response = await fetch('/api/verify-payment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        sessionId: sessionId,
+                        email: userEmail
+                    })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    console.log('Payment verified successfully via Stripe API');
+                } else {
+                    console.warn('Payment verification pending:', data.paymentStatus);
+                    // Webhook might still process it - don't block the page
+                }
+            } catch (error) {
+                console.error('Payment verification request failed:', error);
+                // Webhook will handle it as fallback
+            }
+        }
+
+        // Initialize page (NO auth check - user just came from Stripe redirect)
+        async function initPage() {
+            // Verify payment status via Stripe API (non-blocking)
+            verifyPaymentWithStripe();
 
             if (window.i18n) {
                 await window.i18n.init();
@@ -277,15 +293,10 @@
                 if (transactionIdElement) {
                     transactionIdElement.textContent = shortId;
                 }
-
-                // Notify parent window
-                if (window.opener && window.opener.stripeProcessor) {
-                    window.opener.stripeProcessor.handlePaymentSuccess(sessionId);
-                }
             }
         }
 
-        // Wait for i18n to be ready
+        // Wait for DOM to be ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initPage);
         } else {
@@ -293,7 +304,8 @@
         }
 
         function continueToSite() {
-            window.location.href = '/dashboard.html';
+            // User needs to login with their credentials (created during checkout)
+            window.location.href = '/login.html';
         }
     </script>
     </main>
