@@ -811,7 +811,10 @@ class AdminPanel {
         const main = document.querySelector('main');
         this.showLoading(main, 'Lade Chat...');
         try {
-            const res = await fetch('/api/chat?ceo=true');
+            const s = this.getSession();
+            const res = await fetch('/api/chat?ceo=true', {
+                headers: { 'X-Admin-Email': s.email, 'X-Admin-Password': s.password }
+            });
             if (!res.ok) return;
             const data = await res.json();
             if (!data.messages || !Array.isArray(data.messages)) {
@@ -862,9 +865,10 @@ class AdminPanel {
     async deleteMessage(id) {
         if (!(await this.confirmDialog('Nachricht löschen?', '🗑️'))) return;
         try {
+            const s = this.getSession();
             const res = await fetch('/api/admin-delete-message', {
                 method: 'DELETE',
-                headers: { 'Content-Type':'application/json' },
+                headers: { 'Content-Type':'application/json', 'X-Admin-Email': s.email, 'X-Admin-Password': s.password },
                 body: JSON.stringify({ messageId: id })
             });
             if (res.ok) this.loadChatData();

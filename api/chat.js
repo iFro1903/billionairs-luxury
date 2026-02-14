@@ -1,5 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
+import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
 
 export const config = {
     runtime: 'edge',
@@ -33,17 +34,29 @@ async function validateSession(sql, token) {
 }
 
 async function validateAdminAccess(req, sql) {
-    // Method 1: Check admin secret header (set by admin panel JS)
+    const CEO_EMAIL = process.env.CEO_EMAIL || 'furkan_akaslan@hotmail.com';
+
+    // Method 1: Check admin secret header
     const adminSecret = req.headers.get('x-admin-secret');
     if (adminSecret && adminSecret === process.env.ADMIN_API_SECRET) {
         return true;
     }
     
-    // Method 2: Check if the session belongs to the CEO email
+    // Method 2: Check admin email + password headers (used by admin panel)
+    const adminEmail = req.headers.get('x-admin-email');
+    const adminPassword = req.headers.get('x-admin-password');
+    if (adminEmail && adminPassword && adminEmail.toLowerCase() === CEO_EMAIL.toLowerCase()) {
+        const passwordHash = process.env.ADMIN_PASSWORD_HASH;
+        if (passwordHash && (await verifyPassword(adminPassword, passwordHash))) {
+            return true;
+        }
+    }
+
+    // Method 3: Check if the session belongs to the CEO email
     const token = getSessionToken(req);
     if (token) {
         const session = await validateSession(sql, token);
-        if (session && session.email && session.email.toLowerCase() === (process.env.CEO_EMAIL || 'furkan_akaslan@hotmail.com').toLowerCase()) {
+        if (session && session.email && session.email.toLowerCase() === CEO_EMAIL.toLowerCase()) {
             return true;
         }
     }
