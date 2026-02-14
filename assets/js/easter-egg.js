@@ -6,6 +6,10 @@ const EasterEggSystem = {
     status: null,
 
     async init(email) {
+        if (!email) {
+            console.warn('EasterEggSystem: No email provided, skipping init');
+            return;
+        }
         this.userEmail = email;
         await this.recordFirstAccess();
         await this.checkStatus();
@@ -224,6 +228,10 @@ const EasterEggSystem = {
     },
 
     async openEye() {
+        if (!this.userEmail) {
+            console.warn('EasterEggSystem: No email, cannot open eye');
+            return;
+        }
         // Fresh status check from server
         try {
             const freshResponse = await fetch('/api/easter-egg', {

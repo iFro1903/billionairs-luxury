@@ -80,7 +80,8 @@ async function getEncryptionKey() {
     const encoder = new TextEncoder();
     const passphrase = process.env.CHAT_ENCRYPTION_KEY;
     if (!passphrase) {
-        throw new Error('CHAT_ENCRYPTION_KEY environment variable is not set. Cannot encrypt/decrypt messages.');
+        console.warn('CHAT_ENCRYPTION_KEY not set — messages will be stored unencrypted');
+        return null;
     }
     
     const keyMaterial = await crypto.subtle.importKey(
@@ -109,6 +110,8 @@ async function encryptMessage(plaintext) {
     if (!plaintext) return plaintext;
     
     const key = await getEncryptionKey();
+    if (!key) return plaintext; // No encryption key — store as plaintext
+    
     const encoder = new TextEncoder();
     const iv = crypto.getRandomValues(new Uint8Array(12));
     
@@ -131,6 +134,7 @@ async function decryptMessage(ciphertext) {
     
     try {
         const key = await getEncryptionKey();
+        if (!key) return ciphertext; // No encryption key — return as-is
         const combined = Uint8Array.from(atob(ciphertext.slice(4)), c => c.charCodeAt(0));
         
         const iv = combined.slice(0, 12);
