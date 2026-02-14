@@ -203,6 +203,9 @@ export default async function handler(req) {
                 });
             }
 
+            // Session start filter — members only see messages from their login time onwards
+            const since = url.searchParams.get('since');
+
             try {
                 await sql`
                     CREATE TABLE IF NOT EXISTS chat_messages (
@@ -217,11 +220,21 @@ export default async function handler(req) {
                     )
                 `;
 
-                const messages = await sql`
-                    SELECT username, message, created_at, file_url, file_name, file_type, email, id
-                    FROM chat_messages
-                    ORDER BY created_at ASC
-                `;
+                let messages;
+                if (since) {
+                    messages = await sql`
+                        SELECT username, message, created_at, file_url, file_name, file_type, email, id
+                        FROM chat_messages
+                        WHERE created_at >= ${since}::timestamp
+                        ORDER BY created_at ASC
+                    `;
+                } else {
+                    messages = await sql`
+                        SELECT username, message, created_at, file_url, file_name, file_type, email, id
+                        FROM chat_messages
+                        ORDER BY created_at ASC
+                    `;
+                }
 
                 // Decrypt all messages for user
                 const decryptedMessages = await Promise.all(

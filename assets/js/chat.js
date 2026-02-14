@@ -31,6 +31,8 @@ class LuxuryChat {
 
     init(userEmail) {
         this.userEmail = userEmail;
+        // Record session start — members only see messages from NOW onwards
+        this.sessionStart = new Date().toISOString();
         this.generateUsername();
         this.initNotificationSound();
         this.createChatUI();
@@ -1051,7 +1053,8 @@ class LuxuryChat {
 
     async loadMessages() {
         try {
-            const response = await fetch(`/api/chat?email=${this.userEmail}`);
+            const sinceParam = this.sessionStart ? `&since=${encodeURIComponent(this.sessionStart)}` : '';
+            const response = await fetch(`/api/chat?email=${this.userEmail}${sinceParam}`);
             const data = await response.json();
 
             if (data.messages) {
