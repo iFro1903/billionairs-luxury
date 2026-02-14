@@ -387,11 +387,11 @@ class AdminPanel {
             tr.dataset.name = (u.name||u.full_name||'').toLowerCase();
             tr.dataset.status = status;
             tr.innerHTML = `
-                <td>${email}</td>
-                <td>${name}</td>
-                <td>${new Date(u.created_at).toLocaleDateString('de-CH')}</td>
-                <td>${timer}</td>
-                <td>
+                <td data-label="Email">${email}</td>
+                <td data-label="Name">${name}</td>
+                <td data-label="Registriert">${new Date(u.created_at).toLocaleDateString('de-CH')}</td>
+                <td data-label="Timer">${timer}</td>
+                <td data-label="Status">
                     <select class="status-select" onchange="adminPanel.updateMemberStatus('${email}',this.value,this)"
                         style="background:${sc.bg};color:${sc.c};border:1px solid ${sc.b};border-radius:20px;padding:3px 8px;font-size:11px;font-weight:600;cursor:pointer;outline:none;">
                         <option value="paid" ${status==='paid'?'selected':''}>Paid</option>
@@ -399,11 +399,11 @@ class AdminPanel {
                         <option value="free" ${status==='free'?'selected':''}>Free</option>
                     </select>
                 </td>
-                <td style="font-size:12px;">
+                <td data-label="Features" style="font-size:12px;">
                     ${u.pyramid_unlocked?'🔓':'🔒'}P ${u.eye_unlocked?'🔓':'🔒'}E ${u.chat_ready||u.chat_unlocked?'🔓':'🔒'}C
                     ${u.is_blocked?'<span style="color:#e74c3c;"> 🚫</span>':''}
                 </td>
-                <td>
+                <td data-label="Aktionen">
                     <button class="tbl-btn primary" data-action="view" data-email="${this.safeAttr(u.email)}">Details</button>
                     ${u.is_blocked
                         ? `<button class="tbl-btn success" data-action="unblock" data-email="${this.safeAttr(u.email)}">Unblock</button>`
@@ -893,11 +893,11 @@ class AdminPanel {
                 data.payments.forEach(p => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td>${new Date(p.created_at).toLocaleDateString('de-CH')}</td>
-                        <td>${this.escapeHtml(p.email)}</td>
-                        <td>${fmt(p.amount)}</td>
-                        <td><span class="payment-method-badge ${p.method}">${p.method}</span></td>
-                        <td><span class="status-badge ${p.status==='refunded'?'refunded':'paid'}">${p.status}</span></td>
+                        <td data-label="Datum">${new Date(p.created_at).toLocaleDateString('de-CH')}</td>
+                        <td data-label="Email">${this.escapeHtml(p.email)}</td>
+                        <td data-label="Betrag">${fmt(p.amount)}</td>
+                        <td data-label="Methode"><span class="payment-method-badge ${p.method}">${p.method}</span></td>
+                        <td data-label="Status"><span class="status-badge ${p.status==='refunded'?'refunded':'paid'}">${p.status}</span></td>
                     `;
                     tbody.appendChild(tr);
                 });

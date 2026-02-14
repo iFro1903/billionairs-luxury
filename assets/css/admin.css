@@ -1364,8 +1364,95 @@ tr:hover td { background: rgba(255,255,255,.02); }
     .toolbar { flex-direction: column; }
     .toolbar-search { min-width: 100%; }
 
-    table { font-size: .78rem; }
-    th, td { padding: .45rem .5rem; }
+    /* ===== MOBILE TABLE → CARD VIEW ===== */
+    #tab-users table thead,
+    #tab-users table th { display: none; }
+
+    #tab-users table,
+    #tab-users table tbody { display: block; width: 100%; }
+
+    #tab-users table tr {
+        display: block;
+        background: rgba(255,255,255,.025);
+        border: 1px solid rgba(232,196,168,.1);
+        border-radius: 10px;
+        padding: .85rem 1rem;
+        margin-bottom: .75rem;
+        position: relative;
+    }
+
+    #tab-users table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: .3rem 0;
+        border: none;
+        font-size: .85rem;
+    }
+
+    #tab-users table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--gold);
+        font-size: .75rem;
+        text-transform: uppercase;
+        letter-spacing: .3px;
+        min-width: 90px;
+        flex-shrink: 0;
+    }
+
+    #tab-users table td[data-label="Email"] {
+        font-weight: 600;
+        color: #E8C4A8;
+        border-bottom: 1px solid rgba(232,196,168,.08);
+        padding-bottom: .5rem;
+        margin-bottom: .25rem;
+    }
+
+    #tab-users table td[data-label="Aktionen"] {
+        justify-content: flex-end;
+        gap: .4rem;
+        padding-top: .6rem;
+        margin-top: .25rem;
+        border-top: 1px solid rgba(232,196,168,.08);
+    }
+    #tab-users table td[data-label="Aktionen"]::before { display: none; }
+
+    /* ===== MOBILE PAYMENTS TABLE → CARDS ===== */
+    #tab-payments table thead,
+    #tab-payments table th { display: none; }
+
+    #tab-payments table,
+    #tab-payments table tbody { display: block; width: 100%; }
+
+    #tab-payments table tr {
+        display: block;
+        background: rgba(255,255,255,.025);
+        border: 1px solid rgba(232,196,168,.1);
+        border-radius: 10px;
+        padding: .85rem 1rem;
+        margin-bottom: .75rem;
+    }
+
+    #tab-payments table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: .3rem 0;
+        border: none;
+        font-size: .85rem;
+    }
+
+    #tab-payments table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--gold);
+        font-size: .75rem;
+        text-transform: uppercase;
+        letter-spacing: .3px;
+        min-width: 80px;
+        flex-shrink: 0;
+    }
 
     .form-grid { grid-template-columns: 1fr; }
 
