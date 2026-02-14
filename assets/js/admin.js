@@ -18,12 +18,13 @@ class AdminPanel {
     }
 
     // 365-day membership countdown timer (starts after payment)
-    getMembershipTimer(paidAt, hasPaid) {
+    getMembershipTimer(paidAt, hasPaid, createdAt) {
         if (!hasPaid) return '<span style="color:#888; font-size:12px;">Not Paid</span>';
-        if (!paidAt) return '<span style="color:#f39c12; font-size:12px;">Paid (no date)</span>';
         
-        const paidDate = new Date(paidAt);
-        const expiresAt = new Date(paidDate.getTime() + 365 * 24 * 60 * 60 * 1000);
+        // Use paid_at if available, otherwise fall back to created_at
+        const startDate = paidAt ? new Date(paidAt) : (createdAt ? new Date(createdAt) : null);
+        if (!startDate) return '<span style="color:#f39c12; font-size:12px;">Paid (no date)</span>';
+        const expiresAt = new Date(startDate.getTime() + 365 * 24 * 60 * 60 * 1000);
         const now = new Date();
         const diffMs = expiresAt - now;
         
@@ -296,7 +297,7 @@ class AdminPanel {
             data.users.forEach(user => {
                 const safeEmail = this.escapeHtml(user.email);
                 const safeName = this.escapeHtml(user.name || 'N/A');
-                const timerHtml = this.getMembershipTimer(user.paid_at, user.has_paid);
+                const timerHtml = this.getMembershipTimer(user.paid_at, user.has_paid, user.created_at);
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${safeEmail}</td>
