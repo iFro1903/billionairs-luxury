@@ -174,7 +174,7 @@ class StripePaymentProcessor {
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error('❌ Wire Transfer error:', errorData);
-                throw new Error(errorData.message || 'Wire transfer request failed');
+                throw new Error(errorData.error || errorData.message || 'Wire transfer request failed');
             }
 
             const result = await response.json();

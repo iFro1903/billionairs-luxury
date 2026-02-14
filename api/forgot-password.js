@@ -40,7 +40,7 @@ export default async function handler(req) {
   try {
     const { email } = await req.json();
 
-    if (!email || !email.includes('@')) {
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return new Response(JSON.stringify({ 
         error: 'Please enter a valid email address.' 
       }), {

@@ -302,7 +302,7 @@ class PaymentMethodSelector {
                 }, 3000);
             } else {
                 // Error - show message
-                window.toast.error(`${result.message || 'Failed to process wire transfer request'}. Please try again or contact support.`, { title: 'Transfer Error' });
+                window.toast.error(`${result.error || result.message || 'Failed to process wire transfer request'}. Please try again or contact support.`, { title: 'Transfer Error' });
             }
 
             return result;

@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ success: false, error: 'Method not allowed' });
   }
 
   try {
@@ -23,8 +23,8 @@ module.exports = async (req, res) => {
 
     if (!sessionId || !email) {
       return res.status(400).json({ 
-        error: 'Missing required fields',
-        message: 'sessionId and email are required'
+        success: false,
+        error: 'sessionId and email are required'
       });
     }
 
@@ -55,8 +55,8 @@ module.exports = async (req, res) => {
         if (updateResult.rows.length === 0) {
           await pool.end();
           return res.status(404).json({ 
-            error: 'User not found',
-            message: 'No user found with this email'
+            success: false,
+            error: 'No user found with this email'
           });
         }
 
@@ -85,8 +85,8 @@ module.exports = async (req, res) => {
         console.error('❌ Database error:', dbError);
         await pool.end();
         return res.status(500).json({ 
-          error: 'Database error',
-          message: 'Internal server error'
+          success: false,
+          error: 'Internal server error'
         });
       }
 
@@ -95,15 +95,15 @@ module.exports = async (req, res) => {
       return res.status(200).json({ 
         success: false,
         paymentStatus: session.payment_status,
-        message: 'Payment not yet completed'
+        error: 'Payment not yet completed'
       });
     }
 
   } catch (error) {
     console.error('❌ Error verifying payment:', error);
     return res.status(500).json({ 
-      error: 'Verification failed',
-      message: 'Internal server error'
+      success: false,
+      error: 'Internal server error'
     });
   }
 };

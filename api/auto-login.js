@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
     }
 
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+        return res.status(405).json({ success: false, error: 'Method not allowed' });
     }
 
     const pool = getPool();
@@ -120,10 +120,10 @@ module.exports = async (req, res) => {
         console.error('Auto-login error:', error);
         return res.status(500).json({ 
             success: false,
-            error: 'Internal server error',
-            message: 'Internal server error' 
+            error: 'Internal server error'
         });
     } finally {
         if (client) client.release();
+        await pool.end();
     }
 };

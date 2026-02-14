@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   const { generateMemberId } = await import('../lib/helpers.js');
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ success: false, error: 'Method not allowed' });
   }
 
   try {
@@ -17,6 +17,7 @@ module.exports = async (req, res) => {
     const rl = await checkRateLimit(clientIp, RATE_LIMITS.STRIPE_CHECKOUT.maxRequests, RATE_LIMITS.STRIPE_CHECKOUT.windowMs, RATE_LIMITS.STRIPE_CHECKOUT.endpoint);
     if (!rl.allowed) {
       return res.status(429).json({
+        success: false,
         error: RATE_LIMITS.STRIPE_CHECKOUT.message,
         retryAfter: rl.retryAfter
       });
@@ -32,16 +33,25 @@ module.exports = async (req, res) => {
       // Validate required fields
       if (!email || !password) {
         return res.status(400).json({ 
-          error: 'Missing required fields',
-          message: 'Email and password are required'
+          success: false,
+          error: 'Email and password are required'
+        });
+      }
+
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return res.status(400).json({
+          success: false,
+          error: 'Please provide a valid email address'
         });
       }
 
       // Validate password length
       if (password.length < 8) {
         return res.status(400).json({ 
-          error: 'Invalid password',
-          message: 'Password must be at least 8 characters'
+          success: false,
+          error: 'Password must be at least 8 characters'
         });
       }
 
@@ -112,8 +122,8 @@ module.exports = async (req, res) => {
           }
         }
         return res.status(500).json({ 
-          error: 'Database error',
-          message: 'Failed to create user account. Please try again or contact support.'
+          success: false,
+          error: 'Failed to create user account. Please try again or contact support.'
         });
       } finally {
         if (client) {
@@ -123,6 +133,7 @@ module.exports = async (req, res) => {
             console.error('Error releasing client in finally:', releaseError);
           }
         }
+        await pool.end();
       }
     }
 
@@ -150,9 +161,9 @@ module.exports = async (req, res) => {
       cancel_url: `https://billionairs.luxury/?message=Payment cancelled&lang=${userLang}`
     });
 
-    res.status(200).json({ url: session.url });
+    res.status(200).json({ success: true, url: session.url });
   } catch (error) {
     console.error('Stripe error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ success: false, error: 'Internal server error' });
   }
 };

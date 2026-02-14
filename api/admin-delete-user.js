@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
     }
 
     if (req.method !== 'DELETE') {
-        return res.status(405).json({ error: 'Method not allowed' });
+        return res.status(405).json({ success: false, error: 'Method not allowed' });
     }
 
     // Admin auth check — verify both email AND password
@@ -23,25 +23,25 @@ module.exports = async (req, res) => {
     const adminPassword = req.headers['x-admin-password'];
     
     if (adminEmail !== 'furkan_akaslan@hotmail.com') {
-        return res.status(401).json({ error: 'Unauthorized' });
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
     }
     
     // Verify admin password against stored hash
     const passwordHash = process.env.ADMIN_PASSWORD_HASH;
     if (!adminPassword || !passwordHash) {
-        return res.status(401).json({ error: 'Unauthorized' });
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
     }
     
     const { verifyPasswordSimple } = await import('../lib/password-hash.js');
     const isValidPassword = await verifyPasswordSimple(adminPassword, passwordHash);
     if (!isValidPassword) {
-        return res.status(401).json({ error: 'Unauthorized' });
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
     }
 
     const { email } = req.body;
 
     if (!email) {
-        return res.status(400).json({ error: 'Email required' });
+        return res.status(400).json({ success: false, error: 'Email required' });
     }
 
     const pool = getPool();
@@ -54,7 +54,7 @@ module.exports = async (req, res) => {
         const userResult = await client.query('SELECT id FROM users WHERE email = $1', [email]);
         
         if (userResult.rows.length === 0) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ success: false, error: 'User not found' });
         }
 
         const userId = userResult.rows[0].id;
@@ -89,11 +89,13 @@ module.exports = async (req, res) => {
     } catch (error) {
         console.error('❌ Delete user error:', error);
         res.status(500).json({
+            success: false,
             error: 'Failed to delete user'
         });
     } finally {
         if (client) {
             client.release();
         }
+        await pool.end();
     }
 };

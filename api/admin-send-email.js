@@ -37,8 +37,10 @@ module.exports = async (req, res) => {
     }
 
     const pool = getPool();
+    try {
     const isValid = await verifyAdmin(pool, adminEmail, adminPassword);
     if (!isValid) {
+        await pool.end();
         return res.status(401).json({ error: 'Invalid credentials' });
     }
 
@@ -134,5 +136,11 @@ module.exports = async (req, res) => {
     } catch (err) {
         console.error('Email error:', err);
         return res.status(500).json({ error: 'Interner Fehler beim Email-Versand' });
+    } finally {
+        await pool.end();
+    }
+    } catch (poolErr) {
+        console.error('Pool error:', poolErr);
+        return res.status(500).json({ error: 'Database connection error' });
     }
 };

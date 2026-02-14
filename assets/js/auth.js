@@ -39,7 +39,7 @@ class AuthManager {
             const data = await response.json();
             
             if (!data.success) {
-                throw new Error(data.message || 'Registration failed');
+                throw new Error(data.error || data.message || 'Registration failed');
             }
 
             return data;
@@ -66,7 +66,7 @@ class AuthManager {
             const data = await response.json();
             
             if (!data.success) {
-                throw new Error(data.message || 'Login failed');
+                throw new Error(data.error || data.message || 'Login failed');
             }
 
             // Save user display data only (token is in HttpOnly cookie)
@@ -147,7 +147,7 @@ class AuthManager {
             const data = await response.json();
             
             if (!data.success) {
-                throw new Error(data.message || 'Payment update failed');
+                throw new Error(data.error || data.message || 'Payment update failed');
             }
 
             this.user = data.user;
