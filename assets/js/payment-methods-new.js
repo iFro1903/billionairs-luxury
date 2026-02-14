@@ -189,19 +189,19 @@ class PaymentMethodSelector {
 
         // Validate required fields
         if (!fullName || !email || !phone || !password) {
-            alert('Please fill in all required fields for crypto payment (First Name, Last Name, Email, Phone, Password)');
+            window.toast.warning('Please fill in all required fields (First Name, Last Name, Email, Phone, Password)', { title: 'Missing Fields' });
             return;
         }
 
         // Validate password length
         if (password.length < 8) {
-            alert('Password must be at least 8 characters long');
+            window.toast.warning('Password must be at least 8 characters long', { title: 'Password Too Short' });
             return;
         }
 
         // Validate password confirmation
         if (password !== passwordConfirm) {
-            alert('Passwords do not match. Please check and try again.');
+            window.toast.warning('Passwords do not match. Please check and try again.', { title: 'Password Mismatch' });
             return;
         }
 
@@ -229,23 +229,7 @@ class PaymentMethodSelector {
 
         
         // Show confirmation message
-        alert(`✓ Crypto Payment Request Received
-
-Thank you, ${fullName}!
-
-Payment Details:
-• Currency: ${cryptoNames[selectedCrypto]}
-• Amount: 500,000 CHF
-
-You will receive via email at ${email}:
-• Crypto wallet address
-• Exact amount in ${cryptoNames[selectedCrypto]}
-• Payment reference ID
-• Real-time exchange rate (valid for 30 minutes)
-
-⚡ Fast processing: Access granted within 10-60 minutes after blockchain confirmation!
-
-💡 Note: Your account has been created. You can login at login.html after payment confirmation.`);
+        window.toast.success(`Crypto Payment Request Received!\nThank you, ${fullName}!\n\nCurrency: ${cryptoNames[selectedCrypto]} · Amount: 500,000 CHF\nCheck your email at ${email} for wallet address and instructions.`, { title: 'Payment Request Sent', duration: 10000 });
 
         return cryptoPaymentData;
     }
@@ -265,19 +249,19 @@ You will receive via email at ${email}:
 
         // Validate required fields
         if (!fullName || !email || !phone || !password) {
-            alert('Please fill in all required fields for wire transfer (First Name, Last Name, Email, Phone, Password)');
+            window.toast.warning('Please fill in all required fields (First Name, Last Name, Email, Phone, Password)', { title: 'Missing Fields' });
             return;
         }
 
         // Validate password length
         if (password.length < 8) {
-            alert('Password must be at least 8 characters long');
+            window.toast.warning('Password must be at least 8 characters long', { title: 'Password Too Short' });
             return;
         }
 
         // Validate password confirmation
         if (password !== passwordConfirm) {
-            alert('Passwords do not match. Please check and try again.');
+            window.toast.warning('Passwords do not match. Please check and try again.', { title: 'Password Mismatch' });
             return;
         }
 
@@ -310,22 +294,7 @@ You will receive via email at ${email}:
 
             if (response.ok) {
                 // Success - show bank details
-                alert(`✓ Wire Transfer Details Sent!
-
-Thank you, ${fullName}!
-
-📧 Check your email: ${email}
-
-You will receive:
-• Complete bank account details
-• Reference number for your transfer  
-• Step-by-step payment instructions
-
-Amount: CHF 500,000.00
-
-⏱️ Access granted within 24 hours of receiving your transfer.
-
-Please keep your phone ${phone} available for verification.`);
+                window.toast.success(`Wire Transfer Details Sent!\nThank you, ${fullName}!\n\nCheck your email: ${email}\nYou will receive bank details, reference number, and instructions.\nAmount: CHF 500,000.00`, { title: 'Transfer Request Submitted', duration: 10000 });
 
                 // Redirect to success page or dashboard
                 setTimeout(() => {
@@ -333,14 +302,14 @@ Please keep your phone ${phone} available for verification.`);
                 }, 3000);
             } else {
                 // Error - show message
-                alert(`❌ Error: ${result.message || 'Failed to process wire transfer request'}\n\nPlease try again or contact support.`);
+                window.toast.error(`${result.message || 'Failed to process wire transfer request'}. Please try again or contact support.`, { title: 'Transfer Error' });
             }
 
             return result;
 
         } catch (error) {
             console.error('Wire transfer error:', error);
-            alert('❌ Network error. Please check your connection and try again.');
+            window.toast.error('Network error. Please check your connection and try again.', { title: 'Connection Failed' });
             throw error;
         }
     }

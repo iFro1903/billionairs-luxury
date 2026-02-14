@@ -1038,11 +1038,11 @@ class LuxuryChat {
             } else {
                 const errorData = await response.json().catch(() => ({}));
                 console.error('Upload error:', errorData);
-                alert(`Upload failed: ${errorData.error || 'Unknown error'}`);
+                window.toast.error(`Upload failed: ${errorData.error || 'Unknown error'}`, { title: 'Upload Error' });
             }
         } catch (error) {
             console.error('Error uploading file:', error);
-            alert('Upload error. Please try again.');
+            window.toast.error('Upload error. Please try again.', { title: 'Upload Failed' });
         } finally {
             input.placeholder = originalPlaceholder;
             input.disabled = false;

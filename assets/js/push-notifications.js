@@ -192,7 +192,7 @@ class PushNotificationManager {
      */
     async showTestNotification() {
         if (!this.isSupported()) {
-            alert('Notifications not supported');
+            window.toast.info('Push notifications are not supported in this browser.', { title: 'Not Supported' });
             return;
         }
 

@@ -417,7 +417,7 @@ class LuxuryTimepiece {
             if (leaveBtn) {
                 leaveBtn.addEventListener('click', () => {
                     // Optionally close window or show final message
-                    alert('Access window closing. Return when ready.');
+                    window.toast.info('Access window closing. Return when ready.', { title: 'Session Ending' });
                     window.location.reload();
                 });
             }

@@ -101,7 +101,7 @@ class StripePaymentProcessor {
 
     async createWireTransferRequest() {
         if (!ENABLE_BANK_TRANSFER) {
-            alert('Bank wire transfer is temporarily unavailable. Please use Credit Card or Cryptocurrency.');
+            window.toast.info('Bank wire transfer is temporarily unavailable. Please use Credit Card or Cryptocurrency.', { title: 'Temporarily Unavailable' });
             return;
         }
         
@@ -421,14 +421,14 @@ class StripePaymentProcessor {
         // Validate required fields
         if (!fullName || !email || !phone) {
             console.error('❌ Validation failed:', { fullName, email, phone });
-            alert('Please fill in all required fields (Name, Email, Phone)');
+            window.toast.warning('Please fill in all required fields (Name, Email, Phone)', { title: 'Missing Fields' });
             return;
         }
 
         // Validate email format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            alert('Please enter a valid email address');
+            window.toast.warning('Please enter a valid email address', { title: 'Invalid Email' });
             return;
         }
 
@@ -472,7 +472,7 @@ class StripePaymentProcessor {
 
         } catch (error) {
             console.error('Crypto payment error:', error);
-            alert('Failed to create crypto payment request. Please try again.');
+            window.toast.error('Failed to create crypto payment request. Please try again.', { title: 'Payment Error' });
         } finally {
             this.isProcessing = false;
         }
