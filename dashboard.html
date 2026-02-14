@@ -475,7 +475,7 @@
                         <span data-i18n="dashboard.pending_line4">One decision. One moment. Everything changes.</span><br>
                         <span data-i18n="dashboard.pending_line5">Unlock what the elite measure their lives by.</span>
                     </div>
-                    <button class="download-button" id="paymentActionButton" onclick="window.location.href='/#paymentSection'" data-i18n="dashboard.complete_payment">Complete Payment</button>
+                    <button class="download-button" id="paymentActionButton" onclick="startDirectCheckout()" data-i18n="dashboard.complete_payment">Complete Payment</button>
                 </div>
             </div>
 
@@ -521,6 +521,62 @@
         }
 
         // Premium Toast Notification System
+        // Direct Stripe Checkout - skip registration form since user is already logged in
+        async function startDirectCheckout() {
+            const btn = document.getElementById('paymentActionButton');
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = '⏳ Weiterleitung...';
+            btn.style.opacity = '0.7';
+
+            try {
+                const user = window.authManager.getUser();
+                if (!user || !user.email) {
+                    showToast('Bitte zuerst einloggen', 'error');
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                    btn.style.opacity = '1';
+                    return;
+                }
+
+                const lang = localStorage.getItem('billionairs_lang') || 'en';
+
+                const response = await fetch('/api/stripe-checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        customerData: {
+                            email: user.email,
+                            password: 'existing-user', // User already exists, won't overwrite
+                            fullName: user.fullName || user.name || '',
+                            phone: user.phone || '',
+                            company: user.company || ''
+                        },
+                        metadata: { source: 'dashboard-direct-payment' },
+                        language: lang
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.url) {
+                    sessionStorage.setItem('paymentInitiated', 'true');
+                    window.location.href = result.url;
+                } else {
+                    showToast(result.error || 'Fehler beim Erstellen der Zahlung', 'error');
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                    btn.style.opacity = '1';
+                }
+            } catch (error) {
+                console.error('Direct checkout error:', error);
+                showToast('Verbindungsfehler. Bitte versuchen Sie es erneut.', 'error');
+                btn.disabled = false;
+                btn.textContent = originalText;
+                btn.style.opacity = '1';
+            }
+        }
+
         function showToast(message, type = 'info', duration = 4000) {
             // Remove existing toast
             const existing = document.getElementById('premium-toast');
