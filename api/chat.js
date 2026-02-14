@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
 
 export const config = {
     runtime: 'edge',
@@ -199,6 +200,19 @@ export default async function handler(req) {
             const url = new URL(req.url);
             const isCEORequest = url.searchParams.get('ceo') === 'true';
 
+            // Rate limit GET requests
+            const clientIp = getClientIp(req);
+            const rl = await checkRateLimit(clientIp, RATE_LIMITS.CHAT_GET.maxRequests, RATE_LIMITS.CHAT_GET.windowMs, RATE_LIMITS.CHAT_GET.endpoint);
+            if (!rl.allowed) {
+                return new Response(JSON.stringify({ error: RATE_LIMITS.CHAT_GET.message }), {
+                    status: 429,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Retry-After': String(rl.retryAfter)
+                    }
+                });
+            }
+
             // CEO request - requires admin authentication
             if (isCEORequest) {
                 const isAdmin = await validateAdminAccess(req, sql);
@@ -308,6 +322,19 @@ export default async function handler(req) {
 
         // POST: Send message (filter + encrypt before storing)
         if (req.method === 'POST') {
+            // Rate limit POST requests
+            const postIp = getClientIp(req);
+            const rlPost = await checkRateLimit(postIp, RATE_LIMITS.CHAT_POST.maxRequests, RATE_LIMITS.CHAT_POST.windowMs, RATE_LIMITS.CHAT_POST.endpoint);
+            if (!rlPost.allowed) {
+                return new Response(JSON.stringify({ error: RATE_LIMITS.CHAT_POST.message }), {
+                    status: 429,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Retry-After': String(rlPost.retryAfter)
+                    }
+                });
+            }
+
             // Authenticate user via session cookie
             const postToken = getSessionToken(req);
             const postUser = await validateSession(sql, postToken);

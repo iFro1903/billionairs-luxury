@@ -111,8 +111,8 @@ export default async function rateLimiter(request, endpoint, maxRequests = 10, w
 
     return {
       allowed: true,
-      remaining: maxRequests - record.count,
-      resetAt: new Date(new Date(record.window_start).getTime() + windowMs)
+      remaining: maxRequests - count,
+      resetAt: Date.now() + windowMs
     };
 
   } catch (error) {

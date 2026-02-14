@@ -3,6 +3,7 @@
 // Sends ultra-luxury email with wallet addresses and QR codes
 
 import pg from 'pg';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
 
 const { Pool } = pg;
 
@@ -99,6 +100,16 @@ export default async function handler(req, res) {
     }
 
     try {
+        // Rate limiting: 5 crypto payment attempts per 15 minutes
+        const clientIp = getClientIp(req);
+        const rl = await checkRateLimit(clientIp, RATE_LIMITS.CRYPTO_PAYMENT.maxRequests, RATE_LIMITS.CRYPTO_PAYMENT.windowMs, RATE_LIMITS.CRYPTO_PAYMENT.endpoint);
+        if (!rl.allowed) {
+            return res.status(429).json({
+                error: RATE_LIMITS.CRYPTO_PAYMENT.message,
+                retryAfter: rl.retryAfter
+            });
+        }
+
         const { fullName, email, phone, company, cryptocurrency, password } = req.body;
 
         // Validate required fields

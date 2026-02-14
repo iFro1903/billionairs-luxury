@@ -42,6 +42,17 @@ module.exports = async (req, res) => {
   }
 
   try {
+    // Rate limiting: 5 checkout attempts per 15 minutes
+    const { checkRateLimit, getClientIp, RATE_LIMITS } = await import('../lib/rate-limiter.js');
+    const clientIp = getClientIp(req);
+    const rl = await checkRateLimit(clientIp, RATE_LIMITS.STRIPE_CHECKOUT.maxRequests, RATE_LIMITS.STRIPE_CHECKOUT.windowMs, RATE_LIMITS.STRIPE_CHECKOUT.endpoint);
+    if (!rl.allowed) {
+      return res.status(429).json({
+        error: RATE_LIMITS.STRIPE_CHECKOUT.message,
+        retryAfter: rl.retryAfter
+      });
+    }
+
     const { customerData, metadata, language } = req.body;
     const userLang = language || 'en'; // Get language from request
 
