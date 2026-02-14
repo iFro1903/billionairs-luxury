@@ -668,13 +668,22 @@
 /* Responsive FAQ & Footer */
 @media (max-width: 768px) {
     .legal-modal {
-        padding: 1rem;
+        padding: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .legal-modal-inner {
+        align-items: flex-start;
+        min-height: auto;
+        padding: 1rem 1rem 6rem;
     }
 
     .modal-content {
-        padding: 2.5rem 1.8rem 4rem;
-        max-height: 92vh;
+        padding: 2.5rem 1.8rem 5rem;
+        max-height: none;
         border-radius: 20px;
+        overflow-y: visible;
     }
 
     .modal-close {
