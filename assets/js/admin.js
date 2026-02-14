@@ -615,14 +615,84 @@ class AdminPanel {
         }
     }
 
-    // ========== EMAIL TO USER ==========
+    // ========== EMAIL COMPOSER ==========
     sendEmailToUser(email) {
-        const subject = prompt('Betreff:');
-        if (!subject) return;
-        const message = prompt('Nachricht:');
-        if (!message) return;
+        const modal = document.getElementById('emailComposerModal');
+        const toField = document.getElementById('emailTo');
+        const subjectField = document.getElementById('emailSubject');
+        const bodyField = document.getElementById('emailBody');
+        const templateSelect = document.getElementById('emailTemplate');
+        const charCount = document.getElementById('emailCharCount');
+        const sendBtn = document.getElementById('emailSendBtn');
 
-        this.doSendEmail(email, subject, message);
+        // Reset fields
+        toField.value = email;
+        subjectField.value = '';
+        bodyField.value = '';
+        templateSelect.value = '';
+        charCount.textContent = '0 Zeichen';
+        sendBtn.querySelector('span').textContent = 'Senden';
+        sendBtn.disabled = false;
+
+        // Character counter
+        bodyField.oninput = () => {
+            const len = bodyField.value.length;
+            charCount.textContent = `${len} Zeichen`;
+        };
+
+        // Store reference for global access
+        window._adminEmailComposer = {
+            applyTemplate: () => {
+                const user = this.users.find(u => u.email === email);
+                const name = user?.name || user?.full_name || 'Mitglied';
+                const tpl = templateSelect.value;
+                const templates = {
+                    'welcome': {
+                        subject: 'Willkommen bei BILLIONAIRS',
+                        body: `Sehr geehrte/r ${name},\n\nWir heissen Sie herzlich willkommen bei BILLIONAIRS.\n\nIhr exklusiver Zugang wurde aktiviert und steht Ihnen ab sofort zur Verfügung. Als Mitglied unseres privaten Netzwerks profitieren Sie von einzigartigen Privilegien und Verbindungen.\n\nSollten Sie Fragen haben, stehen wir Ihnen jederzeit zur Verfügung.\n\nMit besten Grüssen,\nBILLIONAIRS Management`
+                    },
+                    'payment-reminder': {
+                        subject: 'Zahlungserinnerung — BILLIONAIRS Mitgliedschaft',
+                        body: `Sehr geehrte/r ${name},\n\nWir möchten Sie höflich daran erinnern, dass Ihre Mitgliedschaftsgebühr noch aussteht.\n\nBitte vervollständigen Sie die Zahlung über Ihr Dashboard, um weiterhin vollen Zugang zu allen exklusiven Funktionen zu geniessen.\n\nBei Fragen kontaktieren Sie uns unter support@billionairs.luxury.\n\nMit besten Grüssen,\nBILLIONAIRS Management`
+                    },
+                    'account-issue': {
+                        subject: 'Wichtige Information zu Ihrem Account — BILLIONAIRS',
+                        body: `Sehr geehrte/r ${name},\n\nWir möchten Sie über ein Anliegen bezüglich Ihres BILLIONAIRS-Accounts informieren.\n\n[Bitte beschreiben Sie hier das Problem]\n\nBitte kontaktieren Sie uns zeitnah, damit wir die Angelegenheit klären können.\n\nMit besten Grüssen,\nBILLIONAIRS Management`
+                    },
+                    'membership-update': {
+                        subject: 'Update Ihrer BILLIONAIRS Mitgliedschaft',
+                        body: `Sehr geehrte/r ${name},\n\nWir möchten Sie über eine Aktualisierung Ihrer Mitgliedschaft informieren.\n\n[Details zum Update]\n\nDiese Änderungen treten ab sofort in Kraft.\n\nMit besten Grüssen,\nBILLIONAIRS Management`
+                    }
+                };
+
+                if (templates[tpl]) {
+                    subjectField.value = templates[tpl].subject;
+                    bodyField.value = templates[tpl].body;
+                    bodyField.oninput();
+                }
+            },
+            send: async () => {
+                const subject = subjectField.value.trim();
+                const message = bodyField.value.trim();
+
+                if (!subject) { this.toast('Bitte Betreff eingeben', 'error'); subjectField.focus(); return; }
+                if (!message) { this.toast('Bitte Nachricht eingeben', 'error'); bodyField.focus(); return; }
+
+                sendBtn.disabled = true;
+                sendBtn.querySelector('span').textContent = 'Senden...';
+
+                await this.doSendEmail(email, subject, message);
+
+                sendBtn.querySelector('span').textContent = 'Gesendet ✓';
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 1200);
+            }
+        };
+
+        // Show modal
+        modal.classList.remove('hidden');
+        setTimeout(() => subjectField.focus(), 100);
     }
 
     async doSendEmail(to, subject, message) {
