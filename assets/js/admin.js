@@ -873,14 +873,21 @@ class AdminPanel {
     async load2FAStatus() {
         try {
             const s = this.getSession();
-            await fetch('/api/admin-2fa-setup', {
+            const res = await fetch('/api/admin-2fa-setup', {
                 method: 'POST',
                 headers: { 'Content-Type':'application/json' },
                 body: JSON.stringify({ email: this.ceoEmail, password: s?.password||'', action:'status' })
             });
-            document.getElementById('2faStatusText').textContent = '2FA: Deaktiviert';
-            document.getElementById('enable2FA').classList.remove('hidden');
-            document.getElementById('disable2FA').classList.add('hidden');
+            const data = await res.json();
+            if (data.enabled) {
+                document.getElementById('2faStatusText').textContent = '2FA: Aktiviert ✅';
+                document.getElementById('enable2FA').classList.add('hidden');
+                document.getElementById('disable2FA').classList.remove('hidden');
+            } else {
+                document.getElementById('2faStatusText').textContent = '2FA: Deaktiviert';
+                document.getElementById('enable2FA').classList.remove('hidden');
+                document.getElementById('disable2FA').classList.add('hidden');
+            }
         } catch (e) { console.error(e); }
     }
 

@@ -207,6 +207,22 @@ export default async function handler(request) {
       }
     }
 
+    if (action === 'status') {
+      const result = await sql`
+        SELECT enabled FROM two_factor_auth
+        WHERE user_email = ${email} AND enabled = true
+        LIMIT 1
+      `;
+
+      return new Response(JSON.stringify({
+        success: true,
+        enabled: result.length > 0
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
     return new Response(JSON.stringify({ error: 'Invalid action' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' }
