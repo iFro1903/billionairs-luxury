@@ -389,5 +389,7 @@ export default async function handler(req, res) {
             message: 'Server error',
             error: 'Internal server error'
         });
+    } finally {
+        try { await pool.end(); } catch (e) {}
     }
 }

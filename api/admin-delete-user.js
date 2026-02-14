@@ -31,9 +31,23 @@ module.exports = async (req, res) => {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    // Admin auth check
+    // Admin auth check — verify both email AND password
     const adminEmail = req.headers['x-admin-email'];
+    const adminPassword = req.headers['x-admin-password'];
+    
     if (adminEmail !== 'furkan_akaslan@hotmail.com') {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+    
+    // Verify admin password against stored hash
+    const passwordHash = process.env.ADMIN_PASSWORD_HASH;
+    if (!adminPassword || !passwordHash) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+    
+    const { verifyPasswordSimple } = await import('../lib/password-hash.js');
+    const isValidPassword = await verifyPasswordSimple(adminPassword, passwordHash);
+    if (!isValidPassword) {
         return res.status(401).json({ error: 'Unauthorized' });
     }
 

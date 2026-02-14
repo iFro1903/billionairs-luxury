@@ -2,6 +2,7 @@
 // Collects customer information and sends bank details via email
 
 import pg from 'pg';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
 
 const { Pool } = pg;
 
@@ -39,7 +40,11 @@ function getPool() {
 // Email sending function using fetch API (no dependencies needed)
 async function sendEmail(to, subject, html) {
     // Using Resend API - simple and free tier available
-    const RESEND_API_KEY = process.env.RESEND_API_KEY || 're_demo_key';
+    const RESEND_API_KEY = process.env.RESEND_API_KEY;
+    if (!RESEND_API_KEY) {
+        console.error('RESEND_API_KEY is not configured');
+        return false;
+    }
     
     try {
         const response = await fetch('https://api.resend.com/emails', {
@@ -92,6 +97,16 @@ export default async function handler(req, res) {
     }
 
     try {
+        // Rate limiting: 5 wire transfer attempts per 15 minutes
+        const clientIp = getClientIp(req);
+        const rl = await checkRateLimit(clientIp, 5, 15 * 60 * 1000, 'wire-transfer');
+        if (!rl.allowed) {
+            return res.status(429).json({
+                error: 'Too many transfer requests. Please try again in 15 minutes.',
+                retryAfter: rl.retryAfter
+            });
+        }
+
         const { fullName, email, phone, company, password } = req.body;
 
         // Validate required fields
@@ -146,7 +161,7 @@ export default async function handler(req, res) {
                 // Continue to send bank details - don't block existing users from paying!
             } else {
                 // Create new user with pending payment status
-                const hashedPassword = hashPassword(password);
+                const hashedPassword = await hashPassword(password);
                 const memberId = generateMemberId();
                 
                 // Split full name into first and last name

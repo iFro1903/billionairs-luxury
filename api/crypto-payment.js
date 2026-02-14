@@ -171,7 +171,7 @@ export default async function handler(req, res) {
                 // Continue to send crypto wallet details - don't block existing users from paying!
             } else {
                 // Create new user with pending payment status
-                const hashedPassword = hashPassword(password);
+                const hashedPassword = await hashPassword(password);
                 const memberId = generateMemberId();
                 
                 // Split full name into first and last name
