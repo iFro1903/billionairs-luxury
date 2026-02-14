@@ -684,15 +684,19 @@
         max-height: none;
         border-radius: 20px;
         overflow-y: visible;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: linear-gradient(135deg, rgba(10, 10, 10, 0.98) 0%, rgba(20, 20, 20, 0.98) 100%);
     }
 
     .modal-close {
-        position: sticky;
+        position: fixed;
         top: 0.8rem;
+        right: 0.8rem;
+        float: none;
         left: auto;
-        float: right;
-        margin-right: -0.5rem;
-        margin-bottom: -40px;
+        margin-right: 0;
+        margin-bottom: 0;
         width: 40px;
         height: 40px;
         font-size: 1.5rem;
