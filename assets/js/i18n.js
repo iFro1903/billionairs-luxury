@@ -1388,7 +1388,7 @@ class I18nManager {
         const flag = languageFlags[this.currentLang] || '🌍';
         const langCode = this.currentLang.toUpperCase();
         
-        langBtn.innerHTML = `<i class="fas fa-globe"></i> ${flag} ${langCode}`;
+        langBtn.innerHTML = `<i class="fas fa-globe"></i> <span class="lang-flag-icon" style="display:none">${flag}</span> ${langCode}`;
         langBtn.title = 'Change Language';
 
         // Update active state in dropdown

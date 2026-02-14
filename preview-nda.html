@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html><head><title>NDA Preview</title></head>
+<body style="background:#000;color:#fff;font-family:sans-serif;text-align:center;padding-top:3rem;">
+<p>Setting session data and redirecting...</p>
+<script>
+    // Set sessionStorage so NDA page doesn't show "Session Expired"
+    try {
+        sessionStorage.setItem('nda_customer', JSON.stringify({
+            fullName: 'Max Mustermann',
+            email: 'max@example.com',
+            password: 'PreviewTest123!',
+            phone: '+41791234567',
+            company: 'Mustermann AG'
+        }));
+        console.log('sessionStorage set:', sessionStorage.getItem('nda_customer'));
+    } catch(e) {
+        console.error('sessionStorage error:', e);
+        document.body.innerHTML += '<p style="color:red;">Error setting sessionStorage: ' + e.message + '</p>';
+    }
+    // Get lang from URL or default to 'de'
+    const lang = new URLSearchParams(window.location.search).get('lang') || 'de';
+    const url = `nda-signing.html?name=Max%20Mustermann&email=max@example.com&phone=%2B41791234567&company=Mustermann%20AG&lang=${lang}`;
+    console.log('Redirecting to:', url);
+    // Use setTimeout to ensure sessionStorage is written before redirect
+    setTimeout(function() {
+        window.location.replace(url);
+    }, 200);
+</script>
+</body>
+</html>
