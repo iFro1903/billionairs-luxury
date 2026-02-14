@@ -298,13 +298,26 @@ class AdminPanel {
                 const safeEmail = this.escapeHtml(user.email);
                 const safeName = this.escapeHtml(user.name || 'N/A');
                 const timerHtml = this.getMembershipTimer(user.paid_at, user.has_paid, user.created_at);
+                const currentStatus = user.has_paid ? 'paid' : (user.payment_status || 'free');
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${safeEmail}</td>
                     <td>${safeName}</td>
                     <td>${new Date(user.created_at).toLocaleDateString()}</td>
                     <td>${timerHtml}</td>
-                    <td><span class="status-badge ${user.has_paid ? 'paid' : 'unpaid'}">${user.has_paid ? 'Paid' : 'Free'}</span></td>
+                    <td>
+                        <select class="status-select status-${currentStatus}" onchange="adminPanel.updateMemberStatus('${safeEmail}', this.value, this)" style="
+                            background: ${currentStatus === 'paid' ? 'rgba(76,175,80,0.2)' : currentStatus === 'pending' ? 'rgba(243,156,18,0.2)' : 'rgba(220,53,69,0.2)'};
+                            color: ${currentStatus === 'paid' ? '#4CAF50' : currentStatus === 'pending' ? '#f39c12' : '#DC3545'};
+                            border: 1px solid ${currentStatus === 'paid' ? '#4CAF50' : currentStatus === 'pending' ? '#f39c12' : '#DC3545'};
+                            border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600;
+                            cursor: pointer; outline: none; text-transform: uppercase; letter-spacing: 0.5px;
+                        ">
+                            <option value="paid" ${currentStatus === 'paid' ? 'selected' : ''}>✅ Paid</option>
+                            <option value="pending" ${currentStatus === 'pending' ? 'selected' : ''}>⏳ Pending</option>
+                            <option value="free" ${currentStatus === 'free' ? 'selected' : ''}>🆓 Free</option>
+                        </select>
+                    </td>
                     <td>
                         ${user.pyramid_unlocked ? '🔓' : '🔒'} Pyramid
                         ${user.eye_unlocked ? '🔓' : '🔒'} Eye
@@ -867,6 +880,54 @@ class AdminPanel {
 
     viewUser(email) {
         alert(`Viewing user: ${email}\n\n(Full user details coming soon)`);
+    }
+
+    async updateMemberStatus(email, newStatus, selectEl) {
+        const statusLabels = { paid: 'Paid', pending: 'Pending', free: 'Free' };
+        if (!confirm(`Status von ${email} auf "${statusLabels[newStatus]}" ändern?`)) {
+            // Revert dropdown
+            this.loadUsersData();
+            return;
+        }
+
+        try {
+            const adminSession = JSON.parse(sessionStorage.getItem('adminSession'));
+            const response = await fetch('/api/admin-update-status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Admin-Email': adminSession.email,
+                    'X-Admin-Password': adminSession.password
+                },
+                body: JSON.stringify({ email, status: newStatus })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                // Update dropdown styling
+                const colors = {
+                    paid: { bg: 'rgba(76,175,80,0.2)', color: '#4CAF50', border: '#4CAF50' },
+                    pending: { bg: 'rgba(243,156,18,0.2)', color: '#f39c12', border: '#f39c12' },
+                    free: { bg: 'rgba(220,53,69,0.2)', color: '#DC3545', border: '#DC3545' }
+                };
+                const c = colors[newStatus];
+                selectEl.style.background = c.bg;
+                selectEl.style.color = c.color;
+                selectEl.style.borderColor = c.border;
+
+                alert(`✅ ${email} → ${statusLabels[newStatus]}`);
+                // Reload to update timer
+                this.loadUsersData();
+            } else {
+                alert(`❌ Error: ${data.error || 'Unknown error'}`);
+                this.loadUsersData();
+            }
+        } catch (error) {
+            console.error('Error updating status:', error);
+            alert('❌ Failed to update status');
+            this.loadUsersData();
+        }
     }
 
     async deleteUser(email) {
