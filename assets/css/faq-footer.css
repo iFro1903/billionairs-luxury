@@ -672,8 +672,8 @@
     }
 
     .modal-content {
-        padding: 2.5rem 1.8rem;
-        max-height: 90vh;
+        padding: 2.5rem 1.8rem 4rem;
+        max-height: 92vh;
         border-radius: 20px;
     }
 
