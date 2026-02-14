@@ -274,6 +274,8 @@
     "payment_success_message": "您的支付已成功处理。",
     "email_sent_notice": "确认邮件已发送到您的收件箱。",
     "amount": "金额",
+    "amount_value": "CHF 500,000",
+    "amount_detail": "CHF 500,000.00",
     "date": "日期",
     "time": "时间",
     "status": "状态",

@@ -270,6 +270,8 @@
     "payment_success_message": "お支払いが正常に処理されました。",
     "email_sent_notice": "確認メールが受信トレイに送信されました。",
     "amount": "金額",
+    "amount_value": "CHF 500,000",
+    "amount_detail": "CHF 500,000.00",
     "date": "日付",
     "time": "時刻",
     "status": "ステータス",

@@ -270,6 +270,8 @@
     "payment_success_message": "تمت معالجة دفعتك بنجاح.",
     "email_sent_notice": "تم إرسال بريد إلكتروني تأكيد إلى صندوق الوارد الخاص بك.",
     "amount": "المبلغ",
+    "amount_value": "CHF 500,000",
+    "amount_detail": "CHF 500,000.00",
     "date": "التاريخ",
     "time": "الوقت",
     "status": "الحالة",

@@ -289,6 +289,8 @@
     "payment_success_message": "Votre paiement a été traité avec succès.",
     "email_sent_notice": "Un e-mail de confirmation a été envoyé à votre boîte de réception.",
     "amount": "Montant",
+    "amount_value": "CHF 500,000",
+    "amount_detail": "CHF 500,000.00",
     "date": "Date",
     "time": "Heure",
     "status": "Statut",

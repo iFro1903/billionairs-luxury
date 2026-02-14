@@ -285,6 +285,8 @@
     "payment_success_message": "Il tuo pagamento è stato elaborato con successo.",
     "email_sent_notice": "Un'email di conferma è stata inviata alla tua casella di posta.",
     "amount": "Importo",
+    "amount_value": "CHF 500,000",
+    "amount_detail": "CHF 500,000.00",
     "date": "Data",
     "time": "Ora",
     "status": "Stato",

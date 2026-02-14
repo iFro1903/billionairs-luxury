@@ -289,6 +289,8 @@
     "payment_success_message": "Su pago ha sido procesado exitosamente.",
     "email_sent_notice": "Se ha enviado un correo de confirmación a su bandeja de entrada.",
     "amount": "Cantidad",
+    "amount_value": "CHF 500,000",
+    "amount_detail": "CHF 500,000.00",
     "date": "Fecha",
     "time": "Hora",
     "status": "Estado",
