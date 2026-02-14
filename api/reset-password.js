@@ -1,32 +1,10 @@
 ﻿import { neon } from '@neondatabase/serverless';
+import { getCorsOrigin } from '../lib/cors.js';
+import { hashPassword } from '../lib/password-hash.js';
 
 export const config = {
   runtime: 'edge',
 };
-
-// CORS: Only allow requests from our domain
-function getCorsOrigin(req) {
-    const origin = req.headers?.get?.('origin') || '';
-    const allowed = ['https://billionairs.luxury', 'https://www.billionairs.luxury'];
-    return allowed.includes(origin) ? origin : allowed[0];
-}
-
-// Hash password with PBKDF2 (100k iterations, Edge Runtime compatible)
-const PBKDF2_ITERATIONS = 100000;
-async function hashPassword(password) {
-    const saltBuffer = crypto.getRandomValues(new Uint8Array(16));
-    const saltHex = Array.from(saltBuffer).map(b => b.toString(16).padStart(2, '0')).join('');
-    const encoder = new TextEncoder();
-    const keyMaterial = await crypto.subtle.importKey(
-        'raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits']
-    );
-    const derivedBits = await crypto.subtle.deriveBits(
-        { name: 'PBKDF2', salt: saltBuffer, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
-        keyMaterial, 256
-    );
-    const hashHex = Array.from(new Uint8Array(derivedBits)).map(b => b.toString(16).padStart(2, '0')).join('');
-    return `pbkdf2$${PBKDF2_ITERATIONS}$${saltHex}$${hashHex}`;
-}
 
 export default async function handler(req) {
   // Handle CORS

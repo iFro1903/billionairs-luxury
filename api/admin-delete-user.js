@@ -1,22 +1,9 @@
 // Vercel Serverless Function to delete a user
-const { Pool } = require('pg');
-
-function getPool() {
-    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
-    return new Pool({
-        connectionString: dbUrl,
-        ssl: { rejectUnauthorized: false }
-    });
-}
-
-// CORS: Only allow requests from our domain
-function getCorsOrigin(req) {
-    const origin = req.headers.origin || req.headers['origin'];
-    const allowed = ['https://billionairs.luxury', 'https://www.billionairs.luxury'];
-    return allowed.includes(origin) ? origin : allowed[0];
-}
 
 module.exports = async (req, res) => {
+    const { getPool } = await import('../lib/db.js');
+    const { getCorsOrigin } = await import('../lib/cors.js');
+
     // CORS headers
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Origin', getCorsOrigin(req));

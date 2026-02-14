@@ -2,15 +2,17 @@
 // Handles user registration, login, and session management
 // NOW WITH REAL DATABASE INTEGRATION
 
-import pg from 'pg';
 import { createHash, randomBytes } from 'crypto';
 import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
+import { hashPassword, verifyPassword } from '../lib/password-hash.js';
+import { getPool } from '../lib/db.js';
+import { getCorsOrigin } from '../lib/cors.js';
+import { generateMemberId } from '../lib/helpers.js';
 
-const { Pool } = pg;
-
-const PBKDF2_ITERATIONS = 100000;
-const HASH_ALGORITHM = 'SHA-256';
-const KEY_LENGTH = 256; // bits
+// Check if hash needs upgrade from SHA-256 to PBKDF2
+function needsHashUpgrade(storedHash) {
+    return storedHash && !storedHash.startsWith('pbkdf2$');
+}
 
 // Helper function to get base URL
 function getBaseUrl(req) {
@@ -19,89 +21,9 @@ function getBaseUrl(req) {
     return `${protocol}://${host}`;
 }
 
-// Helper function to hash passwords with PBKDF2 (100k iterations)
-async function hashPassword(password) {
-    const saltBuffer = crypto.getRandomValues(new Uint8Array(16));
-    const saltHex = Array.from(saltBuffer).map(b => b.toString(16).padStart(2, '0')).join('');
-    
-    const encoder = new TextEncoder();
-    const keyMaterial = await crypto.subtle.importKey(
-        'raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits']
-    );
-    
-    const derivedBits = await crypto.subtle.deriveBits(
-        { name: 'PBKDF2', salt: saltBuffer, iterations: PBKDF2_ITERATIONS, hash: HASH_ALGORITHM },
-        keyMaterial, KEY_LENGTH
-    );
-    
-    const hashHex = Array.from(new Uint8Array(derivedBits)).map(b => b.toString(16).padStart(2, '0')).join('');
-    return `pbkdf2$${PBKDF2_ITERATIONS}$${saltHex}$${hashHex}`;
-}
-
-// Helper function to verify password (supports PBKDF2 + legacy SHA-256)
-async function verifyPassword(password, storedHash) {
-    if (!storedHash) return false;
-    
-    if (storedHash.startsWith('pbkdf2$')) {
-        // New PBKDF2 format
-        const parts = storedHash.split('$');
-        if (parts.length !== 4) return false;
-        const [, iterStr, saltHex, expectedHash] = parts;
-        const iterations = parseInt(iterStr, 10);
-        const saltBytes = new Uint8Array(saltHex.match(/.{2}/g).map(b => parseInt(b, 16)));
-        
-        const encoder = new TextEncoder();
-        const keyMaterial = await crypto.subtle.importKey(
-            'raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits']
-        );
-        const derivedBits = await crypto.subtle.deriveBits(
-            { name: 'PBKDF2', salt: saltBytes, iterations, hash: HASH_ALGORITHM },
-            keyMaterial, KEY_LENGTH
-        );
-        const hashHex = Array.from(new Uint8Array(derivedBits)).map(b => b.toString(16).padStart(2, '0')).join('');
-        return hashHex === expectedHash;
-    }
-    
-    // Legacy SHA-256 format: salt$hash
-    const [salt, hash] = storedHash.split('$');
-    if (!salt || !hash) return false;
-    const combined = salt + password;
-    const encoder = new TextEncoder();
-    const data = encoder.encode(combined);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashHex = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-    return hashHex === hash;
-}
-
-// Check if hash needs upgrade from SHA-256 to PBKDF2
-function needsHashUpgrade(storedHash) {
-    return storedHash && !storedHash.startsWith('pbkdf2$');
-}
-
 // Helper function to generate session token (cryptographically secure)
 function generateToken() {
     return randomBytes(32).toString('hex');
-}
-
-// Helper function to generate member ID
-function generateMemberId() {
-    return `BILL-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
-}
-
-// Create connection pool
-function getPool() {
-    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.STORAGE_URL;
-    return new Pool({
-        connectionString: dbUrl,
-        ssl: { rejectUnauthorized: false }
-    });
-}
-
-// CORS: Only allow requests from our domain
-function getCorsOrigin(req) {
-    const origin = req.headers.origin || req.headers['origin'];
-    const allowed = ['https://billionairs.luxury', 'https://www.billionairs.luxury'];
-    return allowed.includes(origin) ? origin : allowed[0];
 }
 
 // HttpOnly Cookie helpers

@@ -1,41 +1,11 @@
 // Vercel Serverless Function for Bank Wire Transfer
 // Collects customer information and sends bank details via email
 
-import pg from 'pg';
 import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
-
-const { Pool } = pg;
-
-const PBKDF2_ITERATIONS = 100000;
-// Helper function to hash passwords with PBKDF2 (100k iterations)
-async function hashPassword(password) {
-    const saltBuffer = crypto.getRandomValues(new Uint8Array(16));
-    const saltHex = Array.from(saltBuffer).map(b => b.toString(16).padStart(2, '0')).join('');
-    const encoder = new TextEncoder();
-    const keyMaterial = await crypto.subtle.importKey(
-        'raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits']
-    );
-    const derivedBits = await crypto.subtle.deriveBits(
-        { name: 'PBKDF2', salt: saltBuffer, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
-        keyMaterial, 256
-    );
-    const hashHex = Array.from(new Uint8Array(derivedBits)).map(b => b.toString(16).padStart(2, '0')).join('');
-    return `pbkdf2$${PBKDF2_ITERATIONS}$${saltHex}$${hashHex}`;
-}
-
-// Helper function to generate member ID
-function generateMemberId() {
-    return `BILL-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
-}
-
-// Create connection pool
-function getPool() {
-    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.STORAGE_URL;
-    return new Pool({
-        connectionString: dbUrl,
-        ssl: { rejectUnauthorized: false }
-    });
-}
+import { hashPassword } from '../lib/password-hash.js';
+import { getPool } from '../lib/db.js';
+import { getCorsOrigin } from '../lib/cors.js';
+import { generateMemberId } from '../lib/helpers.js';
 
 // Email sending function using fetch API (no dependencies needed)
 async function sendEmail(to, subject, html) {
@@ -71,13 +41,6 @@ async function sendEmail(to, subject, html) {
         console.error('Email error:', error);
         return false;
     }
-}
-
-// CORS: Only allow requests from our domain
-function getCorsOrigin(req) {
-    const origin = req.headers.origin || req.headers['origin'];
-    const allowed = ['https://billionairs.luxury', 'https://www.billionairs.luxury'];
-    return allowed.includes(origin) ? origin : allowed[0];
 }
 
 export default async function handler(req, res) {

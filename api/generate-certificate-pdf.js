@@ -1,12 +1,6 @@
 import chromium from '@sparticuz/chromium';
 import puppeteer from 'puppeteer-core';
-
-// CORS helper
-function getCorsOrigin(req) {
-    const origin = req.headers.origin || req.headers['origin'];
-    const allowed = ['https://billionairs.luxury', 'https://www.billionairs.luxury'];
-    return allowed.includes(origin) ? origin : allowed[0];
-}
+import { getCorsOrigin } from '../lib/cors.js';
 
 // Generate unique certificate number from email
 async function generateCertNumber(email) {

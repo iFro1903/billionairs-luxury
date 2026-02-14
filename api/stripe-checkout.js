@@ -1,42 +1,11 @@
 // Vercel Serverless Function für Stripe Checkout
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const pg = require('pg');
-const crypto = require('crypto');
-
-const { Pool } = pg;
-
-// Helper function to hash passwords with PBKDF2 (100k iterations)
-const PBKDF2_ITERATIONS = 100000;
-async function hashPassword(password) {
-    const saltBuffer = crypto.getRandomValues(new Uint8Array(16));
-    const saltHex = Array.from(saltBuffer).map(b => b.toString(16).padStart(2, '0')).join('');
-    const encoder = new TextEncoder();
-    const keyMaterial = await crypto.subtle.importKey(
-        'raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits']
-    );
-    const derivedBits = await crypto.subtle.deriveBits(
-        { name: 'PBKDF2', salt: saltBuffer, iterations: PBKDF2_ITERATIONS, hash: 'SHA-256' },
-        keyMaterial, 256
-    );
-    const hashHex = Array.from(new Uint8Array(derivedBits)).map(b => b.toString(16).padStart(2, '0')).join('');
-    return `pbkdf2$${PBKDF2_ITERATIONS}$${saltHex}$${hashHex}`;
-}
-
-// Helper function to generate member ID
-function generateMemberId() {
-    return `BILL-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
-}
-
-// Create connection pool
-function getPool() {
-    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.STORAGE_URL;
-    return new Pool({
-        connectionString: dbUrl,
-        ssl: { rejectUnauthorized: false }
-    });
-}
 
 module.exports = async (req, res) => {
+  const { getPool } = await import('../lib/db.js');
+  const { hashPassword } = await import('../lib/password-hash.js');
+  const { generateMemberId } = await import('../lib/helpers.js');
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }

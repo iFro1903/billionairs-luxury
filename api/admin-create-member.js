@@ -1,16 +1,12 @@
 import { neon } from '@neondatabase/serverless';
-import { hashPassword } from '../lib/password-hash.js';
-import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
+import { hashPassword, verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
+import { generateMemberId } from '../lib/helpers.js';
 
 export const config = {
     runtime: 'edge'
 };
 
 const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
-
-function generateMemberId() {
-    return `BILL-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
-}
 
 export default async function handler(req) {
     if (req.method !== 'POST') {

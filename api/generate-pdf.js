@@ -1,9 +1,4 @@
-// CORS: Only allow requests from our domain
-function getCorsOrigin(req) {
-    const origin = req.headers.origin || req.headers['origin'];
-    const allowed = ['https://billionairs.luxury', 'https://www.billionairs.luxury'];
-    return allowed.includes(origin) ? origin : allowed[0];
-}
+import { getCorsOrigin } from '../lib/cors.js';
 
 export default async function handler(req, res) {
     // Set CORS headers

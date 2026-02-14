@@ -1,18 +1,9 @@
 // API Endpoint: Run Database Migration for stripe_payment_id
 // Vercel Serverless Function
 
-const pg = require('pg');
-const { Pool } = pg;
-
-function getPool() {
-    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.STORAGE_URL;
-    return new Pool({
-        connectionString: dbUrl,
-        ssl: { rejectUnauthorized: false }
-    });
-}
-
 module.exports = async (req, res) => {
+    const { getPool } = await import('../lib/db.js');
+
     // Only allow POST requests
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });

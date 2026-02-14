@@ -1,37 +1,24 @@
 // Vercel Serverless Function — CEO sends email to a member
 // Sender is ALWAYS elite@billionairs.luxury, no other address allowed
 
-const { Pool } = require('pg');
-
-function getPool() {
-    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
-    return new Pool({
-        connectionString: dbUrl,
-        ssl: { rejectUnauthorized: false }
-    });
-}
-
-function getCorsOrigin(req) {
-    const origin = req.headers.origin || req.headers['origin'];
-    const allowed = ['https://billionairs.luxury', 'https://www.billionairs.luxury'];
-    return allowed.includes(origin) ? origin : allowed[0];
-}
-
-async function verifyAdmin(pool, email, password) {
-    const client = await pool.connect();
-    try {
-        const result = await client.query(
-            'SELECT password FROM users WHERE LOWER(email) = LOWER($1)',
-            [email]
-        );
-        if (!result.rows.length) return false;
-        return result.rows[0].password === password;
-    } finally {
-        client.release();
-    }
-}
-
 module.exports = async (req, res) => {
+    const { getPool } = await import('../lib/db.js');
+    const { getCorsOrigin } = await import('../lib/cors.js');
+
+    async function verifyAdmin(pool, email, password) {
+        const client = await pool.connect();
+        try {
+            const result = await client.query(
+                'SELECT password FROM users WHERE LOWER(email) = LOWER($1)',
+                [email]
+            );
+            if (!result.rows.length) return false;
+            return result.rows[0].password === password;
+        } finally {
+            client.release();
+        }
+    }
+
     // CORS
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Origin', getCorsOrigin(req));

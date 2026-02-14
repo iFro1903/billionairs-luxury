@@ -1,15 +1,8 @@
 // Vercel Serverless Function to add missing member_id column
-const { Pool } = require('pg');
-
-function getPool() {
-    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
-    return new Pool({
-        connectionString: dbUrl,
-        ssl: { rejectUnauthorized: false }
-    });
-}
 
 module.exports = async (req, res) => {
+    const { getPool } = await import('../lib/db.js');
+
     // Only allow GET requests
     if (req.method !== 'GET') {
         return res.status(405).json({ error: 'Method not allowed' });

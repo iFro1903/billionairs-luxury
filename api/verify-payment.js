@@ -1,25 +1,10 @@
 // Vercel Serverless Function to verify Stripe payment and update user status
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const pg = require('pg');
-
-const { Pool } = pg;
-
-function getPool() {
-    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.STORAGE_URL;
-    return new Pool({
-        connectionString: dbUrl,
-        ssl: { rejectUnauthorized: false }
-    });
-}
-
-// CORS: Only allow requests from our domain
-function getCorsOrigin(req) {
-    const origin = req.headers.origin || req.headers['origin'];
-    const allowed = ['https://billionairs.luxury', 'https://www.billionairs.luxury'];
-    return allowed.includes(origin) ? origin : allowed[0];
-}
 
 module.exports = async (req, res) => {
+  const { getPool } = await import('../lib/db.js');
+  const { getCorsOrigin } = await import('../lib/cors.js');
+
   // Allow CORS
   res.setHeader('Access-Control-Allow-Origin', getCorsOrigin(req));
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');

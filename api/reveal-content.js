@@ -1,23 +1,7 @@
 // API Endpoint: Reveal Content (Server-side protected)
 // Only returns the secret content to authenticated, paid users
-import pg from 'pg';
-
-const { Pool } = pg;
-
-function getPool() {
-    const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.STORAGE_URL;
-    return new Pool({
-        connectionString: dbUrl,
-        ssl: { rejectUnauthorized: false }
-    });
-}
-
-// CORS: Only allow requests from our domain
-function getCorsOrigin(req) {
-    const origin = req.headers.origin || req.headers['origin'];
-    const allowed = ['https://billionairs.luxury', 'https://www.billionairs.luxury'];
-    return allowed.includes(origin) ? origin : allowed[0];
-}
+import { getPool } from '../lib/db.js';
+import { getCorsOrigin } from '../lib/cors.js';
 
 // Read token from HttpOnly cookie
 function getTokenFromCookie(req) {
