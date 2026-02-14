@@ -1,446 +1,334 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- GDPR Cookie Consent (MUST load BEFORE gtag) -->
-    <link rel="stylesheet" href="assets/css/cookie-consent.css">
-    <script src="assets/js/cookie-consent.js"></script>
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-80P17E7RZK"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-80P17E7RZK');
-    </script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BILLIONAIRS - CEO Admin Panel</title>
+    <title>BILLIONAIRS — Admin</title>
     <link rel="stylesheet" href="assets/css/admin.css">
 </head>
 <body>
-    <!-- CEO Login Screen -->
+    <!-- Login -->
     <div id="adminLogin" class="admin-login">
-        <div class="login-container">
-            <h1>🔒 CEO ACCESS</h1>
-            <p>Restricted Area - CEO Only</p>
+        <div class="login-box">
+            <div class="login-logo">B</div>
+            <h1>CEO Access</h1>
             <form id="adminLoginForm">
-                <input type="email" id="adminEmail" placeholder="CEO Email" required>
-                <input type="password" id="adminPassword" placeholder="Password" required>
-                <button type="submit">ACCESS PANEL</button>
+                <input type="email" id="adminEmail" placeholder="Email" required autocomplete="email">
+                <input type="password" id="adminPassword" placeholder="Passwort" required autocomplete="current-password">
+                <button type="submit">Anmelden</button>
             </form>
-            <div id="loginError" class="error-message"></div>
+            <div id="loginError" class="login-error"></div>
         </div>
     </div>
 
-    <!-- Admin Dashboard -->
-    <div id="adminDashboard" class="admin-dashboard hidden">
-        <!-- Header -->
-        <header class="admin-header">
-            <div class="header-left">
-                <h1>BILLIONAIRS</h1>
-                <span class="ceo-badge">CEO PANEL</span>
+    <!-- Dashboard -->
+    <div id="adminDashboard" class="dashboard hidden">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <span class="brand-letter">B</span>
+                <span class="brand-text">BILLIONAIRS</span>
             </div>
-            <div class="header-right">
-                <div class="emergency-switch">
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-tab="users"><span class="nav-icon">👥</span><span class="nav-label">Members</span></button>
+                <button class="nav-item" data-tab="easter-eggs"><span class="nav-icon">🥚</span><span class="nav-label">Easter Eggs</span></button>
+                <button class="nav-item" data-tab="chat"><span class="nav-icon">💬</span><span class="nav-label">Chat</span></button>
+                <button class="nav-item" data-tab="payments"><span class="nav-icon">💰</span><span class="nav-label">Payments</span></button>
+                <button class="nav-item" data-tab="stats"><span class="nav-icon">📊</span><span class="nav-label">Statistics</span></button>
+                <button class="nav-item" data-tab="security"><span class="nav-icon">🔒</span><span class="nav-label">Security</span></button>
+                <button class="nav-item" data-tab="audit"><span class="nav-icon">📋</span><span class="nav-label">Audit</span></button>
+            </nav>
+            <div class="sidebar-footer">
+                <span id="adminUserName" class="sidebar-user"></span>
+                <button id="adminLogout" class="sidebar-logout">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <div class="main-wrap">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <div class="topbar-left">
+                    <h2 id="pageTitle">Members</h2>
+                    <div class="auto-refresh-toggle">
+                        <label class="switch-small">
+                            <input type="checkbox" id="autoRefreshToggle">
+                            <span class="slider-small"></span>
+                        </label>
+                        <span class="auto-label">Auto-Refresh</span>
+                    </div>
+                </div>
+                <div class="topbar-right">
                     <button id="emergencyBtn" class="emergency-btn" data-active="false">
-                        <span class="emergency-icon">🚨</span>
-                        <span class="emergency-text">Emergency Mode: OFF</span>
+                        <span class="emergency-text">Emergency: OFF</span>
                     </button>
                 </div>
-                <span id="adminUserName"></span>
-                <button id="adminLogout" class="logout-btn">Logout</button>
-            </div>
-        </header>
+            </header>
 
-        <!-- Navigation -->
-        <nav class="admin-nav">
-            <button class="nav-btn active" data-tab="users">👥 Users</button>
-            <button class="nav-btn" data-tab="easter-eggs">🥚 Easter Eggs</button>
-            <button class="nav-btn" data-tab="chat">💬 Chat</button>
-            <button class="nav-btn" data-tab="payments">💰 Payments</button>
-            <button class="nav-btn" data-tab="stats">📊 Statistics</button>
-            <button class="nav-btn" data-tab="security">🔒 Security</button>
-            <button class="nav-btn" data-tab="audit">📋 Audit Logs</button>
-        </nav>
+            <!-- Content -->
+            <main class="content">
 
-        <!-- Content Area -->
-        <main class="admin-content">
-            <!-- Users Tab -->
-            <div id="tab-users" class="tab-content active">
-                <div class="content-header">
-                    <h2>User Management</h2>
-                    <div class="search-bar">
-                        <input type="text" id="userSearch" placeholder="Search users...">
+                <!-- ============ USERS TAB ============ -->
+                <section id="tab-users" class="tab active">
+                    <!-- Quick Stats -->
+                    <div class="kpi-row">
+                        <div class="kpi"><span class="kpi-val" id="totalUsers">0</span><span class="kpi-label">Total</span></div>
+                        <div class="kpi"><span class="kpi-val" id="paidUsers">0</span><span class="kpi-label">Paid</span></div>
+                        <div class="kpi"><span class="kpi-val" id="freeUsers">0</span><span class="kpi-label">Free</span></div>
+                        <div class="kpi"><span class="kpi-val" id="activeUsers">0</span><span class="kpi-label">Online</span></div>
                     </div>
-                </div>
 
-                <div class="stats-cards">
-                    <div class="stat-card">
-                        <h3 id="totalUsers">0</h3>
-                        <p>Total Users</p>
+                    <!-- Toolbar -->
+                    <div class="toolbar">
+                        <input type="text" id="userSearch" class="toolbar-search" placeholder="Suche nach Email, Name...">
+                        <select id="userStatusFilter" class="toolbar-select">
+                            <option value="all">Alle Status</option>
+                            <option value="paid">Paid</option>
+                            <option value="pending">Pending</option>
+                            <option value="free">Free</option>
+                        </select>
+                        <button class="btn-sm btn-gold" id="csvExportBtn">CSV Export</button>
+                        <button class="btn-sm btn-outline" id="refreshUsersBtn">↻ Refresh</button>
                     </div>
-                    <div class="stat-card">
-                        <h3 id="paidUsers">0</h3>
-                        <p>Paid Users</p>
+
+                    <!-- Table -->
+                    <div class="table-wrap">
+                        <table id="usersTable">
+                            <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Name</th>
+                                    <th>Registriert</th>
+                                    <th>Membership</th>
+                                    <th>Status</th>
+                                    <th>Progress</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody"></tbody>
+                        </table>
                     </div>
-                    <div class="stat-card">
-                        <h3 id="activeUsers">0</h3>
-                        <p>Active Today</p>
-                    </div>
-                </div>
 
-                <div class="table-container">
-                    <table id="usersTable">
-                        <thead>
-                            <tr>
-                                <th>Email</th>
-                                <th>Name</th>
-                                <th>Registered</th>
-                                <th>Membership Timer</th>
-                                <th>Status</th>
-                                <th>Progress</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usersTableBody">
-                            <!-- Dynamic content -->
-                        </tbody>
-                    </table>
-                </div>
+                    <!-- Danger Zone -->
+                    <details class="danger-zone">
+                        <summary>⚠️ Danger Zone</summary>
+                        <div class="danger-content">
+                            <button id="createTestUsersBtn" class="btn-sm btn-green">👥 Test-User erstellen</button>
+                            <button id="deleteAllUsersBtn" class="btn-sm btn-red">🗑️ Alle User löschen</button>
+                        </div>
+                    </details>
+                </section>
 
-                <!-- Danger Zone -->
-                <div class="danger-zone">
-                    <h3>⚠️ Danger Zone</h3>
-                    <p>Irreversible actions - Use with extreme caution</p>
-                    <button id="createTestUsersBtn" class="btn-success" style="background: #28a745; margin-bottom: 10px;">
-                        👥 Create 2 Test Users
-                    </button>
-                    <button id="deleteAllUsersBtn" class="btn-danger">
-                        🗑️ Delete All Users (Except CEO)
-                    </button>
-                </div>
-            </div>
-
-            <!-- Easter Eggs Tab -->
-            <div id="tab-easter-eggs" class="tab-content">
-                <div class="content-header">
-                    <h2>Easter Egg Control</h2>
-                </div>
-
-                <!-- Manual Member Creation -->
-                <div class="control-section" style="border: 1px solid rgba(232, 180, 160, 0.3); margin-bottom: 2rem;">
-                    <h3>➕ Add Member Manually</h3>
-                    <p style="color: #999; font-size: 14px; margin-bottom: 15px;">
-                        Create a new member without requiring payment
-                    </p>
-                    <form id="createMemberForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 600px;">
-                        <input type="email" id="newMemberEmail" placeholder="Email address" required
-                               style="padding: 0.7rem; background: rgba(232,196,168,0.05); border: 1px solid rgba(232,196,168,0.2); border-radius: 8px; color: #e8e8e8; font-size: 14px;">
-                        <input type="text" id="newMemberName" placeholder="Full name (optional)"
-                               style="padding: 0.7rem; background: rgba(232,196,168,0.05); border: 1px solid rgba(232,196,168,0.2); border-radius: 8px; color: #e8e8e8; font-size: 14px;">
-                        <input type="password" id="newMemberPassword" placeholder="Password (min. 8 chars)" required minlength="8"
-                               style="padding: 0.7rem; background: rgba(232,196,168,0.05); border: 1px solid rgba(232,196,168,0.2); border-radius: 8px; color: #e8e8e8; font-size: 14px;">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <label style="display: flex; align-items: center; gap: 6px; color: #ccc; font-size: 14px; cursor: pointer;">
-                                <input type="checkbox" id="newMemberPaid" checked
-                                       style="width: 18px; height: 18px; accent-color: #E8B4A0; cursor: pointer;">
-                                Mark as Paid
+                <!-- ============ EASTER EGGS TAB ============ -->
+                <section id="tab-easter-eggs" class="tab">
+                    <!-- Member Creation -->
+                    <div class="card">
+                        <h3 class="card-title">➕ Member manuell hinzufügen</h3>
+                        <form id="createMemberForm" class="form-grid">
+                            <input type="email" id="newMemberEmail" placeholder="Email" required class="input">
+                            <input type="text" id="newMemberName" placeholder="Name (optional)" class="input">
+                            <input type="password" id="newMemberPassword" placeholder="Passwort (min. 8)" required minlength="8" class="input">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="newMemberPaid" checked>
+                                <span>Als Paid markieren</span>
                             </label>
-                        </div>
-                        <button type="submit" style="grid-column: 1 / -1; padding: 0.8rem; background: linear-gradient(135deg, #E8B4A0, #D4A574); color: #0a0a0a; border: none; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease;">
-                            ➕ Create Member
-                        </button>
-                    </form>
-                    <div id="createMemberResult" style="margin-top: 12px; font-size: 14px;"></div>
-                </div>
-
-                <!-- Bulk Actions for All Members -->
-                <div class="control-section bulk-control">
-                    <h3>🌍 Bulk Actions - All Members</h3>
-                    <p style="color: #999; font-size: 14px; margin-bottom: 15px;">
-                        Apply changes to all users (except CEO)
-                    </p>
-                    <div class="bulk-buttons-grid">
-                        <div class="bulk-group">
-                            <h4>🔺 Pyramid</h4>
-                            <button class="bulk-unlock-btn" data-action="unlock-all" data-feature="pyramid">
-                                ✅ Unlock for All
-                            </button>
-                            <button class="bulk-lock-btn" data-action="lock-all" data-feature="pyramid">
-                                🔒 Lock for All
-                            </button>
-                        </div>
-                        <div class="bulk-group">
-                            <h4>👁️ Eye</h4>
-                            <button class="bulk-unlock-btn" data-action="unlock-all" data-feature="eye">
-                                ✅ Unlock for All
-                            </button>
-                            <button class="bulk-lock-btn" data-action="lock-all" data-feature="eye">
-                                🔒 Lock for All
-                            </button>
-                        </div>
-                        <div class="bulk-group">
-                            <h4>💬 Chat</h4>
-                            <button class="bulk-unlock-btn" data-action="unlock-all" data-feature="chat">
-                                ✅ Unlock for All
-                            </button>
-                            <button class="bulk-lock-btn" data-action="lock-all" data-feature="chat">
-                                🔒 Lock for All
-                            </button>
-                        </div>
-                        <div class="bulk-group">
-                            <h4>🎯 All Features</h4>
-                            <button class="bulk-unlock-btn" data-action="unlock-all" data-feature="all">
-                                ✅ Unlock Everything
-                            </button>
-                            <button class="bulk-lock-btn" data-action="lock-all" data-feature="all">
-                                🔒 Lock Everything
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- All Members Overview -->
-                <div class="control-section">
-                    <h3>👥 All Members</h3>
-                    <p style="color: #999; font-size: 14px; margin-bottom: 20px;">
-                        All members with status, controls and activity
-                    </p>
-                    
-                    <div class="users-search-bar" style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center;">
-                        <input type="text" id="easterEggUserSearch" placeholder="🔍 Search by email or name..." 
-                               style="flex: 1; padding: 0.75rem; background: rgba(232, 196, 168, 0.05); border: 1px solid rgba(232, 196, 168, 0.2); border-radius: 8px; color: #e8e8e8;">
-                        <span id="memberCount" style="color: #E8B4A0; font-size: 13px; white-space: nowrap;"></span>
+                            <button type="submit" class="btn-gold full-width">Member erstellen</button>
+                        </form>
+                        <div id="createMemberResult" class="form-result"></div>
                     </div>
 
-                    <div id="individualUserControls" class="individual-users-grid">
-                        <!-- Dynamic member cards -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chat Tab -->
-            <div id="tab-chat" class="tab-content">
-                <div class="content-header">
-                    <h2>Chat Management</h2>
-                    <button id="refreshChat" class="refresh-btn">Refresh</button>
-                </div>
-
-                <div class="stats-cards">
-                    <div class="stat-card">
-                        <h3 id="totalMessages">0</h3>
-                        <p>Total Messages</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3 id="todayMessages">0</h3>
-                        <p>Today</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3 id="chatUsers">0</h3>
-                        <p>Chat Users</p>
-                    </div>
-                </div>
-
-                <div class="chat-messages-admin" id="adminChatMessages">
-                    <!-- Dynamic chat messages -->
-                </div>
-            </div>
-
-            <!-- Payments Tab -->
-            <div id="tab-payments" class="tab-content">
-                <div class="content-header">
-                    <h2>Payment Overview</h2>
-                </div>
-
-                <div class="stats-cards">
-                    <div class="stat-card">
-                        <h3 id="totalRevenue">CHF 0</h3>
-                        <p>Total Revenue</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3 id="stripePayments">0</h3>
-                        <p>Stripe</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3 id="cryptoPayments">0</h3>
-                        <p>Crypto</p>
-                    </div>
-                </div>
-
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>User</th>
-                                <th>Amount</th>
-                                <th>Method</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="paymentsTableBody">
-                            <!-- Dynamic content -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Statistics Tab -->
-            <div id="tab-stats" class="tab-content">
-                <div class="content-header">
-                    <h2>Platform Statistics</h2>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card large">
-                        <h3>User Journey</h3>
-                        <div class="journey-stats">
-                            <div class="journey-item">
-                                <span>Registered</span>
-                                <strong id="statsRegistered">0</strong>
+                    <!-- Bulk Controls -->
+                    <div class="card">
+                        <h3 class="card-title">🌍 Bulk Actions</h3>
+                        <div class="bulk-grid">
+                            <div class="bulk-item">
+                                <span class="bulk-label">🔺 Pyramid</span>
+                                <button class="btn-xs btn-green bulk-unlock-btn" data-action="unlock-all" data-feature="pyramid">Unlock All</button>
+                                <button class="btn-xs btn-red bulk-lock-btn" data-action="lock-all" data-feature="pyramid">Lock All</button>
                             </div>
-                            <div class="journey-item">
-                                <span>Paid</span>
-                                <strong id="statsPaid">0</strong>
+                            <div class="bulk-item">
+                                <span class="bulk-label">👁️ Eye</span>
+                                <button class="btn-xs btn-green bulk-unlock-btn" data-action="unlock-all" data-feature="eye">Unlock All</button>
+                                <button class="btn-xs btn-red bulk-lock-btn" data-action="lock-all" data-feature="eye">Lock All</button>
                             </div>
-                            <div class="journey-item">
-                                <span>Pyramid Unlocked</span>
-                                <strong id="statsPyramid">0</strong>
+                            <div class="bulk-item">
+                                <span class="bulk-label">💬 Chat</span>
+                                <button class="btn-xs btn-green bulk-unlock-btn" data-action="unlock-all" data-feature="chat">Unlock All</button>
+                                <button class="btn-xs btn-red bulk-lock-btn" data-action="lock-all" data-feature="chat">Lock All</button>
                             </div>
-                            <div class="journey-item">
-                                <span>Eye Unlocked</span>
-                                <strong id="statsEye">0</strong>
-                            </div>
-                            <div class="journey-item">
-                                <span>Chat Access</span>
-                                <strong id="statsChat">0</strong>
+                            <div class="bulk-item">
+                                <span class="bulk-label">🎯 Alles</span>
+                                <button class="btn-xs btn-green bulk-unlock-btn" data-action="unlock-all" data-feature="all">Unlock All</button>
+                                <button class="btn-xs btn-red bulk-lock-btn" data-action="lock-all" data-feature="all">Lock All</button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="stat-card large">
-                        <h3>Recent Activity</h3>
-                        <div id="recentActivity" class="activity-list">
-                            <!-- Dynamic activity -->
+                    <!-- Individual Members -->
+                    <div class="card">
+                        <div class="card-header-row">
+                            <h3 class="card-title">👥 Alle Members</h3>
+                            <div class="search-inline">
+                                <input type="text" id="easterEggUserSearch" placeholder="Suchen..." class="input-sm">
+                                <span id="memberCount" class="count-badge"></span>
+                            </div>
+                        </div>
+                        <div id="individualUserControls" class="members-grid"></div>
+                    </div>
+                </section>
+
+                <!-- ============ CHAT TAB ============ -->
+                <section id="tab-chat" class="tab">
+                    <div class="kpi-row">
+                        <div class="kpi"><span class="kpi-val" id="totalMessages">0</span><span class="kpi-label">Messages</span></div>
+                        <div class="kpi"><span class="kpi-val" id="todayMessages">0</span><span class="kpi-label">Heute</span></div>
+                        <div class="kpi"><span class="kpi-val" id="chatUsers">0</span><span class="kpi-label">User</span></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header-row">
+                            <h3 class="card-title">Chat Nachrichten</h3>
+                            <button id="refreshChat" class="btn-sm btn-outline">↻ Refresh</button>
+                        </div>
+                        <div id="adminChatMessages" class="chat-list"></div>
+                    </div>
+                </section>
+
+                <!-- ============ PAYMENTS TAB ============ -->
+                <section id="tab-payments" class="tab">
+                    <div class="kpi-row">
+                        <div class="kpi"><span class="kpi-val" id="totalRevenue">CHF 0</span><span class="kpi-label">Umsatz</span></div>
+                        <div class="kpi"><span class="kpi-val" id="stripePayments">0</span><span class="kpi-label">Stripe</span></div>
+                        <div class="kpi"><span class="kpi-val" id="cryptoPayments">0</span><span class="kpi-label">Crypto</span></div>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Datum</th>
+                                    <th>User</th>
+                                    <th>Betrag</th>
+                                    <th>Methode</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentsTableBody"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- ============ STATS TAB ============ -->
+                <section id="tab-stats" class="tab">
+                    <div class="card">
+                        <h3 class="card-title">User Journey</h3>
+                        <div class="journey-list">
+                            <div class="journey-row"><span>Registriert</span><strong id="statsRegistered">0</strong></div>
+                            <div class="journey-row"><span>Paid</span><strong id="statsPaid">0</strong></div>
+                            <div class="journey-row"><span>Pyramid</span><strong id="statsPyramid">0</strong></div>
+                            <div class="journey-row"><span>Eye</span><strong id="statsEye">0</strong></div>
+                            <div class="journey-row"><span>Chat</span><strong id="statsChat">0</strong></div>
                         </div>
                     </div>
-                </div>
-            </div>
+                    <div id="analyticsSection" class="analytics-grid-wrap"></div>
+                </section>
 
-            <!-- Security Tab -->
-            <div id="securityTab" class="tab-content">
-                <h2>🔒 Security Management</h2>
-                
-                <!-- Two-Factor Auth Setup -->
-                <div class="stat-card">
-                    <h3>Two-Factor Authentication</h3>
-                    <div id="twoFactorStatus" class="security-section">
-                        <div class="status-indicator">
-                            <span id="2faStatusText">Loading...</span>
-                        </div>
-                        <div id="twoFactorSetup" class="hidden">
-                            <div class="qr-code-container">
-                                <img id="qrCodeImage" alt="QR Code" style="display:none;">
-                                <canvas id="qrCodeCanvas"></canvas>
-                                <p>Scan this QR code with your authenticator app (Google Authenticator, Authy, etc.)</p>
+                <!-- ============ SECURITY TAB ============ -->
+                <section id="securityTab" class="tab">
+                    <div class="card">
+                        <h3 class="card-title">Two-Factor Authentication</h3>
+                        <div id="twoFactorStatus">
+                            <div class="tfa-status">
+                                <span id="2faStatusText">Laden...</span>
                             </div>
-                            <div class="backup-codes" id="backupCodes" style="display:none;">
-                                <h4>Backup Codes</h4>
-                                <p>Save these codes in a secure location. Each can be used once:</p>
-                                <div id="backupCodesList"></div>
+                            <div id="twoFactorSetup" class="hidden">
+                                <div class="qr-wrap">
+                                    <img id="qrCodeImage" alt="QR Code" style="display:none;">
+                                    <canvas id="qrCodeCanvas"></canvas>
+                                    <p>QR-Code mit Authenticator-App scannen</p>
+                                </div>
+                                <div class="backup-codes" id="backupCodes" style="display:none;">
+                                    <h4>Backup Codes</h4>
+                                    <div id="backupCodesList" class="codes-grid"></div>
+                                </div>
+                                <div class="tfa-verify">
+                                    <input type="text" id="verificationCode" placeholder="6-stelliger Code" maxlength="6" class="input-code">
+                                    <button id="verify2FA" class="btn-sm btn-gold">Verifizieren</button>
+                                </div>
                             </div>
-                            <div class="verification-form">
-                                <input type="text" id="verificationCode" placeholder="Enter 6-digit code" maxlength="6">
-                                <button id="verify2FA" class="btn btn-primary">Verify & Enable</button>
+                            <div class="tfa-actions">
+                                <button id="enable2FA" class="btn-sm btn-gold">2FA aktivieren</button>
+                                <button id="disable2FA" class="btn-sm btn-red hidden">2FA deaktivieren</button>
                             </div>
-                        </div>
-                        <div class="action-buttons">
-                            <button id="enable2FA" class="btn btn-primary">Enable 2FA</button>
-                            <button id="disable2FA" class="btn btn-danger hidden">Disable 2FA</button>
                         </div>
                     </div>
-                </div>
 
-                <!-- IP Blocking -->
-                <div class="stat-card">
-                    <h3>IP Address Management</h3>
-                    <div class="ip-blocking-section">
-                        <div class="block-ip-form">
-                            <input type="text" id="blockIpAddress" placeholder="Enter IP address to block">
-                            <input type="text" id="blockReason" placeholder="Reason for blocking">
-                            <select id="blockDuration">
-                                <option value="3600000">1 Hour</option>
-                                <option value="86400000">24 Hours</option>
-                                <option value="604800000">7 Days</option>
+                    <div class="card">
+                        <h3 class="card-title">IP Blocking</h3>
+                        <div class="ip-form">
+                            <input type="text" id="blockIpAddress" placeholder="IP-Adresse" class="input">
+                            <input type="text" id="blockReason" placeholder="Grund" class="input">
+                            <select id="blockDuration" class="input">
+                                <option value="3600000">1 Stunde</option>
+                                <option value="86400000">24 Stunden</option>
+                                <option value="604800000">7 Tage</option>
                                 <option value="">Permanent</option>
                             </select>
-                            <button id="blockIpBtn" class="btn btn-danger">Block IP</button>
+                            <button id="blockIpBtn" class="btn-sm btn-red">Blockieren</button>
                         </div>
-                        <div id="blockedIpsList" class="blocked-ips-list">
-                            <!-- Dynamic blocked IPs -->
+                        <div id="blockedIpsList" class="ip-list"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">Rate Limiting</h3>
+                        <div class="rate-stats">
+                            <div class="rate-item"><span>Requests heute</span><strong id="totalRequests">—</strong></div>
+                            <div class="rate-item"><span>Blockiert</span><strong id="blockedRequests">—</strong></div>
+                            <div class="rate-item"><span>Auto-Blocked IPs</span><strong id="autoBlockedIps">—</strong></div>
                         </div>
+                    </div>
+                </section>
+
+                <!-- ============ AUDIT TAB ============ -->
+                <section id="auditTab" class="tab">
+                    <div class="toolbar">
+                        <select id="auditActionFilter" class="toolbar-select">
+                            <option value="">Alle</option>
+                            <option value="LOGIN_SUCCESS">Login OK</option>
+                            <option value="LOGIN_FAILED">Login Fail</option>
+                            <option value="2FA_ENABLED">2FA On</option>
+                            <option value="2FA_DISABLED">2FA Off</option>
+                            <option value="IP_BLOCKED">IP Blocked</option>
+                            <option value="IP_UNBLOCKED">IP Unblocked</option>
+                            <option value="USER_DELETED">User Deleted</option>
+                            <option value="EMERGENCY_ACTIVATED">Emergency On</option>
+                            <option value="EMERGENCY_DEACTIVATED">Emergency Off</option>
+                        </select>
+                        <input type="number" id="auditLimit" class="toolbar-select" value="100" min="10" max="1000" style="width:80px;">
+                        <button id="refreshAuditLogs" class="btn-sm btn-gold">Laden</button>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title">Statistik</h3>
+                        <div id="auditStats" class="audit-stats-row"></div>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title">Logs</h3>
+                        <div id="auditLogsList" class="audit-list"></div>
+                    </div>
+                </section>
+
+                <!-- ============ MEMBER DETAIL MODAL ============ -->
+                <div id="memberModal" class="modal hidden">
+                    <div class="modal-card">
+                        <div class="modal-header">
+                            <h3 id="modalTitle">Member Details</h3>
+                            <button class="modal-close" id="closeModal">✕</button>
+                        </div>
+                        <div id="modalBody" class="modal-body"></div>
                     </div>
                 </div>
 
-                <!-- Rate Limit Stats -->
-                <div class="stat-card">
-                    <h3>Rate Limiting Statistics</h3>
-                    <div id="rateLimitStats" class="stats-grid">
-                        <div class="stat-item">
-                            <span class="stat-label">Total Requests Today</span>
-                            <span class="stat-value" id="totalRequests">-</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Blocked Requests</span>
-                            <span class="stat-value" id="blockedRequests">-</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Auto-Blocked IPs</span>
-                            <span class="stat-value" id="autoBlockedIps">-</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Audit Logs Tab -->
-            <div id="auditTab" class="tab-content">
-                <h2>📋 Audit Logs</h2>
-                
-                <div class="filters">
-                    <select id="auditActionFilter">
-                        <option value="">All Actions</option>
-                        <option value="LOGIN_SUCCESS">Login Success</option>
-                        <option value="LOGIN_FAILED">Login Failed</option>
-                        <option value="2FA_ENABLED">2FA Enabled</option>
-                        <option value="2FA_DISABLED">2FA Disabled</option>
-                        <option value="IP_BLOCKED">IP Blocked</option>
-                        <option value="IP_UNBLOCKED">IP Unblocked</option>
-                        <option value="USER_DELETED">User Deleted</option>
-                        <option value="EMERGENCY_ACTIVATED">Emergency Mode On</option>
-                        <option value="EMERGENCY_DEACTIVATED">Emergency Mode Off</option>
-                    </select>
-                    <input type="number" id="auditLimit" placeholder="Limit" value="100" min="10" max="1000">
-                    <button id="refreshAuditLogs" class="btn btn-primary">Refresh</button>
-                </div>
-
-                <div class="stat-card">
-                    <h3>Action Statistics</h3>
-                    <div id="auditStats" class="stats-grid">
-                        <!-- Dynamic stats -->
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <h3>Recent Logs</h3>
-                    <div id="auditLogsList" class="audit-logs-table">
-                        <!-- Dynamic audit logs -->
-                    </div>
-                </div>
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>

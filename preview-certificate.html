@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zertifikat Vorschau - Badges</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: #000;
+            color: #E8B4A0;
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .amount-section {
+            margin: 40px 0;
+            padding: 28px 30px;
+            text-align: center;
+            border: 1px solid rgba(232, 180, 160, 0.25);
+            background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(20,20,20,0.2) 100%);
+            max-width: 700px;
+            width: 100%;
+        }
+        .amount-label {
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: rgba(232, 180, 160, 0.6);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .amount-value {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 36px;
+            font-weight: 600;
+            color: #E8B4A0;
+            letter-spacing: 3px;
+            margin-bottom: 18px;
+        }
+        .amount-period {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+        }
+        .status-badges {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            font-size: 8px;
+            letter-spacing: 2px;
+            color: #2ecc71;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            background: rgba(46, 204, 113, 0.05);
+        }
+        .badge::before { content: none; }
+    </style>
+</head>
+<body>
+    <div class="amount-section">
+        <div class="amount-label">Mitgliedschaftsinvestition</div>
+        <div class="amount-value">CHF 500,000</div>
+        <div class="amount-period">Jährliches Abonnement</div>
+        <div class="status-badges">
+            <div class="badge">Zahlung Bestätigt</div>
+            <div class="badge">Zugang Gewährt</div>
+            <div class="badge">Mitglied Verifiziert</div>
+        </div>
+    </div>
+</body>
+</html>
