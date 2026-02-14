@@ -17,6 +17,44 @@ class AdminPanel {
             .replace(/'/g, '&#039;');
     }
 
+    // 365-day membership countdown timer
+    getMembershipTimer(createdAt) {
+        if (!createdAt) return '<span style="color:#666;">—</span>';
+        
+        const registered = new Date(createdAt);
+        const expiresAt = new Date(registered.getTime() + 365 * 24 * 60 * 60 * 1000);
+        const now = new Date();
+        const diffMs = expiresAt - now;
+        
+        if (diffMs <= 0) {
+            return '<span style="color:#e74c3c; font-weight:600;">⛔ EXPIRED</span>';
+        }
+        
+        const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+        
+        // Color: green > 180d, yellow > 30d, red <= 30d
+        let color = '#2ecc71';
+        if (totalDays <= 30) color = '#e74c3c';
+        else if (totalDays <= 180) color = '#f39c12';
+        
+        // Progress bar (365 = 100%)
+        const percent = Math.round((totalDays / 365) * 100);
+        
+        return `
+            <div style="min-width:140px;">
+                <div style="font-size:13px; font-weight:700; color:${color}; margin-bottom:4px;">
+                    ${totalDays}d ${hours}h ${minutes}m
+                </div>
+                <div style="background:rgba(255,255,255,0.1); border-radius:4px; height:6px; overflow:hidden;">
+                    <div style="width:${percent}%; height:100%; background:${color}; border-radius:4px; transition:width 0.3s;"></div>
+                </div>
+                <div style="font-size:10px; color:#888; margin-top:2px;">${percent}% remaining</div>
+            </div>
+        `;
+    }
+
     init() {
         // Check if already logged in
         const adminSession = sessionStorage.getItem('adminSession');
@@ -257,11 +295,13 @@ class AdminPanel {
             data.users.forEach(user => {
                 const safeEmail = this.escapeHtml(user.email);
                 const safeName = this.escapeHtml(user.name || 'N/A');
+                const timerHtml = this.getMembershipTimer(user.created_at);
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${safeEmail}</td>
                     <td>${safeName}</td>
                     <td>${new Date(user.created_at).toLocaleDateString()}</td>
+                    <td>${timerHtml}</td>
                     <td><span class="status-badge ${user.has_paid ? 'paid' : 'unpaid'}">${user.has_paid ? 'Paid' : 'Free'}</span></td>
                     <td>
                         ${user.pyramid_unlocked ? '🔓' : '🔒'} Pyramid
