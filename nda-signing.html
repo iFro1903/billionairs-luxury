@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NDA Agreement - BILLIONAIRS</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/assets/images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .nda-page {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        .nda-header {
+            text-align: center;
+            padding: 2rem 0 1.5rem;
+        }
+
+        .nda-header img {
+            width: 80px;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .nda-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 0.3rem;
+        }
+
+        .nda-header p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .gold-line {
+            width: 60px;
+            height: 2px;
+            background: #c9a96e;
+            margin: 1.5rem auto;
+        }
+
+        /* NDA Document Container */
+        .nda-document {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            max-height: 60vh;
+            overflow-y: auto;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .nda-document::-webkit-scrollbar {
+            width: 6px;
+        }
+        .nda-document::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+        }
+        .nda-document::-webkit-scrollbar-thumb {
+            background: rgba(201,169,110,0.4);
+            border-radius: 3px;
+        }
+
+        .nda-document h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .nda-document h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .nda-document .section-num {
+            color: #c9a96e;
+            margin-right: 0.3rem;
+        }
+
+        .nda-document p {
+            margin-bottom: 0.8rem;
+            text-align: justify;
+        }
+
+        .nda-document ol {
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .nda-document ol li {
+            margin-bottom: 0.4rem;
+        }
+
+        .nda-document strong {
+            color: #fff;
+        }
+
+        .nda-document .parties-box {
+            background: rgba(201,169,110,0.05);
+            border: 1px solid rgba(201,169,110,0.15);
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .nda-document .parties-box .party-label {
+            color: #c9a96e;
+            font-weight: 700;
+        }
+
+        .nda-document .confidential-stamp {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #c9a96e;
+            text-transform: uppercase;
+            margin: 1rem 0;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            text-align: center;
+            padding: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.8rem;
+            display: none;
+        }
+
+        .scroll-indicator.visible {
+            display: block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(5px); }
+        }
+
+        /* Signature Section */
+        .signature-section {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .signature-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .signer-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .signer-info .info-item {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+        }
+
+        .signer-info .info-label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.2rem;
+        }
+
+        .signer-info .info-value {
+            font-size: 0.95rem;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Signature Pad */
+        .signature-pad-container {
+            position: relative;
+            margin: 1.5rem 0;
+        }
+
+        .signature-pad-label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .signature-pad-wrapper {
+            position: relative;
+            border: 2px dashed rgba(201,169,110,0.3);
+            border-radius: 8px;
+            background: rgba(0,0,0,0.4);
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .signature-pad-wrapper:hover,
+        .signature-pad-wrapper.active {
+            border-color: rgba(201,169,110,0.6);
+        }
+
+        .signature-pad-wrapper.signed {
+            border-color: #50C878;
+            border-style: solid;
+        }
+
+        #signatureCanvas {
+            width: 100%;
+            height: 150px;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        .signature-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255,255,255,0.2);
+            font-size: 0.9rem;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .signature-placeholder.hidden {
+            opacity: 0;
+        }
+
+        .signature-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .sig-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .sig-btn:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        /* Agreement Checkbox */
+        .nda-consent {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(201,169,110,0.05);
+            border: 1px solid rgba(201,169,110,0.15);
+            border-radius: 8px;
+        }
+
+        .nda-consent input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            accent-color: #c9a96e;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .nda-consent label {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        /* Submit Button */
+        .nda-submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: rgba(201,169,110,0.15);
+            border: 2px solid rgba(201,169,110,0.3);
+            color: rgba(255,255,255,0.3);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-radius: 8px;
+            cursor: not-allowed;
+            transition: all 0.4s ease;
+        }
+
+        .nda-submit-btn.ready {
+            background: linear-gradient(135deg, #c9a96e, #d4b87a);
+            border-color: #c9a96e;
+            color: #000;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(201,169,110,0.3);
+        }
+
+        .nda-submit-btn.ready:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(201,169,110,0.4);
+        }
+
+        .nda-submit-btn.processing {
+            background: rgba(201,169,110,0.3);
+            cursor: wait;
+        }
+
+        /* Date & IP info */
+        .signing-meta {
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.3);
+            margin-top: 1rem;
+        }
+
+        /* Security badge */
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .security-badge svg {
+            width: 14px;
+            height: 14px;
+            fill: rgba(201,169,110,0.5);
+        }
+
+        /* Toast */
+        .nda-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            z-index: 10000;
+            animation: slideIn 0.4s ease;
+            max-width: 400px;
+        }
+
+        .nda-toast.error {
+            background: linear-gradient(135deg, #2a1a1a, #1f0d0d);
+            border: 1px solid #c0392b;
+            color: #fff;
+        }
+
+        .nda-toast.success {
+            background: linear-gradient(135deg, #1a2a1a, #0d1f0d);
+            border: 1px solid #50C878;
+            color: #fff;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nda-page { padding: 1rem; }
+            .nda-document { padding: 1.5rem; font-size: 0.85rem; max-height: 50vh; }
+            .signature-section { padding: 1.5rem; }
+            .signer-info { grid-template-columns: 1fr; }
+            .nda-header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="nda-page">
+        <!-- Header -->
+        <div class="nda-header">
+            <a href="/"><img src="/assets/images/logo.png" alt="BILLIONAIRS"></a>
+            <h1>NON-DISCLOSURE AGREEMENT</h1>
+            <p>Required before proceeding to payment</p>
+            <div class="gold-line"></div>
+        </div>
+
+        <!-- NDA Document -->
+        <div class="nda-document" id="ndaDocument">
+            <div class="confidential-stamp">— Strictly Confidential —</div>
+            
+            <h2>BILLIONAIRS — Mutual Non-Disclosure &amp; Membership Agreement</h2>
+
+            <p>This Mutual Non-Disclosure &amp; Membership Agreement (hereinafter referred to as the <strong>"Agreement"</strong>) is entered into as of <strong><span id="ndaDate"></span></strong> (the <strong>"Effective Date"</strong>) by and between:</p>
+
+            <div class="parties-box">
+                <p><span class="party-label">Party A (the Company):</span><br>
+                BILLIONAIRS, operating under the domain billionairs.luxury, registered in Switzerland<br>
+                (hereinafter referred to as <strong>"BILLIONAIRS"</strong> or <strong>"the Company"</strong>)</p>
+                <br>
+                <p><span class="party-label">Party B (the Member):</span><br>
+                <span id="memberNameDisplay">The undersigned Member applicant</span><br>
+                (hereinafter referred to as <strong>"the Member"</strong>)</p>
+            </div>
+
+            <p>BILLIONAIRS and the Member are collectively referred to as the <strong>"Parties"</strong> and individually as a <strong>"Party"</strong>.</p>
+
+            <h3><span class="section-num">1.</span> Purpose &amp; Scope</h3>
+            <p>The purpose of this Agreement is to establish the mutual obligations, rights, and responsibilities of both Parties in connection with the Member's access to the exclusive BILLIONAIRS private membership platform, and to protect the confidential information exchanged between the Parties.</p>
+
+            <h3><span class="section-num">2.</span> Service Description</h3>
+            <p>BILLIONAIRS provides the following services to accepted Members (the <strong>"Services"</strong>):</p>
+            <ol type="a">
+                <li><strong>Exclusive Membership Platform:</strong> Access to a private, curated digital platform designed for high-net-worth individuals;</li>
+                <li><strong>Private Networking:</strong> Access to a verified member network for direct, encrypted communication between Members;</li>
+                <li><strong>Encrypted Communications:</strong> End-to-end encrypted chat functionality (AES-256-GCM) for private Member-to-Member and CEO communication;</li>
+                <li><strong>Curated Content:</strong> Access to exclusive content, insights, and information shared within the platform;</li>
+                <li><strong>Digital Membership Certificate:</strong> A personalized, downloadable membership certificate;</li>
+                <li><strong>Ongoing Platform Maintenance:</strong> BILLIONAIRS commits to maintaining platform availability with commercially reasonable efforts, targeting 99.5% monthly uptime (excluding scheduled maintenance);</li>
+                <li><strong>Security &amp; Privacy:</strong> Industry-standard security measures to protect Member data and communications.</li>
+            </ol>
+            <p>BILLIONAIRS reserves the right to enhance, modify, or add features to the platform. Material changes that significantly reduce core Services will be communicated to Members with at least 30 days' advance notice.</p>
+
+            <h3><span class="section-num">3.</span> Definition of Confidential Information</h3>
+            <p><strong>"Confidential Information"</strong> means any and all non-public information disclosed by either Party to the other Party, whether orally, in writing, electronically, or by any other means, including but not limited to:</p>
+            <ol type="a">
+                <li>The identity, personal data, and contact details of BILLIONAIRS members;</li>
+                <li>Any communications, discussions, or exchanges within the BILLIONAIRS platform, including private chats and group discussions;</li>
+                <li>Business strategies, investment opportunities, financial data, and deal flow shared within the platform;</li>
+                <li>Proprietary technology, software, algorithms, and platform architecture;</li>
+                <li>Marketing strategies, pricing models, and membership structures;</li>
+                <li>Any information explicitly marked as "Confidential" or "Proprietary";</li>
+                <li>Personal and financial information provided by the Member to BILLIONAIRS during registration and membership.</li>
+            </ol>
+            <p>The classification of information as confidential shall be based on objective criteria and the nature of the information, not solely on one Party's subjective designation.</p>
+
+            <h3><span class="section-num">4.</span> Mutual Confidentiality Obligations</h3>
+            <p><strong>4.1 Obligations of the Member:</strong></p>
+            <ol type="a">
+                <li><strong>Maintain Confidentiality:</strong> Keep all Confidential Information strictly confidential and not disclose it to any third party without the prior written consent of BILLIONAIRS;</li>
+                <li><strong>Restrict Use:</strong> Use the Confidential Information solely in connection with the membership;</li>
+                <li><strong>Exercise Care:</strong> Apply at least the same degree of care to protect the Confidential Information as the Member uses to protect their own confidential information, but in no event less than reasonable care;</li>
+                <li><strong>No Unauthorized Reproduction:</strong> Not copy, reproduce, screenshot, record, or otherwise duplicate any Confidential Information unless expressly authorized by BILLIONAIRS;</li>
+                <li><strong>Discretion:</strong> Not discuss, publish, post, or otherwise share any information about BILLIONAIRS members, conversations, or activities on social media, press, blogs, forums, or any other public platform without prior written consent;</li>
+                <li><strong>Return or Destroy:</strong> Upon termination of membership or upon request, promptly return or destroy all materials containing Confidential Information.</li>
+            </ol>
+            <p><strong>4.2 Obligations of BILLIONAIRS:</strong></p>
+            <ol type="a">
+                <li><strong>Protect Member Data:</strong> BILLIONAIRS shall safeguard all personal, financial, and communication data provided by the Member using industry-standard security measures (including encryption at rest and in transit);</li>
+                <li><strong>No Unauthorized Sharing:</strong> BILLIONAIRS shall not disclose, sell, rent, or share Member data with third parties for commercial purposes without the Member's explicit written consent;</li>
+                <li><strong>Restricted Internal Access:</strong> Access to Member information within BILLIONAIRS shall be limited to authorized personnel on a need-to-know basis;</li>
+                <li><strong>Breach Notification:</strong> In the event of a data breach affecting Member information, BILLIONAIRS shall notify the affected Member within 72 hours of becoming aware of the breach;</li>
+                <li><strong>Compliance:</strong> BILLIONAIRS shall handle all personal data in compliance with applicable data protection laws (see Section 10).</li>
+            </ol>
+
+            <h3><span class="section-num">5.</span> Exclusions from Confidential Information</h3>
+            <p>Confidential Information does not include information that:</p>
+            <ol type="a">
+                <li>Was already in the public domain at the time of disclosure;</li>
+                <li>Becomes publicly available through no breach of this Agreement;</li>
+                <li>Was already known to the receiving Party prior to disclosure, as evidenced by written records;</li>
+                <li>Is independently developed by the receiving Party without reference to the Confidential Information;</li>
+                <li>Is required to be disclosed by law, regulation, or court order, provided the disclosing Party is given prompt written notice and reasonable opportunity to seek protective measures.</li>
+            </ol>
+
+            <h3><span class="section-num">6.</span> Duration of Confidentiality</h3>
+            <p>The confidentiality obligations under this Agreement shall remain in effect for the duration of the Member's membership and for a period of <strong>three (3) years</strong> following the termination or expiration of such membership, unless a longer period is required by applicable law.</p>
+
+            <h3><span class="section-num">7.</span> Remedies for Breach</h3>
+            <p><strong>7.1</strong> Both Parties acknowledge that any breach of the confidentiality obligations may cause irreparable harm. Accordingly, the non-breaching Party shall be entitled to seek injunctive relief, specific performance, and any other equitable remedies available under Swiss law, in addition to damages.</p>
+            <p><strong>7.2</strong> Prior to initiating legal proceedings, the Parties agree to attempt to resolve disputes through good-faith negotiation for a period of 30 days (see Section 14).</p>
+
+            <h3><span class="section-num">8.</span> Membership Fee &amp; Refund Policy</h3>
+            <p>The Member acknowledges and agrees that:</p>
+            <ol type="a">
+                <li>The one-time membership fee of <strong>CHF 500,000</strong> is generally <strong>non-refundable</strong> once access to the platform has been granted, as the Service is deemed rendered upon provision of access credentials;</li>
+                <li>The membership fee constitutes payment for <strong>exclusive access</strong> to the BILLIONAIRS platform and the Services described in Section 2;</li>
+                <li>The Member agrees not to initiate chargebacks or payment disputes without first following the dispute resolution process outlined in Section 14. Any chargeback initiated without prior good-faith resolution attempt shall constitute a material breach of this Agreement;</li>
+                <li>In the event of a confirmed NDA breach by the Member, BILLIONAIRS reserves the right to terminate the membership without refund.</li>
+            </ol>
+            <p><strong>8.2 Exceptions — Refund Entitlement:</strong></p>
+            <p>Notwithstanding Section 8(a), the Member shall be entitled to a full or partial refund in the following circumstances:</p>
+            <ol type="a">
+                <li><strong>Material Non-Performance:</strong> If BILLIONAIRS fails to provide the core Services described in Section 2 for a continuous period exceeding 30 days (excluding force majeure events), the Member may request a pro-rata refund;</li>
+                <li><strong>Fraudulent Misrepresentation:</strong> If it is established that BILLIONAIRS made materially false statements to induce the Member's payment, the Member is entitled to a full refund under Swiss law (Art. 28 OR);</li>
+                <li><strong>Cooling-Off Period:</strong> The Member may cancel within <strong>14 days</strong> of payment if platform access has not yet been used, in accordance with applicable consumer protection principles;</li>
+                <li><strong>Statutory Rights:</strong> Nothing in this Agreement shall exclude or limit any refund rights that cannot be waived under mandatory Swiss law (including Art. 8 UWG).</li>
+            </ol>
+            <p>By signing this Agreement, the Member confirms understanding and voluntary acceptance of this fee structure <strong>prior to making payment</strong>.</p>
+
+            <h3><span class="section-num">9.</span> Company Liability &amp; Obligations</h3>
+            <p><strong>9.1</strong> BILLIONAIRS undertakes to provide the Services with commercially reasonable skill and care.</p>
+            <p><strong>9.2</strong> BILLIONAIRS shall be liable for:</p>
+            <ol type="a">
+                <li>Damages caused by intentional misconduct or gross negligence of BILLIONAIRS or its agents;</li>
+                <li>Breach of its confidentiality obligations under Section 4.2;</li>
+                <li>Breach of applicable data protection laws;</li>
+                <li>Any bodily injury or death caused by BILLIONAIRS's negligence.</li>
+            </ol>
+            <p><strong>9.3</strong> BILLIONAIRS shall not be liable for:</p>
+            <ol type="a">
+                <li>Investment decisions made based on information or discussions within the platform — all investment decisions remain the sole responsibility of the Member;</li>
+                <li>Actions, statements, or conduct of other Members on the platform;</li>
+                <li>Temporary platform unavailability due to maintenance, updates, or circumstances beyond BILLIONAIRS's reasonable control (force majeure);</li>
+                <li>Indirect, consequential, or speculative damages, except where exclusion is prohibited by mandatory Swiss law.</li>
+            </ol>
+            <p><strong>9.4</strong> The total aggregate liability of BILLIONAIRS under this Agreement (excluding cases of intentional misconduct) shall not exceed the membership fee paid by the Member (CHF 500,000).</p>
+
+            <h3><span class="section-num">10.</span> Data Protection &amp; Privacy</h3>
+            <p><strong>10.1</strong> BILLIONAIRS processes personal data in accordance with the Swiss Federal Act on Data Protection (<strong>nDSG</strong>, effective 1 September 2023) and, where applicable, the EU General Data Protection Regulation (<strong>GDPR</strong>).</p>
+            <p><strong>10.2</strong> The Member has the following data rights:</p>
+            <ol type="a">
+                <li><strong>Right of Access:</strong> The Member may request information about what personal data is stored;</li>
+                <li><strong>Right to Rectification:</strong> The Member may request correction of inaccurate data;</li>
+                <li><strong>Right to Deletion:</strong> The Member may request deletion of personal data, subject to legal retention obligations;</li>
+                <li><strong>Right to Data Portability:</strong> The Member may request their data in a structured, machine-readable format;</li>
+                <li><strong>Right to Object:</strong> The Member may object to specific data processing activities.</li>
+            </ol>
+            <p><strong>10.3</strong> Data protection requests can be submitted to: <strong>privacy@billionairs.luxury</strong></p>
+            <p><strong>10.4</strong> BILLIONAIRS shall not transfer Member data to countries without adequate data protection standards unless appropriate safeguards are in place (e.g., Standard Contractual Clauses).</p>
+
+            <h3><span class="section-num">11.</span> Membership Termination</h3>
+            <p><strong>11.1 Termination by the Member:</strong></p>
+            <ol type="a">
+                <li>The Member may terminate their membership at any time by providing written notice to BILLIONAIRS;</li>
+                <li>Termination does not entitle the Member to a refund except as specified in Section 8.2;</li>
+                <li>Upon termination, the Member's access to the platform will be revoked within 7 business days;</li>
+                <li>The Member may request export of their personal data prior to termination.</li>
+            </ol>
+            <p><strong>11.2 Termination by BILLIONAIRS:</strong></p>
+            <ol type="a">
+                <li>BILLIONAIRS may terminate membership for material breach of this Agreement, including NDA violations, after providing written notice and a 14-day cure period (except in cases of severe breach where immediate termination is justified);</li>
+                <li>BILLIONAIRS may terminate membership if the Member engages in illegal activities on the platform;</li>
+                <li>In the event BILLIONAIRS permanently ceases operations, Members shall receive a pro-rata refund for any remaining membership term, if applicable.</li>
+            </ol>
+
+            <h3><span class="section-num">12.</span> No License</h3>
+            <p>Nothing in this Agreement grants either Party any license or right in any intellectual property or proprietary rights of the other Party.</p>
+
+            <h3><span class="section-num">13.</span> Governing Law &amp; Jurisdiction</h3>
+            <p>This Agreement shall be governed by the substantive laws of <strong>Switzerland</strong> (excluding conflict-of-law provisions). Any disputes shall be subject to the exclusive jurisdiction of the courts of <strong>Zurich, Switzerland</strong>.</p>
+
+            <h3><span class="section-num">14.</span> Dispute Resolution</h3>
+            <p><strong>14.1</strong> Before initiating any legal proceedings, both Parties agree to attempt to resolve disputes through good-faith negotiation within <strong>30 days</strong> of written notice of the dispute.</p>
+            <p><strong>14.2</strong> If negotiation fails, either Party may submit the dispute to <strong>mediation</strong> under the Swiss Rules of Commercial Mediation administered by the Swiss Chambers' Arbitration Institution. Mediation costs shall be shared equally.</p>
+            <p><strong>14.3</strong> If mediation fails within 60 days, either Party may pursue litigation before the courts of Zurich, Switzerland, or initiate arbitration under the Swiss Rules of International Arbitration, at the claimant's election.</p>
+
+            <h3><span class="section-num">15.</span> Severability</h3>
+            <p>If any provision of this Agreement is found to be invalid, unenforceable, or contrary to mandatory law, the remaining provisions shall continue in full force and effect. The invalid provision shall be replaced by a valid provision that most closely reflects the Parties' original intent.</p>
+
+            <h3><span class="section-num">16.</span> Entire Agreement</h3>
+            <p>This Agreement constitutes the entire agreement between the Parties with respect to its subject matter and supersedes all prior negotiations, representations, and agreements. Amendments to this Agreement must be made in writing and signed by both Parties.</p>
+
+            <h3><span class="section-num">17.</span> Electronic Signature</h3>
+            <p>The Parties agree that this Agreement may be executed electronically. Electronic signatures shall have the same legal effect as handwritten signatures in accordance with the Swiss Federal Act on Electronic Signatures (ZertES) and the EU eIDAS Regulation.</p>
+        </div>
+
+        <div class="scroll-indicator visible" id="scrollIndicator">
+            ↓ Scroll down to read the full agreement ↓
+        </div>
+
+        <!-- Signature Section -->
+        <div class="signature-section" id="signatureSection">
+            <h3>Your Signature</h3>
+
+            <!-- Signer Info (auto-filled from URL params) -->
+            <div class="signer-info">
+                <div class="info-item">
+                    <div class="info-label">Full Name</div>
+                    <div class="info-value" id="signerName">—</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Email</div>
+                    <div class="info-value" id="signerEmail">—</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Date</div>
+                    <div class="info-value" id="signerDate">—</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Document Ref</div>
+                    <div class="info-value" id="signerRef">BLX-NDA-2026</div>
+                </div>
+            </div>
+
+            <!-- Signature Pad -->
+            <div class="signature-pad-container">
+                <div class="signature-pad-label">Draw your signature below</div>
+                <div class="signature-pad-wrapper" id="signaturePadWrapper">
+                    <canvas id="signatureCanvas"></canvas>
+                    <div class="signature-placeholder" id="signaturePlaceholder">
+                        ✍ Sign here with your mouse or finger
+                    </div>
+                </div>
+                <div class="signature-actions">
+                    <button type="button" class="sig-btn" onclick="clearSignature()">CLEAR</button>
+                </div>
+            </div>
+
+            <!-- Consent -->
+            <div class="nda-consent">
+                <input type="checkbox" id="ndaAgreeCheckbox">
+                <label for="ndaAgreeCheckbox">
+                    I, <strong id="consentName">the undersigned</strong>, have read, understood, and agree to be bound by all terms of this Non-Disclosure Agreement, including the non-refundable payment policy of CHF 500,000. I confirm I am of legal age and acting on my own behalf and free will.
+                </label>
+            </div>
+
+            <!-- Submit -->
+            <button type="button" class="nda-submit-btn" id="ndaSubmitBtn" onclick="submitNDA()">
+                SIGN &amp; PROCEED TO PAYMENT
+            </button>
+
+            <div class="signing-meta" id="signingMeta">
+                Signing date: <span id="metaDate"></span> | 
+                This agreement is legally binding upon signature.
+            </div>
+
+            <div class="security-badge">
+                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                <span>Encrypted &amp; Legally Binding | Swiss Law (ZertES) &amp; EU eIDAS Compliant</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/js/nda-translations.js?v=2"></script>
+    <script>
+    (function() {
+        // ========== INITIALIZATION ==========
+        const urlParams = new URLSearchParams(window.location.search);
+        const memberName = urlParams.get('name') || '';
+        const memberEmail = urlParams.get('email') || '';
+        const memberPhone = urlParams.get('phone') || '';
+        const memberCompany = urlParams.get('company') || '';
+        const lang = urlParams.get('lang') || 'en';
+
+        // Get password securely from sessionStorage (not URL)
+        let memberPassword = '';
+        try {
+            const storedCustomer = JSON.parse(sessionStorage.getItem('nda_customer') || '{}');
+            memberPassword = storedCustomer.password || '';
+        } catch(e) {}
+
+        // Validate that we have required data
+        if (!memberName || !memberEmail || !memberPassword) {
+            const expTitle = (lang !== 'en' && NDA_TRANSLATIONS && NDA_TRANSLATIONS[lang]) ? NDA_TRANSLATIONS[lang].ui.sessionExpiredTitle : 'Session Expired';
+            const expText = (lang !== 'en' && NDA_TRANSLATIONS && NDA_TRANSLATIONS[lang]) ? NDA_TRANSLATIONS[lang].ui.sessionExpiredText : 'Please start the registration process again.';
+            const expLink = (lang !== 'en' && NDA_TRANSLATIONS && NDA_TRANSLATIONS[lang]) ? NDA_TRANSLATIONS[lang].ui.sessionExpiredLink : 'Return to BILLIONAIRS';
+            document.querySelector('.nda-page').innerHTML = `
+                <div style="text-align:center;padding:4rem 2rem;">
+                    <h2 style="font-family:'Playfair Display',serif;margin-bottom:1rem;">${expTitle}</h2>
+                    <p style="color:rgba(255,255,255,0.5);margin-bottom:2rem;">${expText}</p>
+                    <a href="/" style="color:#c9a96e;text-decoration:underline;">${expLink}</a>
+                </div>`;
+            return;
+        }
+
+        // Set date (locale-aware)
+        const now = new Date();
+        const localeMap = { en: 'en-GB', de: 'de-DE', fr: 'fr-FR', es: 'es-ES', it: 'it-IT', ru: 'ru-RU', zh: 'zh-CN', ja: 'ja-JP', ar: 'ar-SA' };
+        const dateStr = now.toLocaleDateString(localeMap[lang] || 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+        document.getElementById('ndaDate').textContent = dateStr;
+        document.getElementById('signerDate').textContent = dateStr;
+        document.getElementById('metaDate').textContent = dateStr;
+
+        // Set signer info
+        if (memberName) {
+            document.getElementById('signerName').textContent = memberName;
+            document.getElementById('memberNameDisplay').textContent = memberName;
+            document.getElementById('consentName').textContent = memberName;
+        }
+        if (memberEmail) {
+            document.getElementById('signerEmail').textContent = memberEmail;
+        }
+
+        // ========== APPLY TRANSLATIONS ==========
+        function applyTranslations(langCode) {
+            if (langCode === 'en' || !NDA_TRANSLATIONS || !NDA_TRANSLATIONS[langCode]) return;
+            const t = NDA_TRANSLATIONS[langCode];
+            const ui = t.ui;
+            const nda = t.nda;
+
+            // Set page title
+            document.title = ui.pageTitle;
+
+            // Set RTL for Arabic
+            if (langCode === 'ar') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = 'ar';
+            } else {
+                document.documentElement.lang = langCode;
+            }
+
+            // Header
+            document.querySelector('.nda-header h1').textContent = ui.headerTitle;
+            document.querySelector('.nda-header p').textContent = ui.headerSubtitle;
+
+            // Scroll indicator
+            document.getElementById('scrollIndicator').textContent = ui.scrollIndicator;
+
+            // Signature section UI
+            document.querySelector('.signature-section h3').textContent = ui.signatureTitle;
+            const labels = document.querySelectorAll('.info-label');
+            if (labels[0]) labels[0].textContent = ui.labelName;
+            if (labels[1]) labels[1].textContent = ui.labelEmail;
+            if (labels[2]) labels[2].textContent = ui.labelDate;
+            if (labels[3]) labels[3].textContent = ui.labelDocRef;
+
+            document.querySelector('.signature-pad-label').textContent = ui.signaturePadLabel;
+            document.getElementById('signaturePlaceholder').textContent = ui.signaturePlaceholder;
+            document.querySelector('.sig-btn').textContent = ui.clearBtn;
+
+            // Consent
+            const consentLabel = document.querySelector('.nda-consent label');
+            if (consentLabel) consentLabel.innerHTML = ui.consentText(memberName || ui.labelName);
+
+            // Submit button
+            document.getElementById('ndaSubmitBtn').textContent = ui.submitBtn.replace('&', '&');
+
+            // Meta
+            document.getElementById('signingMeta').innerHTML = ui.signingMeta(dateStr);
+
+            // Security badge
+            document.querySelector('.security-badge span').innerHTML = ui.securityBadge;
+
+            // NDA Document content
+            const ndaDoc = document.getElementById('ndaDocument');
+            let html = `<div class="confidential-stamp">${nda.confidentialStamp}</div>`;
+            html += `<h2>${nda.title}</h2>`;
+            html += `<p>${nda.intro(dateStr)}</p>`;
+            html += `<div class="parties-box">`;
+            html += `<p><span class="party-label">${nda.partyALabel}</span><br>${nda.partyAText}<br>${nda.partyARef}</p><br>`;
+            html += `<p><span class="party-label">${nda.partyBLabel}</span><br><span id="memberNameDisplay2">${memberName || nda.partyBLabel}</span><br>${nda.partyBRef}</p>`;
+            html += `</div>`;
+            html += `<p>${nda.partiesRef}</p>`;
+
+            nda.sections.forEach((section, i) => {
+                html += `<h3><span class="section-num">${i + 1}.</span> ${section.title}</h3>`;
+                html += section.content;
+            });
+
+            ndaDoc.innerHTML = html;
+        }
+
+        applyTranslations(lang);
+
+        // ========== SCROLL TRACKING ==========
+        const ndaDoc = document.getElementById('ndaDocument');
+        const scrollIndicator = document.getElementById('scrollIndicator');
+        let hasScrolledToBottom = false;
+
+        ndaDoc.addEventListener('scroll', function() {
+            const scrollPercent = (ndaDoc.scrollTop + ndaDoc.clientHeight) / ndaDoc.scrollHeight;
+            if (scrollPercent > 0.95) {
+                hasScrolledToBottom = true;
+                scrollIndicator.classList.remove('visible');
+            }
+        });
+
+        // Check if content doesn't need scrolling
+        setTimeout(() => {
+            if (ndaDoc.scrollHeight <= ndaDoc.clientHeight + 10) {
+                hasScrolledToBottom = true;
+                scrollIndicator.classList.remove('visible');
+            }
+        }, 500);
+
+        // ========== SIGNATURE PAD ==========
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        const wrapper = document.getElementById('signaturePadWrapper');
+        const placeholder = document.getElementById('signaturePlaceholder');
+        let isDrawing = false;
+        let hasSignature = false;
+        let lastX = 0, lastY = 0;
+
+        function resizeCanvas() {
+            const rect = wrapper.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = 150;
+            ctx.strokeStyle = '#c9a96e';
+            ctx.lineWidth = 2.5;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: (clientX - rect.left) * (canvas.width / rect.width),
+                y: (clientY - rect.top) * (canvas.height / rect.height)
+            };
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const pos = getPos(e);
+            lastX = pos.x;
+            lastY = pos.y;
+            placeholder.classList.add('hidden');
+            wrapper.classList.add('active');
+            e.preventDefault();
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const pos = getPos(e);
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+            lastX = pos.x;
+            lastY = pos.y;
+            hasSignature = true;
+            e.preventDefault();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            wrapper.classList.remove('active');
+            if (hasSignature) {
+                wrapper.classList.add('signed');
+            }
+            updateSubmitButton();
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseleave', stopDrawing);
+        canvas.addEventListener('touchstart', startDrawing, { passive: false });
+        canvas.addEventListener('touchmove', draw, { passive: false });
+        canvas.addEventListener('touchend', stopDrawing);
+
+        function clearSignature() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hasSignature = false;
+            wrapper.classList.remove('signed');
+            placeholder.classList.remove('hidden');
+            updateSubmitButton();
+        }
+        window.clearSignature = clearSignature;
+
+        // ========== SUBMIT LOGIC ==========
+        const agreeCheckbox = document.getElementById('ndaAgreeCheckbox');
+        const submitBtn = document.getElementById('ndaSubmitBtn');
+
+        agreeCheckbox.addEventListener('change', updateSubmitButton);
+
+        function updateSubmitButton() {
+            const isReady = hasSignature && agreeCheckbox.checked;
+            submitBtn.classList.toggle('ready', isReady);
+            submitBtn.disabled = !isReady;
+            submitBtn.style.cursor = isReady ? 'pointer' : 'not-allowed';
+        }
+
+        // UI string helper for translations
+        function uiStr(key) {
+            if (lang !== 'en' && NDA_TRANSLATIONS && NDA_TRANSLATIONS[lang]) {
+                return NDA_TRANSLATIONS[lang].ui[key] || key;
+            }
+            const defaults = {
+                toastSignFirst: 'Please draw your signature first.',
+                toastAgreeFirst: 'Please agree to the NDA terms.',
+                toastReadFirst: 'Please read the entire agreement before signing.',
+                toastSuccess: 'NDA signed successfully! Redirecting to payment...',
+                toastPaymentError: 'Payment error: ',
+                toastError: 'Error: ',
+                processingBtn: 'PROCESSING...',
+                submitBtn: 'SIGN & PROCEED TO PAYMENT'
+            };
+            return defaults[key] || key;
+        }
+
+        function showToast(msg, type = 'error') {
+            const toast = document.createElement('div');
+            toast.className = `nda-toast ${type}`;
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 400); }, 4000);
+        }
+
+        async function submitNDA() {
+            if (!hasSignature) {
+                showToast(uiStr('toastSignFirst'));
+                return;
+            }
+            if (!agreeCheckbox.checked) {
+                showToast(uiStr('toastAgreeFirst'));
+                return;
+            }
+            if (!hasScrolledToBottom) {
+                showToast(uiStr('toastReadFirst'));
+                return;
+            }
+
+            submitBtn.classList.add('processing');
+            submitBtn.textContent = uiStr('processingBtn');
+
+            try {
+                // Capture signature as image
+                const signatureData = canvas.toDataURL('image/png');
+
+                // Save NDA signature to server
+                const response = await fetch('/api/nda-signature', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: memberName,
+                        email: memberEmail,
+                        phone: memberPhone,
+                        company: memberCompany,
+                        signature: signatureData,
+                        agreedAt: new Date().toISOString(),
+                        documentRef: 'BLX-NDA-2026',
+                        userAgent: navigator.userAgent
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showToast(uiStr('toastSuccess'), 'success');
+                    
+                    // Store NDA status in sessionStorage
+                    sessionStorage.setItem('nda_signed', 'true');
+                    sessionStorage.setItem('nda_signature_id', result.signatureId || '');
+
+                    // Redirect to payment — trigger Stripe Checkout
+                    setTimeout(() => {
+                        const customerData = {
+                            fullName: memberName,
+                            email: memberEmail,
+                            password: memberPassword,
+                            phone: memberPhone,
+                            company: memberCompany
+                        };
+                        const metadata = {
+                            product: 'BILLIONAIRS_EXCLUSIVE_ACCESS',
+                            tier: 'MILLIONAIRE_SEGMENT',
+                            payment_type: 'full',
+                            customer_name: memberName,
+                            customer_email: memberEmail,
+                            customer_phone: memberPhone,
+                            nda_signed: 'true',
+                            nda_signature_id: result.signatureId || '',
+                            timestamp: new Date().toISOString(),
+                            language: lang
+                        };
+                        if (memberCompany) metadata.customer_company = memberCompany;
+
+                        fetch('/api/stripe-checkout', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                mode: 'payment',
+                                currency: 'chf',
+                                amount: 50000000,
+                                paymentType: 'full',
+                                customerData: customerData,
+                                metadata: metadata,
+                                language: lang
+                            })
+                        })
+                        .then(r => {
+                            if (!r.ok) throw new Error('Server error: ' + r.status);
+                            return r.json();
+                        })
+                        .then(session => {
+                            if (session.error) throw new Error(session.error);
+                            if (!session.url) throw new Error('No checkout URL received');
+                            sessionStorage.setItem('paymentInitiated', 'true');
+                            window.location.href = session.url;
+                        })
+                        .catch(err => {
+                            showToast(uiStr('toastPaymentError') + err.message);
+                            submitBtn.classList.remove('processing');
+                            submitBtn.textContent = uiStr('submitBtn');
+                        });
+                    }, 1500);
+                } else {
+                    throw new Error(result.error || 'Failed to save NDA signature');
+                }
+            } catch (error) {
+                showToast(uiStr('toastError') + error.message);
+                submitBtn.classList.remove('processing');
+                submitBtn.textContent = uiStr('submitBtn');
+            }
+        }
+        window.submitNDA = submitNDA;
+    })();
+    </script>
+</body>
+</html>
