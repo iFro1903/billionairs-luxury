@@ -39,33 +39,6 @@
     <link rel="alternate" hreflang="x-default" href="https://billionairs.luxury/">
     
     <!-- Schema.org Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "BILLIONAIRS",
-        "url": "https://billionairs.luxury",
-        "logo": "https://billionairs.luxury/assets/images/logo.png",
-        "description": "The world's most exclusive private membership. Ultra-luxury experiences, elite networking & billionaire lifestyle.",
-        "foundingDate": "2025",
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "email": "elite@billionairs.luxury",
-            "contactType": "customer service"
-        },
-        "sameAs": []
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "BILLIONAIRS",
-        "url": "https://billionairs.luxury",
-        "inLanguage": ["en", "de", "fr", "es", "it", "ru", "zh", "ja", "ar"]
-    }
-    </script>
-
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://billionairs.luxury/">
@@ -283,7 +256,7 @@
     <link rel="stylesheet" href="assets/css/payment-methods.css?v=20260211" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/language-dropdown.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/mobile-language-dropdown.css" media="print" onload="this.media='all'; this.onload=null;">
-    <link rel="stylesheet" href="assets/css/faq-footer.css" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="assets/css/faq-footer.css">
     <link rel="stylesheet" href="assets/css/what-isnt.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/last-few-days.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/the-truth.css" media="print" onload="this.media='all'; this.onload=null;">
@@ -297,6 +270,30 @@
         <link rel="stylesheet" href="assets/css/the-truth.css">
     </noscript>
     
+    <!-- CRITICAL: Inline modal styles to ensure modals ALWAYS work, even if faq-footer.css fails -->
+    <style>
+        .legal-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); z-index: 10000; padding: 2rem; overflow-y: auto; }
+        .legal-modal.active { display: block !important; animation: fadeIn 0.4s ease; }
+        .legal-modal-inner { display: flex; align-items: center; justify-content: center; min-height: 100vh; position: relative; z-index: 1; }
+        .legal-modal .modal-content { max-width: 700px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 3rem; position: relative; background: rgba(15,15,15,0.97); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; }
+        .legal-modal .modal-content h2 { color: #fff; font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .legal-modal .modal-content h3 { color: #fff; margin-bottom: 0.8rem; }
+        .legal-modal .modal-content p { color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 0.8rem; }
+        .legal-modal .modal-close { position: sticky; top: 1rem; float: right; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); font-size: 1.8rem; cursor: pointer; z-index: 10001; }
+        .legal-section { margin-bottom: 2rem; padding: 1.5rem; background: rgba(255,255,255,0.02); border-left: 2px solid rgba(255,255,255,0.1); border-radius: 8px; }
+        .faq-modal-item { margin-bottom: 1.5rem; padding: 1.5rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; }
+        .faq-modal-item h3 { color: #fff; }
+        .faq-modal-item p { color: rgba(255,255,255,0.65); }
+        .modal-divider { width: 80px; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent); margin: 0 0 2rem 0; }
+        @media (max-width: 768px) {
+            .legal-modal { padding: 0; }
+            .legal-modal-inner { align-items: flex-start; min-height: auto; padding: 1rem 1rem 6rem; }
+            .legal-modal .modal-content { max-height: none; overflow-y: visible; padding: 2rem 1.5rem 4rem; }
+            .legal-modal .modal-close { position: fixed; top: 5rem; right: 1rem; float: none; background: rgba(10,10,10,0.9); border: 1px solid rgba(232,196,168,0.3); color: rgba(255,255,255,0.8); }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+
     <!-- CRITICAL: Force dark background on autofill - inline to override everything -->
     <style>
         /* Prevent flash of unstyled content during page load */
@@ -557,7 +554,7 @@
                         <span class="hero-footer-sep">&#x25C6;</span>
                         <a href="#" class="hero-footer-link" id="termsLinkHero">TERMS & CONDITIONS</a>
                     </div>
-                    <p class="hero-footer-copy">&copy; 2025 FRO</p>
+                    <p class="hero-footer-copy">&copy; 2026 FRO</p>
                 </div>
             </div>
         </section>
@@ -1055,7 +1052,7 @@
                 <span class="footer-separator" aria-hidden="true">&#x25C6;</span>
                 <a href="#" class="footer-link" id="termsLink" aria-label="Terms and conditions of service" data-i18n="TERMS & CONDITIONS">TERMS &amp; CONDITIONS</a>
             </nav>
-            <p class="footer-copyright">&copy; 2025 FRO</p>
+            <p class="footer-copyright">&copy; 2026 FRO</p>
         </footer>
 
         <!-- FAQ Modal -->
@@ -1269,24 +1266,39 @@
         }, 2000);
     });
     
-    // -- Terms Checkbox ? Payment Button Toggle --
+    // -- Terms Checkbox → Payment Button Toggle --
     document.addEventListener('DOMContentLoaded', function() {
         const termsCheckbox = document.getElementById('termsCheckbox');
         const paymentButton = document.getElementById('stripeCheckoutButton');
         
+        function updatePaymentButton() {
+            if (!termsCheckbox || !paymentButton) return;
+            if (termsCheckbox.checked) {
+                paymentButton.disabled = false;
+                paymentButton.classList.remove('payment-button-disabled');
+            } else {
+                paymentButton.disabled = true;
+                paymentButton.classList.add('payment-button-disabled');
+            }
+        }
+
         if (termsCheckbox && paymentButton) {
-            termsCheckbox.addEventListener('change', function() {
-                if (this.checked) {
-                    paymentButton.disabled = false;
-                    paymentButton.classList.remove('payment-button-disabled');
-                } else {
-                    paymentButton.disabled = true;
-                    paymentButton.classList.add('payment-button-disabled');
-                }
-            });
+            termsCheckbox.addEventListener('change', updatePaymentButton);
+
+            // iOS Safari fix: add explicit touch handler on the checkmark span
+            // because iOS sometimes doesn't propagate label taps to hidden checkboxes
+            const checkmark = document.querySelector('.legal-consent-checkmark');
+            if (checkmark) {
+                checkmark.addEventListener('click', function(e) {
+                    // Only toggle if the click wasn't already handled by the label
+                    e.stopPropagation();
+                    termsCheckbox.checked = !termsCheckbox.checked;
+                    termsCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+                });
+            }
         }
         
-        // Wire consent links to modals
+        // Wire consent links to modals — stop propagation so link taps don't toggle checkbox on iOS
         const termsConsentLink = document.getElementById('termsConsentLink');
         const privacyConsentLink = document.getElementById('privacyConsentLink');
         const refundConsentLink = document.getElementById('refundConsentLink');
@@ -1294,6 +1306,7 @@
         if (termsConsentLink) {
             termsConsentLink.addEventListener('click', function(e) {
                 e.preventDefault();
+                e.stopPropagation();
                 const modal = document.getElementById('termsModal');
                 if (modal) modal.classList.add('active');
             });
@@ -1301,6 +1314,7 @@
         if (privacyConsentLink) {
             privacyConsentLink.addEventListener('click', function(e) {
                 e.preventDefault();
+                e.stopPropagation();
                 const modal = document.getElementById('privacyModal');
                 if (modal) modal.classList.add('active');
             });
@@ -1308,7 +1322,8 @@
         if (refundConsentLink) {
             refundConsentLink.addEventListener('click', function(e) {
                 e.preventDefault();
-                // Refund info is in FAQ #8 and Terms modal &mdash; open Terms
+                e.stopPropagation();
+                // Refund info is in FAQ #8 and Terms modal — open Terms
                 const modal = document.getElementById('termsModal');
                 if (modal) modal.classList.add('active');
             });
@@ -1997,6 +2012,88 @@
     <script src="assets/js/notifications.js" defer></script>
     <script src="assets/js/main.js?v=20260211" defer></script>
     <script src="assets/js/faq.js" defer></script>
+
+    <!-- CRITICAL FALLBACK: Ensure modals work even if faq.js fails to load -->
+    <script>
+    window.addEventListener('load', function() {
+        // Only activate fallback if faq.js didn't create openModal
+        setTimeout(function() {
+            if (typeof window.openModal === 'function') return;
+
+            var modals = {
+                faq: document.getElementById('faqModal'),
+                impressum: document.getElementById('impressumModal'),
+                privacy: document.getElementById('privacyModal'),
+                terms: document.getElementById('termsModal')
+            };
+
+            function fallbackOpenModal(name) {
+                var modal = modals[name];
+                if (modal) {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+
+            function fallbackCloseModal(modal) {
+                if (modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+
+            window.openModal = fallbackOpenModal;
+
+            // Wire footer links
+            var linkMap = {faqLink:'faq', legalLink:'impressum', privacyLink:'privacy', termsLink:'terms'};
+            var heroMap = {faqLinkHero:'faq', legalLinkHero:'impressum', privacyLinkHero:'privacy', termsLinkHero:'terms'};
+
+            function wireLinks(map) {
+                for (var id in map) {
+                    (function(linkId, modalName) {
+                        var el = document.getElementById(linkId);
+                        if (el) {
+                            el.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                fallbackOpenModal(modalName);
+                            });
+                        }
+                    })(id, map[id]);
+                }
+            }
+
+            wireLinks(linkMap);
+            wireLinks(heroMap);
+
+            // Wire close buttons and backdrop
+            for (var key in modals) {
+                (function(modal) {
+                    if (!modal) return;
+                    var closeBtn = modal.querySelector('.modal-close');
+                    if (closeBtn) {
+                        closeBtn.addEventListener('click', function() { fallbackCloseModal(modal); });
+                    }
+                    modal.addEventListener('click', function(e) {
+                        if (e.target === modal) fallbackCloseModal(modal);
+                    });
+                })(modals[key]);
+            }
+
+            // ESC to close
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    for (var k in modals) {
+                        if (modals[k] && modals[k].classList.contains('active')) {
+                            fallbackCloseModal(modals[k]);
+                        }
+                    }
+                }
+            });
+
+            console.warn('[BILLIONAIRS] Modal fallback activated - faq.js may not have loaded');
+        }, 2000);
+    });
+    </script>
     <script src="assets/js/testimonials.js" defer></script>
     <script src="assets/js/stripe-payment.js" defer></script>
     <script src="assets/js/payment-methods-new.js?v=20260211" defer></script>

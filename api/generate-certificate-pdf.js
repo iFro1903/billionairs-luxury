@@ -490,6 +490,7 @@ export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', getCorsOrigin(req));
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
 
     if (req.method === 'OPTIONS') return res.status(200).end();
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -497,13 +498,21 @@ export default async function handler(req, res) {
     let browser = null;
 
     try {
+        // Session-based authentication - verify user is logged in
+        const cookies = req.headers.cookie || '';
+        const sessionMatch = cookies.match(/billionairs_session=([^;]+)/);
+        if (!sessionMatch) {
+            return res.status(401).json({ error: 'Authentication required. Please log in.' });
+        }
+        const sessionToken = sessionMatch[1];
+
         const { email, lang } = req.body;
 
         if (!email) {
             return res.status(400).json({ error: 'Email is required' });
         }
 
-        // Verify user has paid
+        // Verify user has paid AND session is valid
         const { sql } = await import('@vercel/postgres');
 
         const result = await sql`
@@ -519,6 +528,16 @@ export default async function handler(req, res) {
         const user = result.rows[0];
         if (user.payment_status !== 'paid') {
             return res.status(403).json({ error: 'Payment required' });
+        }
+
+        // Verify the session belongs to this user
+        const sessionResult = await sql`
+            SELECT user_id FROM sessions 
+            WHERE token = ${sessionToken} 
+            AND expires_at > NOW()
+        `;
+        if (sessionResult.rows.length === 0 || sessionResult.rows[0].user_id !== user.id) {
+            return res.status(403).json({ error: 'Session does not match. You can only download your own certificate.' });
         }
 
         // Generate certificate number

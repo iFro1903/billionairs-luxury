@@ -1,8 +1,16 @@
 import { rateLimiter } from './rate-limiter.js';
+import { neon } from '@neondatabase/serverless';
 
 export const config = {
     runtime: 'edge'
 };
+
+// Read token from HttpOnly cookie
+function getTokenFromCookie(req) {
+    const cookies = req.headers.get('cookie') || '';
+    const match = cookies.match(/billionairs_session=([^;]+)/);
+    return match ? match[1] : null;
+}
 
 // SHA-1 hash function for Edge Runtime
 async function sha1(message) {
@@ -16,6 +24,35 @@ export default async function handler(req) {
     if (req.method !== 'POST') {
         return new Response(JSON.stringify({ error: 'Method not allowed' }), {
             status: 405,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
+    // Authentication: Require valid session
+    const token = getTokenFromCookie(req);
+    if (!token) {
+        return new Response(JSON.stringify({ error: 'Authentication required' }), {
+            status: 401,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
+    try {
+        const sql = neon(process.env.DATABASE_URL);
+        const sessions = await sql`
+            SELECT user_id FROM sessions 
+            WHERE token = ${token} AND expires_at > NOW()
+        `;
+        if (sessions.length === 0) {
+            return new Response(JSON.stringify({ error: 'Invalid or expired session' }), {
+                status: 401,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        }
+    } catch (authError) {
+        console.error('Auth check error:', authError);
+        return new Response(JSON.stringify({ error: 'Authentication failed' }), {
+            status: 500,
             headers: { 'Content-Type': 'application/json' }
         });
     }

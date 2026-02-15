@@ -3404,16 +3404,20 @@ input:-webkit-autofill::first-line {
     -webkit-user-select: none;
 }
 
-/* Hide native checkbox */
+/* Hide native checkbox - iOS compatible */
 .legal-consent-checkbox {
     position: absolute;
     opacity: 0;
-    width: 0;
-    height: 0;
-    pointer-events: none;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
-/* Custom checkbox */
+/* Custom checkbox with iOS-friendly tap target */
 .legal-consent-checkmark {
     flex-shrink: 0;
     width: 22px;
@@ -3426,6 +3430,20 @@ input:-webkit-autofill::first-line {
     transition: all 0.3s ease;
     margin-top: 2px;
     background: rgba(0, 0, 0, 0.3);
+    /* iOS: expand tap target to 44px minimum without changing visual size */
+    position: relative;
+}
+
+.legal-consent-checkmark::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
 }
 
 .legal-consent-checkmark::after {
@@ -3509,8 +3527,18 @@ input:-webkit-autofill::first-line {
     }
     
     .legal-consent-checkmark {
-        width: 20px;
-        height: 20px;
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+    }
+
+    .legal-consent-checkmark::before {
+        width: 48px;
+        height: 48px;
+    }
+
+    .legal-consent-label {
+        gap: 1rem;
     }
 }
 /* ==================== END LEGAL CONSENT CHECKBOX ==================== */

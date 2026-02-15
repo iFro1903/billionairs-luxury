@@ -15,8 +15,7 @@ const BillionairsAnalytics = {
     // User Events
     trackSignup: (email) => {
         gtag('event', 'sign_up', {
-            method: 'email',
-            user_email: email
+            method: 'email'
         });
     },
 

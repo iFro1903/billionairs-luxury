@@ -190,8 +190,27 @@ class StripePaymentProcessor {
         }
     }
 
+    // Escape HTML to prevent XSS attacks
+    escapeHtml(str) {
+        if (str === null || str === undefined) return '';
+        const div = document.createElement('div');
+        div.textContent = String(str);
+        return div.innerHTML;
+    }
+
     showBankDetailsModal(bankDetails, instructions) {
         // Create a beautiful modal with bank details
+        // Sanitize all server data before rendering
+        const safe = {
+            amount: this.escapeHtml(bankDetails.amount),
+            bankName: this.escapeHtml(bankDetails.bankName),
+            accountHolder: this.escapeHtml(bankDetails.accountHolder),
+            iban: this.escapeHtml(bankDetails.iban),
+            swift: this.escapeHtml(bankDetails.swift),
+            reference: this.escapeHtml(bankDetails.reference),
+            address: this.escapeHtml(bankDetails.address)
+        };
+        const safeInstructions = instructions.map(i => this.escapeHtml(i));
         const modal = document.createElement('div');
         modal.style.cssText = `
             position: fixed;
@@ -241,31 +260,31 @@ class StripePaymentProcessor {
                 ">
                     <div style="margin-bottom: 1rem;">
                         <strong style="color: #E8B4A0;">Amount:</strong>
-                        <span style="color: #ffffff; font-size: 1.2rem; margin-left: 1rem;">${bankDetails.amount}</span>
+                        <span style="color: #ffffff; font-size: 1.2rem; margin-left: 1rem;">${safe.amount}</span>
                     </div>
                     <div style="margin-bottom: 1rem;">
                         <strong style="color: #E8B4A0;">Bank Name:</strong>
-                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem;">${bankDetails.bankName}</span>
+                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem;">${safe.bankName}</span>
                     </div>
                     <div style="margin-bottom: 1rem;">
                         <strong style="color: #E8B4A0;">Account Holder:</strong>
-                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem;">${bankDetails.accountHolder}</span>
+                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem;">${safe.accountHolder}</span>
                     </div>
                     <div style="margin-bottom: 1rem;">
                         <strong style="color: #E8B4A0;">IBAN:</strong>
-                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem; font-family: monospace;">${bankDetails.iban}</span>
+                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem; font-family: monospace;">${safe.iban}</span>
                     </div>
                     <div style="margin-bottom: 1rem;">
                         <strong style="color: #E8B4A0;">SWIFT/BIC:</strong>
-                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem; font-family: monospace;">${bankDetails.swift}</span>
+                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem; font-family: monospace;">${safe.swift}</span>
                     </div>
                     <div style="margin-bottom: 1rem;">
                         <strong style="color: #E8B4A0;">Reference:</strong>
-                        <span style="color: #FF6B6B; margin-left: 1rem; font-weight: 700; font-family: monospace;">${bankDetails.reference}</span>
+                        <span style="color: #FF6B6B; margin-left: 1rem; font-weight: 700; font-family: monospace;">${safe.reference}</span>
                     </div>
                     <div style="margin-bottom: 0;">
                         <strong style="color: #E8B4A0;">Bank Address:</strong>
-                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem; font-size: 0.85rem;">${bankDetails.address}</span>
+                        <span style="color: rgba(255, 255, 255, 0.9); margin-left: 1rem; font-size: 0.85rem;">${safe.address}</span>
                     </div>
                 </div>
 
@@ -277,7 +296,7 @@ class StripePaymentProcessor {
                     margin-bottom: 2rem;
                 ">
                     <strong style="color: #FF6B6B; display: block; margin-bottom: 0.5rem;">⚠️ Important:</strong>
-                    ${instructions.map(inst => `
+                    ${safeInstructions.map(inst => `
                         <p style="color: rgba(255, 255, 255, 0.8); margin: 0.5rem 0; font-size: 0.85rem;">• ${inst}</p>
                     `).join('')}
                 </div>
@@ -362,7 +381,7 @@ class StripePaymentProcessor {
                 <div class="error-icon">⚠️</div>
                 <h3>Payment Processing Error</h3>
                 <p>We encountered an issue processing your payment:</p>
-                <p class="error-details">${message}</p>
+                <p class="error-details">${this.escapeHtml(message)}</p>
                 <p>Please try again or contact our support team.</p>
                 <button class="error-close-btn" onclick="this.parentElement.parentElement.remove()">
                     CLOSE
@@ -513,7 +532,7 @@ class StripePaymentProcessor {
                     text-align: center;
                     margin-bottom: 0.5rem;
                     font-weight: 700;
-                ">${data.wallet.symbol} ${data.cryptocurrency} Payment</h2>
+                ">${this.escapeHtml(data.wallet.symbol)} ${this.escapeHtml(data.cryptocurrency)} Payment</h2>
                 
                 <p style="
                     text-align: center;
@@ -565,7 +584,7 @@ class StripePaymentProcessor {
                         font-weight: 700;
                         word-break: break-all;
                         letter-spacing: 0.5px;
-                    ">${data.wallet.address}</p>
+                    ">${this.escapeHtml(data.wallet.address)}</p>
                 </div>
 
                 <div style="
@@ -576,15 +595,15 @@ class StripePaymentProcessor {
                 ">
                     <div style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid rgba(232, 180, 160, 0.2);">
                         <span style="color: rgba(255, 255, 255, 0.6); font-size: 0.85rem;">Network</span>
-                        <span style="color: #ffffff; font-weight: 600; font-size: 0.85rem;">${data.wallet.network}</span>
+                        <span style="color: #ffffff; font-weight: 600; font-size: 0.85rem;">${this.escapeHtml(data.wallet.network)}</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid rgba(232, 180, 160, 0.2);">
                         <span style="color: rgba(255, 255, 255, 0.6); font-size: 0.85rem;">Amount (CHF)</span>
-                        <span style="color: #E8B4A0; font-weight: 700; font-size: 0.9rem;">${data.amount.chf}</span>
+                        <span style="color: #E8B4A0; font-weight: 700; font-size: 0.9rem;">${this.escapeHtml(data.amount.chf)}</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; padding: 0.75rem 0;">
                         <span style="color: rgba(255, 255, 255, 0.6); font-size: 0.85rem;">Reference</span>
-                        <span style="color: #ffffff; font-weight: 600; font-size: 0.85rem;">${data.reference}</span>
+                        <span style="color: #ffffff; font-weight: 600; font-size: 0.85rem;">${this.escapeHtml(data.reference)}</span>
                     </div>
                 </div>
 
@@ -598,7 +617,7 @@ class StripePaymentProcessor {
                     <p style="color: #FF3B30; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.5rem;">⚠️ IMPORTANT</p>
                     <ul style="color: rgba(255, 255, 255, 0.8); font-size: 0.8rem; line-height: 1.6; margin: 0; padding-left: 1.5rem;">
                         <li>Double-check the wallet address</li>
-                        <li>Only use ${data.wallet.network} network</li>
+                        <li>Only use ${this.escapeHtml(data.wallet.network)} network</li>
                         <li>Transactions are irreversible</li>
                         <li>Email us the transaction hash</li>
                     </ul>

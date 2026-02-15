@@ -1630,10 +1630,11 @@ setTimeout(function() { window.print(); }, 800);
         const msg = isActive ? 'Website ONLINE bringen?' : 'EMERGENCY SHUTDOWN aktivieren?\nAlle User sehen 404!';
         if (!(await this.confirmDialog(msg, isActive ? '✅' : '🚨'))) return;
         try {
+            const session = this.getSession();
             const res = await fetch('/api/admin-emergency', {
                 method: 'POST',
                 headers: { 'Content-Type':'application/json' },
-                body: JSON.stringify({ email: this.ceoEmail, mode: isActive ? 'deactivate' : 'activate' })
+                body: JSON.stringify({ email: this.ceoEmail, password: session?.password || '', mode: isActive ? 'deactivate' : 'activate' })
             });
             if (res.ok) {
                 this.updateEmergencyButton(!isActive);

@@ -1,9 +1,9 @@
 // Service Worker for BILLIONAIRS PWA
 // Provides offline support and performance caching
 
-const CACHE_NAME = 'billionairs-v1.0.5';
-const RUNTIME_CACHE = 'billionairs-runtime-v1.0.5';
-const IMAGE_CACHE = 'billionairs-images-v1.0.5';
+const CACHE_NAME = 'billionairs-v1.0.6';
+const RUNTIME_CACHE = 'billionairs-runtime-v1.0.6';
+const IMAGE_CACHE = 'billionairs-images-v1.0.6';
 
 // Resources to cache immediately on install
 const PRECACHE_URLS = [
@@ -13,6 +13,7 @@ const PRECACHE_URLS = [
     '/login.html',
     '/create-account.html',
     '/assets/css/styles.css',
+    '/assets/css/faq-footer.css',
     '/assets/css/mobile-nav.css',
     '/assets/css/easter-egg.css',
     '/assets/css/admin.css',
@@ -20,7 +21,9 @@ const PRECACHE_URLS = [
     '/assets/js/analytics.js',
     '/assets/js/cookie-consent.js',
     '/assets/js/i18n.js',
+    '/assets/js/faq.js',
     '/assets/js/lang-dropdown-simple.js',
+    '/assets/js/modal-i18n.js',
     '/assets/images/logo.png',
     '/assets/images/og-image.jpg',
     '/manifest.json'

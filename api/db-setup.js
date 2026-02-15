@@ -1,10 +1,42 @@
 // Database Setup Script for BILLIONAIRS
 // Run this once to create the necessary tables
+// Protected: Requires admin credentials
 
 import pg from 'pg';
 const { Pool } = pg;
 
+const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
+
 export default async function handler(req, res) {
+    // Only allow POST requests with admin credentials
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed. Send POST with admin credentials.' });
+    }
+
+    // Require admin email + password
+    const { email, password } = req.body || {};
+    if (!email || !password || email.toLowerCase() !== CEO_EMAIL.toLowerCase()) {
+        return res.status(403).json({ error: 'Access denied. Admin credentials required.' });
+    }
+
+    // Verify admin password
+    const passwordHash = process.env.ADMIN_PASSWORD_HASH;
+    if (!passwordHash) {
+        return res.status(500).json({ error: 'ADMIN_PASSWORD_HASH not configured' });
+    }
+
+    // Use bcrypt for Node.js runtime
+    const bcrypt = await import('bcryptjs');
+    const isValid = await bcrypt.compare(password, passwordHash);
+    if (!isValid) {
+        // Also try simple SHA-256 comparison if bcrypt fails
+        const crypto = await import('crypto');
+        const shaHash = crypto.createHash('sha256').update(password).digest('hex');
+        if (shaHash !== passwordHash && !passwordHash.startsWith('pbkdf2$')) {
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+    }
+
     // Get database URL from environment
     const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL || process.env.STORAGE_URL;
     

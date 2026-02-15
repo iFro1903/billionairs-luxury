@@ -58,6 +58,6 @@
     "moment-timezone": "^0.5.43",
     "pg": "^8.16.3",
     "puppeteer-core": "^24.37.3",
-    "stripe": "^13.11.0"
+    "stripe": "^20.3.1"
   }
 }
