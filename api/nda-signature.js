@@ -104,6 +104,33 @@ module.exports = async (req, res) => {
       );
 
       logSuccess('nda-signature', 'nda_signed', { signatureId, email: email.replace(/(.{2}).*@/, '$1***@') });
+
+      // Send NDA confirmation email (non-blocking)
+      try {
+        const signedAt = new Date().toLocaleString('en-GB', { timeZone: 'Europe/Zurich' });
+        const emailPayload = {
+          type: 'nda-confirmation',
+          to: email.toLowerCase(),
+          userName: name,
+          signatureId: signatureId,
+          signedAt: signedAt
+        };
+
+        const baseUrl = req.headers['x-forwarded-proto'] 
+            ? `${req.headers['x-forwarded-proto']}://${req.headers['x-forwarded-host'] || req.headers['host']}`
+            : `https://${req.headers['host']}`;
+
+        fetch(`${baseUrl}/api/email-service`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(emailPayload)
+        }).catch(emailErr => {
+          console.error('NDA confirmation email failed (non-blocking):', emailErr.message);
+        });
+      } catch (emailError) {
+        console.error('NDA confirmation email setup error:', emailError.message);
+      }
+
       timer.end();
 
       return res.status(200).json({

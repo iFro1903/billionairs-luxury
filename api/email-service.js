@@ -833,6 +833,165 @@ const templates = {
 </body>
 </html>
         `
+    }),
+
+    'nda-confirmation': (userName, signatureId, signedAt) => ({
+        subject: 'NDA Signed Successfully — BILLIONAIRS',
+        html: `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;600;700&display=swap');
+    </style>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #000000;">
+    <div style="display: none; max-height: 0; overflow: hidden;">
+        Your Non-Disclosure Agreement has been signed and recorded. This email serves as your confirmation.
+    </div>
+    
+    <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #1a1a1a 100%); padding: 60px 20px;">
+        <tr>
+            <td align="center">
+                <table width="650" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, rgba(15, 15, 25, 0.98) 0%, rgba(25, 25, 40, 0.98) 100%); border-radius: 24px; border: 3px solid rgba(232, 180, 184, 0.5); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1); overflow: hidden;">
+                    
+                    <!-- Header -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, rgba(232, 180, 184, 0.15) 0%, rgba(247, 202, 201, 0.05) 100%); padding: 50px 40px; text-align: center; border-bottom: 2px solid rgba(232, 180, 184, 0.4); position: relative;">
+                            <div style="position: absolute; top: 20px; left: 20px; width: 40px; height: 40px; border-top: 3px solid #e8b4b8; border-left: 3px solid #e8b4b8; opacity: 0.6;"></div>
+                            <div style="position: absolute; top: 20px; right: 20px; width: 40px; height: 40px; border-top: 3px solid #e8b4b8; border-right: 3px solid #e8b4b8; opacity: 0.6;"></div>
+                            
+                            <img src="https://billionairs.luxury/assets/images/logo.png" alt="BILLIONAIRS" style="max-width: 80px; height: auto; margin-bottom: 20px; filter: drop-shadow(0 0 30px rgba(232, 180, 184, 0.6));" />
+                            
+                            <p style="margin: 0 0 10px 0; font-size: 13px; color: rgba(247, 202, 201, 0.7); letter-spacing: 4px; text-transform: uppercase; font-weight: 300;">
+                                Legal Document
+                            </p>
+                            <h1 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 36px; color: #e8b4b8; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 0 40px rgba(232, 180, 184, 0.5), 0 2px 4px rgba(0, 0, 0, 0.8);">
+                                NDA CONFIRMATION
+                            </h1>
+                            <div style="width: 60px; height: 2px; background: linear-gradient(90deg, transparent, #e8b4b8, transparent); margin: 20px auto 0;"></div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Body -->
+                    <tr>
+                        <td style="padding: 50px 40px 30px; color: #ffffff;">
+                            <h2 style="margin: 0 0 25px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 28px; color: #ffffff; font-weight: 700; text-align: center; line-height: 1.3;">
+                                Dear <span style="color: #e8b4b8;">\${userName || 'Member'}</span>,
+                            </h2>
+                            
+                            <p style="margin: 0 0 30px 0; font-size: 16px; line-height: 1.9; color: rgba(255, 255, 255, 0.85); text-align: center; font-weight: 300;">
+                                Your Non-Disclosure Agreement (NDA) has been <strong style="color: #e8b4b8;">successfully signed and recorded</strong>. This email serves as your official confirmation.
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- NDA Details Card -->
+                    <tr>
+                        <td style="padding: 0 40px 40px;">
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background: linear-gradient(135deg, rgba(232, 180, 184, 0.12) 0%, rgba(247, 202, 201, 0.05) 100%); border-radius: 16px; border: 2px solid rgba(232, 180, 184, 0.4); overflow: hidden; box-shadow: 0 10px 40px rgba(232, 180, 184, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);">
+                                <tr>
+                                    <td style="background: linear-gradient(90deg, rgba(232, 180, 184, 0.25), rgba(247, 202, 201, 0.15)); padding: 20px 30px; border-bottom: 1px solid rgba(232, 180, 184, 0.3);">
+                                        <h3 style="margin: 0; font-family: 'Playfair Display', Georgia, serif; font-size: 18px; color: #e8b4b8; font-weight: 700; letter-spacing: 1px; text-align: center;">
+                                            📜 Signature Details
+                                        </h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 25px 30px;">
+                                        <table width="100%" cellpadding="10" cellspacing="0">
+                                            <tr>
+                                                <td style="color: rgba(255, 255, 255, 0.6); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Document</td>
+                                                <td style="color: rgba(255, 255, 255, 0.9); font-weight: 600; text-align: right; font-size: 14px;">BLX-NDA-2026</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding: 0;"><div style="height: 1px; background: rgba(232, 180, 184, 0.15);"></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: rgba(255, 255, 255, 0.6); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Signature ID</td>
+                                                <td style="color: #e8b4b8; font-weight: 700; text-align: right; font-size: 14px;">\${signatureId || '—'}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding: 0;"><div style="height: 1px; background: rgba(232, 180, 184, 0.15);"></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: rgba(255, 255, 255, 0.6); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Signed At</td>
+                                                <td style="color: rgba(255, 255, 255, 0.9); text-align: right; font-size: 14px;">\${signedAt || new Date().toLocaleString('en-GB', { timeZone: 'Europe/Zurich' })}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="padding: 0;"><div style="height: 1px; background: rgba(232, 180, 184, 0.15);"></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: rgba(255, 255, 255, 0.6); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">Status</td>
+                                                <td style="color: #4ade80; font-weight: 700; text-align: right; font-size: 15px;">✓ Signed &amp; Recorded</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    
+                    <!-- Key Terms Reminder -->
+                    <tr>
+                        <td style="padding: 0 40px 40px;">
+                            <div style="background: rgba(0, 0, 0, 0.4); border-left: 3px solid #e8b4b8; padding: 25px 30px; border-radius: 8px;">
+                                <p style="margin: 0 0 12px 0; font-size: 13px; color: #e8b4b8; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">
+                                    Key Obligations
+                                </p>
+                                <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.75); line-height: 1.7; font-weight: 300;">
+                                    • All platform information is strictly <strong style="color: #e8b4b8;">confidential</strong><br/>
+                                    • Member identity and activities must not be disclosed<br/>
+                                    • Violations may result in legal proceedings under Swiss law<br/>
+                                    • This NDA is binding and recorded digitally with your signature
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Contact -->
+                    <tr>
+                        <td style="padding: 0 40px 50px;">
+                            <p style="margin: 0; font-size: 16px; line-height: 1.8; color: rgba(255, 255, 255, 0.85); text-align: center; font-weight: 300;">
+                                Please retain this email for your records. If you have any questions, contact our legal team.
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Divider -->
+                    <tr>
+                        <td style="padding: 0 40px;">
+                            <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(232, 180, 184, 0.5), transparent);"></div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.4)); padding: 40px 40px 50px; text-align: center;">
+                            <p style="margin: 0 0 8px 0; font-family: 'Playfair Display', Georgia, serif; font-size: 16px; color: #e8b4b8; font-weight: 700; letter-spacing: 3px;">
+                                BILLIONAIRS
+                            </p>
+                            <p style="margin: 0 0 15px 0; font-size: 11px; color: rgba(255, 255, 255, 0.5); letter-spacing: 2px; text-transform: uppercase;">
+                                Luxury · Exclusivity · Mystique
+                            </p>
+                            <p style="margin: 0; font-size: 12px; color: rgba(255, 255, 255, 0.5);">
+                                Questions? <a href="mailto:legal@billionairs.luxury" style="color: #e8b4b8; text-decoration: none; border-bottom: 1px solid rgba(232, 180, 184, 0.3);">legal@billionairs.luxury</a>
+                            </p>
+                            <div style="width: 100px; height: 1px; background: linear-gradient(90deg, transparent, rgba(232, 180, 184, 0.4), transparent); margin: 20px auto 15px;"></div>
+                            <p style="margin: 0; font-size: 10px; color: rgba(255, 255, 255, 0.4);">
+                                © \${new Date().getFullYear()} BILLIONAIRS. All rights reserved.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+        `
     })
 };
 
@@ -872,6 +1031,9 @@ export default async function handler(req) {
                 break;
             case 'refund':
                 template = templates.refund(data.userName, data.amount, data.currency, data.refundId);
+                break;
+            case 'nda-confirmation':
+                template = templates['nda-confirmation'](data.userName, data.signatureId, data.signedAt);
                 break;
             default:
                 return new Response(JSON.stringify({ error: 'Invalid email type' }), {

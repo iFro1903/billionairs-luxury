@@ -815,8 +815,33 @@
 
         function resizeCanvas() {
             const rect = wrapper.getBoundingClientRect();
-            canvas.width = rect.width;
-            canvas.height = 150;
+            const newWidth = rect.width;
+            const newHeight = 150;
+
+            // Preserve existing signature during resize
+            let imageData = null;
+            if (hasSignature) {
+                try {
+                    imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                } catch (e) { /* ignore */ }
+            }
+
+            const oldWidth = canvas.width;
+            const oldHeight = canvas.height;
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+
+            // Restore signature if it existed
+            if (imageData && hasSignature) {
+                // Create temp canvas with old dimensions to scale properly
+                const tmp = document.createElement('canvas');
+                tmp.width = oldWidth;
+                tmp.height = oldHeight;
+                const tmpCtx = tmp.getContext('2d');
+                tmpCtx.putImageData(imageData, 0, 0);
+                ctx.drawImage(tmp, 0, 0, oldWidth, oldHeight, 0, 0, newWidth, newHeight);
+            }
+
             ctx.strokeStyle = '#c9a96e';
             ctx.lineWidth = 2.5;
             ctx.lineCap = 'round';
