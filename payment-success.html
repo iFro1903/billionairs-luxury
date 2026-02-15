@@ -228,16 +228,15 @@
     <script src="assets/js/i18n.js"></script>
     <script src="assets/js/lang-dropdown-simple.js"></script>
     <script>
-        // Get session ID, email and language from URL
+        // Get session ID and language from URL (email no longer in URL for privacy)
         const urlParams = new URLSearchParams(window.location.search);
         const sessionId = urlParams.get('session_id');
-        const userEmail = urlParams.get('email');
         const userLang = urlParams.get('lang') || 'en';
 
         // Verify payment with Stripe API (server-side) and mark user as paid
         async function verifyPaymentWithStripe() {
-            if (!sessionId || !userEmail) {
-                console.warn('Missing session_id or email in URL params');
+            if (!sessionId) {
+                console.warn('Missing session_id in URL params');
                 return;
             }
 
@@ -246,8 +245,7 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        sessionId: sessionId,
-                        email: userEmail
+                        sessionId: sessionId
                     })
                 });
 

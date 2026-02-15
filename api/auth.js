@@ -107,7 +107,7 @@ export default async function handler(req, res) {
             
             if (existingUser.rows.length > 0) {
                 
-                return res.status(400).json({ success: false, message: 'User already exists' });
+                return res.status(400).json({ success: false, message: 'Registration failed. Please try again or contact support.' });
             }
 
             // Validate password strength
@@ -151,8 +151,8 @@ export default async function handler(req, res) {
                         type: 'welcome',
                         to: email,
                         userName: userName,
-                        userEmail: email,
-                        userPassword: password  // Send plain password for initial email
+                        userEmail: email
+                        // Password intentionally NOT sent — never include plaintext passwords in emails
                     })
                 });
             } catch (emailError) {
@@ -288,42 +288,10 @@ export default async function handler(req, res) {
             return res.status(200).json({ success: true, message: 'Logged out successfully' });
         }
 
-        // UPDATE PAYMENT STATUS (called after successful payment)
+        // UPDATE PAYMENT STATUS — disabled for security
+        // Only the Stripe webhook (/api/stripe-webhook) should update payment status to 'paid'
         if (action === 'update_payment') {
-            if (!token) {
-                
-                return res.status(401).json({ success: false, message: 'Unauthorized' });
-            }
-
-            // Get user from session
-            const sessionResult = await pool.query(
-                'SELECT u.id, u.email, u.member_id FROM sessions s JOIN users u ON s.user_id = u.id WHERE s.token = $1',
-                [token]
-            );
-            
-            if (sessionResult.rows.length === 0) {
-                
-                return res.status(401).json({ success: false, message: 'Invalid session' });
-            }
-
-            const user = sessionResult.rows[0];
-
-            // Update payment status
-            await pool.query(
-                'UPDATE users SET payment_status = $1, paid_at = CURRENT_TIMESTAMP WHERE id = $2',
-                ['paid', user.id]
-            );
-
-            
-            return res.status(200).json({
-                success: true,
-                message: 'Payment status updated',
-                user: {
-                    email: user.email,
-                    memberId: user.member_id,
-                    paymentStatus: 'paid'
-                }
-            });
+            return res.status(403).json({ success: false, message: 'Payment status can only be updated via verified Stripe webhook' });
         }
 
         

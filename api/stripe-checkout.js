@@ -160,7 +160,7 @@ module.exports = async (req, res) => {
         auto_login_email: customerData?.email || '' // For auto-login after payment
       },
       customer_email: customerData?.email || undefined,
-      success_url: `https://billionairs.luxury/payment-success.html?session_id={CHECKOUT_SESSION_ID}&email=${encodeURIComponent(customerData?.email || '')}&lang=${userLang}`,
+      success_url: `https://billionairs.luxury/payment-success.html?session_id={CHECKOUT_SESSION_ID}&lang=${userLang}`,
       cancel_url: `https://billionairs.luxury/payment-cancelled.html?lang=${userLang}`
     });
 

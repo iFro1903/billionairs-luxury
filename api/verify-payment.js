@@ -4,6 +4,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 module.exports = async (req, res) => {
   const { getPool } = await import('../lib/db.js');
   const { getCorsOrigin } = await import('../lib/cors.js');
+  const { checkRateLimit, getClientIp, RATE_LIMITS } = await import('../lib/rate-limiter.js');
 
   // Allow CORS
   res.setHeader('Access-Control-Allow-Origin', getCorsOrigin(req));
@@ -18,13 +19,20 @@ module.exports = async (req, res) => {
     return res.status(405).json({ success: false, error: 'Method not allowed' });
   }
 
-  try {
-    const { sessionId, email } = req.body;
+  // Rate limiting: 10 requests per 15 minutes per IP
+  const clientIp = getClientIp(req);
+  const rateLimit = await checkRateLimit(clientIp, 10, 900000, 'verify-payment');
+  if (!rateLimit.allowed) {
+    return res.status(429).json({ success: false, error: 'Too many requests. Try again later.' });
+  }
 
-    if (!sessionId || !email) {
+  try {
+    const { sessionId } = req.body;
+
+    if (!sessionId) {
       return res.status(400).json({ 
         success: false,
-        error: 'sessionId and email are required'
+        error: 'sessionId is required'
       });
     }
 
@@ -32,6 +40,16 @@ module.exports = async (req, res) => {
     const session = await stripe.checkout.sessions.retrieve(sessionId, {
       expand: ['payment_intent']
     });
+
+    // Get email from Stripe session metadata (not from client request)
+    const email = session.customer_email || session.metadata?.customer_email || session.metadata?.auto_login_email;
+
+    if (!email) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'No email associated with this payment session'
+      });
+    }
 
     // Check if payment was successful (check both session and payment_intent)
     const isPaid = session.payment_status === 'paid' || 
