@@ -401,6 +401,7 @@ class AdminPanel {
                 </td>
                 <td data-label="Features" style="font-size:12px;">
                     ${u.pyramid_unlocked?'🔓':'🔒'}P ${u.eye_unlocked?'🔓':'🔒'}E ${u.chat_ready||u.chat_unlocked?'🔓':'🔒'}C
+                    ${u.twofa_enabled?'<span style="color:#2ecc71;" title="2FA aktiv">🔐</span>':''}
                     ${u.is_blocked?'<span style="color:#e74c3c;"> 🚫</span>':''}
                 </td>
                 <td data-label="Aktionen">
@@ -495,6 +496,7 @@ class AdminPanel {
             <div class="detail-row"><span class="detail-label">Pyramid</span><span class="detail-value">${user.pyramid_unlocked ? '🔓 Unlocked' : '🔒 Locked'}</span></div>
             <div class="detail-row"><span class="detail-label">Eye</span><span class="detail-value">${user.eye_unlocked ? '🔓 Unlocked' : '🔒 Locked'}</span></div>
             <div class="detail-row"><span class="detail-label">Chat</span><span class="detail-value">${user.chat_ready || user.chat_unlocked ? '🔓 Unlocked' : '🔒 Locked'}</span></div>
+            <div class="detail-row"><span class="detail-label">2FA</span><span class="detail-value" style="${user.twofa_enabled ? 'color:#2ecc71' : ''}">${user.twofa_enabled ? '🔐 Aktiv' : 'Deaktiviert'}</span></div>
             <div class="detail-row"><span class="detail-label">Blockiert</span><span class="detail-value">${user.is_blocked ? '🚫 Ja' : 'Nein'}</span></div>
             <div class="detail-row"><span class="detail-label">Phone</span><span class="detail-value">${this.escapeHtml(user.phone || '—')}</span></div>
             <div class="detail-row"><span class="detail-label">Company</span><span class="detail-value">${this.escapeHtml(user.company || '—')}</span></div>
@@ -520,6 +522,9 @@ class AdminPanel {
                     ? `<button class="btn-sm btn-green" data-modal-action="unblock" data-email="${this.safeAttr(user.email)}">Unblock</button>`
                     : `<button class="btn-sm btn-red" data-modal-action="block" data-email="${this.safeAttr(user.email)}">Block</button>`
                 }
+                ${user.twofa_enabled
+                    ? `<button class="btn-sm" style="background:rgba(243,156,18,.2);color:#f39c12;border:1px solid #f39c12;" data-modal-action="reset-2fa" data-email="${this.safeAttr(user.email)}">2FA Reset</button>`
+                    : ''}
                 <button class="btn-sm btn-red" data-modal-action="delete" data-email="${this.safeAttr(user.email)}">Löschen</button>
             </div>
         `;
@@ -539,6 +544,7 @@ class AdminPanel {
             else if (act === 'send-email') this.sendEmailToUser(em);
             else if (act === 'unblock') { this.unblockUser(em); this.closeModal(); }
             else if (act === 'block') { this.blockUser(em); this.closeModal(); }
+            else if (act === 'reset-2fa') { this.reset2FA(em); this.closeModal(); }
             else if (act === 'delete') { this.deleteUser(em); this.closeModal(); }
         });
     }
@@ -1285,6 +1291,22 @@ setTimeout(function() { window.print(); }, 800);
             if (res.ok && d.success) { this.toast(d.message, 'success'); this.loadUsersData(); }
             else { this.toast(d.error, 'error'); }
         } catch (e) { console.error(e); this.toast('Fehler', 'error'); }
+    }
+
+    // ========== 2FA RESET ==========
+    async reset2FA(email) {
+        if (!(await this.confirmDialog(`2FA fuer ${email} zuruecksetzen? Der User muss 2FA danach neu einrichten.`, '🔐'))) return;
+        try {
+            const s = this.getSession();
+            const res = await fetch('/api/admin-reset-2fa', {
+                method: 'POST',
+                headers: { 'Content-Type':'application/json', 'x-admin-email':s.email, 'x-admin-password':s.password },
+                body: JSON.stringify({ email })
+            });
+            const d = await res.json();
+            if (res.ok && d.success) { this.toast('2FA zurueckgesetzt', 'success'); this.loadUsersData(); }
+            else { this.toast(d.error || 'Fehler', 'error'); }
+        } catch (e) { console.error(e); this.toast('Fehler beim 2FA-Reset', 'error'); }
     }
 
     // ========== CREATE MEMBER ==========

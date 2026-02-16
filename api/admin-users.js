@@ -42,9 +42,11 @@ export default async function handler(req) {
         let users = [];
         try {
             users = await sql`
-                SELECT *
-                FROM users
-                ORDER BY created_at DESC
+                SELECT u.*, 
+                    COALESCE(tfa.enabled, false) as twofa_enabled
+                FROM users u
+                LEFT JOIN two_factor_auth tfa ON u.email = tfa.user_email
+                ORDER BY u.created_at DESC
             `;
         } catch (dbError) {
             console.error('Database query error:', dbError);
@@ -74,7 +76,8 @@ export default async function handler(req) {
             eye_unlocked: u.eye_unlocked || false,
             chat_unlocked: u.chat_unlocked || false,
             chat_ready: u.chat_ready || false,
-            is_blocked: u.is_blocked || false
+            is_blocked: u.is_blocked || false,
+            twofa_enabled: u.twofa_enabled || false
         }));
 
         // Calculate stats
