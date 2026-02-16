@@ -56,6 +56,60 @@ class AdminPanel {
         setTimeout(() => el.remove(), 400);
     }
 
+    // ========== INACTIVITY AUTO-LOGOUT (10 min) ==========
+    _startInactivityTimer() {
+        this._inactivityTimeout = 10 * 60 * 1000; // 10 Minuten
+        this._inactivityWarning = 9 * 60 * 1000;  // Warnung nach 9 Min
+        this._activityEvents = ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'];
+        this._resetInactivity = () => {
+            clearTimeout(this._logoutTimer);
+            clearTimeout(this._warningTimer);
+            // Warnung-Banner entfernen falls sichtbar
+            const banner = document.getElementById('inactivityWarning');
+            if (banner) banner.remove();
+            // Warnung nach 9 Min
+            this._warningTimer = setTimeout(() => this._showInactivityWarning(), this._inactivityWarning);
+            // Logout nach 10 Min
+            this._logoutTimer = setTimeout(() => this._autoLogout(), this._inactivityTimeout);
+        };
+        this._activityEvents.forEach(evt => document.addEventListener(evt, this._resetInactivity, { passive: true }));
+        this._resetInactivity();
+    }
+
+    _clearInactivityTimer() {
+        clearTimeout(this._logoutTimer);
+        clearTimeout(this._warningTimer);
+        if (this._resetInactivity) {
+            this._activityEvents.forEach(evt => document.removeEventListener(evt, this._resetInactivity));
+        }
+        const banner = document.getElementById('inactivityWarning');
+        if (banner) banner.remove();
+    }
+
+    _showInactivityWarning() {
+        if (document.getElementById('inactivityWarning')) return;
+        const banner = document.createElement('div');
+        banner.id = 'inactivityWarning';
+        banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;text-align:center;padding:12px 20px;font-size:14px;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,0.4);animation:slideDown .3s ease;';
+        banner.innerHTML = 'Automatische Abmeldung in 1 Minute wegen Inaktivitaet — <span style="cursor:pointer;text-decoration:underline;" id="stayLoggedIn">Angemeldet bleiben</span>';
+        document.body.appendChild(banner);
+        document.getElementById('stayLoggedIn')?.addEventListener('click', () => {
+            this._resetInactivity();
+            this.toast('Sitzung verlaengert', 'success');
+        });
+    }
+
+    _autoLogout() {
+        this._clearInactivityTimer();
+        sessionStorage.removeItem('adminSession');
+        // Kurze Nachricht zeigen, dann reload
+        const msg = document.createElement('div');
+        msg.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;';
+        msg.innerHTML = '<div style="color:#c9a96e;font-size:1.3rem;font-weight:700;">Sitzung abgelaufen</div><div style="color:rgba(255,255,255,0.6);font-size:0.9rem;">Automatische Abmeldung wegen Inaktivitaet</div>';
+        document.body.appendChild(msg);
+        setTimeout(() => location.reload(), 2000);
+    }
+
     // ========== CONFIRM DIALOG ==========
     confirmDialog(message, icon = '⚠️') {
         return new Promise(resolve => {
@@ -193,6 +247,9 @@ class AdminPanel {
         document.getElementById('adminDashboard').classList.remove('hidden');
         document.getElementById('adminUserName').textContent = email;
 
+        // Auto-Logout nach 10 Min Inaktivitaet
+        this._startInactivityTimer();
+
         // Sidebar nav
         document.querySelectorAll('.nav-item').forEach(btn => {
             btn.addEventListener('click', () => this.switchTab(btn.dataset.tab));
@@ -200,6 +257,7 @@ class AdminPanel {
 
         // Logout
         document.getElementById('adminLogout').addEventListener('click', () => {
+            this._clearInactivityTimer();
             sessionStorage.removeItem('adminSession');
             location.reload();
         });
