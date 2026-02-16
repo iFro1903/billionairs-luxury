@@ -543,10 +543,33 @@
                                 <div id="qrCodeDisplay" style="text-align: center; margin-bottom: 1.2rem;">
                                     <div style="color: rgba(255,255,255,0.4); padding: 2rem; font-family: 'Montserrat', sans-serif; font-size: 0.8rem;">Generating QR Code...</div>
                                 </div>
-                                <p style="text-align: center; font-family: 'Montserrat', sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.4); line-height: 1.7; margin-bottom: 1rem;">
-                                    Scan this QR code with your<br>
-                                    <span style="color: #E8B4A0; font-weight: 600;">Microsoft Authenticator</span> or any TOTP-compatible app
-                                </p>
+
+                                <!-- Schritt-fuer-Schritt Anleitung -->
+                                <div style="margin: 1.2rem 0; padding: 1.2rem; background: rgba(232,180,160,0.05); border: 1px solid rgba(232,180,160,0.15); border-radius: 10px;">
+                                    <div style="font-family: 'Montserrat', sans-serif; font-size: 0.72rem; font-weight: 700; color: #E8B4A0; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.8rem; text-align: center;">So scannst du den QR-Code richtig:</div>
+                                    <div style="font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.55); line-height: 2;">
+                                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.3rem;">
+                                            <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; border-radius: 50%; background: rgba(232,180,160,0.15); color: #E8B4A0; font-size: 0.65rem; font-weight: 700;">1</span>
+                                            <span>Oeffne <strong style="color: #E8B4A0;">Microsoft Authenticator</strong></span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.3rem;">
+                                            <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; border-radius: 50%; background: rgba(232,180,160,0.15); color: #E8B4A0; font-size: 0.65rem; font-weight: 700;">2</span>
+                                            <span>Tippe oben rechts auf das <strong style="color: #fff;">+</strong> Symbol</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.3rem;">
+                                            <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; border-radius: 50%; background: rgba(232,180,160,0.15); color: #E8B4A0; font-size: 0.65rem; font-weight: 700;">3</span>
+                                            <span>Waehle <strong style="color: #fff;">"Anderes Konto"</strong> (Google, Facebook...)</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.7rem;">
+                                            <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; border-radius: 50%; background: rgba(232,180,160,0.15); color: #E8B4A0; font-size: 0.65rem; font-weight: 700;">4</span>
+                                            <span>Scanne <strong style="color: #fff;">diesen QR-Code</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="padding: 0.7rem; background: rgba(220,53,69,0.08); border: 1px solid rgba(220,53,69,0.25); border-radius: 8px; text-align: center; margin-bottom: 1rem;">
+                                    <span style="font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: rgba(220,53,69,0.9); font-weight: 600;">Nicht einfach die Kamera nutzen -- sonst landet der Code bei den Passwoertern!</span>
+                                </div>
                                 <div id="manualKeySection" style="display: none; margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.25); border: 1px dashed rgba(232,180,160,0.15); border-radius: 8px; text-align: center;">
                                     <div style="font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.5rem;">Manual Key</div>
                                     <div id="manualKeyValue" style="font-family: 'Montserrat', sans-serif; font-size: 0.82rem; color: #E8B4A0; letter-spacing: 0.2em; word-break: break-all; user-select: all; font-weight: 500;"></div>
