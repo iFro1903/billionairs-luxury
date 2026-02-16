@@ -3404,17 +3404,17 @@ input:-webkit-autofill::first-line {
     -webkit-user-select: none;
 }
 
-/* Hide native checkbox - iOS compatible */
+/* Hide native checkbox - positioned over visual checkmark for reliable click */
 .legal-consent-checkbox {
     position: absolute;
     opacity: 0;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    z-index: 2;
 }
 
 /* Custom checkbox with iOS-friendly tap target */

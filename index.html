@@ -1284,18 +1284,6 @@
 
         if (termsCheckbox && paymentButton) {
             termsCheckbox.addEventListener('change', updatePaymentButton);
-
-            // iOS Safari fix: add explicit touch handler on the checkmark span
-            // because iOS sometimes doesn't propagate label taps to hidden checkboxes
-            const checkmark = document.querySelector('.legal-consent-checkmark');
-            if (checkmark) {
-                checkmark.addEventListener('click', function(e) {
-                    // Only toggle if the click wasn't already handled by the label
-                    e.stopPropagation();
-                    termsCheckbox.checked = !termsCheckbox.checked;
-                    termsCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
-                });
-            }
         }
         
         // Wire consent links to modals — stop propagation so link taps don't toggle checkbox on iOS
