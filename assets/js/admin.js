@@ -1872,7 +1872,9 @@ setTimeout(function() { window.print(); }, 800);
             const data = await res.json();
             if (data.success) {
                 document.getElementById('twoFactorSetup').classList.remove('hidden');
-                new QRCode(document.getElementById('qrCodeCanvas'), { text: data.qrCodeUrl, width: 256, height: 256 });
+                const qrContainer = document.getElementById('qrCodeCanvas');
+                qrContainer.innerHTML = ''; // Clear previous QR code
+                new QRCode(qrContainer, { text: data.qrCodeUrl, width: 256, height: 256, colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
                 const backupDiv = document.getElementById('backupCodes');
                 backupDiv.style.display = 'block';
                 document.getElementById('backupCodesList').innerHTML = data.backupCodes.map(c => `<div class="backup-code">${c}</div>`).join('');
