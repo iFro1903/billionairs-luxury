@@ -9,7 +9,7 @@ import { getPool } from '../lib/db.js';
 import { getCorsOrigin } from '../lib/cors.js';
 import { generateMemberId } from '../lib/helpers.js';
 import { logRequest, logSuccess, logWarn, logError, logTimer } from '../lib/logger.js';
-import { authenticator } from 'otplib';
+import { verifyTOTP } from '../lib/totp.js';
 
 // Check if hash needs upgrade from SHA-256 to PBKDF2
 function needsHashUpgrade(storedHash) {
@@ -238,9 +238,8 @@ export default async function handler(req, res) {
                     }
 
                     // Verify TOTP code
-                    authenticator.options = { window: 2 };
                     const codeStr = String(twoFactorCode).trim();
-                    const isValidTOTP = authenticator.check(codeStr, tfaRecord.secret);
+                    const isValidTOTP = verifyTOTP(tfaRecord.secret, codeStr);
                     
                     // Check backup codes
                     let isValidBackup = false;
