@@ -1266,6 +1266,8 @@
             }
         }
 
+        let twofaCurrentSecret = null; // Cache secret to prevent regeneration
+        
         async function toggleTwoFASetup() {
             const flow = document.getElementById('twofaSetupFlow');
             if (flow.style.display === 'block') {
@@ -1274,6 +1276,9 @@
             }
             flow.style.display = 'block';
             showDashSetupStep(1);
+
+            // Only generate if we don't have a secret yet
+            if (twofaCurrentSecret) return;
 
             // Generate QR code
             try {
@@ -1287,6 +1292,7 @@
                 
                 if (data.success) {
                     twofaBackupCodes = data.backupCodes;
+                    twofaCurrentSecret = data.secret;
                     
                     // Generate QR Code using a canvas (no external dependency)
                     const qrDisplay = document.getElementById('qrCodeDisplay');
@@ -1381,6 +1387,7 @@
 
         function finishTwoFASetup() {
             document.getElementById('twofaSetupFlow').style.display = 'none';
+            twofaCurrentSecret = null;
             loadTwoFAStatus();
             showToast('Two-factor authentication enabled successfully', 'success');
         }

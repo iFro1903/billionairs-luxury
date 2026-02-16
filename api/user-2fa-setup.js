@@ -4,7 +4,8 @@
 
 import { getPool } from '../lib/db.js';
 import { getCorsOrigin } from '../lib/cors.js';
-import { generateSecret, generateBackupCodes, verifyTOTP, generateOtpauthUrl } from '../lib/totp.js';
+import { generateBackupCodes } from '../lib/totp.js';
+import { authenticator } from 'otplib';
 
 // Get session token from cookie
 function getTokenFromCookie(req) {
@@ -82,9 +83,9 @@ export default async function handler(req, res) {
 
         // ===== GENERATE (Start 2FA Setup) =====
         if (action === 'generate') {
-            const secret = generateSecret();
+            const secret = authenticator.generateSecret();
             const backupCodes = generateBackupCodes(10);
-            const otpauthUrl = generateOtpauthUrl(userEmail, secret);
+            const otpauthUrl = authenticator.keyuri(userEmail, 'BILLIONAIRS', secret);
 
             // Save to DB (not yet enabled)
             await pool.query(`
@@ -117,7 +118,8 @@ export default async function handler(req, res) {
 
         // ===== VERIFY (Confirm setup with first code) =====
         if (action === 'verify') {
-            if (!code || code.length !== 6) {
+            const codeStr = String(code || '').trim();
+            if (!codeStr || codeStr.length !== 6) {
                 return res.status(400).json({ error: 'Please enter a valid 6-digit code' });
             }
 
@@ -132,7 +134,12 @@ export default async function handler(req, res) {
             }
 
             const { secret } = result.rows[0];
-            const isValid = verifyTOTP(secret, code);
+            
+            // Use otplib with generous window (2 steps = ±60 seconds)
+            authenticator.options = { window: 2 };
+            const isValid = authenticator.check(codeStr, secret);
+            
+            console.log('[2FA VERIFY]', { email: userEmail, codeLength: codeStr.length, secretLength: secret.length, isValid, serverTime: new Date().toISOString() });
 
             if (isValid) {
                 // Enable 2FA
@@ -180,8 +187,10 @@ export default async function handler(req, res) {
             let backupCodesList = [];
             try { backupCodesList = JSON.parse(backup_codes || '[]'); } catch (e) {}
 
-            const isValidTOTP = verifyTOTP(secret, code);
-            const isValidBackup = backupCodesList.includes(code);
+            authenticator.options = { window: 2 };
+            const codeStr = String(code).trim();
+            const isValidTOTP = authenticator.check(codeStr, secret);
+            const isValidBackup = backupCodesList.includes(codeStr);
 
             if (isValidTOTP || isValidBackup) {
                 await pool.query(
