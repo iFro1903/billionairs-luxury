@@ -6,15 +6,6 @@ import { getPool } from '../lib/db.js';
 import { getCorsOrigin } from '../lib/cors.js';
 import { generateSecret, generateBackupCodes, verifyTOTP, generateOtpauthUrl } from '../lib/totp.js';
 
-// Try to use otplib if available, fallback to custom implementation
-let otplibAuth = null;
-try {
-    const otplib = await import('otplib');
-    otplibAuth = otplib.authenticator;
-} catch (e) {
-    console.log('[2FA] otplib not available, using custom TOTP implementation');
-}
-
 // Get session token from cookie
 function getTokenFromCookie(req) {
     const cookies = req.headers.cookie || '';
@@ -91,9 +82,9 @@ export default async function handler(req, res) {
 
         // ===== GENERATE (Start 2FA Setup) =====
         if (action === 'generate') {
-            const secret = otplibAuth ? otplibAuth.generateSecret() : generateSecret();
+            const secret = generateSecret();
             const backupCodes = generateBackupCodes(10);
-            const otpauthUrl = otplibAuth ? otplibAuth.keyuri(userEmail, 'BILLIONAIRS', secret) : generateOtpauthUrl(userEmail, secret);
+            const otpauthUrl = generateOtpauthUrl(userEmail, secret);
 
             // Save to DB (not yet enabled)
             await pool.query(`
@@ -144,15 +135,9 @@ export default async function handler(req, res) {
             const { secret } = result.rows[0];
             
             // Verify TOTP code with generous window
-            let isValid = false;
-            if (otplibAuth) {
-                otplibAuth.options = { window: 2 };
-                isValid = otplibAuth.check(codeStr, secret);
-            } else {
-                isValid = verifyTOTP(secret, codeStr);
-            }
+            const isValid = verifyTOTP(secret, codeStr);
             
-            console.log('[2FA VERIFY]', { email: userEmail, codeLength: codeStr.length, secretLength: secret.length, isValid, usingOtplib: !!otplibAuth, serverTime: new Date().toISOString() });
+            console.log('[2FA VERIFY]', { email: userEmail, codeLength: codeStr.length, secretLength: secret.length, isValid, serverTime: new Date().toISOString() });
 
             if (isValid) {
                 // Enable 2FA
@@ -201,13 +186,7 @@ export default async function handler(req, res) {
             try { backupCodesList = JSON.parse(backup_codes || '[]'); } catch (e) {}
 
             const codeStr = String(code).trim();
-            let isValidTOTP = false;
-            if (otplibAuth) {
-                otplibAuth.options = { window: 2 };
-                isValidTOTP = otplibAuth.check(codeStr, secret);
-            } else {
-                isValidTOTP = verifyTOTP(secret, codeStr);
-            }
+            const isValidTOTP = verifyTOTP(secret, codeStr);
             const isValidBackup = backupCodesList.includes(codeStr);
 
             if (isValidTOTP || isValidBackup) {
