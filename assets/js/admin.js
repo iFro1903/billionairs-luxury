@@ -113,10 +113,13 @@ class AdminPanel {
     // ========== CONFIRM DIALOG ==========
     confirmDialog(message, icon = '⚠️') {
         return new Promise(resolve => {
+            // Remove any existing confirm dialogs first
+            document.querySelectorAll('.confirm-overlay').forEach(el => el.remove());
             const overlay = document.createElement('div');
             overlay.className = 'confirm-overlay';
+            overlay.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;';
             overlay.innerHTML = `
-                <div class="confirm-dialog">
+                <div class="confirm-dialog" style="pointer-events:auto;">
                     <div class="confirm-icon">${icon}</div>
                     <div class="confirm-msg">${this.escapeHtml(message)}</div>
                     <div class="confirm-actions">
@@ -125,9 +128,10 @@ class AdminPanel {
                     </div>
                 </div>
             `;
-            const close = (val) => { overlay.remove(); resolve(val); };
-            overlay.querySelector('.confirm-btn.yes').addEventListener('click', () => close(true));
-            overlay.querySelector('.confirm-btn.no').addEventListener('click', () => close(false));
+            let resolved = false;
+            const close = (val) => { if (resolved) return; resolved = true; overlay.remove(); resolve(val); };
+            overlay.querySelector('.confirm-btn.yes').addEventListener('click', (e) => { e.stopPropagation(); close(true); });
+            overlay.querySelector('.confirm-btn.no').addEventListener('click', (e) => { e.stopPropagation(); close(false); });
             overlay.addEventListener('click', e => { if (e.target === overlay) close(false); });
             document.body.appendChild(overlay);
             overlay.querySelector('.confirm-btn.yes').focus();
@@ -1587,12 +1591,13 @@ setTimeout(function() { window.print(); }, 800);
         try {
             const s = this.getSession();
             const res = await fetch('/api/admin-delete-message', {
-                method: 'DELETE',
+                method: 'POST',
                 headers: { 'Content-Type':'application/json', 'X-Admin-Email': s.email, 'X-Admin-Password': s.password },
                 body: JSON.stringify({ messageId: id })
             });
-            if (res.ok) this.loadChatData();
-        } catch (e) { console.error(e); }
+            if (res.ok) { this.toast('Nachricht geloescht', 'success'); this.loadChatData(); }
+            else { const d = await res.json().catch(()=>({})); this.toast(d.error || 'Fehler beim Loeschen', 'error'); }
+        } catch (e) { console.error(e); this.toast('Verbindungsfehler', 'error'); }
     }
 
     // ========== PAYMENTS ==========

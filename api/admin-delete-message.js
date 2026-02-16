@@ -1,73 +1,55 @@
-// Vercel Serverless Function to delete a chat message
+// Delete a single chat message — Edge Runtime (Vercel)
+import { neon } from '@neondatabase/serverless';
+import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
 
-module.exports = async (req, res) => {
-    const { getPool } = await import('../lib/db.js');
-    const { getCorsOrigin } = await import('../lib/cors.js');
+export const config = { runtime: 'edge' };
 
-    // CORS headers
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Origin', getCorsOrigin(req));
-    res.setHeader('Access-Control-Allow-Methods', 'DELETE,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-admin-email, x-admin-password');
+const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
+
+export default async function handler(req) {
+    const corsHeaders = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, x-admin-email, x-admin-password',
+        'Content-Type': 'application/json'
+    };
 
     if (req.method === 'OPTIONS') {
-        return res.status(200).end();
+        return new Response(null, { status: 204, headers: corsHeaders });
     }
 
-    if (req.method !== 'DELETE') {
-        return res.status(405).json({ success: false, error: 'Method not allowed' });
-    }
-
-    // Admin authentication
-    const adminEmail = req.headers['x-admin-email'];
-    const adminPassword = req.headers['x-admin-password'];
-
-    if (adminEmail !== 'furkan_akaslan@hotmail.com') {
-        return res.status(401).json({ success: false, error: 'Unauthorized' });
-    }
-
-    const passwordHash = process.env.ADMIN_PASSWORD_HASH;
-    if (!adminPassword || !passwordHash) {
-        return res.status(401).json({ success: false, error: 'Unauthorized' });
-    }
-
-    const { verifyPasswordSimple } = await import('../lib/password-hash.js');
-    const isValidPassword = await verifyPasswordSimple(adminPassword, passwordHash);
-    if (!isValidPassword) {
-        return res.status(401).json({ success: false, error: 'Unauthorized' });
+    if (req.method !== 'POST') {
+        return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers: corsHeaders });
     }
 
     try {
-        const { messageId } = req.body;
+        const adminEmail = req.headers.get('x-admin-email');
+        const adminPassword = req.headers.get('x-admin-password');
 
+        if (!adminEmail || adminEmail.toLowerCase() !== CEO_EMAIL) {
+            return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
+        }
+
+        const passwordHash = process.env.ADMIN_PASSWORD_HASH;
+        if (!adminPassword || !passwordHash || !(await verifyPassword(adminPassword, passwordHash))) {
+            return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
+        }
+
+        const { messageId } = await req.json();
         if (!messageId) {
-            return res.status(400).json({ success: false, error: 'Message ID required' });
+            return new Response(JSON.stringify({ error: 'Message ID required' }), { status: 400, headers: corsHeaders });
         }
 
-        const pool = getPool();
-        const client = await pool.connect();
+        const sql = neon(process.env.DATABASE_URL);
+        const result = await sql`DELETE FROM chat_messages WHERE id = ${messageId} RETURNING id`;
 
-        try {
-            const result = await client.query(
-                'DELETE FROM chat_messages WHERE id = $1 RETURNING id',
-                [messageId]
-            );
-
-            if (result.rowCount === 0) {
-                return res.status(404).json({ success: false, error: 'Message not found' });
-            }
-
-            console.log(`[ADMIN] Chat message #${messageId} deleted by ${adminEmail}`);
-
-            return res.status(200).json({ 
-                success: true, 
-                message: `Nachricht #${messageId} geloescht` 
-            });
-        } finally {
-            client.release();
+        if (result.length === 0) {
+            return new Response(JSON.stringify({ error: 'Message not found' }), { status: 404, headers: corsHeaders });
         }
+
+        return new Response(JSON.stringify({ success: true, message: `Nachricht #${messageId} geloescht` }), { status: 200, headers: corsHeaders });
     } catch (error) {
         console.error('Delete message error:', error);
-        return res.status(500).json({ success: false, error: 'Internal server error' });
+        return new Response(JSON.stringify({ error: 'Internal server error' }), { status: 500, headers: corsHeaders });
     }
-};
+}
