@@ -365,6 +365,7 @@ class I18nManager {
                 'Swiss Secured': 'Swiss Gesichert',
                 'Blockchain Verified': 'Blockchain Verifiziert',
                 'Exclusive Access': 'Exklusiver Zugang',
+                '2FA Protected': '2FA Geschützt',
                 
                 // Member Dashboard - Ultimate Truth Section
                 'You have crossed the threshold few dare to approach': 'Sie haben die Schwelle überschritten, die nur wenige wagen',
@@ -472,6 +473,7 @@ class I18nManager {
                 'Swiss Secured': 'Sécurisé Suisse',
                 'Blockchain Verified': 'Vérifié Blockchain',
                 'Exclusive Access': 'Accès Exclusif',
+                '2FA Protected': '2FA Protégé',
                 
                 // Member Dashboard - Ultimate Truth Section
                 'You have crossed the threshold few dare to approach': 'Vous avez franchi le seuil que peu osent approcher',
@@ -579,6 +581,7 @@ class I18nManager {
                 'Swiss Secured': 'Seguridad Suiza',
                 'Blockchain Verified': 'Verificado Blockchain',
                 'Exclusive Access': 'Acceso Exclusivo',
+                '2FA Protected': '2FA Protegido',
                 
                 // Member Dashboard - Ultimate Truth Section
                 'You have crossed the threshold few dare to approach': 'Has cruzado el umbral que pocos se atreven a acercarse',
@@ -686,6 +689,7 @@ class I18nManager {
                 'Swiss Secured': '瑞士安全保障',
                 'Blockchain Verified': '区块链验证',
                 'Exclusive Access': '专属访问',
+                '2FA Protected': '双重验证保护',
                 
                 // Member Dashboard - Ultimate Truth Section
                 'You have crossed the threshold few dare to approach': '您已跨越了少数人敢于接近的门槛',
@@ -793,6 +797,7 @@ class I18nManager {
                 'Swiss Secured': 'مؤمن سويسري',
                 'Blockchain Verified': 'مُصادق عليه بالبلوكشين',
                 'Exclusive Access': 'وصول حصري',
+                '2FA Protected': 'محمي بالمصادقة الثنائية',
                 
                 // Member Dashboard - Ultimate Truth Section
                 'You have crossed the threshold few dare to approach': 'لقد عبرت العتبة التي يجرؤ القليلون على الاقتراب منها',
@@ -900,6 +905,7 @@ class I18nManager {
                 'Swiss Secured': 'Sicurezza Svizzera',
                 'Blockchain Verified': 'Verificato Blockchain',
                 'Exclusive Access': 'Accesso Esclusivo',
+                '2FA Protected': '2FA Protetto',
                 
                 // Member Dashboard - Ultimate Truth Section
                 'You have crossed the threshold few dare to approach': 'Hai attraversato la soglia che pochi osano avvicinare',
@@ -1007,6 +1013,7 @@ class I18nManager {
                 'Swiss Secured': 'Швейцарская безопасность',
                 'Blockchain Verified': 'Верифицировано Blockchain',
                 'Exclusive Access': 'Эксклюзивный доступ',
+                '2FA Protected': '2FA Защита',
                 
                 // Member Dashboard - Ultimate Truth Section
                 'You have crossed the threshold few dare to approach': 'Вы пересекли порог, к которому немногие осмеливаются приблизиться',
@@ -1114,6 +1121,7 @@ class I18nManager {
                 'Swiss Secured': 'スイス認証済み',
                 'Blockchain Verified': 'ブロックチェーン検証済み',
                 'Exclusive Access': '限定アクセス',
+                '2FA Protected': '二要素認証',
                 
                 // Member Dashboard - Ultimate Truth Section
                 'You have crossed the threshold few dare to approach': 'あなたは、ほとんどの人が近づこうとしない敷居を越えました',
