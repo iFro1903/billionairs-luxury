@@ -17,7 +17,7 @@ export default async function handler(request) {
   }
 
   try {
-    const { email, password, action } = await request.json();
+    const { email, password, action, code } = await request.json();
 
     // Verify credentials with Web Crypto API
     if (email !== CEO_EMAIL) {
@@ -104,7 +104,6 @@ export default async function handler(request) {
     }
 
     if (action === 'verify') {
-      const { code } = await request.json();
 
       // Hole Secret aus DB
       const result = await sql`
@@ -155,7 +154,6 @@ export default async function handler(request) {
     }
 
     if (action === 'disable') {
-      const { code } = await request.json();
 
       // Verifiziere Code oder Backup Code
       const result = await sql`
