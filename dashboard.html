@@ -506,8 +506,8 @@
                             <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="rgba(232,180,160,0.08)" stroke="#E8B4A0" stroke-width="1.5"/>
                             <path d="M9.5 12l2 2 4-4" stroke="#E8B4A0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #E8B4A0; margin: 0; font-weight: 600;">SECURITY SETTINGS</h3>
-                        <p style="font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.35); margin: 0.4rem 0 0; text-transform: uppercase; letter-spacing: 0.1em;">Protect your account with additional security</p>
+                        <h3 id="securityTitle" style="font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #E8B4A0; margin: 0; font-weight: 600;">SECURITY SETTINGS</h3>
+                        <p id="securitySubtitle" style="font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.35); margin: 0.4rem 0 0; text-transform: uppercase; letter-spacing: 0.1em;">Protect your account with additional security</p>
                     </div>
 
                     <!-- 2FA Status -->
@@ -521,20 +521,20 @@
                                 </svg>
                             </div>
                             <div>
-                                <h4 style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem; font-weight: 600; color: #E8B4A0; margin: 0 0 0.15rem; text-transform: uppercase; letter-spacing: 0.05em;">Two-Factor Authentication</h4>
+                                <h4 id="twofaTitle" style="font-family: 'Montserrat', sans-serif; font-size: 0.85rem; font-weight: 600; color: #E8B4A0; margin: 0 0 0.15rem; text-transform: uppercase; letter-spacing: 0.05em;">Two-Factor Authentication</h4>
                                 <span style="font-family: 'Montserrat', sans-serif; font-size: 0.72rem; color: rgba(255,255,255,0.35);" id="twofaDashStatus">Loading...</span>
                             </div>
                         </div>
-                        <button class="twofa-toggle-btn" id="twofaToggleBtn" onclick="toggleTwoFASetup()" style="display: none;">Enable</button>
+                        <button class="twofa-toggle-btn" id="twofaToggleBtn" onclick="toggleTwoFASetup()" style="display: none; padding: 0.7rem 2rem; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: all 0.3s; background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%); color: rgba(0,0,0,0.85); border: none;">Enable</button>
                     </div>
 
                     <!-- 2FA Setup Flow (hidden by default) -->
                     <div id="twofaSetupFlow" style="display: none; margin-top: 1.5rem;">
                         <!-- Setup Steps Indicator -->
                         <div class="twofa-setup-steps">
-                            <div class="twofa-setup-step active" id="dashStep1">1. Scan QR</div>
-                            <div class="twofa-setup-step" id="dashStep2">2. Verify</div>
-                            <div class="twofa-setup-step" id="dashStep3">3. Backup Codes</div>
+                            <div class="twofa-setup-step active" id="dashStep1"><span id="dashStep1Text">1. Scan QR</span></div>
+                            <div class="twofa-setup-step" id="dashStep2"><span id="dashStep2Text">2. Verify</span></div>
+                            <div class="twofa-setup-step" id="dashStep3"><span id="dashStep3Text">3. Backup Codes</span></div>
                         </div>
 
                         <!-- Step 1: QR Code -->
@@ -544,38 +544,38 @@
                                     <div style="color: rgba(255,255,255,0.4); padding: 2rem; font-family: 'Montserrat', sans-serif; font-size: 0.8rem;">Generating QR Code...</div>
                                 </div>
 
-                                <!-- Schritt-fuer-Schritt Anleitung -->
+                                <!-- Step-by-step instructions -->
                                 <div style="margin: 1.2rem 0; padding: 1.2rem; background: rgba(232,180,160,0.05); border: 1px solid rgba(232,180,160,0.15); border-radius: 10px;">
-                                    <div style="font-family: 'Montserrat', sans-serif; font-size: 0.72rem; font-weight: 700; color: #E8B4A0; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.8rem; text-align: center;">So scannst du den QR-Code richtig:</div>
+                                    <div id="twofaInstructionTitle" style="font-family: 'Montserrat', sans-serif; font-size: 0.72rem; font-weight: 700; color: #E8B4A0; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.8rem; text-align: center;">How to scan the QR code correctly:</div>
                                     <div style="font-family: 'Montserrat', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.55); line-height: 2;">
                                         <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.3rem;">
                                             <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; border-radius: 50%; background: rgba(232,180,160,0.15); color: #E8B4A0; font-size: 0.65rem; font-weight: 700;">1</span>
-                                            <span>Oeffne <strong style="color: #E8B4A0;">Microsoft Authenticator</strong></span>
+                                            <span id="twofaStep1Text">Open <strong style="color: #E8B4A0;">Microsoft Authenticator</strong></span>
                                         </div>
                                         <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.3rem;">
                                             <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; border-radius: 50%; background: rgba(232,180,160,0.15); color: #E8B4A0; font-size: 0.65rem; font-weight: 700;">2</span>
-                                            <span>Tippe oben rechts auf das <strong style="color: #fff;">+</strong> Symbol</span>
+                                            <span id="twofaStep2Text">Tap the <strong style="color: #fff;">+</strong> icon in the top right</span>
                                         </div>
                                         <div style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.3rem;">
                                             <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; border-radius: 50%; background: rgba(232,180,160,0.15); color: #E8B4A0; font-size: 0.65rem; font-weight: 700;">3</span>
-                                            <span>Waehle <strong style="color: #fff;">"Anderes Konto"</strong> (Google, Facebook...)</span>
+                                            <span id="twofaStep3Text">Select <strong style="color: #fff;">"Other account"</strong> (Google, Facebook...)</span>
                                         </div>
                                         <div style="display: flex; align-items: center; gap: 0.7rem;">
                                             <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 22px; height: 22px; border-radius: 50%; background: rgba(232,180,160,0.15); color: #E8B4A0; font-size: 0.65rem; font-weight: 700;">4</span>
-                                            <span>Scanne <strong style="color: #fff;">diesen QR-Code</strong></span>
+                                            <span id="twofaStep4Text">Scan <strong style="color: #fff;">this QR code</strong></span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div style="padding: 0.7rem; background: rgba(220,53,69,0.08); border: 1px solid rgba(220,53,69,0.25); border-radius: 8px; text-align: center; margin-bottom: 1rem;">
-                                    <span style="font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: rgba(220,53,69,0.9); font-weight: 600;">Nicht einfach die Kamera nutzen -- sonst landet der Code bei den Passwoertern!</span>
+                                    <span id="twofaCameraWarning" style="font-family: 'Montserrat', sans-serif; font-size: 0.7rem; color: rgba(220,53,69,0.9); font-weight: 600;">Do not use your camera app -- the code will end up in passwords instead!</span>
                                 </div>
                                 <div id="manualKeySection" style="display: none; margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.25); border: 1px dashed rgba(232,180,160,0.15); border-radius: 8px; text-align: center;">
                                     <div style="font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.5rem;">Manual Key</div>
                                     <div id="manualKeyValue" style="font-family: 'Montserrat', sans-serif; font-size: 0.82rem; color: #E8B4A0; letter-spacing: 0.2em; word-break: break-all; user-select: all; font-weight: 500;"></div>
                                 </div>
                             </div>
-                            <button onclick="showDashSetupStep(2)" style="display: block; width: 100%; margin-top: 1.2rem; padding: 1rem; background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%); color: rgba(0,0,0,0.85); border: none; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s;">NEXT</button>
+                            <button id="twofaNextBtn" onclick="showDashSetupStep(2)" style="display: block; width: 100%; margin-top: 1.2rem; padding: 1rem; background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%); color: rgba(0,0,0,0.85); border: none; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s;">NEXT</button>
                         </div>
 
                         <!-- Step 2: Verify Code -->
@@ -587,7 +587,7 @@
                                     <rect x="16" y="18" width="16" height="10" rx="2" stroke="rgba(232,180,160,0.3)" stroke-width="1.2" fill="none"/>
                                     <text x="24" y="26" text-anchor="middle" fill="#E8B4A0" font-size="7" font-family="Montserrat" font-weight="600">2FA</text>
                                 </svg>
-                                <p style="font-family: 'Montserrat', sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-bottom: 1.2rem; line-height: 1.6;">
+                                <p id="twofaVerifyText" style="font-family: 'Montserrat', sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-bottom: 1.2rem; line-height: 1.6;">
                                     Enter the 6-digit code from your Authenticator app<br>to confirm the setup
                                 </p>
                                 <div class="twofa-code-inputs" id="dashCodeInputs">
@@ -600,7 +600,7 @@
                                 </div>
                                 <div id="dashTwofaError" style="color: #f44336; font-size: 0.78rem; margin: 0.5rem 0; display: none;"></div>
                             </div>
-                            <button id="dashVerifyBtn" onclick="verifyDashTwoFA()" style="display: block; width: 100%; margin-top: 1.2rem; padding: 1rem; background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%); color: rgba(0,0,0,0.85); border: none; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s;">CONFIRM</button>
+                            <button id="dashVerifyBtn" onclick="verifyDashTwoFA()" style="display: block; width: 100%; margin-top: 1.2rem; padding: 1rem; background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%); color: rgba(0,0,0,0.85); border: none; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s;"><span id="twofaConfirmBtnText">CONFIRM</span></button>
                         </div>
 
                         <!-- Step 3: Backup Codes -->
@@ -612,7 +612,7 @@
                                             <path d="M9 12l2 2 4-4" stroke="#4CAF50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
                                     </div>
-                                    <div style="font-family: 'Playfair Display', serif; font-size: 1.05rem; color: #4CAF50;">2FA Successfully Enabled</div>
+                                    <div id="twofaSuccessText" style="font-family: 'Playfair Display', serif; font-size: 1.05rem; color: #4CAF50;">2FA Successfully Enabled</div>
                                 </div>
 
                                 <div style="display: flex; align-items: center; gap: 1rem; padding: 1.2rem 1.4rem; background: rgba(220,53,69,0.12); border: 2px solid rgba(220,53,69,0.5); border-radius: 12px; margin: 1.2rem 0; animation: twofaPulseWarn 2s ease-in-out 3;">
@@ -622,8 +622,8 @@
                                         <circle cx="12" cy="17" r="1.2" fill="#DC3545"/>
                                     </svg>
                                     <div style="font-family: 'Montserrat', sans-serif; line-height: 1.7;">
-                                        <div style="font-size: 0.9rem; font-weight: 700; color: #DC3545; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem;">SAVE THESE BACKUP CODES!</div>
-                                        <div style="font-size: 0.78rem; color: rgba(255,255,255,0.65);">Each code can only be used <strong style="color:#fff;">once</strong> if you lose access to your authenticator app.<br>These codes will <strong style="color:#DC3545;">NOT be shown again</strong>.</div>
+                                        <div id="twofaBackupTitle" style="font-size: 0.9rem; font-weight: 700; color: #DC3545; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem;">SAVE THESE BACKUP CODES!</div>
+                                        <div id="twofaBackupDesc" style="font-size: 0.78rem; color: rgba(255,255,255,0.65);">Each code can only be used <strong style="color:#fff;">once</strong> if you lose access to your authenticator app.<br>These codes will <strong style="color:#DC3545;">NOT be shown again</strong>.</div>
                                     </div>
                                 </div>
                                 <style>
@@ -637,14 +637,14 @@
                                     <!-- Filled dynamically -->
                                 </div>
                             </div>
-                            <button onclick="finishTwoFASetup()" style="display: block; width: 100%; margin-top: 1.2rem; padding: 1rem; background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%); color: rgba(0,0,0,0.85); border: none; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s;">CODES SAVED</button>
+                            <button id="twofaCodesSavedBtn" onclick="finishTwoFASetup()" style="display: block; width: 100%; margin-top: 1.2rem; padding: 1rem; background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%); color: rgba(0,0,0,0.85); border: none; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s;">CODES SAVED</button>
                         </div>
                     </div>
 
                     <!-- Disable 2FA (shown when enabled) -->
                     <div id="twofaDisableSection" style="display: none; margin-top: 1.5rem;">
                         <div style="padding: 2rem; background: rgba(0,0,0,0.15); border: 1px solid rgba(232,180,160,0.1); border-radius: 12px; text-align: center;">
-                            <p style="font-family: 'Montserrat', sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-bottom: 1rem; line-height: 1.6;">
+                            <p id="twofaDisableText" style="font-family: 'Montserrat', sans-serif; font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-bottom: 1rem; line-height: 1.6;">
                                 Enter a code from your authenticator app or a backup code to disable 2FA
                             </p>
                             <div class="form-group" style="max-width: 280px; margin: 0 auto;">
@@ -652,9 +652,9 @@
                                        style="background: rgba(0,0,0,0.3) !important; color: white !important; text-align: center; letter-spacing: 0.1em; font-family: 'Montserrat', sans-serif;">
                             </div>
                             <div id="disableTwofaError" style="color: #f44336; font-size: 0.78rem; margin: 0.5rem 0; display: none;"></div>
-                            <button onclick="disableTwoFA()" style="display: block; width: 100%; margin-top: 1rem; padding: 1rem; background: linear-gradient(135deg, rgba(244,67,54,0.8) 0%, rgba(198,40,40,0.8) 100%); color: rgba(255,255,255,0.9); border: none; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s;">DISABLE 2FA</button>
+                            <button id="twofaDisableBtn" onclick="disableTwoFA()" style="display: block; width: 100%; margin-top: 1rem; padding: 1rem; background: linear-gradient(135deg, rgba(244,67,54,0.8) 0%, rgba(198,40,40,0.8) 100%); color: rgba(255,255,255,0.9); border: none; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s;">DISABLE 2FA</button>
                             <div style="text-align: center; margin-top: 0.8rem;">
-                                <a href="#" onclick="document.getElementById('twofaDisableSection').style.display='none'; return false;" style="color: rgba(232,180,160,0.5); font-size: 0.72rem; text-decoration: none;">Cancel</a>
+                                <a id="twofaCancelLink" href="#" onclick="document.getElementById('twofaDisableSection').style.display='none'; return false;" style="color: rgba(232,180,160,0.5); font-size: 0.72rem; text-decoration: none;">Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -1248,6 +1248,298 @@
         // ===== TWO-FACTOR AUTHENTICATION MANAGEMENT =====
         let twofaBackupCodes = [];
 
+        // 2FA Translation map
+        const twofaTranslations = {
+            de: {
+                securityTitle: 'SICHERHEITSEINSTELLUNGEN',
+                securitySubtitle: 'Schuetzen Sie Ihr Konto mit zusaetzlicher Sicherheit',
+                twofaTitle: 'Zwei-Faktor-Authentifizierung',
+                enabled: 'Aktiviert',
+                notEnabled: 'Nicht aktiviert',
+                enable: 'Aktivieren',
+                disable: 'Deaktivieren',
+                step1: '1. QR scannen',
+                step2: '2. Verifizieren',
+                step3: '3. Backup-Codes',
+                instructionTitle: 'So scannst du den QR-Code richtig:',
+                stepOpen: 'Oeffne <strong style="color:#E8B4A0;">Microsoft Authenticator</strong>',
+                stepPlus: 'Tippe oben rechts auf das <strong style="color:#fff;">+</strong> Symbol',
+                stepOther: 'Waehle <strong style="color:#fff;">"Anderes Konto"</strong> (Google, Facebook...)',
+                stepScan: 'Scanne <strong style="color:#fff;">diesen QR-Code</strong>',
+                cameraWarning: 'Nicht die Kamera-App nutzen -- sonst landet der Code bei den Passwoertern!',
+                manualKey: 'Manueller Schluessel',
+                next: 'WEITER',
+                confirm: 'BESTAETIGEN',
+                verifyText: 'Gib den 6-stelligen Code aus deiner Authenticator-App ein<br>um die Einrichtung zu bestaetigen',
+                successText: '2FA erfolgreich aktiviert',
+                backupTitle: 'BACKUP-CODES SICHERN!',
+                backupDesc: 'Jeder Code kann nur <strong style="color:#fff;">einmal</strong> verwendet werden, falls du den Zugang zu deiner Authenticator-App verlierst.<br>Diese Codes werden <strong style="color:#DC3545;">NICHT erneut angezeigt</strong>.',
+                codesSaved: 'CODES GESICHERT',
+                disableText: 'Gib einen Code aus deiner Authenticator-App oder einen Backup-Code ein, um 2FA zu deaktivieren',
+                disableBtn: '2FA DEAKTIVIEREN',
+                cancel: 'Abbrechen',
+                unableToLoad: 'Status konnte nicht geladen werden'
+            },
+            fr: {
+                securityTitle: 'PARAMETRES DE SECURITE',
+                securitySubtitle: 'Protegez votre compte avec une securite supplementaire',
+                twofaTitle: 'Authentification a deux facteurs',
+                enabled: 'Active',
+                notEnabled: 'Non active',
+                enable: 'Activer',
+                disable: 'Desactiver',
+                step1: '1. Scanner QR',
+                step2: '2. Verifier',
+                step3: '3. Codes de secours',
+                instructionTitle: 'Comment scanner le QR code correctement:',
+                stepOpen: 'Ouvrir <strong style="color:#E8B4A0;">Microsoft Authenticator</strong>',
+                stepPlus: 'Appuyer sur le <strong style="color:#fff;">+</strong> en haut a droite',
+                stepOther: 'Choisir <strong style="color:#fff;">"Autre compte"</strong> (Google, Facebook...)',
+                stepScan: 'Scanner <strong style="color:#fff;">ce QR code</strong>',
+                cameraWarning: 'Ne pas utiliser l\'appareil photo -- le code finirait dans les mots de passe!',
+                manualKey: 'Cle manuelle',
+                next: 'SUIVANT',
+                confirm: 'CONFIRMER',
+                verifyText: 'Entrez le code a 6 chiffres de votre application Authenticator<br>pour confirmer la configuration',
+                successText: '2FA active avec succes',
+                backupTitle: 'SAUVEGARDEZ CES CODES!',
+                backupDesc: 'Chaque code ne peut etre utilise qu\'<strong style="color:#fff;">une seule fois</strong> si vous perdez l\'acces a votre application.<br>Ces codes ne seront <strong style="color:#DC3545;">PLUS affiches</strong>.',
+                codesSaved: 'CODES SAUVEGARDES',
+                disableText: 'Entrez un code de votre application ou un code de secours pour desactiver la 2FA',
+                disableBtn: 'DESACTIVER 2FA',
+                cancel: 'Annuler',
+                unableToLoad: 'Impossible de charger le statut'
+            },
+            es: {
+                securityTitle: 'CONFIGURACION DE SEGURIDAD',
+                securitySubtitle: 'Proteja su cuenta con seguridad adicional',
+                twofaTitle: 'Autenticacion de dos factores',
+                enabled: 'Activado',
+                notEnabled: 'No activado',
+                enable: 'Activar',
+                disable: 'Desactivar',
+                step1: '1. Escanear QR',
+                step2: '2. Verificar',
+                step3: '3. Codigos de respaldo',
+                instructionTitle: 'Como escanear el codigo QR correctamente:',
+                stepOpen: 'Abrir <strong style="color:#E8B4A0;">Microsoft Authenticator</strong>',
+                stepPlus: 'Tocar el <strong style="color:#fff;">+</strong> en la esquina superior derecha',
+                stepOther: 'Seleccionar <strong style="color:#fff;">"Otra cuenta"</strong> (Google, Facebook...)',
+                stepScan: 'Escanear <strong style="color:#fff;">este codigo QR</strong>',
+                cameraWarning: 'No usar la app de camara -- el codigo terminara en las contrasenas!',
+                manualKey: 'Clave manual',
+                next: 'SIGUIENTE',
+                confirm: 'CONFIRMAR',
+                verifyText: 'Ingrese el codigo de 6 digitos de su aplicacion Authenticator<br>para confirmar la configuracion',
+                successText: '2FA activado exitosamente',
+                backupTitle: 'GUARDE ESTOS CODIGOS!',
+                backupDesc: 'Cada codigo solo puede usarse <strong style="color:#fff;">una vez</strong> si pierde acceso a su aplicacion.<br>Estos codigos <strong style="color:#DC3545;">NO se mostraran de nuevo</strong>.',
+                codesSaved: 'CODIGOS GUARDADOS',
+                disableText: 'Ingrese un codigo de su app o un codigo de respaldo para desactivar 2FA',
+                disableBtn: 'DESACTIVAR 2FA',
+                cancel: 'Cancelar',
+                unableToLoad: 'No se pudo cargar el estado'
+            },
+            zh: {
+                securityTitle: '\u5b89\u5168\u8bbe\u7f6e',
+                securitySubtitle: '\u4f7f\u7528\u989d\u5916\u5b89\u5168\u63aa\u65bd\u4fdd\u62a4\u60a8\u7684\u8d26\u6237',
+                twofaTitle: '\u53cc\u91cd\u8eab\u4efd\u9a8c\u8bc1',
+                enabled: '\u5df2\u542f\u7528',
+                notEnabled: '\u672a\u542f\u7528',
+                enable: '\u542f\u7528',
+                disable: '\u7981\u7528',
+                step1: '1. \u626b\u63cf QR',
+                step2: '2. \u9a8c\u8bc1',
+                step3: '3. \u5907\u7528\u7801',
+                instructionTitle: '\u5982\u4f55\u6b63\u786e\u626b\u63cf QR \u7801\uff1a',
+                stepOpen: '\u6253\u5f00 <strong style="color:#E8B4A0;">Microsoft Authenticator</strong>',
+                stepPlus: '\u70b9\u51fb\u53f3\u4e0a\u89d2\u7684 <strong style="color:#fff;">+</strong> \u56fe\u6807',
+                stepOther: '\u9009\u62e9 <strong style="color:#fff;">"\u5176\u4ed6\u8d26\u6237"</strong>',
+                stepScan: '\u626b\u63cf <strong style="color:#fff;">\u6b64 QR \u7801</strong>',
+                cameraWarning: '\u4e0d\u8981\u4f7f\u7528\u76f8\u673a\u5e94\u7528 -- \u4ee3\u7801\u4f1a\u88ab\u5b58\u5230\u5bc6\u7801\u4e2d\uff01',
+                manualKey: '\u624b\u52a8\u5bc6\u94a5',
+                next: '\u4e0b\u4e00\u6b65',
+                confirm: '\u786e\u8ba4',
+                verifyText: '\u8f93\u5165\u60a8\u7684 Authenticator \u5e94\u7528\u4e2d\u7684 6 \u4f4d\u6570\u5b57\u4ee3\u7801<br>\u4ee5\u786e\u8ba4\u8bbe\u7f6e',
+                successText: '2FA \u5df2\u6210\u529f\u542f\u7528',
+                backupTitle: '\u4fdd\u5b58\u8fd9\u4e9b\u5907\u7528\u7801\uff01',
+                backupDesc: '\u6bcf\u4e2a\u4ee3\u7801\u53ea\u80fd\u4f7f\u7528<strong style="color:#fff;">\u4e00\u6b21</strong>\u3002<br>\u8fd9\u4e9b\u4ee3\u7801<strong style="color:#DC3545;">\u4e0d\u4f1a\u518d\u6b21\u663e\u793a</strong>\u3002',
+                codesSaved: '\u4ee3\u7801\u5df2\u4fdd\u5b58',
+                disableText: '\u8f93\u5165 Authenticator \u5e94\u7528\u4e2d\u7684\u4ee3\u7801\u6216\u5907\u7528\u7801\u4ee5\u7981\u7528 2FA',
+                disableBtn: '\u7981\u7528 2FA',
+                cancel: '\u53d6\u6d88',
+                unableToLoad: '\u65e0\u6cd5\u52a0\u8f7d\u72b6\u6001'
+            },
+            ar: {
+                securityTitle: '\u0625\u0639\u062f\u0627\u062f\u0627\u062a \u0627\u0644\u0623\u0645\u0627\u0646',
+                securitySubtitle: '\u0627\u062d\u0645\u0650 \u062d\u0633\u0627\u0628\u0643 \u0628\u0623\u0645\u0627\u0646 \u0625\u0636\u0627\u0641\u064a',
+                twofaTitle: '\u0627\u0644\u0645\u0635\u0627\u062f\u0642\u0629 \u0627\u0644\u062b\u0646\u0627\u0626\u064a\u0629',
+                enabled: '\u0645\u064f\u0641\u0639\u0651\u0644',
+                notEnabled: '\u063a\u064a\u0631 \u0645\u064f\u0641\u0639\u0651\u0644',
+                enable: '\u062a\u0641\u0639\u064a\u0644',
+                disable: '\u062a\u0639\u0637\u064a\u0644',
+                step1: '1. \u0645\u0633\u062d QR',
+                step2: '2. \u062a\u062d\u0642\u0642',
+                step3: '3. \u0631\u0645\u0648\u0632 \u0627\u062d\u062a\u064a\u0627\u0637\u064a\u0629',
+                instructionTitle: '\u0643\u064a\u0641\u064a\u0629 \u0645\u0633\u062d \u0631\u0645\u0632 QR \u0628\u0634\u0643\u0644 \u0635\u062d\u064a\u062d:',
+                stepOpen: '\u0627\u0641\u062a\u062d <strong style="color:#E8B4A0;">Microsoft Authenticator</strong>',
+                stepPlus: '\u0627\u0636\u063a\u0637 \u0639\u0644\u0649 <strong style="color:#fff;">+</strong> \u0641\u064a \u0627\u0644\u0632\u0627\u0648\u064a\u0629 \u0627\u0644\u0639\u0644\u0648\u064a\u0629',
+                stepOther: '\u0627\u062e\u062a\u0631 <strong style="color:#fff;">"\u062d\u0633\u0627\u0628 \u0622\u062e\u0631"</strong>',
+                stepScan: '\u0627\u0645\u0633\u062d <strong style="color:#fff;">\u0631\u0645\u0632 QR \u0647\u0630\u0627</strong>',
+                cameraWarning: '\u0644\u0627 \u062a\u0633\u062a\u062e\u062f\u0645 \u062a\u0637\u0628\u064a\u0642 \u0627\u0644\u0643\u0627\u0645\u064a\u0631\u0627 -- \u0633\u064a\u0646\u062a\u0647\u064a \u0627\u0644\u0631\u0645\u0632 \u0641\u064a \u0643\u0644\u0645\u0627\u062a \u0627\u0644\u0645\u0631\u0648\u0631!',
+                manualKey: '\u0645\u0641\u062a\u0627\u062d \u064a\u062f\u0648\u064a',
+                next: '\u0627\u0644\u062a\u0627\u0644\u064a',
+                confirm: '\u062a\u0623\u0643\u064a\u062f',
+                verifyText: '\u0623\u062f\u062e\u0644 \u0627\u0644\u0631\u0645\u0632 \u0627\u0644\u0645\u0643\u0648\u0646 \u0645\u0646 6 \u0623\u0631\u0642\u0627\u0645 \u0645\u0646 \u062a\u0637\u0628\u064a\u0642 Authenticator<br>\u0644\u062a\u0623\u0643\u064a\u062f \u0627\u0644\u0625\u0639\u062f\u0627\u062f',
+                successText: '\u062a\u0645 \u062a\u0641\u0639\u064a\u0644 2FA \u0628\u0646\u062c\u0627\u062d',
+                backupTitle: '\u0627\u062d\u0641\u0638 \u0647\u0630\u0647 \u0627\u0644\u0631\u0645\u0648\u0632!',
+                backupDesc: '\u0643\u0644 \u0631\u0645\u0632 \u064a\u0645\u0643\u0646 \u0627\u0633\u062a\u062e\u062f\u0627\u0645\u0647 <strong style="color:#fff;">\u0645\u0631\u0629 \u0648\u0627\u062d\u062f\u0629</strong> \u0641\u0642\u0637.<br>\u0644\u0646 \u064a\u062a\u0645 <strong style="color:#DC3545;">\u0639\u0631\u0636\u0647\u0627 \u0645\u0631\u0629 \u0623\u062e\u0631\u0649</strong>.',
+                codesSaved: '\u062a\u0645 \u062d\u0641\u0638 \u0627\u0644\u0631\u0645\u0648\u0632',
+                disableText: '\u0623\u062f\u062e\u0644 \u0631\u0645\u0632\u0627\u064b \u0645\u0646 \u0627\u0644\u062a\u0637\u0628\u064a\u0642 \u0623\u0648 \u0631\u0645\u0632 \u0627\u062d\u062a\u064a\u0627\u0637\u064a \u0644\u062a\u0639\u0637\u064a\u0644 2FA',
+                disableBtn: '\u062a\u0639\u0637\u064a\u0644 2FA',
+                cancel: '\u0625\u0644\u063a\u0627\u0621',
+                unableToLoad: '\u062a\u0639\u0630\u0631 \u062a\u062d\u0645\u064a\u0644 \u0627\u0644\u062d\u0627\u0644\u0629'
+            },
+            it: {
+                securityTitle: 'IMPOSTAZIONI DI SICUREZZA',
+                securitySubtitle: 'Proteggi il tuo account con sicurezza aggiuntiva',
+                twofaTitle: 'Autenticazione a due fattori',
+                enabled: 'Attivato',
+                notEnabled: 'Non attivato',
+                enable: 'Attivare',
+                disable: 'Disattivare',
+                step1: '1. Scansiona QR',
+                step2: '2. Verifica',
+                step3: '3. Codici di backup',
+                instructionTitle: 'Come scansionare il codice QR correttamente:',
+                stepOpen: 'Apri <strong style="color:#E8B4A0;">Microsoft Authenticator</strong>',
+                stepPlus: 'Tocca il <strong style="color:#fff;">+</strong> in alto a destra',
+                stepOther: 'Seleziona <strong style="color:#fff;">"Altro account"</strong> (Google, Facebook...)',
+                stepScan: 'Scansiona <strong style="color:#fff;">questo codice QR</strong>',
+                cameraWarning: 'Non usare l\'app fotocamera -- il codice finira nelle password!',
+                manualKey: 'Chiave manuale',
+                next: 'AVANTI',
+                confirm: 'CONFERMA',
+                verifyText: 'Inserisci il codice a 6 cifre dalla tua app Authenticator<br>per confermare la configurazione',
+                successText: '2FA attivato con successo',
+                backupTitle: 'SALVA QUESTI CODICI!',
+                backupDesc: 'Ogni codice puo essere utilizzato <strong style="color:#fff;">una sola volta</strong>.<br>Questi codici <strong style="color:#DC3545;">NON verranno mostrati di nuovo</strong>.',
+                codesSaved: 'CODICI SALVATI',
+                disableText: 'Inserisci un codice dalla tua app o un codice di backup per disattivare 2FA',
+                disableBtn: 'DISATTIVA 2FA',
+                cancel: 'Annulla',
+                unableToLoad: 'Impossibile caricare lo stato'
+            },
+            ru: {
+                securityTitle: '\u041d\u0410\u0421\u0422\u0420\u041e\u0419\u041a\u0418 \u0411\u0415\u0417\u041e\u041f\u0410\u0421\u041d\u041e\u0421\u0422\u0418',
+                securitySubtitle: '\u0417\u0430\u0449\u0438\u0442\u0438\u0442\u0435 \u0441\u0432\u043e\u0439 \u0430\u043a\u043a\u0430\u0443\u043d\u0442 \u0434\u043e\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0439 \u0437\u0430\u0449\u0438\u0442\u043e\u0439',
+                twofaTitle: '\u0414\u0432\u0443\u0445\u0444\u0430\u043a\u0442\u043e\u0440\u043d\u0430\u044f \u0430\u0443\u0442\u0435\u043d\u0442\u0438\u0444\u0438\u043a\u0430\u0446\u0438\u044f',
+                enabled: '\u0412\u043a\u043b\u044e\u0447\u0435\u043d\u043e',
+                notEnabled: '\u041d\u0435 \u0432\u043a\u043b\u044e\u0447\u0435\u043d\u043e',
+                enable: '\u0412\u043a\u043b\u044e\u0447\u0438\u0442\u044c',
+                disable: '\u041e\u0442\u043a\u043b\u044e\u0447\u0438\u0442\u044c',
+                step1: '1. \u0421\u043a\u0430\u043d\u0438\u0440\u043e\u0432\u0430\u0442\u044c QR',
+                step2: '2. \u041f\u043e\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044c',
+                step3: '3. \u0420\u0435\u0437\u0435\u0440\u0432\u043d\u044b\u0435 \u043a\u043e\u0434\u044b',
+                instructionTitle: '\u041a\u0430\u043a \u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e \u0441\u043a\u0430\u043d\u0438\u0440\u043e\u0432\u0430\u0442\u044c QR-\u043a\u043e\u0434:',
+                stepOpen: '\u041e\u0442\u043a\u0440\u043e\u0439\u0442\u0435 <strong style="color:#E8B4A0;">Microsoft Authenticator</strong>',
+                stepPlus: '\u041d\u0430\u0436\u043c\u0438\u0442\u0435 <strong style="color:#fff;">+</strong> \u0432 \u043f\u0440\u0430\u0432\u043e\u043c \u0432\u0435\u0440\u0445\u043d\u0435\u043c \u0443\u0433\u043b\u0443',
+                stepOther: '\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 <strong style="color:#fff;">"\u0414\u0440\u0443\u0433\u043e\u0439 \u0430\u043a\u043a\u0430\u0443\u043d\u0442"</strong>',
+                stepScan: '\u041e\u0442\u0441\u043a\u0430\u043d\u0438\u0440\u0443\u0439\u0442\u0435 <strong style="color:#fff;">\u044d\u0442\u043e\u0442 QR-\u043a\u043e\u0434</strong>',
+                cameraWarning: '\u041d\u0435 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0439\u0442\u0435 \u043a\u0430\u043c\u0435\u0440\u0443 -- \u043a\u043e\u0434 \u043f\u043e\u043f\u0430\u0434\u0451\u0442 \u0432 \u043f\u0430\u0440\u043e\u043b\u0438!',
+                manualKey: '\u0420\u0443\u0447\u043d\u043e\u0439 \u043a\u043b\u044e\u0447',
+                next: '\u0414\u0410\u041b\u0415\u0415',
+                confirm: '\u041f\u041e\u0414\u0422\u0412\u0415\u0420\u0414\u0418\u0422\u042c',
+                verifyText: '\u0412\u0432\u0435\u0434\u0438\u0442\u0435 6-\u0437\u043d\u0430\u0447\u043d\u044b\u0439 \u043a\u043e\u0434 \u0438\u0437 Authenticator<br>\u0434\u043b\u044f \u043f\u043e\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043d\u0438\u044f',
+                successText: '2FA \u0443\u0441\u043f\u0435\u0448\u043d\u043e \u0430\u043a\u0442\u0438\u0432\u0438\u0440\u043e\u0432\u0430\u043d\u0430',
+                backupTitle: '\u0421\u041e\u0425\u0420\u0410\u041d\u0418\u0422\u0415 \u042d\u0422\u0418 \u041a\u041e\u0414\u042b!',
+                backupDesc: '\u041a\u0430\u0436\u0434\u044b\u0439 \u043a\u043e\u0434 \u043c\u043e\u0436\u043d\u043e \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u044c <strong style="color:#fff;">\u043e\u0434\u0438\u043d \u0440\u0430\u0437</strong>.<br>\u042d\u0442\u0438 \u043a\u043e\u0434\u044b <strong style="color:#DC3545;">\u041d\u0415 \u0431\u0443\u0434\u0443\u0442 \u043f\u043e\u043a\u0430\u0437\u0430\u043d\u044b \u0441\u043d\u043e\u0432\u0430</strong>.',
+                codesSaved: '\u041a\u041e\u0414\u042b \u0421\u041e\u0425\u0420\u0410\u041d\u0415\u041d\u042b',
+                disableText: '\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043a\u043e\u0434 \u0438\u0437 \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u044f \u0438\u043b\u0438 \u0440\u0435\u0437\u0435\u0440\u0432\u043d\u044b\u0439 \u043a\u043e\u0434 \u0434\u043b\u044f \u043e\u0442\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f 2FA',
+                disableBtn: '\u041e\u0422\u041a\u041b\u042e\u0427\u0418\u0422\u042c 2FA',
+                cancel: '\u041e\u0442\u043c\u0435\u043d\u0430',
+                unableToLoad: '\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u0441\u0442\u0430\u0442\u0443\u0441'
+            },
+            ja: {
+                securityTitle: '\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u8a2d\u5b9a',
+                securitySubtitle: '\u8ffd\u52a0\u306e\u30bb\u30ad\u30e5\u30ea\u30c6\u30a3\u3067\u30a2\u30ab\u30a6\u30f3\u30c8\u3092\u4fdd\u8b77',
+                twofaTitle: '\u4e8c\u8981\u7d20\u8a8d\u8a3c',
+                enabled: '\u6709\u52b9',
+                notEnabled: '\u7121\u52b9',
+                enable: '\u6709\u52b9\u5316',
+                disable: '\u7121\u52b9\u5316',
+                step1: '1. QR\u30b9\u30ad\u30e3\u30f3',
+                step2: '2. \u78ba\u8a8d',
+                step3: '3. \u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u30b3\u30fc\u30c9',
+                instructionTitle: 'QR\u30b3\u30fc\u30c9\u306e\u6b63\u3057\u3044\u30b9\u30ad\u30e3\u30f3\u65b9\u6cd5:',
+                stepOpen: '<strong style="color:#E8B4A0;">Microsoft Authenticator</strong>\u3092\u958b\u304f',
+                stepPlus: '\u53f3\u4e0a\u306e <strong style="color:#fff;">+</strong> \u3092\u30bf\u30c3\u30d7',
+                stepOther: '<strong style="color:#fff;">"\u4ed6\u306e\u30a2\u30ab\u30a6\u30f3\u30c8"</strong>\u3092\u9078\u629e',
+                stepScan: '<strong style="color:#fff;">\u3053\u306eQR\u30b3\u30fc\u30c9</strong>\u3092\u30b9\u30ad\u30e3\u30f3',
+                cameraWarning: '\u30ab\u30e1\u30e9\u30a2\u30d7\u30ea\u3092\u4f7f\u308f\u306a\u3044\u3067\u304f\u3060\u3055\u3044 -- \u30b3\u30fc\u30c9\u304c\u30d1\u30b9\u30ef\u30fc\u30c9\u306b\u4fdd\u5b58\u3055\u308c\u307e\u3059\uff01',
+                manualKey: '\u624b\u52d5\u30ad\u30fc',
+                next: '\u6b21\u3078',
+                confirm: '\u78ba\u8a8d',
+                verifyText: 'Authenticator\u30a2\u30d7\u30ea\u306e6\u6841\u306e\u30b3\u30fc\u30c9\u3092\u5165\u529b<br>\u3057\u3066\u8a2d\u5b9a\u3092\u78ba\u8a8d\u3057\u3066\u304f\u3060\u3055\u3044',
+                successText: '2FA\u304c\u6b63\u5e38\u306b\u6709\u52b9\u5316\u3055\u308c\u307e\u3057\u305f',
+                backupTitle: '\u3053\u308c\u3089\u306e\u30b3\u30fc\u30c9\u3092\u4fdd\u5b58\uff01',
+                backupDesc: '\u5404\u30b3\u30fc\u30c9\u306f<strong style="color:#fff;">1\u56de</strong>\u306e\u307f\u4f7f\u7528\u53ef\u80fd\u3067\u3059\u3002<br>\u3053\u308c\u3089\u306e\u30b3\u30fc\u30c9\u306f<strong style="color:#DC3545;">\u518d\u8868\u793a\u3055\u308c\u307e\u305b\u3093</strong>\u3002',
+                codesSaved: '\u30b3\u30fc\u30c9\u4fdd\u5b58\u6e08\u307f',
+                disableText: 'Authenticator\u30a2\u30d7\u30ea\u306e\u30b3\u30fc\u30c9\u307e\u305f\u306f\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\u30b3\u30fc\u30c9\u3092\u5165\u529b\u3057\u30662FA\u3092\u7121\u52b9\u5316',
+                disableBtn: '2FA\u3092\u7121\u52b9\u5316',
+                cancel: '\u30ad\u30e3\u30f3\u30bb\u30eb',
+                unableToLoad: '\u30b9\u30c6\u30fc\u30bf\u30b9\u3092\u8aad\u307f\u8fbc\u3081\u307e\u305b\u3093'
+            }
+        };
+
+        function getTwoFAText(key) {
+            const lang = (window.i18n && window.i18n.currentLang) || localStorage.getItem('billionairs_lang') || 'en';
+            if (lang === 'en') return null; // Use English default
+            const t = twofaTranslations[lang];
+            return t ? t[key] : null;
+        }
+
+        function translateTwoFASection() {
+            const el = (id) => document.getElementById(id);
+            const set = (id, key) => {
+                const e = el(id);
+                const t = getTwoFAText(key);
+                if (e && t) e.textContent = t;
+            };
+            const setHTML = (id, key) => {
+                const e = el(id);
+                const t = getTwoFAText(key);
+                if (e && t) e.innerHTML = t;
+            };
+
+            set('securityTitle', 'securityTitle');
+            set('securitySubtitle', 'securitySubtitle');
+            set('twofaTitle', 'twofaTitle');
+            set('dashStep1Text', 'step1');
+            set('dashStep2Text', 'step2');
+            set('dashStep3Text', 'step3');
+            set('twofaInstructionTitle', 'instructionTitle');
+            setHTML('twofaStep1Text', 'stepOpen');
+            setHTML('twofaStep2Text', 'stepPlus');
+            setHTML('twofaStep3Text', 'stepOther');
+            setHTML('twofaStep4Text', 'stepScan');
+            set('twofaCameraWarning', 'cameraWarning');
+            set('twofaNextBtn', 'next');
+            set('twofaConfirmBtnText', 'confirm');
+            setHTML('twofaVerifyText', 'verifyText');
+            set('twofaSuccessText', 'successText');
+            set('twofaBackupTitle', 'backupTitle');
+            setHTML('twofaBackupDesc', 'backupDesc');
+            set('twofaCodesSavedBtn', 'codesSaved');
+            setHTML('twofaDisableText', 'disableText');
+            set('twofaDisableBtn', 'disableBtn');
+            set('twofaCancelLink', 'cancel');
+        }
+
+        // Listen for language changes
+        window.addEventListener('i18nReady', () => translateTwoFASection());
+        window.addEventListener('languageChanged', () => translateTwoFASection());
+
         async function loadTwoFAStatus() {
             try {
                 const response = await fetch('/api/user-2fa-setup', {
@@ -1266,9 +1558,9 @@
                     icon.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="#4CAF50" stroke-width="1.3" fill="rgba(76,175,80,0.1)"/><path d="M8 11V7a4 4 0 1 1 8 0v4" stroke="#4CAF50" stroke-width="1.3" stroke-linecap="round"/><circle cx="12" cy="16" r="1.5" fill="#4CAF50"/></svg>';
                     icon.style.background = 'rgba(76, 175, 80, 0.08)';
                     icon.style.borderColor = 'rgba(76, 175, 80, 0.2)';
-                    status.textContent = 'Enabled';
+                    status.textContent = getTwoFAText('enabled') || 'Enabled';
                     status.style.color = 'rgba(76, 175, 80, 0.8)';
-                    btn.textContent = 'Disable';
+                    btn.textContent = getTwoFAText('disable') || 'Disable';
                     btn.style.background = 'rgba(255,255,255,0.08)';
                     btn.style.color = 'rgba(255,255,255,0.6)';
                     btn.style.border = '1px solid rgba(255,255,255,0.1)';
@@ -1280,17 +1572,18 @@
                     icon.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="#E8B4A0" stroke-width="1.3" fill="rgba(232,180,160,0.1)"/><path d="M8 11V7a4 4 0 1 1 8 0v4" stroke="#E8B4A0" stroke-width="1.3" stroke-linecap="round"/><circle cx="12" cy="16" r="1.5" fill="#E8B4A0"/></svg>';
                     icon.style.background = 'rgba(232,180,160,0.06)';
                     icon.style.borderColor = 'rgba(232,180,160,0.12)';
-                    status.textContent = 'Not enabled';
+                    status.textContent = getTwoFAText('notEnabled') || 'Not enabled';
                     status.style.color = 'rgba(255,255,255,0.4)';
-                    btn.textContent = 'Enable';
+                    btn.textContent = getTwoFAText('enable') || 'Enable';
                     btn.style.background = 'linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%)';
                     btn.style.color = 'rgba(0,0,0,0.85)';
                     btn.style.border = 'none';
                     btn.onclick = toggleTwoFASetup;
                 }
                 btn.style.display = 'inline-block';
+                translateTwoFASection();
             } catch (e) {
-                document.getElementById('twofaDashStatus').textContent = 'Unable to load status';
+                document.getElementById('twofaDashStatus').textContent = getTwoFAText('unableToLoad') || 'Unable to load status';
             }
         }
 
