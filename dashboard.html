@@ -547,12 +547,12 @@
                                     Scan this QR code with your<br>
                                     <span style="color: #E8B4A0; font-weight: 600;">Microsoft Authenticator</span> or any TOTP-compatible app
                                 </p>
-                                <div id="manualKeySection" style="display: none; margin-top: 1rem; padding: 0.8rem; background: rgba(0,0,0,0.25); border: 1px dashed rgba(232,180,160,0.15); border-radius: 8px; text-align: center;">
-                                    <div style="font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem;">Manual key</div>
-                                    <div id="manualKeyValue" style="font-family: 'Courier New', monospace; font-size: 0.85rem; color: #E8B4A0; letter-spacing: 0.15em; word-break: break-all; user-select: all;"></div>
+                                <div id="manualKeySection" style="display: none; margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.25); border: 1px dashed rgba(232,180,160,0.15); border-radius: 8px; text-align: center;">
+                                    <div style="font-family: 'Montserrat', sans-serif; font-size: 0.65rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.5rem;">Manual Key</div>
+                                    <div id="manualKeyValue" style="font-family: 'Montserrat', sans-serif; font-size: 0.82rem; color: #E8B4A0; letter-spacing: 0.2em; word-break: break-all; user-select: all; font-weight: 500;"></div>
                                 </div>
                             </div>
-                            <button class="submit-button" style="margin-top: 1.2rem; font-size: 0.8rem; letter-spacing: 0.15em;" onclick="showDashSetupStep(2)">NEXT</button>
+                            <button onclick="showDashSetupStep(2)" style="display: block; width: 100%; margin-top: 1.2rem; padding: 1rem; background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%); color: rgba(0,0,0,0.85); border: none; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s;">NEXT</button>
                         </div>
 
                         <!-- Step 2: Verify Code -->
@@ -577,7 +577,7 @@
                                 </div>
                                 <div id="dashTwofaError" style="color: #f44336; font-size: 0.78rem; margin: 0.5rem 0; display: none;"></div>
                             </div>
-                            <button class="submit-button" style="margin-top: 1.2rem; font-size: 0.8rem; letter-spacing: 0.15em;" id="dashVerifyBtn" onclick="verifyDashTwoFA()">CONFIRM</button>
+                            <button id="dashVerifyBtn" onclick="verifyDashTwoFA()" style="display: block; width: 100%; margin-top: 1.2rem; padding: 1rem; background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%); color: rgba(0,0,0,0.85); border: none; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s;">CONFIRM</button>
                         </div>
 
                         <!-- Step 3: Backup Codes -->
@@ -609,7 +609,7 @@
                                     <!-- Filled dynamically -->
                                 </div>
                             </div>
-                            <button class="submit-button" style="margin-top: 1.2rem; font-size: 0.8rem; letter-spacing: 0.15em;" onclick="finishTwoFASetup()">CODES SAVED</button>
+                            <button onclick="finishTwoFASetup()" style="display: block; width: 100%; margin-top: 1.2rem; padding: 1rem; background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%); color: rgba(0,0,0,0.85); border: none; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s;">CODES SAVED</button>
                         </div>
                     </div>
 
@@ -624,7 +624,7 @@
                                        style="background: rgba(0,0,0,0.3) !important; color: white !important; text-align: center; letter-spacing: 0.1em; font-family: 'Montserrat', sans-serif;">
                             </div>
                             <div id="disableTwofaError" style="color: #f44336; font-size: 0.78rem; margin: 0.5rem 0; display: none;"></div>
-                            <button class="submit-button" style="margin-top: 1rem; font-size: 0.85rem; background: linear-gradient(135deg, rgba(244,67,54,0.8) 0%, rgba(198,40,40,0.8) 100%);" onclick="disableTwoFA()">DISABLE 2FA</button>
+                            <button onclick="disableTwoFA()" style="display: block; width: 100%; margin-top: 1rem; padding: 1rem; background: linear-gradient(135deg, rgba(244,67,54,0.8) 0%, rgba(198,40,40,0.8) 100%); color: rgba(255,255,255,0.9); border: none; border-radius: 50px; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; cursor: pointer; transition: all 0.3s;">DISABLE 2FA</button>
                             <div style="text-align: center; margin-top: 0.8rem;">
                                 <a href="#" onclick="document.getElementById('twofaDisableSection').style.display='none'; return false;" style="color: rgba(232,180,160,0.5); font-size: 0.72rem; text-decoration: none;">Cancel</a>
                             </div>
