@@ -3542,3 +3542,243 @@ input:-webkit-autofill::first-line {
     }
 }
 /* ==================== END LEGAL CONSENT CHECKBOX ==================== */
+
+/* ==================== TWO-FACTOR AUTHENTICATION ==================== */
+
+/* Login Page 2FA */
+.twofa-login-section {
+    text-align: center;
+    animation: twofaFadeIn 0.4s ease;
+}
+
+@keyframes twofaFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.twofa-login-icon {
+    margin-bottom: 1rem;
+}
+
+.twofa-login-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: #E8B4A0;
+    margin-bottom: 0.3rem;
+}
+
+.twofa-login-hint {
+    color: rgba(255,255,255,0.45);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.twofa-code-inputs {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+}
+
+.twofa-code-digit {
+    width: 48px;
+    height: 56px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    background: rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(232, 180, 160, 0.2);
+    border-radius: 10px;
+    color: #E8B4A0;
+    outline: none;
+    transition: all 0.3s ease;
+    caret-color: #E8B4A0;
+}
+
+.twofa-code-digit:focus {
+    border-color: #E8B4A0;
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 15px rgba(232, 180, 160, 0.15);
+}
+
+.twofa-code-digit.filled {
+    border-color: rgba(232, 180, 160, 0.5);
+    background: rgba(232, 180, 160, 0.05);
+}
+
+.twofa-backup-link {
+    text-align: center;
+    margin-top: 0.8rem;
+}
+
+.twofa-backup-link a {
+    color: rgba(232, 180, 160, 0.6);
+    font-size: 0.72rem;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(232, 180, 160, 0.2);
+    transition: all 0.3s;
+}
+
+.twofa-backup-link a:hover {
+    color: #E8B4A0;
+}
+
+/* Dashboard Security Section */
+.security-section {
+    animation: twofaFadeIn 0.5s ease;
+}
+
+.security-header {
+    margin-bottom: 1.5rem;
+}
+
+.security-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+.twofa-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(232, 180, 160, 0.1);
+    border-radius: 12px;
+}
+
+.twofa-status-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.twofa-status-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.twofa-toggle-btn {
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%);
+    color: rgba(0,0,0,0.85);
+}
+
+.twofa-toggle-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(232, 180, 160, 0.3);
+}
+
+/* Setup Steps */
+.twofa-setup-steps {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+}
+
+.twofa-setup-step {
+    flex: 1;
+    text-align: center;
+    padding: 0.6rem;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.3s;
+}
+
+.twofa-setup-step.active {
+    color: #E8B4A0;
+    background: rgba(232, 180, 160, 0.08);
+    border-color: rgba(232, 180, 160, 0.25);
+}
+
+.twofa-setup-step.done {
+    color: rgba(76, 175, 80, 0.8);
+    background: rgba(76, 175, 80, 0.05);
+    border-color: rgba(76, 175, 80, 0.2);
+}
+
+/* QR Container */
+.twofa-qr-container {
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(232, 180, 160, 0.1);
+    border-radius: 12px;
+}
+
+.twofa-manual-key {
+    margin-top: 1rem;
+    padding: 0.8rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px dashed rgba(232, 180, 160, 0.2);
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Backup Codes Grid */
+.twofa-backup-codes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.twofa-backup-code {
+    padding: 0.6rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(232, 180, 160, 0.1);
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    letter-spacing: 0.1em;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .twofa-code-digit {
+        width: 42px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+    
+    .twofa-status-row {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .twofa-status-info {
+        flex-direction: column;
+    }
+    
+    .twofa-backup-codes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==================== END TWO-FACTOR AUTHENTICATION ==================== */

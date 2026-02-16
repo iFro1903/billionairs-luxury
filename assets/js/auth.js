@@ -52,23 +52,33 @@ class AuthManager {
     }
 
     // Login user
-    async login(email, password) {
+    async login(email, password, twoFactorCode = null) {
         try {
             const language = localStorage.getItem('billionairs_lang') || navigator.language?.split('-')[0] || 'en';
+            const body = {
+                action: 'login',
+                email,
+                password,
+                language
+            };
+            if (twoFactorCode) {
+                body.twoFactorCode = twoFactorCode;
+            }
+
             const response = await fetch('/api/auth', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify({
-                    action: 'login',
-                    email,
-                    password,
-                    language
-                })
+                body: JSON.stringify(body)
             });
 
             const data = await response.json();
             
+            // 2FA required — return data so caller can show 2FA input
+            if (data.requiresTwoFactor) {
+                return data;
+            }
+
             if (!data.success) {
                 throw new Error(data.error || data.message || 'Login failed');
             }

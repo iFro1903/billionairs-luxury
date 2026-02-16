@@ -414,6 +414,55 @@
                 <button type="submit" class="submit-button" data-i18n="login.submit">Enter</button>
             </form>
 
+            <!-- Two-Factor Authentication Step -->
+            <div id="twoFactorModal" style="display: none;">
+                <div class="twofa-login-section">
+                    <div class="twofa-login-icon">
+                        <svg viewBox="0 0 48 48" width="48" height="48" fill="none">
+                            <rect x="10" y="6" width="28" height="36" rx="4" stroke="#E8B4A0" stroke-width="2" fill="rgba(232,180,160,0.05)"/>
+                            <circle cx="24" cy="38" r="2" fill="rgba(232,180,160,0.4)"/>
+                            <rect x="16" y="18" width="16" height="10" rx="2" stroke="rgba(232,180,160,0.4)" stroke-width="1.5" fill="none"/>
+                            <text x="24" y="26" text-anchor="middle" fill="#E8B4A0" font-size="7" font-family="Montserrat" font-weight="600">2FA</text>
+                        </svg>
+                    </div>
+                    <h2 class="twofa-login-title">Authentication Code</h2>
+                    <p class="twofa-login-hint">Enter the 6-digit code from your<br>Microsoft Authenticator app</p>
+                    
+                    <div class="twofa-code-inputs" id="twofaCodeInputs">
+                        <input type="text" inputmode="numeric" maxlength="1" class="twofa-code-digit" data-index="0" autocomplete="one-time-code">
+                        <input type="text" inputmode="numeric" maxlength="1" class="twofa-code-digit" data-index="1">
+                        <input type="text" inputmode="numeric" maxlength="1" class="twofa-code-digit" data-index="2">
+                        <input type="text" inputmode="numeric" maxlength="1" class="twofa-code-digit" data-index="3">
+                        <input type="text" inputmode="numeric" maxlength="1" class="twofa-code-digit" data-index="4">
+                        <input type="text" inputmode="numeric" maxlength="1" class="twofa-code-digit" data-index="5">
+                    </div>
+
+                    <div id="twofaError" class="error-message" style="display: none; margin-bottom: 1rem;" role="alert"></div>
+
+                    <button type="button" class="submit-button" id="verifyTwofaBtn" onclick="verifyTwoFactorCode()">VERIFY</button>
+
+                    <div class="twofa-backup-link">
+                        <a href="#" id="useBackupCodeLink">Use a backup code instead</a>
+                    </div>
+
+                    <!-- Backup Code Input (hidden by default) -->
+                    <div id="backupCodeSection" style="display: none; margin-top: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Backup Code</label>
+                            <input type="text" id="backupCodeInput" class="form-input" placeholder="XXXX-XXXX"
+                                   style="background: rgba(0, 0, 0, 0.3) !important; color: white !important; text-align: center; letter-spacing: 0.15em; font-family: 'Courier New', monospace;">
+                        </div>
+                        <button type="button" class="submit-button" onclick="verifyBackupCode()">VERIFY BACKUP CODE</button>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 1.2rem;">
+                        <a href="#" id="backToLoginFromTwofa" style="color: rgba(232, 180, 160, 0.6); font-size: 12px; text-decoration: none;">
+                            ← Back to Login
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <!-- Forgot Password Modal -->
             <div id="forgotPasswordModal" style="display: none;">
                 <h2 class="login-subtitle" style="margin-bottom: 1rem;" data-i18n="login.reset_password_title">Reset Password</h2>
@@ -448,6 +497,10 @@
     <script>
         // Login-only page: registration is performed through the purchase flow (I DESERVE THIS)
 
+        // Store credentials for 2FA re-submission
+        let pendingEmail = '';
+        let pendingPassword = '';
+
         function showError(message) {
             const errorDiv = document.getElementById('errorMessage');
             errorDiv.textContent = message;
@@ -466,6 +519,150 @@
             document.getElementById('errorMessage').style.display = 'none';
             document.getElementById('successMessage').style.display = 'none';
         }
+
+        // ===== TWO-FACTOR AUTHENTICATION UI =====
+        function showTwoFactorStep() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('twoFactorModal').style.display = 'block';
+            // Focus first digit
+            const firstInput = document.querySelector('.twofa-code-digit[data-index="0"]');
+            if (firstInput) setTimeout(() => firstInput.focus(), 100);
+        }
+
+        function hideTwoFactorStep() {
+            document.getElementById('twoFactorModal').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('twofaError').style.display = 'none';
+            document.getElementById('backupCodeSection').style.display = 'none';
+            // Clear code inputs
+            document.querySelectorAll('.twofa-code-digit').forEach(el => { el.value = ''; el.classList.remove('filled'); });
+            pendingEmail = '';
+            pendingPassword = '';
+        }
+
+        // Auto-advance code digit inputs
+        document.addEventListener('DOMContentLoaded', () => {
+            const digits = document.querySelectorAll('.twofa-code-digit');
+            digits.forEach((input, idx) => {
+                input.addEventListener('input', (e) => {
+                    const val = e.target.value.replace(/\D/g, '');
+                    e.target.value = val;
+                    if (val.length === 1) {
+                        e.target.classList.add('filled');
+                        if (idx < 5) digits[idx + 1].focus();
+                        // Auto-submit when all 6 entered
+                        if (idx === 5) {
+                            const code = Array.from(digits).map(d => d.value).join('');
+                            if (code.length === 6) setTimeout(() => verifyTwoFactorCode(), 200);
+                        }
+                    } else {
+                        e.target.classList.remove('filled');
+                    }
+                });
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !e.target.value && idx > 0) {
+                        digits[idx - 1].focus();
+                        digits[idx - 1].value = '';
+                        digits[idx - 1].classList.remove('filled');
+                    }
+                });
+                // Handle paste (e.g. from authenticator app)
+                input.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const paste = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+                    if (paste.length >= 6) {
+                        for (let i = 0; i < 6; i++) {
+                            digits[i].value = paste[i];
+                            digits[i].classList.add('filled');
+                        }
+                        setTimeout(() => verifyTwoFactorCode(), 300);
+                    }
+                });
+            });
+
+            // Backup code link
+            document.getElementById('useBackupCodeLink')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = document.getElementById('backupCodeSection');
+                const codeInputs = document.getElementById('twofaCodeInputs');
+                const verifyBtn = document.getElementById('verifyTwofaBtn');
+                if (section.style.display === 'none') {
+                    section.style.display = 'block';
+                    codeInputs.style.display = 'none';
+                    verifyBtn.style.display = 'none';
+                    e.target.textContent = 'Use authenticator code instead';
+                    document.getElementById('backupCodeInput').focus();
+                } else {
+                    section.style.display = 'none';
+                    codeInputs.style.display = 'flex';
+                    verifyBtn.style.display = 'block';
+                    e.target.textContent = 'Use a backup code instead';
+                    document.querySelector('.twofa-code-digit[data-index="0"]').focus();
+                }
+            });
+
+            // Back to login from 2FA
+            document.getElementById('backToLoginFromTwofa')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                hideTwoFactorStep();
+            });
+        });
+
+        async function verifyTwoFactorCode() {
+            const digits = document.querySelectorAll('.twofa-code-digit');
+            const code = Array.from(digits).map(d => d.value).join('');
+            if (code.length !== 6) {
+                document.getElementById('twofaError').textContent = 'Please enter all 6 digits';
+                document.getElementById('twofaError').style.display = 'block';
+                return;
+            }
+            await submitWithTwoFactor(code);
+        }
+
+        async function verifyBackupCode() {
+            const code = document.getElementById('backupCodeInput').value.trim();
+            if (!code) {
+                document.getElementById('twofaError').textContent = 'Please enter your backup code';
+                document.getElementById('twofaError').style.display = 'block';
+                return;
+            }
+            await submitWithTwoFactor(code);
+        }
+
+        async function submitWithTwoFactor(code) {
+            const btn = document.getElementById('verifyTwofaBtn');
+            const twofaError = document.getElementById('twofaError');
+            twofaError.style.display = 'none';
+
+            const currentLang = window.i18nManager?.currentLang || localStorage.getItem('billionairs_lang') || 'en';
+
+            try {
+                if (btn) { btn.disabled = true; btn.textContent = 'VERIFYING...'; }
+
+                const result = await window.authManager.login(pendingEmail, pendingPassword, code);
+
+                if (result.requiresTwoFactor && !result.success) {
+                    // Invalid code
+                    twofaError.textContent = result.message || 'Invalid verification code';
+                    twofaError.style.display = 'block';
+                    document.querySelectorAll('.twofa-code-digit').forEach(d => { d.value = ''; d.classList.remove('filled'); });
+                    document.querySelector('.twofa-code-digit[data-index="0"]')?.focus();
+                    if (btn) { btn.disabled = false; btn.textContent = 'VERIFY'; }
+                    return;
+                }
+
+                if (result.success) {
+                    localStorage.setItem('userEmail', pendingEmail);
+                    if (btn) { btn.textContent = '✓ VERIFIED'; btn.style.background = 'linear-gradient(135deg, #4CAF50 0%, #388E3C 100%)'; }
+                    setTimeout(() => window.location.href = '/dashboard.html?lang=' + currentLang, 800);
+                }
+            } catch (error) {
+                twofaError.textContent = error.message || 'Verification failed';
+                twofaError.style.display = 'block';
+                if (btn) { btn.disabled = false; btn.textContent = 'VERIFY'; }
+            }
+        }
+        // ===== END TWO-FACTOR UI =====
 
         // Handle Login
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
@@ -499,8 +696,18 @@
                 submitBtn.disabled = true;
                 loginBox.appendChild(overlay);
 
-                await window.authManager.login(email, password);
+                const result = await window.authManager.login(email, password);
                 
+                // Check if 2FA is required
+                if (result.requiresTwoFactor) {
+                    if (overlay.parentNode) overlay.remove();
+                    submitBtn.disabled = false;
+                    pendingEmail = email;
+                    pendingPassword = password;
+                    showTwoFactorStep();
+                    return;
+                }
+
                 // Store email for Easter Egg system
                 localStorage.setItem('userEmail', email);
                 

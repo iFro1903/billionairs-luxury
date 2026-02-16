@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2FA Preview — BILLIONAIRS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: #0a0a0f;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* ===== PREVIEW HEADER ===== */
+        .preview-header {
+            text-align: center;
+            padding: 2rem;
+            border-bottom: 1px solid rgba(232,180,160,0.15);
+            background: rgba(232, 180, 160, 0.02);
+        }
+        .preview-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #E8B4A0;
+            margin-bottom: 0.5rem;
+        }
+        .preview-header p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        /* ===== SECTION LAYOUT ===== */
+        .preview-sections {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(232,180,160,0.12);
+            border: 1px solid rgba(232,180,160,0.25);
+            color: #E8B4A0;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-desc {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        /* ===== DEMO CONTAINER ===== */
+        .demo-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* ===== LOGIN BOX ===== */
+        .login-box {
+            background: linear-gradient(135deg, rgba(232, 180, 160, 0.08) 0%, rgba(26, 26, 26, 0.9) 100%);
+            border: 2px solid rgba(232, 180, 160, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 420px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .login-logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #E8B4A0;
+            letter-spacing: 0.2em;
+        }
+
+        .login-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(232, 180, 160, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        .form-input:focus {
+            border-color: #E8B4A0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .form-input:disabled {
+            opacity: 0.4;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1.1rem;
+            background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%);
+            color: rgba(0,0,0,0.9);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(232, 180, 160, 0.4);
+        }
+
+        /* ===== 2FA CODE INPUT ===== */
+        .twofa-section {
+            margin-top: 1rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(232, 180, 160, 0.1);
+        }
+
+        .twofa-icon {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .twofa-icon svg {
+            width: 48px;
+            height: 48px;
+        }
+
+        .twofa-label {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: #E8B4A0;
+            margin-bottom: 0.3rem;
+        }
+
+        .twofa-hint {
+            text-align: center;
+            color: rgba(255,255,255,0.45);
+            font-size: 0.78rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .code-inputs {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .code-digit {
+            width: 48px;
+            height: 56px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(232, 180, 160, 0.2);
+            border-radius: 10px;
+            color: #E8B4A0;
+            outline: none;
+            transition: all 0.3s ease;
+            caret-color: #E8B4A0;
+        }
+        .code-digit:focus {
+            border-color: #E8B4A0;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 15px rgba(232, 180, 160, 0.15);
+        }
+        .code-digit.filled {
+            border-color: rgba(232, 180, 160, 0.5);
+            background: rgba(232, 180, 160, 0.05);
+        }
+
+        .backup-link {
+            text-align: center;
+            margin-top: 0.8rem;
+        }
+        .backup-link a {
+            color: rgba(232, 180, 160, 0.6);
+            font-size: 0.75rem;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(232, 180, 160, 0.2);
+            transition: all 0.3s;
+        }
+        .backup-link a:hover {
+            color: #E8B4A0;
+        }
+
+        /* ===== STEP INDICATOR ===== */
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .step-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(232, 180, 160, 0.2);
+            transition: all 0.3s;
+        }
+        .step-dot.active {
+            background: #E8B4A0;
+            box-shadow: 0 0 8px rgba(232, 180, 160, 0.4);
+        }
+        .step-dot.done {
+            background: rgba(76, 175, 80, 0.6);
+        }
+        .step-line {
+            width: 30px;
+            height: 2px;
+            background: rgba(232, 180, 160, 0.15);
+        }
+        .step-line.done {
+            background: rgba(76, 175, 80, 0.4);
+        }
+
+        /* ===== DASHBOARD SECURITY CARD ===== */
+        .security-card {
+            background: linear-gradient(135deg, rgba(232, 180, 160, 0.08) 0%, rgba(26, 26, 26, 0.8) 100%);
+            border: 2px solid rgba(232, 180, 160, 0.2);
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 550px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .security-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #E8B4A0;
+            margin-bottom: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .security-subtitle {
+            color: rgba(255,255,255,0.45);
+            font-size: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        /* 2FA Status Toggle */
+        .twofa-status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(232, 180, 160, 0.1);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .twofa-status-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .twofa-status-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        .twofa-status-icon.off {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .twofa-status-icon.on {
+            background: rgba(76, 175, 80, 0.15);
+        }
+
+        .twofa-status-text h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.15rem;
+        }
+        .twofa-status-text span {
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.4);
+        }
+        .twofa-status-text span.enabled {
+            color: rgba(76, 175, 80, 0.8);
+        }
+
+        .toggle-btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        .toggle-btn.enable {
+            background: linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%);
+            color: rgba(0,0,0,0.85);
+        }
+        .toggle-btn.enable:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(232, 180, 160, 0.3);
+        }
+        .toggle-btn.disable {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255,255,255,0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* QR Code Setup */
+        .setup-flow {
+            display: none;
+            animation: fadeSlideIn 0.5s ease;
+        }
+        .setup-flow.visible {
+            display: block;
+        }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .setup-steps {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .setup-step {
+            flex: 1;
+            text-align: center;
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s;
+        }
+        .setup-step.active {
+            color: #E8B4A0;
+            background: rgba(232, 180, 160, 0.08);
+            border-color: rgba(232, 180, 160, 0.25);
+        }
+        .setup-step.done {
+            color: rgba(76, 175, 80, 0.8);
+            background: rgba(76, 175, 80, 0.05);
+            border-color: rgba(76, 175, 80, 0.2);
+        }
+
+        .qr-container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(232, 180, 160, 0.1);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .qr-box {
+            display: inline-flex;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .qr-placeholder {
+            width: 160px;
+            height: 160px;
+            background: #fff;
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            gap: 2px;
+        }
+        .qr-placeholder .qr-cell {
+            background: #000;
+            border-radius: 1px;
+        }
+        .qr-placeholder .qr-cell.white {
+            background: #fff;
+        }
+
+        .qr-instruction {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.6;
+        }
+        .qr-instruction strong {
+            color: #E8B4A0;
+        }
+
+        .manual-key {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px dashed rgba(232, 180, 160, 0.2);
+            border-radius: 8px;
+        }
+        .manual-key-label {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.35);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.3rem;
+        }
+        .manual-key-value {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #E8B4A0;
+            letter-spacing: 0.15em;
+            word-break: break-all;
+            user-select: all;
+        }
+
+        /* Backup Codes */
+        .backup-codes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .backup-code {
+            padding: 0.6rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(232, 180, 160, 0.1);
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            letter-spacing: 0.1em;
+        }
+
+        .backup-warning {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            padding: 1rem;
+            background: rgba(255, 152, 0, 0.08);
+            border: 1px solid rgba(255, 152, 0, 0.2);
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .backup-warning-icon {
+            color: #FFA726;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .backup-warning-text {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+        }
+
+        /* Success state */
+        .success-check {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(76, 175, 80, 0.12);
+            border: 2px solid rgba(76, 175, 80, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        /* ===== INTERACTIVE DEMO CONTROLS ===== */
+        .demo-controls {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        .demo-btn {
+            padding: 0.5rem 1.2rem;
+            border: 1px solid rgba(232, 180, 160, 0.3);
+            background: rgba(232, 180, 160, 0.08);
+            color: #E8B4A0;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .demo-btn:hover {
+            background: rgba(232, 180, 160, 0.15);
+            transform: translateY(-1px);
+        }
+        .demo-btn.active {
+            background: rgba(232, 180, 160, 0.2);
+            border-color: #E8B4A0;
+        }
+
+        .arrow-label {
+            text-align: center;
+            color: rgba(232, 180, 160, 0.5);
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .demo-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .login-box, .security-card {
+                max-width: 100%;
+            }
+            .code-digit {
+                width: 42px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Divider */
+        .section-divider {
+            border: none;
+            border-top: 1px solid rgba(232, 180, 160, 0.1);
+            margin: 1rem 0 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="preview-header">
+        <h1>🔐 Two-Factor Authentication</h1>
+        <p>Vorschau — So wird die 2FA für BILLIONAIRS-Mitglieder aussehen</p>
+    </div>
+
+    <div class="preview-sections">
+
+        <!-- ============================== -->
+        <!-- SECTION 1: LOGIN MIT 2FA       -->
+        <!-- ============================== -->
+        <div>
+            <span class="section-label">🔑 Schritt 1</span>
+            <h2 class="section-title">Login mit Zwei-Faktor-Authentifizierung</h2>
+            <p class="section-desc">
+                Nach der Eingabe von E-Mail und Passwort erscheint ein zweiter Schritt: 
+                Der 6-stellige Code aus der Authenticator-App muss eingegeben werden.
+            </p>
+
+            <div class="demo-container">
+                <!-- Login Step 1: Email & Password -->
+                <div class="login-box" id="loginStep1">
+                    <div class="login-logo">
+                        <span class="login-logo-text">BILLIONAIRS</span>
+                    </div>
+                    <h2 class="login-title">Access Portal</h2>
+                    <p class="login-subtitle">Enter the exclusive realm</p>
+
+                    <div class="step-indicator">
+                        <div class="step-dot active" id="dot1"></div>
+                        <div class="step-line" id="line1"></div>
+                        <div class="step-dot" id="dot2"></div>
+                    </div>
+
+                    <div id="passwordStep">
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" value="member@example.com" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-input" value="••••••••••" disabled>
+                        </div>
+                        <button class="submit-button" onclick="showTwoFAStep()">ENTER</button>
+                    </div>
+
+                    <div id="twofaStep" style="display: none;">
+                        <div class="twofa-section" style="border-top: none; margin-top: 0; padding-top: 0;">
+                            <div class="twofa-icon">
+                                <svg viewBox="0 0 48 48" fill="none">
+                                    <rect x="10" y="6" width="28" height="36" rx="4" stroke="#E8B4A0" stroke-width="2" fill="rgba(232,180,160,0.05)"/>
+                                    <circle cx="24" cy="38" r="2" fill="rgba(232,180,160,0.4)"/>
+                                    <rect x="16" y="18" width="16" height="10" rx="2" stroke="rgba(232,180,160,0.4)" stroke-width="1.5" fill="none"/>
+                                    <text x="24" y="26" text-anchor="middle" fill="#E8B4A0" font-size="7" font-family="Montserrat" font-weight="600">2FA</text>
+                                </svg>
+                            </div>
+                            <div class="twofa-label">Authentication Code</div>
+                            <div class="twofa-hint">Gib den 6-stelligen Code aus deiner<br>Authenticator-App ein</div>
+                            
+                            <div class="code-inputs">
+                                <input type="text" maxlength="1" class="code-digit" id="c1" oninput="handleCodeInput(this, 'c2')" value="">
+                                <input type="text" maxlength="1" class="code-digit" id="c2" oninput="handleCodeInput(this, 'c3')" value="">
+                                <input type="text" maxlength="1" class="code-digit" id="c3" oninput="handleCodeInput(this, 'c4')" value="">
+                                <input type="text" maxlength="1" class="code-digit" id="c4" oninput="handleCodeInput(this, 'c5')" value="">
+                                <input type="text" maxlength="1" class="code-digit" id="c5" oninput="handleCodeInput(this, 'c6')" value="">
+                                <input type="text" maxlength="1" class="code-digit" id="c6" oninput="handleCodeComplete()" value="">
+                            </div>
+
+                            <button class="submit-button" onclick="simulateVerify()" id="verifyBtn">VERIFY</button>
+
+                            <div class="backup-link">
+                                <a href="#" onclick="return false;">Backup-Code verwenden</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-controls">
+                <button class="demo-btn active" onclick="resetLoginDemo()">↺ Zurücksetzen</button>
+                <button class="demo-btn" onclick="showTwoFAStep()">→ 2FA Schritt zeigen</button>
+                <button class="demo-btn" onclick="simulateAutoFill()">✦ Code simulieren</button>
+            </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- ============================== -->
+        <!-- SECTION 2: DASHBOARD SECURITY  -->
+        <!-- ============================== -->
+        <div>
+            <span class="section-label">⚙️ Schritt 2</span>
+            <h2 class="section-title">2FA-Einrichtung im Dashboard</h2>
+            <p class="section-desc">
+                Mitglieder können die Zwei-Faktor-Authentifizierung in ihren Sicherheitseinstellungen 
+                im Dashboard aktivieren und verwalten. QR-Code scannen → Code bestätigen → Backup-Codes sichern.
+            </p>
+
+            <div class="demo-container">
+                <div class="security-card">
+                    <div class="security-title">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="rgba(232,180,160,0.1)" stroke="#E8B4A0" stroke-width="1.5"/>
+                            <path d="M9.5 12l2 2 4-4" stroke="#E8B4A0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Security Settings
+                    </div>
+                    <p class="security-subtitle">Schütze dein Konto mit zusätzlicher Sicherheit</p>
+
+                    <!-- Status Row -->
+                    <div class="twofa-status-row" id="statusRow">
+                        <div class="twofa-status-info">
+                            <div class="twofa-status-icon off" id="statusIcon">🔓</div>
+                            <div class="twofa-status-text">
+                                <h4>Two-Factor Authentication</h4>
+                                <span id="statusText">Nicht aktiviert</span>
+                            </div>
+                        </div>
+                        <button class="toggle-btn enable" id="toggleBtn" onclick="toggleSetupFlow()">Aktivieren</button>
+                    </div>
+
+                    <!-- Setup Flow -->
+                    <div class="setup-flow" id="setupFlow">
+                        <!-- Steps -->
+                        <div class="setup-steps">
+                            <div class="setup-step active" id="setupStep1">1. QR scannen</div>
+                            <div class="setup-step" id="setupStep2">2. Bestätigen</div>
+                            <div class="setup-step" id="setupStep3">3. Backup-Codes</div>
+                        </div>
+
+                        <!-- Step 1: QR Code -->
+                        <div id="setupPage1">
+                            <div class="qr-container">
+                                <div class="qr-box">
+                                    <!-- Simulated QR Code Pattern -->
+                                    <svg width="160" height="160" viewBox="0 0 160 160">
+                                        <!-- QR finder patterns (corners) -->
+                                        <rect x="10" y="10" width="40" height="40" rx="4" fill="#000"/>
+                                        <rect x="14" y="14" width="32" height="32" rx="2" fill="#fff"/>
+                                        <rect x="20" y="20" width="20" height="20" rx="2" fill="#000"/>
+                                        
+                                        <rect x="110" y="10" width="40" height="40" rx="4" fill="#000"/>
+                                        <rect x="114" y="14" width="32" height="32" rx="2" fill="#fff"/>
+                                        <rect x="120" y="20" width="20" height="20" rx="2" fill="#000"/>
+                                        
+                                        <rect x="10" y="110" width="40" height="40" rx="4" fill="#000"/>
+                                        <rect x="14" y="114" width="32" height="32" rx="2" fill="#fff"/>
+                                        <rect x="20" y="120" width="20" height="20" rx="2" fill="#000"/>
+                                        
+                                        <!-- Data modules (simulated) -->
+                                        <rect x="60" y="12" width="8" height="8" fill="#000"/>
+                                        <rect x="76" y="12" width="8" height="8" fill="#000"/>
+                                        <rect x="92" y="12" width="8" height="8" fill="#000"/>
+                                        <rect x="60" y="28" width="8" height="8" fill="#000"/>
+                                        <rect x="68" y="20" width="8" height="8" fill="#000"/>
+                                        <rect x="84" y="28" width="8" height="8" fill="#000"/>
+                                        <rect x="76" y="36" width="8" height="8" fill="#000"/>
+                                        
+                                        <rect x="12" y="60" width="8" height="8" fill="#000"/>
+                                        <rect x="28" y="60" width="8" height="8" fill="#000"/>
+                                        <rect x="28" y="68" width="8" height="8" fill="#000"/>
+                                        <rect x="36" y="76" width="8" height="8" fill="#000"/>
+                                        <rect x="20" y="76" width="8" height="8" fill="#000"/>
+                                        <rect x="12" y="84" width="8" height="8" fill="#000"/>
+                                        <rect x="36" y="84" width="8" height="8" fill="#000"/>
+                                        <rect x="44" y="68" width="8" height="8" fill="#000"/>
+                                        
+                                        <rect x="60" y="60" width="8" height="8" fill="#000"/>
+                                        <rect x="76" y="60" width="8" height="8" fill="#000"/>
+                                        <rect x="68" y="68" width="8" height="8" fill="#000"/>
+                                        <rect x="84" y="68" width="8" height="8" fill="#000"/>
+                                        <rect x="60" y="76" width="8" height="8" fill="#000"/>
+                                        <rect x="76" y="76" width="8" height="8" fill="#000"/>
+                                        <rect x="92" y="76" width="8" height="8" fill="#000"/>
+                                        <rect x="68" y="84" width="8" height="8" fill="#000"/>
+                                        <rect x="84" y="84" width="8" height="8" fill="#000"/>
+                                        
+                                        <rect x="112" y="60" width="8" height="8" fill="#000"/>
+                                        <rect x="128" y="60" width="8" height="8" fill="#000"/>
+                                        <rect x="120" y="68" width="8" height="8" fill="#000"/>
+                                        <rect x="140" y="68" width="8" height="8" fill="#000"/>
+                                        <rect x="112" y="76" width="8" height="8" fill="#000"/>
+                                        <rect x="136" y="76" width="8" height="8" fill="#000"/>
+                                        <rect x="128" y="84" width="8" height="8" fill="#000"/>
+                                        <rect x="144" y="84" width="8" height="8" fill="#000"/>
+                                        
+                                        <rect x="60" y="112" width="8" height="8" fill="#000"/>
+                                        <rect x="76" y="112" width="8" height="8" fill="#000"/>
+                                        <rect x="92" y="112" width="8" height="8" fill="#000"/>
+                                        <rect x="68" y="120" width="8" height="8" fill="#000"/>
+                                        <rect x="84" y="120" width="8" height="8" fill="#000"/>
+                                        <rect x="60" y="128" width="8" height="8" fill="#000"/>
+                                        <rect x="76" y="136" width="8" height="8" fill="#000"/>
+                                        <rect x="92" y="128" width="8" height="8" fill="#000"/>
+                                        
+                                        <rect x="112" y="112" width="8" height="8" fill="#000"/>
+                                        <rect x="128" y="112" width="8" height="8" fill="#000"/>
+                                        <rect x="120" y="120" width="8" height="8" fill="#000"/>
+                                        <rect x="140" y="120" width="8" height="8" fill="#000"/>
+                                        <rect x="112" y="136" width="8" height="8" fill="#000"/>
+                                        <rect x="136" y="128" width="8" height="8" fill="#000"/>
+                                        <rect x="144" y="140" width="8" height="8" fill="#000"/>
+                                    </svg>
+                                </div>
+
+                                <p class="qr-instruction">
+                                    Scanne diesen QR-Code mit deiner<br>
+                                    <strong>Google Authenticator</strong> oder <strong>Microsoft Authenticator</strong> App
+                                </p>
+
+                                <div class="manual-key">
+                                    <div class="manual-key-label">Oder manuell eingeben:</div>
+                                    <div class="manual-key-value">JBSW Y3DP EHPK 3PXP 4GQT VNRH S5CZ LEMU</div>
+                                </div>
+                            </div>
+
+                            <button class="submit-button" onclick="showSetupStep2()">WEITER →</button>
+                        </div>
+
+                        <!-- Step 2: Verify Code -->
+                        <div id="setupPage2" style="display: none;">
+                            <div class="qr-container">
+                                <div class="twofa-icon">
+                                    <svg viewBox="0 0 48 48" fill="none">
+                                        <rect x="10" y="6" width="28" height="36" rx="4" stroke="#E8B4A0" stroke-width="2" fill="rgba(232,180,160,0.05)"/>
+                                        <circle cx="24" cy="38" r="2" fill="rgba(232,180,160,0.4)"/>
+                                        <rect x="16" y="18" width="16" height="10" rx="2" stroke="rgba(232,180,160,0.4)" stroke-width="1.5" fill="none"/>
+                                        <text x="24" y="26" text-anchor="middle" fill="#E8B4A0" font-size="7" font-family="Montserrat" font-weight="600">2FA</text>
+                                    </svg>
+                                </div>
+                                <p class="qr-instruction" style="margin-bottom: 1rem;">
+                                    Gib den Code aus deiner Authenticator-App ein,<br>um die Einrichtung zu bestätigen
+                                </p>
+                                <div class="code-inputs">
+                                    <input type="text" maxlength="1" class="code-digit" id="s1" oninput="handleCodeInput(this, 's2')">
+                                    <input type="text" maxlength="1" class="code-digit" id="s2" oninput="handleCodeInput(this, 's3')">
+                                    <input type="text" maxlength="1" class="code-digit" id="s3" oninput="handleCodeInput(this, 's4')">
+                                    <input type="text" maxlength="1" class="code-digit" id="s4" oninput="handleCodeInput(this, 's5')">
+                                    <input type="text" maxlength="1" class="code-digit" id="s5" oninput="handleCodeInput(this, 's6')">
+                                    <input type="text" maxlength="1" class="code-digit" id="s6" oninput="handleSetupComplete()">
+                                </div>
+                            </div>
+                            <button class="submit-button" onclick="showSetupStep3()">BESTÄTIGEN</button>
+                        </div>
+
+                        <!-- Step 3: Backup Codes -->
+                        <div id="setupPage3" style="display: none;">
+                            <div class="qr-container" style="text-align: left;">
+                                <div style="text-align: center; margin-bottom: 1rem;">
+                                    <div class="success-check">
+                                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none">
+                                            <path d="M9 12l2 2 4-4" stroke="#4CAF50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div class="twofa-label" style="color: #4CAF50;">2FA Erfolgreich Aktiviert!</div>
+                                </div>
+
+                                <div class="backup-warning">
+                                    <span class="backup-warning-icon">⚠️</span>
+                                    <span class="backup-warning-text">
+                                        <strong>Speichere diese Backup-Codes sicher ab!</strong><br>
+                                        Jeder Code kann nur einmal verwendet werden, falls du den Zugriff auf deine Authenticator-App verlierst. 
+                                        Diese Codes werden <strong>nicht erneut angezeigt</strong>.
+                                    </span>
+                                </div>
+
+                                <div class="backup-codes-grid">
+                                    <div class="backup-code">A7K2-M9P4</div>
+                                    <div class="backup-code">B3X8-N5Q1</div>
+                                    <div class="backup-code">C6F2-R8T7</div>
+                                    <div class="backup-code">D1H5-S3V9</div>
+                                    <div class="backup-code">E4J7-U6W2</div>
+                                    <div class="backup-code">F8L3-X1Y5</div>
+                                    <div class="backup-code">G2M6-Z4A8</div>
+                                    <div class="backup-code">H5N9-B7C3</div>
+                                    <div class="backup-code">J1P4-D6E2</div>
+                                    <div class="backup-code">K3Q7-F9G5</div>
+                                </div>
+                            </div>
+                            <button class="submit-button" onclick="finishSetup()">CODES GESPEICHERT ✓</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-controls">
+                <button class="demo-btn" onclick="resetDashboardDemo()">↺ Zurücksetzen</button>
+                <button class="demo-btn" onclick="toggleSetupFlow()">→ Setup starten</button>
+                <button class="demo-btn" onclick="showSetupStep2()">→ Code-Eingabe</button>
+                <button class="demo-btn" onclick="showSetupStep3()">→ Backup-Codes</button>
+                <button class="demo-btn" onclick="finishSetup()">✓ Fertig</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ===== LOGIN DEMO =====
+        function showTwoFAStep() {
+            document.getElementById('passwordStep').style.display = 'none';
+            document.getElementById('twofaStep').style.display = 'block';
+            document.getElementById('dot1').classList.remove('active');
+            document.getElementById('dot1').classList.add('done');
+            document.getElementById('line1').classList.add('done');
+            document.getElementById('dot2').classList.add('active');
+            document.getElementById('c1').focus();
+        }
+
+        function resetLoginDemo() {
+            document.getElementById('passwordStep').style.display = 'block';
+            document.getElementById('twofaStep').style.display = 'none';
+            document.getElementById('dot1').classList.add('active');
+            document.getElementById('dot1').classList.remove('done');
+            document.getElementById('line1').classList.remove('done');
+            document.getElementById('dot2').classList.remove('active');
+            document.querySelectorAll('#twofaStep .code-digit').forEach(d => { d.value = ''; d.classList.remove('filled'); });
+            document.getElementById('verifyBtn').textContent = 'VERIFY';
+            document.getElementById('verifyBtn').style.background = '';
+        }
+
+        function handleCodeInput(current, nextId) {
+            if (current.value.length === 1) {
+                current.classList.add('filled');
+                const next = document.getElementById(nextId);
+                if (next) next.focus();
+            } else {
+                current.classList.remove('filled');
+            }
+        }
+
+        function handleCodeComplete() {
+            document.getElementById('c6').classList.add('filled');
+        }
+
+        function simulateAutoFill() {
+            showTwoFAStep();
+            const digits = '847291';
+            const ids = ['c1','c2','c3','c4','c5','c6'];
+            ids.forEach((id, i) => {
+                setTimeout(() => {
+                    const el = document.getElementById(id);
+                    el.value = digits[i];
+                    el.classList.add('filled');
+                    if (i === 5) {
+                        setTimeout(simulateVerify, 400);
+                    }
+                }, i * 150);
+            });
+        }
+
+        function simulateVerify() {
+            const btn = document.getElementById('verifyBtn');
+            btn.textContent = 'VERIFYING...';
+            btn.style.opacity = '0.7';
+            setTimeout(() => {
+                btn.textContent = '✓ VERIFIED — WELCOME';
+                btn.style.background = 'linear-gradient(135deg, #4CAF50 0%, #388E3C 100%)';
+                btn.style.opacity = '1';
+            }, 1200);
+        }
+
+        // ===== DASHBOARD DEMO =====
+        function toggleSetupFlow() {
+            const flow = document.getElementById('setupFlow');
+            flow.classList.toggle('visible');
+            if (flow.classList.contains('visible')) {
+                showSetupPage(1);
+            }
+        }
+
+        function showSetupPage(num) {
+            document.getElementById('setupPage1').style.display = num === 1 ? 'block' : 'none';
+            document.getElementById('setupPage2').style.display = num === 2 ? 'block' : 'none';
+            document.getElementById('setupPage3').style.display = num === 3 ? 'block' : 'none';
+
+            const steps = ['setupStep1', 'setupStep2', 'setupStep3'];
+            steps.forEach((s, i) => {
+                const el = document.getElementById(s);
+                el.classList.remove('active', 'done');
+                if (i < num - 1) el.classList.add('done');
+                else if (i === num - 1) el.classList.add('active');
+            });
+        }
+
+        function showSetupStep2() {
+            const flow = document.getElementById('setupFlow');
+            if (!flow.classList.contains('visible')) flow.classList.add('visible');
+            showSetupPage(2);
+            setTimeout(() => document.getElementById('s1').focus(), 100);
+        }
+
+        function handleSetupComplete() {
+            document.getElementById('s6').classList.add('filled');
+        }
+
+        function showSetupStep3() {
+            const flow = document.getElementById('setupFlow');
+            if (!flow.classList.contains('visible')) flow.classList.add('visible');
+            showSetupPage(3);
+        }
+
+        function finishSetup() {
+            document.getElementById('setupFlow').classList.remove('visible');
+            document.getElementById('statusIcon').textContent = '🔒';
+            document.getElementById('statusIcon').classList.remove('off');
+            document.getElementById('statusIcon').classList.add('on');
+            document.getElementById('statusText').textContent = 'Aktiviert';
+            document.getElementById('statusText').classList.add('enabled');
+            document.getElementById('toggleBtn').textContent = 'Deaktivieren';
+            document.getElementById('toggleBtn').classList.remove('enable');
+            document.getElementById('toggleBtn').classList.add('disable');
+        }
+
+        function resetDashboardDemo() {
+            document.getElementById('setupFlow').classList.remove('visible');
+            document.getElementById('statusIcon').textContent = '🔓';
+            document.getElementById('statusIcon').classList.add('off');
+            document.getElementById('statusIcon').classList.remove('on');
+            document.getElementById('statusText').textContent = 'Nicht aktiviert';
+            document.getElementById('statusText').classList.remove('enabled');
+            document.getElementById('toggleBtn').textContent = 'Aktivieren';
+            document.getElementById('toggleBtn').classList.add('enable');
+            document.getElementById('toggleBtn').classList.remove('disable');
+            showSetupPage(1);
+            document.querySelectorAll('#setupPage2 .code-digit').forEach(d => { d.value = ''; d.classList.remove('filled'); });
+        }
+    </script>
+
+</body>
+</html>

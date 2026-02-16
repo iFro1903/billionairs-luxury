@@ -9,6 +9,7 @@ import { getPool } from '../lib/db.js';
 import { getCorsOrigin } from '../lib/cors.js';
 import { generateMemberId } from '../lib/helpers.js';
 import { logRequest, logSuccess, logWarn, logError, logTimer } from '../lib/logger.js';
+import { verifyTOTP } from '../lib/totp.js';
 
 // Check if hash needs upgrade from SHA-256 to PBKDF2
 function needsHashUpgrade(storedHash) {
@@ -58,7 +59,7 @@ export default async function handler(req, res) {
         return;
     }
 
-    const { action, email, password, token: bodyToken, firstName, lastName, language } = req.body;
+    const { action, email, password, token: bodyToken, firstName, lastName, language, twoFactorCode } = req.body;
     const timer = logTimer('auth_handler');
     logRequest('auth', req.method, { action, email: email ? email.replace(/(.{2}).*@/, '$1***@') : undefined });
     
@@ -215,6 +216,68 @@ export default async function handler(req, res) {
                 // Fallback if preferred_language column doesn't exist yet
                 await pool.query('UPDATE users SET last_seen = CURRENT_TIMESTAMP WHERE id = $1', [user.id]);
             }
+
+            // ===== TWO-FACTOR AUTHENTICATION CHECK =====
+            try {
+                const tfaResult = await pool.query(
+                    'SELECT secret, backup_codes, enabled FROM two_factor_auth WHERE user_email = $1 AND enabled = true LIMIT 1',
+                    [email.toLowerCase()]
+                );
+
+                if (tfaResult.rows.length > 0) {
+                    const tfaRecord = tfaResult.rows[0];
+                    
+                    // 2FA is enabled — code required
+                    if (!twoFactorCode) {
+                        // No code provided → tell client to show 2FA input
+                        return res.status(200).json({
+                            success: false,
+                            requiresTwoFactor: true,
+                            message: 'Two-factor authentication required'
+                        });
+                    }
+
+                    // Verify TOTP code
+                    const isValidTOTP = verifyTOTP(tfaRecord.secret, twoFactorCode);
+                    
+                    // Check backup codes
+                    let isValidBackup = false;
+                    let backupCodesList = [];
+                    try {
+                        backupCodesList = JSON.parse(tfaRecord.backup_codes || '[]');
+                        isValidBackup = backupCodesList.includes(twoFactorCode);
+                    } catch (e) {}
+
+                    if (!isValidTOTP && !isValidBackup) {
+                        return res.status(401).json({
+                            success: false,
+                            message: 'Invalid verification code',
+                            requiresTwoFactor: true
+                        });
+                    }
+
+                    // If backup code used, remove it
+                    if (isValidBackup) {
+                        const updatedCodes = backupCodesList.filter(c => c !== twoFactorCode);
+                        await pool.query(
+                            'UPDATE two_factor_auth SET backup_codes = $1 WHERE user_email = $2',
+                            [JSON.stringify(updatedCodes), email.toLowerCase()]
+                        );
+                    }
+
+                    // Update last_used
+                    await pool.query(
+                        'UPDATE two_factor_auth SET last_used = NOW() WHERE user_email = $1',
+                        [email.toLowerCase()]
+                    );
+                }
+            } catch (tfaErr) {
+                // If two_factor_auth table doesn't exist yet, skip 2FA check
+                if (!tfaErr.message?.includes('does not exist')) {
+                    console.error('2FA check error:', tfaErr);
+                }
+            }
+            // ===== END TWO-FACTOR AUTHENTICATION CHECK =====
 
             // Create session
             const sessionToken = generateToken();

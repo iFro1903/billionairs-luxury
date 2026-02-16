@@ -497,6 +497,136 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Security Settings Section -->
+            <div id="securitySection" class="security-section" style="margin-top: 2rem;">
+                <div class="member-card" style="border-color: rgba(232, 180, 160, 0.15);">
+                    <div class="security-header">
+                        <div class="security-title-row">
+                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" style="flex-shrink: 0;">
+                                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="rgba(232,180,160,0.1)" stroke="#E8B4A0" stroke-width="1.5"/>
+                                <path d="M9.5 12l2 2 4-4" stroke="#E8B4A0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <div>
+                                <h3 style="font-family: 'Playfair Display', serif; font-size: 1.15rem; color: #E8B4A0; margin: 0;">Security Settings</h3>
+                                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.4); margin: 0.2rem 0 0;">Protect your account with additional security</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2FA Status -->
+                    <div class="twofa-status-row" id="twofaStatusRow">
+                        <div class="twofa-status-info">
+                            <div class="twofa-status-icon" id="twofaDashIcon">🔓</div>
+                            <div>
+                                <h4 style="font-size: 0.85rem; font-weight: 600; color: #fff; margin: 0 0 0.15rem;">Two-Factor Authentication</h4>
+                                <span style="font-size: 0.72rem; color: rgba(255,255,255,0.4);" id="twofaDashStatus">Loading...</span>
+                            </div>
+                        </div>
+                        <button class="twofa-toggle-btn" id="twofaToggleBtn" onclick="toggleTwoFASetup()" style="display: none;">Enable</button>
+                    </div>
+
+                    <!-- 2FA Setup Flow (hidden by default) -->
+                    <div id="twofaSetupFlow" style="display: none;">
+                        <!-- Setup Steps Indicator -->
+                        <div class="twofa-setup-steps">
+                            <div class="twofa-setup-step active" id="dashStep1">1. Scan QR</div>
+                            <div class="twofa-setup-step" id="dashStep2">2. Verify</div>
+                            <div class="twofa-setup-step" id="dashStep3">3. Backup Codes</div>
+                        </div>
+
+                        <!-- Step 1: QR Code -->
+                        <div id="twofaPage1">
+                            <div class="twofa-qr-container">
+                                <div id="qrCodeDisplay" style="text-align: center; margin-bottom: 1rem;">
+                                    <div style="color: rgba(255,255,255,0.5); padding: 2rem;">Generating QR Code...</div>
+                                </div>
+                                <p style="text-align: center; font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.6; margin-bottom: 1rem;">
+                                    Scan this QR code with your<br>
+                                    <strong style="color: #E8B4A0;">Microsoft Authenticator</strong> or any TOTP-compatible app
+                                </p>
+                                <div class="twofa-manual-key" id="manualKeySection" style="display: none;">
+                                    <div style="font-size: 0.65rem; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem;">Manual key:</div>
+                                    <div id="manualKeyValue" style="font-family: 'Courier New', monospace; font-size: 0.85rem; color: #E8B4A0; letter-spacing: 0.15em; word-break: break-all; user-select: all;"></div>
+                                </div>
+                            </div>
+                            <button class="submit-button" style="margin-top: 1rem; font-size: 0.85rem;" onclick="showDashSetupStep(2)">NEXT →</button>
+                        </div>
+
+                        <!-- Step 2: Verify Code -->
+                        <div id="twofaPage2" style="display: none;">
+                            <div class="twofa-qr-container" style="text-align: center;">
+                                <svg viewBox="0 0 48 48" width="48" height="48" fill="none" style="margin-bottom: 1rem;">
+                                    <rect x="10" y="6" width="28" height="36" rx="4" stroke="#E8B4A0" stroke-width="2" fill="rgba(232,180,160,0.05)"/>
+                                    <circle cx="24" cy="38" r="2" fill="rgba(232,180,160,0.4)"/>
+                                    <rect x="16" y="18" width="16" height="10" rx="2" stroke="rgba(232,180,160,0.4)" stroke-width="1.5" fill="none"/>
+                                    <text x="24" y="26" text-anchor="middle" fill="#E8B4A0" font-size="7" font-family="Montserrat" font-weight="600">2FA</text>
+                                </svg>
+                                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 1.2rem;">
+                                    Enter the 6-digit code from your Authenticator app<br>to confirm the setup
+                                </p>
+                                <div class="twofa-code-inputs" id="dashCodeInputs">
+                                    <input type="text" inputmode="numeric" maxlength="1" class="twofa-code-digit dash-digit" data-index="0">
+                                    <input type="text" inputmode="numeric" maxlength="1" class="twofa-code-digit dash-digit" data-index="1">
+                                    <input type="text" inputmode="numeric" maxlength="1" class="twofa-code-digit dash-digit" data-index="2">
+                                    <input type="text" inputmode="numeric" maxlength="1" class="twofa-code-digit dash-digit" data-index="3">
+                                    <input type="text" inputmode="numeric" maxlength="1" class="twofa-code-digit dash-digit" data-index="4">
+                                    <input type="text" inputmode="numeric" maxlength="1" class="twofa-code-digit dash-digit" data-index="5">
+                                </div>
+                                <div id="dashTwofaError" style="color: #f44336; font-size: 0.78rem; margin: 0.5rem 0; display: none;"></div>
+                            </div>
+                            <button class="submit-button" style="margin-top: 1rem; font-size: 0.85rem;" id="dashVerifyBtn" onclick="verifyDashTwoFA()">CONFIRM</button>
+                        </div>
+
+                        <!-- Step 3: Backup Codes -->
+                        <div id="twofaPage3" style="display: none;">
+                            <div class="twofa-qr-container">
+                                <div style="text-align: center; margin-bottom: 1rem;">
+                                    <div style="width: 50px; height: 50px; border-radius: 50%; background: rgba(76,175,80,0.12); border: 2px solid rgba(76,175,80,0.4); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;">
+                                        <svg viewBox="0 0 24 24" width="26" height="26" fill="none">
+                                            <path d="M9 12l2 2 4-4" stroke="#4CAF50" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div style="font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #4CAF50;">2FA Successfully Enabled!</div>
+                                </div>
+
+                                <div style="display: flex; align-items: flex-start; gap: 0.6rem; padding: 1rem; background: rgba(255,152,0,0.08); border: 1px solid rgba(255,152,0,0.2); border-radius: 8px; margin: 1rem 0;">
+                                    <span style="font-size: 1.1rem; flex-shrink: 0;">⚠️</span>
+                                    <span style="font-size: 0.75rem; color: rgba(255,255,255,0.6); line-height: 1.5;">
+                                        <strong>Save these backup codes securely!</strong><br>
+                                        Each code can only be used once if you lose access to your authenticator app.
+                                        These codes will <strong>not be shown again</strong>.
+                                    </span>
+                                </div>
+
+                                <div class="twofa-backup-codes-grid" id="backupCodesGrid">
+                                    <!-- Filled dynamically -->
+                                </div>
+                            </div>
+                            <button class="submit-button" style="margin-top: 1rem; font-size: 0.85rem;" onclick="finishTwoFASetup()">CODES SAVED ✓</button>
+                        </div>
+                    </div>
+
+                    <!-- Disable 2FA (shown when enabled) -->
+                    <div id="twofaDisableSection" style="display: none; margin-top: 1rem;">
+                        <div class="twofa-qr-container" style="text-align: center;">
+                            <p style="font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 1rem;">
+                                Enter a code from your authenticator app or a backup code to disable 2FA
+                            </p>
+                            <div class="form-group" style="max-width: 280px; margin: 0 auto;">
+                                <input type="text" id="disableTwofaCode" class="form-input" placeholder="6-digit code or backup code"
+                                       style="background: rgba(0,0,0,0.3) !important; color: white !important; text-align: center; letter-spacing: 0.1em;">
+                            </div>
+                            <div id="disableTwofaError" style="color: #f44336; font-size: 0.78rem; margin: 0.5rem 0; display: none;"></div>
+                            <button class="submit-button" style="margin-top: 1rem; font-size: 0.85rem; background: linear-gradient(135deg, rgba(244,67,54,0.8) 0%, rgba(198,40,40,0.8) 100%);" onclick="disableTwoFA()">DISABLE 2FA</button>
+                            <div style="text-align: center; margin-top: 0.8rem;">
+                                <a href="#" onclick="document.getElementById('twofaDisableSection').style.display='none'; return false;" style="color: rgba(232,180,160,0.5); font-size: 0.72rem; text-decoration: none;">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     </main>
@@ -773,6 +903,9 @@
             // Display user info
             document.getElementById('memberId').textContent = user.memberId;
             document.getElementById('memberEmail').textContent = user.email;
+            
+            // Load 2FA status
+            loadTwoFAStatus();
             
             // Display personalized greeting
             const welcomeSubtitle = document.getElementById('welcomeSubtitle');
@@ -1077,6 +1210,246 @@
                 }, 6000);
             }
         }
+
+        // ===== TWO-FACTOR AUTHENTICATION MANAGEMENT =====
+        let twofaBackupCodes = [];
+
+        async function loadTwoFAStatus() {
+            try {
+                const response = await fetch('/api/user-2fa-setup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ action: 'status' })
+                });
+                const data = await response.json();
+                
+                const icon = document.getElementById('twofaDashIcon');
+                const status = document.getElementById('twofaDashStatus');
+                const btn = document.getElementById('twofaToggleBtn');
+                
+                if (data.enabled) {
+                    icon.textContent = '🔒';
+                    icon.style.background = 'rgba(76, 175, 80, 0.15)';
+                    status.textContent = 'Enabled';
+                    status.style.color = 'rgba(76, 175, 80, 0.8)';
+                    btn.textContent = 'Disable';
+                    btn.style.background = 'rgba(255,255,255,0.08)';
+                    btn.style.color = 'rgba(255,255,255,0.6)';
+                    btn.style.border = '1px solid rgba(255,255,255,0.1)';
+                    btn.onclick = () => {
+                        document.getElementById('twofaDisableSection').style.display = 
+                            document.getElementById('twofaDisableSection').style.display === 'none' ? 'block' : 'none';
+                    };
+                } else {
+                    icon.textContent = '🔓';
+                    icon.style.background = 'rgba(255,255,255,0.05)';
+                    status.textContent = 'Not enabled';
+                    status.style.color = 'rgba(255,255,255,0.4)';
+                    btn.textContent = 'Enable';
+                    btn.style.background = 'linear-gradient(135deg, #E8B4A0 0%, #D4A574 100%)';
+                    btn.style.color = 'rgba(0,0,0,0.85)';
+                    btn.style.border = 'none';
+                    btn.onclick = toggleTwoFASetup;
+                }
+                btn.style.display = 'inline-block';
+            } catch (e) {
+                document.getElementById('twofaDashStatus').textContent = 'Unable to load status';
+            }
+        }
+
+        async function toggleTwoFASetup() {
+            const flow = document.getElementById('twofaSetupFlow');
+            if (flow.style.display === 'block') {
+                flow.style.display = 'none';
+                return;
+            }
+            flow.style.display = 'block';
+            showDashSetupStep(1);
+
+            // Generate QR code
+            try {
+                const response = await fetch('/api/user-2fa-setup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ action: 'generate' })
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    twofaBackupCodes = data.backupCodes;
+                    
+                    // Generate QR Code using a canvas (no external dependency)
+                    const qrDisplay = document.getElementById('qrCodeDisplay');
+                    qrDisplay.innerHTML = `
+                        <div style="display: inline-block; padding: 1rem; background: #fff; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);">
+                            <img id="qrCodeImg" alt="QR Code for Authenticator App" style="width: 180px; height: 180px; image-rendering: pixelated;">
+                        </div>
+                    `;
+                    
+                    // Use QR code API for generating the image
+                    const qrImg = document.getElementById('qrCodeImg');
+                    qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(data.otpauthUrl);
+                    qrImg.onerror = () => {
+                        // Fallback: show manual key only
+                        qrDisplay.innerHTML = '<p style="color: rgba(255,255,255,0.5); padding: 1rem;">QR Code could not be loaded. Please use the manual key below.</p>';
+                    };
+
+                    // Show manual key
+                    const keySection = document.getElementById('manualKeySection');
+                    const keyValue = document.getElementById('manualKeyValue');
+                    keyValue.textContent = data.secret.match(/.{1,4}/g).join(' ');
+                    keySection.style.display = 'block';
+                }
+            } catch (e) {
+                document.getElementById('qrCodeDisplay').innerHTML = '<p style="color: #f44336;">Error generating QR code. Please try again.</p>';
+            }
+        }
+
+        function showDashSetupStep(num) {
+            document.getElementById('twofaPage1').style.display = num === 1 ? 'block' : 'none';
+            document.getElementById('twofaPage2').style.display = num === 2 ? 'block' : 'none';
+            document.getElementById('twofaPage3').style.display = num === 3 ? 'block' : 'none';
+            
+            ['dashStep1','dashStep2','dashStep3'].forEach((id, i) => {
+                const el = document.getElementById(id);
+                el.classList.remove('active', 'done');
+                if (i < num - 1) el.classList.add('done');
+                else if (i === num - 1) el.classList.add('active');
+            });
+
+            if (num === 2) {
+                setTimeout(() => document.querySelector('.dash-digit[data-index="0"]')?.focus(), 100);
+            }
+        }
+
+        async function verifyDashTwoFA() {
+            const digits = document.querySelectorAll('.dash-digit');
+            const code = Array.from(digits).map(d => d.value).join('');
+            const errEl = document.getElementById('dashTwofaError');
+            const btn = document.getElementById('dashVerifyBtn');
+            
+            if (code.length !== 6) {
+                errEl.textContent = 'Please enter all 6 digits';
+                errEl.style.display = 'block';
+                return;
+            }
+
+            try {
+                btn.disabled = true;
+                btn.textContent = 'VERIFYING...';
+                errEl.style.display = 'none';
+                
+                const response = await fetch('/api/user-2fa-setup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ action: 'verify', code })
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Show backup codes
+                    const grid = document.getElementById('backupCodesGrid');
+                    grid.innerHTML = twofaBackupCodes.map(c => 
+                        `<div class="twofa-backup-code">${c}</div>`
+                    ).join('');
+                    showDashSetupStep(3);
+                } else {
+                    errEl.textContent = data.error || 'Invalid code. Try again.';
+                    errEl.style.display = 'block';
+                    digits.forEach(d => { d.value = ''; d.classList.remove('filled'); });
+                    digits[0]?.focus();
+                }
+            } catch (e) {
+                errEl.textContent = 'Verification failed. Please try again.';
+                errEl.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'CONFIRM';
+            }
+        }
+
+        function finishTwoFASetup() {
+            document.getElementById('twofaSetupFlow').style.display = 'none';
+            loadTwoFAStatus();
+            showToast('Two-factor authentication enabled successfully! 🔒', 'success');
+        }
+
+        async function disableTwoFA() {
+            const code = document.getElementById('disableTwofaCode').value.trim();
+            const errEl = document.getElementById('disableTwofaError');
+            
+            if (!code) {
+                errEl.textContent = 'Please enter a code';
+                errEl.style.display = 'block';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/user-2fa-setup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ action: 'disable', code })
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('twofaDisableSection').style.display = 'none';
+                    document.getElementById('disableTwofaCode').value = '';
+                    loadTwoFAStatus();
+                    showToast('Two-factor authentication disabled', 'warning');
+                } else {
+                    errEl.textContent = data.error || 'Invalid code';
+                    errEl.style.display = 'block';
+                }
+            } catch (e) {
+                errEl.textContent = 'Error disabling 2FA. Please try again.';
+                errEl.style.display = 'block';
+            }
+        }
+
+        // Init dashboard code digit inputs
+        document.addEventListener('DOMContentLoaded', () => {
+            const digits = document.querySelectorAll('.dash-digit');
+            digits.forEach((input, idx) => {
+                input.addEventListener('input', (e) => {
+                    const val = e.target.value.replace(/\D/g, '');
+                    e.target.value = val;
+                    if (val.length === 1) {
+                        e.target.classList.add('filled');
+                        if (idx < 5) digits[idx + 1].focus();
+                        if (idx === 5) {
+                            const code = Array.from(digits).map(d => d.value).join('');
+                            if (code.length === 6) setTimeout(() => verifyDashTwoFA(), 200);
+                        }
+                    } else {
+                        e.target.classList.remove('filled');
+                    }
+                });
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !e.target.value && idx > 0) {
+                        digits[idx - 1].focus();
+                        digits[idx - 1].value = '';
+                        digits[idx - 1].classList.remove('filled');
+                    }
+                });
+                input.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const paste = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+                    if (paste.length >= 6) {
+                        for (let i = 0; i < 6; i++) {
+                            digits[i].value = paste[i];
+                            digits[i].classList.add('filled');
+                        }
+                        setTimeout(() => verifyDashTwoFA(), 300);
+                    }
+                });
+            });
+        });
+        // ===== END TWO-FACTOR MANAGEMENT =====
 
         // Initialize dashboard
         initDashboard();
