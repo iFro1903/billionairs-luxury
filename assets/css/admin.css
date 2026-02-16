@@ -122,6 +122,174 @@ body {
 .login-error:empty { display: none; }
 
 /* =============================================
+   ADMIN 2FA LOGIN MODAL
+   ============================================= */
+.admin-2fa-modal {
+    text-align: center;
+    animation: admin2faFadeIn 0.4s ease;
+    margin-top: 1.5rem;
+}
+
+@keyframes admin2faFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.admin-2fa-icon {
+    margin-bottom: 1rem;
+}
+
+.admin-2fa-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.02em;
+}
+
+.admin-2fa-hint {
+    color: rgba(255,255,255,0.45);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.admin-2fa-digits {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+}
+
+.admin-2fa-digit {
+    width: 44px;
+    height: 52px;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(201, 169, 110, 0.2);
+    border-radius: 10px;
+    color: var(--gold);
+    outline: none;
+    transition: all 0.3s ease;
+    caret-color: var(--gold);
+    font-family: 'Courier New', monospace;
+}
+
+.admin-2fa-digit:focus {
+    border-color: var(--gold);
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 15px rgba(201, 169, 110, 0.2);
+}
+
+.admin-2fa-digit.filled {
+    border-color: rgba(201, 169, 110, 0.5);
+    background: rgba(201, 169, 110, 0.05);
+}
+
+.admin-2fa-error {
+    background: rgba(231, 76, 60, 0.1);
+    border: 1px solid rgba(231, 76, 60, 0.3);
+    color: #e74c3c;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.admin-2fa-verify-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, var(--gold), #b8943f);
+    color: #1a1a2e;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    transition: all 0.3s;
+    text-transform: uppercase;
+}
+
+.admin-2fa-verify-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(201, 169, 110, 0.3);
+}
+
+.admin-2fa-verify-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.admin-2fa-backup-link {
+    text-align: center;
+    margin-top: 0.8rem;
+}
+
+.admin-2fa-backup-link a {
+    color: rgba(201, 169, 110, 0.5);
+    font-size: 0.72rem;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+    transition: all 0.3s;
+}
+
+.admin-2fa-backup-link a:hover {
+    color: var(--gold);
+}
+
+.admin-backup-input {
+    width: 100%;
+    padding: 0.7rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(201, 169, 110, 0.2);
+    border-radius: 8px;
+    color: var(--gold);
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    outline: none;
+    margin-bottom: 0.75rem;
+    transition: border-color 0.3s;
+}
+
+.admin-backup-input:focus {
+    border-color: var(--gold);
+}
+
+.admin-2fa-back {
+    text-align: center;
+    margin-top: 1.2rem;
+}
+
+.admin-2fa-back a {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 0.72rem;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.admin-2fa-back a:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 480px) {
+    .admin-2fa-digit {
+        width: 38px;
+        height: 46px;
+        font-size: 1.2rem;
+    }
+    .admin-2fa-digits {
+        gap: 0.35rem;
+    }
+}
+
+/* =============================================
    DASHBOARD LAYOUT
    ============================================= */
 .dashboard {

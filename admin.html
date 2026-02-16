@@ -20,6 +20,46 @@
                 <button type="submit">Anmelden</button>
             </form>
             <div id="loginError" class="login-error"></div>
+
+            <!-- 2FA Verification Step (hidden by default) -->
+            <div id="admin2FAModal" class="admin-2fa-modal" style="display: none;">
+                <div class="admin-2fa-icon">
+                    <svg viewBox="0 0 48 48" width="48" height="48" fill="none">
+                        <rect x="10" y="6" width="28" height="36" rx="4" stroke="#c9a96e" stroke-width="2" fill="rgba(201,169,110,0.05)"/>
+                        <circle cx="24" cy="38" r="2" fill="rgba(201,169,110,0.4)"/>
+                        <rect x="16" y="18" width="16" height="10" rx="2" stroke="rgba(201,169,110,0.4)" stroke-width="1.5" fill="none"/>
+                        <text x="24" y="26" text-anchor="middle" fill="#c9a96e" font-size="7" font-family="monospace" font-weight="600">2FA</text>
+                    </svg>
+                </div>
+                <h2 class="admin-2fa-title">Authentication Code</h2>
+                <p class="admin-2fa-hint">6-stelligen Code aus der<br>Authenticator App eingeben</p>
+
+                <div class="admin-2fa-digits" id="admin2FADigits">
+                    <input type="text" inputmode="numeric" maxlength="1" class="admin-2fa-digit" data-index="0" autocomplete="one-time-code">
+                    <input type="text" inputmode="numeric" maxlength="1" class="admin-2fa-digit" data-index="1">
+                    <input type="text" inputmode="numeric" maxlength="1" class="admin-2fa-digit" data-index="2">
+                    <input type="text" inputmode="numeric" maxlength="1" class="admin-2fa-digit" data-index="3">
+                    <input type="text" inputmode="numeric" maxlength="1" class="admin-2fa-digit" data-index="4">
+                    <input type="text" inputmode="numeric" maxlength="1" class="admin-2fa-digit" data-index="5">
+                </div>
+
+                <div id="admin2FAError" class="admin-2fa-error" style="display: none;"></div>
+
+                <button type="button" class="admin-2fa-verify-btn" id="admin2FAVerifyBtn">VERIFIZIEREN</button>
+
+                <div class="admin-2fa-backup-link">
+                    <a href="#" id="adminBackupCodeLink">Backup Code verwenden</a>
+                </div>
+
+                <div id="adminBackupSection" style="display: none; margin-top: 1rem;">
+                    <input type="text" id="adminBackupCodeInput" class="admin-backup-input" placeholder="XXXX-XXXX">
+                    <button type="button" class="admin-2fa-verify-btn" id="adminBackupVerifyBtn">BACKUP VERIFIZIEREN</button>
+                </div>
+
+                <div class="admin-2fa-back">
+                    <a href="#" id="admin2FABack">Zurueck zum Login</a>
+                </div>
+            </div>
         </div>
     </div>
 

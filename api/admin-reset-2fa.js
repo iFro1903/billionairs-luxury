@@ -62,10 +62,9 @@ export default async function handler(req) {
             });
         }
 
-        // Disable 2FA and remove secret
+        // Delete 2FA entry completely (NOT NULL constraint on secret prevents UPDATE to NULL)
         await sql`
-            UPDATE two_factor_auth 
-            SET enabled = false, secret = NULL, backup_codes = NULL
+            DELETE FROM two_factor_auth 
             WHERE user_email = ${email}
         `;
 

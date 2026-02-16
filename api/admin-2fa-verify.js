@@ -47,8 +47,8 @@ export default async function handler(request) {
     const { secret, backup_codes } = result[0];
     const backupCodesList = JSON.parse(backup_codes);
 
-    // Verifiziere TOTP Code
-    const isValidTOTP = verifyTOTP(secret, code);
+    // Verifiziere TOTP Code (async wegen Web Crypto)
+    const isValidTOTP = await verifyTOTP(secret, code);
     
     // Oder Backup Code
     const isValidBackup = backupCodesList.includes(code);
@@ -118,61 +118,58 @@ export default async function handler(request) {
   }
 }
 
-function verifyTOTP(secret, token, window = 1) {
-  const time = Math.floor(Date.now() / 1000 / 30);
-  
-  for (let i = -window; i <= window; i++) {
-    if (generateTOTP(secret, time + i) === token) {
-      return true;
-    }
-  }
-  return false;
-}
+// Proper TOTP verification using Web Crypto API (HMAC-SHA1)
+// RFC 6238 compliant - works with Google/Microsoft Authenticator
 
-function generateTOTP(secret, time) {
+function base32Decode(base32) {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
   let bits = '';
-  for (let i = 0; i < secret.length; i++) {
-    const val = chars.indexOf(secret[i].toUpperCase());
+  const cleaned = base32.replace(/[\s=-]/g, '').toUpperCase();
+  for (let i = 0; i < cleaned.length; i++) {
+    const val = chars.indexOf(cleaned[i]);
+    if (val === -1) continue;
     bits += val.toString(2).padStart(5, '0');
   }
-  
-  const bytes = new Uint8Array(Math.ceil(bits.length / 8));
+  const bytes = new Uint8Array(Math.floor(bits.length / 8));
   for (let i = 0; i < bytes.length; i++) {
     bytes[i] = parseInt(bits.substr(i * 8, 8), 2);
   }
+  return bytes;
+}
 
-  const timeBytes = new Uint8Array(8);
+async function generateTOTP(secret, timeStep) {
+  const key = base32Decode(secret);
+  const timeBuffer = new Uint8Array(8);
+  let t = timeStep;
   for (let i = 7; i >= 0; i--) {
-    timeBytes[i] = time & 0xff;
-    time = time >> 8;
+    timeBuffer[i] = t & 0xff;
+    t = Math.floor(t / 256);
   }
-
-  const hash = simpleHmac(bytes, timeBytes);
+  // Real HMAC-SHA1 via Web Crypto API
+  const cryptoKey = await crypto.subtle.importKey(
+    'raw', key, { name: 'HMAC', hash: 'SHA-1' }, false, ['sign']
+  );
+  const signature = await crypto.subtle.sign('HMAC', cryptoKey, timeBuffer);
+  const hash = new Uint8Array(signature);
   const offset = hash[hash.length - 1] & 0x0f;
   const binary = ((hash[offset] & 0x7f) << 24) |
                  ((hash[offset + 1] & 0xff) << 16) |
                  ((hash[offset + 2] & 0xff) << 8) |
                  (hash[offset + 3] & 0xff);
-  
   const otp = binary % 1000000;
   return otp.toString().padStart(6, '0');
 }
 
-function simpleHmac(key, message) {
-  const combined = new Uint8Array(key.length + message.length);
-  combined.set(key);
-  combined.set(message, key.length);
-  
-  const hash = new Uint8Array(20);
-  for (let i = 0; i < 20; i++) {
-    let sum = 0;
-    for (let j = 0; j < combined.length; j++) {
-      sum += combined[j] * (i + j + 1);
-    }
-    hash[i] = sum % 256;
+async function verifyTOTP(secret, token, window = 2) {
+  if (!secret || !token) return false;
+  const codeStr = String(token).trim();
+  if (codeStr.length !== 6 || !/^\d{6}$/.test(codeStr)) return false;
+  const time = Math.floor(Date.now() / 1000 / 30);
+  for (let i = -window; i <= window; i++) {
+    const generated = await generateTOTP(secret, time + i);
+    if (generated === codeStr) return true;
   }
-  return hash;
+  return false;
 }
 
 async function logAudit(sql, { action, user, ip, details }) {

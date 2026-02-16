@@ -1665,13 +1665,136 @@ setTimeout(function() { window.print(); }, 800);
         } catch (e) { console.error(e); }
     }
 
-    // ========== 2FA ==========
+    // ========== 2FA LOGIN MODAL ==========
     show2FAPrompt(email, password) {
-        const code = prompt('6-stelliger 2FA Code:');
-        if (code) this.verify2FAAndLogin(email, password, code);
+        this._pending2FA = { email, password };
+        const form = document.getElementById('adminLoginForm');
+        const modal = document.getElementById('admin2FAModal');
+        if (form) form.style.display = 'none';
+        if (modal) {
+            modal.style.display = 'block';
+            // Clear previous state
+            document.querySelectorAll('.admin-2fa-digit').forEach(d => { d.value = ''; d.classList.remove('filled'); });
+            const errEl = document.getElementById('admin2FAError');
+            if (errEl) errEl.style.display = 'none';
+            document.getElementById('adminBackupSection').style.display = 'none';
+            document.getElementById('admin2FADigits').style.display = 'flex';
+            document.getElementById('admin2FAVerifyBtn').style.display = 'block';
+            // Focus first digit
+            const first = modal.querySelector('.admin-2fa-digit[data-index="0"]');
+            if (first) setTimeout(() => first.focus(), 150);
+        }
+        this._init2FAModalHandlers();
+    }
+
+    _init2FAModalHandlers() {
+        if (this._2faHandlersInit) return;
+        this._2faHandlersInit = true;
+
+        const digits = document.querySelectorAll('.admin-2fa-digit');
+        digits.forEach((input, idx) => {
+            input.addEventListener('input', (e) => {
+                const val = e.target.value.replace(/\D/g, '');
+                e.target.value = val;
+                if (val.length === 1) {
+                    e.target.classList.add('filled');
+                    if (idx < 5) digits[idx + 1].focus();
+                    if (idx === 5) {
+                        const code = Array.from(digits).map(d => d.value).join('');
+                        if (code.length === 6) setTimeout(() => this._submit2FACode(), 200);
+                    }
+                } else {
+                    e.target.classList.remove('filled');
+                }
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && idx > 0) {
+                    digits[idx - 1].focus();
+                    digits[idx - 1].value = '';
+                    digits[idx - 1].classList.remove('filled');
+                }
+            });
+            input.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const paste = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '');
+                if (paste.length >= 6) {
+                    for (let i = 0; i < 6; i++) {
+                        digits[i].value = paste[i];
+                        digits[i].classList.add('filled');
+                    }
+                    setTimeout(() => this._submit2FACode(), 300);
+                }
+            });
+        });
+
+        // Verify button
+        document.getElementById('admin2FAVerifyBtn')?.addEventListener('click', () => this._submit2FACode());
+
+        // Backup code link toggle
+        document.getElementById('adminBackupCodeLink')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            const section = document.getElementById('adminBackupSection');
+            const digitsWrap = document.getElementById('admin2FADigits');
+            const verifyBtn = document.getElementById('admin2FAVerifyBtn');
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+                digitsWrap.style.display = 'none';
+                verifyBtn.style.display = 'none';
+                e.target.textContent = 'Authenticator Code verwenden';
+                document.getElementById('adminBackupCodeInput').focus();
+            } else {
+                section.style.display = 'none';
+                digitsWrap.style.display = 'flex';
+                verifyBtn.style.display = 'block';
+                e.target.textContent = 'Backup Code verwenden';
+                document.querySelector('.admin-2fa-digit[data-index="0"]').focus();
+            }
+        });
+
+        // Backup verify button
+        document.getElementById('adminBackupVerifyBtn')?.addEventListener('click', () => this._submitBackupCode());
+
+        // Back to login
+        document.getElementById('admin2FABack')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            this._hide2FAModal();
+        });
+    }
+
+    _hide2FAModal() {
+        const form = document.getElementById('adminLoginForm');
+        const modal = document.getElementById('admin2FAModal');
+        if (form) form.style.display = 'block';
+        if (modal) modal.style.display = 'none';
+        this._pending2FA = null;
+    }
+
+    _show2FAError(msg) {
+        const errEl = document.getElementById('admin2FAError');
+        if (errEl) { errEl.textContent = msg; errEl.style.display = 'block'; }
+    }
+
+    async _submit2FACode() {
+        const digits = document.querySelectorAll('.admin-2fa-digit');
+        const code = Array.from(digits).map(d => d.value).join('');
+        if (code.length !== 6) { this._show2FAError('6-stelliger Code erforderlich'); return; }
+        if (!this._pending2FA) return;
+        await this.verify2FAAndLogin(this._pending2FA.email, this._pending2FA.password, code);
+    }
+
+    async _submitBackupCode() {
+        const code = document.getElementById('adminBackupCodeInput')?.value.trim();
+        if (!code) { this._show2FAError('Backup Code eingeben'); return; }
+        if (!this._pending2FA) return;
+        await this.verify2FAAndLogin(this._pending2FA.email, this._pending2FA.password, code);
     }
 
     async verify2FAAndLogin(email, password, code) {
+        // Disable button during request
+        const btn = document.getElementById('admin2FAVerifyBtn');
+        const backupBtn = document.getElementById('adminBackupVerifyBtn');
+        if (btn) btn.disabled = true;
+        if (backupBtn) backupBtn.disabled = true;
         try {
             const res = await fetch('/api/admin-auth', {
                 method: 'POST',
@@ -1681,9 +1804,22 @@ setTimeout(function() { window.print(); }, 800);
             if (res.ok) {
                 const data = await res.json();
                 this.setSession(data.email, password);
+                this._hide2FAModal();
                 this.showDashboard(data.email);
-            } else { this.toast('Ungültiger Code', 'error'); this.show2FAPrompt(email, password); }
-        } catch (e) { console.error(e); this.toast('2FA Fehler', 'error'); }
+            } else {
+                this._show2FAError('Ungueltiger Code - erneut versuchen');
+                // Clear digits for retry
+                document.querySelectorAll('.admin-2fa-digit').forEach(d => { d.value = ''; d.classList.remove('filled'); });
+                const first = document.querySelector('.admin-2fa-digit[data-index="0"]');
+                if (first) first.focus();
+            }
+        } catch (e) {
+            console.error(e);
+            this._show2FAError('Verbindungsfehler');
+        } finally {
+            if (btn) btn.disabled = false;
+            if (backupBtn) backupBtn.disabled = false;
+        }
     }
 
     // ========== SECURITY TAB ==========
