@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>i18n Audit - Vorschau der fehlenden Übersetzungen</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #e8b4a0;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+        .summary {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .summary-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(232,180,160,0.2);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            min-width: 140px;
+        }
+        .summary-card .num {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #e8b4a0;
+        }
+        .summary-card .label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .file-section {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .file-header {
+            background: linear-gradient(90deg, rgba(232,180,160,0.15), transparent);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .file-header h2 {
+            font-size: 1.1rem;
+            color: #e8b4a0;
+            letter-spacing: 1px;
+        }
+        .file-header .badge {
+            background: rgba(232,180,160,0.2);
+            color: #e8b4a0;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .file-header .badge.high { background: rgba(220,38,38,0.2); color: #f87171; }
+        .file-header .badge.medium { background: rgba(234,179,8,0.2); color: #fbbf24; }
+        .file-header .badge.low { background: rgba(34,197,94,0.2); color: #4ade80; }
+        .file-body { padding: 1rem 1.5rem; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            text-align: left;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        td {
+            padding: 0.6rem 0.75rem;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: top;
+        }
+        td:first-child {
+            color: rgba(255,255,255,0.3);
+            font-family: monospace;
+            white-space: nowrap;
+            width: 60px;
+        }
+        td:nth-child(2) {
+            color: #fff;
+            font-weight: 500;
+        }
+        td:nth-child(3) {
+            color: rgba(255,255,255,0.4);
+            font-family: monospace;
+            font-size: 0.75rem;
+        }
+        .highlight {
+            background: rgba(232,180,160,0.08);
+            border-left: 3px solid #e8b4a0;
+        }
+        .note {
+            background: rgba(234,179,8,0.08);
+            border: 1px solid rgba(234,179,8,0.2);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            font-size: 0.8rem;
+            color: #fbbf24;
+        }
+        .info-box {
+            background: rgba(59,130,246,0.08);
+            border: 1px solid rgba(59,130,246,0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .info-box p {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.7);
+        }
+        .info-box strong { color: #93c5fd; }
+        .section-label {
+            font-size: 0.7rem;
+            color: rgba(232,180,160,0.6);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 0.75rem 0.75rem 0.25rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<h1>i18n AUDIT</h1>
+<p class="subtitle">Hardcodierte Texte ohne data-i18n Attribut &mdash; nur Text wird ergänzt, kein Design/Layout</p>
+
+<div class="summary">
+    <div class="summary-card">
+        <div class="num">~92</div>
+        <div class="label">Texte gesamt</div>
+    </div>
+    <div class="summary-card">
+        <div class="num">7</div>
+        <div class="label">Dateien</div>
+    </div>
+    <div class="summary-card">
+        <div class="num">0</div>
+        <div class="label">Design-Änderungen</div>
+    </div>
+</div>
+
+<div class="info-box">
+    <p><strong>Was wird geändert:</strong> Nur <code>data-i18n="..."</code> Attribute werden zu bestehenden HTML-Elementen hinzugefügt + Übersetzungskeys in die 9 JSON-Dateien.<br>
+    <strong>Was NICHT geändert wird:</strong> Kein CSS, kein Layout, keine Farben, keine Bilder, keine Schriftgrössen.</p>
+</div>
+
+<!-- ==================== INDEX.HTML ==================== -->
+<div class="file-section">
+    <div class="file-header">
+        <h2>index.html</h2>
+        <span class="badge high">~50 Texte &bull; HOCH</span>
+    </div>
+    <div class="file-body">
+        <div class="section-label">Navigation & Mobile Menü</div>
+        <table>
+            <tr><th>Zeile</th><th>Aktueller Text (EN)</th><th>HTML Element</th></tr>
+            <tr><td>~414</td><td>INNER CIRCLE</td><td>&lt;button class="nav-member"&gt;</td></tr>
+            <tr><td>~416</td><td>CONTACT</td><td>&lt;button class="nav-contact"&gt;</td></tr>
+            <tr><td>~441</td><td>INNER CIRCLE</td><td>&lt;button class="mobile-btn"&gt;</td></tr>
+            <tr><td>~442</td><td>CONTACT</td><td>&lt;button class="mobile-btn"&gt;</td></tr>
+            <tr><td>~446-449</td><td>FAQ / LEGAL NOTICE / PRIVACY / TERMS</td><td>&lt;a class="mobile-legal-link"&gt;</td></tr>
+        </table>
+
+        <div class="section-label">Contact Popup</div>
+        <table>
+            <tr><th>Zeile</th><th>Aktueller Text (EN)</th><th>HTML Element</th></tr>
+            <tr><td>~453</td><td>Exclusive Inquiries</td><td>&lt;h3 class="popup-title"&gt;</td></tr>
+            <tr><td>~454</td><td>For access requests and private consultations</td><td>&lt;p class="popup-description"&gt;</td></tr>
+            <tr><td>~458</td><td>Copy</td><td>&lt;span class="copy-text"&gt;</td></tr>
+            <tr><td>~461</td><td>Response time: 24-48 hours</td><td>&lt;p class="popup-footer"&gt;</td></tr>
+        </table>
+
+        <div class="section-label">Hero Section</div>
+        <table>
+            <tr><th>Zeile</th><th>Aktueller Text (EN)</th><th>HTML Element</th></tr>
+            <tr class="highlight"><td>~471-480</td><td>Swiss Secured / Blockchain Verified / Exclusive Access / 2FA Protected</td><td>&lt;span class="trust-label"&gt;</td></tr>
+            <tr><td>~487</td><td>What you're about to see can't be bought. Only accessed.</td><td>&lt;p class="hero-tagline"&gt;</td></tr>
+            <tr><td>~493-495</td><td>Beyond wealth. Beyond status. / A moment that exists... / Where time bends...</td><td>&lt;p class="message-line"&gt;</td></tr>
+            <tr class="highlight"><td>~500</td><td>I DESERVE THIS</td><td>&lt;span class="btn-text-main"&gt;</td></tr>
+            <tr><td>~509</td><td>Discover what transcends everything you own</td><td>&lt;p class="hook-accept"&gt;</td></tr>
+            <tr><td>~514</td><td>Secured by Swiss Banking Standards ...</td><td>&lt;p class="security-text"&gt;</td></tr>
+            <tr><td>~517-523</td><td>FAQ / LEGAL NOTICE / PRIVACY / TERMS</td><td>&lt;a class="hero-footer-link"&gt;</td></tr>
+            <tr><td>~524</td><td>© 2026 FRO</td><td>&lt;p class="hero-footer-copy"&gt;</td></tr>
+        </table>
+
+        <div class="section-label">Trust & Value Section</div>
+        <table>
+            <tr><th>Zeile</th><th>Aktueller Text (EN)</th><th>HTML Element</th></tr>
+            <tr><td>~533-534</td><td>Some experiences can't be explained. / They can only be lived.</td><td>&lt;span&gt; in trust-tagline</td></tr>
+            <tr><td>~536</td><td>Where wealth is the entry requirement...</td><td>&lt;p class="trust-subtitle"&gt;</td></tr>
+            <tr class="highlight"><td>~546-600</td><td>Global Access / Private Circle / Pre-Market / Discretion + Beschreibungen</td><td>&lt;h4&gt; und &lt;p&gt; in benefit-cards</td></tr>
+        </table>
+
+        <div class="section-label">CTA Buttons</div>
+        <table>
+            <tr><th>Zeile</th><th>Aktueller Text (EN)</th><th>HTML Element</th></tr>
+            <tr class="highlight"><td>~700</td><td>I'M READY</td><td>&lt;span class="btn-text-main"&gt;</td></tr>
+            <tr><td>~703</td><td>Not ready? Come back when money isn't your concern.</td><td>&lt;p class="trust-rejection-bait"&gt;</td></tr>
+        </table>
+
+        <div class="section-label">Payment Section</div>
+        <table>
+            <tr><th>Zeile</th><th>Aktueller Text (EN)</th><th>HTML Element</th></tr>
+            <tr><td>~772-773</td><td>EXCLUSIVE ACCESS</td><td>&lt;span class="title-luxury/emphasis"&gt;</td></tr>
+            <tr><td>~775</td><td>By Invitation Only</td><td>&lt;p class="subtitle"&gt;</td></tr>
+            <tr><td>~781</td><td>Secured by Swiss Banking Standards</td><td>&lt;h3 class="payment-method-title"&gt;</td></tr>
+            <tr><td>~818</td><td>Credit / Debit Card / Instant Processing</td><td>payment-method &lt;h4&gt; + &lt;p&gt;</td></tr>
+            <tr><td>~930-931</td><td>SSL SECURED / 256-BIT ENCRYPTION</td><td>&lt;span class="ssl-label/detail"&gt;</td></tr>
+        </table>
+
+        <div class="section-label">Timepiece / Uhr-Sektion</div>
+        <table>
+            <tr><th>Zeile</th><th>Aktueller Text (EN)</th><th>HTML Element</th></tr>
+            <tr><td>~975</td><td>Access Granted</td><td>&lt;h2 class="welcome-title"&gt;</td></tr>
+            <tr><td>~1000-1001</td><td>Locating... / Loading...</td><td>&lt;span&gt;</td></tr>
+            <tr><td>~1006-1008</td><td>Style / Global</td><td>&lt;button class="feature-button"&gt;</td></tr>
+            <tr><td>~1019-1031</td><td>New York / London / Tokyo / Dubai</td><td>world-clock &lt;h4&gt;</td></tr>
+        </table>
+
+        <div class="note">Hinweis: Viele dieser Texte werden bereits durch das JS-basierte Textersetzungssystem in i18n.js (getTextMapForLanguage) übersetzt. Dort sind die englischen Originaltexte als Keys hinterlegt. Durch data-i18n wird die Übersetzung aber zuverlässiger und schneller.</div>
+    </div>
+</div>
+
+<!-- ==================== RESET-PASSWORD.HTML ==================== -->
+<div class="file-section">
+    <div class="file-header">
+        <h2>reset-password.html</h2>
+        <span class="badge high">12 Texte &bull; HOCH</span>
+    </div>
+    <div class="file-body">
+        <table>
+            <tr><th>Zeile</th><th>Aktueller Text (EN)</th><th>HTML Element</th></tr>
+            <tr class="highlight"><td>~216</td><td>Reset Password</td><td>&lt;h1&gt;</td></tr>
+            <tr class="highlight"><td>~217</td><td>Create a new, secure password for your account.</td><td>&lt;p class="subtitle"&gt;</td></tr>
+            <tr><td>~222</td><td>Email Address</td><td>&lt;label class="form-label"&gt;</td></tr>
+            <tr><td>~226</td><td>New Password</td><td>&lt;label class="form-label"&gt;</td></tr>
+            <tr><td>~228</td><td>At least 8 characters</td><td>&lt;input placeholder&gt;</td></tr>
+            <tr><td>~230</td><td>At least 8 characters</td><td>&lt;li&gt; (requirement)</td></tr>
+            <tr><td>~231</td><td>Recommended: Upper & lowercase...</td><td>&lt;li&gt; (requirement)</td></tr>
+            <tr><td>~235</td><td>Confirm Password</td><td>&lt;label class="form-label"&gt;</td></tr>
+            <tr><td>~237</td><td>Re-enter password</td><td>&lt;input placeholder&gt;</td></tr>
+            <tr class="highlight"><td>~241</td><td>Change Password</td><td>&lt;button class="submit-button"&gt;</td></tr>
+            <tr><td>~245</td><td>← Back to Login</td><td>&lt;a&gt; back-link</td></tr>
+        </table>
+    </div>
+</div>
+
+<!-- ==================== LOGIN.HTML ==================== -->
+<div class="file-section">
+    <div class="file-header">
+        <h2>login.html</h2>
+        <span class="badge medium">8 Texte &bull; MITTEL</span>
+    </div>
+    <div class="file-body">
+        <div class="note">Betrifft nur den 2FA-Bereich — der normale Login ist bereits übersetzt.</div>
+        <table>
+            <tr><th>Zeile</th><th>Aktueller Text (EN)</th><th>HTML Element</th></tr>
+            <tr class="highlight"><td>~368</td><td>Authentication Code</td><td>&lt;h2 class="twofa-login-title"&gt;</td></tr>
+            <tr><td>~369</td><td>Enter the 6-digit code from your Microsoft Authenticator app</td><td>&lt;p class="twofa-login-hint"&gt;</td></tr>
+            <tr class="highlight"><td>~383</td><td>VERIFY</td><td>&lt;button id="verifyTwofaBtn"&gt;</td></tr>
+            <tr><td>~386</td><td>Use a backup code instead</td><td>&lt;a id="useBackupCodeLink"&gt;</td></tr>
+            <tr><td>~390</td><td>Backup Code</td><td>&lt;label class="form-label"&gt;</td></tr>
+            <tr><td>~394</td><td>VERIFY BACKUP CODE</td><td>&lt;button&gt;</td></tr>
+            <tr><td>~398</td><td>← Back to Login</td><td>&lt;a id="backToLoginFromTwofa"&gt;</td></tr>
+        </table>
+    </div>
+</div>
+
+<!-- ==================== DASHBOARD.HTML ==================== -->
+<div class="file-section">
+    <div class="file-header">
+        <h2>dashboard.html</h2>
+        <span class="badge medium">~20 Texte &bull; MITTEL</span>
+    </div>
+    <div class="file-body">
+        <div class="note">2FA-Sektion: Texte werden per JS übersetzt (translateTwoFASection), aber ohne data-i18n im HTML. Ergänzen für konsistente Übersetzung.</div>
+        <table>
+            <tr><th>Zeile</th><th>Aktueller Text (EN)</th><th>HTML Element</th></tr>
+            <tr><td>~585</td><td>SECURITY SETTINGS</td><td>&lt;h3 id="securityTitle"&gt;</td></tr>
+            <tr><td>~586</td><td>Protect your account with additional security</td><td>&lt;p id="securitySubtitle"&gt;</td></tr>
+            <tr><td>~596</td><td>Two-Factor Authentication</td><td>&lt;h4 id="twofaTitle"&gt;</td></tr>
+            <tr><td>~598</td><td>Enable</td><td>&lt;button id="twofaToggleBtn"&gt;</td></tr>
+            <tr><td>~605-607</td><td>1. Scan QR / 2. Verify / 3. Backup Codes</td><td>&lt;span&gt; Steps</td></tr>
+            <tr><td>~617-632</td><td>Authenticator-Anleitung (4 Schritte)</td><td>&lt;span&gt; Instructions</td></tr>
+            <tr><td>~637</td><td>Do not use your camera app...</td><td>&lt;span id="twofaCameraWarning"&gt;</td></tr>
+            <tr><td>~639</td><td>Manual Key</td><td>&lt;div&gt; label</td></tr>
+            <tr><td>~644</td><td>NEXT</td><td>&lt;button id="twofaNextBtn"&gt;</td></tr>
+            <tr><td>~710</td><td>Enter the 6-digit code...</td><td>&lt;p id="twofaVerifyText"&gt;</td></tr>
+            <tr><td>~729</td><td>CONFIRM</td><td>&lt;span id="twofaConfirmBtnText"&gt;</td></tr>
+            <tr><td>~737</td><td>2FA Successfully Enabled</td><td>&lt;div id="twofaSuccessText"&gt;</td></tr>
+            <tr><td>~746-747</td><td>SAVE THESE BACKUP CODES! / Beschreibung</td><td>&lt;div id="twofaBackupTitle/Desc"&gt;</td></tr>
+            <tr><td>~755</td><td>CODES SAVED</td><td>&lt;button id="twofaCodesSavedBtn"&gt;</td></tr>
+            <tr><td>~764-770</td><td>Disable 2FA Texte</td><td>&lt;p&gt; / &lt;button&gt;</td></tr>
+            <tr><td>~774</td><td>Cancel</td><td>&lt;a id="twofaCancelLink"&gt;</td></tr>
+        </table>
+    </div>
+</div>
+
+<!-- ==================== ANDERE ==================== -->
+<div class="file-section">
+    <div class="file-header">
+        <h2>create-account.html / payment-success.html / payment-cancelled.html</h2>
+        <span class="badge low">1-2 Texte &bull; NIEDRIG</span>
+    </div>
+    <div class="file-body">
+        <table>
+            <tr><th>Datei</th><th>Aktueller Text (EN)</th><th>Anmerkung</th></tr>
+            <tr><td>create-account.html</td><td>Skip to main content</td><td>Screenreader-only, niedrige Priorität</td></tr>
+            <tr><td>payment-success.html</td><td>Skip to main content</td><td>Screenreader-only, niedrige Priorität</td></tr>
+            <tr><td>payment-cancelled.html</td><td>—</td><td>Vollständig übersetzt</td></tr>
+        </table>
+    </div>
+</div>
+
+<div style="text-align: center; margin-top: 3rem; padding: 2rem; border-top: 1px solid rgba(255,255,255,0.08);">
+    <p style="color: rgba(255,255,255,0.3); font-size: 0.75rem; letter-spacing: 1px;">
+        NUR TEXT-ATTRIBUTE WERDEN ERGÄNZT &mdash; KEIN DESIGN, LAYOUT ODER GRAFIK WIRD VERÄNDERT
+    </p>
+</div>
+
+</body>
+</html>
