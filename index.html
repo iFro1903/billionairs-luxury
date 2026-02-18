@@ -2,7 +2,10 @@
 <html lang="de">
 <head>
     <!-- GDPR Cookie Consent (MUST load BEFORE gtag) -->
-    <script src="assets/dist/core.bundle.js?v=20260218"></script>
+    <link rel="stylesheet" href="assets/css/cookie-consent.css?v=20260211">
+    <link rel="stylesheet" href="assets/css/toast.css?v=20260214">
+    <script src="assets/js/toast.js?v=20260214"></script>
+    <script src="assets/js/cookie-consent.js?v=20260211"></script>
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-80P17E7RZK"></script>
@@ -208,7 +211,7 @@
     </noscript>
     
     <!-- Mobile Performance (Light) - NUR Speed, kein Design -->
-    <!-- Included in styles.bundle.css -->
+    <link rel="stylesheet" href="assets/css/mobile-performance-light.css">
     
     <!-- Stripe Payment Processing - NO DEFER, must load before stripe-payment.js -->
     <script src="https://js.stripe.com/v3/"></script>
@@ -244,8 +247,28 @@
     </script>
     
     <!-- Stylesheets - Optimized Loading Order (Critical First) -->
-    <link rel="preload" href="assets/dist/styles.bundle.css?v=20260218" as="style">
-    <link rel="stylesheet" href="assets/dist/styles.bundle.css?v=20260218">
+    <link rel="preload" href="assets/css/styles.css?v=20260211" as="style">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260211">
+    <link rel="stylesheet" href="assets/css/mobile-nav.css">
+    <link rel="stylesheet" href="assets/css/testimonials.css">
+    <link rel="stylesheet" href="assets/css/member-comments.css">
+    <link rel="stylesheet" href="assets/css/benefits.css">
+    <link rel="stylesheet" href="assets/css/payment-methods.css?v=20260211" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="assets/css/language-dropdown.css" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="assets/css/mobile-language-dropdown.css" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="assets/css/faq-footer.css">
+    <link rel="stylesheet" href="assets/css/what-isnt.css" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="assets/css/last-few-days.css" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="assets/css/the-truth.css" media="print" onload="this.media='all'; this.onload=null;">
+    <noscript>
+        <link rel="stylesheet" href="assets/css/payment-methods.css">
+        <link rel="stylesheet" href="assets/css/language-dropdown.css">
+        <link rel="stylesheet" href="assets/css/mobile-language-dropdown.css">
+        <link rel="stylesheet" href="assets/css/faq-footer.css">
+        <link rel="stylesheet" href="assets/css/what-isnt.css">
+        <link rel="stylesheet" href="assets/css/last-few-days.css">
+        <link rel="stylesheet" href="assets/css/the-truth.css">
+    </noscript>
     
     <!-- CRITICAL: Inline modal styles to ensure modals ALWAYS work, even if faq-footer.css fails -->
     <style>
@@ -1714,8 +1737,25 @@
     };
     </script>
 
-    <!-- i18n Bundle (i18n + language system) -->
-    <script src="assets/dist/i18n.bundle.js?v=20260218" defer></script>
+    <!-- Mobile Performance (Light) - NUR Speed -->
+    <script src="assets/js/mobile-performance-light.js" defer></script>
+
+    <!-- PWA Support - DISABLED (Install button removed) -->
+    <!-- <script src="assets/js/pwa.js" defer></script> -->
+    <script src="assets/js/sw-update.js" defer></script>
+
+    <!-- i18n Multi-Language Support -->
+    <script src="assets/js/i18n.js" defer></script>
+    <script src="assets/js/lang-dropdown-simple.js" defer></script>
+    <script src="assets/js/modal-i18n.js" defer></script>
+    <script src="assets/js/page-i18n.js" defer></script>
+    <script src="assets/js/payment-i18n.js" defer></script>
+
+    <!-- Accessibility (WCAG 2.1 AA) -->
+    <script src="assets/js/accessibility.js" defer></script>
+
+    <!-- Background Sync -->
+    <script src="assets/js/background-sync.js" defer></script>
 
     <!-- Mobile Navigation -->
     <script>
@@ -1966,8 +2006,13 @@
         }, 3000);
     </script>
 
-    <!-- Features Bundle (all deferred scripts) -->
-    <script src="assets/dist/features.bundle.js?v=20260218" defer></script>
+    <!-- Push Notifications -->
+    <script src="assets/js/push-notifications.js" defer></script>
+
+    <!-- Scripts - Deferred for Performance -->
+    <script src="assets/js/notifications.js" defer></script>
+    <script src="assets/js/main.js?v=20260211" defer></script>
+    <script src="assets/js/faq.js" defer></script>
 
     <!-- CRITICAL FALLBACK: Ensure modals work even if faq.js fails to load -->
     <script>
@@ -2050,7 +2095,10 @@
         }, 2000);
     });
     </script>
-    <!-- testimonials, stripe-payment, payment-methods, benefits → included in features.bundle.js -->
+    <script src="assets/js/testimonials.js" defer></script>
+    <script src="assets/js/stripe-payment.js" defer></script>
+    <script src="assets/js/payment-methods-new.js?v=20260211" defer></script>
+    <script src="assets/js/benefits.js" defer></script>
     
     <!-- Password Strength Indicator -->
     <script>
