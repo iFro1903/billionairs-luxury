@@ -1,11 +1,10 @@
 // IP Blocking Management Endpoint (Admin only)
 import { neon } from '@neondatabase/serverless';
+import { verifyAdminSession } from '../lib/verify-admin.js';
 
 export const config = {
   runtime: 'edge'
 };
-
-const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
 
 export default async function handler(request) {
   if (request.method !== 'POST') {
@@ -16,7 +15,12 @@ export default async function handler(request) {
   }
 
   try {
-    const { ip, reason, duration, adminEmail, action = 'block' } = await request.json();
+    // Admin authentication
+    const auth = await verifyAdminSession(request);
+    if (!auth.authorized) return auth.response;
+
+    const { ip, reason, duration, action = 'block' } = await request.json();
+    const adminEmail = auth.email;
 
     if (!ip) {
       return new Response(JSON.stringify({ error: 'IP address required' }), {
