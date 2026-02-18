@@ -46,8 +46,8 @@
     <!-- i18n Language System -->
     <script src="assets/js/i18n.js" defer></script>
     
-    <!-- Local QR Code Generator (2FA — no external service, secret stays in browser) -->
-    <script src="assets/js/qr-local.js" defer></script>
+    <!-- QR Code Library — generates locally in browser, secret never leaves (same lib as admin panel) -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js" defer></script>
     
     <!-- Emergency Mode Check -->
     <script>
@@ -1621,13 +1621,18 @@
                     // Generate QR Code LOCALLY (no external server — secret stays in browser)
                     const qrDisplay = document.getElementById('qrCodeDisplay');
                     qrDisplay.innerHTML = `
-                        <div style="display: inline-block; padding: 1rem; background: #fff; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);">
-                            <canvas id="qrCanvas" width="180" height="180" style="image-rendering: pixelated;"></canvas>
-                        </div>
+                        <div id="qrCanvasDiv" style="display: inline-block; padding: 1rem; background: #fff; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);"></div>
                     `;
                     
-                    // Local QR Code generation (no data leaves the browser)
-                    generateQRLocal(document.getElementById('qrCanvas'), data.otpauthUrl, 180);
+                    // Local QR Code generation via qrcodejs (no data leaves the browser)
+                    new QRCode(document.getElementById('qrCanvasDiv'), {
+                        text: data.otpauthUrl,
+                        width: 180,
+                        height: 180,
+                        colorDark: '#000000',
+                        colorLight: '#ffffff',
+                        correctLevel: QRCode.CorrectLevel.M
+                    });
 
                     // Show manual key
                     const keySection = document.getElementById('manualKeySection');
