@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMOJI AUDIT - Alle Emojis auf billionairs.luxury</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0a; color: #e0d5c5; font-family: 'Segoe UI', sans-serif; padding: 20px; }
+  h1 { text-align: center; color: #c9a96e; font-size: 1.8rem; margin-bottom: 8px; letter-spacing: 2px; }
+  .subtitle { text-align: center; color: #888; font-size: 0.85rem; margin-bottom: 30px; }
+  .legend { display: flex; gap: 20px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
+  .legend span { font-size: 0.8rem; padding: 4px 12px; border-radius: 20px; }
+  .legend .keep { background: rgba(46,204,113,0.15); border: 1px solid rgba(46,204,113,0.3); color: #2ecc71; }
+  .legend .maybe { background: rgba(241,196,15,0.15); border: 1px solid rgba(241,196,15,0.3); color: #f1c40f; }
+  .legend .remove { background: rgba(231,76,60,0.15); border: 1px solid rgba(231,76,60,0.3); color: #e74c3c; }
+  .legend .dev { background: rgba(150,150,150,0.1); border: 1px solid rgba(150,150,150,0.3); color: #999; }
+
+  .category { margin-bottom: 35px; }
+  .category-title { color: #c9a96e; font-size: 1.1rem; border-bottom: 1px solid rgba(201,169,110,0.3); padding-bottom: 8px; margin-bottom: 15px; }
+  .category-desc { color: #888; font-size: 0.8rem; margin-bottom: 12px; }
+
+  .emoji-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; }
+  .emoji-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; transition: border-color 0.3s; }
+  .emoji-card:hover { border-color: rgba(201,169,110,0.4); }
+  .emoji-big { font-size: 2rem; min-width: 50px; text-align: center; }
+  .emoji-info { flex: 1; }
+  .emoji-context { font-size: 0.85rem; color: #ccc; margin-bottom: 4px; }
+  .emoji-context em { color: #c9a96e; font-style: normal; }
+  .emoji-file { font-size: 0.7rem; color: #666; }
+  .emoji-tag { font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-top: 4px; }
+  .tag-flag { background: rgba(52,152,219,0.15); color: #3498db; }
+  .tag-status { background: rgba(46,204,113,0.15); color: #2ecc71; }
+  .tag-icon { background: rgba(155,89,182,0.15); color: #9b59b6; }
+  .tag-functional { background: rgba(230,126,34,0.15); color: #e67e22; }
+  .tag-decoration { background: rgba(241,196,15,0.15); color: #f1c40f; }
+  .tag-dev { background: rgba(150,150,150,0.1); color: #999; }
+  .tag-email { background: rgba(52,152,219,0.15); color: #3498db; }
+
+  .section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(201,169,110,0.3), transparent); margin: 40px 0; }
+
+  /* Simulate actual UI contexts */
+  .sim-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+  .sim-title { font-size: 0.75rem; color: #c9a96e; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+
+  /* Language dropdown simulation */
+  .lang-dropdown-sim { background: rgba(15,15,15,0.9); border: 1px solid rgba(201,169,110,0.3); border-radius: 12px; padding: 8px; max-width: 280px; }
+  .lang-item { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
+  .lang-item:hover { background: rgba(201,169,110,0.1); }
+  .lang-flag { font-size: 1.3rem; }
+  .lang-name { font-size: 0.9rem; color: #e0d5c5; }
+
+  /* Admin nav simulation */
+  .admin-nav-sim { display: flex; gap: 6px; flex-wrap: wrap; }
+  .admin-nav-item { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: rgba(201,169,110,0.08); border: 1px solid rgba(201,169,110,0.2); border-radius: 8px; font-size: 0.85rem; }
+  .admin-nav-item .nav-emoji { font-size: 1.2rem; }
+
+  /* Chat simulation */
+  .chat-sim { background: #111; border-radius: 12px; overflow: hidden; max-width: 400px; }
+  .chat-header-sim { background: rgba(201,169,110,0.1); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(201,169,110,0.2); }
+  .chat-body-sim { padding: 20px; text-align: center; color: #666; }
+  .chat-input-sim { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .chat-input-sim input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 8px 14px; color: #e0d5c5; font-size: 0.85rem; outline: none; }
+  .chat-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; padding: 4px 8px; }
+
+  /* Notification simulation */
+  .notif-sim { display: flex; align-items: flex-start; gap: 12px; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 14px; max-width: 360px; margin-bottom: 8px; }
+  .notif-icon { width: 40px; height: 40px; background: rgba(201,169,110,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .notif-text { flex: 1; }
+  .notif-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 2px; }
+  .notif-body { font-size: 0.75rem; color: #888; }
+
+  /* Payment feature tags */
+  .payment-tag { display: inline-flex; align-items: center; gap: 4px; background: rgba(201,169,110,0.08); border: 1px solid rgba(201,169,110,0.2); padding: 5px 12px; border-radius: 6px; font-size: 0.8rem; margin: 3px; }
+
+  /* Email simulation */
+  .email-sim { background: #fff; color: #333; border-radius: 8px; padding: 20px; max-width: 400px; }
+  .email-header { text-align: center; padding: 15px; background: linear-gradient(135deg, #1a1a2e, #0d0d1a); border-radius: 8px; margin-bottom: 15px; }
+  .email-header h2 { color: #c9a96e; font-size: 1.1rem; }
+  .email-subject { font-size: 0.85rem; color: #333; font-weight: 600; margin-bottom: 5px; }
+  .email-from { font-size: 0.75rem; color: #888; }
+
+  /* Status badges in admin */
+  .status-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+  .status-badge { padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 4px; }
+  .status-unlocked { background: rgba(46,204,113,0.15); color: #2ecc71; }
+  .status-locked { background: rgba(231,76,60,0.15); color: #e74c3c; }
+  .status-2fa { background: rgba(155,89,182,0.15); color: #9b59b6; }
+  .status-blocked { background: rgba(231,76,60,0.15); color: #e74c3c; }
+
+  /* Copy button simulation */
+  .copy-btn-sim { display: inline-flex; align-items: center; gap: 6px; background: rgba(201,169,110,0.1); border: 1px solid rgba(201,169,110,0.3); border-radius: 6px; padding: 6px 12px; color: #c9a96e; font-size: 0.8rem; cursor: pointer; }
+
+  /* Warning box */
+  .warning-sim { background: rgba(255,59,48,0.1); border: 1px solid rgba(255,59,48,0.3); border-radius: 8px; padding: 12px 16px; color: #FF6B6B; font-size: 0.85rem; max-width: 400px; }
+  .warning-sim strong { color: #FF6B6B; }
+
+  /* Success simulation */
+  .success-sim { text-align: center; padding: 20px; }
+  .success-icon-big { font-size: 2.5rem; margin-bottom: 10px; }
+  .success-text { color: #2ecc71; font-size: 0.9rem; }
+
+  /* Hourglass wire */
+  .wire-loading-sim { text-align: center; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 12px; }
+  .wire-loading-sim .big-icon { font-size: 2rem; margin-bottom: 8px; }
+  .wire-loading-sim .loading-text { color: #888; font-size: 0.85rem; }
+
+  .verdict { margin-top: 40px; padding: 20px; background: rgba(201,169,110,0.05); border: 1px solid rgba(201,169,110,0.2); border-radius: 12px; }
+  .verdict h2 { color: #c9a96e; margin-bottom: 12px; }
+  .verdict p { color: #aaa; font-size: 0.85rem; line-height: 1.6; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<h1>EMOJI AUDIT</h1>
+<p class="subtitle">Alle Emojis auf billionairs.luxury — Im Kontext dargestellt</p>
+
+<div class="legend">
+  <span class="keep">Professionell / Funktional</span>
+  <span class="maybe">Akzeptabel / Deine Entscheidung</span>
+  <span class="remove">Billig / Kaputt / Entfernen</span>
+  <span class="dev">Nur Developer (Console)</span>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: LANGUAGE DROPDOWN FLAGS -->
+<!-- ============================================================ -->
+<div class="category">
+  <h2 class="category-title">1. Sprach-Dropdown — Flaggen-Emojis</h2>
+  <p class="category-desc">Sichtbar auf jeder Seite (index.html, login.html, etc.) wenn der User die Sprache wechselt</p>
+
+  <div class="sim-box">
+    <div class="sim-title">So sieht es aktuell aus</div>
+    <div class="lang-dropdown-sim">
+      <div class="lang-item"><span class="lang-flag">🇬🇧</span><span class="lang-name">English</span></div>
+      <div class="lang-item"><span class="lang-flag">🇩🇪</span><span class="lang-name">Deutsch</span></div>
+      <div class="lang-item"><span class="lang-flag">🇫🇷</span><span class="lang-name">Fran&ccedil;ais</span></div>
+      <div class="lang-item"><span class="lang-flag">🇪🇸</span><span class="lang-name">Espa&ntilde;ol</span></div>
+      <div class="lang-item"><span class="lang-flag">🇮🇹</span><span class="lang-name">Italiano</span></div>
+      <div class="lang-item"><span class="lang-flag">🇷🇺</span><span class="lang-name">&#x420;&#x443;&#x441;&#x441;&#x43A;&#x438;&#x439;</span></div>
+      <div class="lang-item"><span class="lang-flag">🇯🇵</span><span class="lang-name">&#x65E5;&#x672C;&#x8A9E;</span></div>
+      <div class="lang-item"><span class="lang-flag">🇨🇳</span><span class="lang-name">&#x4E2D;&#x6587;</span></div>
+      <div class="lang-item"><span class="lang-flag">🇸🇦</span><span class="lang-name">&#x627;&#x644;&#x639;&#x631;&#x628;&#x64A;&#x629;</span></div>
+    </div>
+  </div>
+  <p style="color:#888;font-size:0.8rem;">Dateien: i18n.js, lang-dropdown-simple.js — 9 Flaggen</p>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: PAYMENT SECTION -->
+<!-- ============================================================ -->
+<div class="category">
+  <h2 class="category-title">2. Payment-Bereich — Emojis in Meldungen &amp; Formularen</h2>
+  <p class="category-desc">Sichtbar in index.html beim Zahlungsprozess</p>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 15px;">
+
+    <!-- Warning: Important -->
+    <div class="sim-box">
+      <div class="sim-title">Bank-Transfer Warnung (stripe-payment.js)</div>
+      <div class="warning-sim">
+        <strong>&#x26A0;&#xFE0F; Important:</strong> Please ensure the exact amount of CHF 500,000.00 is transferred. The reference number must be included.
+      </div>
+    </div>
+
+    <!-- Crypto Warning -->
+    <div class="sim-box">
+      <div class="sim-title">Crypto Warnung (stripe-payment.js)</div>
+      <div class="warning-sim">
+        <p style="font-weight:700;">&#x26A0;&#xFE0F; IMPORTANT</p>
+        <p style="color:#aaa;font-size:0.8rem;margin-top:4px;">Only send the exact cryptocurrency. Sending wrong tokens will result in permanent loss.</p>
+      </div>
+    </div>
+
+    <!-- QR Code fallback -->
+    <div class="sim-box">
+      <div class="sim-title">QR Code Fehler (stripe-payment.js)</div>
+      <div style="background:rgba(255,255,255,0.03);padding:12px;border-radius:8px;color:#FF6B6B;font-size:0.85rem;">
+        &#x26A0;&#xFE0F; QR Code could not be loaded. Please copy the wallet address manually.
+      </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="sim-box">
+      <div class="sim-title">Error Modal Icon (stripe-payment.js)</div>
+      <div style="text-align:center;padding:15px;">
+        <div style="font-size:3rem;">&#x26A0;&#xFE0F;</div>
+        <div style="color:#FF6B6B;font-size:0.9rem;margin-top:8px;">Payment could not be processed</div>
+      </div>
+    </div>
+
+    <!-- Success sparkle -->
+    <div class="sim-box">
+      <div class="sim-title">Success Modal Icon (stripe-payment.js)</div>
+      <div style="text-align:center;padding:15px;">
+        <div style="font-size:3rem;">&#x2728;</div>
+        <div style="color:#2ecc71;font-size:0.9rem;margin-top:8px;">Payment Successful!</div>
+      </div>
+    </div>
+
+    <!-- Wire transfer loading -->
+    <div class="sim-box">
+      <div class="sim-title">Wire Transfer Loading (payment-methods-new.js)</div>
+      <div class="wire-loading-sim">
+        <div class="big-icon">&#x23F3;</div>
+        <div class="loading-text">Processing wire transfer request...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment feature tags with checkmarks -->
+  <div class="sim-box" style="margin-top:15px;">
+    <div class="sim-title">Payment-Methoden Features (payment-i18n.js) — 27x in 9 Sprachen</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span class="payment-tag">&#x2713; Instant Processing</span>
+      <span class="payment-tag">&#x2713; Unlimited Amount</span>
+      <span class="payment-tag">&#x2713; Unlimited - Fast</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+      <span class="payment-tag">&#x2713; Sofortige Abwicklung</span>
+      <span class="payment-tag">&#x2713; Unbegrenzter Betrag</span>
+      <span class="payment-tag">&#x2713; Unbegrenzt - Schnell</span>
+    </div>
+    <p style="color:#666;font-size:0.7rem;margin-top:6px;">Hinweis: &#x2713; ist kein Emoji, sondern ein Standard-Unicode-Zeichen (U+2713)</p>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: PAYMENT SUCCESS / CREATE ACCOUNT / LOGIN / AUTO-LOGIN -->
+<!-- ============================================================ -->
+<div class="category">
+  <h2 class="category-title">3. Erfolgs-Seiten — Status-Zeichen</h2>
+  <p class="category-desc">Sichtbar nach erfolgreicher Zahlung, bei Login-Verifizierung</p>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+    <div class="sim-box">
+      <div class="sim-title">payment-success.html</div>
+      <div style="padding:10px;color:#ccc;font-size:0.85rem;">
+        &#x1F4E7; Please check your email for login credentials.
+      </div>
+    </div>
+
+    <div class="sim-box">
+      <div class="sim-title">create-account.html</div>
+      <div style="padding:8px 14px;background:rgba(46,204,113,0.1);border-radius:20px;display:inline-block;color:#2ecc71;font-size:0.85rem;">
+        &#x2713; Payment Confirmed
+      </div>
+    </div>
+
+    <div class="sim-box">
+      <div class="sim-title">login.html — 2FA Verified</div>
+      <div style="padding:10px 24px;background:linear-gradient(135deg,#4CAF50,#388E3C);color:#fff;border-radius:8px;font-size:0.85rem;display:inline-block;">
+        &#x2713; VERIFIED
+      </div>
+    </div>
+
+    <div class="sim-box">
+      <div class="sim-title">auto-login.html</div>
+      <div class="success-sim">
+        <div class="success-icon-big">&#x2713;</div>
+        <div class="success-text">Access granted!<br>Redirecting to your dashboard...</div>
+      </div>
+    </div>
+
+    <div class="sim-box">
+      <div class="sim-title">en.json — "Sent" status</div>
+      <div style="padding:8px;color:#2ecc71;font-size:0.85rem;">&#x2713; Sent</div>
+    </div>
+
+    <div class="sim-box">
+      <div class="sim-title">en.json — "Why Crypto?"</div>
+      <div style="padding:8px;color:#c9a96e;font-size:0.85rem;">&#x2713; Why Crypto?</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: CHAT SYSTEM -->
+<!-- ============================================================ -->
+<div class="category">
+  <h2 class="category-title">4. Chat-System — Funktionale Emojis</h2>
+  <p class="category-desc">Sichtbar im Dashboard-Chat (chat.js) — nur f&uuml;r zahlende Mitglieder</p>
+
+  <div class="sim-box">
+    <div class="sim-title">Chat-Ansicht (Dashboard)</div>
+    <div class="chat-sim">
+      <div class="chat-header-sim">
+        <span style="color:#c9a96e;font-size:0.9rem;">Inner Circle Chat</span>
+        <div>
+          <span class="chat-btn" title="Sound toggle">&#x1F514;</span>
+        </div>
+      </div>
+      <div class="chat-body-sim">
+        <div style="font-size:2.5rem;margin-bottom:8px;">&#x1F4AC;</div>
+        <div>No messages yet. Start the conversation!</div>
+      </div>
+      <div class="chat-input-sim">
+        <span class="chat-btn" title="Datei anh&auml;ngen">&#x1F4CE;</span>
+        <input type="text" placeholder="Type a message..." readonly>
+        <span class="chat-btn" style="color:#c9a96e;" title="Senden">&#x27A4;</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px;">
+    <div class="sim-box">
+      <div class="sim-title">Sound Muted Status</div>
+      <div style="font-size:1.5rem;text-align:center;">&#x1F507; (Muted)</div>
+    </div>
+
+    <div class="sim-box">
+      <div class="sim-title">Screenshot-Schutz Overlay</div>
+      <div style="background:rgba(0,0,0,0.9);padding:20px;text-align:center;border-radius:8px;">
+        <div style="font-size:2rem;margin-bottom:8px;">&#x1F512;</div>
+        <div style="color:#ccc;font-size:0.8rem;">Screenshots are not allowed in this area</div>
+      </div>
+    </div>
+
+    <div class="sim-box">
+      <div class="sim-title">Datei-Link im Chat</div>
+      <div style="padding:8px 14px;background:rgba(201,169,110,0.1);border-radius:8px;display:inline-flex;align-items:center;gap:6px;">
+        <span>&#x1F4C4;</span>
+        <span style="color:#c9a96e;font-size:0.85rem;text-decoration:underline;">document.pdf</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: PUSH NOTIFICATIONS -->
+<!-- ============================================================ -->
+<div class="category">
+  <h2 class="category-title">5. Push-Benachrichtigungen — Titel-Emojis</h2>
+  <p class="category-desc">Browser Push-Notifications (notifications.js) — au&szlig;erhalb der Website angezeigt</p>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 10px;">
+    <div class="notif-sim">
+      <div class="notif-icon">&#x1F514;</div>
+      <div class="notif-text">
+        <div class="notif-title">&#x1F514; BILLIONAIRS</div>
+        <div class="notif-body">Welcome to the Inner Circle</div>
+      </div>
+    </div>
+    <div class="notif-sim">
+      <div class="notif-icon">&#x1F4AC;</div>
+      <div class="notif-text">
+        <div class="notif-title">&#x1F4AC; New Message</div>
+        <div class="notif-body">Someone sent you a message</div>
+      </div>
+    </div>
+    <div class="notif-sim">
+      <div class="notif-icon">&#x2728;</div>
+      <div class="notif-text">
+        <div class="notif-title">&#x2728; BILLIONAIRS</div>
+        <div class="notif-body">Easter Egg unlocked!</div>
+      </div>
+    </div>
+    <div class="notif-sim">
+      <div class="notif-icon">&#x2705;</div>
+      <div class="notif-text">
+        <div class="notif-title">&#x2705; Payment Confirmed</div>
+        <div class="notif-body">Your CHF 500,000 membership is active</div>
+      </div>
+    </div>
+    <div class="notif-sim">
+      <div class="notif-icon">&#x1F4E2;</div>
+      <div class="notif-text">
+        <div class="notif-title">&#x1F4E2; BILLIONAIRS Update</div>
+        <div class="notif-body">New features available</div>
+      </div>
+    </div>
+    <div class="notif-sim">
+      <div class="notif-icon">&#x1F513;</div>
+      <div class="notif-text">
+        <div class="notif-title">&#x1F513; Pyramid Unlocked</div>
+        <div class="notif-body">Your journey begins...</div>
+      </div>
+    </div>
+    <div class="notif-sim">
+      <div class="notif-icon">&#x1F441;&#xFE0F;</div>
+      <div class="notif-text">
+        <div class="notif-title">&#x1F441;&#xFE0F; The Eye</div>
+        <div class="notif-body">The Eye is now watching. Click to continue.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================ -->
+<!-- SECTION 6: ADMIN PANEL -->
+<!-- ============================================================ -->
+<div class="category">
+  <h2 class="category-title">6. Admin-Panel — Navigation &amp; Status-Icons</h2>
+  <p class="category-desc">Nur f&uuml;r CEO/Admin sichtbar (admin.html, admin.js)</p>
+
+  <div class="sim-box">
+    <div class="sim-title">Admin Navigation</div>
+    <div class="admin-nav-sim">
+      <div class="admin-nav-item"><span class="nav-emoji">&#x1F465;</span> Members</div>
+      <div class="admin-nav-item"><span class="nav-emoji">&#x1F95A;</span> Easter Eggs</div>
+      <div class="admin-nav-item"><span class="nav-emoji">&#x1F4AC;</span> Chat</div>
+      <div class="admin-nav-item"><span class="nav-emoji">&#x1F4B0;</span> Payments</div>
+      <div class="admin-nav-item"><span class="nav-emoji">&#x1F4CA;</span> Statistics</div>
+      <div class="admin-nav-item"><span class="nav-emoji">&#x1F512;</span> Security</div>
+      <div class="admin-nav-item"><span class="nav-emoji">&#x1F4CB;</span> Audit</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-top: 15px;">
+    <div class="sim-box">
+      <div class="sim-title">Member Feature-Status</div>
+      <div class="status-row">
+        <span class="status-badge status-unlocked">&#x1F513; P Unlocked</span>
+        <span class="status-badge status-locked">&#x1F512; E Locked</span>
+        <span class="status-badge status-2fa">&#x1F510; 2FA Aktiv</span>
+        <span class="status-badge status-blocked">&#x1F6AB; Blocked</span>
+      </div>
+    </div>
+
+    <div class="sim-box">
+      <div class="sim-title">Admin Toast-Icons</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <span style="padding:6px 12px;background:rgba(46,204,113,0.15);border-radius:6px;">&#x2705; Success</span>
+        <span style="padding:6px 12px;background:rgba(231,76,60,0.15);border-radius:6px;">&#x274C; Error</span>
+        <span style="padding:6px 12px;background:rgba(241,196,15,0.15);border-radius:6px;">&#x26A0;&#xFE0F; Warning</span>
+        <span style="padding:6px 12px;background:rgba(52,152,219,0.15);border-radius:6px;">&#x2139;&#xFE0F; Info</span>
+      </div>
+    </div>
+
+    <div class="sim-box">
+      <div class="sim-title">Danger Zone</div>
+      <div style="background:rgba(231,76,60,0.1);border:1px solid rgba(231,76,60,0.3);border-radius:8px;padding:12px;">
+        <div style="font-weight:600;color:#e74c3c;margin-bottom:8px;">&#x26A0;&#xFE0F; Danger Zone</div>
+        <div style="display:flex;gap:8px;">
+          <span style="padding:6px 12px;background:rgba(46,204,113,0.1);border-radius:6px;font-size:0.8rem;">&#x1F465; Test-User erstellen</span>
+          <span style="padding:6px 12px;background:rgba(231,76,60,0.1);border-radius:6px;font-size:0.8rem;">&#x1F5D1;&#xFE0F; Alle User l&ouml;schen</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sim-box">
+      <div class="sim-title">Bulk Actions</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span class="payment-tag">&#x1F53A; Pyramid</span>
+        <span class="payment-tag">&#x1F441;&#xFE0F; Eye</span>
+        <span class="payment-tag">&#x1F4AC; Chat</span>
+        <span class="payment-tag">&#x1F3AF; Alles</span>
+      </div>
+    </div>
+
+    <div class="sim-box">
+      <div class="sim-title">Modal Aktionen</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span class="payment-tag">&#x1F4E7; Email senden</span>
+        <span class="payment-tag">&#x1F50D; NDA Vollbild</span>
+        <span class="payment-tag">&#x1F4C4; PDF herunterladen</span>
+        <span class="payment-tag">&#x1F4DC; NDA-Vereinbarung</span>
+      </div>
+    </div>
+
+    <div class="sim-box">
+      <div class="sim-title">Emergency &amp; Confirm Dialoge</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span style="padding:6px 12px;background:rgba(231,76,60,0.15);border-radius:6px;font-size:0.85rem;">&#x1F6A8; Emergency Mode</span>
+        <span style="padding:6px 12px;background:rgba(231,76,60,0.15);border-radius:6px;font-size:0.85rem;">&#x1F5D1;&#xFE0F; User l&ouml;schen</span>
+        <span style="padding:6px 12px;background:rgba(155,89,182,0.15);border-radius:6px;font-size:0.85rem;">&#x1F510; 2FA Reset</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================ -->
+<!-- SECTION 7: EMAIL TEMPLATES -->
+<!-- ============================================================ -->
+<div class="category">
+  <h2 class="category-title">7. E-Mail Templates</h2>
+  <p class="category-desc">In E-Mails an Mitglieder (email-utils.js, wire-transfer.js, crypto-payment.js)</p>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 15px;">
+    <div class="sim-box">
+      <div class="sim-title">Email Header</div>
+      <div class="email-sim">
+        <div class="email-header">
+          <h2>&#x1F48E; BILLIONAIRS</h2>
+        </div>
+        <div class="email-subject">Subject: &#x1F48E; BILLIONAIRS LUXURY - CHF 500'000.00 Wire Transfer Instructions</div>
+        <div class="email-from">From: noreply@billionairs.luxury</div>
+      </div>
+    </div>
+
+    <div class="sim-box">
+      <div class="sim-title">Crypto Email Warnung</div>
+      <div class="email-sim">
+        <div style="background:rgba(255,59,48,0.1);padding:12px;border-radius:8px;color:#d00;">
+          &#x26A0;&#xFE0F; Critical Instructions — Only send the exact cryptocurrency to the provided address.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================ -->
+<!-- SECTION 8: FAQ COPY BUTTON -->
+<!-- ============================================================ -->
+<div class="category">
+  <h2 class="category-title">8. FAQ — Copy Button</h2>
+  <p class="category-desc">Sichtbar auf der FAQ/Support-Seite (faq.js)</p>
+
+  <div class="sim-box">
+    <div class="sim-title">Copy-Button Status</div>
+    <div style="display:flex;gap:12px;align-items:center;">
+      <div class="copy-btn-sim">&#x1F4CB; Copy</div>
+      <span style="color:#666;font-size:0.8rem;">&#8594;</span>
+      <div class="copy-btn-sim" style="border-color:rgba(46,204,113,0.3);color:#2ecc71;">&#x2713; Copied!</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================ -->
+<!-- SECTION 9: DEVELOPER-ONLY (Console) -->
+<!-- ============================================================ -->
+<div class="category">
+  <h2 class="category-title">9. Developer-Only — Console Emojis</h2>
+  <p class="category-desc">Nur in Browser-Console sichtbar (console.error, console.log, console.warn) — Nutzer sehen diese NIE</p>
+
+  <div class="sim-box">
+    <div class="sim-title">Typische Console-Ausgaben (~80 Vorkommen)</div>
+    <div style="background:#1a1a1a;padding:14px;border-radius:8px;font-family:monospace;font-size:0.8rem;line-height:1.8;">
+      <div style="color:#e74c3c;">&#x274C; Server error: TypeError: Failed to fetch</div>
+      <div style="color:#e74c3c;">&#x274C; Session error: invalid_session</div>
+      <div style="color:#e74c3c;">&#x274C; Stripe processor init error: undefined</div>
+      <div style="color:#f1c40f;">&#x26A0;&#xFE0F; Language button not found</div>
+      <div style="color:#f1c40f;">&#x26A0;&#xFE0F; No userEmail found</div>
+      <div style="color:#2ecc71;">&#x2705; Hidden Door language set to: de</div>
+      <div style="color:#2ecc71;">&#x2705; Payment verified successfully</div>
+    </div>
+    <p style="color:#666;font-size:0.7rem;margin-top:8px;">Dateien: stripe-payment.js, main.js, lang-dropdown-simple.js, i18n.js, background-sync.js, easter-egg.js, payment-methods-new.js, pwa.js, push-notifications.js, language-system.js, dashboard.html, diverse api/*.js, scripts/*.js</p>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ============================================================ -->
+<!-- VERDICT -->
+<!-- ============================================================ -->
+<div class="verdict">
+  <h2>Zusammenfassung &mdash; 80+ sichtbare Emojis</h2>
+
+  <table style="width:100%;border-collapse:collapse;margin-top:12px;font-size:0.8rem;">
+    <thead>
+      <tr style="border-bottom:1px solid rgba(201,169,110,0.3);">
+        <th style="text-align:left;padding:8px;color:#c9a96e;">Bereich</th>
+        <th style="text-align:center;padding:8px;color:#c9a96e;">Anzahl</th>
+        <th style="text-align:left;padding:8px;color:#c9a96e;">Emojis</th>
+        <th style="text-align:left;padding:8px;color:#c9a96e;">Sichtbar f&uuml;r</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+        <td style="padding:8px;">1. Sprach-Flaggen</td>
+        <td style="text-align:center;padding:8px;">9</td>
+        <td style="padding:8px;">&#x1F1EC;&#x1F1E7; &#x1F1E9;&#x1F1EA; &#x1F1EB;&#x1F1F7; &#x1F1EA;&#x1F1F8; &#x1F1EE;&#x1F1F9; &#x1F1F7;&#x1F1FA; &#x1F1EF;&#x1F1F5; &#x1F1E8;&#x1F1F3; &#x1F1F8;&#x1F1E6;</td>
+        <td style="padding:8px;color:#888;">Alle Besucher</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+        <td style="padding:8px;">2. Payment Warnungen</td>
+        <td style="text-align:center;padding:8px;">6</td>
+        <td style="padding:8px;">&#x26A0;&#xFE0F; &#x2728; &#x23F3;</td>
+        <td style="padding:8px;color:#888;">Zahlende User</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+        <td style="padding:8px;">3. Erfolgs-Seiten</td>
+        <td style="text-align:center;padding:8px;">7</td>
+        <td style="padding:8px;">&#x1F4E7; &#x2713;</td>
+        <td style="padding:8px;color:#888;">Zahlende User</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+        <td style="padding:8px;">4. Chat-System</td>
+        <td style="text-align:center;padding:8px;">9</td>
+        <td style="padding:8px;">&#x1F514; &#x1F507; &#x1F4AC; &#x1F4CE; &#x27A4; &#x1F512; &#x1F4C4;</td>
+        <td style="padding:8px;color:#888;">Mitglieder</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+        <td style="padding:8px;">5. Push Notifications</td>
+        <td style="text-align:center;padding:8px;">8</td>
+        <td style="padding:8px;">&#x1F514; &#x1F4AC; &#x2728; &#x2705; &#x1F4E2; &#x1F513; &#x1F441;&#xFE0F;</td>
+        <td style="padding:8px;color:#888;">Mitglieder</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+        <td style="padding:8px;">6. Admin-Panel</td>
+        <td style="text-align:center;padding:8px;">~35</td>
+        <td style="padding:8px;">&#x1F465; &#x1F4AC; &#x1F4B0; &#x1F4CA; &#x1F512; &#x1F4CB; &#x26A0;&#xFE0F; &#x1F5D1;&#xFE0F; &#x1F6A8; &#x1F510; ...</td>
+        <td style="padding:8px;color:#888;">Nur CEO</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+        <td style="padding:8px;">7. E-Mail Templates</td>
+        <td style="text-align:center;padding:8px;">4</td>
+        <td style="padding:8px;">&#x1F48E; &#x26A0;&#xFE0F;</td>
+        <td style="padding:8px;color:#888;">E-Mail Empf&auml;nger</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+        <td style="padding:8px;">8. FAQ Copy Button</td>
+        <td style="text-align:center;padding:8px;">2</td>
+        <td style="padding:8px;">&#x1F4CB; &#x2713;</td>
+        <td style="padding:8px;color:#888;">Alle Besucher</td>
+      </tr>
+      <tr>
+        <td style="padding:8px;color:#666;">9. Console (Developer)</td>
+        <td style="text-align:center;padding:8px;color:#666;">~80</td>
+        <td style="padding:8px;color:#666;">&#x274C; &#x26A0;&#xFE0F; &#x2705;</td>
+        <td style="padding:8px;color:#666;">Nur Entwickler</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="color:#c9a96e;margin-top:20px;font-weight:600;">Du entscheidest: Welche Bereiche sollen Emoji-frei werden?</p>
+  <p>Schau dir jede Sektion oben an und sag mir f&uuml;r welche Bereiche (1-9) die Emojis entfernt werden sollen.</p>
+</div>
+
+</body>
+</html>
