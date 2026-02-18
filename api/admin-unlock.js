@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless';
+import { verifyAdminSession } from '../lib/verify-admin.js';
 
 export const config = {
     runtime: 'edge'
@@ -13,6 +14,10 @@ export default async function handler(req) {
     }
 
     try {
+        // Admin authentication (cookie + legacy header fallback)
+        const auth = await verifyAdminSession(req);
+        if (!auth.authorized) return auth.response;
+
         const { email, unlock } = await req.json();
         const sql = neon(process.env.DATABASE_URL);
 

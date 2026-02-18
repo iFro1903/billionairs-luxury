@@ -4,7 +4,7 @@
  */
 
 import { neon } from '@neondatabase/serverless';
-import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
+import { verifyAdminSession } from '../lib/verify-admin.js';
 
 export const config = {
     runtime: 'edge'
@@ -18,28 +18,11 @@ export default async function handler(req) {
         });
     }
 
-    // Admin authentication check
-    const adminEmail = req.headers.get('x-admin-email');
-    const adminPassword = req.headers.get('x-admin-password');
-
-    const ADMIN_EMAIL = 'furkan_akaslan@hotmail.com';
-
-    if (adminEmail !== ADMIN_EMAIL) {
-        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-            status: 401,
-            headers: { 'Content-Type': 'application/json' }
-        });
-    }
-
-    const passwordHash = process.env.ADMIN_PASSWORD_HASH;
-    if (!passwordHash || !(await verifyPassword(adminPassword, passwordHash))) {
-        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-            status: 401,
-            headers: { 'Content-Type': 'application/json' }
-        });
-    }
-
     try {
+        // Admin authentication (cookie + legacy header fallback)
+        const auth = await verifyAdminSession(req);
+        if (!auth.authorized) return auth.response;
+
         const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
         if (!dbUrl) {
             throw new Error('Database URL not configured');

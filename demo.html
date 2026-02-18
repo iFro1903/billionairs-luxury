@@ -1,11 +1,14 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- GDPR Cookie Consent (MUST load BEFORE gtag) -->
     <link rel="stylesheet" href="assets/css/cookie-consent.css">
     <link rel="stylesheet" href="assets/css/toast.css?v=20260214">
-    <script src="assets/js/toast.js?v=20260214"></script>
-    <script src="assets/js/cookie-consent.js"></script>
+    <script src="assets/js/toast.js?v=20260214" defer></script>
+    <script src="assets/js/error-handler.js?v=20260218" defer></script>
+    <script src="assets/js/cookie-consent.js" defer></script>
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-80P17E7RZK"></script>
@@ -32,7 +35,7 @@
     
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://billionairs.luxury/">
+    <meta property="og:url" content="https://billionairs.luxury/demo.html">
     <meta property="og:title" content="BILLIONAIRS LUXURY - Exclusive Premium Membership">
     <meta property="og:description" content="Join the elite circle. Exclusive digital membership with premium content and luxury experiences. Limited access.">
     <meta property="og:image" content="https://billionairs.luxury/assets/images/og-image.jpg">
@@ -43,7 +46,7 @@
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://billionairs.luxury/">
+    <meta name="twitter:url" content="https://billionairs.luxury/demo.html">
     <meta name="twitter:title" content="BILLIONAIRS LUXURY - Exclusive Premium Membership">
     <meta name="twitter:description" content="Join the elite circle. Exclusive digital membership with premium content and luxury experiences.">
     <meta name="twitter:image" content="https://billionairs.luxury/assets/images/og-image.jpg">
@@ -69,7 +72,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="BILLIONAIRS">
     <link rel="manifest" href="/manifest.json">
-    <link rel="apple-touch-icon" href="/assets/images/icon-192x192.png">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
     
     <!-- JSON-LD Structured Data for SEO -->
     <script type="application/ld+json">
@@ -99,46 +102,14 @@
     </script>
     
     <!-- Content Security Policy - Enhanced for Multiple Payment Methods -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://js.stripe.com https://www.paypal.com https://www.paypalobjects.com https://www.googletagmanager.com https://www.google-analytics.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.stripe.com https://www.paypal.com https://api.cloudinary.com https://*.google-analytics.com https://*.analytics.google.com https://region1.google-analytics.com; frame-src 'self' https://js.stripe.com https://www.paypal.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://js.stripe.com https://www.googletagmanager.com https://www.google-analytics.com 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.stripe.com https://api.cloudinary.com https://*.google-analytics.com https://*.analytics.google.com https://region1.google-analytics.com https://*.ingest.sentry.io; frame-src 'self' https://js.stripe.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
     
     <!-- Privacy & Security Tags -->
     <meta name="referrer" content="no-referrer">
     <meta http-equiv="X-DNS-Prefetch-Control" content="off">
-    <!-- Allow Google to index homepage only (controlled by robots.txt) -->
-    <meta name="robots" content="noindex, nofollow">
     
-    <!-- Open Graph / Social Media (WhatsApp, Facebook, Instagram, TikTok, Snapchat) -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="BILLIONAIRS - Exclusive Access">
-    <meta property="og:description" content="Beyond wealth. Beyond status. A moment that exists outside of time.">
-    <meta property="og:image" content="https://www.billionairs.luxury/assets/images/og-image.jpg">
-    <meta property="og:image:secure_url" content="https://www.billionairs.luxury/assets/images/og-image.jpg">
-    <meta property="og:image:type" content="image/jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="BILLIONAIRS - Exclusive Digital Experience">
-    <meta property="og:url" content="https://www.billionairs.luxury">
-    <meta property="og:site_name" content="BILLIONAIRS">
-    <meta property="og:locale" content="en_US">
-    
-    <!-- Twitter/X Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="BILLIONAIRS - Exclusive Access">
-    <meta name="twitter:description" content="Beyond wealth. Beyond status. A moment that exists outside of time.">
-    <meta name="twitter:image" content="https://www.billionairs.luxury/assets/images/og-image.jpg">
-    <meta name="twitter:image:alt" content="BILLIONAIRS Logo">
-    
-    <!-- Facebook Specific -->
-    <meta property="fb:app_id" content="your_app_id_here">
-    
-    <!-- Security & Privacy -->
+    <!-- Security -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="robots" content="noindex, nofollow">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/logo.png">
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="apple-touch-icon" href="assets/images/logo.png">
     
     <!-- Preload Critical Images -->
     <link rel="preload" href="assets/images/logo.png" as="image" type="image/png">
@@ -163,6 +134,7 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com">
     
     <!-- Emergency Mode Check -->
     <script>
@@ -196,6 +168,7 @@
     <link rel="stylesheet" href="assets/css/payment-methods.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/language-dropdown.css" media="print" onload="this.media='all'; this.onload=null;">
     <link rel="stylesheet" href="assets/css/faq-footer.css" media="print" onload="this.media='all'; this.onload=null;">
+    <link rel="stylesheet" href="/assets/css/print.css" media="print">
     <noscript>
         <link rel="stylesheet" href="assets/css/payment-methods.css">
         <link rel="stylesheet" href="assets/css/language-dropdown.css">

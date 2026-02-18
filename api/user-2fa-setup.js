@@ -5,6 +5,7 @@
 import { getPool } from '../lib/db.js';
 import { getCorsOrigin } from '../lib/cors.js';
 import { generateSecret, generateBackupCodes, verifyTOTP, generateOtpauthUrl } from '../lib/totp.js';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
 
 // Get session token from cookie
 function getTokenFromCookie(req) {
@@ -38,6 +39,13 @@ export default async function handler(req, res) {
 
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    // Rate Limiting
+    const ip = getClientIp(req);
+    const { allowed, retryAfter } = await checkRateLimit(ip, RATE_LIMITS.TWO_FA_SETUP.maxRequests, RATE_LIMITS.TWO_FA_SETUP.windowMs, RATE_LIMITS.TWO_FA_SETUP.endpoint);
+    if (!allowed) {
+        return res.status(429).json({ error: RATE_LIMITS.TWO_FA_SETUP.message });
     }
 
     const pool = getPool();

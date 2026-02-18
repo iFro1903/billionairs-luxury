@@ -1,0 +1,258 @@
+/* ============================================================
+   BILLIONAIRS — Print Stylesheet
+   Clean, ink-friendly output for all pages
+   ============================================================ */
+
+/* ---- Global Print Reset ---- */
+@media print {
+
+  /* Force light background, dark text for readability & ink saving */
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 12pt;
+    line-height: 1.5;
+    margin: 0;
+    padding: 20px;
+  }
+
+  /* ---- Hide non-essential UI elements ---- */
+  nav,
+  .navbar,
+  .nav-container,
+  .hamburger,
+  .mobile-menu,
+  .cookie-consent-banner,
+  .cookie-consent-overlay,
+  .luxury-toast-container,
+  .language-selector,
+  .lang-dropdown,
+  .particles-js,
+  #particles-js,
+  .scroll-top-btn,
+  .scroll-indicator,
+  .floating-cta,
+  .back-to-top,
+  footer .social-links,
+  .chat-widget,
+  .chat-container,
+  .theme-toggle,
+  .dark-mode-toggle,
+  video,
+  audio,
+  iframe,
+  .easter-egg,
+  .hidden-door-trigger,
+  .btn-group,
+  .action-buttons,
+  .payment-methods,
+  .stripe-payment-form,
+  .crypto-payment-section,
+  .wire-transfer-section,
+  .form-validation-feedback,
+  .lv-feedback,
+  .password-strength-bar,
+  noscript {
+    display: none !important;
+  }
+
+  /* ---- Typography ---- */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    page-break-after: avoid;
+    page-break-inside: avoid;
+    orphans: 3;
+    widows: 3;
+  }
+
+  h1 { font-size: 24pt; margin-bottom: 12pt; }
+  h2 { font-size: 20pt; margin-bottom: 10pt; }
+  h3 { font-size: 16pt; margin-bottom: 8pt; }
+  h4 { font-size: 14pt; margin-bottom: 6pt; }
+
+  p, li, td, th {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* ---- Links: show URL after link text ---- */
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    font-weight: normal;
+    color: #555 !important;
+  }
+
+  /* Don't show URL for internal anchors or javascript links */
+  a[href^="#"]::after,
+  a[href^="javascript:"]::after,
+  a[href^="mailto:"]::after {
+    content: "";
+  }
+
+  /* ---- Images ---- */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Logo: keep visible but resize for print */
+  .logo img,
+  .login-logo-img,
+  .navbar-brand img {
+    max-height: 40px;
+    display: block !important;
+  }
+
+  /* ---- Tables ---- */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    border: 1px solid #ccc !important;
+    padding: 6pt 8pt;
+    text-align: left;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr {
+    page-break-inside: avoid;
+  }
+
+  /* ---- Page breaks ---- */
+  .page-break-before {
+    page-break-before: always;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+  }
+
+  section {
+    page-break-inside: avoid;
+  }
+
+  /* ---- Buttons: show as text ---- */
+  button,
+  .btn,
+  input[type="submit"],
+  input[type="button"] {
+    border: 1px solid #999 !important;
+    padding: 4pt 8pt;
+    font-size: 10pt;
+  }
+
+  /* ---- Forms: hide in print ---- */
+  form {
+    display: none !important;
+  }
+
+  /* ---- Cards & Containers ---- */
+  .card,
+  .feature-card,
+  .benefit-card,
+  .testimonial-card,
+  .member-card,
+  .pricing-card {
+    border: 1px solid #ddd !important;
+    padding: 12pt;
+    margin-bottom: 12pt;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Footer ---- */
+  footer {
+    border-top: 1px solid #999 !important;
+    padding-top: 12pt;
+    margin-top: 24pt;
+    font-size: 9pt;
+  }
+
+  /* ---- Specific page: Privacy & Cookie Policy ---- */
+  .policy-content,
+  .privacy-content,
+  .cookie-content {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* ---- Specific page: Dashboard ---- */
+  .dashboard-container,
+  .member-info {
+    max-width: 100% !important;
+  }
+
+  .status-badge,
+  .membership-tier {
+    border: 1px solid #000 !important;
+    padding: 2pt 6pt;
+    font-weight: bold;
+  }
+
+  /* ---- Specific page: NDA Document ---- */
+  .nda-content,
+  .nda-document {
+    max-width: 100% !important;
+    font-size: 11pt;
+  }
+
+  .signature-area {
+    border-top: 1px solid #000 !important;
+    margin-top: 24pt;
+    padding-top: 12pt;
+  }
+
+  /* ---- Specific page: Certificate ---- */
+  .certificate-container {
+    border: 2px solid #000 !important;
+    padding: 24pt;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+
+  /* ---- Background decorations: remove ---- */
+  .gradient-bg,
+  .hero-bg,
+  .overlay,
+  .backdrop,
+  .animated-bg,
+  .glow,
+  .blur-circle,
+  [class*="particle"],
+  [class*="animation"] {
+    background: none !important;
+    animation: none !important;
+  }
+
+  /* ---- Scrollbar & overflow ---- */
+  html, body {
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* ---- Print header/footer branding ---- */
+  @page {
+    margin: 2cm;
+    size: A4;
+  }
+
+  @page :first {
+    margin-top: 1cm;
+  }
+
+}

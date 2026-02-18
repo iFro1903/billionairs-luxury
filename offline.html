@@ -7,11 +7,11 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
     <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" href="/assets/images/logo.png">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <link rel="manifest" href="/manifest.json">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            margin: 0;
-            padding: 0;
             font-family: 'Montserrat', Arial, sans-serif;
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
             color: #fff;
@@ -25,56 +25,355 @@
             max-width: 600px;
             padding: 40px 20px;
         }
+        /* Animated signal icon */
         .offline-icon {
-            font-size: 80px;
-            margin-bottom: 30px;
-            opacity: 0.8;
+            width: 100px; height: 100px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        .offline-icon svg { width: 100%; height: 100%; }
+        .signal-ring { animation: pulse 2s ease-in-out infinite; transform-origin: center; }
+        .signal-ring:nth-child(2) { animation-delay: 0.3s; }
+        .signal-ring:nth-child(3) { animation-delay: 0.6s; }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
         h1 {
             font-size: 36px;
-            color: #D4A574;
-            margin-bottom: 20px;
+            color: #E8B4A0;
+            margin-bottom: 12px;
             font-weight: 900;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
         }
-        p {
-            font-size: 18px;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 30px;
+        .status-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+        }
+        /* Connection status badge */
+        .connection-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 28px;
+            transition: all 0.4s ease;
+        }
+        .connection-status.offline {
+            background: rgba(220, 53, 69, 0.15);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            color: #ff6b7a;
+        }
+        .connection-status.online {
+            background: rgba(40, 167, 69, 0.15);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            color: #5ddb6f;
+        }
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        /* Buttons */
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
         }
         .retry-button {
-            display: inline-block;
-            padding: 15px 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
             background: linear-gradient(135deg, #D4A574, #F4C2A1);
             color: #1a1a2e;
             text-decoration: none;
             border-radius: 10px;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 14px;
             letter-spacing: 1px;
             cursor: pointer;
             border: none;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, opacity 0.3s;
         }
-        .retry-button:hover {
-            transform: translateY(-2px);
+        .retry-button:hover { transform: translateY(-2px); }
+        .retry-button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .retry-button .spinner {
+            width: 16px; height: 16px;
+            border: 2px solid #1a1a2e;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+        .retry-button.loading .spinner { display: inline-block; }
+        .retry-button.loading .btn-text { display: none; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .home-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            background: transparent;
+            color: #E8B4A0;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border: 1px solid rgba(232, 180, 160, 0.3);
+            transition: all 0.3s ease;
+        }
+        .home-button:hover {
+            border-color: rgba(232, 180, 160, 0.6);
+            background: rgba(232, 180, 160, 0.05);
+        }
+        /* Cached pages section */
+        .cached-pages {
+            margin-top: 10px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .cached-pages h3 {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .cached-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        .cached-list a {
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #E8B4A0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .cached-list a:hover {
+            background: rgba(232, 180, 160, 0.1);
+            border-color: rgba(232, 180, 160, 0.3);
+        }
+        /* Auto-retry countdown */
+        .auto-retry {
+            font-size: 12px;
+            color: rgba(255,255,255,0.35);
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="offline-container">
-        <div class="offline-icon">📡</div>
+    <div class="offline-container" role="main" aria-label="Offline notification">
+        <!-- Animated signal icon -->
+        <div class="offline-icon" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle class="signal-ring" cx="50" cy="70" r="6" fill="#E8B4A0"/>
+                <path class="signal-ring" d="M30 55 A30 30 0 0 1 70 55" stroke="#E8B4A0" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.6"/>
+                <path class="signal-ring" d="M20 42 A42 42 0 0 1 80 42" stroke="#E8B4A0" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.4"/>
+                <path class="signal-ring" d="M10 30 A55 55 0 0 1 90 30" stroke="#E8B4A0" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.2"/>
+                <!-- X overlay -->
+                <line x1="30" y1="30" x2="70" y2="70" stroke="#ff6b7a" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+                <line x1="70" y1="30" x2="30" y2="70" stroke="#ff6b7a" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+            </svg>
+        </div>
+
         <h1>OFFLINE</h1>
-        <p>
-            You are currently offline. Please check your internet connection and try again.
+
+        <div class="connection-status offline" id="connectionStatus">
+            <span class="status-dot"></span>
+            <span id="statusLabel">No Connection</span>
+        </div>
+
+        <p class="status-text">
+            You are currently offline.<br>
+            Please check your internet connection.
         </p>
-        <p style="font-size: 14px; color: rgba(255, 255, 255, 0.6);">
-            Some content may be available from cache.
-        </p>
-        <button class="retry-button" onclick="window.location.reload()">
-            RETRY CONNECTION
-        </button>
+
+        <div class="btn-row">
+            <button class="retry-button" id="retryBtn" onclick="retryConnection()">
+                <span class="spinner"></span>
+                <span class="btn-text">RETRY</span>
+            </button>
+            <a href="/" class="home-button">HOME</a>
+        </div>
+
+        <!-- Cached pages - populated by JS -->
+        <div class="cached-pages" id="cachedPages" style="display:none;">
+            <h3>Available from cache</h3>
+            <div class="cached-list" id="cachedList"></div>
+        </div>
+
+        <p class="auto-retry" id="autoRetryText"></p>
     </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        var retryBtn = document.getElementById('retryBtn');
+        var statusEl = document.getElementById('connectionStatus');
+        var statusLabel = document.getElementById('statusLabel');
+        var autoRetryText = document.getElementById('autoRetryText');
+        var countdown = 15;
+        var timer = null;
+
+        /* --- Auto-retry countdown --- */
+        function startCountdown() {
+            countdown = 15;
+            clearInterval(timer);
+            timer = setInterval(function() {
+                countdown--;
+                if (autoRetryText) {
+                    autoRetryText.textContent = 'Auto-retry in ' + countdown + 's';
+                }
+                if (countdown <= 0) {
+                    clearInterval(timer);
+                    retryConnection();
+                }
+            }, 1000);
+            if (autoRetryText) {
+                autoRetryText.textContent = 'Auto-retry in 15s';
+            }
+        }
+
+        /* --- Retry connection --- */
+        window.retryConnection = function() {
+            retryBtn.classList.add('loading');
+            retryBtn.disabled = true;
+            clearInterval(timer);
+            if (autoRetryText) autoRetryText.textContent = 'Checking connection...';
+
+            fetch('/', { method: 'HEAD', cache: 'no-store' })
+                .then(function(res) {
+                    if (res.ok) {
+                        updateStatus(true);
+                        setTimeout(function() {
+                            // Go back to the page user came from, or home
+                            var ref = document.referrer;
+                            window.location.href = (ref && ref.includes(location.hostname)) ? ref : '/';
+                        }, 800);
+                    } else {
+                        throw new Error('Not OK');
+                    }
+                })
+                .catch(function() {
+                    retryBtn.classList.remove('loading');
+                    retryBtn.disabled = false;
+                    updateStatus(false);
+                    startCountdown();
+                });
+        };
+
+        /* --- Connection status --- */
+        function updateStatus(online) {
+            if (online) {
+                statusEl.className = 'connection-status online';
+                statusLabel.textContent = 'Connected';
+            } else {
+                statusEl.className = 'connection-status offline';
+                statusLabel.textContent = 'No Connection';
+            }
+        }
+
+        /* --- Listen for online/offline events --- */
+        window.addEventListener('online', function() {
+            updateStatus(true);
+            clearInterval(timer);
+            if (autoRetryText) autoRetryText.textContent = 'Connection restored! Redirecting...';
+            setTimeout(function() {
+                var ref = document.referrer;
+                window.location.href = (ref && ref.includes(location.hostname)) ? ref : '/';
+            }, 1000);
+        });
+
+        window.addEventListener('offline', function() {
+            updateStatus(false);
+            startCountdown();
+        });
+
+        /* --- Show cached pages --- */
+        function showCachedPages() {
+            if (!('caches' in window)) return;
+
+            var pageNames = {
+                '/': 'Home',
+                '/index.html': 'Home',
+                '/login.html': 'Login',
+                '/dashboard.html': 'Dashboard',
+                '/create-account.html': 'Create Account',
+                '/404.html': '404'
+            };
+
+            caches.keys().then(function(names) {
+                var checks = names.map(function(name) {
+                    return caches.open(name).then(function(cache) {
+                        return cache.keys();
+                    });
+                });
+                return Promise.all(checks);
+            }).then(function(results) {
+                var urls = [];
+                results.forEach(function(requests) {
+                    requests.forEach(function(req) {
+                        try {
+                            var u = new URL(req.url);
+                            var path = u.pathname;
+                            if (pageNames[path] && urls.indexOf(path) === -1) {
+                                urls.push(path);
+                            }
+                        } catch(e) {}
+                    });
+                });
+
+                if (urls.length > 0) {
+                    var container = document.getElementById('cachedPages');
+                    var list = document.getElementById('cachedList');
+                    container.style.display = 'block';
+                    urls.forEach(function(path) {
+                        var a = document.createElement('a');
+                        a.href = path;
+                        a.textContent = pageNames[path] || path;
+                        list.appendChild(a);
+                    });
+                }
+            }).catch(function() {});
+        }
+
+        /* --- Init --- */
+        var isPreview = location.search.indexOf('preview') !== -1;
+        if (navigator.onLine && !isPreview) {
+            // Already online - redirect immediately
+            updateStatus(true);
+            var ref = document.referrer;
+            window.location.href = (ref && ref.includes(location.hostname)) ? ref : '/';
+        } else {
+            updateStatus(false);
+            startCountdown();
+            showCachedPages();
+        }
+    })();
+    </script>
 </body>
 </html>

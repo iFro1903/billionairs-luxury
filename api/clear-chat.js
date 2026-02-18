@@ -1,11 +1,10 @@
 import { neon } from '@neondatabase/serverless';
 import { getCorsOrigin } from '../lib/cors.js';
+import { verifyAdminSession } from '../lib/verify-admin.js';
 
 export const config = {
     runtime: 'edge'
 };
-
-const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
 
 export default async function handler(req) {
     // CORS
@@ -15,7 +14,8 @@ export default async function handler(req) {
             headers: {
                 'Access-Control-Allow-Origin': getCorsOrigin(req),
                 'Access-Control-Allow-Methods': 'DELETE, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type'
+                'Access-Control-Allow-Headers': 'Content-Type, Cookie',
+                'Access-Control-Allow-Credentials': 'true'
             }
         });
     }
@@ -28,15 +28,9 @@ export default async function handler(req) {
     }
 
     try {
-        const body = await req.json();
-        
-        // Only CEO can clear all chat
-        if (body.ceoEmail !== CEO_EMAIL) {
-            return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-                status: 403,
-                headers: { 'Content-Type': 'application/json' }
-            });
-        }
+        // Admin authentication (cookie + legacy fallback)
+        const auth = await verifyAdminSession(req);
+        if (!auth.authorized) return auth.response;
 
         const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
         if (!dbUrl) throw new Error('No DB URL');

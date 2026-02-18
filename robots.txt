@@ -5,21 +5,44 @@ User-agent: *
 
 # Public pages
 Allow: /
+Allow: /demo.html
 Allow: /login.html
 Allow: /privacy-policy.html
 Allow: /cookie-policy.html
 
 # Block private/sensitive areas
 Disallow: /dashboard.html
+Disallow: /admin.html
 Disallow: /admin/
 Disallow: /api/
 Disallow: /assets/uploads/
+Disallow: /documents/
+Disallow: /public/downloads/
+
+# Block auth & account pages
 Disallow: /reset-password.html
 Disallow: /auto-login.html
 Disallow: /create-account.html
+
+# Block payment pages
 Disallow: /payment-cancelled.html
 Disallow: /payment-success.html
+
+# Block internal pages
 Disallow: /ceo-chat-monitor.html
+Disallow: /nda-signing.html
+Disallow: /nda-preview-launcher.html
+Disallow: /nda-pdf-preview.html
+Disallow: /premium-certificate.html
+Disallow: /the-hidden-door.html
+
+# Block error & fallback pages
+Disallow: /500.html
+Disallow: /offline.html
+Disallow: /emergency-404.html
+
+# Block preview/dev pages
+Disallow: /preview-*.html
 
 # Sitemap location
 Sitemap: https://billionairs.luxury/sitemap.xml

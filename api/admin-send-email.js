@@ -1,12 +1,10 @@
 // Vercel Edge Function — CEO sends email to a member
 import { neon } from '@neondatabase/serverless';
-import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
+import { verifyAdminSession } from '../lib/verify-admin.js';
 
 export const config = {
     runtime: 'edge'
 };
-
-const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
 
 export default async function handler(req) {
     // CORS preflight
@@ -16,7 +14,7 @@ export default async function handler(req) {
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'POST,OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Email, X-Admin-Password'
+                'Access-Control-Allow-Headers': 'Content-Type, Cookie'
             }
         });
     }
@@ -27,24 +25,11 @@ export default async function handler(req) {
         });
     }
 
-    // Auth
-    const adminEmail = (req.headers.get('x-admin-email') || '').trim();
-    const adminPassword = (req.headers.get('x-admin-password') || '').trim();
-
-    if (adminEmail.toLowerCase() !== CEO_EMAIL) {
-        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-            status: 401, headers: { 'Content-Type': 'application/json' }
-        });
-    }
-
-    const passwordHash = process.env.ADMIN_PASSWORD_HASH;
-    if (!passwordHash || !(await verifyPassword(adminPassword, passwordHash))) {
-        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-            status: 401, headers: { 'Content-Type': 'application/json' }
-        });
-    }
-
     try {
+        // Admin authentication (cookie + legacy header fallback)
+        const auth = await verifyAdminSession(req);
+        if (!auth.authorized) return auth.response;
+
         const body = await req.json();
         const { to, subject, message } = body || {};
 

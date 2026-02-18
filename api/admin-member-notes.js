@@ -1,31 +1,18 @@
 // Admin: Save/Load Member Notes
 import { neon } from '@neondatabase/serverless';
-import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
+import { verifyAdminSession } from '../lib/verify-admin.js';
 
 export const config = {
     runtime: 'edge'
 };
 
-const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
-
 export default async function handler(req) {
-    // Admin authentication
-    const adminEmail = req.headers.get('x-admin-email');
-    const adminPassword = req.headers.get('x-admin-password');
-
-    if (adminEmail !== CEO_EMAIL) {
-        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-            status: 401,
-            headers: { 'Content-Type': 'application/json' }
-        });
-    }
-
-    const passwordHash = process.env.ADMIN_PASSWORD_HASH;
-    if (!passwordHash || !(await verifyPassword(adminPassword, passwordHash))) {
-        return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-            status: 401,
-            headers: { 'Content-Type': 'application/json' }
-        });
+    try {
+        // Admin authentication (cookie + legacy header fallback)
+        const auth = await verifyAdminSession(req);
+        if (!auth.authorized) return auth.response;
+    } catch (err) {
+        return new Response(JSON.stringify({ error: 'Auth error' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
     }
 
     const sql = neon(process.env.DATABASE_URL);

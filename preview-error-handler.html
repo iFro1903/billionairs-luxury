@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview: Error Handler — BILLIONAIRS</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Toast System (bestehendes) -->
+    <link rel="stylesheet" href="assets/css/toast.css?v=20260218">
+    <script src="assets/js/toast.js?v=20260218"></script>
+
+    <!-- Global Error Handler (NEU) -->
+    <script src="assets/js/error-handler.js?v=20260218"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .preview-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .preview-badge {
+            display: inline-block;
+            background: rgba(232,180,160,0.12);
+            border: 1px solid rgba(232,180,160,0.25);
+            color: #e8b4a0;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+
+        .preview-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .preview-subtitle {
+            font-size: 15px;
+            color: rgba(255,255,255,0.5);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto 50px;
+        }
+
+        .test-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 28px;
+            transition: all 0.3s ease;
+        }
+        .test-card:hover {
+            border-color: rgba(232,180,160,0.2);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .card-icon {
+            font-size: 28px;
+            margin-bottom: 14px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: rgba(255,255,255,0.45);
+            font-weight: 300;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        .test-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-danger {
+            background: rgba(244,67,54,0.15);
+            color: #ef9a9a;
+            border: 1px solid rgba(244,67,54,0.3);
+        }
+        .btn-danger:hover {
+            background: rgba(244,67,54,0.25);
+            transform: translateY(-1px);
+        }
+
+        .btn-warning {
+            background: rgba(255,193,7,0.12);
+            color: #ffe082;
+            border: 1px solid rgba(255,193,7,0.3);
+        }
+        .btn-warning:hover {
+            background: rgba(255,193,7,0.22);
+            transform: translateY(-1px);
+        }
+
+        .btn-info {
+            background: rgba(232,180,160,0.12);
+            color: #e8b4a0;
+            border: 1px solid rgba(232,180,160,0.3);
+        }
+        .btn-info:hover {
+            background: rgba(232,180,160,0.22);
+            transform: translateY(-1px);
+        }
+
+        /* Status Panel */
+        .status-panel {
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 28px;
+        }
+
+        .status-title {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .status-dot.green { background: #4caf50; box-shadow: 0 0 8px rgba(76,175,80,0.4); }
+        .status-dot.red { background: #f44336; box-shadow: 0 0 8px rgba(244,67,54,0.4); }
+
+        .status-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+        }
+        .status-value {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Console-Hinweis */
+        .console-hint {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+            border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 10px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+        }
+        .console-hint kbd {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: monospace;
+        }
+
+        /* Separator */
+        .section-sep {
+            max-width: 1000px;
+            margin: 40px auto;
+            text-align: center;
+        }
+        .section-sep h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .section-sep p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* 500 Page Preview */
+        .page-preview {
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+        }
+        .page-preview iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+        .preview-label {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0,0,0,0.7);
+            color: #e8b4a0;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 14px; }
+            .test-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="preview-header">
+        <div class="preview-badge">Vorschau — Punkt 14</div>
+        <h1 class="preview-title">Global Error Handler</h1>
+        <p class="preview-subtitle">
+            Teste den neuen Fehlerhandler. Klicke auf die Buttons um verschiedene Fehlertypen zu simulieren.
+            Beachte den Toast oben rechts und die Konsole (F12).
+        </p>
+    </div>
+
+    <!-- Status Panel -->
+    <div class="status-panel">
+        <div class="status-title">Handler Status</div>
+        <div class="status-grid">
+            <div class="status-item">
+                <span class="status-dot" id="dotOnerror"></span>
+                <div>
+                    <div class="status-label">window.onerror</div>
+                    <div class="status-value" id="statusOnerror">Prüfe...</div>
+                </div>
+            </div>
+            <div class="status-item">
+                <span class="status-dot" id="dotPromise"></span>
+                <div>
+                    <div class="status-label">unhandledrejection</div>
+                    <div class="status-value" id="statusPromise">Prüfe...</div>
+                </div>
+            </div>
+            <div class="status-item">
+                <span class="status-dot" id="dotToast"></span>
+                <div>
+                    <div class="status-label">Toast System</div>
+                    <div class="status-value" id="statusToast">Prüfe...</div>
+                </div>
+            </div>
+            <div class="status-item">
+                <span class="status-dot" id="dotApi"></span>
+                <div>
+                    <div class="status-label">Error API</div>
+                    <div class="status-value" id="statusApi">Prüfe...</div>
+                </div>
+            </div>
+            <div class="status-item">
+                <span class="status-dot" id="dotCount"></span>
+                <div>
+                    <div class="status-label">Errors Caught</div>
+                    <div class="status-value" id="statusCount">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Buttons -->
+    <div class="test-grid">
+
+        <!-- Test 1: JS Runtime Error -->
+        <div class="test-card">
+            <div class="card-icon">1</div>
+            <div class="card-title">JS Runtime Error</div>
+            <div class="card-desc">Simuliert einen ungefangenen TypeError — als ob auf eine undefinierte Variable zugegriffen wird.</div>
+            <button class="test-btn btn-danger" onclick="triggerRuntimeError()">
+                Fehler auslösen
+            </button>
+        </div>
+
+        <!-- Test 2: Unhandled Promise -->
+        <div class="test-card">
+            <div class="card-icon">2</div>
+            <div class="card-title">Unhandled Promise Rejection</div>
+            <div class="card-desc">Simuliert eine fehlgeschlagene API-Anfrage ohne try/catch — typisch für vergessene Fehlerbehandlung.</div>
+            <button class="test-btn btn-danger" onclick="triggerPromiseError()">
+                Promise Fehler
+            </button>
+        </div>
+
+        <!-- Test 3: Reference Error -->
+        <div class="test-card">
+            <div class="card-icon">3</div>
+            <div class="card-title">Reference Error</div>
+            <div class="card-desc">Zugriff auf eine Variable die nicht existiert — passiert bei Tippfehlern im Code.</div>
+            <button class="test-btn btn-danger" onclick="triggerReferenceError()">
+                Reference Error
+            </button>
+        </div>
+
+        <!-- Test 4: Manual Report -->
+        <div class="test-card">
+            <div class="card-icon">4</div>
+            <div class="card-title">Manuelles Error-Reporting</div>
+            <div class="card-desc">Nutzt die neue API um programmatisch einen Fehler zu melden — für eigenen Code in try/catch.</div>
+            <button class="test-btn btn-warning" onclick="triggerManualReport()">
+                Manuell melden
+            </button>
+        </div>
+
+        <!-- Test 5: Toast System -->
+        <div class="test-card">
+            <div class="card-icon">5</div>
+            <div class="card-title">Toast-System Check</div>
+            <div class="card-desc">Zeigt alle Toast-Varianten: Erfolg, Warnung, Info, Fehler — so sieht dein Nutzer Feedback.</div>
+            <button class="test-btn btn-info" onclick="showAllToasts()">
+                Alle Toasts zeigen
+            </button>
+        </div>
+
+        <!-- Test 6: Stress Test -->
+        <div class="test-card">
+            <div class="card-icon">6</div>
+            <div class="card-title">Duplikat-Filter Test</div>
+            <div class="card-desc">Löst 10x den gleichen Fehler aus. Der Handler sollte Duplikate erkennen und nur 1 Toast zeigen.</div>
+            <button class="test-btn btn-warning" onclick="triggerDedupeTest()">
+                10x gleicher Fehler
+            </button>
+        </div>
+
+    </div>
+
+    <!-- 500 Page Preview -->
+    <div class="section-sep">
+        <h2>500.html — Server Error Seite</h2>
+        <p>Neue Fehlerseite im BILLIONAIRS-Design (ersetzt die fehlende 500.html)</p>
+    </div>
+
+    <div class="page-preview">
+        <div class="preview-label">500.html</div>
+        <iframe src="500.html"></iframe>
+    </div>
+
+    <!-- Console Hint -->
+    <div class="console-hint">
+        Öffne die Browser-Konsole mit <kbd>F12</kbd> > <kbd>Console</kbd> um die Error-Logs zu sehen.<br>
+        Alle Fehler werden mit <code>[BILLIONAIRS Error]</code> geloggt.
+    </div>
+
+    <script>
+        // === Status prüfen ===
+        window.addEventListener('DOMContentLoaded', function() {
+            // window.onerror
+            var hasOnerror = typeof window.onerror === 'function';
+            setStatus('Onerror', hasOnerror, hasOnerror ? 'Aktiv' : 'Fehlt');
+
+            // unhandledrejection (prüfen via BillionairsErrorHandler)
+            var hasApi = typeof window.BillionairsErrorHandler === 'object';
+            setStatus('Promise', hasApi, hasApi ? 'Aktiv' : 'Fehlt');
+
+            // Toast System
+            var hasToast = window.toast && typeof window.toast.error === 'function';
+            setStatus('Toast', hasToast, hasToast ? 'Aktiv' : 'Fehlt');
+
+            // Error API
+            setStatus('Api', hasApi, hasApi ? 'Verfügbar' : 'Fehlt');
+
+            // Count
+            updateCount();
+        });
+
+        function setStatus(name, ok, text) {
+            var dot = document.getElementById('dot' + name);
+            var val = document.getElementById('status' + name);
+            if (dot) dot.className = 'status-dot ' + (ok ? 'green' : 'red');
+            if (val) val.textContent = text;
+        }
+
+        function updateCount() {
+            var count = window.BillionairsErrorHandler ? window.BillionairsErrorHandler.getErrorCount() : 0;
+            var el = document.getElementById('statusCount');
+            var dot = document.getElementById('dotCount');
+            if (el) el.textContent = count;
+            if (dot) dot.className = 'status-dot ' + (count === 0 ? 'green' : 'red');
+        }
+
+        // === Test-Funktionen ===
+
+        function triggerRuntimeError() {
+            // Ungefangener TypeError
+            setTimeout(function() {
+                var obj = null;
+                obj.someMethod(); // TypeError: Cannot read properties of null
+            }, 100);
+            setTimeout(updateCount, 500);
+        }
+
+        function triggerPromiseError() {
+            // Unhandled Promise Rejection
+            fetch('https://api.example.com/nonexistent-endpoint-12345')
+                .then(function(res) {
+                    if (!res.ok) throw new Error('API responded with ' + res.status);
+                    return res.json();
+                });
+            setTimeout(updateCount, 1500);
+        }
+
+        function triggerReferenceError() {
+            setTimeout(function() {
+                console.log(thisVariableDoesNotExist); // ReferenceError
+            }, 100);
+            setTimeout(updateCount, 500);
+        }
+
+        function triggerManualReport() {
+            if (window.BillionairsErrorHandler) {
+                try {
+                    JSON.parse('{ invalid json }');
+                } catch (e) {
+                    window.BillionairsErrorHandler.report(e, 'preview-test');
+                }
+            }
+            setTimeout(updateCount, 500);
+        }
+
+        function showAllToasts() {
+            if (!window.toast) return;
+            window.toast.success('Payment successful! Premium activated.', { duration: 5000 });
+            setTimeout(function() { window.toast.info('Your session will expire in 5 minutes.', { duration: 5000 }); }, 600);
+            setTimeout(function() { window.toast.warning('Weak internet connection detected.', { duration: 5000 }); }, 1200);
+            setTimeout(function() { window.toast.error('Something went wrong. Please try again.', { duration: 5000 }); }, 1800);
+        }
+
+        function triggerDedupeTest() {
+            // 10x den gleichen Fehler - sollte nur 1x Toast zeigen
+            for (var i = 0; i < 10; i++) {
+                (function(idx) {
+                    setTimeout(function() {
+                        try { throw new Error('Duplicate test error #42'); } 
+                        catch(e) { 
+                            if (window.BillionairsErrorHandler) {
+                                window.BillionairsErrorHandler.report(e, 'dedupe-test');
+                            }
+                        }
+                    }, idx * 50);
+                })(i);
+            }
+            setTimeout(updateCount, 1500);
+        }
+    </script>
+
+</body>
+</html>

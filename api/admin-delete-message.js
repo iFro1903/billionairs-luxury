@@ -1,16 +1,14 @@
 // Delete a single chat message — Edge Runtime (Vercel)
 import { neon } from '@neondatabase/serverless';
-import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
+import { verifyAdminSession } from '../lib/verify-admin.js';
 
 export const config = { runtime: 'edge' };
-
-const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
 
 export default async function handler(req) {
     const corsHeaders = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, x-admin-email, x-admin-password',
+        'Access-Control-Allow-Headers': 'Content-Type, Cookie',
         'Content-Type': 'application/json'
     };
 
@@ -23,17 +21,9 @@ export default async function handler(req) {
     }
 
     try {
-        const adminEmail = req.headers.get('x-admin-email');
-        const adminPassword = req.headers.get('x-admin-password');
-
-        if (!adminEmail || adminEmail.toLowerCase() !== CEO_EMAIL) {
-            return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
-        }
-
-        const passwordHash = process.env.ADMIN_PASSWORD_HASH;
-        if (!adminPassword || !passwordHash || !(await verifyPassword(adminPassword, passwordHash))) {
-            return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401, headers: corsHeaders });
-        }
+        // Admin authentication (cookie + legacy header fallback)
+        const auth = await verifyAdminSession(req);
+        if (!auth.authorized) return auth.response;
 
         const { messageId } = await req.json();
         if (!messageId) {

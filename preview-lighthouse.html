@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lighthouse Performance Audit - BILLIONAIRS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            padding: 30px;
+        }
+        .preview-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(232, 180, 160, 0.2);
+        }
+        .preview-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            background: linear-gradient(135deg, #e8b4a0, #d4a090);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .preview-header p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+        }
+        .stats-row {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 16px 24px;
+            text-align: center;
+            min-width: 140px;
+        }
+        .stat-number { font-size: 1.8rem; font-weight: 600; }
+        .stat-number.green { color: #81c784; }
+        .stat-number.blue { color: #64b5f6; }
+        .stat-number.gold { color: #e8b4a0; }
+        .stat-label {
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+        .section {
+            max-width: 1000px;
+            margin: 0 auto 24px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: #e8b4a0;
+            margin-bottom: 14px;
+        }
+        .fix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+        }
+        .fix-table th {
+            text-align: left;
+            padding: 8px 10px;
+            color: rgba(255,255,255,0.5);
+            font-weight: 500;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .fix-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            color: rgba(255,255,255,0.6);
+        }
+        .fix-table tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.65rem;
+            font-weight: 500;
+        }
+        .badge-fixed {
+            background: rgba(100, 181, 246, 0.15);
+            color: #64b5f6;
+            border: 1px solid rgba(100, 181, 246, 0.3);
+        }
+        .badge-ok {
+            background: rgba(76, 175, 80, 0.15);
+            color: #81c784;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        .pages-affected {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.35);
+        }
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 12px;
+        }
+        @media (max-width: 600px) {
+            .before-after { grid-template-columns: 1fr; }
+        }
+        .ba-box {
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 0.75rem;
+        }
+        .ba-before {
+            background: rgba(244, 67, 54, 0.06);
+            border: 1px solid rgba(244, 67, 54, 0.15);
+        }
+        .ba-after {
+            background: rgba(76, 175, 80, 0.06);
+            border: 1px solid rgba(76, 175, 80, 0.15);
+        }
+        .ba-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .ba-before .ba-label { color: #ef9a9a; }
+        .ba-after .ba-label { color: #81c784; }
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.5);
+            display: block;
+            padding: 2px 0;
+            word-break: break-all;
+        }
+        code .highlight { color: #64b5f6; }
+        code .removed { color: #ef9a9a; text-decoration: line-through; }
+        .impact-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .impact-meter {
+            flex: 1;
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .impact-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+        .impact-fill.high { background: linear-gradient(90deg, #81c784, #4caf50); }
+        .impact-fill.medium { background: linear-gradient(90deg, #64b5f6, #42a5f5); }
+        .impact-label {
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.4);
+            min-width: 60px;
+        }
+        .note-box {
+            background: rgba(232, 180, 160, 0.05);
+            border: 1px solid rgba(232, 180, 160, 0.15);
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.6;
+            margin-top: 20px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .note-box strong { color: #e8b4a0; }
+    </style>
+</head>
+<body>
+    <div class="preview-header">
+        <h1>Lighthouse Performance Audit</h1>
+        <p>Point 15 -- Render-blocking resources, font loading, preconnect hints</p>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-box">
+            <div class="stat-number blue">15</div>
+            <div class="stat-label">Scripts Fixed</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number blue">7</div>
+            <div class="stat-label">CSS Deferred</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number green">4</div>
+            <div class="stat-label">Fonts Non-Blocking</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number gold">6</div>
+            <div class="stat-label">Preconnects Added</div>
+        </div>
+    </div>
+
+    <!-- Fix 1: Render-blocking Scripts -->
+    <div class="section">
+        <h2>1. Render-Blocking Scripts -> defer</h2>
+        <table class="fix-table">
+            <tr>
+                <th>Script</th>
+                <th>Fix</th>
+                <th>Pages</th>
+            </tr>
+            <tr>
+                <td>toast.js</td>
+                <td><span class="badge badge-fixed">+ defer</span></td>
+                <td class="pages-affected">index, login, create-account, dashboard, demo</td>
+            </tr>
+            <tr>
+                <td>error-handler.js</td>
+                <td><span class="badge badge-fixed">+ defer</span></td>
+                <td class="pages-affected">index, login, create-account, dashboard, demo, 404</td>
+            </tr>
+            <tr>
+                <td>cookie-consent.js</td>
+                <td><span class="badge badge-fixed">+ defer</span></td>
+                <td class="pages-affected">index, login, create-account, dashboard, demo, 404</td>
+            </tr>
+            <tr>
+                <td>Stripe SDK (js.stripe.com/v3/)</td>
+                <td><span class="badge badge-fixed">+ defer</span></td>
+                <td class="pages-affected">index</td>
+            </tr>
+            <tr>
+                <td>particles.min.js (CDN)</td>
+                <td><span class="badge badge-fixed">+ defer</span></td>
+                <td class="pages-affected">dashboard</td>
+            </tr>
+            <tr>
+                <td>i18n.js, lang-dropdown-simple.js, login-i18n.js</td>
+                <td><span class="badge badge-fixed">+ defer</span></td>
+                <td class="pages-affected">login</td>
+            </tr>
+        </table>
+        <div class="before-after">
+            <div class="ba-box ba-before">
+                <div class="ba-label">Before</div>
+                <code>&lt;script src="assets/js/toast.js"&gt;&lt;/script&gt;</code>
+                <code>&lt;script src="https://js.stripe.com/v3/"&gt;&lt;/script&gt;</code>
+            </div>
+            <div class="ba-box ba-after">
+                <div class="ba-label">After</div>
+                <code>&lt;script src="assets/js/toast.js" <span class="highlight">defer</span>&gt;&lt;/script&gt;</code>
+                <code>&lt;script src="https://js.stripe.com/v3/" <span class="highlight">defer</span>&gt;&lt;/script&gt;</code>
+            </div>
+        </div>
+        <div class="impact-bar">
+            <div class="impact-label">Impact</div>
+            <div class="impact-meter"><div class="impact-fill high" style="width: 85%"></div></div>
+            <div class="impact-label" style="text-align:right; color:#81c784">High</div>
+        </div>
+    </div>
+
+    <!-- Fix 2: Google Fonts Non-Blocking -->
+    <div class="section">
+        <h2>2. Google Fonts -> Non-blocking Loading</h2>
+        <table class="fix-table">
+            <tr>
+                <th>Page</th>
+                <th>Before</th>
+                <th>After</th>
+            </tr>
+            <tr>
+                <td>login.html</td>
+                <td style="color:#ef9a9a">Blocking</td>
+                <td><span class="badge badge-fixed">media="print" onload</span></td>
+            </tr>
+            <tr>
+                <td>create-account.html</td>
+                <td style="color:#ef9a9a">Blocking</td>
+                <td><span class="badge badge-fixed">media="print" onload</span></td>
+            </tr>
+            <tr>
+                <td>dashboard.html</td>
+                <td style="color:#ef9a9a">Blocking</td>
+                <td><span class="badge badge-fixed">media="print" onload</span></td>
+            </tr>
+            <tr>
+                <td>404.html</td>
+                <td style="color:#ef9a9a">Blocking</td>
+                <td><span class="badge badge-fixed">media="print" onload</span></td>
+            </tr>
+            <tr>
+                <td>index.html</td>
+                <td><span class="badge badge-ok">Already OK</span></td>
+                <td><span class="badge badge-ok">Already OK</span></td>
+            </tr>
+            <tr>
+                <td>demo.html</td>
+                <td><span class="badge badge-ok">Already OK</span></td>
+                <td><span class="badge badge-ok">Already OK</span></td>
+            </tr>
+        </table>
+        <div class="before-after">
+            <div class="ba-box ba-before">
+                <div class="ba-label">Before (blocking)</div>
+                <code>&lt;link href="...fonts..." rel="stylesheet"&gt;</code>
+            </div>
+            <div class="ba-box ba-after">
+                <div class="ba-label">After (non-blocking)</div>
+                <code>&lt;link rel="stylesheet" href="...fonts..." <span class="highlight">media="print" onload="this.media='all'"</span>&gt;</code>
+                <code>&lt;noscript&gt;&lt;link rel="stylesheet" href="...fonts..."&gt;&lt;/noscript&gt;</code>
+            </div>
+        </div>
+        <div class="impact-bar">
+            <div class="impact-label">Impact</div>
+            <div class="impact-meter"><div class="impact-fill high" style="width: 75%"></div></div>
+            <div class="impact-label" style="text-align:right; color:#81c784">High</div>
+        </div>
+    </div>
+
+    <!-- Fix 3: Below-the-fold CSS -->
+    <div class="section">
+        <h2>3. Below-the-fold CSS -> Deferred (index.html)</h2>
+        <table class="fix-table">
+            <tr>
+                <th>CSS File</th>
+                <th>Before</th>
+                <th>After</th>
+            </tr>
+            <tr>
+                <td>testimonials.css</td>
+                <td style="color:#ef9a9a">Blocking</td>
+                <td><span class="badge badge-fixed">Deferred</span></td>
+            </tr>
+            <tr>
+                <td>member-comments.css</td>
+                <td style="color:#ef9a9a">Blocking</td>
+                <td><span class="badge badge-fixed">Deferred</span></td>
+            </tr>
+            <tr>
+                <td>benefits.css</td>
+                <td style="color:#ef9a9a">Blocking</td>
+                <td><span class="badge badge-fixed">Deferred</span></td>
+            </tr>
+            <tr>
+                <td>faq-footer.css</td>
+                <td style="color:#ef9a9a">Blocking</td>
+                <td><span class="badge badge-fixed">Deferred</span></td>
+            </tr>
+            <tr>
+                <td>easter-egg.css (dashboard)</td>
+                <td style="color:#ef9a9a">Blocking</td>
+                <td><span class="badge badge-fixed">Deferred</span></td>
+            </tr>
+        </table>
+        <div class="impact-bar">
+            <div class="impact-label">Impact</div>
+            <div class="impact-meter"><div class="impact-fill medium" style="width: 55%"></div></div>
+            <div class="impact-label" style="text-align:right; color:#64b5f6">Medium</div>
+        </div>
+    </div>
+
+    <!-- Fix 4: Preconnect Hints -->
+    <div class="section">
+        <h2>4. Preconnect Hints Added</h2>
+        <table class="fix-table">
+            <tr>
+                <th>Domain</th>
+                <th>Purpose</th>
+                <th>Pages</th>
+            </tr>
+            <tr>
+                <td>www.googletagmanager.com</td>
+                <td>Google Analytics</td>
+                <td class="pages-affected">index, login, create-account, dashboard, demo</td>
+            </tr>
+            <tr>
+                <td>js.stripe.com</td>
+                <td>Stripe SDK</td>
+                <td class="pages-affected">index</td>
+            </tr>
+            <tr>
+                <td>cdn.jsdelivr.net</td>
+                <td>Particles.js, QR.js</td>
+                <td class="pages-affected">login, create-account, dashboard, 404</td>
+            </tr>
+        </table>
+        <div class="impact-bar">
+            <div class="impact-label">Impact</div>
+            <div class="impact-meter"><div class="impact-fill medium" style="width: 40%"></div></div>
+            <div class="impact-label" style="text-align:right; color:#64b5f6">Medium</div>
+        </div>
+    </div>
+
+    <!-- Fix 5: Head ordering -->
+    <div class="section">
+        <h2>5. Head Tag Ordering Fixed</h2>
+        <table class="fix-table">
+            <tr>
+                <th>Fix</th>
+                <th>Pages</th>
+            </tr>
+            <tr>
+                <td>Moved meta charset + viewport to top of head (before any scripts/styles)</td>
+                <td class="pages-affected">index, login, create-account, dashboard, demo</td>
+            </tr>
+        </table>
+        <div class="before-after">
+            <div class="ba-box ba-before">
+                <div class="ba-label">Before</div>
+                <code>&lt;head&gt;</code>
+                <code>  &lt;link rel="stylesheet" ...&gt;</code>
+                <code>  &lt;script src="..."&gt;&lt;/script&gt;</code>
+                <code>  <span class="removed">&lt;meta charset="UTF-8"&gt;</span></code>
+                <code>  <span class="removed">&lt;meta name="viewport" ...&gt;</span></code>
+            </div>
+            <div class="ba-box ba-after">
+                <div class="ba-label">After</div>
+                <code>&lt;head&gt;</code>
+                <code>  <span class="highlight">&lt;meta charset="UTF-8"&gt;</span></code>
+                <code>  <span class="highlight">&lt;meta name="viewport" ...&gt;</span></code>
+                <code>  &lt;link rel="stylesheet" ...&gt;</code>
+                <code>  &lt;script src="..." defer&gt;&lt;/script&gt;</code>
+            </div>
+        </div>
+    </div>
+
+    <div class="note-box">
+        <strong>Erwarteter Lighthouse-Effekt:</strong> First Contentful Paint (FCP) verbessert sich um ca. 0.5-1s. 
+        Render-blocking Ressourcen reduziert von ~15 auf ~3 (nur kritische CSS). 
+        Keine visuellen Aenderungen am Design -- nur schnelleres Laden.
+    </div>
+</body>
+</html>

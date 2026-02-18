@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation Preview - BILLIONAIRS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/form-validation.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        .preview-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(232, 180, 160, 0.2);
+        }
+
+        .preview-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            background: linear-gradient(135deg, #e8b4a0, #d4a090);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .preview-header p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+        }
+
+        .status-bar {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 30px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .status-bar span {
+            color: #81c784;
+            font-weight: 500;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .demo-grid { grid-template-columns: 1fr; }
+        }
+
+        .demo-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .demo-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: #e8b4a0;
+            margin-bottom: 6px;
+        }
+
+        .demo-card .subtitle {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: rgba(232, 180, 160, 0.4);
+            box-shadow: 0 0 0 2px rgba(232, 180, 160, 0.1);
+        }
+
+        input::placeholder {
+            color: rgba(255,255,255,0.25);
+        }
+
+        .legend {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px;
+            grid-column: 1 / -1;
+        }
+
+        .legend h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: #e8b4a0;
+            margin-bottom: 16px;
+        }
+
+        .legend-items {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.green { background: #81c784; }
+        .legend-dot.red { background: #ef9a9a; }
+
+        .legend-border {
+            width: 30px;
+            height: 2px;
+            border-radius: 2px;
+        }
+
+        .legend-border.green { background: rgba(76, 175, 80, 0.4); }
+        .legend-border.red { background: rgba(244, 67, 54, 0.4); }
+
+        .how-it-works {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px;
+            grid-column: 1 / -1;
+        }
+
+        .how-it-works h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: #e8b4a0;
+            margin-bottom: 12px;
+        }
+
+        .how-it-works ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .how-it-works li {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.5);
+            padding: 6px 0;
+            padding-left: 18px;
+            position: relative;
+        }
+
+        .how-it-works li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 4px;
+            background: #e8b4a0;
+            border-radius: 50%;
+        }
+
+        .integrated-pages {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .integrated-pages code {
+            color: rgba(232, 180, 160, 0.7);
+            background: rgba(255,255,255,0.05);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-header">
+        <h1>Live Form Validation</h1>
+        <p>Point 18 -- Real-time validation feedback with visual indicators</p>
+    </div>
+
+    <div class="status-bar">
+        Status: <span>form-validation.js loaded</span> |
+        CSS: <span>form-validation.css loaded</span> |
+        Fields detected: <span id="fieldCount">0</span> |
+        Language: <span id="currentLang">en</span>
+    </div>
+
+    <div class="demo-grid">
+        <!-- Legend -->
+        <div class="legend">
+            <h3>Visual Indicators</h3>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <div class="legend-dot green"></div>
+                    Green dot after label = valid
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot red"></div>
+                    Red dot after label = invalid
+                </div>
+                <div class="legend-item">
+                    <div class="legend-border green"></div>
+                    Green border = valid input
+                </div>
+                <div class="legend-item">
+                    <div class="legend-border red"></div>
+                    Red border = invalid input
+                </div>
+                <div class="legend-item">
+                    Text below field = feedback message
+                </div>
+            </div>
+        </div>
+
+        <!-- Email Demo -->
+        <div class="demo-card">
+            <h3>Email Validation</h3>
+            <p class="subtitle">Type a valid or invalid email address</p>
+            <form>
+                <div class="form-group">
+                    <label for="demo-email">Email Address</label>
+                    <input type="email" id="demo-email" placeholder="e.g. name@example.com">
+                </div>
+            </form>
+        </div>
+
+        <!-- Password Demo -->
+        <div class="demo-card">
+            <h3>Password Strength</h3>
+            <p class="subtitle">See the strength indicator change in real-time</p>
+            <form>
+                <div class="form-group">
+                    <label for="demo-pw">Password</label>
+                    <input type="password" id="demo-pw" placeholder="Min. 8 characters">
+                </div>
+                <div class="form-group">
+                    <label for="demo-pw-confirm">Confirm Password</label>
+                    <input type="password" id="demo-pw-confirm" name="confirmPassword" placeholder="Re-enter password">
+                </div>
+            </form>
+        </div>
+
+        <!-- Name Demo -->
+        <div class="demo-card">
+            <h3>Name Validation</h3>
+            <p class="subtitle">Minimum 2 characters required</p>
+            <form>
+                <div class="form-group">
+                    <label for="demo-firstname">First Name</label>
+                    <input type="text" id="demo-firstname" name="firstName" required placeholder="e.g. Alexander">
+                </div>
+                <div class="form-group">
+                    <label for="demo-lastname">Last Name</label>
+                    <input type="text" id="demo-lastname" name="lastName" required placeholder="e.g. Worthington">
+                </div>
+            </form>
+        </div>
+
+        <!-- Phone Demo -->
+        <div class="demo-card">
+            <h3>Phone Validation</h3>
+            <p class="subtitle">Accepts international formats</p>
+            <form>
+                <div class="form-group">
+                    <label for="demo-phone">Phone Number</label>
+                    <input type="tel" id="demo-phone" placeholder="e.g. +49 170 1234567">
+                </div>
+            </form>
+        </div>
+
+        <!-- How It Works -->
+        <div class="how-it-works">
+            <h3>How It Works</h3>
+            <ul>
+                <li>The script auto-discovers all form fields on a page</li>
+                <li>Validators are bound based on input type (email, password, tel) and name/id attributes</li>
+                <li>Input events are debounced (300ms) to avoid flickering during typing</li>
+                <li>On blur (leaving a field), validation runs immediately</li>
+                <li>Feedback messages are multilingual (EN, DE, FR, ES, IT)</li>
+                <li>CSS classes (lv-valid, lv-invalid, lv-neutral) control visual states</li>
+                <li>An ARIA live region announces changes for screen readers</li>
+                <li>The script does NOT block form submission -- it only provides visual hints</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="integrated-pages">
+        Integrated in: <code>index.html</code> <code>login.html</code> <code>create-account.html</code> <code>reset-password.html</code> <code>admin.html</code>
+    </div>
+
+    <script src="assets/js/form-validation.js?v=20260218"></script>
+    <script>
+        // Update status
+        setTimeout(function() {
+            var fields = document.querySelectorAll('input:not([type="hidden"]):not([type="submit"])');
+            document.getElementById('fieldCount').textContent = fields.length;
+            document.getElementById('currentLang').textContent = document.documentElement.lang || 'en';
+        }, 500);
+    </script>
+</body>
+</html>

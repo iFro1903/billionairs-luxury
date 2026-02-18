@@ -1,12 +1,11 @@
 // Two-Factor Auth Setup für CEO
 import { neon } from '@neondatabase/serverless';
-import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
+import { verifyAdminSession } from '../lib/verify-admin.js';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
 
 export const config = {
   runtime: 'edge'
 };
-
-const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
 
 export default async function handler(request) {
   if (request.method !== 'POST') {
@@ -16,33 +15,22 @@ export default async function handler(request) {
     });
   }
 
+  // Rate Limiting
+  const ip = getClientIp(request);
+  const { allowed, retryAfter } = await checkRateLimit(ip, RATE_LIMITS.TWO_FA_SETUP.maxRequests, RATE_LIMITS.TWO_FA_SETUP.windowMs, RATE_LIMITS.TWO_FA_SETUP.endpoint);
+  if (!allowed) {
+    return new Response(JSON.stringify({ error: RATE_LIMITS.TWO_FA_SETUP.message }), {
+      status: 429,
+      headers: { 'Content-Type': 'application/json', 'Retry-After': String(retryAfter) }
+    });
+  }
+
   try {
-    const { email, password, action, code } = await request.json();
+    // Admin authentication (cookie + legacy body fallback)
+    const auth = await verifyAdminSession(request);
+    if (!auth.authorized) return auth.response;
 
-    // Verify credentials with Web Crypto API
-    if (email !== CEO_EMAIL) {
-      return new Response(JSON.stringify({ error: 'Invalid credentials' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
-
-    const passwordHash = process.env.ADMIN_PASSWORD_HASH;
-    if (!passwordHash) {
-      console.error('ADMIN_PASSWORD_HASH not set');
-      return new Response(JSON.stringify({ error: 'Server configuration error' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
-
-    const isValidPassword = await verifyPassword(password, passwordHash);
-    if (!isValidPassword) {
-      return new Response(JSON.stringify({ error: 'Invalid credentials' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
+    const { action, code } = await request.json();
 
     const sql = neon(process.env.DATABASE_URL);
 

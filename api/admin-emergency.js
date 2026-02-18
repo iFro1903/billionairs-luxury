@@ -1,11 +1,10 @@
 import { neon } from '@neondatabase/serverless';
-import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
+import { verifyAdminSession } from '../lib/verify-admin.js';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
 
 export const config = {
     runtime: 'edge'
 };
-
-const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
 
 export default async function handler(req) {
     if (req.method !== 'POST') {
@@ -15,33 +14,22 @@ export default async function handler(req) {
         });
     }
 
+    // Rate Limiting - Destruktive Admin-Aktion
+    const ip = getClientIp(req);
+    const { allowed, retryAfter } = await checkRateLimit(ip, RATE_LIMITS.ADMIN_DESTRUCTIVE.maxRequests, RATE_LIMITS.ADMIN_DESTRUCTIVE.windowMs, RATE_LIMITS.ADMIN_DESTRUCTIVE.endpoint);
+    if (!allowed) {
+        return new Response(JSON.stringify({ error: RATE_LIMITS.ADMIN_DESTRUCTIVE.message }), {
+            status: 429,
+            headers: { 'Content-Type': 'application/json', 'Retry-After': String(retryAfter) }
+        });
+    }
+
     try {
-        const { email, password, mode } = await req.json();
+        // Admin authentication (cookie + legacy body fallback)
+        const auth = await verifyAdminSession(req);
+        if (!auth.authorized) return auth.response;
 
-        // CEO only
-        if (!email || email.toLowerCase() !== CEO_EMAIL.toLowerCase()) {
-            return new Response(JSON.stringify({ error: 'Access denied' }), {
-                status: 403,
-                headers: { 'Content-Type': 'application/json' }
-            });
-        }
-
-        // Verify admin password
-        const passwordHash = process.env.ADMIN_PASSWORD_HASH;
-        if (!passwordHash || !password) {
-            return new Response(JSON.stringify({ error: 'Authentication required' }), {
-                status: 401,
-                headers: { 'Content-Type': 'application/json' }
-            });
-        }
-
-        const isValidPassword = await verifyPassword(password, passwordHash);
-        if (!isValidPassword) {
-            return new Response(JSON.stringify({ error: 'Invalid credentials' }), {
-                status: 401,
-                headers: { 'Content-Type': 'application/json' }
-            });
-        }
+        const { mode } = await req.json();
 
         const sql = neon(process.env.DATABASE_URL);
 

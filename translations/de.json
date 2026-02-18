@@ -63,7 +63,18 @@
     "overlay_verifying": "Zugang wird überprüft",
     "overlay_authenticating": "Ihre Anmeldedaten werden verifiziert...",
     "overlay_granted": "Zugang gewährt",
-    "overlay_redirecting": "Weiterleitung zu Ihrem Dashboard..."
+    "overlay_redirecting": "Weiterleitung zu Ihrem Dashboard...",
+    "reset_new_subtitle": "Erstellen Sie ein neues, sicheres Passwort für Ihr Konto.",
+    "reset_pw_placeholder": "Mindestens 8 Zeichen",
+    "reset_req_min_chars": "Mindestens 8 Zeichen",
+    "reset_req_recommended": "Empfohlen: Groß- & Kleinbuchstaben, Zahlen & Sonderzeichen",
+    "reset_confirm_placeholder": "Passwort erneut eingeben",
+    "twofa_title": "Authentifizierungscode",
+    "twofa_hint": "Geben Sie den 6-stelligen Code aus Ihrer<br>Microsoft Authenticator App ein",
+    "twofa_verify": "VERIFIZIEREN",
+    "twofa_use_backup": "Stattdessen einen Backup-Code verwenden",
+    "twofa_backup_label": "Backup-Code",
+    "twofa_verify_backup": "BACKUP-CODE VERIFIZIEREN"
   },
   "register": {
     "title": "Registrierung",
@@ -217,7 +228,8 @@
     "upload": "Hochladen",
     "view": "Ansehen",
     "details": "Details",
-    "actions": "Aktionen"
+    "actions": "Aktionen",
+    "skip_to_main": "Zum Hauptinhalt springen"
   },
   "accessibility": {
     "toggle_navigation": "Navigation umschalten",

@@ -1,9 +1,9 @@
 // Service Worker for BILLIONAIRS PWA
 // Provides offline support and performance caching
 
-const CACHE_NAME = 'billionairs-v1.0.6';
-const RUNTIME_CACHE = 'billionairs-runtime-v1.0.6';
-const IMAGE_CACHE = 'billionairs-images-v1.0.6';
+const CACHE_NAME = 'billionairs-v1.1.0';
+const RUNTIME_CACHE = 'billionairs-runtime-v1.1.0';
+const IMAGE_CACHE = 'billionairs-images-v1.1.0';
 
 // Resources to cache immediately on install
 const PRECACHE_URLS = [
@@ -12,20 +12,33 @@ const PRECACHE_URLS = [
     '/dashboard.html',
     '/login.html',
     '/create-account.html',
+    '/offline.html',
+    '/404.html',
     '/assets/css/styles.css',
     '/assets/css/faq-footer.css',
     '/assets/css/mobile-nav.css',
     '/assets/css/easter-egg.css',
     '/assets/css/admin.css',
     '/assets/css/cookie-consent.css',
+    '/assets/css/toast.css',
+    '/assets/css/form-validation.css',
+    '/assets/css/print.css',
     '/assets/js/analytics.js',
     '/assets/js/cookie-consent.js',
     '/assets/js/i18n.js',
     '/assets/js/faq.js',
     '/assets/js/lang-dropdown-simple.js',
     '/assets/js/modal-i18n.js',
+    '/assets/js/error-handler.js',
+    '/assets/js/accessibility.js',
+    '/assets/js/form-validation.js',
+    '/assets/js/toast.js',
     '/assets/images/logo.png',
+    '/assets/images/logo.svg',
     '/assets/images/og-image.jpg',
+    '/assets/images/favicon-32x32.png',
+    '/assets/images/favicon-16x16.png',
+    '/favicon.ico',
     '/manifest.json'
 ];
 

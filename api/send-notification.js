@@ -10,6 +10,7 @@
 
 import { neon } from '@neondatabase/serverless';
 import { captureError } from '../lib/sentry.js';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
 
 export const config = {
     runtime: 'edge'
@@ -52,6 +53,16 @@ export default async function handler(req) {
         return new Response(JSON.stringify({ error: 'Method not allowed' }), {
             status: 405,
             headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
+    // Rate Limiting
+    const ip = getClientIp(req);
+    const { allowed, retryAfter } = await checkRateLimit(ip, RATE_LIMITS.SEND_NOTIFICATION.maxRequests, RATE_LIMITS.SEND_NOTIFICATION.windowMs, RATE_LIMITS.SEND_NOTIFICATION.endpoint);
+    if (!allowed) {
+        return new Response(JSON.stringify({ error: RATE_LIMITS.SEND_NOTIFICATION.message }), {
+            status: 429,
+            headers: { 'Content-Type': 'application/json', 'Retry-After': String(retryAfter) }
         });
     }
 

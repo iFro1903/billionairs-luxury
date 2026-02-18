@@ -5,6 +5,7 @@
 
 import { neon } from '@neondatabase/serverless';
 import { captureError } from '../lib/sentry.js';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
 
 export const config = {
     runtime: 'edge'
@@ -18,8 +19,15 @@ export default async function handler(req) {
         });
     }
 
-    // Simple rate limiting ohne IP-Block Check (da öffentlicher Endpoint)
-    // Limitierung erfolgt durch Neon DB Connection Limits
+    // Rate Limiting
+    const ip = getClientIp(req);
+    const { allowed, retryAfter } = await checkRateLimit(ip, RATE_LIMITS.PUSH_SUBSCRIBE.maxRequests, RATE_LIMITS.PUSH_SUBSCRIBE.windowMs, RATE_LIMITS.PUSH_SUBSCRIBE.endpoint);
+    if (!allowed) {
+        return new Response(JSON.stringify({ error: RATE_LIMITS.PUSH_SUBSCRIBE.message }), {
+            status: 429,
+            headers: { 'Content-Type': 'application/json', 'Retry-After': String(retryAfter) }
+        });
+    }
 
     try {
         const body = await req.json();

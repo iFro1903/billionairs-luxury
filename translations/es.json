@@ -35,7 +35,18 @@
     "overlay_verifying": "Verificando acceso",
     "overlay_authenticating": "Autenticando sus credenciales...",
     "overlay_granted": "Acceso concedido",
-    "overlay_redirecting": "Redirigiendo a su panel de control..."
+    "overlay_redirecting": "Redirigiendo a su panel de control...",
+    "reset_new_subtitle": "Crea una nueva contraseña segura para tu cuenta.",
+    "reset_pw_placeholder": "Al menos 8 caracteres",
+    "reset_req_min_chars": "Al menos 8 caracteres",
+    "reset_req_recommended": "Recomendado: Mayúsculas y minúsculas, números y caracteres especiales",
+    "reset_confirm_placeholder": "Reingresar contraseña",
+    "twofa_title": "Código de autenticación",
+    "twofa_hint": "Ingresa el código de 6 dígitos de tu<br>aplicación Microsoft Authenticator",
+    "twofa_verify": "VERIFICAR",
+    "twofa_use_backup": "Usar un código de respaldo en su lugar",
+    "twofa_backup_label": "Código de respaldo",
+    "twofa_verify_backup": "VERIFICAR CÓDIGO DE RESPALDO"
   },
   "common": {
     "inner_circle": "CÍRCULO INTERIOR",
@@ -47,7 +58,8 @@
     "copied": "¡Copiado!",
     "swiss_secured": "Seguridad Suiza",
     "blockchain_verified": "Verificado Blockchain",
-    "exclusive_access": "Acceso Exclusivo"
+    "exclusive_access": "Acceso Exclusivo",
+    "skip_to_main": "Ir al contenido principal"
   },
   "hero_section": {
     "what_you_see": "Lo que está a punto de ver no se puede comprar. Solo acceder.",

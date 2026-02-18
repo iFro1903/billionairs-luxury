@@ -14,7 +14,18 @@
     "overlay_verifying": "Проверка доступа",
     "overlay_authenticating": "Аутентификация ваших данных...",
     "overlay_granted": "Доступ предоставлен",
-    "overlay_redirecting": "Перенаправление на панель управления..."
+    "overlay_redirecting": "Перенаправление на панель управления...",
+    "reset_new_subtitle": "Создайте новый надёжный пароль для вашего аккаунта.",
+    "reset_pw_placeholder": "Минимум 8 символов",
+    "reset_req_min_chars": "Минимум 8 символов",
+    "reset_req_recommended": "Рекомендуется: Заглавные и строчные буквы, цифры и специальные символы",
+    "reset_confirm_placeholder": "Повторите пароль",
+    "twofa_title": "Код аутентификации",
+    "twofa_hint": "Введите 6-значный код из вашего<br>приложения Microsoft Authenticator",
+    "twofa_verify": "ПОДТВЕРДИТЬ",
+    "twofa_use_backup": "Использовать резервный код",
+    "twofa_backup_label": "Резервный код",
+    "twofa_verify_backup": "ПОДТВЕРДИТЬ РЕЗЕРВНЫЙ КОД"
   },
   "hero": {
     "title": "Добро пожаловать в эксклюзивный клуб Billionairs",
@@ -32,7 +43,8 @@
     "copied": "Скопировано!",
     "swiss_secured": "Швейцарская безопасность",
     "blockchain_verified": "Верифицировано Blockchain",
-    "exclusive_access": "Эксклюзивный доступ"
+    "exclusive_access": "Эксклюзивный доступ",
+    "skip_to_main": "Перейти к основному содержанию"
   },
   "hero_section": {
     "what_you_see": "То, что вы собираетесь увидеть, нельзя купить. Только получить доступ.",

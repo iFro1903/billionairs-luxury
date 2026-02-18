@@ -3,12 +3,13 @@
 module.exports = async (req, res) => {
     const { getPool } = await import('../lib/db.js');
     const { getCorsOrigin } = await import('../lib/cors.js');
+    const { verifyAdminSession } = await import('../lib/verify-admin.js');
 
     // CORS headers
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Origin', getCorsOrigin(req));
     res.setHeader('Access-Control-Allow-Methods', 'DELETE,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-admin-email, x-admin-password');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Cookie');
 
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
@@ -18,24 +19,14 @@ module.exports = async (req, res) => {
         return res.status(405).json({ success: false, error: 'Method not allowed' });
     }
 
-    // Admin auth check — verify both email AND password
-    const adminEmail = req.headers['x-admin-email'];
-    const adminPassword = req.headers['x-admin-password'];
-    
-    if (adminEmail !== 'furkan_akaslan@hotmail.com') {
-        return res.status(401).json({ success: false, error: 'Unauthorized' });
-    }
-    
-    // Verify admin password against stored hash
-    const passwordHash = process.env.ADMIN_PASSWORD_HASH;
-    if (!adminPassword || !passwordHash) {
-        return res.status(401).json({ success: false, error: 'Unauthorized' });
-    }
-    
-    const { verifyPasswordSimple } = await import('../lib/password-hash.js');
-    const isValidPassword = await verifyPasswordSimple(adminPassword, passwordHash);
-    if (!isValidPassword) {
-        return res.status(401).json({ success: false, error: 'Unauthorized' });
+    // Admin auth check — cookie + legacy header fallback
+    try {
+        const auth = await verifyAdminSession(req);
+        if (!auth.authorized) {
+            return res.status(401).json({ success: false, error: 'Unauthorized' });
+        }
+    } catch (err) {
+        return res.status(500).json({ success: false, error: 'Auth error' });
     }
 
     const { email } = req.body;

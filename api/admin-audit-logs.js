@@ -1,12 +1,10 @@
 // Admin Endpoint: Get Audit Logs
 import { neon } from '@neondatabase/serverless';
-import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
+import { verifyAdminSession } from '../lib/verify-admin.js';
 
 export const config = {
   runtime: 'edge'
 };
-
-const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
 
 export default async function handler(request) {
   if (request.method !== 'GET') {
@@ -17,24 +15,9 @@ export default async function handler(request) {
   }
 
   try {
-    // Authentifizierung prüfen
-    const adminEmail = request.headers.get('x-admin-email');
-    const adminPassword = request.headers.get('x-admin-password');
-
-    if (adminEmail !== CEO_EMAIL) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
-
-    const passwordHash = process.env.ADMIN_PASSWORD_HASH;
-    if (!passwordHash || !(await verifyPassword(adminPassword, passwordHash))) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
+    // Admin authentication (cookie + legacy header fallback)
+    const auth = await verifyAdminSession(request);
+    if (!auth.authorized) return auth.response;
 
     const url = new URL(request.url);
     const limit = parseInt(url.searchParams.get('limit') || '100');

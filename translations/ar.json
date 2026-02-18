@@ -14,7 +14,18 @@
     "overlay_verifying": "التحقق من الوصول",
     "overlay_authenticating": "جارٍ التحقق من بيانات الاعتماد الخاصة بك...",
     "overlay_granted": "تم منح الوصول",
-    "overlay_redirecting": "جارٍ إعادة التوجيه إلى لوحة التحكم..."
+    "overlay_redirecting": "جارٍ إعادة التوجيه إلى لوحة التحكم...",
+    "reset_new_subtitle": "أنشئ كلمة مرور جديدة وآمنة لحسابك.",
+    "reset_pw_placeholder": "8 أحرف على الأقل",
+    "reset_req_min_chars": "8 أحرف على الأقل",
+    "reset_req_recommended": "موصى به: أحرف كبيرة وصغيرة، أرقام ورموز خاصة",
+    "reset_confirm_placeholder": "أعد إدخال كلمة المرور",
+    "twofa_title": "رمز المصادقة",
+    "twofa_hint": "أدخل الرمز المكون من 6 أرقام من<br>تطبيق Microsoft Authenticator",
+    "twofa_verify": "تحقق",
+    "twofa_use_backup": "استخدم رمز احتياطي بدلاً من ذلك",
+    "twofa_backup_label": "رمز احتياطي",
+    "twofa_verify_backup": "تحقق من الرمز الاحتياطي"
   },
   "hero": {
     "title": "مرحباً بك في نادي المليارديرات الحصري",
@@ -32,7 +43,8 @@
     "copied": "تم النسخ!",
     "swiss_secured": "مؤمن سويسري",
     "blockchain_verified": "مُصادق عليه بالبلوكشين",
-    "exclusive_access": "وصول حصري"
+    "exclusive_access": "وصول حصري",
+    "skip_to_main": "تخطي إلى المحتوى الرئيسي"
   },
   "hero_section": {
     "what_you_see": "ما أنت على وشك رؤيته لا يمكن شراؤه. يمكن الوصول إليه فقط.",

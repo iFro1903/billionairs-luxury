@@ -14,7 +14,18 @@
     "overlay_verifying": "アクセスを確認中",
     "overlay_authenticating": "資格情報を認証しています...",
     "overlay_granted": "アクセスが許可されました",
-    "overlay_redirecting": "ダッシュボードへリダイレクト中..."
+    "overlay_redirecting": "ダッシュボードへリダイレクト中...",
+    "reset_new_subtitle": "アカウントの新しい安全なパスワードを作成してください。",
+    "reset_pw_placeholder": "8文字以上",
+    "reset_req_min_chars": "8文字以上",
+    "reset_req_recommended": "推奨：大文字・小文字、数字、特殊文字",
+    "reset_confirm_placeholder": "パスワードを再入力",
+    "twofa_title": "認証コード",
+    "twofa_hint": "Microsoft Authenticatorアプリの<br>6桁のコードを入力してください",
+    "twofa_verify": "確認",
+    "twofa_use_backup": "代わりにバックアップコードを使用",
+    "twofa_backup_label": "バックアップコード",
+    "twofa_verify_backup": "バックアップコードを確認"
   },
   "hero": {
     "title": "ビリオネアーズ限定クラブへようこそ",
@@ -32,7 +43,8 @@
     "copied": "コピーされました！",
     "swiss_secured": "スイス認証済み",
     "blockchain_verified": "ブロックチェーン検証済み",
-    "exclusive_access": "限定アクセス"
+    "exclusive_access": "限定アクセス",
+    "skip_to_main": "メインコンテンツへスキップ"
   },
   "hero_section": {
     "what_you_see": "これからご覧になるものは購入できません。アクセスのみ可能です。",

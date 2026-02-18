@@ -4,6 +4,8 @@
  */
 
 import { neon } from '@neondatabase/serverless';
+import { verifyAdminSession } from '../lib/verify-admin.js';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
 
 export const config = {
     runtime: 'edge'
@@ -17,24 +19,22 @@ export default async function handler(req) {
         });
     }
 
-    try {
-        const { adminEmail, adminPassword } = await req.json();
+    // Rate Limiting - Destruktive Admin-Aktion
+    const ip = getClientIp(req);
+    const { allowed, retryAfter } = await checkRateLimit(ip, RATE_LIMITS.ADMIN_DESTRUCTIVE.maxRequests, RATE_LIMITS.ADMIN_DESTRUCTIVE.windowMs, RATE_LIMITS.ADMIN_DESTRUCTIVE.endpoint);
+    if (!allowed) {
+        return new Response(JSON.stringify({ error: RATE_LIMITS.ADMIN_DESTRUCTIVE.message }), {
+            status: 429,
+            headers: { 'Content-Type': 'application/json', 'Retry-After': String(retryAfter) }
+        });
+    }
 
-        // Verify admin credentials
+    try {
+        // Admin authentication (cookie + legacy body fallback)
+        const auth = await verifyAdminSession(req);
+        if (!auth.authorized) return auth.response;
+
         const sql = neon(process.env.DATABASE_URL);
-        
-        // Import password verification
-        const { verifyPasswordSimple: verifyPassword } = await import('../lib/password-hash.js');
-        const passwordHash = process.env.ADMIN_PASSWORD_HASH;
-        
-        const isValidPassword = await verifyPassword(adminPassword, passwordHash);
-        
-        if (adminEmail !== 'furkan_akaslan@hotmail.com' || !isValidPassword) {
-            return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-                status: 401,
-                headers: { 'Content-Type': 'application/json' }
-            });
-        }
 
         // Delete all users except CEO
         const ceoEmail = 'furkan_akaslan@hotmail.com';

@@ -14,7 +14,18 @@
     "overlay_verifying": "验证访问权限",
     "overlay_authenticating": "正在验证您的凭据...",
     "overlay_granted": "访问已授权",
-    "overlay_redirecting": "正在跳转到您的控制台..."
+    "overlay_redirecting": "正在跳转到您的控制台...",
+    "reset_new_subtitle": "为您的账户创建一个新的安全密码。",
+    "reset_pw_placeholder": "至少8个字符",
+    "reset_req_min_chars": "至少8个字符",
+    "reset_req_recommended": "建议：大小写字母、数字和特殊字符",
+    "reset_confirm_placeholder": "重新输入密码",
+    "twofa_title": "验证码",
+    "twofa_hint": "输入您的Microsoft Authenticator应用中的<br>6位数验证码",
+    "twofa_verify": "验证",
+    "twofa_use_backup": "改用备用代码",
+    "twofa_backup_label": "备用代码",
+    "twofa_verify_backup": "验证备用代码"
   },
   "hero": {
     "title": "欢迎来到亿万富翁专属俱乐部",
@@ -32,7 +43,8 @@
     "copied": "已复制！",
     "swiss_secured": "瑞士安全保障",
     "blockchain_verified": "区块链验证",
-    "exclusive_access": "专属访问"
+    "exclusive_access": "专属访问",
+    "skip_to_main": "跳到主要内容"
   },
   "hero_section": {
     "what_you_see": "您即将看到的无法购买。只能访问。",

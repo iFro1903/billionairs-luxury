@@ -6,6 +6,7 @@ const crypto = require('crypto');
 module.exports = async (req, res) => {
     const { getPool } = await import('../lib/db.js');
     const { getCorsOrigin } = await import('../lib/cors.js');
+    const { checkRateLimit, getClientIp, RATE_LIMITS } = await import('../lib/rate-limiter.js');
 
     // Generate cryptographically secure session token (same method as auth.js)
     function generateToken() {
@@ -31,6 +32,13 @@ module.exports = async (req, res) => {
 
     if (req.method !== 'POST') {
         return res.status(405).json({ success: false, error: 'Method not allowed' });
+    }
+
+    // Rate Limiting
+    const ip = getClientIp(req);
+    const { allowed, retryAfter } = await checkRateLimit(ip, RATE_LIMITS.AUTO_LOGIN.maxRequests, RATE_LIMITS.AUTO_LOGIN.windowMs, RATE_LIMITS.AUTO_LOGIN.endpoint);
+    if (!allowed) {
+        return res.status(429).json({ success: false, error: RATE_LIMITS.AUTO_LOGIN.message });
     }
 
     const pool = getPool();

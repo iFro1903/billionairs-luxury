@@ -1,5 +1,6 @@
 // Two-Factor Auth Verification beim Login
 import { neon } from '@neondatabase/serverless';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '../lib/rate-limiter.js';
 
 export const config = {
   runtime: 'edge'
@@ -12,6 +13,16 @@ export default async function handler(request) {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
       status: 405,
       headers: { 'Content-Type': 'application/json' }
+    });
+  }
+
+  // Rate Limiting - Brute-Force-Schutz für 2FA
+  const ip = getClientIp(request);
+  const { allowed, retryAfter } = await checkRateLimit(ip, RATE_LIMITS.TWO_FA_VERIFY.maxRequests, RATE_LIMITS.TWO_FA_VERIFY.windowMs, RATE_LIMITS.TWO_FA_VERIFY.endpoint);
+  if (!allowed) {
+    return new Response(JSON.stringify({ error: RATE_LIMITS.TWO_FA_VERIFY.message }), {
+      status: 429,
+      headers: { 'Content-Type': 'application/json', 'Retry-After': String(retryAfter) }
     });
   }
 

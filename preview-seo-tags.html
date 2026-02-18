@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Meta Tags Audit - BILLIONAIRS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            padding: 30px;
+        }
+        .preview-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(232, 180, 160, 0.2);
+        }
+        .preview-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            background: linear-gradient(135deg, #e8b4a0, #d4a090);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .preview-header p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+        }
+        .summary-bar {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .summary-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 12px 20px;
+            text-align: center;
+        }
+        .summary-number {
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+        .summary-number.green { color: #81c784; }
+        .summary-number.red { color: #ef9a9a; }
+        .summary-number.gold { color: #e8b4a0; }
+        .summary-label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+        .page-grid {
+            display: grid;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .page-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 20px;
+            overflow: hidden;
+        }
+        .page-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .page-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: #e8b4a0;
+        }
+        .page-badge {
+            font-size: 0.65rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .badge-indexed {
+            background: rgba(76, 175, 80, 0.15);
+            color: #81c784;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        .badge-noindex {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .tags-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 6px;
+        }
+        .tag-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.6);
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.02);
+        }
+        .tag-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .tag-dot.ok { background: #81c784; }
+        .tag-dot.missing { background: #ef9a9a; }
+        .tag-dot.added { background: #64b5f6; }
+        .tag-dot.fixed { background: #ffb74d; }
+
+        .social-preview {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .social-preview h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #e8b4a0;
+            margin-bottom: 16px;
+        }
+        .social-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .social-cards { grid-template-columns: 1fr; }
+        }
+        .social-card {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .social-card-label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        /* Facebook/WhatsApp style preview */
+        .fb-preview {
+            background: #242526;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #3a3b3c;
+        }
+        .fb-preview .fb-img {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #1a1a2e, #0a0a0a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.2);
+            font-size: 0.8rem;
+        }
+        .fb-preview .fb-content {
+            padding: 12px;
+        }
+        .fb-preview .fb-domain {
+            font-size: 0.7rem;
+            color: #8e8e8e;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .fb-preview .fb-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #e4e6eb;
+            margin: 4px 0;
+            line-height: 1.3;
+        }
+        .fb-preview .fb-desc {
+            font-size: 0.78rem;
+            color: #8e8e8e;
+            line-height: 1.4;
+        }
+        /* Twitter/X style preview */
+        .tw-preview {
+            background: #15202b;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #38444d;
+        }
+        .tw-preview .tw-img {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #1a1a2e, #0a0a0a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.2);
+            font-size: 0.8rem;
+        }
+        .tw-preview .tw-content {
+            padding: 12px;
+        }
+        .tw-preview .tw-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #e7e9ea;
+            line-height: 1.3;
+        }
+        .tw-preview .tw-desc {
+            font-size: 0.78rem;
+            color: #71767b;
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+        .tw-preview .tw-domain {
+            font-size: 0.72rem;
+            color: #71767b;
+            margin-top: 4px;
+        }
+        .legend-bar {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            color: rgba(255,255,255,0.5);
+        }
+        .changes-summary {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .changes-summary h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: #e8b4a0;
+            margin-bottom: 12px;
+        }
+        .change-list {
+            list-style: none;
+        }
+        .change-list li {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            padding: 5px 0;
+            padding-left: 16px;
+            position: relative;
+        }
+        .change-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+        }
+        .change-list li.added::before { background: #64b5f6; }
+        .change-list li.fixed::before { background: #ffb74d; }
+        .change-list li.removed::before { background: #ef9a9a; }
+    </style>
+</head>
+<body>
+    <div class="preview-header">
+        <h1>SEO Meta Tags Audit</h1>
+        <p>Point 16 -- Open Graph, Twitter Cards, JSON-LD, and more</p>
+    </div>
+
+    <div class="summary-bar">
+        <div class="summary-item">
+            <div class="summary-number gold">8</div>
+            <div class="summary-label">Pages Audited</div>
+        </div>
+        <div class="summary-item">
+            <div class="summary-number green">1</div>
+            <div class="summary-label">Already Complete</div>
+        </div>
+        <div class="summary-item">
+            <div class="summary-number" style="color:#64b5f6">6</div>
+            <div class="summary-label">Pages Fixed</div>
+        </div>
+        <div class="summary-item">
+            <div class="summary-number" style="color:#ffb74d">1</div>
+            <div class="summary-label">Duplicates Cleaned</div>
+        </div>
+    </div>
+
+    <div class="legend-bar">
+        <div class="legend-item"><div class="tag-dot ok"></div> Already existed</div>
+        <div class="legend-item"><div class="tag-dot added"></div> Newly added</div>
+        <div class="legend-item"><div class="tag-dot fixed"></div> Fixed / cleaned</div>
+        <div class="legend-item"><div class="tag-dot missing"></div> Not applicable</div>
+    </div>
+
+    <div class="page-grid">
+        <!-- index.html -->
+        <div class="page-card">
+            <div class="page-card-header">
+                <span class="page-name">index.html (Landing Page)</span>
+                <span class="page-badge badge-indexed">Indexed</span>
+            </div>
+            <div class="tags-grid">
+                <div class="tag-item"><div class="tag-dot ok"></div> title</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> description</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> keywords</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> canonical</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> robots</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> og:title</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> og:description</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> og:image</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> og:url</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> twitter:card</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> twitter:title</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> twitter:image</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> JSON-LD (3x)</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> hreflang (9)</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> author</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> theme-color</div>
+            </div>
+        </div>
+
+        <!-- login.html -->
+        <div class="page-card">
+            <div class="page-card-header">
+                <span class="page-name">login.html</span>
+                <span class="page-badge badge-indexed">Indexed</span>
+            </div>
+            <div class="tags-grid">
+                <div class="tag-item"><div class="tag-dot ok"></div> title</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> description</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> keywords</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> canonical</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> robots</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:title</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:description</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:image</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:url</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:card</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:title</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:image</div>
+                <div class="tag-item"><div class="tag-dot added"></div> author</div>
+                <div class="tag-item"><div class="tag-dot added"></div> theme-color</div>
+            </div>
+        </div>
+
+        <!-- create-account.html -->
+        <div class="page-card">
+            <div class="page-card-header">
+                <span class="page-name">create-account.html</span>
+                <span class="page-badge badge-noindex">noindex</span>
+            </div>
+            <div class="tags-grid">
+                <div class="tag-item"><div class="tag-dot ok"></div> title</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> description</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> canonical</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> robots</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:title</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:description</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:image</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:url</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:card</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:title</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:image</div>
+                <div class="tag-item"><div class="tag-dot added"></div> author</div>
+                <div class="tag-item"><div class="tag-dot added"></div> theme-color</div>
+            </div>
+        </div>
+
+        <!-- dashboard.html -->
+        <div class="page-card">
+            <div class="page-card-header">
+                <span class="page-name">dashboard.html</span>
+                <span class="page-badge badge-noindex">noindex</span>
+            </div>
+            <div class="tags-grid">
+                <div class="tag-item"><div class="tag-dot ok"></div> title</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> description</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> canonical</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> robots</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> theme-color</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:title</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:description</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:image</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:url</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:card</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:title</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:image</div>
+                <div class="tag-item"><div class="tag-dot added"></div> author</div>
+            </div>
+        </div>
+
+        <!-- demo.html -->
+        <div class="page-card">
+            <div class="page-card-header">
+                <span class="page-name">demo.html</span>
+                <span class="page-badge badge-noindex">noindex</span>
+            </div>
+            <div class="tags-grid">
+                <div class="tag-item"><div class="tag-dot ok"></div> title</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> description</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> keywords</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> canonical</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> robots</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> og:title</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> og:image</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> twitter:card</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> JSON-LD (1x)</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> author</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> theme-color</div>
+                <div class="tag-item"><div class="tag-dot fixed"></div> og:url fixed</div>
+                <div class="tag-item"><div class="tag-dot fixed"></div> duplicates removed</div>
+                <div class="tag-item"><div class="tag-dot fixed"></div> fb:app_id removed</div>
+            </div>
+        </div>
+
+        <!-- privacy-policy.html -->
+        <div class="page-card">
+            <div class="page-card-header">
+                <span class="page-name">privacy-policy.html</span>
+                <span class="page-badge badge-indexed">Indexed</span>
+            </div>
+            <div class="tags-grid">
+                <div class="tag-item"><div class="tag-dot ok"></div> title</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> description</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> canonical</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> robots</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:title</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:description</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:image</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:url</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:card</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:title</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:image</div>
+                <div class="tag-item"><div class="tag-dot added"></div> author</div>
+                <div class="tag-item"><div class="tag-dot added"></div> theme-color</div>
+            </div>
+        </div>
+
+        <!-- cookie-policy.html -->
+        <div class="page-card">
+            <div class="page-card-header">
+                <span class="page-name">cookie-policy.html</span>
+                <span class="page-badge badge-indexed">Indexed</span>
+            </div>
+            <div class="tags-grid">
+                <div class="tag-item"><div class="tag-dot ok"></div> title</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> description</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> canonical</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> robots</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:title</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:description</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:image</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:url</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:card</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:title</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:image</div>
+                <div class="tag-item"><div class="tag-dot added"></div> author</div>
+                <div class="tag-item"><div class="tag-dot added"></div> theme-color</div>
+            </div>
+        </div>
+
+        <!-- 404.html -->
+        <div class="page-card">
+            <div class="page-card-header">
+                <span class="page-name">404.html</span>
+                <span class="page-badge badge-noindex">noindex</span>
+            </div>
+            <div class="tags-grid">
+                <div class="tag-item"><div class="tag-dot ok"></div> title</div>
+                <div class="tag-item"><div class="tag-dot ok"></div> robots</div>
+                <div class="tag-item"><div class="tag-dot added"></div> description</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:title</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:description</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:image</div>
+                <div class="tag-item"><div class="tag-dot added"></div> og:url</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:card</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:title</div>
+                <div class="tag-item"><div class="tag-dot added"></div> twitter:image</div>
+                <div class="tag-item"><div class="tag-dot added"></div> author</div>
+                <div class="tag-item"><div class="tag-dot added"></div> theme-color</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social Media Preview Simulation -->
+    <div class="social-preview">
+        <h2>Social Media Preview (index.html)</h2>
+        <p style="font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-bottom: 16px;">How your link appears when shared on social media</p>
+        <div class="social-cards">
+            <!-- Facebook / WhatsApp -->
+            <div class="social-card">
+                <div class="social-card-label">Facebook / WhatsApp / LinkedIn</div>
+                <div class="fb-preview">
+                    <div class="fb-img">og-image.jpg (1200x630)</div>
+                    <div class="fb-content">
+                        <div class="fb-domain">billionairs.luxury</div>
+                        <div class="fb-title">BILLIONAIRS - The World's Most Exclusive Private Membership</div>
+                        <div class="fb-desc">Join the most exclusive private membership in the world. Limited to exceptional individuals. CHF 500'000 lifetime investment.</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Twitter/X -->
+            <div class="social-card">
+                <div class="social-card-label">Twitter / X</div>
+                <div class="tw-preview">
+                    <div class="tw-img">og-image.jpg (1200x630)</div>
+                    <div class="tw-content">
+                        <div class="tw-title">BILLIONAIRS - The World's Most Exclusive Private Membership</div>
+                        <div class="tw-desc">Join the most exclusive private membership in the world. Limited to exceptional individuals.</div>
+                        <div class="tw-domain">billionairs.luxury</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Changes Summary -->
+    <div class="changes-summary">
+        <h2>Changes Made</h2>
+        <ul class="change-list">
+            <li class="added">login.html: Added Open Graph tags (og:title, og:description, og:image, og:url, og:type, og:site_name, og:locale)</li>
+            <li class="added">login.html: Added Twitter Card tags (twitter:card, twitter:title, twitter:description, twitter:image)</li>
+            <li class="added">login.html: Added meta author and theme-color</li>
+            <li class="added">create-account.html: Added OG + Twitter + author + theme-color</li>
+            <li class="added">dashboard.html: Added OG + Twitter + author</li>
+            <li class="added">privacy-policy.html: Added OG + Twitter + author + theme-color</li>
+            <li class="added">cookie-policy.html: Added OG + Twitter + author + theme-color</li>
+            <li class="added">404.html: Added description, OG + Twitter + author + theme-color</li>
+            <li class="fixed">demo.html: Removed duplicate OG tags (2nd set with wrong og:url www.billionairs.luxury)</li>
+            <li class="fixed">demo.html: Removed duplicate Twitter Card tags (2nd set)</li>
+            <li class="fixed">demo.html: Removed duplicate robots meta tag (3rd instance)</li>
+            <li class="fixed">demo.html: Removed fb:app_id with placeholder value "your_app_id_here"</li>
+            <li class="fixed">demo.html: Fixed og:url from "/" to "/demo.html"</li>
+            <li class="removed">Removed all PayPal domains from CSP (per user request -- not needed for luxury amounts)</li>
+        </ul>
+    </div>
+</body>
+</html>

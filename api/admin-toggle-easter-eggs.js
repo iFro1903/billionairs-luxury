@@ -38,29 +38,20 @@ export default async function handler(req) {
             });
         }
 
-        const sql = neon(process.env.DATABASE_URL);
-        const { action, feature, email } = await req.json();
-
-        // Verify admin authentication
-        const authHeader = req.headers.get('authorization');
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        // Admin authentication (cookie + legacy Bearer fallback)
+        const { verifyAdminSession } = await import('../lib/verify-admin.js');
+        const auth = await verifyAdminSession(req);
+        if (!auth.authorized) {
             return new Response(JSON.stringify({ error: 'Unauthorized' }), { 
                 status: 401, 
                 headers 
             });
         }
 
-        const token = authHeader.substring(7);
-        
-        // Check if user is admin (CEO email hardcoded check)
+        const sql = neon(process.env.DATABASE_URL);
+        const { action, feature, email } = await req.json();
+
         const CEO_EMAIL = 'furkan_akaslan@hotmail.com';
-        
-        if (token !== CEO_EMAIL) {
-            return new Response(JSON.stringify({ error: 'Admin access required' }), { 
-                status: 403, 
-                headers 
-            });
-        }
 
         // Handle different actions
         if (action === 'unlock-all' || action === 'lock-all') {

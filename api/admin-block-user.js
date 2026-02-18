@@ -1,11 +1,9 @@
 import { neon } from '@neondatabase/serverless';
-import { verifyPasswordSimple as verifyPassword } from '../lib/password-hash.js';
+import { verifyAdminSession, CEO_EMAIL } from '../lib/verify-admin.js';
 
 export const config = {
     runtime: 'edge'
 };
-
-const ADMIN_EMAIL = 'furkan_akaslan@hotmail.com';
 
 export default async function handler(req) {
     if (req.method !== 'POST') {
@@ -16,24 +14,9 @@ export default async function handler(req) {
     }
 
     try {
-        // Admin authentication
-        const adminEmail = req.headers.get('x-admin-email');
-        const adminPassword = req.headers.get('x-admin-password');
-
-        if (adminEmail !== ADMIN_EMAIL) {
-            return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-                status: 401,
-                headers: { 'Content-Type': 'application/json' }
-            });
-        }
-
-        const passwordHash = process.env.ADMIN_PASSWORD_HASH;
-        if (!passwordHash || !(await verifyPassword(adminPassword, passwordHash))) {
-            return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-                status: 401,
-                headers: { 'Content-Type': 'application/json' }
-            });
-        }
+        // Admin authentication (cookie + legacy header fallback)
+        const auth = await verifyAdminSession(req);
+        if (!auth.authorized) return auth.response;
 
         const { email, action } = await req.json();
 
@@ -45,7 +28,7 @@ export default async function handler(req) {
         }
 
         // Prevent blocking the CEO
-        if (email === ADMIN_EMAIL) {
+        if (email === CEO_EMAIL) {
             return new Response(JSON.stringify({ error: 'Cannot block CEO account' }), {
                 status: 400,
                 headers: { 'Content-Type': 'application/json' }

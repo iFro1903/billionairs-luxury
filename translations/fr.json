@@ -35,7 +35,18 @@
     "overlay_verifying": "Vérification de l'accès",
     "overlay_authenticating": "Authentification de vos identifiants...",
     "overlay_granted": "Accès accordé",
-    "overlay_redirecting": "Redirection vers votre tableau de bord..."
+    "overlay_redirecting": "Redirection vers votre tableau de bord...",
+    "reset_new_subtitle": "Créez un nouveau mot de passe sécurisé pour votre compte.",
+    "reset_pw_placeholder": "Au moins 8 caractères",
+    "reset_req_min_chars": "Au moins 8 caractères",
+    "reset_req_recommended": "Recommandé : Majuscules & minuscules, chiffres & caractères spéciaux",
+    "reset_confirm_placeholder": "Ressaisir le mot de passe",
+    "twofa_title": "Code d'authentification",
+    "twofa_hint": "Entrez le code à 6 chiffres de votre<br>application Microsoft Authenticator",
+    "twofa_verify": "VÉRIFIER",
+    "twofa_use_backup": "Utiliser un code de secours à la place",
+    "twofa_backup_label": "Code de secours",
+    "twofa_verify_backup": "VÉRIFIER LE CODE DE SECOURS"
   },
   "common": {
     "inner_circle": "CERCLE INTÉRIEUR",
@@ -47,7 +58,8 @@
     "copied": "Copié!",
     "swiss_secured": "Sécurisé Suisse",
     "blockchain_verified": "Vérifié Blockchain",
-    "exclusive_access": "Accès Exclusif"
+    "exclusive_access": "Accès Exclusif",
+    "skip_to_main": "Aller au contenu principal"
   },
   "hero_section": {
     "what_you_see": "Ce que vous êtes sur le point de voir ne peut pas être acheté. Seulement accédé.",

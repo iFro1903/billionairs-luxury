@@ -1,0 +1,106 @@
+/* ========================================
+   BILLIONAIRS - Live Form Validation CSS
+   Visual feedback for form fields
+   ======================================== */
+
+/* Feedback Message */
+.lv-feedback {
+    display: none;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    margin-top: 5px;
+    padding: 0 2px;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat', -apple-system, sans-serif;
+}
+
+.lv-feedback--valid {
+    color: #81c784;
+}
+
+.lv-feedback--invalid {
+    color: #ef9a9a;
+}
+
+.lv-feedback--neutral {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Input Border States */
+.form-input.lv-valid,
+input.lv-valid,
+.lv-valid > input,
+.lv-valid > .form-input {
+    border-color: rgba(76, 175, 80, 0.4) !important;
+}
+
+.form-input.lv-valid:focus,
+input.lv-valid:focus {
+    border-color: rgba(76, 175, 80, 0.6) !important;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+}
+
+.form-input.lv-invalid,
+input.lv-invalid,
+.lv-invalid > input,
+.lv-invalid > .form-input {
+    border-color: rgba(244, 67, 54, 0.4) !important;
+}
+
+.form-input.lv-invalid:focus,
+input.lv-invalid:focus {
+    border-color: rgba(244, 67, 54, 0.6) !important;
+    box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.1);
+}
+
+/* Subtle icon indicators via pseudo */
+.form-group.lv-valid .form-label::after,
+.form-group.lv-valid label::after {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #81c784;
+    border-radius: 50%;
+    margin-left: 6px;
+    vertical-align: middle;
+    animation: lvDotIn 0.3s ease;
+}
+
+.form-group.lv-invalid .form-label::after,
+.form-group.lv-invalid label::after {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #ef9a9a;
+    border-radius: 50%;
+    margin-left: 6px;
+    vertical-align: middle;
+    animation: lvDotIn 0.3s ease;
+}
+
+@keyframes lvDotIn {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Transition for inputs */
+.form-input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .lv-feedback,
+    .form-group.lv-valid .form-label::after,
+    .form-group.lv-invalid .form-label::after {
+        animation: none;
+        transition: none;
+    }
+}

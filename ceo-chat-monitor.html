@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="assets/js/error-handler.js?v=20260218"></script>
     <title>CEO Dashboard - BILLIONAIRS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1073,6 +1074,7 @@
                 const authResponse = await fetch('/api/admin-auth', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
                     body: JSON.stringify({ email, password })
                 });
                 
@@ -1214,7 +1216,9 @@
         // === Members Management ===
         async function loadMembers() {
             try {
-                const response = await fetch('/api/admin-users');
+                const response = await fetch('/api/admin-users', {
+                    credentials: 'include'
+                });
                 const data = await response.json();
                 allMembers = (data.users || []).filter(u => u.email !== 'furkan_akaslan@hotmail.com');
                 document.getElementById('membersCount').textContent = `${allMembers.length} Members`;
@@ -1300,6 +1304,7 @@
                     const response = await fetch('/api/admin-delete-user', {
                         method: 'DELETE',
                         headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
                         body: JSON.stringify({ email })
                     });
 
@@ -1350,6 +1355,7 @@
                     const response = await fetch('/api/clear-chat', {
                         method: 'DELETE',
                         headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
                         body: JSON.stringify({ ceoEmail })
                     });
 
@@ -1378,7 +1384,9 @@
         // === Visitor Statistics ===
         async function loadVisitorStats() {
             try {
-                const response = await fetch('/api/visitor-stats');
+                const response = await fetch('/api/visitor-stats', {
+                    credentials: 'include'
+                });
                 const data = await response.json();
                 
                 if (data.error && !data.overview) {

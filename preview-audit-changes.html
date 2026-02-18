@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BILLIONAIRS – Audit Änderungen Vorschau</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(135deg, rgba(232,180,160,0.15) 0%, rgba(10,10,10,0.95) 100%);
+            border-bottom: 1px solid rgba(232,180,160,0.3);
+            padding: 2rem 3rem;
+            text-align: center;
+        }
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            background: linear-gradient(135deg, #E8B4A0, #D9A090);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1.5rem;
+            background: rgba(232,180,160,0.05);
+            border-bottom: 1px solid rgba(232,180,160,0.1);
+            flex-wrap: wrap;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-num {
+            font-size: 28px;
+            font-weight: 700;
+            color: #E8B4A0;
+        }
+        .stat-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            color: #E8B4A0;
+            margin: 2.5rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(232,180,160,0.2);
+        }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.2rem;
+        }
+        .card {
+            background: linear-gradient(135deg, rgba(232,180,160,0.08) 0%, rgba(26,26,26,0.9) 100%);
+            border: 1px solid rgba(232,180,160,0.15);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            border-color: rgba(232,180,160,0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(232,180,160,0.1);
+        }
+        .card-number {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 11px;
+            color: rgba(232,180,160,0.4);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .card-status {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+        }
+        .status-done {
+            background: rgba(52,199,89,0.15);
+            color: #4cd964;
+            border: 1px solid rgba(52,199,89,0.3);
+        }
+        .status-skipped {
+            background: rgba(255,204,0,0.15);
+            color: #fc0;
+            border: 1px solid rgba(255,204,0,0.3);
+        }
+        .card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            color: #fff;
+        }
+        .card p {
+            font-size: 12.5px;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.6;
+        }
+        .card-files {
+            margin-top: 0.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .file-tag {
+            background: rgba(232,180,160,0.1);
+            border: 1px solid rgba(232,180,160,0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: rgba(232,180,160,0.7);
+            font-family: 'Courier New', monospace;
+        }
+        .demo-section {
+            margin-top: 2rem;
+        }
+        .demo-block {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(232,180,160,0.15);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .demo-block h4 {
+            font-size: 14px;
+            color: #E8B4A0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .demo-block h4 .icon {
+            font-size: 18px;
+        }
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+        }
+        .demo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: rgba(232,180,160,0.06);
+            border: 1px solid rgba(232,180,160,0.12);
+            border-radius: 8px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 12.5px;
+            transition: all 0.3s ease;
+        }
+        .demo-link:hover {
+            background: rgba(232,180,160,0.12);
+            border-color: rgba(232,180,160,0.3);
+            color: #E8B4A0;
+        }
+        .demo-link .arrow {
+            margin-left: auto;
+            opacity: 0.3;
+            transition: all 0.3s;
+        }
+        .demo-link:hover .arrow {
+            opacity: 1;
+            transform: translateX(3px);
+        }
+        .i18n-demo {
+            margin-top: 1rem;
+        }
+        .i18n-test-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .i18n-test-row:last-child { border: none; }
+        .i18n-lang {
+            font-weight: 600;
+            color: #E8B4A0;
+            min-width: 30px;
+            font-size: 12px;
+        }
+        .i18n-text {
+            font-size: 12.5px;
+            color: rgba(255,255,255,0.6);
+        }
+        .lang-btn {
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(232,180,160,0.3);
+            background: rgba(232,180,160,0.08);
+            color: rgba(232,180,160,0.8);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        .lang-btn:hover, .lang-btn.active {
+            background: rgba(232,180,160,0.2);
+            border-color: #E8B4A0;
+            color: #E8B4A0;
+        }
+        .lang-bar {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .code-preview {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(232,180,160,0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 11.5px;
+            color: rgba(255,255,255,0.5);
+            overflow-x: auto;
+            line-height: 1.8;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .code-preview .tag { color: #e06c75; }
+        .code-preview .attr { color: #d19a66; }
+        .code-preview .val { color: #98c379; }
+        .code-preview .comment { color: rgba(255,255,255,0.25); }
+        .print-demo { margin-top: 0.8rem; }
+        .print-demo-btn {
+            padding: 8px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(232,180,160,0.3);
+            background: rgba(232,180,160,0.1);
+            color: #E8B4A0;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .print-demo-btn:hover {
+            background: rgba(232,180,160,0.2);
+        }
+        .analytics-list {
+            list-style: none;
+            padding: 0;
+        }
+        .analytics-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            font-size: 12.5px;
+            color: rgba(255,255,255,0.6);
+        }
+        .analytics-list .event-name {
+            font-family: 'Courier New', monospace;
+            color: #E8B4A0;
+            font-size: 11px;
+            background: rgba(232,180,160,0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            min-width: 140px;
+        }
+        .offline-frame {
+            border: 1px solid rgba(232,180,160,0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        .offline-frame iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+        }
+        @media (max-width: 600px) {
+            .header { padding: 1.5rem 1rem; }
+            .header h1 { font-size: 24px; }
+            .content { padding: 1rem; }
+            .card-grid { grid-template-columns: 1fr; }
+            .link-grid { grid-template-columns: 1fr; }
+            .stats-bar { gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>BILLIONAIRS Audit – Vorschau</h1>
+    <p>ALLE ÄNDERUNGEN & VERBESSERUNGEN IM ÜBERBLICK</p>
+</div>
+
+<div class="stats-bar">
+    <div class="stat">
+        <div class="stat-num">14</div>
+        <div class="stat-label">Fertige Punkte</div>
+    </div>
+    <div class="stat">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Übersprungen</div>
+    </div>
+    <div class="stat">
+        <div class="stat-num">9</div>
+        <div class="stat-label">Sprachen</div>
+    </div>
+    <div class="stat">
+        <div class="stat-num">25+</div>
+        <div class="stat-label">Geänderte Dateien</div>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- ============ ÜBERSICHT ALLER PUNKTE ============ -->
+    <h2 class="section-title">Alle 15 Audit-Punkte</h2>
+    <div class="card-grid">
+
+        <div class="card" onclick="document.getElementById('sec-i18n').scrollIntoView({behavior:'smooth'})">
+            <span class="card-number">P10</span>
+            <span class="card-status status-done">✓ FERTIG</span>
+            <h3>i18n Hardcoded Texts</h3>
+            <p>Alle hartkodierten Texte in reset-password.html, login.html 2FA-Sektion und Skip-Nav mit data-i18n Attributen versehen. 12 neue Schlüssel in allen 9 Sprachen.</p>
+            <div class="card-files">
+                <span class="file-tag">reset-password.html</span>
+                <span class="file-tag">login.html</span>
+                <span class="file-tag">9× JSON</span>
+            </div>
+        </div>
+
+        <div class="card" onclick="document.getElementById('sec-aria').scrollIntoView({behavior:'smooth'})">
+            <span class="card-number">P11+17</span>
+            <span class="card-status status-done">✓ FERTIG</span>
+            <h3>ARIA & Keyboard-Navigation</h3>
+            <p>role="banner", 2FA aria-labels, onclick → keydown Support, aria-current für Nav, prefers-reduced-motion. In 8+ Seiten integriert.</p>
+            <div class="card-files">
+                <span class="file-tag">accessibility.js</span>
+                <span class="file-tag">login.html</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <span class="card-number">P12</span>
+            <span class="card-status status-done">✓ FERTIG</span>
+            <h3>CSP-Headers</h3>
+            <p>Content Security Policy in vercel.json konfiguriert. Script/Style/Font/Image-Quellen Whitelist definiert.</p>
+            <div class="card-files">
+                <span class="file-tag">vercel.json</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <span class="card-number">P13</span>
+            <span class="card-status status-done">✓ FERTIG</span>
+            <h3>Rate-Limiting</h3>
+            <p>Upstash Redis-basiertes Rate-Limiting auf API-Endpoints zum Schutz vor Brute-Force und Missbrauch.</p>
+            <div class="card-files">
+                <span class="file-tag">api/</span>
+                <span class="file-tag">vercel.json</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <span class="card-number">P14</span>
+            <span class="card-status status-done">✓ FERTIG</span>
+            <h3>Global Error Handler</h3>
+            <p>window.onerror + unhandledrejection Handler. Toast-Benachrichtigungen + Sentry-Integration für Fehler-Reporting.</p>
+            <div class="card-files">
+                <span class="file-tag">error-handler.js</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <span class="card-number">P15</span>
+            <span class="card-status status-done">✓ FERTIG</span>
+            <h3>Lighthouse Performance</h3>
+            <p>Lazy Loading, Preconnect-Hints, font-display: swap, Ressourcen-Optimierung für bessere Core Web Vitals.</p>
+            <div class="card-files">
+                <span class="file-tag">index.html</span>
+                <span class="file-tag">demo.html</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <span class="card-number">P16</span>
+            <span class="card-status status-done">✓ FERTIG</span>
+            <h3>SEO Meta-Tags</h3>
+            <p>Open Graph + Twitter Card Meta-Tags, Canonical URLs, hreflang für Mehrsprachigkeit auf allen Seiten.</p>
+            <div class="card-files">
+                <span class="file-tag">Alle HTML</span>
+            </div>
+        </div>
+
+        <div class="card" onclick="document.getElementById('sec-form').scrollIntoView({behavior:'smooth'})">
+            <span class="card-number">P18</span>
+            <span class="card-status status-done">✓ FERTIG</span>
+            <h3>Form-Validation UX</h3>
+            <p>Echtzeit-Feldvalidierung mit visuellen Indikatoren, Passwort-Stärke-Anzeige, Inline-Fehlermeldungen.</p>
+            <div class="card-files">
+                <span class="file-tag">form-validation.js</span>
+                <span class="file-tag">form-validation.css</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <span class="card-number">P19</span>
+            <span class="card-status status-skipped">⏭ ÜBERSPRUNGEN</span>
+            <h3>Dark/Light Mode</h3>
+            <p>Auf Nutzerwunsch nicht implementiert. Das bestehende dunkle Design bleibt unverändert.</p>
+        </div>
+
+        <div class="card" onclick="document.getElementById('sec-offline').scrollIntoView({behavior:'smooth'})">
+            <span class="card-number">P20</span>
+            <span class="card-status status-done">✓ FERTIG</span>
+            <h3>Offline Fallback</h3>
+            <p>Animiertes SVG-Icon, Connection-Badge, 15s Auto-Retry, Auto-Redirect, gecachte Seitenanzeige. Komplett neu.</p>
+            <div class="card-files">
+                <span class="file-tag">offline.html</span>
+                <span class="file-tag">sw.js</span>
+            </div>
+        </div>
+
+        <div class="card" onclick="document.getElementById('sec-analytics').scrollIntoView({behavior:'smooth'})">
+            <span class="card-number">P21</span>
+            <span class="card-status status-done">✓ FERTIG</span>
+            <h3>Analytics Events</h3>
+            <p>10 automatische Tracking-Events: Scroll, Sprache, Forms, Payment, Cookie, Outbound, 2FA, NDA, Contact, Time.</p>
+            <div class="card-files">
+                <span class="file-tag">analytics.js</span>
+            </div>
+        </div>
+
+        <div class="card" onclick="document.getElementById('sec-print').scrollIntoView({behavior:'smooth'})">
+            <span class="card-number">P22</span>
+            <span class="card-status status-done">✓ FERTIG</span>
+            <h3>Print Stylesheet</h3>
+            <p>Komplettes Druck-CSS: Navigation ausgeblendet, heller Hintergrund, URLs nach Links, A4-Regeln. In 8 Seiten integriert.</p>
+            <div class="card-files">
+                <span class="file-tag">print.css</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <span class="card-number">P23</span>
+            <span class="card-status status-done">✓ FERTIG</span>
+            <h3>Favicon Set</h3>
+            <p>apple-touch-icon vereinheitlicht, manifest.json auf 10+ Seiten, doppelte Blocks entfernt.</p>
+            <div class="card-files">
+                <span class="file-tag">Alle HTML</span>
+                <span class="file-tag">manifest.json</span>
+            </div>
+        </div>
+
+        <div class="card" onclick="document.getElementById('sec-seo').scrollIntoView({behavior:'smooth'})">
+            <span class="card-number">P24</span>
+            <span class="card-status status-done">✓ FERTIG</span>
+            <h3>robots.txt / sitemap</h3>
+            <p>15 neue Disallow-Regeln, demo.html mit 9 hreflang-Links, lastmod-Daten korrigiert.</p>
+            <div class="card-files">
+                <span class="file-tag">robots.txt</span>
+                <span class="file-tag">sitemap.xml</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ LIVE DEMOS ============ -->
+    <h2 class="section-title">Live-Demos & Vorschauen</h2>
+
+    <div class="demo-block">
+        <h4><span class="icon">🌐</span> Geänderte Seiten öffnen</h4>
+        <div class="link-grid">
+            <a href="/reset-password.html" class="demo-link" target="_blank">
+                🔑 Reset Password <span class="arrow">→</span>
+            </a>
+            <a href="/login.html" class="demo-link" target="_blank">
+                🔐 Login (2FA) <span class="arrow">→</span>
+            </a>
+            <a href="/create-account.html" class="demo-link" target="_blank">
+                📝 Create Account <span class="arrow">→</span>
+            </a>
+            <a href="/index.html" class="demo-link" target="_blank">
+                🏠 Startseite <span class="arrow">→</span>
+            </a>
+            <a href="/dashboard.html" class="demo-link" target="_blank">
+                📊 Dashboard <span class="arrow">→</span>
+            </a>
+            <a href="/offline.html?preview" class="demo-link" target="_blank">
+                📡 Offline Fallback <span class="arrow">→</span>
+            </a>
+            <a href="/404.html" class="demo-link" target="_blank">
+                🚫 404 Seite <span class="arrow">→</span>
+            </a>
+            <a href="/privacy-policy.html" class="demo-link" target="_blank">
+                📜 Privacy Policy <span class="arrow">→</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- i18n Demo -->
+    <div class="demo-block" id="sec-i18n">
+        <h4><span class="icon">🌍</span> Punkt 10 – i18n Übersetzungen live testen</h4>
+        <p style="color:rgba(255,255,255,0.4); font-size:12px; margin-bottom:1rem;">Klicke eine Sprache und öffne dann die Seite – die Texte werden automatisch übersetzt:</p>
+        <div class="lang-bar" id="langBar">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="de">DE</button>
+            <button class="lang-btn" data-lang="fr">FR</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+            <button class="lang-btn" data-lang="zh">中文</button>
+            <button class="lang-btn" data-lang="ar">عربي</button>
+            <button class="lang-btn" data-lang="it">IT</button>
+            <button class="lang-btn" data-lang="ru">RU</button>
+            <button class="lang-btn" data-lang="ja">日本語</button>
+        </div>
+
+        <div style="color:rgba(255,255,255,0.35); font-size:11px; margin-bottom:1rem;" id="langStatus">Aktuelle Sprache: <strong style="color:#E8B4A0">EN</strong> — Öffne eine Seite oben um den Effekt zu sehen</div>
+
+        <p style="color:rgba(255,255,255,0.5); font-size:12px; margin-bottom:0.8rem; font-weight:600;">Neue Übersetzungsschlüssel (Punkt 10):</p>
+        <div id="translationPreview" class="i18n-demo"></div>
+
+        <p style="color:rgba(255,255,255,0.5); font-size:12px; margin:1.2rem 0 0.8rem; font-weight:600;">Code-Beispiel (reset-password.html):</p>
+        <div class="code-preview">
+            <span class="comment">&lt;!-- VORHER: hartcodiert --&gt;</span><br>
+            &lt;<span class="tag">h1</span>&gt;Reset Password&lt;/<span class="tag">h1</span>&gt;<br>
+            &lt;<span class="tag">label</span>&gt;Email Address&lt;/<span class="tag">label</span>&gt;<br><br>
+            <span class="comment">&lt;!-- NACHHER: übersetzbar --&gt;</span><br>
+            &lt;<span class="tag">h1</span> <span class="attr">data-i18n</span>=<span class="val">"login.reset_password_title"</span>&gt;Reset Password&lt;/<span class="tag">h1</span>&gt;<br>
+            &lt;<span class="tag">label</span> <span class="attr">data-i18n</span>=<span class="val">"login.email_label"</span>&gt;Email Address&lt;/<span class="tag">label</span>&gt;<br>
+            &lt;<span class="tag">input</span> <span class="attr">data-i18n-placeholder</span>=<span class="val">"login.reset_pw_placeholder"</span> <span class="attr">placeholder</span>=<span class="val">"At least 8 chars"</span>&gt;
+        </div>
+    </div>
+
+    <!-- ARIA Demo -->
+    <div class="demo-block" id="sec-aria">
+        <h4><span class="icon">♿</span> Punkt 11+17 – ARIA & Keyboard</h4>
+        <p style="color:rgba(255,255,255,0.5); font-size:12.5px; line-height:1.8;">
+            <strong style="color:#E8B4A0">Hinzugefügt:</strong><br>
+            • <code style="color:#98c379">role="banner"</code> automatisch auf Header-Elemente<br>
+            • 2FA Inputs: <code style="color:#98c379">aria-label="Digit 1 of 6"</code> bis <code style="color:#98c379">aria-label="Digit 6 of 6"</code><br>
+            • 2FA Container: <code style="color:#98c379">role="group" aria-label="6-digit verification code"</code><br>
+            • Alle <code style="color:#98c379">onclick</code> Elemente → automatischer Keyboard-Support (<code style="color:#98c379">Enter</code> + <code style="color:#98c379">Space</code>)<br>
+            • <code style="color:#98c379">aria-current="page"</code> für aktive Navigation<br>
+            • <code style="color:#98c379">prefers-reduced-motion</code> Support für Animationen<br>
+            • <code style="color:#98c379">accessibility.js</code> in 8 zusätzliche Seiten eingebunden
+        </p>
+    </div>
+
+    <!-- Offline Demo -->
+    <div class="demo-block" id="sec-offline">
+        <h4><span class="icon">📡</span> Punkt 20 – Offline Fallback</h4>
+        <p style="color:rgba(255,255,255,0.5); font-size:12px; margin-bottom:0.5rem;">Komplett neu geschriebene Seite mit animiertem SVG-Icon, Connection-Badge und Auto-Retry:</p>
+        <div class="offline-frame">
+            <iframe src="/offline.html?preview" title="Offline Fallback Preview"></iframe>
+        </div>
+    </div>
+
+    <!-- Form Validation -->
+    <div class="demo-block" id="sec-form">
+        <h4><span class="icon">✍️</span> Punkt 18 – Form-Validation</h4>
+        <p style="color:rgba(255,255,255,0.5); font-size:12px; margin-bottom:0.5rem;">Öffne die Seiten um Echtzeit-Validierung zu testen:</p>
+        <div class="link-grid">
+            <a href="/create-account.html" class="demo-link" target="_blank">
+                📝 Registrierung testen <span class="arrow">→</span>
+            </a>
+            <a href="/login.html" class="demo-link" target="_blank">
+                🔐 Login testen <span class="arrow">→</span>
+            </a>
+            <a href="/reset-password.html" class="demo-link" target="_blank">
+                🔑 Passwort-Reset testen <span class="arrow">→</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Analytics -->
+    <div class="demo-block" id="sec-analytics">
+        <h4><span class="icon">📊</span> Punkt 21 – Analytics Auto-Tracking Events</h4>
+        <ul class="analytics-list">
+            <li><span class="event-name">scroll_depth</span> 25%, 50%, 75%, 100% Scroll-Tiefe</li>
+            <li><span class="event-name">language_change</span> Sprachwechsel über Dropdown</li>
+            <li><span class="event-name">form_submit</span> Formular-Absendungen</li>
+            <li><span class="event-name">select_payment</span> Zahlungsmethode gewählt</li>
+            <li><span class="event-name">cookie_consent</span> Cookie-Zustimmung erteilt</li>
+            <li><span class="event-name">outbound_click</span> Externe Links geklickt</li>
+            <li><span class="event-name">2fa_verify</span> 2FA Code verifiziert</li>
+            <li><span class="event-name">nda_sign</span> NDA unterschrieben</li>
+            <li><span class="event-name">contact_open</span> Support-Chat geöffnet</li>
+            <li><span class="event-name">time_on_page</span> 30s / 60s / 180s / 300s</li>
+        </ul>
+    </div>
+
+    <!-- Print -->
+    <div class="demo-block" id="sec-print">
+        <h4><span class="icon">🖨️</span> Punkt 22 – Print Stylesheet</h4>
+        <p style="color:rgba(255,255,255,0.5); font-size:12px; margin-bottom:0.8rem;">Die Druckansicht blendet Navigation, Partikel, Chat und Payment-UI aus. Heller Hintergrund, URLs werden nach Links angezeigt.</p>
+        <div class="print-demo">
+            <button class="print-demo-btn" onclick="window.print()">🖨 Diese Seite drucken (Test)</button>
+            <span style="color:rgba(255,255,255,0.3); font-size:11px; margin-left:1rem;">Oder Strg+P auf einer der geänderten Seiten</span>
+        </div>
+    </div>
+
+    <!-- SEO -->
+    <div class="demo-block" id="sec-seo">
+        <h4><span class="icon">🔍</span> Punkt 24 – robots.txt & sitemap</h4>
+        <div class="link-grid">
+            <a href="/robots.txt" class="demo-link" target="_blank">
+                🤖 robots.txt <span class="arrow">→</span>
+            </a>
+            <a href="/sitemap.xml" class="demo-link" target="_blank">
+                🗺️ sitemap.xml <span class="arrow">→</span>
+            </a>
+        </div>
+        <p style="color:rgba(255,255,255,0.4); font-size:11.5px; margin-top:0.8rem; line-height:1.7;">
+            <strong>robots.txt:</strong> +15 Disallow-Regeln (admin, documents, downloads, NDA, preview-*, error pages)<br>
+            <strong>sitemap.xml:</strong> demo.html mit 9 hreflang-Links, login.html hreflang, lastmod 2025-01-15
+        </p>
+    </div>
+
+</div>
+
+<script>
+// Translation preview data
+const translations = {
+    en: {
+        "login.reset_password_title": "Reset Password",
+        "login.reset_new_subtitle": "Create a new, secure password for your account.",
+        "login.twofa_title": "Authentication Code",
+        "login.twofa_verify": "VERIFY",
+        "login.twofa_use_backup": "Use a backup code instead",
+        "common.skip_to_main": "Skip to main content"
+    },
+    de: {
+        "login.reset_password_title": "Passwort zurücksetzen",
+        "login.reset_new_subtitle": "Erstellen Sie ein neues, sicheres Passwort für Ihr Konto.",
+        "login.twofa_title": "Authentifizierungscode",
+        "login.twofa_verify": "VERIFIZIEREN",
+        "login.twofa_use_backup": "Stattdessen einen Backup-Code verwenden",
+        "common.skip_to_main": "Zum Hauptinhalt springen"
+    },
+    fr: {
+        "login.reset_password_title": "Réinitialiser le mot de passe",
+        "login.reset_new_subtitle": "Créez un nouveau mot de passe sécurisé pour votre compte.",
+        "login.twofa_title": "Code d'authentification",
+        "login.twofa_verify": "VÉRIFIER",
+        "login.twofa_use_backup": "Utiliser un code de secours à la place",
+        "common.skip_to_main": "Aller au contenu principal"
+    },
+    es: {
+        "login.reset_password_title": "Restablecer contraseña",
+        "login.reset_new_subtitle": "Crea una nueva contraseña segura para tu cuenta.",
+        "login.twofa_title": "Código de autenticación",
+        "login.twofa_verify": "VERIFICAR",
+        "login.twofa_use_backup": "Usar un código de respaldo en su lugar",
+        "common.skip_to_main": "Ir al contenido principal"
+    },
+    zh: {
+        "login.reset_password_title": "重置密码",
+        "login.reset_new_subtitle": "为您的账户创建一个新的安全密码。",
+        "login.twofa_title": "验证码",
+        "login.twofa_verify": "验证",
+        "login.twofa_use_backup": "改用备用代码",
+        "common.skip_to_main": "跳到主要内容"
+    },
+    ar: {
+        "login.reset_password_title": "إعادة تعيين كلمة المرور",
+        "login.reset_new_subtitle": "أنشئ كلمة مرور جديدة وآمنة لحسابك.",
+        "login.twofa_title": "رمز المصادقة",
+        "login.twofa_verify": "تحقق",
+        "login.twofa_use_backup": "استخدم رمز احتياطي بدلاً من ذلك",
+        "common.skip_to_main": "تخطي إلى المحتوى الرئيسي"
+    },
+    it: {
+        "login.reset_password_title": "Reimposta password",
+        "login.reset_new_subtitle": "Crea una nuova password sicura per il tuo account.",
+        "login.twofa_title": "Codice di autenticazione",
+        "login.twofa_verify": "VERIFICA",
+        "login.twofa_use_backup": "Usa un codice di backup",
+        "common.skip_to_main": "Vai al contenuto principale"
+    },
+    ru: {
+        "login.reset_password_title": "Сброс пароля",
+        "login.reset_new_subtitle": "Создайте новый надёжный пароль для вашего аккаунта.",
+        "login.twofa_title": "Код аутентификации",
+        "login.twofa_verify": "ПОДТВЕРДИТЬ",
+        "login.twofa_use_backup": "Использовать резервный код",
+        "common.skip_to_main": "Перейти к основному содержанию"
+    },
+    ja: {
+        "login.reset_password_title": "パスワードリセット",
+        "login.reset_new_subtitle": "アカウントの新しい安全なパスワードを作成してください。",
+        "login.twofa_title": "認証コード",
+        "login.twofa_verify": "確認",
+        "login.twofa_use_backup": "代わりにバックアップコードを使用",
+        "common.skip_to_main": "メインコンテンツへスキップ"
+    }
+};
+
+let currentLang = 'en';
+
+function renderTranslations(lang) {
+    const container = document.getElementById('translationPreview');
+    const data = translations[lang];
+    container.innerHTML = Object.entries(data).map(([key, val]) =>
+        `<div class="i18n-test-row">
+            <span class="i18n-lang" style="min-width:180px; font-size:10.5px; font-family:monospace;">${key}</span>
+            <span class="i18n-text">${val}</span>
+        </div>`
+    ).join('');
+}
+
+// Language button clicks
+document.getElementById('langBar').addEventListener('click', (e) => {
+    if (e.target.classList.contains('lang-btn')) {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        currentLang = e.target.dataset.lang;
+        renderTranslations(currentLang);
+        document.getElementById('langStatus').innerHTML = 
+            `Aktuelle Sprache: <strong style="color:#E8B4A0">${currentLang.toUpperCase()}</strong> — Öffne eine Seite oben um den Effekt zu sehen`;
+        
+        // Set cookie for i18n system
+        document.cookie = `preferred_language=${currentLang};path=/;max-age=31536000`;
+        try { localStorage.setItem('preferred_language', currentLang); } catch(e) {}
+    }
+});
+
+// Initial render
+renderTranslations('en');
+</script>
+
+</body>
+</html>
