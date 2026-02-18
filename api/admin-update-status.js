@@ -81,7 +81,11 @@ export default async function handler(req) {
 
     } catch (error) {
         console.error('Error updating member status:', error);
-        return new Response(JSON.stringify({ error: 'Server error: ' + error.message }), {
+        return new Response(JSON.stringify({ 
+            error: 'Server error: ' + error.message,
+            stack: error.stack?.substring(0, 300),
+            name: error.name 
+        }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }
         });
