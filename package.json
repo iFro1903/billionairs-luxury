@@ -20,7 +20,7 @@
     "test:report": "playwright show-report",
     "typecheck": "tsc --noEmit",
     "typecheck:watch": "tsc --noEmit --watch",
-    "build": "tsc && echo Production build ready",
+    "build": "node build-bundles.js && tsc --noEmit && echo Production build ready",
     "pm2:start": "pm2 start stripe-server.js --name billionairs",
     "pm2:stop": "pm2 stop billionairs",
     "pm2:restart": "pm2 restart billionairs",
