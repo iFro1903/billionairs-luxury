@@ -1299,33 +1299,22 @@
             termsCheckbox.addEventListener('change', updatePaymentButton);
         }
         
-        // Wire consent links to modals — stop propagation so link taps don't toggle checkbox on iOS
-        const termsConsentLink = document.getElementById('termsConsentLink');
-        const privacyConsentLink = document.getElementById('privacyConsentLink');
-        const refundConsentLink = document.getElementById('refundConsentLink');
-        
-        if (termsConsentLink) {
-            termsConsentLink.addEventListener('click', function(e) {
+        // Wire consent links to modals via EVENT DELEGATION
+        // (i18n replaces innerHTML, destroying old elements — delegation survives)
+        const consentContainer = document.getElementById('legalConsentContainer');
+        if (consentContainer) {
+            consentContainer.addEventListener('click', function(e) {
+                const link = e.target.closest('.legal-consent-link');
+                if (!link) return;
                 e.preventDefault();
                 e.stopPropagation();
-                const modal = document.getElementById('termsModal');
-                if (modal) modal.classList.add('active');
-            });
-        }
-        if (privacyConsentLink) {
-            privacyConsentLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                const modal = document.getElementById('privacyModal');
-                if (modal) modal.classList.add('active');
-            });
-        }
-        if (refundConsentLink) {
-            refundConsentLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                // Refund info is in FAQ #8 and Terms modal — open Terms
-                const modal = document.getElementById('termsModal');
+                const id = link.id || link.getAttribute('id');
+                let modal = null;
+                if (id === 'termsConsentLink' || id === 'refundConsentLink') {
+                    modal = document.getElementById('termsModal');
+                } else if (id === 'privacyConsentLink') {
+                    modal = document.getElementById('privacyModal');
+                }
                 if (modal) modal.classList.add('active');
             });
         }
