@@ -282,7 +282,7 @@
     "confirmed": "已确认",
     "email_sent_label": "邮件已发送",
     "sent": "✓ 已发送",
-    "check_email_notice": "📧 请查看您的电子邮件以获取登录凭据。",
+    "check_email_notice": "请查看您的电子邮件以获取登录凭据。",
     "click_button_notice": "点击下面的按钮访问您的专属仪表板。",
     "enter_sanctuary": "进入您的圣殿",
     "spam_notice": "找不到邮件？请检查您的垃圾邮件文件夹或联系支持。"

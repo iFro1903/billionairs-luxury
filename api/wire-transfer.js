@@ -677,7 +677,7 @@ export default async function handler(req, res) {
         // Send email to customer
         const emailSent = await sendEmail(
             email,
-            '💎 BILLIONAIRS LUXURY - CHF 500\'000.00 Wire Transfer Instructions',
+            'BILLIONAIRS LUXURY - CHF 500\'000.00 Wire Transfer Instructions',
             emailHTML
         );
 

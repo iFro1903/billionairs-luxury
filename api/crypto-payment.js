@@ -778,7 +778,7 @@ export default async function handler(req, res) {
         // Send email to customer
         const emailSent = await sendEmail(
             email,
-            `💎 BILLIONAIRS LUXURY - ${selectedWallet.name} Payment Instructions`,
+            `BILLIONAIRS LUXURY - ${selectedWallet.name} Payment Instructions`,
             emailHTML
         );
 
