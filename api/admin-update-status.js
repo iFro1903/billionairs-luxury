@@ -39,28 +39,51 @@ export default async function handler(req) {
 
         const sql = neon(process.env.DATABASE_URL);
 
-        const hasPaid = status === 'paid';
+        // Ensure has_paid column exists (not in original schema)
+        try {
+            await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS has_paid BOOLEAN DEFAULT false`;
+            await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS paid_at TIMESTAMP`;
+        } catch (_) { /* columns likely exist */ }
 
         let result;
-        if (status === 'paid') {
-            // Set to paid: keep existing paid_at or set to now
-            result = await sql`
-                UPDATE users 
-                SET payment_status = ${status},
-                    has_paid = true,
-                    paid_at = COALESCE(paid_at, NOW())
-                WHERE email = ${email}
-                RETURNING email, payment_status, has_paid
-            `;
-        } else {
-            // Set to free/pending: clear paid status
-            result = await sql`
-                UPDATE users 
-                SET payment_status = ${status},
-                    has_paid = false
-                WHERE email = ${email}
-                RETURNING email, payment_status, has_paid
-            `;
+        try {
+            if (status === 'paid') {
+                result = await sql`
+                    UPDATE users 
+                    SET payment_status = ${status},
+                        has_paid = true,
+                        paid_at = COALESCE(paid_at, NOW())
+                    WHERE LOWER(email) = LOWER(${email})
+                    RETURNING email, payment_status, has_paid
+                `;
+            } else {
+                result = await sql`
+                    UPDATE users 
+                    SET payment_status = ${status},
+                        has_paid = false
+                    WHERE LOWER(email) = LOWER(${email})
+                    RETURNING email, payment_status, has_paid
+                `;
+            }
+        } catch (sqlErr) {
+            // Fallback: update without has_paid in case column still doesn't exist
+            console.error('SQL update with has_paid failed, trying fallback:', sqlErr.message);
+            if (status === 'paid') {
+                result = await sql`
+                    UPDATE users 
+                    SET payment_status = ${status},
+                        paid_at = COALESCE(paid_at, NOW())
+                    WHERE LOWER(email) = LOWER(${email})
+                    RETURNING email, payment_status
+                `;
+            } else {
+                result = await sql`
+                    UPDATE users 
+                    SET payment_status = ${status}
+                    WHERE LOWER(email) = LOWER(${email})
+                    RETURNING email, payment_status
+                `;
+            }
         }
 
         if (result.length === 0) {
