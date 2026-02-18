@@ -1058,6 +1058,16 @@
         let allMembers = [];
         let currentTab = 'messages';
 
+        // Authenticated fetch helper — sends Bearer token + credentials
+        function authFetch(url, opts = {}) {
+            const token = sessionStorage.getItem('ceoSessionToken');
+            if (token) {
+                opts.headers = Object.assign({ Authorization: 'Bearer ' + token }, opts.headers || {});
+            }
+            opts.credentials = 'include';
+            return fetch(url, opts);
+        }
+
         async function login() {
             const email = document.getElementById('ceoEmail').value.trim();
             const password = document.getElementById('ceoPassword').value;
@@ -1085,6 +1095,11 @@
                     errorEl.classList.remove('hidden');
                     return;
                 }
+                
+                // Store session token for Bearer auth fallback
+                if (authData.sessionToken) {
+                    sessionStorage.setItem('ceoSessionToken', authData.sessionToken);
+                }
             } catch (authErr) {
                 errorEl.textContent = 'Authentication server error. Please try again.';
                 errorEl.classList.remove('hidden');
@@ -1109,9 +1124,7 @@
         async function loadMessages() {
             try {
                 // Use CEO endpoint — gets all messages decrypted with emails visible
-                const response = await fetch('/api/chat?ceo=true', {
-                    credentials: 'include'
-                });
+                const response = await authFetch('/api/chat?ceo=true');
                 const data = await response.json();
 
                 if (data.success) {
@@ -1216,9 +1229,7 @@
         // === Members Management ===
         async function loadMembers() {
             try {
-                const response = await fetch('/api/admin-users', {
-                    credentials: 'include'
-                });
+                const response = await authFetch('/api/admin-users');
                 const data = await response.json();
                 allMembers = (data.users || []).filter(u => u.email !== 'furkan_akaslan@hotmail.com');
                 document.getElementById('membersCount').textContent = `${allMembers.length} Members`;
@@ -1301,10 +1312,9 @@
                 btn.textContent = 'Deleting...';
 
                 try {
-                    const response = await fetch('/api/admin-delete-user', {
+                    const response = await authFetch('/api/admin-delete-user', {
                         method: 'DELETE',
                         headers: { 'Content-Type': 'application/json' },
-                        credentials: 'include',
                         body: JSON.stringify({ email })
                     });
 
@@ -1352,10 +1362,9 @@
                 btn.textContent = 'Deleting...';
 
                 try {
-                    const response = await fetch('/api/clear-chat', {
+                    const response = await authFetch('/api/clear-chat', {
                         method: 'DELETE',
                         headers: { 'Content-Type': 'application/json' },
-                        credentials: 'include',
                         body: JSON.stringify({ ceoEmail })
                     });
 
@@ -1384,9 +1393,7 @@
         // === Visitor Statistics ===
         async function loadVisitorStats() {
             try {
-                const response = await fetch('/api/visitor-stats', {
-                    credentials: 'include'
-                });
+                const response = await authFetch('/api/visitor-stats');
                 const data = await response.json();
                 
                 if (data.error && !data.overview) {

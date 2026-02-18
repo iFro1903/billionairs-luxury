@@ -158,15 +158,27 @@ export default async function handler(req) {
         // Create a server-side session so the CEO also has a valid billionairs_session cookie.
         // This enables authenticated access to protected APIs (e.g., chat CEO mode).
         let sessionCookie = '';
+        let sessionToken = '';
         try {
             // Find CEO user in users table
-            const userResult = await sql`
+            let userResult = await sql`
                 SELECT id FROM users WHERE LOWER(email) = ${email.toLowerCase()} LIMIT 1
             `;
             
+            // If CEO not in users table, create entry
+            if (userResult.length === 0) {
+                console.log('CEO not found in users table, creating entry...');
+                userResult = await sql`
+                    INSERT INTO users (email, full_name, password_hash, has_paid, payment_status)
+                    VALUES (${email.toLowerCase()}, 'CEO', 'admin-auth-managed', true, 'paid')
+                    ON CONFLICT (email) DO UPDATE SET full_name = 'CEO'
+                    RETURNING id
+                `;
+            }
+            
             if (userResult.length > 0) {
                 const userId = userResult[0].id;
-                const sessionToken = crypto.randomUUID() + '-' + crypto.randomUUID();
+                sessionToken = crypto.randomUUID() + '-' + crypto.randomUUID();
                 const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
                 
                 // Insert session
@@ -194,7 +206,8 @@ export default async function handler(req) {
             success: true,
             email: email.toLowerCase(),
             name: 'CEO',
-            twoFactorEnabled
+            twoFactorEnabled,
+            sessionToken: sessionToken || undefined
         }), {
             status: 200,
             headers: responseHeaders
