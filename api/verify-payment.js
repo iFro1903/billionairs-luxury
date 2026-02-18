@@ -63,6 +63,7 @@ module.exports = async (req, res) => {
         const updateResult = await pool.query(
           `UPDATE users 
            SET payment_status = $1, 
+               has_paid = true,
                payment_date = CURRENT_TIMESTAMP,
                stripe_session_id = $3
            WHERE email = $2 
