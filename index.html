@@ -1334,7 +1334,6 @@
         const existing = document.getElementById('billionairsToast');
         if (existing) existing.remove();
 
-        const icons = { warning: '?', error: '?', info: '?', success: '?' };
         const colors = {
             warning: 'rgba(232, 180, 160, 0.15)',
             error:   'rgba(220, 80, 80, 0.15)',
@@ -1359,8 +1358,7 @@
             + 'box-shadow:0 8px 32px rgba(0,0,0,0.4);opacity:0;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);'
             + 'font-family:Montserrat,sans-serif;';
 
-        toast.innerHTML = '<span style="font-size:20px;flex-shrink:0;">' + (icons[type] || '?') + '</span>'
-            + '<span style="color:rgba(255,255,255,0.95);font-size:13px;line-height:1.5;letter-spacing:0.3px;">'
+        toast.innerHTML = '<span style="color:rgba(255,255,255,0.95);font-size:13px;line-height:1.5;letter-spacing:0.3px;">'
             + message + '</span>';
 
         document.body.appendChild(toast);
