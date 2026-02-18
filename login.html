@@ -375,7 +375,9 @@
     <div id="particles-js"></div>
     
     <!-- Language Dropdown (positioned absolutely) -->
-    <div id="langDropdownContainer" style="position: fixed; top: 20px; right: 20px; z-index: 10000;"></div>
+    <div id="langDropdownContainer" style="position: fixed; top: 20px; right: 20px; z-index: 10000;">
+        <button class="lang-switcher" id="langBtn" aria-label="Switch language" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);padding:0.5rem 1rem;font-size:0.75rem;font-weight:600;letter-spacing:1.5px;border-radius:20px;cursor:pointer;transition:all 0.3s ease;">EN</button>
+    </div>
     
     <main id="main-content" role="main" tabindex="-1">
     <div class="login-container">
@@ -811,6 +813,8 @@
 
     <!-- Initialize Particles.js -->
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        if (typeof particlesJS === 'undefined') return;
         particlesJS('particles-js', {
             particles: {
                 number: { value: 120, density: { enable: true, value_area: 800 } },
@@ -871,6 +875,7 @@
                 }
             },
             retina_detect: true
+        });
         });
     </script>
     <!-- Visitor Tracking -->
