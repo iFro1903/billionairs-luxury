@@ -234,6 +234,8 @@
         const userLang = urlParams.get('lang') || 'en';
 
         // Verify payment with Stripe API (server-side) and mark user as paid
+        let verifiedEmail = '';
+
         async function verifyPaymentWithStripe() {
             if (!sessionId) {
                 console.warn('Missing session_id in URL params');
@@ -252,13 +254,12 @@
                 const data = await response.json();
                 if (data.success) {
                     console.log('Payment verified successfully via Stripe API');
+                    verifiedEmail = (data.user && data.user.email) || '';
                 } else {
                     console.warn('Payment verification pending:', data.paymentStatus);
-                    // Webhook might still process it - don't block the page
                 }
             } catch (error) {
                 console.error('Payment verification request failed:', error);
-                // Webhook will handle it as fallback
             }
         }
 
@@ -302,8 +303,12 @@
         }
 
         function continueToSite() {
-            // User needs to login with their credentials (created during checkout)
-            window.location.href = '/login.html';
+            // Auto-login if we have email and session_id, otherwise manual login
+            if (verifiedEmail && sessionId) {
+                window.location.href = '/auto-login.html?email=' + encodeURIComponent(verifiedEmail) + '&session_id=' + encodeURIComponent(sessionId) + '&lang=' + encodeURIComponent(userLang);
+            } else {
+                window.location.href = '/login.html?registered=true&lang=' + encodeURIComponent(userLang);
+            }
         }
     </script>
     </main>
