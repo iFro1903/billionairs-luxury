@@ -35,6 +35,7 @@ export default async function handler(req) {
             });
         }
 
+        const adminEmail = auth.email;
         const dbUrl = process.env.POSTGRES_URL || process.env.DATABASE_URL;
         const sql = neon(dbUrl);
 
@@ -48,6 +49,11 @@ export default async function handler(req) {
                 reason TEXT
             )
         `;
+
+        // Ensure is_blocked column exists on users table
+        try {
+            await sql`ALTER TABLE users ADD COLUMN IF NOT EXISTS is_blocked BOOLEAN DEFAULT false`;
+        } catch (_) { /* column likely exists */ }
 
         if (action === 'block') {
             // Block the user
@@ -117,7 +123,8 @@ export default async function handler(req) {
         console.error('Block user error:', error);
         return new Response(JSON.stringify({ 
             error: 'Failed to block/unblock user',
-            message: 'Internal server error'
+            message: error.message,
+            stack: error.stack?.substring(0, 300)
         }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' }
