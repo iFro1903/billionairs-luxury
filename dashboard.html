@@ -46,6 +46,9 @@
     <!-- i18n Language System -->
     <script src="assets/js/i18n.js" defer></script>
     
+    <!-- Local QR Code Generator (2FA — no external service, secret stays in browser) -->
+    <script src="assets/js/qr-local.js" defer></script>
+    
     <!-- Emergency Mode Check -->
     <script>
         // Check if emergency mode is active
@@ -1615,21 +1618,16 @@
                     twofaBackupCodes = data.backupCodes;
                     twofaCurrentSecret = data.secret;
                     
-                    // Generate QR Code using a canvas (no external dependency)
+                    // Generate QR Code LOCALLY (no external server — secret stays in browser)
                     const qrDisplay = document.getElementById('qrCodeDisplay');
                     qrDisplay.innerHTML = `
                         <div style="display: inline-block; padding: 1rem; background: #fff; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);">
-                            <img id="qrCodeImg" alt="QR Code for Authenticator App" style="width: 180px; height: 180px; image-rendering: pixelated;">
+                            <canvas id="qrCanvas" width="180" height="180" style="image-rendering: pixelated;"></canvas>
                         </div>
                     `;
                     
-                    // Use QR code API for generating the image
-                    const qrImg = document.getElementById('qrCodeImg');
-                    qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(data.otpauthUrl);
-                    qrImg.onerror = () => {
-                        // Fallback: show manual key only
-                        qrDisplay.innerHTML = '<p style="color: rgba(255,255,255,0.5); padding: 1rem;">QR Code could not be loaded. Please use the manual key below.</p>';
-                    };
+                    // Local QR Code generation (no data leaves the browser)
+                    generateQRLocal(document.getElementById('qrCanvas'), data.otpauthUrl, 180);
 
                     // Show manual key
                     const keySection = document.getElementById('manualKeySection');
