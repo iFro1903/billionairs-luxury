@@ -62,7 +62,7 @@
             .catch(err => console.error('Emergency check failed:', err));
 
         // Check if user is blocked
-        const userData = JSON.parse(localStorage.getItem('billionairsUser') || '{}');
+        const userData = JSON.parse(localStorage.getItem('billionairs_user') || '{}');
         if (userData.email) {
             fetch('/api/check-blocked', {
                 method: 'POST',
