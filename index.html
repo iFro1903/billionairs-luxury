@@ -1438,17 +1438,10 @@
             // Redirect to NDA signing page before payment
             const currentLang = window.currentLanguage || document.documentElement.lang || 'en';
             
-            // Store sensitive data in sessionStorage (not in URL)
+            // Store sensitive data in sessionStorage (not in URL — PII stays out of logs/history)
             sessionStorage.setItem('nda_customer', JSON.stringify(customerData));
             
-            const ndaParams = new URLSearchParams({
-                name: customerData.fullName,
-                email: customerData.email,
-                phone: customerData.phone || '',
-                company: customerData.company || '',
-                lang: currentLang
-            });
-            window.location.href = `/nda-signing.html?${ndaParams.toString()}`;
+            window.location.href = `/nda-signing.html?lang=${encodeURIComponent(currentLang)}`;
         } else if (methodType === 'wire') {
             if (!ENABLE_BANK_TRANSFER) {
                 showPaymentToast(toastT('wireUnavailable') || 'Bank wire transfer is temporarily unavailable. Please use Credit Card or Cryptocurrency.', 'warning');

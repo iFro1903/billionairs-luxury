@@ -667,16 +667,16 @@
     (function() {
         // ========== INITIALIZATION ==========
         const urlParams = new URLSearchParams(window.location.search);
-        const memberName = urlParams.get('name') || '';
-        const memberEmail = urlParams.get('email') || '';
-        const memberPhone = urlParams.get('phone') || '';
-        const memberCompany = urlParams.get('company') || '';
         const lang = urlParams.get('lang') || 'en';
 
-        // Get password securely from sessionStorage (not URL)
-        let memberPassword = '';
+        // Read ALL sensitive data from sessionStorage (not URL — PII stays out of logs/history/referrer)
+        let memberName = '', memberEmail = '', memberPhone = '', memberCompany = '', memberPassword = '';
         try {
             const storedCustomer = JSON.parse(sessionStorage.getItem('nda_customer') || '{}');
+            memberName = storedCustomer.fullName || '';
+            memberEmail = storedCustomer.email || '';
+            memberPhone = storedCustomer.phone || '';
+            memberCompany = storedCustomer.company || '';
             memberPassword = storedCustomer.password || '';
         } catch(e) {}
 
