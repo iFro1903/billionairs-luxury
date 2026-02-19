@@ -419,23 +419,41 @@
             }
         };
 
-        // Detect language from localStorage/cookie (same as main app)
+        // Detect language from localStorage/cookie/URL (same as main app)
         function getLanguage() {
-            let lang = localStorage.getItem('billionairs_lang');
-            if (!lang) {
+            // 1. Check URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlLang = urlParams.get('lang');
+            if (urlLang && aboutTranslations[urlLang]) return urlLang;
+
+            // 2. Check localStorage
+            let lang = null;
+            try { lang = localStorage.getItem('billionairs_lang'); } catch(e) {}
+            if (lang && aboutTranslations[lang]) return lang;
+
+            // 3. Check cookie
+            try {
                 const cookies = document.cookie.split(';');
                 for (const c of cookies) {
-                    const [k, v] = c.trim().split('=');
-                    if (k === 'billionairs_lang') { lang = v; break; }
+                    const parts = c.trim().split('=');
+                    if (parts[0] === 'billionairs_lang') { lang = parts[1]; break; }
                 }
-            }
-            return lang && aboutTranslations[lang] ? lang : 'en';
+            } catch(e) {}
+            if (lang && aboutTranslations[lang]) return lang;
+
+            // 4. Check browser language
+            const browserLang = (navigator.language || navigator.userLanguage || 'en').substr(0, 2);
+            if (aboutTranslations[browserLang]) return browserLang;
+
+            return 'en';
         }
 
         function applyTranslations() {
             const lang = getLanguage();
             const t = aboutTranslations[lang];
-            if (!t) return;
+            if (!t || lang === 'en') return;
+
+            console.log('[About] Applying language:', lang);
 
             // Set HTML lang & dir
             document.documentElement.lang = lang;
@@ -448,7 +466,12 @@
             });
         }
 
+        // Run immediately
         applyTranslations();
+        // Also run after DOM ready (safety)
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', applyTranslations);
+        }
     </script>
     <script>
         (function() {
