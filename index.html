@@ -416,11 +416,43 @@
 
     <!-- SEO Content Section Styles -->
     <style>
+        .what-is-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            padding: 0.7rem 1.8rem;
+            background: transparent;
+            border: 1px solid rgba(232,180,160,0.25);
+            border-radius: 30px;
+            color: #E8B4A0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+        .what-is-btn:hover {
+            background: rgba(232,180,160,0.08);
+            border-color: rgba(232,180,160,0.45);
+        }
+        .what-is-btn .what-is-arrow {
+            transition: transform 0.3s ease;
+        }
+        .what-is-btn.active .what-is-arrow {
+            transform: rotate(180deg);
+        }
         .seo-content-section {
             padding: 4rem 2rem;
             background: linear-gradient(180deg, rgba(10,7,8,0.95) 0%, rgba(26,16,18,0.98) 100%);
             border-top: 1px solid rgba(232,180,160,0.08);
             border-bottom: 1px solid rgba(232,180,160,0.08);
+            animation: seoFadeIn 0.5s ease-out;
+        }
+        @keyframes seoFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .seo-content-inner {
             max-width: 900px;
@@ -769,6 +801,11 @@
                     <p class="trust-subtitle">
                         Where wealth is the entry requirement. Not the achievement.
                     </p>
+
+                    <button id="whatIsBillionairsBtn" class="what-is-btn" onclick="document.getElementById('seoRevealSection').style.display=document.getElementById('seoRevealSection').style.display==='none'?'block':'none'; this.classList.toggle('active'); document.getElementById('seoRevealSection').scrollIntoView({behavior:'smooth',block:'start'});">
+                        <span>What is billionairs.luxury?</span>
+                        <svg class="what-is-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
                 </div>
 
                 <div class="trust-benefits">
@@ -871,8 +908,8 @@
                     </p>
                 </div>
 
-                <!-- SEO Content Section - Only visible within Trust section -->
-                <div class="seo-content-section" aria-label="About BILLIONAIRS luxury membership" itemscope itemtype="https://schema.org/Service">
+                <!-- SEO Content Section - Toggle via button -->
+                <div id="seoRevealSection" class="seo-content-section" style="display: none;" aria-label="About BILLIONAIRS luxury membership" itemscope itemtype="https://schema.org/Service">
                     <div class="seo-content-inner">
                         <h2 class="seo-heading" itemprop="name">The World's Most Exclusive Private Membership</h2>
                         <div class="seo-divider"></div>
