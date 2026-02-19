@@ -802,7 +802,7 @@
                         Where wealth is the entry requirement. Not the achievement.
                     </p>
 
-                    <a href="about.html" class="what-is-btn" id="whatIsBillionairsBtn" onclick="var l=localStorage.getItem('billionairs_lang')||'en'; if(l!=='en'){this.href='about.html?lang='+l;} return true;">
+                    <a href="about.html" class="what-is-btn" id="whatIsBillionairsBtn" onclick="var l=localStorage.getItem('billionairs_lang')||'en'; this.href=l!=='en'?'about.html?lang='+l:'about.html'; return true;">
                         <span>What is billionairs.luxury?</span>
                     </a>
                 </div>
