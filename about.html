@@ -243,9 +243,9 @@
     <canvas id="particleCanvas"></canvas>
 
     <!-- Back Button -->
-    <a href="/" class="back-button" onclick="history.back(); return false;">
+    <a href="/" class="back-button" onclick="history.back(); return false;" id="backBtn">
         <svg viewBox="0 0 14 14" fill="none"><path d="M9 3L5 7L9 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        Back
+        <span data-key="back">Back</span>
     </a>
 
     <div class="about-container">
@@ -255,40 +255,40 @@
         </div>
 
         <!-- Content -->
-        <h1 class="about-heading">The World's Most Exclusive Private Membership</h1>
+        <h1 class="about-heading" data-key="heading">The World's Most Exclusive Private Membership</h1>
         <div class="about-divider"></div>
 
-        <p class="about-text">BILLIONAIRS is an ultra-exclusive private membership designed for ultra-high-net-worth individuals (UHNWI) and billionaires seeking meaningful connections beyond social media. Founded in Switzerland and secured by Swiss banking standards, our encrypted luxury network connects a select circle of verified entrepreneurs, investors, and high-performing individuals across Z&uuml;rich, Monaco, Dubai, Singapore, and London.</p>
+        <p class="about-text" data-key="p1">BILLIONAIRS is an ultra-exclusive private membership designed for ultra-high-net-worth individuals (UHNWI) and billionaires seeking meaningful connections beyond social media. Founded in Switzerland and secured by Swiss banking standards, our encrypted luxury network connects a select circle of verified entrepreneurs, investors, and high-performing individuals across Z&uuml;rich, Monaco, Dubai, Singapore, and London.</p>
 
-        <p class="about-text">With a lifetime membership investment of CHF 500,000, BILLIONAIRS provides access to pre-market investment opportunities, rare collectibles including Patek Philippe timepieces, private real estate transactions, exclusive private equity deals, and a blockchain-verified inner circle. Our members have accessed crypto opportunities with 2,900% returns, off-market penthouses on Bahnhofstrasse, and pre-IPO fintech allocations &mdash; all through private network intelligence.</p>
+        <p class="about-text" data-key="p2">With a lifetime membership investment of CHF 500,000, BILLIONAIRS provides access to pre-market investment opportunities, rare collectibles including Patek Philippe timepieces, private real estate transactions, exclusive private equity deals, and a blockchain-verified inner circle. Our members have accessed crypto opportunities with 2,900% returns, off-market penthouses on Bahnhofstrasse, and pre-IPO fintech allocations &mdash; all through private network intelligence.</p>
 
-        <p class="about-text">Every member signs a legally binding NDA under Swiss law (ZertES &amp; EU eIDAS compliant). Communication happens through AES-256-GCM encrypted channels with military-grade screenshot protection. Identity remains anonymous &mdash; members interact as &ldquo;Titans&rdquo; in our Inner Circle. Two-factor authentication, rate limiting, and Swiss-secured infrastructure protect every interaction.</p>
+        <p class="about-text" data-key="p3">Every member signs a legally binding NDA under Swiss law (ZertES &amp; EU eIDAS compliant). Communication happens through AES-256-GCM encrypted channels with military-grade screenshot protection. Identity remains anonymous &mdash; members interact as &ldquo;Titans&rdquo; in our Inner Circle. Two-factor authentication, rate limiting, and Swiss-secured infrastructure protect every interaction.</p>
 
-        <p class="about-text">BILLIONAIRS is not a social club, not an investment fund, and not a networking event. It is a private wealth preservation and opportunity network for those who understand that the most valuable currency is not money &mdash; but access. Limited to 100 members worldwide. By invitation only.</p>
+        <p class="about-text" data-key="p4">BILLIONAIRS is not a social club, not an investment fund, and not a networking event. It is a private wealth preservation and opportunity network for those who understand that the most valuable currency is not money &mdash; but access. Limited to 100 members worldwide. By invitation only.</p>
 
         <!-- Features -->
         <div class="about-features">
             <div class="about-feature">
-                <strong>Swiss Secured</strong>
-                <span>Z&uuml;rich-based encrypted infrastructure</span>
+                <strong data-key="f1_title">Swiss Secured</strong>
+                <span data-key="f1_desc">Z&uuml;rich-based encrypted infrastructure</span>
             </div>
             <div class="about-feature">
-                <strong>Blockchain Verified</strong>
-                <span>Every membership cryptographically validated</span>
+                <strong data-key="f2_title">Blockchain Verified</strong>
+                <span data-key="f2_desc">Every membership cryptographically validated</span>
             </div>
             <div class="about-feature">
-                <strong>AES-256 Encrypted</strong>
-                <span>Military-grade communication security</span>
+                <strong data-key="f3_title">AES-256 Encrypted</strong>
+                <span data-key="f3_desc">Military-grade communication security</span>
             </div>
             <div class="about-feature">
-                <strong>9 Languages</strong>
-                <span>English, Deutsch, Fran&ccedil;ais, Espa&ntilde;ol, Italiano, Русский, 中文, 日本語, العربية</span>
+                <strong data-key="f4_title">9 Languages</strong>
+                <span data-key="f4_desc">English, Deutsch, Fran&ccedil;ais, Espa&ntilde;ol, Italiano, Русский, 中文, 日本語, العربية</span>
             </div>
         </div>
 
         <!-- CTA -->
         <div class="about-cta">
-            <a href="/" onclick="history.back(); return false;">Return to BILLIONAIRS</a>
+            <a href="/" onclick="history.back(); return false;" data-key="cta">Return to BILLIONAIRS</a>
         </div>
 
         <!-- Footer -->
@@ -297,7 +297,159 @@
         </div>
     </div>
 
-    <!-- Particle Animation -->
+    <!-- Multi-Language Support -->
+    <script>
+        const aboutTranslations = {
+            en: {
+                back: "Back",
+                heading: "The World's Most Exclusive Private Membership",
+                p1: "BILLIONAIRS is an ultra-exclusive private membership designed for ultra-high-net-worth individuals (UHNWI) and billionaires seeking meaningful connections beyond social media. Founded in Switzerland and secured by Swiss banking standards, our encrypted luxury network connects a select circle of verified entrepreneurs, investors, and high-performing individuals across Zürich, Monaco, Dubai, Singapore, and London.",
+                p2: "With a lifetime membership investment of CHF 500,000, BILLIONAIRS provides access to pre-market investment opportunities, rare collectibles including Patek Philippe timepieces, private real estate transactions, exclusive private equity deals, and a blockchain-verified inner circle. Our members have accessed crypto opportunities with 2,900% returns, off-market penthouses on Bahnhofstrasse, and pre-IPO fintech allocations — all through private network intelligence.",
+                p3: "Every member signs a legally binding NDA under Swiss law (ZertES & EU eIDAS compliant). Communication happens through AES-256-GCM encrypted channels with military-grade screenshot protection. Identity remains anonymous — members interact as \"Titans\" in our Inner Circle. Two-factor authentication, rate limiting, and Swiss-secured infrastructure protect every interaction.",
+                p4: "BILLIONAIRS is not a social club, not an investment fund, and not a networking event. It is a private wealth preservation and opportunity network for those who understand that the most valuable currency is not money — but access. Limited to 100 members worldwide. By invitation only.",
+                f1_title: "Swiss Secured", f1_desc: "Zürich-based encrypted infrastructure",
+                f2_title: "Blockchain Verified", f2_desc: "Every membership cryptographically validated",
+                f3_title: "AES-256 Encrypted", f3_desc: "Military-grade communication security",
+                f4_title: "9 Languages", f4_desc: "English, Deutsch, Français, Español, Italiano, Русский, 中文, 日本語, العربية",
+                cta: "Return to BILLIONAIRS"
+            },
+            de: {
+                back: "Zurück",
+                heading: "Die exklusivste private Mitgliedschaft der Welt",
+                p1: "BILLIONAIRS ist eine ultra-exklusive private Mitgliedschaft für Ultra-High-Net-Worth-Individuals (UHNWI) und Milliardäre, die bedeutungsvolle Verbindungen jenseits sozialer Medien suchen. Gegründet in der Schweiz und gesichert nach Schweizer Bankenstandards, verbindet unser verschlüsseltes Luxusnetzwerk einen ausgewählten Kreis verifizierter Unternehmer, Investoren und leistungsstarker Persönlichkeiten in Zürich, Monaco, Dubai, Singapur und London.",
+                p2: "Mit einer lebenslangen Mitgliedschaftsinvestition von CHF 500.000 bietet BILLIONAIRS Zugang zu Pre-Market-Investitionsmöglichkeiten, seltenen Sammlerstücken einschließlich Patek Philippe Zeitmessern, privaten Immobilientransaktionen, exklusiven Private-Equity-Deals und einem blockchain-verifizierten inneren Kreis. Unsere Mitglieder haben Krypto-Möglichkeiten mit 2.900% Rendite, Off-Market-Penthäuser an der Bahnhofstrasse und Pre-IPO-Fintech-Zuteilungen erschlossen — alles durch private Netzwerkintelligenz.",
+                p3: "Jedes Mitglied unterzeichnet eine rechtlich bindende NDA nach Schweizer Recht (ZertES & EU eIDAS konform). Kommunikation erfolgt über AES-256-GCM verschlüsselte Kanäle mit militärischem Screenshot-Schutz. Identität bleibt anonym — Mitglieder interagieren als „Titans" in unserem Inner Circle. Zwei-Faktor-Authentifizierung, Rate Limiting und Schweizer Sicherheitsinfrastruktur schützen jede Interaktion.",
+                p4: "BILLIONAIRS ist kein sozialer Club, kein Investmentfonds und keine Networking-Veranstaltung. Es ist ein privates Vermögensschutz- und Chancennetzwerk für diejenigen, die verstehen, dass die wertvollste Währung nicht Geld ist — sondern Zugang. Limitiert auf 100 Mitglieder weltweit. Nur auf Einladung.",
+                f1_title: "Swiss Gesichert", f1_desc: "Verschlüsselte Infrastruktur in Zürich",
+                f2_title: "Blockchain Verifiziert", f2_desc: "Jede Mitgliedschaft kryptographisch validiert",
+                f3_title: "AES-256 Verschlüsselt", f3_desc: "Kommunikationssicherheit auf Militärniveau",
+                f4_title: "9 Sprachen", f4_desc: "English, Deutsch, Français, Español, Italiano, Русский, 中文, 日本語, العربية",
+                cta: "Zurück zu BILLIONAIRS"
+            },
+            fr: {
+                back: "Retour",
+                heading: "L'adhésion privée la plus exclusive au monde",
+                p1: "BILLIONAIRS est une adhésion privée ultra-exclusive conçue pour les individus à très haute valeur nette (UHNWI) et les milliardaires recherchant des connexions significatives au-delà des réseaux sociaux. Fondée en Suisse et sécurisée par les normes bancaires suisses, notre réseau de luxe crypté connecte un cercle sélect d'entrepreneurs, d'investisseurs et de personnalités performantes vérifiées à Zürich, Monaco, Dubaï, Singapour et Londres.",
+                p2: "Avec un investissement d'adhésion à vie de CHF 500 000, BILLIONAIRS offre l'accès à des opportunités d'investissement pré-marché, des objets de collection rares dont des montres Patek Philippe, des transactions immobilières privées, des offres exclusives de private equity et un cercle intérieur vérifié par blockchain. Nos membres ont accédé à des opportunités crypto avec des rendements de 2 900%, des penthouses hors marché sur la Bahnhofstrasse et des allocations fintech pré-IPO — le tout grâce à l'intelligence du réseau privé.",
+                p3: "Chaque membre signe un NDA juridiquement contraignant en vertu du droit suisse (conforme ZertES & EU eIDAS). La communication se fait par des canaux cryptés AES-256-GCM avec une protection anti-capture d'écran de grade militaire. L'identité reste anonyme — les membres interagissent en tant que « Titans » dans notre Cercle Intérieur. L'authentification à deux facteurs, la limitation de débit et l'infrastructure sécurisée suisse protègent chaque interaction.",
+                p4: "BILLIONAIRS n'est pas un club social, pas un fonds d'investissement, et pas un événement de réseautage. C'est un réseau privé de préservation de patrimoine et d'opportunités pour ceux qui comprennent que la monnaie la plus précieuse n'est pas l'argent — mais l'accès. Limité à 100 membres dans le monde. Sur invitation uniquement.",
+                f1_title: "Sécurisé Suisse", f1_desc: "Infrastructure cryptée basée à Zürich",
+                f2_title: "Vérifié Blockchain", f2_desc: "Chaque adhésion validée cryptographiquement",
+                f3_title: "Cryptage AES-256", f3_desc: "Sécurité de communication de grade militaire",
+                f4_title: "9 Langues", f4_desc: "English, Deutsch, Français, Español, Italiano, Русский, 中文, 日本語, العربية",
+                cta: "Retour à BILLIONAIRS"
+            },
+            es: {
+                back: "Volver",
+                heading: "La membresía privada más exclusiva del mundo",
+                p1: "BILLIONAIRS es una membresía privada ultra-exclusiva diseñada para individuos de patrimonio ultra-alto (UHNWI) y multimillonarios que buscan conexiones significativas más allá de las redes sociales. Fundada en Suiza y asegurada por estándares bancarios suizos, nuestra red de lujo encriptada conecta un círculo selecto de empresarios, inversores y profesionales de alto rendimiento verificados en Zürich, Mónaco, Dubái, Singapur y Londres.",
+                p2: "Con una inversión de membresía vitalicia de CHF 500.000, BILLIONAIRS proporciona acceso a oportunidades de inversión pre-mercado, coleccionables raros incluyendo relojes Patek Philippe, transacciones inmobiliarias privadas, ofertas exclusivas de capital privado y un círculo interno verificado por blockchain. Nuestros miembros han accedido a oportunidades cripto con retornos del 2.900%, penthouses fuera de mercado en Bahnhofstrasse y asignaciones fintech pre-IPO — todo a través de inteligencia de red privada.",
+                p3: "Cada miembro firma un NDA legalmente vinculante bajo la ley suiza (compatible ZertES y EU eIDAS). La comunicación se realiza a través de canales encriptados AES-256-GCM con protección de capturas de pantalla de grado militar. La identidad permanece anónima — los miembros interactúan como \"Titans\" en nuestro Círculo Interior. La autenticación de dos factores, la limitación de velocidad y la infraestructura asegurada por Suiza protegen cada interacción.",
+                p4: "BILLIONAIRS no es un club social, no es un fondo de inversión y no es un evento de networking. Es una red privada de preservación de patrimonio y oportunidades para aquellos que entienden que la moneda más valiosa no es el dinero — sino el acceso. Limitado a 100 miembros en todo el mundo. Solo por invitación.",
+                f1_title: "Seguridad Suiza", f1_desc: "Infraestructura encriptada en Zürich",
+                f2_title: "Verificado Blockchain", f2_desc: "Cada membresía validada criptográficamente",
+                f3_title: "Encriptado AES-256", f3_desc: "Seguridad de comunicación de grado militar",
+                f4_title: "9 Idiomas", f4_desc: "English, Deutsch, Français, Español, Italiano, Русский, 中文, 日本語, العربية",
+                cta: "Volver a BILLIONAIRS"
+            },
+            it: {
+                back: "Indietro",
+                heading: "L'iscrizione privata più esclusiva al mondo",
+                p1: "BILLIONAIRS è un'iscrizione privata ultra-esclusiva progettata per individui con patrimonio ultra-elevato (UHNWI) e miliardari che cercano connessioni significative oltre i social media. Fondata in Svizzera e protetta dagli standard bancari svizzeri, la nostra rete di lusso crittografata collega una cerchia selezionata di imprenditori, investitori e professionisti ad alte prestazioni verificati a Zurigo, Monaco, Dubai, Singapore e Londra.",
+                p2: "Con un investimento di iscrizione a vita di CHF 500.000, BILLIONAIRS offre accesso a opportunità di investimento pre-mercato, oggetti da collezione rari tra cui orologi Patek Philippe, transazioni immobiliari private, offerte esclusive di private equity e una cerchia interna verificata da blockchain. I nostri membri hanno avuto accesso a opportunità crypto con rendimenti del 2.900%, attici fuori mercato sulla Bahnhofstrasse e allocazioni fintech pre-IPO — tutto attraverso l'intelligence della rete privata.",
+                p3: "Ogni membro firma un NDA legalmente vincolante secondo la legge svizzera (conforme ZertES e EU eIDAS). La comunicazione avviene attraverso canali crittografati AES-256-GCM con protezione screenshot di grado militare. L'identità rimane anonima — i membri interagiscono come \"Titans\" nel nostro Cerchio Interno. L'autenticazione a due fattori, il rate limiting e l'infrastruttura protetta svizzera proteggono ogni interazione.",
+                p4: "BILLIONAIRS non è un club sociale, non è un fondo di investimento e non è un evento di networking. È una rete privata di preservazione del patrimonio e opportunità per coloro che comprendono che la valuta più preziosa non è il denaro — ma l'accesso. Limitato a 100 membri in tutto il mondo. Solo su invito.",
+                f1_title: "Sicurezza Svizzera", f1_desc: "Infrastruttura crittografata con sede a Zurigo",
+                f2_title: "Verificato Blockchain", f2_desc: "Ogni iscrizione validata crittograficamente",
+                f3_title: "Crittografia AES-256", f3_desc: "Sicurezza delle comunicazioni di grado militare",
+                f4_title: "9 Lingue", f4_desc: "English, Deutsch, Français, Español, Italiano, Русский, 中文, 日本語, العربية",
+                cta: "Torna a BILLIONAIRS"
+            },
+            ru: {
+                back: "Назад",
+                heading: "Самое эксклюзивное частное членство в мире",
+                p1: "BILLIONAIRS — это ультра-эксклюзивное частное членство, созданное для сверхбогатых людей (UHNWI) и миллиардеров, ищущих значимые связи за пределами социальных сетей. Основанная в Швейцарии и защищённая швейцарскими банковскими стандартами, наша зашифрованная сеть роскоши соединяет избранный круг верифицированных предпринимателей, инвесторов и высокоэффективных личностей в Цюрихе, Монако, Дубае, Сингапуре и Лондоне.",
+                p2: "С пожизненным членским взносом в CHF 500 000 BILLIONAIRS предоставляет доступ к предрыночным инвестиционным возможностям, редким коллекционным предметам, включая часы Patek Philippe, частным сделкам с недвижимостью, эксклюзивным сделкам с частным капиталом и верифицированному блокчейном внутреннему кругу. Наши члены получили доступ к крипто-возможностям с доходностью 2 900%, пентхаусам вне рынка на Банхофштрассе и предIPO финтех-аллокациям — всё через интеллект частной сети.",
+                p3: "Каждый член подписывает юридически обязывающее NDA по швейцарскому праву (соответствует ZertES и EU eIDAS). Коммуникация происходит через зашифрованные каналы AES-256-GCM с военной защитой от скриншотов. Личность остаётся анонимной — члены взаимодействуют как «Титаны» в нашем Внутреннем Кругу. Двухфакторная аутентификация, ограничение частоты запросов и защищённая швейцарская инфраструктура обеспечивают безопасность каждого взаимодействия.",
+                p4: "BILLIONAIRS — это не социальный клуб, не инвестиционный фонд и не нетворкинг-мероприятие. Это частная сеть сохранения богатства и возможностей для тех, кто понимает, что самая ценная валюта — это не деньги, а доступ. Ограничено 100 членами по всему миру. Только по приглашению.",
+                f1_title: "Швейцарская защита", f1_desc: "Зашифрованная инфраструктура в Цюрихе",
+                f2_title: "Верификация Blockchain", f2_desc: "Каждое членство криптографически подтверждено",
+                f3_title: "Шифрование AES-256", f3_desc: "Безопасность связи военного уровня",
+                f4_title: "9 Языков", f4_desc: "English, Deutsch, Français, Español, Italiano, Русский, 中文, 日本語, العربية",
+                cta: "Вернуться к BILLIONAIRS"
+            },
+            zh: {
+                back: "返回",
+                heading: "世界上最独家的私人会员",
+                p1: "BILLIONAIRS是为超高净值人士(UHNWI)和寻求超越社交媒体的有意义联系的亿万富翁设计的超级独家私人会员。成立于瑞士，受瑞士银行标准保护，我们的加密奢华网络连接着苏黎世、摩纳哥、迪拜、新加坡和伦敦经过验证的企业家、投资者和高绩效人士的精选圈子。",
+                p2: "通过50万瑞郎的终身会员投资，BILLIONAIRS提供预市场投资机会、包括百达翡丽手表在内的珍稀收藏品、私人房地产交易、独家私募股权交易和区块链验证的内圈。我们的会员已获得回报率达2,900%的加密货币机会、班霍夫大街上的场外顶层公寓和预IPO金融科技配额——全部通过私人网络情报。",
+                p3: "每位会员签署瑞士法律下具有法律约束力的保密协议（符合ZertES和EU eIDAS）。通过AES-256-GCM加密通道进行通信，具有军事级截图保护。身份保持匿名——会员在我们的内圈以"Titans"身份互动。双因素认证、速率限制和瑞士安全基础设施保护每次互动。",
+                p4: "BILLIONAIRS不是社交俱乐部，不是投资基金，也不是社交活动。它是一个私人财富保护和机会网络，面向那些理解最有价值的货币不是金钱——而是准入的人。全球限100名会员。仅限邀请。",
+                f1_title: "瑞士安全", f1_desc: "苏黎世加密基础设施",
+                f2_title: "区块链验证", f2_desc: "每个会员资格均经过加密验证",
+                f3_title: "AES-256加密", f3_desc: "军事级通信安全",
+                f4_title: "9种语言", f4_desc: "English, Deutsch, Français, Español, Italiano, Русский, 中文, 日本語, العربية",
+                cta: "返回 BILLIONAIRS"
+            },
+            ja: {
+                back: "戻る",
+                heading: "世界で最も独占的なプライベートメンバーシップ",
+                p1: "BILLIONAIRSは、ソーシャルメディアを超えた有意義なつながりを求める超富裕層（UHNWI）と億万長者のために設計された、超排他的なプライベートメンバーシップです。スイスで設立され、スイスの銀行基準で保護されている当社の暗号化されたラグジュアリーネットワークは、チューリッヒ、モナコ、ドバイ、シンガポール、ロンドンの検証済み起業家、投資家、高業績者の厳選されたサークルをつないでいます。",
+                p2: "CHF 500,000の生涯メンバーシップ投資により、BILLIONAIRSはプレマーケット投資機会、パテックフィリップの時計を含む希少コレクターズアイテム、プライベート不動産取引、独占的なプライベートエクイティ取引、ブロックチェーン検証済みインナーサークルへのアクセスを提供します。当社のメンバーは、2,900%のリターンを持つ暗号通貨の機会、バーンホフ通りのオフマーケットペントハウス、プレIPOフィンテック配分にアクセスしてきました — すべてプライベートネットワークインテリジェンスを通じて。",
+                p3: "すべてのメンバーはスイス法（ZertES＆EU eIDAS準拠）に基づく法的拘束力のあるNDAに署名します。通信はAES-256-GCM暗号化チャネルを通じて行われ、軍事グレードのスクリーンショット保護が施されています。身元は匿名のまま — メンバーはインナーサークルで「Titans」として交流します。二要素認証、レート制限、スイスのセキュリティインフラがすべてのインタラクションを保護します。",
+                p4: "BILLIONAIRSはソーシャルクラブでも、投資ファンドでも、ネットワーキングイベントでもありません。最も価値のある通貨はお金ではなく、アクセスであることを理解する人々のための、プライベートな資産保全と機会のネットワークです。世界中で100名限定。招待制のみ。",
+                f1_title: "スイス認証", f1_desc: "チューリッヒの暗号化インフラ",
+                f2_title: "ブロックチェーン検証", f2_desc: "すべてのメンバーシップを暗号的に検証",
+                f3_title: "AES-256暗号化", f3_desc: "軍事グレードの通信セキュリティ",
+                f4_title: "9言語", f4_desc: "English, Deutsch, Français, Español, Italiano, Русский, 中文, 日本語, العربية",
+                cta: "BILLIONAIRSに戻る"
+            },
+            ar: {
+                back: "رجوع",
+                heading: "أكثر عضوية خاصة حصرية في العالم",
+                p1: "BILLIONAIRS هي عضوية خاصة فائقة الحصرية مصممة لأصحاب الثروات الفائقة (UHNWI) والمليارديرات الباحثين عن علاقات ذات معنى تتجاوز وسائل التواصل الاجتماعي. تأسست في سويسرا ومحمية بمعايير البنوك السويسرية، شبكتنا الفاخرة المشفرة تربط دائرة مختارة من رواد الأعمال والمستثمرين والأفراد ذوي الأداء العالي المعتمدين في زيوريخ وموناكو ودبي وسنغافورة ولندن.",
+                p2: "مع استثمار عضوية مدى الحياة بقيمة 500,000 فرنك سويسري، يوفر BILLIONAIRS الوصول إلى فرص الاستثمار قبل السوق، والمقتنيات النادرة بما في ذلك ساعات باتيك فيليب، ومعاملات العقارات الخاصة، وصفقات الملكية الخاصة الحصرية، ودائرة داخلية محققة بالبلوكشين. وصل أعضاؤنا إلى فرص العملات المشفرة بعوائد 2,900٪، وشقق بنتهاوس خارج السوق في شارع بانهوف، وتخصيصات التكنولوجيا المالية قبل الطرح العام — كل ذلك من خلال استخبارات الشبكة الخاصة.",
+                p3: "يوقع كل عضو اتفاقية عدم إفصاح ملزمة قانونياً بموجب القانون السويسري (متوافقة مع ZertES و EU eIDAS). يتم الاتصال عبر قنوات مشفرة AES-256-GCM مع حماية من لقطات الشاشة بمستوى عسكري. تظل الهوية مجهولة — يتفاعل الأعضاء كـ\"Titans\" في دائرتنا الداخلية. المصادقة الثنائية وتحديد المعدل والبنية التحتية المؤمنة السويسرية تحمي كل تفاعل.",
+                p4: "BILLIONAIRS ليست نادياً اجتماعياً، ولا صندوق استثمار، ولا فعالية تواصل. إنها شبكة خاصة للحفاظ على الثروة والفرص لأولئك الذين يفهمون أن العملة الأكثر قيمة ليست المال — بل الوصول. محدودة بـ 100 عضو حول العالم. بدعوة فقط.",
+                f1_title: "أمان سويسري", f1_desc: "بنية تحتية مشفرة في زيوريخ",
+                f2_title: "تحقق البلوكشين", f2_desc: "كل عضوية محققة بالتشفير",
+                f3_title: "تشفير AES-256", f3_desc: "أمان اتصالات بمستوى عسكري",
+                f4_title: "9 لغات", f4_desc: "English, Deutsch, Français, Español, Italiano, Русский, 中文, 日本語, العربية",
+                cta: "العودة إلى BILLIONAIRS"
+            }
+        };
+
+        // Detect language from localStorage/cookie (same as main app)
+        function getLanguage() {
+            let lang = localStorage.getItem('billionairs_lang');
+            if (!lang) {
+                const cookies = document.cookie.split(';');
+                for (const c of cookies) {
+                    const [k, v] = c.trim().split('=');
+                    if (k === 'billionairs_lang') { lang = v; break; }
+                }
+            }
+            return lang && aboutTranslations[lang] ? lang : 'en';
+        }
+
+        function applyTranslations() {
+            const lang = getLanguage();
+            const t = aboutTranslations[lang];
+            if (!t) return;
+
+            // Set HTML lang & dir
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+            // Translate all elements with data-key
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (t[key]) el.textContent = t[key];
+            });
+        }
+
+        applyTranslations();
+    </script>
     <script>
         (function() {
             const canvas = document.getElementById('particleCanvas');
